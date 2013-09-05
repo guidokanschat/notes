@@ -17,6 +17,73 @@
   higher dimensions.
 \end{intro}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Step functions and their integrals}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}
+  \defindex{lattice}
+  We introduce \textbf{lattices} $\Q_n$ of $\R^d$ consisting of half
+  open cubes
+  \begin{gather*}
+    Q^{(n)}_{i_1,\dots,i_d} =
+    \left]\tfrac{i_1}{2^n},\tfrac{i_1+1}{2^n}\right]
+    \times
+    \left]\tfrac{i_2}{2^n},\tfrac{i_2+1}{2^n}\right]
+    \times\dots\times
+    \left]\tfrac{i_d}{2^n},\tfrac{i_d+1}{2^n}\right],
+    \qquad i_k\in\mathbb Z.
+  \end{gather*}
+  The lattice is said to be of width $2^{-n}$.
+\end{definition}
+
+\begin{note}
+  Independent on the dimension $d$, the number of cubes in $\Q_n$ is
+  countable. Thus, we can replace the multiple indices indicating the
+  position of a cube in the lattice by a single enumeration index
+  $k$. Furthermore, it is easy to see that the number of cubes in
+  $\Q_n$ contained in a bounded set is finite, albeit depending on $n$.
+\end{note}
+
+\begin{definition}
+  A function $f$ is called a \define{step function} on the lattice
+  $\Q_n$, if $f$ is constant on each cube $Q_k$. We refer to the value
+  of $f$ on $Q_k$ as $f(Q_k)$ or short $f_k$.
+  value 
+\end{definition}
+
+\begin{definition}
+  \index{integral!of a step function}
+  The \textbf{integral} of a step function $f$ on $\Q_n$ is
+  defined in the obvious way as
+  \begin{gather*}
+    \int_{\R^d} f(x) \,dx = \sum_{Q_k} f(q_k). 
+  \end{gather*}
+  Here, we explicitly allow the values $\infty$ and $-\infty$ for the integral.
+\end{definition}
+
+\begin{definition}
+  The \define{support} of a function is the set
+  \begin{gather}
+    \supp f = \overline{
+      \bigl\{x\in \R^d\big| f(x) \neq 0 \bigr\}}.
+  \end{gather}
+\end{definition}
+\begin{note}
+  If the support of $f$ is bounded, its integral is finite.
+\end{note}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sets of measure zero}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Definition of the integral}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Integration of limits}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% Local Variables: 
 %%% mode: latex
