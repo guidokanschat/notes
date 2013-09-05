@@ -18,13 +18,76 @@
 \end{intro}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sets of measure zero}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{intro}
+  Sets of measure zero constitute one of the most important concepts
+  in integration and measure theory. Odd enough, it is possible to
+  define them in an elementary way, which does not require any
+  advanced measure theory.
+\end{intro}
+
+\begin{definition}
+  A subset $Z\subset \R$ is called a \textbf{set of measure zero}, if
+  for any $\epsilon > 0$ there exist a finite or countable set of
+  intervals $I_{k}$ such that
+  \begin{gather*}
+    Z \subset \bigcup_k I_{k}
+    \quad\text{and}\quad
+    \sum_k |I_{k}| < \epsilon.
+  \end{gather*}
+  We also say that the set $Z$ can be \define{covered} by a finite or
+  countable union of intervals with total length less than $\epsilon$.
+\end{definition}
+
+\begin{example}
+  A set consisting of a single number $x\in\R$ is of measure zero,
+  since for any $\epsilon>0$:
+  \begin{gather*}
+    \{x\} \subset \left[x-\tfrac\epsilon2,x+\tfrac\epsilon2\right].  
+  \end{gather*}
+\end{example}
+
+\begin{lemma}
+  The finite or countable union of sets of measure zero is of measure
+  zero.
+\end{lemma}
+
+\begin{proof}
+  Let $\{Z_j\}_{j=1,2,\dots}$ be a finite or countable sequence of
+  sets of measure zero. For each $Z_j$, let $\{I_{jk}\}$ be a set of
+  intervals covering $Z_j$ and having total length less than
+  $2^{-k}\epsilon$. Such a set exists according to the definition of
+  a set of measure zero. Then,
+  \begin{gather*}
+    Z = \bigcup_j Z_j \subset \bigcup_{jk} I_{jk}
+    \quad\text{and}\quad
+    \sum_{jk} |I_{jk}| < \epsilon.
+  \end{gather*}
+  It remains to note that the index set $jk$ is at most countable.
+\end{proof}
+
+\begin{corollary}
+  The set $\Q\subset \R$ of rational numbers is of measure zero.
+\end{corollary}
+
+\begin{definition}
+  \label{def:almost-everywhere}
+  A property is said to hold \define{almost everywhere} on a set $M$,
+  if it holds on $M$, or at least on a set $M\setminus Z$, where $Z$
+  is of measure zero.
+\end{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Step functions and their integrals}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{definition}
-  \defindex{lattice}
-  We introduce \textbf{lattices} $\Q_n$ of $\R^d$ consisting of half
-  open cubes
+  \defindex{lattice} We introduce \textbf{lattices}
+  $\Q_n$\footnote{The letter $\Q$ with index always refers to a
+    lattice and never to the rational numbers} of $\R^d$ consisting of
+  half open cubes
   \begin{gather*}
     Q^{(n)}_{i_1,\dots,i_d} =
     \left]\tfrac{i_1}{2^n},\tfrac{i_1+1}{2^n}\right]
@@ -52,15 +115,47 @@
   value 
 \end{definition}
 
+\begin{note}
+  A step function $f$ on a lattice $\Q_n$ is also a step function on
+  any lattice $\Q_m$ with $m>n$, by simply choosing it to be the same
+  constant on all the cubes of $\Q_m$ which are subsets of the same
+  cube of $\Q_n$.
+  
+  Therefore, further on, we can always compare two step functions by
+  comparing them on the finer lattice used for their definition.
+\end{note}
+
+
 \begin{definition}
   \index{integral!of a step function}
   The \textbf{integral} of a step function $f$ on $\Q_n$ is
   defined in the obvious way as
   \begin{gather*}
-    \int_{\R^d} f(x) \,dx = \sum_{Q_k} f(q_k). 
+    \int_{\R^d} f(x) \,dx = \sum_{Q_k} f(q_k) |Q_k|,
   \end{gather*}
+  where $|Q_k|$ denotes the volume of the cube $Q_k$.
   Here, we explicitly allow the values $\infty$ and $-\infty$ for the integral.
 \end{definition}
+
+\begin{lemma}[Properties of the integral]
+  The integral of step functions is a linear operator,
+  that is, for two step functions $f$ and $g$ and numbers $a,b\in
+  \R$ holds
+  \begin{gather*}
+    \int_{\R^d}\bigl(a f(x)+b g(x)\bigr)\dx
+    = a\int_{\R^d} f(x) + b \int_{\R^d} g(x).
+  \end{gather*}
+  Furthermore, the integral is monotonic, that is, if for all $x\in
+  \R^d$ holds $f(x) \le g(x)$, then holds
+  \begin{gather*}
+    \int_{\R^d} f(x) \le \int_{\R^d} g(x).
+  \end{gather*}
+\end{lemma}
+
+\begin{proof}
+  Both properties follow from the fact that they hold for the values
+  $f(Q_k)$ and $g(Q_k)$ and the summation operator.
+\end{proof}
 
 \begin{definition}
   The \define{support} of a function is the set
@@ -68,18 +163,67 @@
     \supp f = \overline{
       \bigl\{x\in \R^d\big| f(x) \neq 0 \bigr\}}.
   \end{gather}
+  A function $f$ is said to have \define{finite support} if $\supp f$
+  is a bounded set.
 \end{definition}
+
 \begin{note}
-  If the support of $f$ is bounded, its integral is finite.
+  If the support of a step function $f$ is bounded, its integral is finite.
 \end{note}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Sets of measure zero}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The following two lemmas establish the close connection between the
+convergence of step functions almost everywhere and convergence of
+their integrals.
+
+\begin{lemma}
+  \label{lemma:integral:1}
+  Let $\{\phi_n\}_{n=1,\dots}$ be a monotonically decreasing sequence
+  of step functions on lattices $\Q_n$ converging to zero almost
+  everywhere. Then,
+  \begin{gather*}
+    \lim_{n\to \infty}\int_{\R^d} \phi_n(x) \,dx = 0.
+  \end{gather*}
+\end{lemma}
+
+\begin{todo}
+  \begin{proof}
+    
+  \end{proof}
+\end{todo}
+
+\begin{lemma}
+  \label{lemma:integral:2}
+  Let $\{\phi_n\}_{n=1,\dots}$ be a monotonically increasing sequence
+  of step functions on lattices $\Q_n$ such that their integrals are
+  uniformly bounded by a constant $C$:
+  \begin{gather}
+    \label{eq:integral:1}
+    \int_{\R^d} \phi_n(x) \,dx \le C.
+  \end{gather}
+  Then, the functions $\phi_n$ converge to a finite limit function
+  $\phi$ almost everywhere in $\R^d$.
+\end{lemma}
+
+\begin{todo}
+  \begin{proof}
+    
+  \end{proof}
+\end{todo}
+
+\begin{remark}
+  \label{remark:integral:1}
+  Due to the monotonicity of the integral, the sequence on the left
+  hand side of inequality~\eqref{eq:integral:1} is monotonically
+  increasing. Therefore, the integrals are actually converging to a
+  finite value.
+\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Definition of the integral}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Integration of limits}
