@@ -131,7 +131,7 @@
   The \textbf{integral} of a step function $f$ on $\Q_n$ is
   defined in the obvious way as
   \begin{gather*}
-    \int_{\R^d} f(x) \,dx = \sum_{Q_k} f(q_k) |Q_k|,
+    \int_{\R^d} f(x) \dx = \sum_{Q_k} f(q_k) |Q_k|,
   \end{gather*}
   where $|Q_k|$ denotes the volume of the cube $Q_k$.
   Here, we explicitly allow the values $\infty$ and $-\infty$ for the integral.
@@ -142,7 +142,7 @@
   that is, for two step functions $f$ and $g$ and numbers $a,b\in
   \R$ holds
   \begin{gather*}
-    \int_{\R^d}\bigl(a f(x)+b g(x)\bigr)\dx
+    \int_{\R^d}\bigl(a f(x)+b g(x)\bigr) \dx
     = a\int_{\R^d} f(x) + b \int_{\R^d} g(x).
   \end{gather*}
   Furthermore, the integral is monotonic, that is, if for all $x\in
@@ -181,7 +181,7 @@ their integrals.
   of step functions on lattices $\Q_n$ converging to zero almost
   everywhere. Then,
   \begin{gather*}
-    \lim_{n\to \infty}\int_{\R^d} \phi_n(x) \,dx = 0.
+    \lim_{n\to \infty}\int_{\R^d} \phi_n(x) \dx = 0.
   \end{gather*}
 \end{lemma}
 
@@ -198,7 +198,7 @@ their integrals.
   uniformly bounded by a constant $C$:
   \begin{gather}
     \label{eq:integral:1}
-    \int_{\R^d} \phi_n(x) \,dx \le C.
+    \int_{\R^d} \phi_n(x) \dx \le C.
   \end{gather}
   Then, the functions $\phi_n$ converge to a finite limit function
   $\phi$ almost everywhere in $\R^d$.
