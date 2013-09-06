@@ -110,9 +110,8 @@
 
 \begin{definition}
   A function $f$ is called a \define{step function} on the lattice
-  $\Q_n$, if $f$ is constant on each cube $Q_k$. We refer to the value
-  of $f$ on $Q_k$ as $f(Q_k)$ or short $f_k$.
-  value 
+  $\Q_n$, if $f$ is constant on each cube $Q_k$, and if $f$ is different from zero only on a finite number of cubes.
+  We refer to the value of $f$ on $Q_k$ as $f(Q_k)$ or short $f_k$.
 \end{definition}
 
 \begin{note}
@@ -133,8 +132,7 @@
   \begin{gather*}
     \int_{\R^d} f(x) \dx = \sum_{Q_k} f(q_k) |Q_k|,
   \end{gather*}
-  where $|Q_k|$ denotes the volume of the cube $Q_k$.
-  Here, we explicitly allow the values $\infty$ and $-\infty$ for the integral.
+  where $|Q_k|$ denotes the volume of the cube $Q_k$. Since the sum in this definition is finite, the integral is finite.
 \end{definition}
 
 \begin{lemma}[Properties of the integral]
@@ -163,12 +161,12 @@
     \supp f = \overline{
       \bigl\{x\in \R^d\big| f(x) \neq 0 \bigr\}}.
   \end{gather}
-  A function $f$ is said to have \define{finite support} if $\supp f$
+  A function $f$ is said to have \define{finite support} or synonymously \define{compact support} if $\supp f$
   is a bounded set.
 \end{definition}
 
 \begin{note}
-  If the support of a step function $f$ is bounded, its integral is finite.
+  Since the support of a step function $f$ consists of finitely many cubes, its support is finite.
 \end{note}
 
 The following two lemmas establish the close connection between the
@@ -178,7 +176,7 @@ their integrals.
 \begin{lemma}
   \label{lemma:integral:1}
   Let $\{\phi_n\}_{n=1,\dots}$ be a monotonically decreasing sequence
-  of step functions on lattices $\Q_n$ converging to zero almost
+  of nonnegative step functions on lattices $\Q_n$ converging to zero almost
   everywhere. Then,
   \begin{gather*}
     \lim_{n\to \infty}\int_{\R^d} \phi_n(x) \dx = 0.
@@ -187,7 +185,9 @@ their integrals.
 
 \begin{todo}
   \begin{proof}
-    
+    First, we note that the assumptions imply that for all $n>1$ holds $\supp 
+phi_n \subset \supp \phi_1$, and thus the volume of this support is bounded; let this volume be $V$.
+Let $Z$ be the set of measure zero, where the sequence does not converge to zero, and let $U_\epsilon$ be 
   \end{proof}
 \end{todo}
 
