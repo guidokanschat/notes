@@ -197,11 +197,14 @@ their integrals.
   \begin{gather*}
     S:= \supp \phi_1 \supset \supp \phi_n.
   \end{gather*}
-  and thus the volume of this support is bounded; let the volume of
-  $S$ be $V$. Let now $\epsilon>0$ be arbitrarily small. Let $Z$ be
-  the set of measure zero, where the sequence does not converge to
-  zero, and let $\mathcal J_\epsilon$ be an at most countable covering
-  of this set of total volume less than $\epsilon$ according to
+  and thus the volume of the support of $\phi_n$ is bounded by that of
+  $S$; let the volume of $S$ be $V$.
+
+  Let now $\epsilon>0$ be arbitrarily small. Let $Z$ be the set of
+  measure zero, where the sequence does either not converge to zero,
+  or where any of the functions $\phi_n$ is discontinuous. Let
+  $\mathcal J_\epsilon$ be an at most countable covering of this set
+  of total volume less than $\epsilon$ according to
   Definitions~\ref{def:zero-set-1} and~\ref{def:zero-set-2}.
 
   Let $J$ be the union of all elements in $\mathcal J_\epsilon$. We
@@ -211,26 +214,29 @@ their integrals.
     \int_J \phi_n(x) \le \epsilon M.
   \end{gather*}
   
-  Let now $U_{n,\epsilon}$ be the set on which $\phi_n(x)<\epsilon$,
-  and let $\mathcal U_\epsilon$ be the system of these sets when
-  $n\to\infty$. Since $\phi_n(x)\to 0$ for all $x\in S$ which are not
-  in any of the sets in $\mathcal J_\epsilon$, the union of $\mathcal
-  U_\epsilon$ and $\mathcal J_\epsilon$ is a covering of $S$. And
-  since $S$ is compact, the Heine-Borel theorem says, that we can
-  choose a finite subset from both of these systems, say
-  $\breve{\mathcal U_\epsilon} \cup \breve{\mathcal J_\epsilon}$ to
-  cover $S$. Since the sets $U_{n,\epsilon}$ are monotonically growing
-  with $n$, we conclude that there is an index $n_0$ such that
-  $S\subset U_{n_0,\epsilon} \cup J$.  Further, $\phi_n(x) < \epsilon$
-  for $n\ge n_0$ and $x\in U_{n_0,\epsilon}$, and thus
+  For any point $x\in \R^d\setminus J$ holds $\phi_n(x)\to 0$ as
+  $n\to\infty$. In particular, for $n$ sufficiently large, $\phi_n(x)
+  \le \epsilon$. Since $\phi_n$ is a step function, this holds not
+  only for $x$, but for the whole cube containing $x$. By varying
+  $x\in \R^d\setminus J$, we obtain an infinite set of such cubes,
+  which we call $\mathcal U_\epsilon$.
+  
+  By their definition, the sets in the union of $\mathcal J_\epsilon$
+  and $\mathcal U_\epsilon$ cover the set $S$. And since $S$ is
+  compact, the Heine-Borel theorem says, that we can choose a finite
+  subset from both of these systems, say $\breve{\mathcal U_\epsilon}
+  \cup \breve{\mathcal J_\epsilon}$ to cover $S$. Let $U$ be the union
+  of all cubes in $\breve{\mathcal U_\epsilon}$. Then, there is an
+  index $n_0$, such that $\phi_{n_0}(x) \le \epsilon$ for all $x\in
+  U$. Thus,
   \begin{gather*}
-    \int_{U_{n_0,\epsilon}} \phi_n(x) < \epsilon V,
+    \int_{U} \phi_n(x) < \epsilon V,
     \qquad \forall n\ge n_0.
   \end{gather*}
   We conclude the proof by noting that for $n\ge n_0$
   \begin{gather*}
     \int_{S} \phi_n(x)\dx
-    \le \int_{U_{n_0,\epsilon}} \phi_n(x)\dx + \int_{J} \phi_n(x)\dx
+    \le \int_{U} \phi_n(x)\dx + \int_{J} \phi_n(x)\dx
     < \epsilon(M+V),
   \end{gather*}
   which can be made arbitrarily small by choosing $\epsilon$ small.
@@ -249,11 +255,30 @@ their integrals.
   $\phi$ almost everywhere in $\R^d$.
 \end{lemma}
 
-\begin{todo}
-  \begin{proof}
-    
-  \end{proof}
-\end{todo}
+\begin{proof}
+  First, we observe that it is sufficient to consider sequences of
+  nonnegative functions and thus positive constants $C$: otherwise, we
+  consider the lemma for the sequence consisting of the functions
+  $\phi_n-\phi_1$.
+
+  Let $E_\epsilon$ be the set of points $x$, where $\phi_n(x) >
+  C/\epsilon$ for some $n$, and $E_0$ the set of points $x$, where
+  $\phi_n(x) \to \infty$. Obviously, $E_0\subset E_\epsilon$ for any
+  $\epsilon > 0$.
+  
+  The set $E_\epsilon$ by its definition is an at most countable
+  sequence of the cubes on which the step functions are
+  defined. Therefore, the integral of $\phi_n$ over $E_\epsilon$ is
+  defined and there holds
+  \begin{gather*}
+    \frac{C}{\epsilon}\sum_{Q_{k}\subset E_\epsilon} |Q_{k}|
+    \le \int_{E\epsilon} \phi_n(x) \dx
+    \le \int_{\R^d} \phi_n(x) \dx \le C.
+  \end{gather*}
+  From this, we deduce that the total volume of the cubes in
+  $E_\epsilon$ does not exceed epsilon. Since this set of cubes
+  covers $E_0$, we conclude that $E_0$ is of measure zero.
+\end{proof}
 
 \begin{remark}
   \label{remark:integral:1}
