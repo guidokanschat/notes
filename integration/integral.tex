@@ -80,6 +80,12 @@
   The set $\Q\subset \R$ of rational numbers is of measure zero.
 \end{corollary}
 
+\begin{note}
+  The preceding corollary implies that a dense subset of an interval
+  in $\R$ can be covered by a system of intervals without covering the
+  whole interval. Definitely, a remarkable statement.
+\end{note}
+
 \begin{definition}
   \label{def:almost-everywhere}
   A property is said to hold \define{almost everywhere} on a set $M$,
@@ -118,8 +124,12 @@
 
 \begin{definition}
   A function $f$ is called a \define{step function} on the lattice
-  $\Q_n$, if $f$ is constant on each cube $Q_k$, and if $f$ is different from zero only on a finite number of cubes.
-  We refer to the value of $f$ on $Q_k$ as $f(Q_k)$ or short $f_k$.
+  $\Q_n$, if $f$ is constant on each cube $Q_k$, and if $f$ is
+  different from zero only on a finite number of cubes.  We refer to
+  the value of $f$ on $Q_k$ as $f(Q_k)$ or short $f_k$.
+  
+  \index{S@$\mathcal S$}
+  We denote by $\mathcal S$ the space of step functions.
 \end{definition}
 
 \begin{note}
@@ -140,7 +150,8 @@
   \begin{gather*}
     \int_{\R^d} f(x) \dx = \sum_{Q_k} f(q_k) |Q_k|,
   \end{gather*}
-  where $|Q_k|$ denotes the volume of the cube $Q_k$. Since the sum in this definition is finite, the integral is finite.
+  where $|Q_k|$ denotes the volume of the cube $Q_k$. Since the sum in
+  this definition is finite, the integral is finite.
 \end{definition}
 
 \begin{lemma}[Properties of the integral]
@@ -292,12 +303,257 @@ their integrals.
 \subsection{Definition of the integral}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{intro}
+  In the previous section, we defined the integral of step functions
+  and investigated some limits. The goal of this section is the
+  extension of the integral to a wider class of functions. A first
+  extension is almost immediately suggested by
+  Lemma~\ref{lemma:integral:2} and
+  Remark~\ref{remark:integral:1}. Namely, assigning as value of the
+  integral of a function, which is the limit of an increasing sequence
+  of step functions almost everywhere, the limit of their
+  integrals. Nevertheless, it remains to prove that this yields a well
+  defined integral, in particular, that its definition is independent
+  of the actual choice of the sequence of step functions.
+\end{intro}
 
+\begin{lemma}
+  Let $\{\phi_n\}$ be a monotonically increasing sequence of step
+  functions with uniformly bounded integrals, converging to a function
+  $f$ almost everywhere. Let the same hold for the sequence
+  $\{\psi_m\}$ and the function $g$. Furthermore, let
+  \begin{gather*}
+    f(x) \le g(x) \quad\text{almost everywhere in $\R^d$.}
+  \end{gather*}
+  Then,
+  \begin{gather}
+    \label{eq:integral:1}
+    \lim_{n\to\infty} \int_{\R^d}\phi_n(x)\dx
+    \le
+    \lim_{m\to\infty} \int_{\R^d}\psi_m(x)\dx.
+  \end{gather}
+\end{lemma}
 
+\begin{proof}
+  \begin{todo}
+    ...
+  \end{todo}
+\end{proof}
+
+\begin{corollary}
+  For two functions $f$ and $g$ as in the preceding Lemma with $f(x) =
+  g(x)$ almost everywhere, we obtain
+  \begin{gather*}
+    \int_{\R^d}g(x)\dx = \int_{\R^d}g(x)\dx.
+  \end{gather*}
+  This means in particular, that the limit process in this lemma
+  uniquely defines the integral of the limit functions. Furthermore,
+  it means that we can always modify a function on a set of measure
+  zero without affecting its integral.
+\end{corollary}
+
+\begin{definition}
+  Let $\mathcal S^+$ be the set of functions which equal the limit of
+  a sequence of monotonically increasing step functions with bounded
+  integrals almost everywhere. For any function $f\in \mathcal S^+$, we
+  define the integral as
+  \begin{gather*}
+    \int_{\R^d} f(x) \,dx := \lim_{n\to\infty} \int_{\R^d}\phi_n(x)\dx,
+  \end{gather*}
+  where $\{\phi_n\}$ is any monotonically increasing sequence of step
+  functions converging to $f$ almost everywhere.
+\end{definition}
+
+\begin{example}
+  The function
+  \begin{gather*}
+    f(x) =
+    \begin{cases}
+      1 & x\in \Q \\
+      0 & x\in \R\setminus \Q
+    \end{cases}
+  \end{gather*}
+  is in $\mathcal S^+$ and its integral is zero. This is due to the fact that
+  it is equal to the zero function almost everywhere.
+\end{example}
+
+\begin{lemma}
+  Let $h$ be a function which is the difference of two functions in
+  $\mathcal S^+$, namely $h(x) = f_1(x)-f_2(x)$ almost everywhere. If
+  for two other functions in $\mathcal S^+$ holds $h(x) =
+  g_1(x)-g_2(x)$ almost everywhere, then
+  \begin{gather}
+    \label{eq:integral:2}
+    \int_{\R^d} f_1(x)\dx
+    -\int_{\R^d} f_2(x)\dx
+    =\int_{\R^d} g_1(x)\dx
+    -\int_{\R^d} g_2(x)\dx,
+  \end{gather}
+  that is, the difference of the integral does not depend on the
+  actual choice of the two functions in the difference.
+\end{lemma}
+
+\begin{definition}
+  Let $\mathcal L$\footnote{Here, the letter $\mathcal L$ is used in
+    reference to the Lebesgue integral. We note that Lebesgue used the
+    term ``summable'' instead of ``integrable''.} be the class of
+  functions which can be written as a difference of two functions in
+  $\mathcal S^+$ almost everywhere. For any function $h\in \mathcal
+  L$, the \define{integral} is defined as
+  \begin{gather*}
+    \int_{\R^d} h(x)\dx = \int_{\R^d} f(x)\dx - \int_{\R^d} g(x)\dx,
+  \end{gather*}
+  where $f$ and $g$ are any two functions such that $h(x) = f(x) -
+  g(x)$ almost everywhere.
+  
+  The class $\mathcal L$ is called the set of \define{integrable functions}.
+\end{definition}
+
+\begin{definition}
+  The \define{characteristic function} of a subset $\Omega\subset\R^d$ is
+  $\chi_{\Omega}$. It is defined as
+  \begin{gather*}
+    \chi_{\Omega}(x) =
+    \begin{cases}
+      1 & x\in \Omega \\
+      0 & x\not\in \Omega
+    \end{cases}
+  \end{gather*}
+  \defindex{integral!subset|textbf}
+  The \textbf{integral} over $\Omega$ of a function is defined as
+  \begin{gather*}
+    \int_\Omega f(x)\dx = \int_{\R^d} f(x) \chi_\Omega(x)\dx.
+  \end{gather*}
+  The \define{measure} of a bounded domain $\Omega$ is the integral of
+  $\chi_\Omega$.
+\end{definition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Integration of limits}
+\subsection{Structure of the class of integrable functions}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{intro}
+  The next question we will have to address is, which functions are
+  integrable, and whether we are allowed to interchange limits of
+  sequences of functions and their integrals. In particular, we will
+  see that suitably bounded sequences of integrable functions have
+  integrable limits.
+\end{intro}
+
+\begin{lemma}
+  For every integrable function $f$ there exists a sequence of step
+  functions $\{\phi_n(x)\}$ converging to $f$ almost everywhere, such
+  that
+  \begin{gather*}
+    \int_{\R^d} \bigl|f(x)-\phi_n(x)\bigr|\dx \to 0
+    \quad\text{as}\quad n\to \infty.
+  \end{gather*}
+\end{lemma}
+
+\begin{proof}
+  This lemma is an immediate consequence of the definition of the
+  class $\mathcal L$ as differences of functions in $\mathcal S^+$. In
+  fact, let $f(x) = h(x)-g(x)$ with both functions in $\mathcal
+  S^+$ and let $\{\psi_n(x)\}$ and $\{\rho_n(x)\}$ be increasing
+  sequences of step functions converging to $h(x)$ and $g(x)$
+  almost everywhere, respectively. By definition,
+  \begin{gather*}
+    \int_{\R^d} \bigl|f(x)-\phi_n(x)\bigr|\dx
+    \le \int_{\R^d} \bigl(h(x)-\psi_n(x)\bigr)\dx
+    + \int_{\R^d} \bigl(g(x)-\rho_n(x)\bigr)\dx
+    \to 0.
+  \end{gather*}
+\end{proof}
+
+\begin{theorem}
+  \index{linearity}
+  The class $\mathcal L$ of integrable functions is a vector space and
+  the integral is linear, namely for functions $f,g\in \mathcal L$ and
+  numbers $\alpha,\beta\in \R$ holds
+  \begin{gather*}
+    \int_{\R^d} \bigl(\alpha f(x)+\beta g(x) \bigr)\dx
+    =\alpha \int_{\R^d} f(x)\dx
+    +\beta\int_{\R^d} g(x)\dx.
+  \end{gather*}
+  For functions $g(x)$ and $h(x)$ in $\mathcal S+$ are
+  $\sup(g(x),h(x)$ and  $\inf(g(x),h(x)$ in $\mathcal S+$.
+  Furthermore, for a function $f\in \mathcal L$, its positive part
+  $f^+$, its negative part $f^-$, and its absolute value $|f|$ are in
+  $\mathcal L$.
+\end{theorem}
+
+\begin{proof}
+  The linerarity of the integral follows immediately by taking
+  corresponding linear combinations of step function sequences. Thus,
+  $\mathcal L$ is a vector space. The same argument holds for the
+  infimum and supremum of two functions in $\mathcal S^+$.
+
+  For the second part, we write $f(x)=h(x)-g(x)$ with both functions
+  in $\mathcal S^+$, and note
+  \begin{alignat*}{2}
+    |f| &= \sup(g,h) - \inf(g,h) \\
+    f^+ &= \sup(g,h) - g &&= h - \inf(g,h) \\
+    f^- &= \sup(g,h) - h &&= g - \inf(g,h).
+  \end{alignat*}
+\end{proof}
+
+
+\begin{corollary}
+  The integral is additive, namely for two nonoverlapping domains
+  $\Omega_1\subset\R^d$ and $\Omega_2\subset\R^d$ and an integrable
+  function $f$ holds
+  \begin{gather*}
+    \int_{\Omega_1\cup\Omega_2} f(x)\dx = \int_{\Omega_1} f(x)\dx + \int_{\Omega_2} f(x)\dx.
+  \end{gather*}
+\end{corollary}
+
+\begin{proof}
+  This follows immediately from the linearity of the integral by
+  observing $f(x)\chi_{\Omega_1\cup\Omega_2}(x) =
+  f(x)\chi_{\Omega_1}(x)+f(x)\chi_{\Omega_2}(x)$.
+\end{proof}
+
+\begin{todo}
+  For both theorems check boundedness assumption
+\end{todo}
+
+\begin{theorem}[Beppo-Levi]
+  \index{Beppo-Levi Theorem}
+  Every increasing sequence $\{f_n(x)\}$ of integrable functions whose
+  integrals have a common bound, converges almost everywhere to an
+  integrable function $f(x)$, and the order of taking the limit and
+  integrating can be reversed, that is
+  \begin{gather}
+    \int_{\R^d} f(x)\dx
+    = \lim_{n\to\infty} \int_{\R^d} f_n(x)\dx
+  \end{gather}
+\end{theorem}
+
+\begin{proof}
+  \begin{todo}
+    ...
+  \end{todo}
+\end{proof}
+
+\begin{theorem}[Lebesgue]
+  \index{Lebesgue Theorem}
+  If the sequence of integrable functions $\{f_n(x)\}$ converges
+  to a function $f(x)$ almost everywhere, and if there exists an
+  integrable function such that for all $n$
+  \begin{gather*}
+    \bigl|f_n(x)\bigr| \le g(x),
+  \end{gather*}
+  holds almost everywhere, then the function $f(x)$ is integrable and
+  \begin{gather*}
+    \int_{\R^d} f(x)\dx = \lim_{n\to\infty} \int_{\R^d} f_n(x)\dx.
+  \end{gather*}
+\end{theorem}
+
+\begin{proof}
+  \begin{todo}
+    ...
+  \end{todo}
+\end{proof}
 
 %%% Local Variables: 
 %%% mode: latex
