@@ -1,0 +1,238 @@
+\svnid{$Id: integral.tex 9 2013-09-11 07:18:48Z kanschat $}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Lebesgue function spaces $L^p$}
+\label{sec:lp}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Integral inequalities}
+
+\begin{lemma}[Young's inequality]
+  \defindex{Young's inequality}
+  For two arbitrary numbers $a$ and $b$, and a positive number
+  $\gamma$ holds
+  \begin{gather}
+    \label{eq:lp:1}
+    2\left|ab\right| \le \gamma a^2 + \frac1\gamma b^2.
+  \end{gather}
+\end{lemma}
+\begin{proof}
+  From the binomial formulas we have
+  \begin{gather*}
+    0 \le
+    \begin{cases}
+      (a+b)^2 &= a^2+b^2+2ab,
+      \\
+      (a+b)^2 &= a^2+b^2-2ab,
+    \end{cases}
+  \end{gather*}
+  and thus by bringing $2ab$ to the left,
+  \begin{gather}
+    \label{eq:lp:2}
+    \pm 2ab \le a^2+b^2.
+  \end{gather}
+  For $\gamma \neq 1$, the inequality is obtained by replacing $a$
+  with $\gamma a$ and $b$ with $b/\gamma$ in~\eqref{eq:lp:2} and
+  observing that this does not change the left hand side.
+\end{proof}
+
+\begin{lemma}[Cauchy-Bunyakovsky-Schwarz inequality\footnote{Also known as
+    Cauchy-Schwarz or Schwarz's inequality}]
+  \defindex{Cauchy-BunyakovskySchwarz inequality}
+  If functions $f$ and $g$ and their squares are integrable on a
+  subset $\Omega$ of $\R^d$, so is their pointwise product $fg$, and
+  there holds
+  \begin{gather}
+    \label{eq:lp:3}
+    \int_\Omega f(x)g(x)\dx \le \sqrt{\int_\Omega f^2(x)\dx} \sqrt{\int_\Omega g^2(x)\dx}.
+  \end{gather}
+\end{lemma}
+
+\begin{proof}
+  First, by Young's inequality we obtain for arbitrary
+  $\gamma$ that
+  \begin{gather*}
+    2 \int_\Omega f(x)g(x)\dx
+    \le \gamma \int_\Omega f^2(x)\dx
+    + \frac1\gamma \int_\Omega g^2(x)\dx.
+  \end{gather*}
+  Choosing $\gamma$ such that both terms on the right are equal,
+  namely
+  \begin{gather*}
+    \gamma = \left. \sqrt{\int_\Omega g^2(x)\dx} \right/ \sqrt{\int_\Omega f^2(x)\dx},
+  \end{gather*}
+  the inequality is obtained.
+\end{proof}
+
+\begin{note}
+  The Cauchy-Bunyakovsky-Schwarz inequality is an immediate extension
+  of the Cauchy inequality for discrete sums
+  \begin{gather}
+    \sum_k a_k b_k \le \sqrt{\sum_ka_k^2} \sqrt{\sum_kb_k^2}
+  \end{gather}
+\end{note}
+
+\subsection{The real Hilbert spaces $L^2(\Omega)$}
+
+\begin{intro}
+  For a bounded or unbounded subset $\Omega\subseteq \R^d$, the set of
+  functions with squares, which are integrable with finite integrals
+  forms a vector space. This is assured by the Minkovski
+  inequality~\eqref{???}. Our goal in this section is equipping this
+  space with an inner product and a norm. Once a norm has been
+  defined, we will show that the space obtained is complete, thus a
+  \putindex{Hilbert space}.
+  We start this section by the attempt to introduce an inner
+  product.
+\end{intro}
+
+\begin{lemma}
+\label{lemma:lp:bilinear}
+  Let $\Omega \subseteq \R^d$ be bounded or unbounded.
+  The form
+  \begin{gather}
+    \label{eq:lp:4}
+    \scal(f,g) = \int_\Omega f(x)g(x)\dx
+  \end{gather}
+  is defined and bounded for functions $f$ and $g$ with integrable
+  squares. It is bilinear, positive semidefinite, and symmetric.
+\end{lemma}
+
+\begin{proof}
+  According to the Cauchy-Bunyakovsky-Schwarz
+  inequality~\eqref{eq:lp:3}, boundedness of $\scal(f,g)$ follows from
+  boundedness of the integrals of $f^2$ and $g^2$.
+  Linearity in $f$ and $g$ are an immediate consequence of the
+  linearity of the integral in
+  equation~\eqref{eq:integral:3}. Symmetry follows from the fact that
+  we can change the order of $f$ and $g$ in the product under the
+  integral. Finally, we have
+  \begin{gather*}
+    0 \le \int_\Omega f^2(x)\dx = \scal(f,f).
+  \end{gather*}
+\end{proof}
+
+\begin{intro}
+  We have obtained $\scal(f,f) \ge 0$, but the definiteness of an
+  inner product requires that $\scal(f,f) = 0$ implies $f=0$. On the
+  other hand, $\scal(f,f) = 0$ holds for any function, which is zero
+  almost everywhere in $\Omega$, but can have arbistrary values on a
+  set of measure zero. Thus, we have no hope to define a definite
+  inner product by integration on a function space. The solution to
+  this dilemma is a modification of the function space by a little
+  trick. Essentially, we turn around the definitions and define the
+  relation $f=0$ through the condition $\scal(f,f) = 0$. We will now
+  do this in a mathematically sound way.
+\end{intro}
+
+\begin{lemma}
+  Let $F$ be a set of functions on $\R^d$. We introduce the relation
+  $f\simeq g$ if $f$ and $g$ differ at most on a set of measure zero,
+  or
+  \begin{gather}
+    f\simeq g
+    \quad\Leftrightarrow f(x)-g(x)=0 \text{a.e.}
+  \end{gather}
+ This relation is an \putindex{equivalence relation}.
+\end{lemma}
+
+\begin{proof}
+  We have to show reflexivity, symmetry, and transitivity of
+  ``$\simeq$''. Obviously, since $f(x)=f(x)$ for all $x$, we have
+  $f\simeq f$. Similarly obvious from the definition is that $f\simeq
+  g$ implies $g\simeq f$. Finally, let $f\simeq g$ and $g\simeq
+  h$. Then,
+  \begin{gather*}
+    f(x)-h(x) = \bigl(f(x)-g(x)\bigr) + \bigl(g(x)-h(x)\bigr).
+  \end{gather*}
+  Accordingly, the set on which $f$ and $h$ differ is at most the union of
+  two set of measure zero, thus $f\simeq h$.
+\end{proof}
+
+\begin{lemma}
+  The set of functions
+  \begin{gather*}
+    Z = \bigl\{ f \big| f\equiv 0 \bigr\},
+  \end{gather*}
+  where ``0'' is the function which is zero everywhere, is a vector
+  space. Thus, for any vector space $V$ of functions, the quotient set
+  $V/Z$ is a vector space.
+\end{lemma}
+
+\begin{proof}
+  The first part of the proof is obvious. Thus, for any element of $V$
+  vector addition and scalar multiplication can be split into their
+  components in $Z$ and the remainder, which makes them well defined
+  on the quotient set.
+\end{proof}
+
+\begin{definition}
+  \defindex{L2@$L^2$}
+
+  Let $V$ be the space of functions with bounded square integrals on a
+  set $\Omega\subseteq \R^d$. Let $Z$ be the equivalence class of the
+  zero function according to the preceding lemmas. We define the
+  vector space $L^2(\Omega)$ as the quotient space $V/Z$. The space
+  $L^2(\Omega)$ is equipped with the inner product $\scal(.,.)$
+  according to equation~\eqref{eq:lp:4} and the norm
+  \begin{gather}
+    \norm{f} := \sqrt{\scal(f,f)}.
+  \end{gather}
+\end{definition}
+
+\begin{note}
+  We say for two functions $f$ and $g$ in $L^2(\Omega)$ that ``$f=g$''
+  if the functions coincide almost everywhere.
+  Thus, the missing definiteness of the inner product in
+  Lemma~\ref{lemma:lp:bilinear} is obviously cured by considering
+  equivalence classes. Thus, the norm is actually a norm, and
+  $L^2(\Omega)$ for the moment is a pre-Hilbert space, that is, an
+  inner product space, which is not necessarily complete.
+\end{note}
+
+\begin{remark}
+  Consistent with other authors, we usually refer to an element of
+  $L^2(\Omega)$ as a \define{square integrable function} or
+  $L^2$-function. Nevertheless, it is important to keep in mind that
+  these elements are not functions at all. In particular, they do not
+  assign a value $f(x)$ to a given point $x\in \R^d$, since $\{x\}$ is
+  a set of measure zero, and thus we would be allowed to change this
+  value any time. This observation is important whenever we deal with
+  function spaces $L^2(\Omega)$ and similar objects. Later we will
+  have to answer the question what kind of evaluation of an
+  $L^2$-function is actually permitted.
+\end{remark}
+
+\begin{definition}
+  We say that a sequence $f_n$ in $L^2(\Omega)$ converges to an
+  element $f\in L^2(\Omega)$ if $\norm{f_n-f}\to 0$ as $n\to\infty$. A
+  sequence $f_n$ in $L^2(\Omega)$ is called a \putindex{Cauchy
+    sequence}, if
+  \begin{gather}
+    \forall \epsilon>0
+    \quad \exists n_\epsilon
+    \quad\forall m,n>n_\epsilon :
+    \norm{f_m-f_n} < \epsilon.
+  \end{gather}
+  For the latter, we also say $\norm{f_m-f_n}\to 0$ as $n,m\to\infty$
+\end{definition}
+
+\begin{theorem}[Fischer-Riesz]
+  $L^2(\Omega)$ is a Hilbert space, that is, it is complete, that is,
+  every Cauchy sequence $f_n$ in $L^2(\Omega)$ converges to an
+  element $f\in L^2(\Omega)$.
+\end{theorem}
+
+\begin{todo}
+  \begin{proof}
+    
+  \end{proof}
+\end{todo}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
