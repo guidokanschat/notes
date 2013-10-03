@@ -327,7 +327,7 @@ their integrals.
   \end{gather*}
   Then,
   \begin{gather}
-    \label{eq:integral:1}
+    \label{eq:integral:4}
     \lim_{n\to\infty} \int_{\R^d}\phi_n(x)\dx
     \le
     \lim_{m\to\infty} \int_{\R^d}\psi_m(x)\dx.
@@ -409,25 +409,6 @@ their integrals.
   The class $\mathcal L$ is called the set of \define{integrable functions}.
 \end{definition}
 
-\begin{definition}
-  The \define{characteristic function} of a subset $\Omega\subset\R^d$ is
-  $\chi_{\Omega}$. It is defined as
-  \begin{gather*}
-    \chi_{\Omega}(x) =
-    \begin{cases}
-      1 & x\in \Omega \\
-      0 & x\not\in \Omega
-    \end{cases}
-  \end{gather*}
-  \defindex{integral!subset|textbf}
-  The \textbf{integral} over $\Omega$ of a function is defined as
-  \begin{gather*}
-    \int_\Omega f(x)\dx = \int_{\R^d} f(x) \chi_\Omega(x)\dx.
-  \end{gather*}
-  The \define{measure} of a bounded domain $\Omega$ is the integral of
-  $\chi_\Omega$.
-\end{definition}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Structure of the class of integrable functions}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -466,15 +447,17 @@ their integrals.
 \end{proof}
 
 \begin{theorem}
+  \label{theorem:integral:linearity}
   \index{linearity}
   The class $\mathcal L$ of integrable functions is a vector space and
   the integral is linear, namely for functions $f,g\in \mathcal L$ and
   numbers $\alpha,\beta\in \R$ holds
-  \begin{gather*}
+  \begin{gather}
+    \label{eq:integral:3}
     \int_{\R^d} \bigl(\alpha f(x)+\beta g(x) \bigr)\dx
     =\alpha \int_{\R^d} f(x)\dx
     +\beta\int_{\R^d} g(x)\dx.
-  \end{gather*}
+  \end{gather}
   For functions $g(x)$ and $h(x)$ in $\mathcal S+$ are
   $\sup(g(x),h(x)$ and  $\inf(g(x),h(x)$ in $\mathcal S+$.
   Furthermore, for a function $f\in \mathcal L$, its positive part
@@ -497,6 +480,26 @@ their integrals.
   \end{alignat*}
 \end{proof}
 
+\begin{definition}
+  The \define{characteristic function} of a subset $\Omega\subset\R^d$ is
+  $\chi_{\Omega}$. It is defined as
+  \begin{gather*}
+    \chi_{\Omega}(x) =
+    \begin{cases}
+      1 & x\in \Omega \\
+      0 & x\not\in \Omega
+    \end{cases}
+  \end{gather*}
+  \defindex{integral!subset|textbf}
+  The function $f$ is said to be \textbf{integrable} on the set
+  $\Omega$, if $f\chi_\Omega$ is integrable (on $\R^d$). The
+  \textbf{integral} over $\Omega$ of a function $f$ is defined as
+  \begin{gather*}
+    \int_\Omega f(x)\dx = \int_{\R^d} f(x) \chi_\Omega(x)\dx.
+  \end{gather*}
+  The \define{measure} of a bounded domain $\Omega$ is the integral of
+  $\chi_\Omega$.
+\end{definition}
 
 \begin{corollary}
   The integral is additive, namely for two nonoverlapping domains
@@ -540,9 +543,10 @@ their integrals.
   If the sequence of integrable functions $\{f_n(x)\}$ converges
   to a function $f(x)$ almost everywhere, and if there exists an
   integrable function such that for all $n$
-  \begin{gather*}
+  \begin{gather}
+    \label{eq:integral:5}
     \bigl|f_n(x)\bigr| \le g(x),
-  \end{gather*}
+  \end{gather}
   holds almost everywhere, then the function $f(x)$ is integrable and
   \begin{gather*}
     \int_{\R^d} f(x)\dx = \lim_{n\to\infty} \int_{\R^d} f_n(x)\dx.
@@ -554,6 +558,23 @@ their integrals.
     ...
   \end{todo}
 \end{proof}
+
+\begin{example}
+  Condition~\eqref{eq:integral:5} in Lebesgue's theorem is necessary,
+  as can be seen from the following example. Let for $x\in \R$
+  \begin{gather*}
+    f_n(x) =
+    \begin{cases}
+      (n+1) |x|^n & x\in [-1,1] \\
+      0 & \text{else}.
+    \end{cases}
+  \end{gather*}
+  The sequence converges to zero almost everywhere, but the integrals
+  are two. Indeed, by changing the factor in front of $x^n$, the limit
+  of the integrals can be made any value including $\infty$. On the
+  other hand, if the factors are uniformly bounded, the limit is zero,
+  as the theorem predicts.
+\end{example}
 
 %%% Local Variables: 
 %%% mode: latex
