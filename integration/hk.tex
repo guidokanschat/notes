@@ -1,15 +1,93 @@
 \svnid{$Id$}
 
+\begin{intro}
+  There are two fundamentally different definitions of Sobolev spaces,
+  which are usually referred to as the spaces $H^k$ and $W^{k,p}$. The
+  first group is obtained by completing a space of continuously
+  differentiable functions with respect to a given norm. The second
+  definition relies on the introduction of distributional derivatives
+  and then restricts the set of functions with such derivatives to
+  those bounded with respect to a given norm. Thus, we can say that
+  $H^k$ approximates the desired space from the inside, while
+  $W^{k,p}$ bounds it from the outside. An important result of modern
+  analysis was the conclusion that both classes are actually the same.
+
+  Details on Sobolev spaces, including most of the material below can
+  be found in~\cite{AdamsFournier03}.
+\end{intro}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{The Sobolev spaces $H^k$}
-\label{sec:lp}
+\section{The Sobolev spaces $H^1(\Omega)$}
+\label{sec:h1}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{The Sobolev spaces $H^1(\Omega)$}
+\begin{intro}
+  These spaces are defined by first defining a norm for them, then
+  completing for instance the space $\co^\infty$ with respect to this
+  norm. This will lead to some difficulties with the involved symbols,
+  which we will resolve in Section~\ref{sec:weak-derivatives}. We note
+  that the problem of definiteness of the norm is the same as in the
+  definition of $L^2(\Omega)$, which is, why we again have to take
+  equivalence classes.
+\end{intro}
 
+\begin{definition}
+  For a function $f\in \co^\infty(\Omega)$, we define the
+  $H^1$-seminorm $|.|_1$ and the $H^1$-norm $\norm{.}_1$ as
+  \begin{align}
+    |f|_1 &= \norm{\nabla f}_0,
+    \norm{f}_1 &= \norm{f}_0 + |f|_1.
+  \end{align}
+  Here, $\norm{.}_0$ refers to the $L^2$-norm on $\Omega$. Since
+  the $L^2$-norm ignores values on sets of measure zero, we will adopt
+  the notion, that the $H^1$-seminorm is well-defined for a function
+  $f$ which is differentiable almost everywhere.
+\end{definition}
 
+\begin{definition}
+  First we compute the completion of
+  $\co^\infty(\Omega)$ with respect to the norm $\norm{f}_1$, that is,
+  the set of limits of all Cauchy sequences with respect to the
+  $H^1$-norm consisting of elements in $\co^\infty(\Omega)$ with
+  uniformly bounded $H^1$-norm.
+  
+  The Sobolev space $H^1(\Omega)$ is the set of equivalence classes in
+  this completion, where we say $f\simeq g$ if $\norm{f-g}_1=0$.
+\end{definition}
+
+\begin{note}
+  The space $\co^\infty(\Omega)$ in this definition could have been
+  replaced by $\co^1(\Omega)$ with no different effect.
+\end{note}
+
+\begin{example}
+  The completion process in the definition above indeed yields
+  functions which were not in $\co^\infty$. For instance, it is
+  possible to construct a smooth sequence of functions converging to
+  the function $f(x) = |x|$ with respect to the $H^1$-norm on $[-1,1]$.
+\end{example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Weak derivatives}
+\label{sec:weak-derivatives}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{example}
+   Take for instance $\Omega
+  = [0,1]$. It is known that \putindex{Lipschitz-continuous}
+  functions on $\R$ are absolutely continuous and thus continuously
+  differentiable almost everywhere, with their derivatives bounded by
+  the Lipschitz constant, say $L$. Thus, the function itself is
+  bounded on $[0,1]$, say by $M$. Therefore, such a function $f$ is
+  weakly differentiable and its norm is bounded by
+  \begin{gather*}
+    \norm{f}_1 \le L+M.
+  \end{gather*}
+\end{example}
 
 %%% Local Variables: 
 %%% mode: latex
