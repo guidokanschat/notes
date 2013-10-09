@@ -560,7 +560,7 @@ their integrals.
 \end{proof}
 
 \begin{example}
-  Condition~\eqref{eq:integral:5} in Lebesgue's theorem is necessary,
+  Condition~\eqref{eq:integral:5} in Lebesgue's Theorem is necessary,
   as can be seen from the following example. Let for $x\in \R$
   \begin{gather*}
     f_n(x) =
@@ -576,6 +576,27 @@ their integrals.
   as the theorem predicts.
 \end{example}
 
+The assumptions of Lebesgue's Theorem are too strong for some
+applications. Thus, the following lemma proves boundedness of the
+integral of the limit under weaker assumptions.
+
+\begin{lemma}[Fatou]
+If the functions $f_n$ are nonnegative, integrable, and converge
+almost everywhere in $\Omega$ to a limit function $f$, and if
+furthermore the sequence of integrals
+\begin{gather*}
+  \int_\Omega f_n(x) \dx,
+\end{gather*}
+is bounded, then $f$ is integrable and
+\begin{gather*}
+  \int_\Omega f(x)\dx \le \liminf_{n\to\infty} \int_\Omega f_n(x) \dx.
+\end{gather*}
+\end{lemma}
+
+\begin{todo}
+  \begin{proof}
+  \end{proof}
+\end{todo}
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "main"

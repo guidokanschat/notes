@@ -208,28 +208,76 @@
 \begin{definition}
   We say that a sequence $f_n$ in $L^2(\Omega)$ converges to an
   element $f\in L^2(\Omega)$ if $\norm{f_n-f}\to 0$ as $n\to\infty$. A
-  sequence $f_n$ in $L^2(\Omega)$ is called a \putindex{Cauchy
-    sequence}, if
+  sequence $f_n$ in $L^2(\Omega)$ is called a \define{Cauchy
+    sequence}, if the \define{Cauchy criterion}
   \begin{gather}
+    \label{eq:lp:cauchy}
     \forall \epsilon>0
     \quad \exists n_\epsilon
     \quad\forall m,n>n_\epsilon :
     \norm{f_m-f_n} < \epsilon.
   \end{gather}
-  For the latter, we also say $\norm{f_m-f_n}\to 0$ as $n,m\to\infty$
+  For the latter, we also say $\norm{f_m-f_n}\to 0$ as
+  $n,m\to\infty$. 
 \end{definition}
 
 \begin{theorem}[Fischer-Riesz]
+  Let $\Omega\subseteq \R^d$. Then,
   $L^2(\Omega)$ is a Hilbert space, that is, it is complete, that is,
   every Cauchy sequence $f_n$ in $L^2(\Omega)$ converges to an
   element $f\in L^2(\Omega)$.
 \end{theorem}
 
-\begin{todo}
-  \begin{proof}
-    
-  \end{proof}
-\end{todo}
+\begin{proof}
+  First, we note that the Cauchy criterion is necessary for
+  convergence, since by the triangle inequality, we have for
+  $m,n\to\infty$:
+  \begin{gather*}
+    \norm{f_m-f_n} \le \norm{f_m-f} + \norm{f-f_n} \to 0.
+  \end{gather*}
+  Now we assume that the Cauchy criterion holds. Then, there exists
+  a sequence $n_1,n_2,\dots$ such that $\norm{f_{n_{k+1}}- f_{n_k}}
+  <2^{-k}$. Now we have to distinguish between bounded domains
+  $\Omega$ and unbounded domains. First, for bounded domains, the
+  Cauchy-Bunyakovsky-Schwarz inequality implies that
+  \begin{gather*}
+    \int_\Omega 1 \left|f_{n_{k+1}}(x)- f_{n_k}(x)\right|\dx \le \sqrt{m(\Omega)}
+    \norm{f_{n_{k+1}}- f_{n_k}} \le \sqrt{m(\Omega)}2^{-k},
+  \end{gather*}
+  hence the series
+  \begin{gather*}
+    \sum_{k=1}^\infty \int_\Omega |f_{n_{k+1}}(x)- f_{n_k}(x)|\dx
+  \end{gather*}
+  converges to a finite value. The sequence of functions defined by
+  \begin{gather*}
+    s_m(x) = \sum_{k=1}^m |f_{n_{k+1}}(x)- f_{n_k}(x)|,
+  \end{gather*}
+  is monotonically increasing. Furthermore, we have seen above that
+  their integrals are uniformly bounded. Thus, by the Beppo-Levi
+  theorem, $s_m(x)$ converges almost everywhere to an integrable
+  function. This on the other hand implies that for almost every $x\in
+  \Omega$ the sequence $f_{n_k}(x)$ is a Cauchy sequence and thus
+  converges to a limit value $f(x)$.
+  
+  If the domain $\Omega$ is unbounded and its measure is not finite,
+  the above argument can be applied to any finite subdomain. Covering
+  $\Omega$ with a countable sequence of such subdomains, we can
+  likewise conclude convergence to a limit function $f$ for
+  almost every $x\in\Omega$.
+
+  Now we prove that $f\in L^2(\Omega)$. We observe that
+  \begin{gather*}
+    \norm{f_{n_k}} \le \norm{f_{n_1}} + \norm{f_{n_k}-f_{n_1}} \le \norm{f_{n_1}}+\frac12.
+  \end{gather*}
+  Thus, $\norm{f_{n_k}}^2$ is uniformly bounded and as $|f_{n_k}(x)|^2
+  \to |f(x)|^2$ almost everywhere, Fatou's lemma asserts that
+  $\norm{f}$ is finite and accordingly $f\in L^2(\Omega)$.
+
+  It remains to show that $\norm{f_n-f}\to 0$.
+  \begin{todo}
+    Show that norms converge
+  \end{todo}
+\end{proof}
 
 
 %%% Local Variables: 
