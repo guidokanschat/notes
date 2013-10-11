@@ -42,12 +42,12 @@
   countable union of intervals with total length less than $\epsilon$.
 \end{definition}
 
-\begin{todo}
-  \begin{definition}
-    \label{def:zero-set-2}
-    Sets of meazure zero in higher dimensions.
-  \end{definition}
-\end{todo}
+\begin{definition}
+  \label{def:zero-set-2}
+  Sets of meazure zero in higher dimensions are defined in a similar
+  way, replacing the set of intervals $I_k$ by cubes $Q_k$ such that
+  their total volume is less than $\epsilon$.
+\end{definition}
 
 \begin{example}
   A set consisting of a single number $x\in\R$ is of measure zero,
@@ -77,7 +77,8 @@
 \end{proof}
 
 \begin{corollary}
-  The set $\Q\subset \R$ of rational numbers is of measure zero.
+  The set $\Q\subset \R$ of rational numbers is of measure zero, since
+  it is a countable union of points.
 \end{corollary}
 
 \begin{note}
@@ -320,8 +321,8 @@ their integrals.
 \begin{lemma}
   Let $\{\phi_n\}$ be a monotonically increasing sequence of step
   functions with uniformly bounded integrals, converging to a function
-  $f$ almost everywhere. Let the same hold for the sequence
-  $\{\psi_m\}$ and the function $g$. Furthermore, let
+  $f$ almost everywhere. Let the same hold for a second sequence
+  $\{\psi_n\}$ and the function $g$. Furthermore, let
   \begin{gather*}
     f(x) \le g(x) \quad\text{almost everywhere in $\R^d$.}
   \end{gather*}
@@ -330,31 +331,45 @@ their integrals.
     \label{eq:integral:4}
     \lim_{n\to\infty} \int_{\R^d}\phi_n(x)\dx
     \le
-    \lim_{m\to\infty} \int_{\R^d}\psi_m(x)\dx.
+    \lim_{n\to\infty} \int_{\R^d}\psi_n(x)\dx.
   \end{gather}
 \end{lemma}
 
 \begin{proof}
-  \begin{todo}
-    ...
-  \end{todo}
+  First, we introduce the abbreviations
+  \begin{gather*}
+    M_1 = \lim_{n\to\infty} \int_{\R^d}\phi_n(x)\dx
+    \quad\text{and}\quad
+    M_2 = \lim_{n\to\infty} \int_{\R^d}\psi_n(x)\dx.
+  \end{gather*}
+  Let $\phi_m$ be an arbitrary function in the first sequence. Then,
+  by the assumptions, $h_n^+ = \phi_m-\psi_n$, the positive part of
+  the difference, converges to zero almost everywhere and decreases
+  monotonically. Thus, by Lemma~\ref{lemma:integral:1}, its integrals
+  tend to zero as well. We conclude
+  \begin{gather*}
+    \int_{\R^d}\phi_n(x)\dx - M_2 \le 0
+    \quad\text{or}\quad
+    \int_{\R^d}\phi_n(x)\dx \le M_2.
+  \end{gather*}
+  If now we let $n\to\infty$, we obtain $M_1 \le M_2$.
 \end{proof}
 
-\begin{corollary}
+\begin{note}
   For two functions $f$ and $g$ as in the preceding Lemma with $f(x) =
-  g(x)$ almost everywhere, we obtain
-  \begin{gather*}
-    \int_{\R^d}g(x)\dx = \int_{\R^d}g(x)\dx.
-  \end{gather*}
+  g(x)$ almost everywhere, we can repeat the argument of the proof and
+  interchange the sequences. Thus, $M_1 = M_2$.
   This means in particular, that the limit process in this lemma
   uniquely defines the integral of the limit functions. Furthermore,
   it means that we can always modify a function on a set of measure
   zero without affecting its integral.
-\end{corollary}
+\end{note}
 
 \begin{definition}
+  \label{definition:integral:Splus}
   Let $\mathcal S^+$ be the set of functions which equal the limit of
-  a sequence of monotonically increasing step functions with bounded
+  a sequence of monotonically increasing step functions with uniformly
+  bounded
   integrals almost everywhere. For any function $f\in \mathcal S^+$, we
   define the integral as
   \begin{gather*}
@@ -394,12 +409,12 @@ their integrals.
 \end{lemma}
 
 \begin{definition}
-  Let $\mathcal L$\footnote{Here, the letter $\mathcal L$ is used in
-    reference to the Lebesgue integral. We note that Lebesgue used the
-    term ``summable'' instead of ``integrable''.} be the class of
-  functions which can be written as a difference of two functions in
-  $\mathcal S^+$ almost everywhere. For any function $h\in \mathcal
-  L$, the \define{integral} is defined as
+  Let $\mathcal L$ be the class of functions\footnote{Here, the letter
+    $\mathcal L$ is used in reference to the Lebesgue integral. We
+    note that Lebesgue used the term ``summable'' instead of
+    ``integrable''.} which can be written as a difference of two
+  functions in $\mathcal S^+$ almost everywhere. For any function
+  $h\in \mathcal L$, the \define{integral} is defined as
   \begin{gather*}
     \int_{\R^d} h(x)\dx = \int_{\R^d} f(x)\dx - \int_{\R^d} g(x)\dx,
   \end{gather*}
@@ -502,11 +517,14 @@ their integrals.
 \end{definition}
 
 \begin{corollary}
-  The integral is additive, namely for two nonoverlapping domains
-  $\Omega_1\subset\R^d$ and $\Omega_2\subset\R^d$ and an integrable
-  function $f$ holds
+  The integral is additive, namely for two disjoint and not
+  necessarily bounded domains
+  $\Omega_1\subset\R^d$ and $\Omega_2\subset\R^d$ and a
+  function $f$ such that $f\chi_{\Omega_1}$ and $f\chi_{\Omega_2}$ are
+  integrable holds
   \begin{gather*}
-    \int_{\Omega_1\cup\Omega_2} f(x)\dx = \int_{\Omega_1} f(x)\dx + \int_{\Omega_2} f(x)\dx.
+    \int_{\Omega_1\cup\Omega_2} f(x)\dx
+    = \int_{\Omega_1} f(x)\dx + \int_{\Omega_2} f(x)\dx.
   \end{gather*}
 \end{corollary}
 
@@ -516,13 +534,37 @@ their integrals.
   f(x)\chi_{\Omega_1}(x)+f(x)\chi_{\Omega_2}(x)$.
 \end{proof}
 
-\begin{todo}
-  For both theorems check boundedness assumption
-\end{todo}
+\begin{remark}
+  The space $\mathcal S^+$ and thus the space of integrable functions
+  have been obtained by a \putindex{completion} process. We started
+  out from the space of all test functions and then added to this
+  space all monotonically increasing limits with respect to the
+  topology ``convergent almost everywhere''. An important
+  characteristic of this process is, that it is \putindex{idempotent},
+  that is, its repeated application does not change the result. We
+  first verify this statement for $\mathcal S^+$. It is extended to
+  integrable functions by the Beppo-Levi
+  Theorem~\ref{theorem:Beppo-Levi} below.
+\end{remark}
+
+\begin{lemma}
+  Let $f_n$ be an increasing sequence of functions in $\mathcal
+  S^+$. Assume further that the integrals of $f_n$ are uniformly
+  bounded by a number $M$. Then, the sequence $f_n$ converges almost
+  everywhere to a function $f\in\mathcal S^+$.
+\end{lemma}
+
+\begin{proof}
+  \begin{todo}
+    ...
+  \end{todo}
+\end{proof}
 
 \begin{theorem}[Beppo-Levi]
+  \label{theorem:Beppo-Levi}
   \index{Beppo-Levi Theorem}
-  Every increasing sequence $\{f_n(x)\}$ of integrable functions whose
+  Every monotonically increasing sequence $\{f_n(x)\}$
+  of integrable functions whose
   integrals have a common bound, converges almost everywhere to an
   integrable function $f(x)$, and the order of taking the limit and
   integrating can be reversed, that is
@@ -533,6 +575,19 @@ their integrals.
 \end{theorem}
 
 \begin{proof}
+  Let us first rewrite the problem as
+  \begin{gather*}
+    f_n(x) = f_0(x) + \sum_{k=1}^n g_k(x),
+  \end{gather*}
+  where $g_k(x) = f_k(x) - f_{k-1}(x)$. By the assumptions, the
+  elements $g_k$ of the series are nonnegative and
+  integrable. Furthermore, since the integrals of $f_n$ have a common
+  bound, say $M$, the sequence of integrals is bounded by
+  \begin{gather*}
+    \sum_{n=1}^\infty \int_{\R^d} g_n(x)\dx
+    \le M + \int_{\R^d} |f_0(x)|\dx,
+  \end{gather*}
+  and thus convergent.
   \begin{todo}
     ...
   \end{todo}
