@@ -74,13 +74,41 @@
   \end{gather}
 \end{note}
 
+\begin{lemma}[Hölder's inequality]
+  Assume that the functions $|f|^p$ and $|g|^q$ are integrable with
+  $1<p,q<\infty$ and
+  \begin{gather}
+    \label{eq:lp:5}
+    \frac1p+\frac1q=1,
+  \end{gather}
+  then the function $fg$ is integrable on $\Omega$ and
+  \begin{gather}
+    \label{eq:lp:6}
+    \int_\Omega |fg| \dx \le \sqrt[p] {\int_\Omega |f|^p \dx} \sqrt[q] {\int_\Omega |g|^q \dx}.
+  \end{gather}
+\end{lemma}
+
+\begin{lemma}[Minkowski's inequality]
+  Let the functions $|f|^p$ and $|g|^p$ be integrable on $\Omega$ for
+  $1\le p < \infty$. Then, the function $|f+g|^p$ is integrable on
+  $\Omega$ and
+  \begin{gather}
+    \label{eq:lp:7}
+    \sqrt[p] {\int_\Omega |f+g|^p \dx}
+    \le \sqrt[p] {\int_\Omega |f|^p \dx}
+    +\sqrt[p] {\int_\Omega |g|^p \dx}
+  \end{gather}
+\end{lemma}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The real Hilbert spaces $L^2(\Omega)$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{intro}
   For a bounded or unbounded subset $\Omega\subseteq \R^d$, the set of
   functions with squares, which are integrable with finite integrals
-  forms a vector space. This is assured by the Minkovski
-  inequality~\eqref{???}. Our goal in this section is equipping this
+  forms a vector space. This is assured by the Minkowski's
+  inequality~\eqref{eq:lp:7}. Our goal in this section is equipping this
   space with an inner product and a norm. Once a norm has been
   defined, we will show that the space obtained is complete, thus a
   \putindex{Hilbert space}.
@@ -178,7 +206,7 @@
   $L^2(\Omega)$ is equipped with the inner product $\scal(.,.)$
   according to equation~\eqref{eq:lp:4} and the norm
   \begin{gather}
-    \norm{f} := \sqrt{\scal(f,f)}.
+    \norm{f} = \norm{f}_2 := \sqrt{\scal(f,f)}.
   \end{gather}
 \end{definition}
 
@@ -279,6 +307,56 @@
   \end{todo}
 \end{proof}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The real Banach spaces $L^p(\Omega)$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{intro}
+  We saw that the Cauchy-Bunyakovsky-Schwarz inequality has a
+  generalization for exponents different from 2 in Hölder's
+  inequality, further that Minkowski's inequality holds for arbitrary
+  $p$ with $1\le p<\infty$. This suggests to define a norm through
+  \begin{gather}
+    \label{eq:lp:8}
+    \norm{f}_p = \sqrt[p] {\int_\Omega |f|^p \dx},
+  \end{gather}
+  and it is indeed an easy exercise to prove the norm properties
+  analogue to the previous subsection.
+\end{intro}
+
+\begin{definition}
+  A function $f:\Omega \to \R$ is called \define{essentially bounded}
+  from above, if there is a number $a$ such that the set
+  \begin{gather*}
+    (f>a) := \bigl\{x\in\Omega \big| f(x)>a \bigr\},
+  \end{gather*}
+  has measure zero. The number $a$ is called an \define{essential
+    upper bound}. For an essentially bounded function, we define the
+  \define{essential supremum} $\esssup f$ as the infimum of all
+  essential upper bounds:
+  \begin{gather*}
+    \esssup f = \inf_{a\in \R} (f>a) \text{ has measure zero.}
+  \end{gather*}
+\end{definition}
+
+\begin{definition}
+  For $1\le p < \infty$, the space $L^p(\Omega)$ is the space of all
+  functions such that $|f|^p$ is integrable with its norm defined
+  in~\eqref{eq:lp:8}. The space $L^\infty(\Omega)$ is the space of all
+  essentially bounded functions on $\Omega$, and its norm is
+  \begin{gather*}
+    \norm{f}_\infty = \esssup_{x\in\Omega} f
+  \end{gather*}
+\end{definition}
+
+\begin{note}
+  For $p\neq2$, the $L^p$-norm is not defined by an inner product,
+  thus $L^p(\Omega)$ cannot be a Hilbert space.
+\end{note}
+
+\begin{theorem}
+  The spaces $L^p(\Omega)$ are complete, thus, they are Banach spaces.
+\end{theorem}
 
 %%% Local Variables: 
 %%% mode: latex

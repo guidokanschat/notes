@@ -2,7 +2,7 @@
 \usepackage{mathsim}
 \svnid{$Id$}
 \usepackage[notref,notcite]{showkeys}
-\usepackage{hyperref}
+%\usepackage{hyperref}
 \usepackage[math]{iwona}
 \usepackage[backend=bibtexu,style=alphabetic]{biblatex}
 \addbibresource{all}
@@ -21,14 +21,22 @@
 
 \section*{Preface}
 \input{../preface}
+
+\begin{todo}
+  Note: yellow boxes indicate text which is missing in the current
+  version and will be added soon.
+\end{todo}
+
 \tableofcontents
 
-\chapter{Integration and $L^p$ spaces}
+\chapter{Integration and Lebesgue spaces}
 \input{integral}
 \input{lp}
 
-\chapter{Weak derivatives and $W^{k,p}$ spaces}
+\chapter{Weak derivatives and Sobolev spaces}
 \input{hk}
+
+\input{sobolev}
 
 \printbibliography
 \printindex

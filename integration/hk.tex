@@ -13,12 +13,13 @@
   analysis was the conclusion that both classes are actually the same.
 
   Details on Sobolev spaces, including most of the material below can
-  be found in~\cite{AdamsFournier03}.
+  be found in~\cite{AdamsFournier03}. A very condensed introduction is
+  also in\cite[Chapter 7]{GilbargTrudinger98}.
 \end{intro}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{The Sobolev spaces $H^1(\Omega)$}
+\section{The Sobolev spaces $H^{1}(\Omega)$}
 \label{sec:h1}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -34,26 +35,31 @@
 \end{intro}
 
 \begin{definition}
-  For a function $f\in \co^\infty(\Omega)$, we define the
-  $H^1$-seminorm $|.|_1$ and the $H^1$-norm $\norm{.}_1$ as
-  \begin{align}
+  For functions $f,g\in \co^\infty(\Omega)$, we define the inner
+  products, the
+  $H^{1}$-seminorm $|.|_1$ and the $H^{1}$-norm $\norm{.}_1$ as
+  \begin{xalignat}2
+    \scal(f,g)_1 &= \int_\Omega \nabla f\cdot \nabla g\dx,
+    &
     |f|_1 &= \norm{\nabla f}_0,
-    \norm{f}_1 &= \norm{f}_0 + |f|_1.
-  \end{align}
-  Here, $\norm{.}_0$ refers to the $L^2$-norm on $\Omega$. Since
-  the $L^2$-norm ignores values on sets of measure zero, we will adopt
-  the notion, that the $H^1$-seminorm is well-defined for a function
-  $f$ which is differentiable almost everywhere.
+    \\
+    \Scal(f,g) &= \scal(f,g)_0 + \scal(f,g)_1,
+        & \norm{f}_1 &= \norm{f}_0 + |f|_1.
+      \end{xalignat}
+  Here, $\scal(.,.)_0$ and $\norm{.}_0$ refer to the inner product and
+  norm in $L^2(\Omega)$, respectively.
 \end{definition}
 
 \begin{definition}
+  \index{h1@$H^1(\Omega)$}
   First we compute the completion of
   $\co^\infty(\Omega)$ with respect to the norm $\norm{f}_1$, that is,
   the set of limits of all Cauchy sequences with respect to the
   $H^1$-norm consisting of elements in $\co^\infty(\Omega)$ with
-  uniformly bounded $H^1$-norm.
+  uniformly bounded $H^1$-norm. The $H^1$-norm of the limit function
+  is defined as the limit of the norms of the sequence.
   
-  The Sobolev space $H^1(\Omega)$ is the set of equivalence classes in
+  The \define{Sobolev space} $H^1(\Omega)$ is the set of equivalence classes in
   this completion, where we say $f\simeq g$ if $\norm{f-g}_1=0$.
 \end{definition}
 
@@ -69,12 +75,111 @@
   the function $f(x) = |x|$ with respect to the $H^1$-norm on $[-1,1]$.
 \end{example}
 
+\begin{definition}
+  The space $\co^\infty_0(\Omega)$ is the space fo functions with
+  ininitely many continuous derivatives and compact support in
+  $\Omega$.
+\end{definition}
+
+\begin{definition}
+  \index{h10@$H^1_0(\Omega)$}
+  The Sobolev space $H^1_0(\Omega)$ is obtained by completing the
+  space $\co^\infty_0(\Omega)$ with respect to the $H^1$-norm and
+  taking equivalence classes such that $f\simeq g$ if $\norm{f-g}_1=0$.
+\end{definition}
+
+\begin{note}
+  It remains to be shown that the spaces $H^1(\Omega)$ and
+  $H^1_0(\Omega)$ are actually different.
+\end{note}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Weak derivatives}
+\section{Weak derivatives and the Sobolev spaces $W^{1,2}$}
 \label{sec:weak-derivatives}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{intro}
+  When we introduced the space $H^1(\Omega)$, we started with a
+  subspace of continuous functions and extended this space by adding
+  the limits of Cauchy sequences. The result is a complete space with
+  respect to the norm $\norm{.}_1$. On the other hand, it is not clear
+  whether this is the biggest function space for which this norm is
+  finite. Therefore, in this section, we take the opposite approach:
+  we define a derivative in a very broad sense and then reduce to
+  those derivatives bounded with respect to the norm $\norm{.}_1$.
+\end{intro}
+
+\begin{definition}
+  If for a given function $u$ there exists a function $w$ such that
+  \begin{gather}
+    \label{eq:hk:1}
+     \int_\Omega w \phi \dx
+     =
+     -\int_\Omega u \partial_i \phi \dx,
+     \qquad\forall \phi\in \co^\infty_0(\Omega),
+  \end{gather}
+  then we define $\partial_i u := w$ as the \define{distributional
+    derivative} (partial) of $u$ with respect to $x_i$. Similarly through
+  integration by parts, we define distributional directional
+  derivatives, distributional gradients etc.
+\end{definition}
+
+\begin{note}
+  The formula~\eqref{eq:hk:1} is the usual integration by
+  parts. Therefore, whenever $u\in\co^1$ in a neighborhood of $x$, the
+  distributional derivative and the usual derivative coincide.
+\end{note}
+
+\begin{example}
+  Let $\Omega=\R$ and $u(x) = |x|$. Intuitively,
+  it is clear that the distributional derivative, if it exists, must
+  be the \define{Heaviside function}
+  \begin{gather}
+    \label{eq:hk:2}
+    w(x) =
+    \begin{cases}
+      -1 & x<0 \\ 1 & x>0.
+    \end{cases}
+  \end{gather}
+  The proof that this is actually the distributional derivative is
+  left to the reader.
+\end{example}
+
+\begin{example}
+  For the derivative of the \putindex{Heaviside function}
+  in~\eqref{eq:hk:2}, we first observe that it must be zero whenever
+  $x\neq 0$, since the function is continuously differentiable
+  there. Now, we take a test function $\phi\in\co^\infty$ with support
+  in the interval $(-\epsilon,\epsilon)$ for some positive
+  $\epsilon$. Let $w'(x)$ be the derivative of $w$. Then, by
+  integration by parts
+  \begin{gather*}
+    \int_{-\epsilon}^\epsilon w(x) \phi'(x)\dx
+    = -\int_{-\epsilon}^0 w(x)' \phi(x)\dx
+    -\int_0^\epsilon w(x)' \phi(x)\dx
+    + 2 \phi(0) = 2\phi(0),
+  \end{gather*}
+  since $w'(x) = 0$ under both integrals. Thus, $w'(x)$ is an object
+  which is zero everywhere except at zero, but its integral against a
+  test function $\phi$ is nonzero. This contradicts our notion, that
+  integrable functions can be changed on a set of measure zero without
+  changing the integral. Indeed, $w'$ is not a function in the usual
+  sense, and we write $w'(x) = 2 \delta(x)$, where $\delta(x)$ is the
+  \define{Dirac $\delta$-distribution}, which is defined by the two
+  conditions
+  \begin{gather*}
+    \begin{alignedat}{2}
+      \delta(x) &= 0, & \forall x & \neq 0
+      \\
+      \int_\R \delta(x) \phi(x)\dx &= \phi(0), \quad & \forall \phi
+      &\in \co^0(\R).
+    \end{alignedat}
+  \end{gather*}
+  We stress that $\delta$ is not an integrable function, or a function
+  at all.
+\end{example}
+
 
 \begin{example}
    Take for instance $\Omega
@@ -89,13 +194,159 @@
   \end{gather*}
 \end{example}
 
+\begin{definition}
+  For a function $u\in L^2(\Omega)$, we call a distributional
+  derivative a \define{weak derivative}, if the derivative is in
+  $L^2(\Omega)$ as well. For such a \define{weakly differentiable} function,
+  the seminorm $|.|_1$ and thus the norm $\norm{.}_1$ is defined, if
+  the gradient is understood in the distributional sense.
+  
+  The space of weakly differentiable functions defined in this manner
+  is the \putindex{Sobolev space} $W^{1,2}(\Omega)$, where the
+  superscript one stands for the order of derivatives and the two is
+  the exponent in the norm.
+\end{definition}
+
+\begin{remark}
+  In this section and the previous section, we have seen two different
+  definition of Sobolev spaces. One of the important theorems of
+  modern analysis due to Meyers and Serrin~\cite{MeyersSerrin64}
+  states that these two definitions actually specify the same object.
+\end{remark}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Higher order derivatives}
+\section{Higher order derivatives and different exponents}
 \label{sec:higher-derivatives}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{intro}
+  Here we generalize the definitions of Sobolev spaces in
+  Sections~\ref{sec:h1} and~\ref{sec:weak-derivatives}, respectively,
+  to higher order derivatives. Most of this section will consist of
+  introducing ugly notation, which is, why we postponed
+  this. Mathematically, like for continuous derivatives, the same
+  concepts as above are applied to obtain the new spaces.
+\end{intro}
+
+\begin{definition}
+  A $d$-dimensional \define{multi-index} is a tuple
+  $\alpha=(\alpha_1,\alpha_2,\dots,\alpha_d)$ with values $\alpha_i$
+  being nonnegative integers. We define partial derivatives of a
+  function $u\in C^\infty$ with respect to a multi-index as
+  \begin{gather*}
+    \partial_{\alpha}u(x) = \frac{\partial^\alpha}{\partial x^\alpha}
+    u(x)
+    = \frac{\partial^{\alpha_1}}{\partial x_1^{\alpha_1}}
+    \frac{\partial^{\alpha_2}}{\partial x_2^{\alpha_2}}
+    \dots
+    \frac{\partial^{\alpha_d}}{\partial x_d^{\alpha_d}}
+    u(x_1,x_2,\dots,x_d).
+  \end{gather*}
+  The order of such a derivative is
+  \begin{gather*}
+    |\alpha| = \sum_{i=1}^d \alpha_i.
+  \end{gather*}
+\end{definition}
+
+\begin{definition}
+  Let $u$ be integrable on $\Omega\subseteq \R^d$. If a function $w$
+  exists such that
+  \begin{gather}
+    \int_\Omega w \phi\dx = (-1)^{|\alpha|} \int_\Omega
+    u, \partial_\alpha \phi \dx,
+    \qquad\forall \phi\in \co^\infty_0(\Omega),
+  \end{gather}
+  then we call $\partial_\alpha u = w$ a \putindex{distributional derivative} of
+  order $|\alpha|$ of $u$. If this derivative is in $L^2(\Omega)$, we
+  call it a \putindex{weak derivative}.
+\end{definition}
+
+\begin{definition}
+  The space $W^{k,2}(\Omega)$ is the space of functions $u\in
+  L^2(\Omega)$ such that all distributional derivatives of order
+  $|\alpha| \le k$ are in $L^2(\Omega)$. The $W^{k,2}$-seminorm and
+  -norm are defined by
+  \begin{gather*}
+    |f|_k = \sqrt{\sum_{|\alpha| = k} \norm{\partial_\alpha u}^2},
+    \qquad
+    \norm{f}_k = \sqrt{\sum_{|\alpha| \le k} \norm{\partial_\alpha u}^2}.
+  \end{gather*}
+\end{definition}
+
+\begin{remark}
+  If we give up the notion of an inner product, all definitions above
+  extend to the case where we replace $L^2$ by a space based on a norm
+  with different exponent $1 \le p \le \infty$. This leads to the
+  spaces $W^{k,p}(\Omega)$.
+\end{remark}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Properties of Sobolev spaces}
+\label{sec:hk:properties}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{intro}
+  For continuously differentiable functions, the inclusion $\co^{k+1}
+  \subset \co^k$ is obvious. The same inclusion holds for $W^{k+1,p}$
+  and $W^{k,p}$ by definition. Continuous functions are obviously
+  continuous on smooth submanifolds, but Sobolev functions are a
+  priori not even defined there. Nevertheless, we will see below, that
+  there are operators which allow us to define traces of Sobolev
+  functions on lower dimensional submanifolds, and even embeddings
+  into spaces of continuous functions.
+\end{intro}
+
+\begin{definition}
+  Let $\Omega \subset \R^d$. For the \putindex{Sobolev space}
+  $W^{k,p}(\Omega)$, we define the \define{Sobolev number}
+  \begin{gather}
+    \label{eq:hk:3}
+    \sigma = k - \frac dp.
+  \end{gather}
+\end{definition}
+
+\begin{todo}
+  For the following theorems, verification is required when the cases $p=1$ and
+  $p=\infty$ are included, when equality of the Sobolev numbers is
+  sufficient and when not, and which assumptions on the domains are reasonable.
+\end{todo}
+
+\begin{theorem}
+  Let $\Omega \subset \R^d$ be a bounded Lipschitz domain. Given two
+  Sobolev spaces $W^{k_1, p_1}(\Omega)$ and $W^{k_2, p_2}(\Omega)$
+  with $1 \le p_1, p_2 < \infty$. If $\sigma_1 \ge \sigma_2$, then
+  there exists a continuous embedding $W^{k_1,
+    p_1}(\Omega)\hookrightarrow W^{k_2, p_2}(\Omega)$ such that
+\begin{gather*}
+  \norm{u}_{W^{k_2, p_2}(\Omega)} \le C \norm{u}_{W^{k_1, p_1}(\Omega)}.
+\end{gather*}
+\end{theorem}
+
+\begin{theorem}
+  Let $\Omega_1 \subset \R^{d_1}$ be a bounded Lipschitz domain and
+  $\Omega_2\subset \overline\Omega_1$ a smooth submanifold of
+  dimension $d_2$. Then, if $\sigma_1 \ge \sigma_2$, there exists a
+  continuous trace operator from $W^{k_1,
+    p_1}(\Omega_1)\hookrightarrow W^{k_2, p_2}(\Omega_2)$, such that
+  \begin{gather*}
+    \norm{u}_{W^{k_2, p_2}(\Omega_2)} \le C \norm{u}_{W^{k_1, p_1}(\Omega_1)}.
+  \end{gather*}
+\end{theorem}
+
+% \begin{definition}
+%   A function is called \define{Hölder continuous} with exponent $\alpha$, if there is a
+%   constant $C$, such that
+%   \begin{gather*}
+%     \forall x,y\in \Omega: \quad |f(x)-f(y)| \le C 
+%   \end{gather*}
+% \end{definition}
+
+% \begin{theorem}
+%   Let $\Omega_1 \subset \R^{d_1}$ be a bounded Lipschitz domain. 
+% \end{theorem}
 
 %%% Local Variables: 
 %%% mode: latex
