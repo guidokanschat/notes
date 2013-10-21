@@ -551,13 +551,46 @@ their integrals.
   Let $f_n$ be an increasing sequence of functions in $\mathcal
   S^+$. Assume further that the integrals of $f_n$ are uniformly
   bounded by a number $M$. Then, the sequence $f_n$ converges almost
-  everywhere to a function $f\in\mathcal S^+$.
+  everywhere to a function $f\in\mathcal S^+$ and there holds
+  \begin{gather*}
+    \lim_{n\to\infty} \int_{\R^d} f_n \dx = \int_{\R^d} f \dx.
+  \end{gather*}
 \end{lemma}
 
 \begin{proof}
-  \begin{todo}
-    ...
-  \end{todo}
+  For each $n$, let $\{\phi_{nk}\}_{k=1,,2,\dots}$ be a sequence of
+  step functions converging monotonically to $f_n$ almost
+  everywhere. We generate a type of diagonal sequence in
+  $\{\phi_{nk}\}$ by assigning
+  \begin{gather*}
+    \psi_n(x) = \sup_{i\le n} \phi_{in}(x).
+  \end{gather*}
+  Since each of the sequences $\{\phi_{nk}\}$ is increasing with
+  respect to $k$, $\psi_n$ must be increasing. Since they furthermore
+  increase towards $f_n$, we have almost everywhere $\psi_n(x) \le
+  f_n(x)$. Thus, 
+  \begin{gather*}
+    \int_{\R^d} \psi_n \dx \le \int_{\R^d} f_n\dx \le M.
+  \end{gather*}
+  By Lemma~\ref{lemma:integral:2}, the sequence $\psi_n$ converges
+  towards a limit function $f$ almost everywhere. On the other
+  hand, for $n\le k$,
+  \begin{gather*}
+    \psi_n \ge \phi_{nk}.
+  \end{gather*}
+  Therefore, by allowing $k\to\infty$, we obtain that
+  \begin{gather*}
+    f_n(x) \le f(x) \quad\text{almost everywhere}.
+  \end{gather*}
+  Hence, we have $\psi_n \le f_n \le f$ and $\psi_n \nearrow f$ almost
+  everywhere, thus the limit of $f_n$ must be equal to the one of
+  $\psi_n$, namely $f_n$. The same argument holds for the integrals,
+  and since
+  \begin{gather*}
+    \int_{\R^d} \psi_n \dx \le \int_{\R^d} f_n \dx \le \int_{\R^d} f \dx,
+  \end{gather*}
+  and since the first integral converges to the last, so does the one
+  in the center.
 \end{proof}
 
 \begin{theorem}[Beppo-Levi]
