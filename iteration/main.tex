@@ -1,0 +1,50 @@
+\documentclass[USenglish,limits]{report}
+\usepackage{mathsim}
+\svnid{$Id$}
+\usepackage[notref,notcite,final]{showkeys}
+%\usepackage{hyperref}
+\usepackage[math]{iwona}
+\usepackage[backend=bibtexu,style=alphabetic]{biblatex}
+\addbibresource{all}
+
+\title{\textbf{Notes on Applied Mathematics}
+\\[5mm]
+{\large Part B: Integration and Sobolev Spaces}}
+\author{Guido Kanschat}
+\date{\today\\[5mm]Revision: \svnrev}
+
+%\renewcommand{\thechapter}{B.\arabic{chapter}}
+
+\makeindex
+\begin{document}
+\maketitle
+
+\section*{Preface}
+\input{../preface}
+
+\begin{todo}
+  Note: yellow boxes indicate text which is missing in the current
+  version and will be added soon.
+\end{todo}
+
+\tableofcontents
+
+\chapter{Iterative methods in finite and infinite dimensional spaces}
+\input{richardson}
+\input{cg}
+
+\chapter{Schwarz methods}
+\input{schwarz}
+
+\chapter{Multigrid methods}
+\input{mg}
+
+\printbibliography
+\printindex
+\end{document}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
