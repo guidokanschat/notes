@@ -1,5 +1,45 @@
 \svnid{$Id$}
 
+\section{The Richardson iteration}
+
+\begin{intro}
+  As a first example and prototype for all other iterative methods we
+  consider Richardson's method, which for matrices and vectors in
+  $\R^n$ reads
+  \begin{gather}
+    \label{eq:richardson:1}
+    x^{(k+1)} = x^{(k)} - \omega_k \bigl(A x^{(k)} - b \bigr).
+  \end{gather}
+  $\omega_k$ is a relaxation parameter, which can be choosen a priori
+  or can be changed in every step. We will for simplicity assume
+  $\omega_k = \omega$.
+  
+  It can be shown easily, that if $A$ is symmetric, positive definite,
+  the method converges if $\omega$ is sufficiently small. More
+  precisely, let
+  \begin{gather}
+    \label{eq:richardson:3}
+    \lambda = \min_{x\in \R^n} \frac{x^TAx}{x^Tx},
+    \qquad\text{and}\qquad
+    \Lambda = \max_{x\in \R^n} \frac{x^TAx}{x^Tx}.
+  \end{gather}
+  Then, the method converges for $0 < \omega < 2\Lambda$. The optimal
+  choice is
+  \begin{gather}
+    \label{eq:richardson:2}
+    \omega = \frac{2}{\lambda+\Lambda},
+  \end{gather}
+  which leads to a contraction rate of
+  \begin{gather}
+    \label{eq:richardson:4}
+    \rho = \frac{\Lambda-\lambda}{\Lambda+\lambda} =
+    \frac{\kappa-1}{\kappa+1} = 1 -\frac2\kappa + \mathcal
+    O(\kappa^{-2}),
+  \end{gather}
+  where $\kappa = \Lambda/\lambda$ is the spectral condition number. 
+\end{intro}
+
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "main"
