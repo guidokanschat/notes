@@ -8,20 +8,23 @@
   $\R^n$ reads
   \begin{gather}
     \label{eq:richardson:1}
-    x^{(k+1)} = x^{(k)} - \omega_k \bigl(A x^{(k)} - b \bigr).
+    \vec x^{(k+1)}
+    = \vec x^{(k)}
+    - \omega_k \bigl(\mat A \vec x^{(k)} - \vec b \bigr).
   \end{gather}
-  $\omega_k$ is a relaxation parameter, which can be choosen a priori
+  $\omega_k$ is a relaxation parameter, which can be chosen a priori
   or can be changed in every step. We will for simplicity assume
   $\omega_k = \omega$.
   
-  It can be shown easily, that if $A$ is symmetric, positive definite,
+  It can be shown easily, that if $\mat A$ is symmetric, positive definite,
   the method converges if $\omega$ is sufficiently small. More
   precisely, let
   \begin{gather}
     \label{eq:richardson:3}
-    \lambda = \min_{x\in \R^n} \frac{x^TAx}{x^Tx},
+    \lambda
+    = \min_{x\in \R^n} \frac{\vec x^T\mat A\vec x}{\vec x^T\vec x},
     \qquad\text{and}\qquad
-    \Lambda = \max_{x\in \R^n} \frac{x^TAx}{x^Tx}.
+    \Lambda = \max_{x\in \R^n} \frac{\vec x^T\mat A\vec x}{\vec x^T\vec x}.
   \end{gather}
   Then, the method converges for $0 < \omega < 2\Lambda$. The optimal
   choice is
@@ -38,6 +41,162 @@
   \end{gather}
   where $\kappa = \Lambda/\lambda$ is the spectral condition number. 
 \end{intro}
+
+\begin{intro}
+  The analysis of finite element methods shows that it is beneficial
+  to give up the focus on finite dimensional spaces and rather use
+  theory that applies to separable Hilbert spaces. If results can
+  obtained in this context, they can easily be restricted to finite
+  dimensional subspaces and thus become uniform with respect to the
+  mesh parameter. Thus, we will first reformulate Richardson's method
+  for this case and then derive convergence estimates.
+\end{intro}
+
+\begin{intro}
+  Elements of an abstract Hilbert space $V$ will be denoted by
+  $u,v,w$, etc. On the other hand, coefficient vectors in $\R^n$ are
+  denoted by letters $\vec x,\vec y,\vec z$, etc.
+\end{intro}
+
+\begin{definition}
+  Let $V$ be a Hilbert space with inner product $\scal(.,.)_V$. Let
+  $a(.,.)$ be a second bilinear form on $V$. Then, for any right hand
+  side $f\in V^*$ and any start vector $u^{(0)}\in V$,
+  \define{Richardson's method} is defined by the iteration
+  \begin{gather}
+    \label{eq:richardson:5}
+    \scal(u^{(k+1)},v)_V = \scal(u^{(k)},v)_V
+    - \omega_k \bigl(a(u^{(k)},v) - f(v)\bigr), \qquad \forall v\in V.
+  \end{gather}
+  $\omega_k$ is a suitable \putindex{relaxation parameter}, chosen
+  such that the method converges.
+\end{definition}
+
+\begin{note}
+  The scalar products in~\eqref{eq:richardson:5} become necessary,
+  since different from the case in $\R^n$, the result of applying the
+  bilinear form $a(.,.)$ to $u^{(k)}$ in the first argument yields a
+  linear form on $V$. In order to convert this to a vector in $V$, we
+  have to apply the isomorphism induced by the \putindex{Riesz
+    representation theorem}.
+\end{note}
+
+\begin{theorem}
+  Let the bilinear form $a(.,.)$ be bounded and elliptic on $V\times
+  V$, namely, let there exist positive constants $\Lambda$ and $\lambda$ such
+  that for all $u,v\in V$ there holds
+  \begin{gather}
+    \label{eq:richardson:6}
+    a(u,v) \le \Lambda \norm{u}_V \norm{v}_V,
+    \qquad
+    a(u,u) \ge \lambda \norm{u}_V^2.
+  \end{gather}
+  Then, the Richardson iteration~\eqref{eq:richardson:5} converges for
+  $\omega_k = \omega \in (0, 2 \Lambda)$. The optimal
+  choice is $\omega$ according to~\eqref{eq:richardson:2}, in which
+  case the convergence rate is given by~\eqref{eq:richardson:4}.
+\end{theorem}
+
+\begin{proof} The proof is for instance used in the proof of the
+  Lax/Milgram lemma.
+\end{proof}
+
+\begin{note}
+  It is clear that the boundedness and ellipticity
+  estimates~\eqref{eq:richardson:6} hold for any finite dimensional
+  subspace $V_n\subset V$, and thus the convergence
+  estimate~\eqref{eq:richardson:4} becomes independent of $n$.
+\end{note}  
+
+\begin{definition}
+  After choosing a basis for a finite dimensional space $V_n$ or a
+  Schauder basis for the space $V$ (assuming $V$ separable), say
+  $\{\phi_i\}$, we can define a (possibly infinite-dimensional) matrix
+  $\mat A$ associated with the bilinear form $a(.,.)$ with the entries
+  \begin{gather*}
+    a_{ij} = a(\phi_j, \phi_i).
+  \end{gather*}
+  Similarly, we define the matrix $\mat B$ associated with the $V$-inner
+  product through
+  \begin{gather*}
+    b_{ij} = \scal(\phi_j,\phi_i)_V.
+  \end{gather*}
+  We note that $\mat B$ is the matrix for the operator converting a vector
+  $u\in V$ to its dual vector $u^*\in V^*$, and $\mat B^{-1}$ is
+  the matrix associated with the Riesz isomorphism from $V^*$ to $V$.
+  
+  If we restrict the bilinear forms to a finite dimensional subspace
+  $V_n$, we denote the matrices $\mat A$ and $\mat B$ restricted to
+  this subspace by $\mat A_n$ and $\mat B_n$,
+  respectively. Accordingly, we define the bounds
+  \begin{gather}
+    \label{eq:richardson:8}
+    \Lambda_n = \max_{u\in V_n}\frac{a(u,u)}{\norm{u}_V^2},
+    \qquad
+    \lambda_n = \min_{u\in V_n}\frac{a(u,u)}{\norm{u}_V^2}.
+  \end{gather}
+\end{definition}
+
+\begin{note}
+  When we apply Richardson's method as in~\eqref{eq:richardson:5} on a
+  computer, each step involves a multiplication with the matrix $A$,
+  but an inversion of the matrix $B$, corresponding to the iteration
+  \begin{gather*}
+    \mat B \vec x^{(k+1)}
+    = \mat B \vec x^{(k)}
+    - \omega_k \bigl(\mat A \vec x^{(k)} - \vec b \bigr),
+  \end{gather*}
+  or equivalently,
+  \begin{gather}
+    \label{eq:richardson:7}
+    \vec x^{(k+1)}
+    = \vec x^{(k)}
+    - \omega_k \mat B^{-1}\bigl(\mat A \vec x^{(k)} - \vec b \bigr).
+  \end{gather}
+  The iteration in~\eqref{eq:richardson:7} is commonly referred to as
+  preconditioned Richardson iteration and $\mat B^{-1}$ as the
+  \putindex{preconditioner}. Note that by introducing the iteration in
+  its weak form~\eqref{eq:richardson:5}, the preconditioner arrives
+  naturally and with necessity.
+  
+  The goal of this chapter is finding preconditioners $\mat B^{-1}$, or
+  equivalently inner products $\scal(.,.)_V$, such that the bilinear
+  form $a(.,.)$ is bounded and the condition number
+  $\kappa = \Lambda/\lambda$ is small.
+\end{note}
+
+\begin{example}
+  Let us take for example $V = H^1_0(\Omega)$ and
+  \begin{gather*}
+    a(u,v) = \int_{\Omega} \nabla u \cdot \nabla v\dx.
+  \end{gather*}
+  By the Poincaré-Friedrichs inequality, $a(.,.)$ is an inner product
+  on $V$ and thus we can choose $\scal(.,.)_V = a(.,.)$. In
+  particular, $\lambda = \Lambda = 1$ and the optimal choice is
+  $\omega = 1$. Then, Richardson's iteration becomes
+  \begin{gather*}
+        a(u^{(k+1)},v)_V = a(u^{(k)},v)_V
+    - \omega_k \bigl(a(u^{(k)},v) - f(v)\bigr) =  f(v), \qquad \forall v\in V,
+  \end{gather*}
+  which converges in a single step, but we have to solve the original
+  equation for $u$. Thus, either the inversion of the matrix $A_n$ is
+  trivial on each finite dimensional subspace $V_n$, or the method is
+  useless. With usual finite element bases, the latter is true.
+\end{example}
+
+\begin{example}
+  In the other extreme, we would like to use the $\R^n$ or $L^2$
+  inner product on $V_n$ or $V$, such that the Riesz isomorphism is
+  easily computable. But then, the bilinear form $a(.,.)$ is unbounded
+  on $V$. Thus, while for each finite $n$, the condition number
+  $\kappa_n = \Lambda_n/\lambda_n$ exists, it converges to infinity if
+  $n\to\infty$.
+\end{example}
+
+\begin{todo}
+  Show that the condition number grows like $1/h^2$ for finite element
+  methods.
+\end{todo}
 
 
 %%% Local Variables: 
