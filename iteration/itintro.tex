@@ -1,0 +1,69 @@
+\svnid{$Id$}
+
+\begin{remark}
+  This part of the notes deals with preconditioning of symmetric
+  operators, or those, which have a dominating symmetric part. The
+  theory of preconditioning methods for nonsymmetric and in particular
+  non-normal operators is currently barely developed and thus cannot
+  be covered by these notes. 
+\end{remark}
+
+\begin{example}
+  While the methods developed in this chapter are fairly general, we
+  introduce a specific model problem as a simple benchmark case. To
+  this end, we consider the Dirichlet problem: find $u\in V =
+  H^1_0(\Omega)$ such that
+  \begin{gather}
+    \label{eq:itintro:1}
+    a(u,v) \equiv \int_\Omega \nabla u\cdot \nabla v \dx
+    = \int_\Omega f v \dx \equiv f(v),
+    \qquad \forall v\in V.
+  \end{gather}
+  The finite dimensional linear systems of equations are derived from
+  finite element discretizations on quasi-uniform meshes of cells with
+  maximal diameter $h$, yielding a sequence of spaces $V_h$, on which
+  linear systems are introduced by the same weak
+  form~\eqref{eq:itintro:1}.
+\end{example}
+
+\begin{notation}
+  With a bilinear form $a(.,.)$ on $V\times V$ we associate the
+  operator $A: V\to V^*$ by
+  \begin{gather}
+    \label{eq:itintro:2}
+    \scal(Au,v) = a(u,v), \quad \forall v\in V,
+  \end{gather}
+  where $\scal(.,.):V^*\times V \to \R$ is the canonical bilinear form of an
+  element of $V^*$ and an element of $V$, namely
+  \begin{gather}
+    \label{eq:richardson:9}
+    \scal(f,v) = f(v), \quad \forall f\in V^*, v\in V.
+  \end{gather}
+  
+  We will tacitly assume that operators $A$, $B$, etc.\ are defined by
+  equation~\eqref{eq:itintro:2} and the bilinear forms $a(.,.)$,
+  $b(.,.)$, etc., respectively, if they are not defined otherwise.
+  
+  After choosing a basis for a finite dimensional space $V_n$ or a
+  Schauder basis for the space $V$ (assuming $V$ separable), say
+  $\{\phi_i\}$, we can define a (possibly infinite-dimensional) matrix
+  $\mat A$ associated with the bilinear form $a(.,.)$ with the entries
+  \begin{gather*}
+    a_{ij} = a(\phi_j, \phi_i).
+  \end{gather*}
+  
+  If we restrict the bilinear forms to a finite dimensional subspace
+  $V_n$, we denote the matrices $\mat A$ restricted to this subspace
+  by $\mat A_n$. Accordingly, we define the bounds
+  \begin{gather}
+    \label{eq:richardson:8}
+    \Lambda_n = \max_{u\in V_n}\frac{a(u,u)}{\norm{u}_V^2},
+    \qquad
+    \lambda_n = \min_{u\in V_n}\frac{a(u,u)}{\norm{u}_V^2}.
+  \end{gather}
+\end{notation}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

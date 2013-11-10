@@ -26,7 +26,7 @@
     \qquad\text{and}\qquad
     \Lambda = \max_{x\in \R^n} \frac{\vec x^T\mat A\vec x}{\vec x^T\vec x}.
   \end{gather}
-  Then, the method converges for $0 < \omega < 2\Lambda$. The optimal
+  Then, the method converges for $0 < \omega < 2/\Lambda$. The optimal
   choice is
   \begin{gather}
     \label{eq:richardson:2}
@@ -82,6 +82,7 @@
 \end{note}
 
 \begin{theorem}
+  \label{theorem:richardson:1}
   Let the bilinear form $a(.,.)$ be bounded and elliptic on $V\times
   V$, namely, let there exist positive constants $\Lambda$ and $\lambda$ such
   that for all $u,v\in V$ there holds
@@ -92,13 +93,37 @@
     a(u,u) \ge \lambda \norm{u}_V^2.
   \end{gather}
   Then, the Richardson iteration~\eqref{eq:richardson:5} converges for
-  $\omega_k = \omega \in (0, 2 \Lambda)$. The optimal
+  $\omega_k = \omega \in (0, 2 \lambda/\Lambda^2)$. The optimal
   choice is $\omega$ according to~\eqref{eq:richardson:2}, in which
   case the convergence rate is given by~\eqref{eq:richardson:4}.
 \end{theorem}
 
-\begin{proof} The proof is for instance used in the proof of the
-  Lax/Milgram lemma.
+\begin{proof}
+  We define the iteration operator $T$ as the solution operator of
+  equation~\eqref{eq:richardson:5}, namely $T u{(k)} := u{(k+1)}$. We
+  have to prove that $T$ is a contraction on $V$ under the assumptions
+  of the theorem.
+
+  For two arbitrary vectors $u^1, u^2 \in V$, let $w = u^1-u^2$ be
+  their difference. Due to linearity, we have $T w = T u^1-T u^2$ and
+  \begin{gather*}
+    \scal(T w,v)_V = \scal(w,v)_V - \omega a(w,v) = \scal(w-\omega A w,v)_V.
+  \end{gather*}
+  Using $v=Tw$ as a test function, we obtain
+  \begin{align*}
+    \norm{Tw}_V^2
+    & = \scal(w-\omega A w,w-\omega A w)_V \\
+    &= \norm{w}_V^2 - 2\omega a(w,w) + \omega^2 \norm{Aw}_V^2\\
+    & \le \norm{w}_V^2 - 2\lambda\omega \norm{w}_V^2
+    +  \Lambda^2 \omega^2\norm{w}_V^2\\
+    & = \underbrace{\bigl(1-2\lambda\omega
+      + \Lambda^2\omega^2\bigr)}_{=:\rho(\omega)} \norm{w}_V^2.
+  \end{align*}
+  \begin{todo}
+    Check the actual convergence!
+  \end{todo}
+  The function $\rho(\omega)$ is a parabola open to the top, which
+  equals one at zero and $2/\Lambda$.
 \end{proof}
 
 \begin{note}
@@ -108,39 +133,17 @@
   estimate~\eqref{eq:richardson:4} becomes independent of $n$.
 \end{note}  
 
-\begin{definition}
-  After choosing a basis for a finite dimensional space $V_n$ or a
-  Schauder basis for the space $V$ (assuming $V$ separable), say
-  $\{\phi_i\}$, we can define a (possibly infinite-dimensional) matrix
-  $\mat A$ associated with the bilinear form $a(.,.)$ with the entries
-  \begin{gather*}
-    a_{ij} = a(\phi_j, \phi_i).
-  \end{gather*}
-  Similarly, we define the matrix $\mat B$ associated with the $V$-inner
-  product through
-  \begin{gather*}
-    b_{ij} = \scal(\phi_j,\phi_i)_V.
-  \end{gather*}
-  We note that $\mat B$ is the matrix for the operator converting a vector
-  $u\in V$ to its dual vector $u^*\in V^*$, and $\mat B^{-1}$ is
-  the matrix associated with the Riesz isomorphism from $V^*$ to $V$.
-  
-  If we restrict the bilinear forms to a finite dimensional subspace
-  $V_n$, we denote the matrices $\mat A$ and $\mat B$ restricted to
-  this subspace by $\mat A_n$ and $\mat B_n$,
-  respectively. Accordingly, we define the bounds
-  \begin{gather}
-    \label{eq:richardson:8}
-    \Lambda_n = \max_{u\in V_n}\frac{a(u,u)}{\norm{u}_V^2},
-    \qquad
-    \lambda_n = \min_{u\in V_n}\frac{a(u,u)}{\norm{u}_V^2}.
-  \end{gather}
-\end{definition}
-
 \begin{note}
+  We define an operator $B:V\to V^*$ such that $Bu = b(u,.) :=
+  \scal(u,.)_V$. By the Riesz representation theorem, there is a
+  continuous inverse operator $B^{-1}: V^*\to V$, which is often
+  called \define{Riesz isomorphism}.
+\end{note}
+
+\begin{definition}
   When we apply Richardson's method as in~\eqref{eq:richardson:5} on a
-  computer, each step involves a multiplication with the matrix $A$,
-  but an inversion of the matrix $B$, corresponding to the iteration
+  computer, each step involves a multiplication with the matrix $\mat A$,
+  but an inversion of the matrix $\mat B$, corresponding to the iteration
   \begin{gather*}
     \mat B \vec x^{(k+1)}
     = \mat B \vec x^{(k)}
@@ -154,8 +157,8 @@
     - \omega_k \mat B^{-1}\bigl(\mat A \vec x^{(k)} - \vec b \bigr).
   \end{gather}
   The iteration in~\eqref{eq:richardson:7} is commonly referred to as
-  preconditioned Richardson iteration and $\mat B^{-1}$ as the
-  \putindex{preconditioner}. Note that by introducing the iteration in
+  \define{preconditioned Richardson iteration} and $\mat B^{-1}$ as the
+  \define{preconditioner}. Note that by introducing the iteration in
   its weak form~\eqref{eq:richardson:5}, the preconditioner arrives
   naturally and with necessity.
   
@@ -163,20 +166,64 @@
   equivalently inner products $\scal(.,.)_V$, such that the bilinear
   form $a(.,.)$ is bounded and the condition number
   $\kappa = \Lambda/\lambda$ is small.
-\end{note}
+  
+  In order to reduce (or increase) confusion, we will refer to the
+  inner product that we search in order to bund the condition number
+  as $b(.,.)$ instead of $\scal(.,.)_V$, this way separating the
+  Hilbert space $V$ more clearly from the task of
+  preconditioning. Thus, the operator $B$ and the matrix $\mat B$ will
+  be associated with a bilinear form $b(.,.)$ and the final version of
+  the preconditioned Richardson iteration in the space $V$ is
+  \begin{gather}
+    \label{eq:richardson:10}
+    b(u^{(k+1)},v)_V = b(u^{(k)},v)_V
+    - \omega_k \bigl(a(u^{(k)},v) - f(v)\bigr), \qquad \forall v\in V,
+  \end{gather}
+  or in operator form
+  \begin{gather}
+    \label{eq:richardson:11}
+    u^{(k+1)} = u^{(k)} - \omega_k B^{-1} (A u^{(k)} - f).
+  \end{gather}
+\end{definition}
+
+\begin{corollary}
+  Let the symmetric bilinear forms $a(.,.)$ and $b(.,.)$ in the
+  Richardson iteration~\eqref{eq:richardson:10} fulfill the
+  \define{spectral equivalence} relation
+  \begin{gather}
+    \label{eq:richardson:12}
+    \lambda b(u,u) \le a(u,u) \le \Lambda b(u,u), \quad \forall u\in V.
+  \end{gather}
+  Then, if $\omega_k \equiv \omega \in (0,2\Lambda)$, the iteration is
+  a contraction on $V$. The optimal contraction number is $\rho$
+  according to equation~\eqref{eq:richardson:4} for $\omega$ chosen as
+  in~\eqref{eq:richardson:2}.
+\end{corollary}
+
+\begin{proof}
+  This corollary is equivalent to Theorem~\ref{theorem:richardson:1}
+  if the inner product $\scal(.,.)_V$ is replaced by the bilinear form
+  $b(.,.)$.
+\end{proof}
+
+\begin{notation}
+  \index{lambdaBA@$\lambda(B,A)$}
+  \index{Lambdaba@$\Lambda(B,A)$}
+  In order to distinguish different preconditioners, we will also us
+  the notation $\lambda(B, A)$ and $\Lambda(B,A)$ to refer to the
+  constants in the norm equivalence~\eqref{eq:richardson:12}.
+\end{notation}
+
 
 \begin{example}
-  Let us take for example $V = H^1_0(\Omega)$ and
-  \begin{gather*}
-    a(u,v) = \int_{\Omega} \nabla u \cdot \nabla v\dx.
-  \end{gather*}
+  Let us take the example~\eqref{eq:main:1}.
   By the Poincaré-Friedrichs inequality, $a(.,.)$ is an inner product
   on $V$ and thus we can choose $\scal(.,.)_V = a(.,.)$. In
   particular, $\lambda = \Lambda = 1$ and the optimal choice is
   $\omega = 1$. Then, Richardson's iteration becomes
   \begin{gather*}
-        a(u^{(k+1)},v)_V = a(u^{(k)},v)_V
-    - \omega_k \bigl(a(u^{(k)},v) - f(v)\bigr) =  f(v), \qquad \forall v\in V,
+    a(u^{(k+1)},v) = a(u^{(k)},v)
+    - \bigl(a(u^{(k)},v) - f(v)\bigr) =  f(v), \qquad \forall v\in V,
   \end{gather*}
   which converges in a single step, but we have to solve the original
   equation for $u$. Thus, either the inversion of the matrix $A_n$ is
@@ -197,7 +244,6 @@
   Show that the condition number grows like $1/h^2$ for finite element
   methods.
 \end{todo}
-
 
 %%% Local Variables: 
 %%% mode: latex
