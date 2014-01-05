@@ -15,10 +15,53 @@
   $\omega_k$ is a relaxation parameter, which can be chosen a priori
   or can be changed in every step. We will for simplicity assume
   $\omega_k = \omega$.
+\end{intro}  
+
+\begin{theorem}
+  \label{theorem:richardson:1}
+  If $\mat A$ is symmetric, positive definite, with extremal
+  eigenvalues $\lambda>0$ and $\Lambda>0$, then Richardson's method
+  converges if and only if $0 < \omega < 2/\Lambda$. The optimal
+  relaxation parameter is 
+  \begin{gather}
+    \label{eq:richardson:2}
+    \omega_{\text{opt}} = \frac{2}{\lambda+\Lambda},
+  \end{gather}
+  which yields an optimal contraction rate of
+  \begin{gather}
+    \label{eq:richardson:4}
+    \rho_{\text{opt}}
+    = 1-\frac{2\lambda}{\lambda+\Lambda}
+    = \frac{\Lambda-\lambda}{\Lambda+\lambda}
+    = \frac{\kappa-1}{\kappa+1}
+    = 1 -\frac2\kappa + \mathcal
+    O\left(\kappa^{-2}\right),
+  \end{gather}
+  where $\kappa = \Lambda/\lambda$ is the so called \define{spectral
+    condition number}.
+\end{theorem}
+
+\begin{proof}
+  Convergence of this method is analyzed through the \putindex{Banach
+    fixed-point theorem}, which requires contraction
+  property of the matrix $\mat M = \mat I - \omega \mat A$.
+  Alternatively, we studied a theorem that
+  states, that a matrix iteration converges if and only if the
+  spectral radius
+  \begin{gather*}
+    \rho(\mat M) = \max \left|\lambda(\mat M)\right| < 1,
+  \end{gather*}
+  the maximum absolute value of the eigenvalues of $\mat M$ is
+  strictly less than one.
   
-  It can be shown easily, that if $\mat A$ is symmetric, positive definite,
-  the method converges if $\omega$ is sufficiently small. More
-  precisely, let
+  If $\mat A$ is symmetric, positive definite, with eigenvalues
+  $\lambda_i > 0$, we have that
+  \begin{gather}
+    \label{eq:richardson:13}
+    \rho(\mat M) = \max_i \left|1-\omega \lambda_i\right|.
+  \end{gather}
+  Let the extremal eigenvalues be determined by the minimum and
+  maximum of the Rayleigh quotient,
   \begin{gather}
     \label{eq:richardson:3}
     \lambda
@@ -26,21 +69,15 @@
     \qquad\text{and}\qquad
     \Lambda = \max_{x\in \R^n} \frac{\vec x^T\mat A\vec x}{\vec x^T\vec x}.
   \end{gather}
-  Then, the method converges for $0 < \omega < 2/\Lambda$. The optimal
-  choice is
-  \begin{gather}
-    \label{eq:richardson:2}
-    \omega = \frac{2}{\lambda+\Lambda},
-  \end{gather}
-  which leads to a contraction rate of
-  \begin{gather}
-    \label{eq:richardson:4}
-    \rho = \frac{\Lambda-\lambda}{\Lambda+\lambda} =
-    \frac{\kappa-1}{\kappa+1} = 1 -\frac2\kappa + \mathcal
-    O(\kappa^{-2}),
-  \end{gather}
-  where $\kappa = \Lambda/\lambda$ is the spectral condition number. 
-\end{intro}
+  Then, equation~\eqref{eq:richardson:13} yields that the method
+  converges for $0 < \omega < 2/\Lambda$. Furthermore, for 
+  $1/\Lambda \le \omega \le 2/\Lambda$ we have
+  \begin{gather*}
+    \rho(\mat M) = \max \bigl\{ -1+\omega \Lambda,  1-\omega \lambda \bigr\}.
+  \end{gather*}
+  The optimal parameter $\omega$ is the one where both values are
+  equal and thus~\eqref{eq:richardson:2} and~\eqref{eq:richardson:4} hold.
+\end{proof}
 
 \begin{intro}
   The analysis of finite element methods shows that it is beneficial
@@ -82,7 +119,7 @@
 \end{note}
 
 \begin{theorem}
-  \label{theorem:richardson:1}
+  \label{theorem:richardson:2}
   Let the bilinear form $a(.,.)$ be bounded and elliptic on $V\times
   V$, namely, let there exist positive constants $\Lambda$ and $\lambda$ such
   that for all $u,v\in V$ there holds
@@ -92,15 +129,13 @@
     \qquad
     a(u,u) \ge \lambda \norm{u}_V^2.
   \end{gather}
-  Then, the Richardson iteration~\eqref{eq:richardson:5} converges for
-  $\omega_k = \omega \in (0, 2 \lambda/\Lambda^2)$. The optimal
-  choice is $\omega$ according to~\eqref{eq:richardson:2}, in which
-  case the convergence rate is given by~\eqref{eq:richardson:4}.
+  Then, Richardson's iteration converges for
+  $\omega_k = \omega$ for any $\omega \in (0, 2\lambda/\Lambda^2)$.
 \end{theorem}
 
 \begin{proof}
   We define the iteration operator $T$ as the solution operator of
-  equation~\eqref{eq:richardson:5}, namely $T u{(k)} := u{(k+1)}$. We
+  equation~\eqref{eq:richardson:5}, namely $T u^{(k)} := u^{(k+1)}$. We
   have to prove that $T$ is a contraction on $V$ under the assumptions
   of the theorem.
 
@@ -119,18 +154,32 @@
     & = \underbrace{\bigl(1-2\lambda\omega
       + \Lambda^2\omega^2\bigr)}_{=:\rho(\omega)} \norm{w}_V^2.
   \end{align*}
-  \begin{todo}
-    Check the actual convergence!
-  \end{todo}
   The function $\rho(\omega)$ is a parabola open to the top, which
-  equals one at zero and $2/\Lambda$.
+  at zero equals one and has a negative derivative. Thus, it is less
+  than one for small positive valuers of $\omega$. The other
+  point where $\rho(\omega) = 1$ is $\omega = 2\lambda/\Lambda^2$.
 \end{proof}
+
+\begin{note}
+  The condition on $\omega$ in Theorem~\ref{theorem:richardson:2} is
+  more restrictive than in Theorem~\ref{theorem:richardson:1}, since
+  $\lambda/\Lambda \le 1$. This is
+  due to the fact, that in Theorem~\ref{theorem:richardson:1} we
+  assume symmetry, and thus orthogonal diagonalizability of the matrix
+  $\mat A$. With similar assumptions,
+  Theorem~\ref{theorem:richardson:2} could be made sharper.
+\end{note}
 
 \begin{note}
   It is clear that the boundedness and ellipticity
   estimates~\eqref{eq:richardson:6} hold for any finite dimensional
   subspace $V_n\subset V$, and thus the convergence
   estimate~\eqref{eq:richardson:4} becomes independent of $n$.
+  
+  More interesting and also more common is the case where the bilinear form
+  $a(.,.)$ is unbounded on $V$. While it is still bounded on each
+  finite subspace $V_n$, this bound cannot be independent of $n$ if
+  the sequence $\{V_n\}$ approximates $V$.
 \end{note}  
 
 \begin{note}
@@ -201,7 +250,7 @@
 \end{corollary}
 
 \begin{proof}
-  This corollary is equivalent to Theorem~\ref{theorem:richardson:1}
+  This corollary is equivalent to Theorem~\ref{theorem:richardson:2}
   if the inner product $\scal(.,.)_V$ is replaced by the bilinear form
   $b(.,.)$.
 \end{proof}
@@ -216,7 +265,7 @@
 
 
 \begin{example}
-  Let us take the example~\eqref{eq:main:1}.
+  Let us take the example~\eqref{eq:itintro:1}.
   By the Poincaré-Friedrichs inequality, $a(.,.)$ is an inner product
   on $V$ and thus we can choose $\scal(.,.)_V = a(.,.)$. In
   particular, $\lambda = \Lambda = 1$ and the optimal choice is

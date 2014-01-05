@@ -4,7 +4,7 @@
   This part of the notes deals with preconditioning of symmetric
   operators, or those, which have a dominating symmetric part. The
   theory of preconditioning methods for nonsymmetric and in particular
-  non-normal operators is currently barely developed and thus cannot
+  non-normal operators is currently not well developed and thus will not
   be covered by these notes. 
 \end{remark}
 
@@ -54,7 +54,8 @@
   
   If we restrict the bilinear forms to a finite dimensional subspace
   $V_n$, we denote the matrices $\mat A$ restricted to this subspace
-  by $\mat A_n$. Accordingly, we define the bounds
+  by $\mat A_n$. Accordingly, we define the bounds of the
+  \define{Rayleigh quotient}
   \begin{gather}
     \label{eq:richardson:8}
     \Lambda_n = \max_{u\in V_n}\frac{a(u,u)}{\norm{u}_V^2},
