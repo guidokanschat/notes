@@ -1,5 +1,46 @@
 \svnid{$Id$}
 
+\section{The conjugate gradient method}
+
+\begin{intro}
+  Relying on Hilbert space structure more than Richardson's iteration
+  is the \define{conjugate gradient method} (cg), since it uses
+  orthogonal search directions. Nevertheless, it also relies on
+  constructing search directions from residuals, such that a
+  \putindex{Riesz isomorphism} enters the same way as before and can
+  then be used for preconditioning.
+  
+  The beauty of the conjugate gradient method is, that it is parameter
+  and tuning free, and it converges considerably faster than a linear
+  iteration method.
+\end{intro}
+
+\begin{definition}
+  Let $V$ be a Hilbert space and $V^*$ its dual. The conjugate
+  gradient method for an iteration vector $x^{(k)} \in V$ involves the
+  residuals $r^{(k)} \in V^*$ as well as the update direction $p^{(k)}
+  \in V$ and the auxiliary vector $z^{(k)} \in V$. It consists of the
+  steps
+  \begin{enumerate}
+  \item Initialization: for $f$ and $x^{(0)}$ given, compute
+    \begin{xalignat*}{2}
+      r^{(0)} &= f- a(x^{(0)},.) \\
+      \scal(z^{(0)}, v) &= r^{(0)}(v) & \forall v &\in V \\
+      p^{(0)} &= z^{(0)}.
+    \end{xalignat*}
+    \item Iteration step: for $x^{(k)}$, $r^{(k)}$, $z^{(k)}$, and
+      $p^{(k)}$ given, compute
+      \begin{xalignat*}2
+        \alpha_k &= \frac{r^{(k)}(z^{(k)})}{a(p^{(k)},p^{(k)})} \\
+        x^{(k+1)} &= x^{(k)} + \alpha_k p^{(k)} \\
+        r^{(k+1)} &= r^{(k)} - \alpha_k a(p^{(k)},.) \\
+      \scal(z^{(k+1)}, v) &= r^{(k+1)}(v) & \forall v &\in V \\
+      \beta_k &= \frac{r^{(k+1)}(z^{(k+1)})}{r^{(k)}(z^{(k)})}\\
+      p^{(k+1)} &= z^{(k+1)} + \beta_k p^{(k)}
+      \end{xalignat*}
+  \end{enumerate}
+\end{definition}
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "main"
