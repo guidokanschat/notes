@@ -20,9 +20,9 @@
 \begin{intro}
   Let $V$ be a Hilbert space and let $a(.,.): V\times V$ be a
   symmetric and $V$-elliptic bilinear form. Let the set of auxiliary
-  subspaces $\{V_j\}_{j=0,\dots,J}$ of $V$ be chosen such that
+  subspaces $\{V_j\}_{j=1,\dots,J}$ of $V$ be chosen such that
   \begin{gather*}
-    V = \sum_{j=0}^J V_j,
+    V = \sum_{j=1}^J V_j,
   \end{gather*}
   but the sum is not required to be direct, that is, a vector $v\in V$
   may have several decompositions $v = \sum \alpha_j v_j$ with $v_j\in
@@ -150,6 +150,7 @@
 \end{proof}
 
 \begin{lemma}
+  \label{lemma:schwarz:5}
   For $v\in V$ holds
   \begin{gather}
     \label{eq:schwarz:5}
@@ -166,21 +167,21 @@
   with $v_j\in V_j$, the computation
   \begin{align*}
     \scal(B^{-1}v,v)
-    &= \sum_{j=0}^J \scal(B^{-1} v, A_j^{-1} A_j v_j)
-    = \sum_{j=0}^J \scal(\Pi_j B^{-1} v, A_j^{-1} A_j v_j) \\
-    &\le \sum_{j=0}^J \sqrt{\scal(\Pi_j B^{-1} v, A_j^{-1}\Pi_j B^{-1} v)}
+    &= \sum_{j=1}^J \scal(B^{-1} v, A_j^{-1} A_j v_j)
+    = \sum_{j=1}^J \scal(\Pi_j B^{-1} v, A_j^{-1} A_j v_j) \\
+    &\le \sum_{j=1}^J \sqrt{\scal(\Pi_j B^{-1} v, A_j^{-1}\Pi_j B^{-1} v)}
     \sqrt{\scal(A_j v_j, A_j^{-1}A_j v_j)} \\
-    & \le \sqrt{\sum_{j=0}^J \scal(\Pi_j B^{-1} v, A_j^{-1}\Pi_j
+    & \le \sqrt{\sum_{j=1}^J \scal(\Pi_j B^{-1} v, A_j^{-1}\Pi_j
       B^{-1} v) }
-    \sqrt{\sum_{j=0}^J \scal(A_j v_j,A_j^{-1}A_j v_j)} \\
+    \sqrt{\sum_{j=1}^J \scal(A_j v_j,A_j^{-1}A_j v_j)} \\
     &= \sqrt{\scal(B^{-1} v, {\sum A_j^{-1}\Pi_j} B^{-1}v)}
-    \sqrt{\sum_{j=0}^J \scal(A_j v_j, v_j)} \\
-    &= \sqrt{\scal(B^{-1}v,v)} \sqrt{\sum_{j=0}^J a(v_j, v_j)},
+    \sqrt{\sum_{j=1}^J \scal(A_j v_j, v_j)} \\
+    &= \sqrt{\scal(B^{-1}v,v)} \sqrt{\sum_{j=1}^J a(v_j, v_j)},
   \end{align*}
   yields for arbitrary decompositions
   \begin{gather}
     \label{eq:schwarz:17}
-    \scal(B^{-1}v,v) \le \sum_{j=0}^J a(v_j, v_j),
+    \scal(B^{-1}v,v) \le \sum_{j=1}^J a(v_j, v_j),
   \end{gather}
   and thus in partiular, that the left hand side is bounded by the
   minimum of the right. Now we choose a special decomposition, showing
@@ -195,15 +196,16 @@
   \end{gather*}
   Furthermore,
   \begin{align*}
-    \sum_{j=0}^J \scal(A_j v_j, v_j)
-    &= \sum_{j=0}^J \scal(A_j A_j^{-1} \Pi_j B^{-1} v, A_j^{-1} \Pi_j
+    \sum_{j=1}^J \scal(A_j v_j, v_j)
+    &= \sum_{j=1}^J \scal(A_j A_j^{-1} \Pi_j B^{-1} v, A_j^{-1} \Pi_j
     B^{-1} v) \\
-    &= \sum_{j=0}^J \scal(\Pi_j B^{-1} v, A_j^{-1} \Pi_j B^{-1} v) \\
+    &= \sum_{j=1}^J \scal(\Pi_j B^{-1} v, A_j^{-1} \Pi_j B^{-1} v) \\
     &= \scal(B^{-1} v, \sum A_j^{-1} \Pi_j B^{-1} v) = \scal(B^{-1} v, v).
   \end{align*}
 \end{proof}
 
 \begin{theorem}
+  \label{theorem:schwarz:1}
   Let $A$ be s.p.d. and $B$ defined by
   equation~\eqref{eq:schwarz:4}. Then, the eigenvalues of $BA$ are
   positive and are enclosed by
@@ -211,10 +213,10 @@
     \label{eq:schwarz:19}
     \begin{split}
     \Lambda(BA) &= \max_{v\in V} \frac{a(v,v)}{\min\limits_{v=\sum v_j}
-      \sum\limits_{j=0}^J a(v_j, v_j)}
+      \sum\limits_{j=1}^J a(v_j, v_j)}
     \\
     \lambda(BA) &= \min\limits_{v\in V} \frac{a(v,v)}{\min\limits_{v=\sum v_j}
-      \sum\limits_{j=0}^J a(v_j, v_j)}      
+      \sum\limits_{j=1}^J a(v_j, v_j)}      
     \end{split}
   \end{gather}
 \end{theorem}
@@ -232,15 +234,31 @@
     \Lambda(BA)
     &= \max_{v\in V} \frac{\scal(B^{-1}BA v,v)}{\scal(B^{-1}v,v)} \\
     &= \max_{v\in V} \frac{a(v,v)}{\min\limits_{v=\sum v_j}
-      \sum\limits_{j=0}^J a(v_j, v_j)},
+      \sum\limits_{j=1}^J a(v_j, v_j)},
   \end{align*}
   and the same for the minimum.
 \end{proof}
 
 \begin{note}
-  In order to estimate the condition number of a Schwarz
+  \label{note:schwarz:1}
+  In order to estimate the condition number $\Lambda(BA)/\lambda(BA)$ of a Schwarz
   preconditioner, it is now sufficient to bound the two quotients
-  in~\eqref{eq:schwarz:19} from above and below.
+  in~\eqref{eq:schwarz:19} from above and below. In particular, in
+  order to find a bound for $\Lambda(BA)$, we have to find an estimate of
+  the form
+  \begin{gather}
+    \label{eq:schwarz:23}
+    a(v,v) \lesssim \min_{v=\sum v_j}\sum_{j=1}^J a(v_j, v_j),
+  \end{gather}
+  or in other words, $a(v,v)$ has to be bounded by the sum on the
+  right for any decomposition $v=\sum v_j$. On the other hand, in
+  order to bound $1/\lambda(BA)$, we need an estimate of the form
+  \begin{gather}
+    \label{eq:schwarz:24}
+     \min_{v=\sum v_j}\sum_{j=1}^J a(v_j, v_j) \lesssim a(v,v),
+  \end{gather}
+  where it is sufficient to find one decomposition $v=\sum v_j$ such
+  that the sum is bounded by the right hand side.
 \end{note}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -267,6 +285,12 @@
   subdomains overlap each other like the three examples in
   Figure~\ref{fig:schwarz:ddmeshes} on the right. A more precise
   definition of the required overlap follows.
+
+  \index{NO@$N_O$}
+  Furthermore, we assume that there is a constant $N_O$ independent of
+  $\T_h$ and the number of subdomains, such that for each $j$ the
+  intersection $\Omega_j\cap\Omega_k$ is nonempty for at most $N_O$
+  subdomains $\Omega_k$.
 \end{intro}
 
 \begin{figure}[tp]
@@ -286,6 +310,17 @@
 \end{figure}
 
 \begin{definition}
+  A covering of $\Omega$ with subdomains $\Omega_j$ is called
+  \define{overlapping} with minimal \define{overlap} $\delta$, if for
+  each $\Omega_j$ and all $x\in\Omega_j$ holds:
+  \begin{gather*}
+    \operatorname{dist}(x,\partial\Omega_J\setminus\partial\Omega) <
+    \delta\;
+    \Rightarrow\; \exists k\neq j: x\in \Omega_k.
+  \end{gather*}
+\end{definition}
+
+\begin{definition}
   A smooth \define{partition of unity} with respect to the subdomains
   $\Omega_1,\Omega_2,\dots,\Omega_J$ of $\Omega$ is a set of
   nonnegative functions $\{\phi_1,\dots,\phi_J\}\subset
@@ -299,6 +334,9 @@
     \sum_{j=1}^J \phi_j(x) &= 1
     & \forall x&\in\overline\Omega.
   \end{xalignat}
+  Similarly, we can define bartitions of unity in $H^1(\Omega)$ or
+  partitions of unity which are piecewise $C^1$.
+  
   Furthermore, we assume that there is a positive constant $\delta$,
   called \define{overlap}, such that for all $j=1,\dots,J$ there holds
   \begin{gather}
@@ -312,7 +350,7 @@
   The term overlap for $\delta$ is justified by the following
   consideration. Let $x \in \Omega_j$ be a point which is not in any
   other $\Omega_i$. Then, $\phi_j(x) = 1$. If~\eqref{eq:schwarz:8} is
-  to hold, then it is necessary
+  to hold, then it is necessary that
   $\operatorname{dist}(x,\partial\Omega_J) \ge \delta$ (up to a
   constant, but this constant is already
   in~\eqref{eq:schwarz:8}). Thus, the points of distance less than
@@ -320,17 +358,60 @@
   subdomain as well, which is then said to overlap with $\Omega_j$.
 \end{note}
 
+\begin{example}
+  \label{example:schwarz:2}
+  On uniform meshes, overlapping subdomains with an overlap of
+  $\delta = n h$ with $n=1,2,\ldots$ can be achieved easily by the
+  following procedure:
+  \begin{enumerate}
+  \item Begin with a nonoverlapping subdivision $\{\Omega_j^0\}$,
+    for instance aligned with the mesh cells of $\T_H$.
+  \item Add all cells that share at least a vertex with a cell in
+    $\Omega_j^0$ to obtain a domain $\Omega_j^1$. After this
+    procedure, two neighboring domains will overlap by two cells,
+    resulting in $\delta = 2h$.
+  \item Repeat this procedure to obtain larger overlaps.
+  \end{enumerate}
+  
+  On the resulting partitions, a partition of unity in $H^1$ can be
+  constructed with piecewise linear (bilinear on quadrilaterals)
+  functions. For instance for $\Omega_j^1$ this function is
+  constructed as follows:
+  \begin{enumerate}
+  \item Choose $\phi_j(x) = 1/2$ in all vertices on $\partial \Omega_j^0$.
+  \item Choose $\phi_j(x) = 0$ in all vertices on $\partial \Omega_j^1$ and outside
+    $\Omega_j^1$.
+  \item Choose $\phi_j(x) = 1$ in all remaining vertices inside
+    $\Omega_j^0$.
+    \item Connect these values by linear (on simplicial meshes), bilinear
+      (quadrilateral meshes) of trilinear (hexahedral meshes)
+      polynomials inside each mesh cell $T\in \T_h$.
+  \end{enumerate}
+  This partition of unity achieves the estimate~\eqref{eq:schwarz:8}
+  with a constant of $1/2$.
+\end{example}
+
 \begin{notation}
   The solution space of our problem is the space $V=V_h$ given by the
-  finite element space on the mesh $\T_h$. Since the meshes are
-  nested, the finite element space $V_0 \equiv V_H$ on the mesh $\T_H$ is a
-  subspace of $V_h$. Additionally, we define finite element spaces on
-  $\Omega_j$ by
+  finite element space on the mesh $\T_h$. We define finite element
+  spaces on $\Omega_j$ by
   \begin{gather}
     \label{eq:schwarz:9}
     V_j = \bigl\{ v\in V_h \big| \forall x\in\Omega\setminus\Omega_j :
     v(x) =0\bigr\}.
   \end{gather}
+  Additionally, we define the space $V_0 \equiv V_H$ as the finite
+  element space on the coarse mesh $\T_H$.  Since the meshes are
+  nested, $V_H$ is indeed a subspace of $V_h$. Thus, we obtain a
+  decomposition of $V_h$ into $J+1$ subspaces
+  \begin{gather*}
+    V_h = V_0 + \sum_{j=1}^J V_j,
+  \end{gather*}
+  where the last $J$ are associated with the subdomains. In fact,
+  Lemma~\ref{lemma:schwarz:4} below states that already the spaces
+  $V_1$ to $V_J$ are sufficient to span $V_h$. Nevertheless, the
+  coarse grid space plays a crucial role in the efficiency of the
+  method due to Lemma~\ref{lemma:schwarz:stable-decomposition}.
 \end{notation}
 
 \begin{definition}
@@ -354,6 +435,7 @@
 \end{note}
 
 \begin{lemma}
+  \label{lemma:schwarz:4}
   There holds
   \begin{gather}
     \label{eq:schwarz:11}
@@ -385,12 +467,8 @@
   was chosen arbitrarily, the lemma is proven.
 \end{proof}
 
-\begin{intro}
-  The following lemmas serve to verify the assumptions of the abstract
-  Theorem~\ref{???}.
-\end{intro}
-
 \begin{lemma}
+  \label{lemma:schwarz:6}
   Let $v_j\in V_j$ for $j=0,\dots,J$ be a composition of $v\in V_h$
   such that
   \begin{gather*}
@@ -399,15 +477,49 @@
   Then,
   \begin{gather}
     \label{eq:schwarz:12}
-    a(v,v) \lesssim \sum_{j=0}^J a(v_j, v_j).
+    a(v,v) \lesssim \sum_{j=0}^J a(v_j, v_j),
   \end{gather}
+  where the implicit constant does not depend on $h$, $H$, or $J$.
 \end{lemma}
 
 \begin{proof}
-  \begin{todo}
-    p. 187 f.
-  \end{todo}
+  First a note: the inequality would be obvious, if $V_h$ was a direct
+  sum of the spaces $V_j$, and it would hold with a constant of one if
+  they were mutually orthogonal. Thus, we have to show some kind of
+  orthogonality between the spaces.
+
+  We start out by stating that
+  \begin{align*}
+    a(v,v) &= a\left(v_0+\sum_{j=1}^J v_j, v_0+\sum_{j=1}^J v_j\right)
+    \\
+    &\le 2 \left(a(v_0, v_0) + a\!\left(\sum_{j=1}^J v_j,\sum_{j=1}^J
+        v_j\right)\right)
+    \\
+    &= 2 \left(a(v_0, v_0) + 2 \sum_{j,k=1}^J a(v_j,v_k)\right).
+  \end{align*}
+
+  In order to estimate the second term on the right, we observe that
+  $a(v_j,v_k)\neq 0$ only if $\Omega_j$ and $\Omega_k$ overlap (this
+  is as much orthogonality as we get). Let therefore $o_{jk}$ be a
+  coefficient such that
+  \begin{gather*}
+    o_{jk} =
+    \begin{cases}
+      1 & \Omega_j \cap \Omega_k \neq \emptyset \\
+      0 & \Omega_j \cap \Omega_k = \emptyset
+    \end{cases}
+  \end{gather*}
+  Now we obtain
+  \begin{align*}
+    \sum_{j,k=1}^J a(v_j,v_k)
+    &= \sum_{j,k=1}^J o_{jk}  a(v_j,v_k) \\
+    & \le \sum_{j,k=1}^J \sqrt{o_{jk} a(v_j, v_j)} \sqrt{o_{jk} a(v_k,
+      v_k)} \\
+    & \le \sum_{j,k=1}^J o_{jk} a(v_j, v_j) \\
+    & \le N_O \sum_{j=1}^J a(v_j, v_j).
+  \end{align*}
 \end{proof}
+
 
 \begin{lemma}[Stable decomposition]
   \label{lemma:schwarz:stable-decomposition}
@@ -421,9 +533,62 @@
 \end{lemma}
 
 \begin{proof}
-  \begin{todo}
-    p. 189 f.
-  \end{todo}
+  Let $\tilde I_H: H^1_0(\Omega) \to V_H$ be an interpolation operator
+  continuous on $H^1(\Omega)$, for instance the interpolation operator
+  by Clement or the one by Schott and Zhang. For a given function
+  $v\in V_h$, let $v_H = \tilde I_H v$. Then
+  \begin{gather}
+    \label{eq:schwarz:20}
+    \begin{split}
+      |v_H|_1 &\lesssim |v|_1 \\
+      \|v-v_H\|_0 &\lesssim H |v|_1.
+    \end{split}
+  \end{gather}
+  From~\eqref{eq:schwarz:20} there holds
+  \begin{gather}
+    \label{eq:schwarz:22}
+    a(v_H,v_H) = |v_H|_1^2 \lesssim |v|_1^2 = a(v,v).
+  \end{gather}
+  Let $w=v-v_H$. Using a partition of unity $\{\phi_j\}$ for the
+  subdomains $\{\Omega_j\}$ and the nodal interpolant $I_h$ as in the
+  proof of Lemma~\ref{lemma:schwarz:4}, and let
+  \begin{gather*}
+    v_j = I_h(\phi_j w).
+  \end{gather*}
+  Thus, $v = \sum v_j$. We point out, that we can use the nodal
+  interpolant, since $w$ is a finite element function on $\T_h$ and
+  $\phi_j$ is either smooth or piecewise polynomial. For the remainder
+  of this proof, we will assume the piecewise polynomial case (see
+  Example~\ref{example:schwarz:2}) and leave the arguments for a
+  smooth function $\phi_j$ to the reader.
+  
+  The interpolation operator is exact for polynomials of degree $k$
+  (assuming such an order for the finite element being
+  used). Therefore,
+  \begin{gather*}
+    a(v_j,v_j) = |v_j|_1^2 \lesssim |\phi_j w|_1^2
+    \lesssim \|\nabla \phi_j w\|_0^2 + \|\phi_j \nabla w\|_0^2.
+  \end{gather*}
+  Using the properties of the partition of unity, we obtain
+  \begin{gather*}
+    a(v_j,v_j) \lesssim \frac1{\delta^2} \|\chi(\Omega_j) w\|_0^2 + |\chi(\Omega_j)w|_1^2.
+  \end{gather*}
+  Summing up yields
+  \begin{gather}
+    \label{eq:schwarz:21}
+    \begin{split}
+      \sum_{j=1}^J a(v_j, v_j)
+      &\lesssim \sum_{j=1}^J \left(\frac1{\delta^2} \|\chi(\Omega_j)
+        w\|_0^2 + |\chi(\Omega_j)w|_1^2\right) \\
+      &\le N_O \left(\frac1{\delta^2}\|w\|_0^2 + |w|_1^2\right) \\
+      &=  N_O \left(\frac1{\delta^2} \|v-v_H\|_0^2 + |v-v_H|_1^2\right)
+      \\
+      & \lesssim \frac{H^2}{\delta^2} |v|_1^2 + |v|_1^2 \\
+      &= \left(1+\frac{H^2}{\delta^2}\right) a(v,v).      
+    \end{split}
+  \end{gather}
+  The estimate~\eqref{eq:schwarz:13} now follows
+  from~\eqref{eq:schwarz:22} and~\eqref{eq:schwarz:21}.
 \end{proof}
 
 \begin{theorem}
@@ -440,19 +605,53 @@
 \end{theorem}
 
 \begin{proof}
-  \begin{todo}
-    ...
-  \end{todo}
+  The proof follows Note~\ref{note:schwarz:1}. Indeed,
+  Lemma~\ref{lemma:schwarz:6} proves inequality~\eqref{eq:schwarz:23}
+  and Lemma~\ref{lemma:schwarz:stable-decomposition}
+  proves~\eqref{eq:schwarz:24}.
 \end{proof}
 
 \begin{remark}
-  \begin{todo}
-    \begin{itemize}
-    \item Size of overlap vs. numerical effort
-    \item Size of overlap vs. coarse grid size
-    \item Size of coarse grid and subdomains vs. speed
-    \end{itemize}
-  \end{todo}
+  We have constructed a preconditioner $B_{\text{TLS}}$ for the finite
+  element discretization of the Poisson problem~\eqref{eq:itintro:1}
+  such that the preconditioned system has a bounded condition number
+  independent of the mesh size $h$. Thus, a Richardson iteration or a
+  conjugate gradient method using this preconditioner will reduce the
+  error by a certain amount within a fixed number of steps.
+  
+  Closer inspection of the estimate~\eqref{eq:schwarz:14} in view of
+  Example~\ref{example:schwarz:2} reveals a problem though: typically,
+  $\delta$ is of the order of $h$, such that the estimate becomes
+  \begin{gather*}
+    \kappa(B_{\text{TLS}} A_h) \lesssim \left(1+\frac H h\right)^2.
+  \end{gather*}
+  If we choose $H$ constant, this is exactly as bad as the condition
+  number of $A$ itself. Under mild further assumptions, the square on
+  the right hand side can be avoided~\cite{DryjaWidlund94}, which
+  is an improvement compared to the operator without preconditioning,
+  but is not uniform with respect to $h$. Therefore, we are left with
+  two options:
+  \begin{enumerate}
+  \item Increase the overlap such that it is $\mathcal O(H)$. This
+    procedure yields a \putindex{uniform preconditioner}, but it
+    introduces a problem: when refining $h$, more and more
+    cells belong to several subdomains and thus computations on them
+    have to be performed several times. Therefore, the effort per
+    preconditioning step is increased considerably.
+  \item Keep the overlap at a small multiple of $h$ and choose $H$
+    such that $H/h$ is bounded by a constant. Then, the preconditioner
+    remains uniform, the overlap remains small. This way, the
+    difficulty has been transferred to the coarse grid problem on
+    $\T_H$, since now this problem becomes more and more difficult to
+    solve, when $h$ decreases.
+  \end{enumerate}
+  
+  While the problems of the first option above are inherent and
+  unavoidable, the second option is at least seemingly optimal and
+  more creativity may be invested into the solution of the coarse grid
+  problem. Therefore, the latter is usually preferred. The coarse grid
+  problem then leads to the idea of multigrid methods, which will be
+  dealt with in Chapter~\ref{cha:iteration:multigrid-methods}.
 \end{remark}
 
 %%% Local Variables: 
