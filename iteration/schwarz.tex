@@ -6,7 +6,7 @@
   In this section, we study preconditioners, which are related to
   subspace decompositions of the space $V$ or its finite dimensional
   subspaces. We will develop the theory in an abstract way, but always
-  keep the model problem~\eqref{eq:main:1} in mind when we do so. In
+  keep the model problem~\eqref{eq:itintro:1} in mind when we do so. In
   particular, the subspaces chosen will be associated with either
   coarser mesh levels or with meshes on subdomains of $\Omega$.
   
@@ -106,13 +106,13 @@
   \begin{gather*}
     e_j^T A u_j = e_j^T A u
     \quad \Leftrightarrow \quad
-    P_j u = u_j = \frac1{a_{jj}}(A u)_j.
+    P_j u = u_j = \frac1{a_{j j}}(A u)_j.
   \end{gather*}
   Since for this decomposition, the sum $V=\bigoplus V_j$ is direct,
-  we obtain with $D=\operatorname{diag}(a_{11},\dots,a_{nn})$ the
+  we obtain with $D=\operatorname{diag}(a_{11},\dots,a_{n n})$ the
   matrix representation
   \begin{gather*}
-    (B u)_j = \frac1{a_{jj}}(A A^{-1} u)_j
+    (B u)_j = \frac1{a_{j j}}(A A^{-1} u)_j
     \quad \Leftrightarrow \quad
     B = D^{-1}.
   \end{gather*}
@@ -183,7 +183,7 @@
     \label{eq:schwarz:17}
     \scal(B^{-1}v,v) \le \sum_{j=1}^J a(v_j, v_j),
   \end{gather}
-  and thus in partiular, that the left hand side is bounded by the
+  and thus in particular, that the left hand side is bounded by the
   minimum of the right. Now we choose a special decomposition, showing
   that it cannot be less than the minimum. To this end, let
   \begin{gather}
@@ -334,7 +334,7 @@
     \sum_{j=1}^J \phi_j(x) &= 1
     & \forall x&\in\overline\Omega.
   \end{xalignat}
-  Similarly, we can define bartitions of unity in $H^1(\Omega)$ or
+  Similarly, we can define partitions of unity in $H^1(\Omega)$ or
   partitions of unity which are piecewise $C^1$.
   
   Furthermore, we assume that there is a positive constant $\delta$,
@@ -364,7 +364,7 @@
   $\delta = n h$ with $n=1,2,\ldots$ can be achieved easily by the
   following procedure:
   \begin{enumerate}
-  \item Begin with a nonoverlapping subdivision $\{\Omega_j^0\}$,
+  \item Begin with a non overlapping subdivision $\{\Omega_j^0\}$,
     for instance aligned with the mesh cells of $\T_H$.
   \item Add all cells that share at least a vertex with a cell in
     $\Omega_j^0$ to obtain a domain $\Omega_j^1$. After this
@@ -500,10 +500,10 @@
 
   In order to estimate the second term on the right, we observe that
   $a(v_j,v_k)\neq 0$ only if $\Omega_j$ and $\Omega_k$ overlap (this
-  is as much orthogonality as we get). Let therefore $o_{jk}$ be a
+  is as much orthogonality as we get). Let therefore $o_{j k}$ be a
   coefficient such that
   \begin{gather*}
-    o_{jk} =
+    o_{j k} =
     \begin{cases}
       1 & \Omega_j \cap \Omega_k \neq \emptyset \\
       0 & \Omega_j \cap \Omega_k = \emptyset
@@ -512,10 +512,10 @@
   Now we obtain
   \begin{align*}
     \sum_{j,k=1}^J a(v_j,v_k)
-    &= \sum_{j,k=1}^J o_{jk}  a(v_j,v_k) \\
-    & \le \sum_{j,k=1}^J \sqrt{o_{jk} a(v_j, v_j)} \sqrt{o_{jk} a(v_k,
+    &= \sum_{j,k=1}^J o_{j k}  a(v_j,v_k) \\
+    & \le \sum_{j,k=1}^J \sqrt{o_{j k} a(v_j, v_j)} \sqrt{o_{j k} a(v_k,
       v_k)} \\
-    & \le \sum_{j,k=1}^J o_{jk} a(v_j, v_j) \\
+    & \le \sum_{j,k=1}^J o_{j k} a(v_j, v_j) \\
     & \le N_O \sum_{j=1}^J a(v_j, v_j).
   \end{align*}
 \end{proof}
@@ -535,7 +535,7 @@
 \begin{proof}
   Let $\tilde I_H: H^1_0(\Omega) \to V_H$ be an interpolation operator
   continuous on $H^1(\Omega)$, for instance the interpolation operator
-  by Clement or the one by Schott and Zhang. For a given function
+  by Clement or the one by Scott and Zhang. For a given function
   $v\in V_h$, let $v_H = \tilde I_H v$. Then
   \begin{gather}
     \label{eq:schwarz:20}
