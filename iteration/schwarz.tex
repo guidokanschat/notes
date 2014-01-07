@@ -89,10 +89,10 @@
   The additive Schwarz preconditioner for the operator $A$ associated
   with the symmetric, and $V$-elliptic bilinear form $a(.,.)$ with
   respect to the subspace decomposition $V_j$ is the mapping $B:
-  V^*\to V$ such that
+  V \to V^*$ such that
   \begin{gather}
     \label{eq:schwarz:4}
-    B = \sum_{j=1}^J P_j A^{-1}.
+    B^{-1} = \sum_{j=1}^J P_j A^{-1}.
   \end{gather}
 \end{definition}
 
@@ -112,9 +112,9 @@
   we obtain with $D=\operatorname{diag}(a_{11},\dots,a_{n n})$ the
   matrix representation
   \begin{gather*}
-    (B u)_j = \frac1{a_{j j}}(A A^{-1} u)_j
+    (B^{-1} u)_j = \frac1{a_{j j}}(A A^{-1} u)_j
     \quad \Leftrightarrow \quad
-    B = D^{-1}.
+    B^{-1} = D^{-1}.
   \end{gather*}
   From the Richardson method in operator
   form~\eqref{eq:richardson:11}, we obtain the iteration
@@ -127,7 +127,7 @@
 
 \begin{lemma}
   \label{lemma:schwarz:3}
-  If $A$ is symmetric and positive definite, so is $B$ as defined
+  If $A$ is symmetric and positive definite, so is $B^{-1}$ as defined
   in~\eqref{eq:schwarz:4}.
 \end{lemma}
 
@@ -135,7 +135,7 @@
   By Lemma~\ref{lemma:schwarz:2} and the fact that $P_j$ maps into $V_j$, we have that
   \begin{gather}
     \label{eq:schwarz:16}
-    B = \sum_{j=1}^J A_j^{-1} \Pi_j.
+    B^{-1} = \sum_{j=1}^J A_j^{-1} \Pi_j.
   \end{gather}
   Due to equation~\eqref{eq:schwarz:1}, $A_j$ inherits its symmetry
   and positive definiteness from $A$, and thus $A_j^{-1}$ is s.p.d.
@@ -154,97 +154,98 @@
   For $v\in V$ holds
   \begin{gather}
     \label{eq:schwarz:5}
-    \scal(B^{-1}v,v) = \min_{v=\sum v_j} \sum_{j=1}^J a(v_j,v_j),
+    b(v,v) \equiv \scal(B v,v) = \min_{v=\sum v_j} \sum_{j=1}^J a(v_j,v_j),
   \end{gather}
   where the minimum is taken over all possible decompositions of $v$
   into a sum of elements $v_j\in V_j$ with $j=1,\dots,J$.
 \end{lemma}
 
 \begin{proof}
-  Since $B$ is s.p.d., so is $B^{-1}$. Therefore, $\scal(.,A_j^{-1}.)$
+  Since $B^{-1}$ is s.p.d., so is $B$. Therefore, $\scal(.,A_j^{-1}.)$
   is an inner product on $V_j^*$, for which the Bunyakovsky-Cauchy-Schwarz
   inequality holds. Thus, for an arbitrary decomposition $v=\sum v_j$
   with $v_j\in V_j$, the computation
   \begin{align*}
-    \scal(B^{-1}v,v)
-    &= \sum_{j=1}^J \scal(B^{-1} v, A_j^{-1} A_j v_j)
-    = \sum_{j=1}^J \scal(\Pi_j B^{-1} v, A_j^{-1} A_j v_j) \\
-    &\le \sum_{j=1}^J \sqrt{\scal(\Pi_j B^{-1} v, A_j^{-1}\Pi_j B^{-1} v)}
+    b(v,v)
+    &= \sum_{j=1}^J b(v, A_j^{-1} A_j v_j)
+    = \sum_{j=1}^J \scal(\Pi_j B v, A_j^{-1} A_j v_j) \\
+    &\le \sum_{j=1}^J \sqrt{\scal(\Pi_j B v, A_j^{-1}\Pi_j B v)}
     \sqrt{\scal(A_j v_j, A_j^{-1}A_j v_j)} \\
-    & \le \sqrt{\sum_{j=1}^J \scal(\Pi_j B^{-1} v, A_j^{-1}\Pi_j
-      B^{-1} v) }
+    & \le \sqrt{\sum_{j=1}^J \scal(\Pi_j B v, A_j^{-1}\Pi_j
+      B v) }
     \sqrt{\sum_{j=1}^J \scal(A_j v_j,A_j^{-1}A_j v_j)} \\
-    &= \sqrt{\scal(B^{-1} v, {\sum A_j^{-1}\Pi_j} B^{-1}v)}
+    &= \sqrt{\scal(B v, {\sum A_j^{-1}\Pi_j} B v)}
     \sqrt{\sum_{j=1}^J \scal(A_j v_j, v_j)} \\
-    &= \sqrt{\scal(B^{-1}v,v)} \sqrt{\sum_{j=1}^J a(v_j, v_j)},
+    &= \sqrt{b(v,v)} \sqrt{\sum_{j=1}^J a(v_j, v_j)},
   \end{align*}
   yields for arbitrary decompositions
   \begin{gather}
     \label{eq:schwarz:17}
-    \scal(B^{-1}v,v) \le \sum_{j=1}^J a(v_j, v_j),
+    b(v,v) \le \sum_{j=1}^J a(v_j, v_j),
   \end{gather}
   and thus in particular, that the left hand side is bounded by the
   minimum of the right. Now we choose a special decomposition, showing
   that it cannot be less than the minimum. To this end, let
   \begin{gather}
     \label{eq:schwarz:18}
-    v_j = A_j^{-1} \Pi_j B^{-1} v.
+    v_j = A_j^{-1} \Pi_j B v.
   \end{gather}
   By Lemma~\ref{lemma:schwarz:2}, we have
   \begin{gather*}
-    \sum v_j = \sum A_j^{-1} \Pi_j B^{-1} v = B B^{-1} v = v.
+    \sum v_j = \sum A_j^{-1} \Pi_j B v = B^{-1} B v = v.
   \end{gather*}
   Furthermore,
   \begin{align*}
     \sum_{j=1}^J \scal(A_j v_j, v_j)
-    &= \sum_{j=1}^J \scal(A_j A_j^{-1} \Pi_j B^{-1} v, A_j^{-1} \Pi_j
-    B^{-1} v) \\
-    &= \sum_{j=1}^J \scal(\Pi_j B^{-1} v, A_j^{-1} \Pi_j B^{-1} v) \\
-    &= \scal(B^{-1} v, \sum A_j^{-1} \Pi_j B^{-1} v) = \scal(B^{-1} v, v).
+    &= \sum_{j=1}^J \scal(A_j A_j^{-1} \Pi_j B v, A_j^{-1} \Pi_j
+    B v) \\
+    &= \sum_{j=1}^J \scal(\Pi_j B v, A_j^{-1} \Pi_j v) \\
+    &= \scal(B v, \sum A_j^{-1} \Pi_j B v) = b(v, v).
   \end{align*}
 \end{proof}
 
 \begin{theorem}
   \label{theorem:schwarz:1}
   Let $A$ be s.p.d. and $B$ defined by
-  equation~\eqref{eq:schwarz:4}. Then, the eigenvalues of $BA$ are
-  positive and are enclosed by
+  equation~\eqref{eq:schwarz:4}. Then, the \putindex{spectral
+    equivalence}~\eqref{eq:richardson:12} holds with
+  positive constants
   \begin{gather}
     \label{eq:schwarz:19}
-    \begin{split}
-    \Lambda(BA) &= \max_{v\in V} \frac{a(v,v)}{\min\limits_{v=\sum v_j}
+%    \begin{split}
+    \Lambda(B,A) = \max_{v\in V} \frac{a(v,v)}{\min\limits_{v=\sum v_j}
       \sum\limits_{j=1}^J a(v_j, v_j)}
-    \\
-    \lambda(BA) &= \min\limits_{v\in V} \frac{a(v,v)}{\min\limits_{v=\sum v_j}
-      \sum\limits_{j=1}^J a(v_j, v_j)}      
-    \end{split}
+    ,\qquad
+    \lambda(B,A) = \min\limits_{v\in V} \frac{a(v,v)}{\min\limits_{v=\sum v_j}
+      \sum\limits_{j=1}^J a(v_j, v_j)}.
+%    \end{split}
   \end{gather}
 \end{theorem}
 
 \begin{proof}
-  Here we use the fact, that $\scal(B^{-1}.,.)$ is an inner product on
+  Here we use the fact, that $b(.,.)$ is an inner product on
   $V$ and that by
   \begin{gather*}
-    \scal(B^{-1}BA v,v) = a(v,v) = \scal(v, B^{-1}BA v),
+    b(B^{-1}A v,v) = a(v,v) = b(v, B^{-1}A v),
   \end{gather*}
-  the operator $BA$ is symmetric with respect to this inner
+  the operator $B^{-1}A$ is symmetric with respect to this inner
   product. Thus, the \putindex{Rayleigh quotient} qualifies to
   estimate the extremal eigenvalues, for instance,
-  \begin{align*}
-    \Lambda(BA)
-    &= \max_{v\in V} \frac{\scal(B^{-1}BA v,v)}{\scal(B^{-1}v,v)} \\
-    &= \max_{v\in V} \frac{a(v,v)}{\min\limits_{v=\sum v_j}
+  \begin{gather*}
+    \Lambda(B^{-1}A)
+    = \max_{v\in V} \frac{b(B^{-1}A v,v)}{b(v,v)}
+    = \max_{v\in V} \frac{a(v,v)}{\min\limits_{v=\sum v_j}
       \sum\limits_{j=1}^J a(v_j, v_j)},
-  \end{align*}
+  \end{gather*}
   and the same for the minimum.
 \end{proof}
 
 \begin{note}
   \label{note:schwarz:1}
-  In order to estimate the condition number $\Lambda(BA)/\lambda(BA)$ of a Schwarz
+  In order to estimate the condition number $\Lambda(B,A)/\lambda(B,A)$ of a Schwarz
   preconditioner, it is now sufficient to bound the two quotients
   in~\eqref{eq:schwarz:19} from above and below. In particular, in
-  order to find a bound for $\Lambda(BA)$, we have to find an estimate of
+  order to find a bound for $\Lambda(B,A)$, we have to find an estimate of
   the form
   \begin{gather}
     \label{eq:schwarz:23}
@@ -252,7 +253,7 @@
   \end{gather}
   or in other words, $a(v,v)$ has to be bounded by the sum on the
   right for any decomposition $v=\sum v_j$. On the other hand, in
-  order to bound $1/\lambda(BA)$, we need an estimate of the form
+  order to bound $1/\lambda(B,A)$, we need an estimate of the form
   \begin{gather}
     \label{eq:schwarz:24}
      \min_{v=\sum v_j}\sum_{j=1}^J a(v_j, v_j) \lesssim a(v,v),
@@ -416,10 +417,10 @@
 
 \begin{definition}
   Let the spaces $V_j$, $j=0,\dots,J$ be defined as above. Then, the
-  \define{two-level Schwarz preconditioner} is defined as
+  \define{two-level additive Schwarz preconditioner} is defined as
   \begin{gather}
     \label{eq:schwarz:10}
-    B_{\text{TLS}} = \sum_{j=0}^J P_j A^{-1} = \sum_{j=0}^J A_j^{-1} \Pi_j,
+    B^{-1}_{\text{TLS}} = \sum_{j=0}^J P_j A^{-1} = \sum_{j=0}^J A_j^{-1} \Pi_j,
   \end{gather}
   where $P_j$ is defined according to~\eqref{eq:schwarz:2} and $A_j:
   V_j\to V_j^*$ by
@@ -596,8 +597,8 @@
   Under the assumptions made so far in this section, there holds
   \begin{gather}
     \label{eq:schwarz:14}
-    \kappa(B_{\text{TLS}} A_h)
-    = \frac{\lambda(B_{\text{TLS}}, A_h)}{\Lambda(B_{\text{TLS}},
+    \kappa(B^{-1}_{\text{TLS}} A_h)
+    = \frac{\Lambda(B_{\text{TLS}}, A_h)}{\lambda(B_{\text{TLS}},
       A_h)}
     \lesssim \left(1+\frac H\delta\right)^2,
   \end{gather}
@@ -623,7 +624,7 @@
   Example~\ref{example:schwarz:2} reveals a problem though: typically,
   $\delta$ is of the order of $h$, such that the estimate becomes
   \begin{gather*}
-    \kappa(B_{\text{TLS}} A_h) \lesssim \left(1+\frac H h\right)^2.
+    \kappa(B^{-1}_{\text{TLS}} A_h) \lesssim \left(1+\frac H h\right)^2.
   \end{gather*}
   If we choose $H$ constant, this is exactly as bad as the condition
   number of $A$ itself. Under mild further assumptions, the square on
