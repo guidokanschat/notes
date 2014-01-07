@@ -46,28 +46,55 @@
 \end{notation}
 
 \begin{definition}
-  We call the bilinear form $a(.,.)$ \define{symmetric}, if
-  holds
+  We call the bilinear form $a(.,.)$ \define{symmetric} and its
+  associated operator $A$ self-adjoint, if there holds
   \begin{gather*}
     a(u,v) = a(v,u) \qquad \forall u,v \in V.
   \end{gather*}
-  It is \define{elliptic}, if for there is a positive number $\gamma$
-  such that
+  They are called \define{elliptic}, if for there is a positive number
+  $\gamma$ such that
   \begin{gather*}
     a(u,u) \ge \gamma \qquad \forall u\in V.
   \end{gather*}
 \end{definition}
 
 \begin{definition}
-  For positive definite self adjoint operators
-  \define{Rayleigh quotient}
+  \defindex{Lambdaa@$\Lambda(A)$}
+  \defindex{lambdaa@$\lambda(A)$}
+  For positive definite self adjoint operators, we obtain the possibly
+  infinite bounds of the spectrum
   \begin{gather}
     \label{eq:richardson:8}
-    \Lambda(A) = \max_{u\in V_n}\frac{a(u,u)}{\norm{u}_V^2},
+    \Lambda(A) = \sup_{u\in V}\frac{a(u,u)}{\norm{u}_V^2},
     \qquad
-    \lambda(A) = \min_{u\in V_n}\frac{a(u,u)}{\norm{u}_V^2}.
+    \lambda(A) = \inf_{u\in V}\frac{a(u,u)}{\norm{u}_V^2},
   \end{gather}
+  \defindex{kappaa@$\kappa(A)$}
+  as well as the possibly infinite \define{spectral condition number}
+  \begin{gather*}
+   \kappa(A) = \frac{\Lambda(A)}{\lambda(A)}.
+  \end{gather*}
 \end{definition}
+
+\begin{note}
+  Note that the spectral condition number depends on the norm of the
+  space $V$. It is bounded, if and only if $A$ is bounded.
+\end{note}
+
+\begin{example}
+  Let $V=H^1_0(\Omega)$ with the inner product
+  \begin{gather*}
+    \scal(u,v)_1 = \int_\Omega \nabla u\cdot \nabla v \dx.  
+  \end{gather*}
+  If $A$ is the operator associated with the bilinear form $a(.,.)$
+  in~\eqref{eq:itintro:1}, then 
+  \begin{gather*}
+    \Lambda(A) = \lambda(A) = \kappa(A) = 1.    
+  \end{gather*}
+  If on the other hand $V = L^2(\Omega)$ equipped with the usual
+  $L^2$-inner product, then $A$ is unbounded and thus $\kappa(A) =
+  \infty$. $\lambda(A)$ is the constant in Friedrichs' inequality.
+\end{example}
 
 \begin{notation}
   After choosing a basis for a finite dimensional space $V_n$ or a
@@ -83,8 +110,81 @@
   by $\mat A_n$.
 \end{notation}
 
+\begin{definition}
+  \defindex{Lambdama@$\Lambda(\mat A)$}
+  \defindex{lambdama@$\lambda(\mat A)$}
+  The two extremal eigenvalues of the matrix $\mat A_n$ can be
+  obtained by the maximum and minimum of the \define{Rayleigh
+    quotient}
+    \begin{gather}
+    \label{eq:richardson:8}
+    \Lambda(\mat A) = \max_{\vec x\in \R^n}\frac{\vec x^T \mat A \vec x}{\vec x^T\vec x},
+    \qquad
+    \lambda(\mat A) = \min_{\vec x\in \R^n}\frac{\vec x^T \mat A \vec x}{\vec x^T\vec x}.
+  \end{gather}
+  \defindex{kappama@$\kappa(\mat A)$}
+  The \putindex{spectral condition number} is
+  \begin{gather*}
+    \kappa(\mat A) = \frac{\Lambda(\mat A)}{\lambda(\mat A)}.
+  \end{gather*}
+\end{definition}
 
+\begin{note}
+  The spectral condition number of the operator $A$ depends on the
+  bilinear form $a(.,.)$ and the choice of the norm in $V$. On the
+  other hand, the spectral condition number of the matrix $\mat A$
+  depends on the choice of a basis of the space $V_n$.
+\end{note}
 
+\begin{example}
+  Let $\{\phi_i\}$ be the standard, piecewise linear, finite element
+  basis on a quasi-uniform triangulation of mesh size $h$. Let $\mat
+  M$, the so called \define{mass matrix} be the matrix associated with
+  the $L^2$-inner product. It has the entries
+  \begin{gather*}
+    m_{ij} = \int_\Omega \phi_i(x) \phi_j(x) \dx.
+  \end{gather*}
+  It is easy to verify, that $m_{ij}\ge 0$, and that not more
+  entries in each row as edges of the triangulation meet in one vertex
+  are different from zero. Furthermore, that the size of those entries
+  is or order $h^d$, where $d$ is the space dimension. From these two
+  facts we immediately obtain
+  \begin{gather*}
+    \Lambda(\mat M) = \mathcal O(h^{-d}).
+  \end{gather*}
+  The argument for $\lambda(\mat M)$ is more subtle. For any mesh cell
+  $T$, let $\vec x_T$ be the entries of the vector $\vec x$ which
+  belong to node values of the cell $T$. Let $\mat M_T$ be the cell
+  mass matrix obtained by restricting the $L^2$-inner product to
+  $T$. Then,
+  \begin{gather*}
+    \vec x^T \mat M \vec x
+    = \sum_{T\in\T_h} \vec x^T_T \mat M_T \vec x_T
+    \ge \min_{T\in\T_h} \frac{\vec x^T_T \mat M_T \vec x_T}{\vec
+      x^T_T\vec x_T}
+    \sum_{T\in\T_h} |\vec x_T|^2 \ge \lambda(\mat M_T)  |\vec x|^2.
+  \end{gather*}
+  In order to estimate the eigenvalues of $\mat M_T$, we note that for
+  a unisolvent element, the norms $|\vec x_T|$ and $\|u\|_{0,T}$ are
+  equivalen on the reference cell, and the $L^2$-norm scales with
+  $h^d$ when transforming to the real cell $T$. Thus, we have
+  $\lambda(\mat M) = \mathcal O(h^{-d})$.
+  Therefore, the condition number is
+  \begin{gather*}
+    \kappa(\mat M) = \frac{\mathcal O(h^{-d})}{\mathcal O(h^{-d})} = {\mathcal O(1)}.
+  \end{gather*}
+\end{example}
+
+\begin{note}
+  A closer inspection of the proof yields, that on a shape regular
+  triangulation with cell radii rnaging between the minimum $h$ and
+  the maximum $H$, we have
+  \begin{align*}
+    \Lambda(\mat M) &= \mathcal O(H^{-d}) \\
+    \lambda(\mat M) &= \mathcal O(h^{-d}) \\
+    \kappa(\mat M) &= \mathcal O\left(\left(\frac Hh\right)^{-d}\right)
+  \end{align*}
+\end{note}
 
 %%% Local Variables: 
 %%% mode: latex
