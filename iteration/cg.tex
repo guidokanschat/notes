@@ -4,7 +4,7 @@
 
 \begin{intro}
   Relying on Hilbert space structure more than Richardson's iteration
-  is the \define{conjugate gradient method} (cg), since it uses
+  is the \putindex{conjugate gradient method} (cg), since it uses
   orthogonal search directions. Nevertheless, it also relies on
   constructing search directions from residuals, such that a
   \putindex{Riesz isomorphism} enters the same way as before and can
@@ -15,31 +15,75 @@
   iteration method.
 \end{intro}
 
-\begin{definition}
-  Let $V$ be a Hilbert space and $V^*$ its dual. The conjugate
-  gradient method for an iteration vector $x^{(k)} \in V$ involves the
+\begin{definition}[Conjugate gradient method]
+  Let $V$ be a Hilbert space and $V^*$ its dual. The \define{conjugate
+  gradient method} for an iteration vector $u^{(k)} \in V$ involves the
   residuals $r^{(k)} \in V^*$ as well as the update direction $p^{(k)}
-  \in V$ and the auxiliary vector $z^{(k)} \in V$. It consists of the
+  \in V$ and the auxiliary vector $w^{(k)} \in V$. It consists of the
   steps
   \begin{enumerate}
-  \item Initialization: for $f$ and $x^{(0)}$ given, compute
+  \item Initialization: for $f$ and $u^{(0)}$ given, compute
     \begin{xalignat*}{2}
-      r^{(0)} &= f- a(x^{(0)},.) \\
-      \scal(z^{(0)}, v) &= r^{(0)}(v) & \forall v &\in V \\
-      p^{(0)} &= z^{(0)}.
+      r^{(0)} &= f- a(u^{(0)},.) \\
+      \scal(w^{(0)}, v) &= r^{(0)}(v) & \forall v &\in V \\
+      p^{(0)} &= w^{(0)}.
     \end{xalignat*}
-    \item Iteration step: for $x^{(k)}$, $r^{(k)}$, $z^{(k)}$, and
+    \item Iteration step: for $u^{(k)}$, $r^{(k)}$, $w^{(k)}$, and
       $p^{(k)}$ given, compute
       \begin{xalignat*}2
-        \alpha_k &= \frac{r^{(k)}(z^{(k)})}{a(p^{(k)},p^{(k)})} \\
-        x^{(k+1)} &= x^{(k)} + \alpha_k p^{(k)} \\
+        \alpha_k &= \frac{r^{(k)}(w^{(k)})}{a(p^{(k)},p^{(k)})} \\
+        u^{(k+1)} &= u^{(k)} + \alpha_k p^{(k)} \\
         r^{(k+1)} &= r^{(k)} - \alpha_k a(p^{(k)},.) \\
-      \scal(z^{(k+1)}, v) &= r^{(k+1)}(v) & \forall v &\in V \\
-      \beta_k &= \frac{r^{(k+1)}(z^{(k+1)})}{r^{(k)}(z^{(k)})}\\
-      p^{(k+1)} &= z^{(k+1)} + \beta_k p^{(k)}
+      \scal(w^{(k+1)}, v) &= r^{(k+1)}(v) & \forall v &\in V \\
+      \beta_k &= \frac{r^{(k+1)}(w^{(k+1)})}{r^{(k)}(w^{(k)})}\\
+      p^{(k+1)} &= w^{(k+1)} + \beta_k p^{(k)}
       \end{xalignat*}
   \end{enumerate}
 \end{definition}
+
+\begin{remark}
+  The results on orthogonality and minimization properties of the cg
+  method in~\cite{GrossmannRoosStynes07} or~\cite{Saad00} remain valid in this
+  context. Differences occur in the interpretation of these
+  properties. The conjugate gradient method does not necessarily
+  converge in a finite number of steps, and if the bilinear form is
+  unbounded, no convergence rate is guaranteed.
+\end{remark}
+
+
+
+% \begin{lemma}
+%   Let $a(.,.)$ be symmetric and elliptic. Then, either $u^{(k)}$ is a
+%   solution, or $u^{(k+1)}$ can be computed by a step of the conjugate
+%   gradient method. Furthermore, there are the 
+% \end{lemma}
+
+\begin{definition}
+  The \define{preconditioned cg method} is obtained from
+  above algorithm by reinterpreting the \putindex{Riesz isomorphism}
+  in the computation of $w^{(k+1)}$ as a preconditioning operation,
+  much alike Definition~\ref{definition:richardson:2} of the
+  preconditioned Richardson iteration. Thus, the line defining
+  $w^{(k+1)}$ is replaced by
+  \begin{xalignat*}2
+    b(w^{(k+1)}, v) &= r^{(k+1)}(v) & \forall v &\in V .
+  \end{xalignat*}
+  Here, like there, the preconditioner enters naturally from the weak
+  form of the algorithm.
+\end{definition}
+
+\begin{theorem}
+  Let the bilinear form $a(.,.)$ be symmetric, and let the
+  \putindex{spectral equivalence}~\eqref{eq:richardson:12} hold. Then,
+  the preconditioned cg method converges and we have the estimate
+  \begin{gather}
+    \label{eq:cg:1}
+    \|u^{(k)} - u\|_A \le 2
+    \left(\frac{\sqrt\kappa-1}{\sqrt\kappa+1}\right)^k \|u^{(0)} - u\|_A.
+  \end{gather}
+  Here, $\kappa = \Lambda/\lambda$ is the \putindex{spectral condition
+    number} of the preconditioned problem.
+\end{theorem}
 
 %%% Local Variables: 
 %%% mode: latex
