@@ -43,7 +43,33 @@
   We will tacitly assume that operators $A$, $B$, etc.\ are defined by
   equation~\eqref{eq:itintro:2} and the bilinear forms $a(.,.)$,
   $b(.,.)$, etc., respectively, if they are not defined otherwise.
-  
+\end{notation}
+
+\begin{definition}
+  We call the bilinear form $a(.,.)$ \define{symmetric}, if
+  holds
+  \begin{gather*}
+    a(u,v) = a(v,u) \qquad \forall u,v \in V.
+  \end{gather*}
+  It is \define{elliptic}, if for there is a positive number $\gamma$
+  such that
+  \begin{gather*}
+    a(u,u) \ge \gamma \qquad \forall u\in V.
+  \end{gather*}
+\end{definition}
+
+\begin{definition}
+  For positive definite self adjoint operators
+  \define{Rayleigh quotient}
+  \begin{gather}
+    \label{eq:richardson:8}
+    \Lambda(A) = \max_{u\in V_n}\frac{a(u,u)}{\norm{u}_V^2},
+    \qquad
+    \lambda(A) = \min_{u\in V_n}\frac{a(u,u)}{\norm{u}_V^2}.
+  \end{gather}
+\end{definition}
+
+\begin{notation}
   After choosing a basis for a finite dimensional space $V_n$ or a
   Schauder basis for the space $V$ (assuming $V$ separable), say
   $\{\phi_i\}$, we can define a (possibly infinite-dimensional) matrix
@@ -54,15 +80,11 @@
   
   If we restrict the bilinear forms to a finite dimensional subspace
   $V_n$, we denote the matrices $\mat A$ restricted to this subspace
-  by $\mat A_n$. Accordingly, we define the bounds of the
-  \define{Rayleigh quotient}
-  \begin{gather}
-    \label{eq:richardson:8}
-    \Lambda_n = \max_{u\in V_n}\frac{a(u,u)}{\norm{u}_V^2},
-    \qquad
-    \lambda_n = \min_{u\in V_n}\frac{a(u,u)}{\norm{u}_V^2}.
-  \end{gather}
+  by $\mat A_n$.
 \end{notation}
+
+
+
 
 %%% Local Variables: 
 %%% mode: latex
