@@ -70,6 +70,7 @@
     \lambda(A) = \inf_{u\in V}\frac{a(u,u)}{\norm{u}_V^2},
   \end{gather}
   \defindex{kappaa@$\kappa(A)$}
+  \index{condition number|see {spectral condition number}}
   as well as the possibly infinite \define{spectral condition number}
   \begin{gather*}
    \kappa(A) = \frac{\Lambda(A)}{\lambda(A)}.
@@ -78,7 +79,8 @@
 
 \begin{note}
   Note that the spectral condition number depends on the norm of the
-  space $V$. It is bounded, if and only if $A$ is bounded.
+  space $V$. It is bounded, if and only if $A$ is bounded with respect
+  to this norm.
 \end{note}
 
 \begin{example}
@@ -116,8 +118,8 @@
   The two extremal eigenvalues of the matrix $\mat A_n$ can be
   obtained by the maximum and minimum of the \define{Rayleigh
     quotient}
-    \begin{gather}
-    \label{eq:richardson:8}
+  \begin{gather}
+    \label{eq:itintro:3}
     \Lambda(\mat A) = \max_{\vec x\in \R^n}\frac{\vec x^T \mat A \vec x}{\vec x^T\vec x},
     \qquad
     \lambda(\mat A) = \min_{\vec x\in \R^n}\frac{\vec x^T \mat A \vec x}{\vec x^T\vec x}.
