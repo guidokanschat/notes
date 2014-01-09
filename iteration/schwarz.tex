@@ -49,11 +49,11 @@
 \begin{definition}
   \label{definition:schwarz:1}
   \index{Pj@$P_j$|see {Ritz projection}}
-  Let the operator $P_j: V \to V_j$ be defined as the solution
-  operator $P_j u := u_j$ to the problem
+  Let the operator $P_j: V \to V_j$ be defined such that $P_j u \in V_j$ is
+  the solution to the problem
   \begin{gather}
     \label{eq:schwarz:2}
-    a(u_j,v_j) = a(u,v_j),\quad\forall v_j\in V_j.
+    a(P_j u_j,v_j) = a(u,v_j),\quad\forall v_j\in V_j.
   \end{gather}
   \index{A-orthogonal projection@$A$-orthogonal projection|see {Ritz projection}}
   We call $P_j$ the $A$-orthogonal projection or \define{Ritz projection} to
@@ -62,10 +62,10 @@
 
  Furthermore, we define the $V$-orthogonal projection operator
   \index{Pij@$\Pi_j$}
-  $\Pi_j: V \to V_j$ as the solution operator $\Pi_j u := u_j$ to the problem
+  $\Pi_j: V \to V_j$ such that $\Pi_j u\in V_j$ is the solution to the problem
   \begin{gather}
     \label{eq:schwarz:3}
-    \scal(u_j,v_j) = \scal(u,v_j),\quad\forall v_j\in V_j.
+    \scal(\Pi_j u_j,v_j) = \scal(u,v_j),\quad\forall v_j\in V_j.
   \end{gather}
 \end{definition}
 
@@ -97,32 +97,37 @@
 \end{definition}
 
 \begin{example}
-  The Jacobi iteration may serve as a guiding example for the
+  \label{example:schwarz:Jacobi}
+  The \putindex{Jacobi method} may serve as a guiding example for the
   definition of these methods. To this end, let $V = \R^n$ with its
   Euclidean inner product $\scal(.,.)$. let $V_j =
   \operatorname{span}\{e_j\}$ be the space spanned by the $j$th unit
   vector. Let $A$ be a symmetric, positive definite matrix and $a(u,v)
   = v^T A u$. Then, equation~\eqref{eq:schwarz:2} becomes
-  \begin{gather*}
+  \begin{gather}
+    \label{eq:schwarz:27}
     e_j^T A u_j = e_j^T A u
     \quad \Leftrightarrow \quad
     P_j u = u_j = \frac1{a_{j j}}(A u)_j.
-  \end{gather*}
+  \end{gather}
   Since for this decomposition, the sum $V=\bigoplus V_j$ is direct,
   we obtain with $D=\operatorname{diag}(a_{11},\dots,a_{n n})$ the
   matrix representation
   \begin{gather*}
-    (B^{-1} u)_j = \frac1{a_{j j}}(A A^{-1} u)_j
+    (B^{-1} v)_j = \frac1{a_{j j}}(A A^{-1} v)_j = \frac1{a_{j j}} v_j
     \quad \Leftrightarrow \quad
     B^{-1} = D^{-1}.
   \end{gather*}
-  From the Richardson method in operator
-  form~\eqref{eq:richardson:11}, we obtain the iteration
-  \begin{align*}
-    u^{(k+1)} &= u^{(k)} - \omega_k \sum_{j=1}^J P_j \bigl(u^{(k)} -
-    A^{-1}f\bigr)\\
-    &= u^{(k)} - \omega_k D^{-1} \bigl(A u^{(k)} - f\bigr).
-  \end{align*}
+  We enter this preconditioner into the Richardson method in operator
+  form~\eqref{eq:richardson:11} to obtain the iteration
+  \begin{gather}
+    \label{eq:schwarz:28}
+    \begin{split}
+      u^{(k+1)} &= u^{(k)} - \omega_k \sum_{j=1}^J P_j \bigl(u^{(k)} -
+      A^{-1}f\bigr)\\
+      &= u^{(k)} - \omega_k D^{-1} \bigl(A u^{(k)} - f\bigr).
+    \end{split}
+  \end{gather}
 \end{example}
 
 \begin{lemma}
@@ -713,6 +718,114 @@
   problem then leads to the idea of multigrid methods, which will be
   dealt with in Chapter~\ref{cha:iteration:multigrid-methods}.
 \end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Multiplicative methods}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{example}
+  If we write the Jacobi method in equation~\eqref{eq:schwarz:28} for
+  each line, we get for each $j=1,\ldots,J$:
+  \begin{gather}
+    \label{eq:schwarz:29}
+      u_j^{(k+1)} = u_j^{(k)} - \omega_k P_j \bigl(u^{(k)} - A^{-1}f\bigr).
+  \end{gather}
+  Since the updates are orthogonal, this is equivalent to the sum
+  in~\eqref{eq:schwarz:28}. In the \putindex{Gauß-Seidel method}, these
+  projections are done consecutively. For instance, if we introduce
+  broken indices, we can write it in the form
+  \begin{gather}
+    \label{eq:schwarz:30}
+      u_j^{(k+\frac{j}{J})} = u_j^{(k+\frac{j-1}{J})}
+      - \omega_k P_j \bigl(u^{(k+\frac{j-1}{J})} - A^{-1}f\bigr).
+  \end{gather}
+  This means, we apply the corrections consecutively one after the
+  other. In order to understand convergence of this method, we are
+  bringing it into a different form and study the propagation of the
+  error. Let $uA^{-1}f$ be the solution of the problem. Then, the
+  error propagates like
+  \begin{multline}
+    \label{eq:schwarz:31}
+      u^{(k+\frac{j}{J})} - u = u^{(k+\frac{j-1}{J})} - u
+      - \omega_k P_j \left(u^{(k+\frac{j-1}{J})} - u\right) \\
+      = (I-\omega_k P_j) \left(u^{(k+\frac{j-1}{J})} - u\right).
+  \end{multline}
+  The error after a whole Gauß-Seidel step is
+  \begin{gather}
+    \label{eq:schwarz:32}
+      u^{(k+1)} - u
+      = (I-\omega_k P_J)(I-\omega_k P_{J-1})\dots(I-\omega_k P_1) \left(u^{(k)} - u\right).
+  \end{gather}
+  The corresponding error equation for the Jacobi method is
+  \begin{gather}
+    \label{eq:schwarz:33}
+    u^{(k+1)} - u = \left(I-\omega_k \sum_{j=1}^J P_j\right) \left(u^{(k)} - u\right).
+  \end{gather}
+  Thus the notions of multiplicative and additive methods.
+\end{example}
+
+\begin{intro}
+  The example of the Jacobi and Gauß-Seidel methods is generic in the
+  way that for any subspace decomposition of $V$ into the sum of
+  $V_j$, we can define an additive and a multiplicative method. Not
+  surprisingly, their analysis also rests on the same ingredients.
+\end{intro}
+
+\begin{definition}
+  The \define{multiplicative Schwarz preconditioner} for the operator $A$ associated
+  with the symmetric, and $V$-elliptic bilinear form $a(.,.)$ with
+  respect to the subspace decomposition $V_j$ is the mapping $B_m:
+  V \to V^*$ such that
+  \begin{gather}
+    \label{eq:schwarz:34}
+    B_m^{-1} = (I -  E_m) A^{-1},
+  \end{gather}
+  where $E_m$ is the multiplicative \define{error propagation operator}
+  \begin{gather}
+    \label{eq:schwarz:35}
+    E_m = (I - P_J)(I - P_{J-1})\dots(I - P_1).
+  \end{gather}
+\end{definition}
+
+\begin{lemma}
+  The error after one step of the iteration
+  \begin{gather*}
+    u^{(k+1)} = u^{(k)} - B_m^{-1}\left(A u^{(k)} - f\right)
+  \end{gather*}
+  is given by
+  \begin{gather*}
+    u^{(k+1)} - u = E_m \left(u^{(k)} - u\right).
+  \end{gather*}
+\end{lemma}
+
+\begin{proof}
+  First, we use the definition of $B_m$ to obtain
+  \begin{gather*}
+    u^{(k+1)} = u^{(k)} - (I -  E_m) \left(u^{(k)} - u\right).
+  \end{gather*}
+  Therefore,
+  \begin{gather*}
+    u^{(k+1)} - u = u^{(k)} - u - (I -  E_m) \left(u^{(k)} - u\right)
+    = (I-I+E_m) \left(u^{(k)} - u\right).
+  \end{gather*}  
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Extensions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{intro}
+  In order to keep the presentation and the proofs simple, we have
+  presented Schwarz methods in their most straight forward form. The
+  framework allows for extensions, which each add minor
+  complications to the proofs and yield slightly modified results. We
+  are going to mention a few of them.
+\end{intro}
 
 %%% Local Variables: 
 %%% mode: latex
