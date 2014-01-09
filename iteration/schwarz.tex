@@ -262,6 +262,55 @@
   that the sum is bounded by the right hand side.
 \end{note}
 
+\begin{assumption}[Strengthened Cauchy-Schwarz inequalities]
+  \label{assumption:schwarz:1}
+  \defindex{strengthened Cauchy-Schwarz inequalities}
+  for $1\le i,j \le J$, there are constants $\epsilon_{ij} \in [0,1]$
+  such that for all $v_i \in V_i$ and $v_j \ni V_j$ there holds
+  \begin{gather}
+    \label{eq:schwarz:25}
+    \left| a(v_i, v_j)\right|
+    \le \epsilon_{ij} \sqrt{a(v_i,v_i)} \sqrt{a(v_j,v_j)}.
+  \end{gather}
+  \index{E@$\mathcal E$}
+  The symmetric $J\times J$-matrix with entries $\epsilon_{ij}$ is called
+  $\mathcal E$, and $\rho(\mathcal E)$ is its spectral radius.
+\end{assumption}
+
+\begin{note}
+  Inequality~\eqref{eq:schwarz:25} with $\epsilon_{ij}$ holds by the
+  regular Cauchy-Schwarz inequality. But for such a matrix, the
+  spectral radius is $J$. As the following lemma will reveal, it is
+  necessary to obtain $\rho(\mathcal E)$ independent of $J$ to obtain
+  estimate~\eqref{eq:schwarz:23}.
+\end{note}
+
+\begin{lemma}
+  \label{lemma:schwarz:7}
+  Let the estimate~\eqref{eq:schwarz:25} hold. Then,
+  estimate~\eqref{eq:schwarz:23} holds with the constant
+  $\rho(\mathcal E)$.
+\end{lemma}
+
+\begin{proof}
+  Let $v\in V$ and its decomposition $v=\sum v_j$ with $v_j\in V_j$ be
+  chosen arbitrarily. Then,
+  \begin{multline*}
+    a(v,v)
+    = a\left(\sum_i v_i, \sum_j v_j\right)
+    = \sum_{i,j=1}^J a(v_i, v_j)
+    \le \sum_{i,j=1}^J \epsilon_{ij} \sqrt{a(v_{\vphantom{j}i},v_i)} \sqrt{a(v_j,v_j)}.
+  \end{multline*}
+  The latter sum corresponds to a matrix-vector product of the form
+  $\vec x^T \mathcal E \vec x$, where the entries of $x$ are of the
+  form $\sqrt{a(v_i,v_i)}$. Since $\mathcal E$ is symmetric positive
+  definite, this product can be estimated by $\rho(\mathcal E) |\vec
+  x|^2$, and thus
+  \begin{gather*}
+    a(v,v) \le \rho(\mathcal E) \sum_{j=1}^J a(v_j,v_j).
+  \end{gather*}
+\end{proof}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Two-level additive Schwarz preconditioner}
@@ -286,12 +335,6 @@
   subdomains overlap each other like the three examples in
   Figure~\ref{fig:schwarz:ddmeshes} on the right. A more precise
   definition of the required overlap follows.
-
-  \index{NO@$N_O$}
-  Furthermore, we assume that there is a constant $N_O$ independent of
-  $\T_h$ and the number of subdomains, such that for each $j$ the
-  intersection $\Omega_j\cap\Omega_k$ is nonempty for at most $N_O$
-  subdomains $\Omega_k$.
 \end{intro}
 
 \begin{figure}[tp]
@@ -311,6 +354,7 @@
 \end{figure}
 
 \begin{definition}
+  \label{definition:schwarz:overlap}
   A covering of $\Omega$ with subdomains $\Omega_j$ is called
   \define{overlapping} with minimal \define{overlap} $\delta$, if for
   each $\Omega_j$ and all $x\in\Omega_j$ holds:
@@ -319,6 +363,17 @@
     \delta\;
     \Rightarrow\; \exists k\neq j: x\in \Omega_k.
   \end{gather*}
+\end{definition}
+
+\begin{definition}
+  \label{definition:schwarz:finite-covering}
+\defindex{NO@$N_O$}
+  \defindex{finite covering}
+  We say that a family of coverings is finite, if
+  there is a constant $N_O$ independent of $\T_h$ and the number of
+  subdomains, such that for each $j$ the intersection
+  $\Omega_j\cap\Omega_k$ is nonempty for at most $N_O$ subdomains
+  $\Omega_k$.
 \end{definition}
 
 \begin{definition}
@@ -469,6 +524,27 @@
 \end{proof}
 
 \begin{lemma}
+  \label{lemma:schwarz:8}
+  Let the covering $\{\Omega_j\}_{j=1,\dots,J}$ for $\Omega$ be finite
+  according to
+  Definition~\ref{definition:schwarz:finite-covering}. Then, the
+  strengthened Cauchy-Schwarz inequalities~\eqref{eq:schwarz:25} hold
+  with a spectral radius
+  \begin{gather}
+    \label{eq:schwarz:26}
+    \rho(\mathcal E) \le N_O.
+  \end{gather}
+\end{lemma}
+
+\begin{proof}
+  The term $a(v_i, v_j)$ is nonzero only if the supports of the two
+  functions have a nonempty intersection. Accordingly, for each index
+  $i$ only a maximum of $N_O$ of the coefficients $\epsilon_{ij}$ are
+  nonzero. We set these equal to one and use Gershgorin's theorem to
+  estimate the greatest eigenvalue.
+\end{proof}
+
+\begin{lemma}
   \label{lemma:schwarz:6}
   Let $v_j\in V_j$ for $j=0,\dots,J$ be a composition of $v\in V_h$
   such that
@@ -496,29 +572,12 @@
     &\le 2 \left(a(v_0, v_0) + a\!\left(\sum_{j=1}^J v_j,\sum_{j=1}^J
         v_j\right)\right)
     \\
-    &= 2 \left(a(v_0, v_0) + 2 \sum_{j,k=1}^J a(v_j,v_k)\right).
+    &= 2 \left(a(v_0, v_0) + \sum_{j,k=1}^J a(v_j,v_k)\right) \\
+    & \le 2 a(v_0, v_0) + 2 N_O \sum_{j=0}^J a(v_j, v_j),
   \end{align*}
-
-  In order to estimate the second term on the right, we observe that
-  $a(v_j,v_k)\neq 0$ only if $\Omega_j$ and $\Omega_k$ overlap (this
-  is as much orthogonality as we get). Let therefore $o_{j k}$ be a
-  coefficient such that
-  \begin{gather*}
-    o_{j k} =
-    \begin{cases}
-      1 & \Omega_j \cap \Omega_k \neq \emptyset \\
-      0 & \Omega_j \cap \Omega_k = \emptyset
-    \end{cases}
-  \end{gather*}
-  Now we obtain
-  \begin{align*}
-    \sum_{j,k=1}^J a(v_j,v_k)
-    &= \sum_{j,k=1}^J o_{j k}  a(v_j,v_k) \\
-    & \le \sum_{j,k=1}^J \sqrt{o_{j k} a(v_j, v_j)} \sqrt{o_{j k} a(v_k,
-      v_k)} \\
-    & \le \sum_{j,k=1}^J o_{j k} a(v_j, v_j) \\
-    & \le N_O \sum_{j=1}^J a(v_j, v_j).
-  \end{align*}
+  where the last inequality is due to Lemma~\ref{lemma:schwarz:7} and
+  Lemma~\ref{lemma:schwarz:8}. Since $N_O$ is assumed independent of
+  $h$, $H$, and $J$, the lemma is proven.
 \end{proof}
 
 
