@@ -46,7 +46,7 @@
   transfer from $V$ to its subspaces.
 \end{proof}
 
-\begin{definition}
+\begin{definition}[Ritz-projection]
   \label{definition:schwarz:1}
   \index{Pj@$P_j$|see {Ritz projection}}
   Let the operator $P_j: V \to V_j$ be defined such that $P_j u \in V_j$ is
@@ -59,29 +59,42 @@
   We call $P_j$ the $A$-orthogonal projection or \define{Ritz projection} to
   $V_j$. The left hand side of this equation induces an operator $A_j:
   V_j \to V_j^*$ by $A_j u_j = a(u_j,.)$.
+\end{definition}
 
- Furthermore, we define the $V$-orthogonal projection operator
+\begin{definition}
+  \label{definition:schwarz:1a}
+  We define the orthogonal projection operator
   \index{Pij@$\Pi_j$}
   $\Pi_j: V \to V_j$ such that $\Pi_j u\in V_j$ is the solution to the problem
   \begin{gather}
-    \label{eq:schwarz:3}
     \scal(\Pi_j u_j,v_j) = \scal(u,v_j),\quad\forall v_j\in V_j.
   \end{gather}
+  \index{Pijt@$\Pi^T_j$}
+  We define its adjoint $\Pi_j^T: V_j^* \to V^*$ by
+  \begin{gather}
+    \label{eq:schwarz:3}
+    \scal(\Pi_j^T \phi_j,v)_{V^*\times V} =  \scal( \phi_j,\Pi_j
+    v)_{V_j^*\times V_j}
+  \end{gather}
 \end{definition}
+
+\begin{todo}
+  Show that $\Pi^T$ is an orthogonal projection, and onto which space.
+\end{todo}
 
 \begin{lemma}
   \label{lemma:schwarz:2}  
   From definition~\ref{definition:schwarz:1}, we deduce
   \begin{gather}
     \label{eq:schwarz:15}
-    A_j P_j = \Pi_j A.
+    A_j P_j = \Pi^T_j A.
   \end{gather}
 \end{lemma}
 
 \begin{proof}
   We rewrite equation~\eqref{eq:schwarz:2} as
   \begin{gather}
-    \scal(A_j P_j u, v_j) = \scal(A u, v_j) = \scal(\Pi_j A u, v_j).
+    \scal(A_j P_j u, v_j) = \scal(A u, v_j) = \scal(\Pi^T_j A u, v_j).
   \end{gather}
 \end{proof}
 
@@ -140,16 +153,17 @@
   By Lemma~\ref{lemma:schwarz:2} and the fact that $P_j$ maps into $V_j$, we have that
   \begin{gather}
     \label{eq:schwarz:16}
-    B^{-1} = \sum_{j=1}^J A_j^{-1} \Pi_j.
+    B^{-1} = \sum_{j=1}^J A_j^{-1} \Pi^T_j.
   \end{gather}
   Due to equation~\eqref{eq:schwarz:1}, $A_j$ inherits its symmetry
   and positive definiteness from $A$, and thus $A_j^{-1}$ is s.p.d.
-  Therefore, for each term in this sum, we have
+  Therefore, for each term in this sum and arbitrary elements
+  $\phi,\psi\in V^*$, we have
   \begin{gather*}
-    \scal(A_j^{-1} \Pi_j u, v)
-    = \scal(A_j^{-1} \Pi_j u, \Pi_j v)
-    = \scal( \Pi_j u, A_j^{-1}\Pi_j v)
-    = \scal(u, A_j^{-1}\Pi_j v).
+    \scal(A_j^{-1} \Pi^T_j \phi, \psi)
+    = \scal(A_j^{-1} \Pi^T_j \phi, \Pi^T_j \psi)
+    = \scal(\Pi^T_j \phi, A_j^{-1}\Pi^T_j \psi)
+    = \scal(\phi, A_j^{-1}\Pi^T_j \psi).
   \end{gather*}
   The result now follows by linearity.
 \end{proof}
@@ -173,13 +187,13 @@
   \begin{align*}
     b(v,v)
     &= \sum_{j=1}^J b(v, A_j^{-1} A_j v_j)
-    = \sum_{j=1}^J \scal(\Pi_j B v, A_j^{-1} A_j v_j) \\
-    &\le \sum_{j=1}^J \sqrt{\scal(\Pi_j B v, A_j^{-1}\Pi_j B v)}
+    = \sum_{j=1}^J \scal(\Pi^T_j B v, A_j^{-1} A_j v_j) \\
+    &\le \sum_{j=1}^J \sqrt{\scal(\Pi^T_j B v, A_j^{-1}\Pi^T_j B v)}
     \sqrt{\scal(A_j v_j, A_j^{-1}A_j v_j)} \\
-    & \le \sqrt{\sum_{j=1}^J \scal(\Pi_j B v, A_j^{-1}\Pi_j
+    & \le \sqrt{\sum_{j=1}^J \scal(\Pi^T_j B v, A_j^{-1}\Pi^T_j
       B v) }
     \sqrt{\sum_{j=1}^J \scal(A_j v_j,A_j^{-1}A_j v_j)} \\
-    &= \sqrt{\scal(B v, {\sum A_j^{-1}\Pi_j} B v)}
+    &= \sqrt{\scal(B v, {\sum A_j^{-1}\Pi^T_j} B v)}
     \sqrt{\sum_{j=1}^J \scal(A_j v_j, v_j)} \\
     &= \sqrt{b(v,v)} \sqrt{\sum_{j=1}^J a(v_j, v_j)},
   \end{align*}
@@ -193,19 +207,19 @@
   that it cannot be less than the minimum. To this end, let
   \begin{gather}
     \label{eq:schwarz:18}
-    v_j = A_j^{-1} \Pi_j B v.
+    v_j = A_j^{-1} \Pi^T_j B v.
   \end{gather}
   By Lemma~\ref{lemma:schwarz:2}, we have
   \begin{gather*}
-    \sum v_j = \sum A_j^{-1} \Pi_j B v = B^{-1} B v = v.
+    \sum v_j = \sum A_j^{-1} \Pi^T_j B v = B^{-1} B v = v.
   \end{gather*}
   Furthermore,
   \begin{align*}
     \sum_{j=1}^J \scal(A_j v_j, v_j)
-    &= \sum_{j=1}^J \scal(A_j A_j^{-1} \Pi_j B v, A_j^{-1} \Pi_j
+    &= \sum_{j=1}^J \scal(A_j A_j^{-1} \Pi^T_j B v, A_j^{-1} \Pi^T_j
     B v) \\
-    &= \sum_{j=1}^J \scal(\Pi_j B v, A_j^{-1} \Pi_j v) \\
-    &= \scal(B v, \sum A_j^{-1} \Pi_j B v) = b(v, v).
+    &= \sum_{j=1}^J \scal(\Pi^T_j B v, A_j^{-1} \Pi^T_j v) \\
+    &= \scal(B v, \sum A_j^{-1} \Pi^T_j B v) = b(v, v).
   \end{align*}
 \end{proof}
 
@@ -311,9 +325,10 @@
   form $\sqrt{a(v_i,v_i)}$. Since $\mathcal E$ is symmetric positive
   definite, this product can be estimated by $\rho(\mathcal E) |\vec
   x|^2$, and thus
-  \begin{gather*}
+  \begin{gather}
+    \label{eq:schwarz:38}
     a(v,v) \le \rho(\mathcal E) \sum_{j=1}^J a(v_j,v_j).
-  \end{gather*}
+  \end{gather}
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -480,7 +495,7 @@
   \define{two-level additive Schwarz preconditioner} is defined as
   \begin{gather}
     \label{eq:schwarz:10}
-    B^{-1}_{\text{TLS}} = \sum_{j=0}^J P_j A^{-1} = \sum_{j=0}^J A_j^{-1} \Pi_j,
+    B^{-1}_{\text{TLS}} = \sum_{j=0}^J P_j A^{-1} = \sum_{j=0}^J A_j^{-1} \Pi^T_j,
   \end{gather}
   where $P_j$ is defined according to~\eqref{eq:schwarz:2} and $A_j:
   V_j\to V_j^*$ by
@@ -587,6 +602,7 @@
 
 
 \begin{lemma}[Stable decomposition]
+  \index{stable decomposition}
   \label{lemma:schwarz:stable-decomposition}
   For each $v\in V_h$ there exists a decomposition $v=\sum_{j=0}^J
   v_j$ with $v_j\in V_j$, such that
@@ -812,7 +828,22 @@
   \end{gather*}  
 \end{proof}
 
+\begin{lemma}
+  Let Assumption~\ref{assumption:schwarz:1} (\putindex{strengthened
+    Cauchy-Schwarz inequalities}) be satisfied. Then the following
+  inequalities hold for $0\le j,k \le J$ and for $u,v\in V$:
+  \begin{align}
+    a(P_j u,v) &\le \sqrt{a(P_j u,u)} \sqrt{a(P_j v,v)}, \\
+    a(P_j u,P_k v) &\le \epsilon_{jk}
+    \sqrt{a(P_j u,u)} \sqrt{a(P_k v,v)}.
+  \end{align}
+\end{lemma}
 
+\begin{proof}
+  By the definition of $P_j$, the fact that $P_j$ is $a(.,.)$-self
+  adjoint (Lemma~\ref{???}) and the Bunyakovsky-Cauchy-Schwarz
+  inequality, we have
+\end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Extensions}
@@ -827,6 +858,158 @@
   are going to mention a few of them.
 \end{intro}
 
+\begin{remark}
+  The definition of the additive Schwarz operator in
+  equation~\eqref{eq:schwarz:4} and the multiplicative Schwarz
+  operator~\eqref{eq:schwarz:34} rely on the Ritz projections $P_j$,
+  which in turn, through their definition in~\eqref{eq:schwarz:2}
+  require solving the local problems with the operators $A_j$ exactly.
+  
+  In some cases, it might be advantageous either to solve a different
+  local problem, or to solve the local problem approximately. In both
+  cases, we can rewrite the algorithm as using a different local
+  projection $\widetilde P_j$ which instead of the Ritz
+  projection~\eqref{eq:schwarz:2} is defined by the equation
+  \begin{gather}
+    \label{eq:schwarz:42}
+    \widetilde a_j (\widetilde P_j u_j,v_j) = a(u,v_j),\quad\forall v_j\in V_j,
+  \end{gather}
+  with a corresponding operator $\widetilde A_j: V_j \to V_j^*$. We
+  will continue to assume that $\widetilde a_j (.,.)$ is symmetric and
+  elliptic in the same way as $a(.,.)$ is, but possibly with different
+  constants.
+
+  It is obvious, that we will need assumptions on the modified
+  bilinear forms $\widetilde a_j (.,.)$and their relationship with
+  $a(.,.)$. But it turns out, that if we make these additional
+  assumptions, we can make the replacements of $P_j$ by $\widetilde
+  P_j$ in the algorithm and the analysis carries through with just one
+  additional parameter involved.
+  
+  The modifications in the analysis are as follows: first, replace the
+  stable decomposition lemma~\ref{lemma:schwarz:stable-decomposition}
+  by assumption~\ref{assumption:schwarz:stable-decomposition}. Then,
+  introduce the additional assumption
+  \ref{assumption:schwarz:local-stability}, which is ellipticity of
+  the modified forms in $V_j$ with respect to the norm established by the
+  original bilinear form. Both assumptions together establish a
+  relaxed form (only for the sum over $j$) of spectral equivalence for
+  $\widetilde a_j(.,.)$ and $a(.,.)$ on $V_j$. The strengthened
+  Cauchy-Schwarz inequalities in Assumption~\ref{assumption:schwarz:1}
+  remain the same.
+\end{remark}
+
+\begin{assumption}[Stable decomposition]
+  \index{stable decomposition}
+  \label{assumption:schwarz:stable-decomposition}
+    For each $v\in V_h$ there exists a decomposition $v=\sum_{j=0}^J
+  v_j$ with $v_j\in V_j$, such that
+  \begin{gather}
+    \label{eq:schwarz:36}
+    \sum_{j=0}^J \widetilde a_j(v_j, v_j)
+    \lesssim a(v,v),
+  \end{gather}
+  where the implicit constant is independent of the number of
+  subdomains $J$.
+\end{assumption}
+
+\begin{assumption}[Local stability]
+  \index{local stability}
+  \label{assumption:schwarz:local-stability}
+  There is a constant $\omega > 0$ such that
+  \begin{gather}
+    \label{eq:schwarz:37}
+    a(v_j, v_j) \le \omega \widetilde a_j(v_j, v_j)
+    \quad\forall j=1,\dots,J \; \forall v_j\in V_j.
+  \end{gather}
+\end{assumption}
+
+\begin{remark}
+  With these two assumptions, the convergence estimates change as
+  follows: first, using the strengthened Cauchy-Schwarz
+  inequalities~\eqref{eq:schwarz:25}, we extend ~\eqref{eq:schwarz:38}
+  to
+  \begin{gather}
+    \label{eq:schwarz:39}
+    a(v,v) \le \omega \rho(\mathcal E) \sum_{j=1}^J \widetilde a_j(v_j, v_j).
+  \end{gather}
+  Then, the proof of Theorem~\ref{theorem:schwarz:1} can be conducted
+  in the very same way as before, using~\eqref{eq:schwarz:36}
+  and~\eqref{eq:schwarz:39}.
+\end{remark}
+
+\begin{example}
+  A simple example is the introduction of a relaxation parameter
+  $\omega$ such that
+  \begin{gather*}
+    \widetilde a_j(v_j, v_j) = \frac1\omega a(v_j, v_j).
+  \end{gather*}
+  Then, obviously, the local stability~\eqref{eq:schwarz:37}
+  holds. Furthermore, the constant in the stable decomposition
+  estimate changes by a factor $1/\omega$. Thus, in this case, the
+  upper and lower bounds $\Lambda(B,A)$ and $\lambda(B,A)$ change by
+  the same factor and the condition number stays the same.
+\end{example}
+
+\begin{remark}
+  The second extension is, that we can replace the subspaces $V_j$ by
+  \putindex{auxiliary space}s $X_j$, which are not subspaces of
+  $V$. In such a situation, we have to require the existence of a
+  \putindex{prolongation} or \putindex{extension operator} $R_j^T: X_j
+  \to V$. This situation is adapted most easily to our existing
+  framework by introducing subspaces $V_j$ as the range of $R_j^T$,
+  namely,
+  \begin{gather}
+    \label{eq:schwarz:40}
+    V_j = \bigl\{ R_j^T x \in V \big| x\in X_j \bigr\}.
+  \end{gather}
+  Then, the local forms are defined on the auxiliary spaces,
+  \begin{gather}
+    \label{eq:schwarz:41}
+    \widetilde a_j(.,.) : X_j\times X_j \to \R, \quad j=1,\dots,J,
+  \end{gather}
+  and wherever we need a vector in $V_j$, we use the interpolation
+  operator. Thus, we introduce decompositions of the form $v = \sum
+  \alpha_j R_j^T x_j$ and the operator $\widetilde P_j: V \to X_j$ is
+  defined by
+  \begin{gather}
+    \label{eq:schwarz:43}
+    \widetilde a_j(\widetilde P_j u, y_j) = a(u, R_j^T y_j),
+    \quad \forall y_j \in X_j.
+  \end{gather}
+  These modifications introduce new operators, but they do not affect
+  the analysis.
+\end{remark}
+
+\begin{example}
+  When we implement a block-Jacobi method, we have $V = \R^n$ and
+  $m$-dimensional subspaces with $J=n/m$ (we assume the quotient is
+  integer). In the standard formulation with subspaces $V_j$, the
+  operators $A_j$, which have to be inverted, are $n\times n$-matrices
+  with only $m$ rows and columns different from zero. This is not a
+  useful description of the local problems. Instead, we want an
+  invertible matrix $A_j \in \R^{m\times m}$. This can be achieved by
+  choosing the extension operator
+  \begin{gather}
+    R_j^T : \R^m \to \R_n,
+    \qquad
+    \begin{pmatrix}
+      x_1 \\ \vdots \\ x_m
+    \end{pmatrix}
+    \mapsto
+    \begin{pmatrix}
+      0\\ \vdots \\ 0 \\
+      v_{mj+1} = x_1 \\ \vdots \\ v_{m(j+1)} = x_m
+      \\ 0\\ \vdots \\ 0
+    \end{pmatrix}.
+  \end{gather}
+\end{example}
+
+\begin{example}
+  Other examples are finite element methods with nonnested spaces on
+  different levels, for instance, when the meshes of a hierarchy are
+  not nested.
+\end{example}
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "main"
