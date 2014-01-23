@@ -61,6 +61,17 @@
   V_j \to V_j^*$ by $A_j u_j = a(u_j,.)$.
 \end{definition}
 
+\begin{lemma}
+  \label{lemma:schwarz:ritz}
+  The projections $P_j$ are self-adjoint with respect to the
+  $a(.,.)$-inner product and positive semi-definite. Furthermore,
+  $P_j$ acts as identity on $P_j$ and there holds $P_j^2 = P_j$.
+\end{lemma}
+\begin{proof}
+  These are all known facts following immediately from the definition
+  of $P_j$ as an orthogonal projection.
+\end{proof}
+
 \begin{definition}
   \label{definition:schwarz:1a}
   We define the orthogonal projection operator
@@ -841,9 +852,26 @@
 
 \begin{proof}
   By the definition of $P_j$, the fact that $P_j$ is $a(.,.)$-self
-  adjoint (Lemma~\ref{???}) and the Bunyakovsky-Cauchy-Schwarz
+  adjoint (Lemma~\ref{lemma:schwarz:ritz}) and the Bunyakovsky-Cauchy-Schwarz
   inequality, we have
+  \begin{multline*}
+    a(P_j u,v) = a(u, P_j v) = a(P_j u, P_j v)
+    \\
+    \le \sqrt{a(P_j u,P_j u)} \sqrt{a(P_j v,P_j v)}
+    \le \sqrt{a(P_j u,u)} \sqrt{a(P_j v,v)}.
+  \end{multline*}
+  The second inequality follows readily by
+  \begin{gather*}
+    a(P_j u,P_k v)
+    \le \epsilon_{jk}\sqrt{a(P_j u,P_j u)} \sqrt{a(P_j v,P_j v)}
+    = \epsilon_{jk}\sqrt{a(P_j u,u)} \sqrt{a(P_j v,v)}.
+  \end{gather*}
 \end{proof}
+
+\begin{theorem}
+  
+\end{theorem}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Extensions}
