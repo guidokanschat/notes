@@ -1,5 +1,33 @@
 \svnid{$Id$}
 
+\begin{intro}
+  \putindex{multigrid} Multigrid methods avoid the problems discussed
+  in the section on two-level Schwarz methods by using not only two,
+  but a whole hierarchy of mesh levels. On each level, an approximate
+  solver, a so called smoother is employed, which improves the error
+  somewhat, and then an approximation on a coarser level is used to
+  improve further. This is done down to the coarsest level, where we
+  assume that the solution process is cheap.
+\end{intro}
+
+\begin{definition}
+  A \define{hierarchy of spaces} $\{V_\ell\}_0\le \ell \le L$ is a
+  sequence of the form
+  \begin{gather}
+    V_0 \subset V_1 \subset \dots \subset V_L.
+  \end{gather}
+  We assume that $V_L = V$ is the high resolution space on which we
+  want to solve~\eqref{eq:itintro:1}, but where the condition number
+  of the matrix $\mat A$ is bad. On the other end of the spectrum, we
+  assume that the solution of~\eqref{eq:itintro:1} on $V_0$ is easily
+  possible.
+\end{definition}
+
+\section{The V-cycle}
+
+\section{The W-cycle and two-grid convergence}
+
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "main"

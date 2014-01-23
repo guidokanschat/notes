@@ -192,8 +192,8 @@
 
 \begin{proof}
   Since $B^{-1}$ is s.p.d., so is $B$. Therefore, $\scal(.,A_j^{-1}.)$
-  is an inner product on $V_j^*$, for which the Bunyakovsky-Cauchy-Schwarz
-  inequality holds. Thus, for an arbitrary decomposition $v=\sum v_j$
+  is an inner product on $V_j^*$, for which the \putindex{Bunyakovsky-Cauchy-Schwarz
+  inequality} holds. Thus, for an arbitrary decomposition $v=\sum v_j$
   with $v_j\in V_j$, the computation
   \begin{align*}
     b(v,v)
@@ -309,7 +309,7 @@
 
 \begin{note}
   Inequality~\eqref{eq:schwarz:25} with $\epsilon_{ij}$ holds by the
-  regular Cauchy-Schwarz inequality. But for such a matrix, the
+  regular \putindex{Bunyakovsky-Cauchy-Schwarz inequality}. But for such a matrix, the
   spectral radius is $J$. As the following lemma will reveal, it is
   necessary to obtain $\rho(\mathcal E)$ independent of $J$ to obtain
   estimate~\eqref{eq:schwarz:23}.
@@ -559,7 +559,7 @@
   Let the covering $\{\Omega_j\}_{j=1,\dots,J}$ for $\Omega$ be finite
   according to
   Definition~\ref{definition:schwarz:finite-covering}. Then, the
-  strengthened Cauchy-Schwarz inequalities~\eqref{eq:schwarz:25} hold
+  \putindex{strengthened Cauchy-Schwarz inequalities}~\eqref{eq:schwarz:25} hold
   with a spectral radius
   \begin{gather}
     \label{eq:schwarz:26}
@@ -891,8 +891,8 @@
 
 \begin{proof}
   By the definition of $P_j$, the fact that $P_j$ is $a(.,.)$-self
-  adjoint (Lemma~\ref{lemma:schwarz:ritz}) and the Bunyakovsky-Cauchy-Schwarz
-  inequality, we have
+  adjoint (Lemma~\ref{lemma:schwarz:ritz}) and the \putindex{Bunyakovsky-Cauchy-Schwarz
+  inequality}, we have
   \begin{multline*}
     a(P_j u,v) = a(u, P_j v) = a(P_j u, P_j v)
     \\
@@ -926,9 +926,10 @@
   \end{gather*}
   Since the operators $P_j$ are positive semi-definite, by rearranging
   we obtain for all $v\in V$ the estimate
-  \begin{gather*}
+  \begin{gather}
+    \label{eq:schwarz:49}
     a(E_J v, E_J v) \le a(v,v) - \sum_{j=1}^J a(E_{j-1}v, P_j E_{j-1}v).
-  \end{gather*}
+  \end{gather}
   Thus, $\|E_J\|_A^2 \le 1$, but we have to show that the sum on the
   right is sufficiently positive to get an estimate of the convergence
   rate. Therefore, we start with equation~\eqref{eq:schwarz:46} of
@@ -947,21 +948,63 @@
   Now let $z \in \R^J$ be the vector with entries $z_k = \sqrt{a(P_k
     E_{k-1}v,E_{k-1}v)}$. Then, we rewrite the previous estimate as
   \begin{gather*}
-    a(P_j v,v) \le (\mathcal E z)_j.
+    a(P_j v,v) \le (\mathcal E z)_j^2.
   \end{gather*}
   Summing over $j$ yields
-  \begin{todo}
-    Where is the factor 2?
-  \end{todo}
+  
   \begin{gather}
     \label{eq:schwarz:48}
     \sum_{j=1}^J a(P_j v,v) \le \|\mathcal E z\|^2
     \le \rho(\mathcal E)^2 \|z\|^2
-    =  \rho(\mathcal E)^2 \sum_{k=1}^{j}
-    a(P_k E_{k-1} v,E_{k-1} v).
+    = \rho(\mathcal E)^2 \sum_{k=1}^{j} a(P_k E_{k-1} v,E_{k-1} v).
   \end{gather}
+  At this point, we use Lemma~\ref{lemma:schwarz:11} to estimate
+  \begin{gather*}
+    \frac1{\constref{eq:schwarz:24}^2} a(v,v)
+    \le \sum_{j=1}^J a(P_j v,v)
+    \le \rho(\mathcal E)^2 \sum_{k=1}^{j} a(P_k E_{k-1} v,E_{k-1} v)
+  \end{gather*}
+  Finally, entering this estimate into~\eqref{eq:schwarz:49}, we
+  obtain
+  \begin{gather*}
+    a(E_J v, E_J v)
+    \le a(v,v) \left(1-\frac1{\rho(\mathcal
+        E)^2\constref{eq:schwarz:24}^2}
+      \right),
+  \end{gather*}
+  which is the statement of the theorem.
 \end{proof}
 
+\begin{lemma}
+  \label{lemma:schwarz:11}
+  Let inequality~\eqref{eq:schwarz:24} hold for some \putindex{stable
+    decomposition} $v=\sum v_j$ with the constant
+  $\constref{eq:schwarz:24}$. Then,
+  \begin{gather}
+    \label{eq:schwarz:50}
+    \sum_{j=1}^J a(P_j v,v) \ge \frac1{\constref{eq:schwarz:24}^2} a(v,v).
+  \end{gather}
+\end{lemma}
+
+\begin{proof}
+  From inequality~\eqref{eq:schwarz:24} for the decomposition $v=\sum
+  v_j$,\ and the definition of $P_j$, and the
+  \putindex{Bunyakovsky-Cauchy-Schwarz inequality}, we obtain
+  \begin{align*}
+    a(v,v) &= \sum_{j=1}^J a(v,v_j) \\
+    &= \sum_{j=1}^J a(P_j v, v_j) \\
+    &\le \sqrt{\sum_{j=1}^J a(P_j v, P_j v)} \;\sqrt{\sum_{j=1}^J a(v_j,
+      v_j)} \\
+    & \le \sqrt{\sum_{j=1}^J a(P_j v, P_j v)}\;
+    \constref{eq:schwarz:24} \sqrt{a(v,v)}.
+  \end{align*}
+  Thus,
+  \begin{gather*}
+    a(v,v) \le \constref{eq:schwarz:24}^2 \sum_{j=1}^J a(P_j v, P_j v)
+    = \constref{eq:schwarz:24}^2 \sum_{j=1}^J a(v, P_j v).
+  \end{gather*}
+  This proves the lemma.
+\end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Extensions}
@@ -1012,8 +1055,8 @@
   the modified forms in $V_j$ with respect to the norm established by the
   original bilinear form. Both assumptions together establish a
   relaxed form (only for the sum over $j$) of spectral equivalence for
-  $\widetilde a_j(.,.)$ and $a(.,.)$ on $V_j$. The strengthened
-  Cauchy-Schwarz inequalities in Assumption~\ref{assumption:schwarz:1}
+  $\widetilde a_j(.,.)$ and $a(.,.)$ on $V_j$. The \putindex{strengthened
+  Cauchy-Schwarz inequalities} in Assumption~\ref{assumption:schwarz:1}
   remain the same.
 \end{remark}
 
@@ -1044,8 +1087,8 @@
 
 \begin{remark}
   With these two assumptions, the convergence estimates change as
-  follows: first, using the strengthened Cauchy-Schwarz
-  inequalities~\eqref{eq:schwarz:25}, we extend ~\eqref{eq:schwarz:38}
+  follows: first, using the \putindex{strengthened Cauchy-Schwarz
+  inequalities}~\eqref{eq:schwarz:25}, we extend ~\eqref{eq:schwarz:38}
   to
   \begin{gather}
     \label{eq:schwarz:39}
@@ -1128,6 +1171,59 @@
   different levels, for instance, when the meshes of a hierarchy are
   not nested.
 \end{example}
+
+\begin{remark}
+  We have discussed additive and multiplicative Schwarz methods, but
+  we are not forced to consider only methods organized strictly in one
+  way or the other. Instead, some of the operations can be performed
+  in the additive, some in the multiplicative way.
+  
+  This is advantageous for instance on multicore hardware: an
+  inspection of the algorithms shows, that application of all
+  operators $P_j$ can be implemented in parallel, while the
+  applications of the operators $(I-P_j)$ in the multiplicative method
+  is sequential.
+\end{remark}
+
+\begin{example}
+  Let the indices $j=1,\dots,J$ be grouped into $M$ subsets $I_m$,
+  such that
+  \begin{gather*}
+    P_iP_k = P_k P_i = 0,\qquad \forall i,k\in I_m.
+  \end{gather*}
+  Such a distribution of indices is also called
+  \define{coloring}. Then,
+  \begin{gather*}
+    (I-P_i)(I-P_k) = I- (P_i+P_k),
+  \end{gather*}
+  and by application to the whole subset and all subsets, the error
+  propagation operator of the multiplicative method can be rewritten
+  as
+  \begin{gather*}
+    E_J = \left(I-\sum_{j\in I_1} P_j \right)
+    \dots
+    \left(I-\sum_{j\in I_m} P_j \right).
+  \end{gather*}
+  While the operations inside each ``color'' are arranged in an
+  additive and thus parallelizable manner, the colers themselves are
+  arranged in a multiplicative way.
+\end{example}
+
+\begin{example}
+  Another example is a rearrangement of the two-level Schwarz method
+  in a way, that the domain decomposition subspaces are still dealt
+  with in an additive fashion, while the coarse space is connected
+  multiplicatively. An example for a symmetric version of this method
+  is described by the error propagation operator
+  \begin{gather}
+    \label{eq:schwarz:51}
+    E_{TL} = \left(I-\sum_{j=1}^J P_j \right) (I-P_0)
+    \left(I-\sum_{j=1}^J P_j \right),
+  \end{gather}
+  which is the two-level operator with Schwarz smoother discussed in
+  the next chapter.
+\end{example}
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "main"
