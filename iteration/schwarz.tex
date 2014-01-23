@@ -748,7 +748,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Multiplicative methods}
+\section{Multiplicative Schwarz methods}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -807,12 +807,12 @@
   V \to V^*$ such that
   \begin{gather}
     \label{eq:schwarz:34}
-    B_m^{-1} = (I -  E_m) A^{-1},
+    B_m^{-1} = (I -  E_J) A^{-1},
   \end{gather}
-  where $E_m$ is the multiplicative \define{error propagation operator}
+  where $E_J$ is the multiplicative \define{error propagation operator}
   \begin{gather}
     \label{eq:schwarz:35}
-    E_m = (I - P_J)(I - P_{J-1})\dots(I - P_1).
+    E_J = (I - P_J)(I - P_{J-1})\dots(I - P_1).
   \end{gather}
 \end{definition}
 
@@ -823,23 +823,62 @@
   \end{gather*}
   is given by
   \begin{gather*}
-    u^{(k+1)} - u = E_m \left(u^{(k)} - u\right).
+    u^{(k+1)} - u = E_J \left(u^{(k)} - u\right).
   \end{gather*}
 \end{lemma}
 
 \begin{proof}
   First, we use the definition of $B_m$ to obtain
   \begin{gather*}
-    u^{(k+1)} = u^{(k)} - (I -  E_m) \left(u^{(k)} - u\right).
+    u^{(k+1)} = u^{(k)} - (I -  E_J) \left(u^{(k)} - u\right).
   \end{gather*}
   Therefore,
   \begin{gather*}
-    u^{(k+1)} - u = u^{(k)} - u - (I -  E_m) \left(u^{(k)} - u\right)
-    = (I-I+E_m) \left(u^{(k)} - u\right).
+    u^{(k+1)} - u = u^{(k)} - u - (I -  E_J) \left(u^{(k)} - u\right)
+    = (I-I+E_J) \left(u^{(k)} - u\right).
   \end{gather*}  
 \end{proof}
 
+\begin{remark}
+  We can define the error propagation operator $E_j$ through the
+  recursion
+  \begin{gather}
+    \label{eq:schwarz:45}
+    E_{0} = I, \qquad E_{k} = (I - P_k) E_{k-1}, \quad k=1,\dots,J.
+  \end{gather}
+\end{remark}
+
 \begin{lemma}
+  \label{lemma:schwarz:9}
+  The error propagation operator $E_j$ has the following porperties:
+  \begin{align}
+    \label{eq:schwarz:44}
+    E^*_{j-1}E_{j-1} - E^*_{j}E_{j} &= E^*_{j-1} P_j E_{j-1}
+    \\
+    \label{eq:schwarz:46}
+    I - E_j &= \sum_{k=1}^{j} P_k E_{k-1}.
+  \end{align}
+  Here, $E^*$ is the $a(.,.)$-adjoint of $E$.
+\end{lemma}
+
+\begin{proof}
+  In order to prove the first identity, we use the recursion
+  formula~\eqref{eq:schwarz:45} to obtain (using $P_j = P_j^*$
+  and $P_j^2 = P_j$)
+  \begin{align*}
+    E^*_{j}E_{j} &= E^*_{j-1} (I-P_j^*) (I-P_j) E_{j-1} \\
+    &= E^*_{j-1} E_{j-1} - E^*_{j-1}P_jE_{j-1}.
+  \end{align*}
+  The second identity is proven by induction with
+  \begin{align*}
+    (I-E_0) &= I - I = 0, \\
+    (I-E_j) &= I-(I-P_j) E_{j-1} = P_j  E_{j-1} + I - E_{j-1} = P_j
+    E_{j-1} +\sum_{k=1}^{j-1} P_k E_{k-1}.
+  \end{align*}
+\end{proof}
+
+\begin{lemma}
+  \label{lemma:schwarz:10}
   Let Assumption~\ref{assumption:schwarz:1} (\putindex{strengthened
     Cauchy-Schwarz inequalities}) be satisfied. Then the following
   inequalities hold for $0\le j,k \le J$ and for $u,v\in V$:
@@ -869,12 +908,63 @@
 \end{proof}
 
 \begin{theorem}
-  
+  Let Assumptions~\ref{assumption:schwarz:1} and the
+  estimate~\eqref{eq:schwarz:23} be satisfied. Then, the error
+  propagation operator satisfies
+  \begin{gather}
+    \label{eq:schwarz:47}
+    \|E_J\|_A^2 \le 1 - \frac{1}{\rho(\mathcal E) \constref{eq:schwarz:24}} < 1,
+  \end{gather}
 \end{theorem}
+
+\begin{proof}
+  We use equation~\eqref{eq:schwarz:44} of Lemma~\ref{lemma:schwarz:9} to obtain
+  \begin{gather*}
+    I- E^*_J E_J = \sum_{j=1}^{j} \left(E^*_{j-1}E_{j-1} -
+      E^*_{j}E_{j}\right)
+    = \sum_{j=1}^J E^*_{j-1} P_j E_{j-1}.
+  \end{gather*}
+  Since the operators $P_j$ are positive semi-definite, by rearranging
+  we obtain for all $v\in V$ the estimate
+  \begin{gather*}
+    a(E_J v, E_J v) \le a(v,v) - \sum_{j=1}^J a(E_{j-1}v, P_j E_{j-1}v).
+  \end{gather*}
+  Thus, $\|E_J\|_A^2 \le 1$, but we have to show that the sum on the
+  right is sufficiently positive to get an estimate of the convergence
+  rate. Therefore, we start with equation~\eqref{eq:schwarz:46} of
+  Lemma~\ref{lemma:schwarz:9}, yielding by Lemma~\ref{lemma:schwarz:10}
+  \begin{align*}
+    a(P_j v,v)
+    &= a(P_j v, E_{j-1}v) + \sum_{k=1}^{j-1} a(P_j v, P_k E_{k-1} v)
+    \\
+    &\le \sqrt{a(P_j v,v)} \left(\sqrt{a(P_j E_{j-1}v,E_{j-1}v)}
+    + \sum_{k=1}^{j-1} \epsilon_{jk} \sqrt{a(P_k E_{k-1}v,E_{k-1}v)}
+    \right) \\
+    & \le \sqrt{a(P_j v,v)} \left(\sum_{k=1}^{j} \epsilon_{jk}
+      \sqrt{a(P_k E_{k-1} v,E_{k-1} v)}
+    \right)
+  \end{align*}
+  Now let $z \in \R^J$ be the vector with entries $z_k = \sqrt{a(P_k
+    E_{k-1}v,E_{k-1}v)}$. Then, we rewrite the previous estimate as
+  \begin{gather*}
+    a(P_j v,v) \le (\mathcal E z)_j.
+  \end{gather*}
+  Summing over $j$ yields
+  \begin{todo}
+    Where is the factor 2?
+  \end{todo}
+  \begin{gather}
+    \label{eq:schwarz:48}
+    \sum_{j=1}^J a(P_j v,v) \le \|\mathcal E z\|^2
+    \le \rho(\mathcal E)^2 \|z\|^2
+    =  \rho(\mathcal E)^2 \sum_{k=1}^{j}
+    a(P_k E_{k-1} v,E_{k-1} v).
+  \end{gather}
+\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Extensions}
+\section{Extensions}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

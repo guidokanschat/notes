@@ -54,7 +54,7 @@
   They are called \define{elliptic}, if for there is a positive number
   $\gamma$ such that
   \begin{gather*}
-    a(u,u) \ge \gamma \qquad \forall u\in V.
+    a(u,u) \ge \gamma \norm{u}_V^2 \qquad \forall u\in V.
   \end{gather*}
 \end{definition}
 
@@ -146,13 +146,13 @@
   \begin{gather*}
     m_{ij} = \int_\Omega \phi_i(x) \phi_j(x) \dx.
   \end{gather*}
-  It is easy to verify, that $m_{ij}\ge 0$, and that not more
+  It is easy to verify, that $m_{ii}> 0$, and that not more
   entries in each row as edges of the triangulation meet in one vertex
   are different from zero. Furthermore, that the size of those entries
-  is or order $h^d$, where $d$ is the space dimension. From these two
+  is of order $h^d$, where $d$ is the space dimension. From these two
   facts we immediately obtain
   \begin{gather*}
-    \Lambda(\mat M) = \mathcal O(h^{-d}).
+    \Lambda(\mat M) = \mathcal O(h^{d}).
   \end{gather*}
   The argument for $\lambda(\mat M)$ is more subtle. For any mesh cell
   $T$, let $\vec x_T$ be the entries of the vector $\vec x$ which
@@ -168,12 +168,12 @@
   \end{gather*}
   In order to estimate the eigenvalues of $\mat M_T$, we note that for
   a unisolvent element, the norms $|\vec x_T|$ and $\|u\|_{0,T}$ are
-  equivalen on the reference cell, and the $L^2$-norm scales with
+  equivalent on the reference cell, and the $L^2$-norm scales with
   $h^d$ when transforming to the real cell $T$. Thus, we have
-  $\lambda(\mat M) = \mathcal O(h^{-d})$.
+  $\lambda(\mat M) = \mathcal O(h^{d})$.
   Therefore, the condition number is
   \begin{gather*}
-    \kappa(\mat M) = \frac{\mathcal O(h^{-d})}{\mathcal O(h^{-d})} = {\mathcal O(1)}.
+    \kappa(\mat M) = \frac{\mathcal O(h^{d})}{\mathcal O(h^{d})} = {\mathcal O(1)}.
   \end{gather*}
 \end{example}
 
@@ -182,9 +182,9 @@
   triangulation with cell radii rnaging between the minimum $h$ and
   the maximum $H$, we have
   \begin{align*}
-    \Lambda(\mat M) &= \mathcal O(H^{-d}) \\
-    \lambda(\mat M) &= \mathcal O(h^{-d}) \\
-    \kappa(\mat M) &= \mathcal O\left(\left(\frac Hh\right)^{-d}\right)
+    \Lambda(\mat M) &= \mathcal O(H^{d}) \\
+    \lambda(\mat M) &= \mathcal O(h^{d}) \\
+    \kappa(\mat M) &= \mathcal O\left(\left(\frac Hh\right)^{d}\right)
   \end{align*}
 \end{note}
 

@@ -72,6 +72,30 @@
   form of the algorithm.
 \end{definition}
 
+\begin{definition}
+  The $n$th \define{Krylov space} as subspace of the Hilbert space $V$
+  with inner product $b(.,.)$ of the operator $A$ and seed vector
+  $w \in V$ is
+  \begin{gather}
+    \label{eq:cg:2}
+    \mathcal K_n = \mathcal K_n(B^{-1}A, w)
+    = \operatorname{span}\left\{w, B^{-1}A w, (B^{-1}A)^2 w, \dots, (B^{-1}A w)^{n-1}\right\}.
+  \end{gather}
+\end{definition}
+
+\begin{lemma}
+  The iterates of the cg method have the following minimization
+  properties:
+  \begin{gather}
+    \label{eq:cg:3}
+    \begin{split}
+      \norm{u^{(k)}-u}_A &= \min_{v\in \mathcal K_k} \norm{u^{(0)} + v -u}_A \\
+      &= \min_{\substack{p\in P_{n-1}\\ p(0) = 1}}
+      \norm{u^{(0)} + p(B^{-1}A) w -u}_A.
+    \end{split}
+  \end{gather}
+\end{lemma}
+
 \begin{theorem}
   Let the bilinear form $a(.,.)$ be symmetric, and let the
   \putindex{spectral equivalence}~\eqref{eq:richardson:12} hold. Then,

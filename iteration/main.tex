@@ -8,6 +8,7 @@
 \usepackage[backend=bibtexu,style=alphabetic]{biblatex}
 \addbibresource{all}
 
+\def\constref#1{C_{\text{\ref{#1}}}}
 \title{\textbf{Notes on Applied Mathematics}
 \\[5mm]
 {\large Interative Methods and Preconditioning}}
@@ -22,15 +23,34 @@
 
 \section*{Preface}
 \input{../preface}
-
+\thispagestyle{empty}
 \begin{todo}
   Note: yellow boxes indicate text which is missing in the current
   version and will be added soon.
 \end{todo}
+\setcounter{page}{0}
 
 \tableofcontents
 
 \chapter{Preliminaries}
+
+\begin{notation}
+  Very often in these notes, we will abbreviate the term ``there is a
+  positive constant $C$ independent of certain parameters, such that $x \le C
+  y$'' by the expression
+  \begin{gather}
+    \label{eq:main:1}
+    x \lesssim y.
+  \end{gather}
+  Furthermore, if additionally for $C\ge 1$, there holds  $y \le Cx$,
+  then we write
+  \begin{gather*}
+    x \simeq y.
+  \end{gather*}
+  Sometimes, it may be useful to be able refer to the implicit
+  constant in such equations, which will be done in the form  $\constref{eq:main:1}$.
+\end{notation}
+
 \input{itintro}
 
 \chapter{Iterative methods in finite and infinite dimensional spaces}
