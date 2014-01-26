@@ -23,6 +23,245 @@
   possible.
 \end{definition}
 
+\begin{definition}
+  A \define{multigrid method} consists of the following components:
+  \begin{enumerate}
+  \item A \define{smoother} $R_\ell$ acting on the level space
+    $V_\ell$, usually an iterative method like Richardson, Jacobi,
+    Gauß-Seidel or a Schwarz method.
+  \item A \define{coarse grid solver} solving the problem on $V_0$
+    exactly.
+  \item Transfer operators between the levels $V_{\ell}$ and
+    $V_{\ell+1}$. For standard finite element methods, this is
+    typically the embedding operator. The transfer in opposite
+    direction is achieved by the $L^2$-projection.
+  \end{enumerate}
+  
+  On a given level $V_{\ell}$, the multigrid level consists of an
+  alternating sequence of \putindex{smoothing step}s and
+  \putindex{coarse grid correction}s, where the latter consist of a
+  projection of the residual to the space $V_{\ell-1}$ and then
+  recursive application of the same sequence. This is easiest
+  described by the function
+  \begin{subequations}
+    \label{eq:mg:5}
+  \begin{gather}
+    \label{eq:mg:1}
+    u_1 = MG_\ell(u^{(0)}, g),
+  \end{gather}
+  which takes an initial value $u^{(0)}$ and computes an approximation
+  $u_1$ to the solution to $A_\ell u = g$ by the following scheme:
+  first, for $\ell = 0$ let
+  \begin{gather*}
+    MG_0(u^{(0)}, g) = A_0^{-1} g_0.
+  \end{gather*}
+  On levels $\ell \neq 0$, perform the three steps
+  \begin{itemize}
+  \item Pre-smoothing: apply $m_{\text{pre}}$ steps of a Richardson
+    iteration preconditioned with the smoother $R_\ell$:
+    \begin{gather}
+      \label{eq:mg:2}
+      u^{(k+1)} = u^{(k)} - R_{\ell}^{-1} \left(A_\ell u^{(k)} - g_\ell\right),
+      \qquad 0 \le k < m_{\text{pre}}.
+    \end{gather}
+    \item Coarse grid correction: let $v^{(0)} \in V_{\ell-1}$ and
+      $g_{\ell-1} \in V_{\ell-1}^*$ such that
+      \begin{gather}
+        \label{eq:mg:3}
+        g_{\ell-1} = \Pi_{\ell-1}^T \left(g_\ell - A_\ell u^{(m_{\text{pre}})}\right),
+        \qquad
+        v^{(0)} = 0.
+      \end{gather}
+      Then, compute 
+      \begin{gather}
+        \label{eq:mg:4}
+        v^{(k+1)} = MG_{\ell-1}(v^{(k)}, g_{\ell-1}),
+      \qquad 0 \le k < m_{\text{coarse}}.
+      \end{gather}
+      Let $w^{(0)} \in V_{\ell}$ be given by $w^{(0)} =
+      u^{(m_{\text{pre}})} + v^{(m_{\text{coarse}})}$.
+  \item Post-smoothing: apply $m_{\text{post}}$ steps of a Richardson
+    iteration preconditioned with the smoother $R_\ell$:
+    \begin{gather}
+      \label{eq:mg:2a}
+      w^{(k+1)} = w^{(k)} - R_{\ell}^{-1} \left(A_\ell w^{(k)} - g_\ell\right),
+      \qquad 0 \le k < m_{\text{post}}.
+    \end{gather}
+    Assign $MG(u^{(0)}, g_\ell) = w^{(m_{\text{post}})}$.
+  \end{itemize}    
+  \end{subequations}
+  
+  This method has three parameters, the numbers of pre- and post
+  smoothing steps $m_{\text{pre}}$ and $m_{\text{post}}$ as well as
+  the number of coarse grid iterations $m_{\text{coarse}}$. Here, it
+  is the last one which has a strong impact on the structure of the
+  iteration. It defines what is called the \define{cycle type}, which
+  is either \define{V-cycle} for $m_{\text{coarse}} = 1$ or
+  \define{W-cycle} for $m_{\text{coarse}} = 2$. The structure of the
+  cycles can be seen in Figure~\ref{fig:mg:1}.
+\end{definition}
+\begin{figure}[tp]
+  \centering
+  \begin{minipage}[t]{.49\linewidth}
+  \begin{tikzpicture}[thick,scale=.7]
+    % Levels
+    \draw[dotted](0,0) node[anchor=east]{$V_0$} -- (7,0);
+    \draw[dotted](0,1) node[anchor=east]{$V_1$} -- (7,1);
+    \draw[dotted](0,2) node[anchor=east]{$V_1$} -- (7,2);
+    \draw[dotted](0,4) node[anchor=east]{$V_{L-2}$} -- (7,4);
+    \draw[dotted](0,5) node[anchor=east]{$V_{L-1}$} -- (7,5);
+    \draw[dotted](0,6) node[anchor=east]{$V_L$} -- (7,6);
+    
+    % Transfers
+    \draw(0.5,6) -- (1.5,4);
+    \draw[dashed](1.5,4) -- (2.5,2);
+    \draw(2.5,2) -- (3.5,0) -- (4.5,2);
+    \draw[dashed](4.5,2) -- (5.5,4);
+    \draw(5.5,4) -- (6.5,6);
+    
+    % Smoothers and coarse grid correction
+    \node at (0.5,6) [circle,draw=blue,fill=blue] {};
+    \node at (1.0,5) [circle,draw=blue,fill=blue] {};
+    \node at (1.5,4) [circle,draw=blue,fill=blue] {};
+    \node at (2.5,2) [circle,draw=blue,fill=blue] {};
+    \node at (3.0,1) [circle,draw=blue,fill=blue] {};
+    \node at (4.0,1) [circle,draw=blue,fill=blue] {};
+    \node at (4.5,2) [circle,draw=blue,fill=blue] {};
+    \node at (5.5,4) [circle,draw=blue,fill=blue] {};
+    \node at (6.0,5) [circle,draw=blue,fill=blue] {};
+    \node at (6.5,6) [circle,draw=blue,fill=blue] {};
+    \node at (3.5,0) [rectangle,draw=red,fill=red] {};
+  \end{tikzpicture}    
+  \end{minipage}
+  \begin{minipage}[t]{.49\linewidth}
+  \begin{tikzpicture}[thick,yscale=.7,xscale=.6]
+    % Levels
+    \draw[dotted](0,0) node[anchor=east]{$V_0$} -- (8.0,0);
+    \draw[dotted](0,1) node[anchor=east]{$V_1$} -- (8.0,1);
+    \draw[dotted](0,2) node[anchor=east]{$V_1$} -- (8.0,2);
+    \draw[dotted](0,4) node[anchor=east]{$V_{L-2}$} -- (8.0,4);
+    \draw[dotted](0,5) node[anchor=east]{$V_{L-1}$} -- (8.0,5);
+    \draw[dotted](0,6) node[anchor=east]{$V_L$} -- (8.0,6);
+
+    % Transfers and smoothers
+    \draw(0.2,6) node[circle,draw=blue,fill=blue] {}
+    -- (0.4,5) node[circle,draw=blue,fill=blue] {}
+    -- (0.6,4) node[circle,draw=blue,fill=blue] {};
+    \draw[dashed](0.6,4) -- (1.0,2);
+    \draw (1.0,2) node[circle,draw=blue,fill=blue] {}
+    -- (1.2,1) node[circle,draw=blue,fill=blue] {}
+    -- (1.4,0) node[rectangle,draw=red,fill=red] {}
+    -- (1.6,1)
+    -- (1.8,0) node[rectangle,draw=red,fill=red] {}
+    -- (2.0,1) node[circle,draw=blue,fill=blue] {}
+    -- (2.2,2)
+    -- (2.4,1) node[circle,draw=blue,fill=blue] {}
+    -- (2.6,0) node[rectangle,draw=red,fill=red] {}
+    -- (2.8,1)
+    -- (3.0,0) node[rectangle,draw=red,fill=red] {}
+    -- (3.2,1) node[circle,draw=blue,fill=blue] {}
+    -- (3.4,2) node[circle,draw=blue,fill=blue] {};
+    \draw[dashed](3.4,2) -- (3.5,3) -- (3.7,0) -- (3.8,4);
+    \draw(3.8,4) node[circle,draw=blue,fill=blue] {}
+    -- (4.0,5)
+    -- (4.2,4) node[circle,draw=blue,fill=blue] {};
+    \draw[dashed] (4.2,4) -- (4.4,0) -- (4.5,3) 
+    -- (4.6,2)
+    ;
+    \draw (4.6,2) node[circle,draw=blue,fill=blue] {}
+    -- (4.8,1) node[circle,draw=blue,fill=blue] {}
+    -- (5.0,0) node[rectangle,draw=red,fill=red] {}
+    -- (5.2,1)
+    -- (5.4,0) node[rectangle,draw=red,fill=red] {}
+    -- (5.6,1) node[circle,draw=blue,fill=blue] {}
+    -- (5.8,2)
+    -- (6.0,1) node[circle,draw=blue,fill=blue] {}
+    -- (6.2,0) node[rectangle,draw=red,fill=red] {}
+    -- (6.4,1)
+    -- (6.6,0) node[rectangle,draw=red,fill=red] {}
+    -- (6.8,1) node[circle,draw=blue,fill=blue] {}
+    -- (7.0,2) node[circle,draw=blue,fill=blue] {};
+    \draw[dashed] (7.0,2) -- (7.4,4);
+    \draw (7.4,4) node[circle,draw=blue,fill=blue] {}
+    -- (7.6,5) node[circle,draw=blue,fill=blue] {}
+    -- (7.8,6) node[circle,draw=blue,fill=blue] {};    
+  \end{tikzpicture}    
+  \end{minipage}
+  \caption{Smoothing and grid transfer of the V-cycle (left) and
+    W-cycle (right). Black lines indicate grid transfer, blue dots are
+  smoothing operations and red squares are coarse grid
+  solvers. ``Time'' is left to right.}
+  \label{fig:mg:1}
+\end{figure}
+
+\begin{remark}
+  Figure~\ref{fig:mg:1} shows that the recursive structure of the
+  W-cycle is much more complex than that of the V-cycle. The
+  complexity analysis below will show that higher values of
+  $m_{\text{coarse}}$ do not lead to efficient algorithms.
+\end{remark}
+
+\begin{definition}
+  If the numbers of pre- and post smoothing steps in the V-cycle are
+  dependent on the level $\ell$, we speak of the \define{variable
+    V-cycle}. A typical choice is $m_\ell = 2^{L-\ell} m_L$, thus
+  doubling the number of smoothing steps whenever stepping down one
+  level.
+\end{definition}
+
+\begin{note}
+  The variable V-cycle with $m_\ell$ as mentioned in the previous
+  definition has as many smoothing steps per iteration as the W-cycle.
+\end{note}
+
+\begin{remark}
+  If we use an additive or multiplicative Schwarz method (omitting the
+  coarse grid) as our smoother $R_\ell$, it should be possible in
+  principle to use the analytical tools of
+  Chapter~\ref{cha:iteration:schwarz-methods}. The difficulty then
+  consists in ensuring that the spectral radius of the iteration
+  matrix does not grow towards one if we proceed upwards on our scale
+  of spaces $V_\ell$. This remark is a todo for the author and an
+  encouragement for the reader. Hints may be found
+  in~\cite{GriebelOswald95,Xu92}.
+\end{remark}
+
+\begin{remark}
+  It turns out that the techniques used for the analysis of the
+  V-cycle and the W-cycle, respectively are quite
+  different. Therefore, we separate them into two sections.
+\end{remark}
+
+\begin{theorem}
+  Let $n_\ell$ be the dimension of $V_\ell$. Assume that the effort
+  needed to for the operations in equations~\eqref{eq:mg:5}b/c/e is
+  linear in $n_\ell$ and assume that $ n_{\ell+1}/n_\ell \approx 2^d$,
+  where $d$ is the space dimension of the grid. Assume that the effort
+  for the coarse grid solver is negligible. Then, the effort for
+  one step of the V-cycle is of order $n_L$. The effort for one step
+  of the W-cycle is of order $n_L$ for $d \ge 2$, while it is of order
+  $n_L \log(n_L)$ in one dimension.
+\end{theorem}
+
+\begin{proof}
+  Start the recursion on level $L$ with the function $MG_L(0,
+  g)$. This function calls $MG_{L-1}(\ldots)$ $m_{\text{coarse}}$
+  times. Thus, by recursion, $MG_{\ell}(\ldots)$ is executed
+  $m_{\text{coarse}}^{L-\ell}$ times.
+  
+  By our assumptions, the amount of operations $\breve N_\ell$ in $MG_\ell(\ldots)$
+  without the coarse grid correction is linear in $n_\ell$, say
+  bounded by $Cn_\ell$. Then, the overall effort $N_L$ on level $L$ is
+  \begin{gather}
+    \label{eq:mg:6}
+    N_L \le C \sum_{\ell=1}^L n_\ell m_{\text{coarse}}^{L-\ell} \le C
+    \sum_{\ell=1}^L n_L 2^{d(l-L)}m_{\text{coarse}}^{L-\ell}
+    = C n_L \sum_{\ell=1}^L \left(\frac{m_{\text{coarse}}}{2^d}\right)^l.
+  \end{gather}
+  It remains to notice that the sum converges and is bounded
+  independent of $L$ if and only if $m_{\text{coarse}}/2^d < 1$.
+\end{proof}
+
 \section{The V-cycle}
 
 \section{The W-cycle and two-grid convergence}
