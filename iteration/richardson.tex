@@ -17,6 +17,32 @@
   $\omega_k = \omega$.
 \end{intro}  
 
+\begin{lemma}
+  \label{lemma:richardson:1}
+  The error after one step of the Richardson method is given by
+  \begin{gather}
+    \label{eq:richardson:14}
+    \vec x^{(k+1)} - x = \mat E \left(
+      \vec x^{(k)} - x \right),
+  \end{gather}
+  where the \putindex{error propagation operator} is
+  \begin{gather}
+    \label{eq:richardson:15}
+    \mat E = \mat I - \omega \mat A.
+  \end{gather}
+\end{lemma}
+
+\begin{proof}
+  Using the fact that $\vec x = \mat A^{-1} \vec b$, we write
+  \begin{gather*}
+    \vec x^{(k+1)} - \vec x 
+    = \vec x^{(k)}
+    - \omega \bigl(\mat A \vec x^{(k)} - \vec b \bigr) -  \vec x^{(k)}
+    =  \vec x^{(k)} - \vec x - \omega \mat A \bigl(
+     \vec x^{(k)} -  \vec x \bigr).
+  \end{gather*}
+\end{proof}
+
 \begin{theorem}
   \label{theorem:richardson:1}
   If $\mat A$ is symmetric, positive definite, with extremal

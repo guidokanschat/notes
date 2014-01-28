@@ -262,6 +262,31 @@
   independent of $L$ if and only if $m_{\text{coarse}}/2^d < 1$.
 \end{proof}
 
+\begin{lemma}
+  Let $B_\ell^{-1}$ be the operator associated with the action of the
+  multigrid preconditioner on level $\ell$ for
+  $\ell=0,\ldots,L$. Then, the error after one step of the multigrid
+  method has the form
+  \begin{gather}
+    \label{eq:mg:7}
+    u^{(k+1)} - u = E_L \left(u^{(k)} - u \right),
+  \end{gather}
+  where for $\ell=0,\ldots,L$ we denote by $E_\ell$ the
+  \putindex{error propagation operator}
+  \begin{gather}
+    \label{eq:mg:8}
+    E_\ell = \left(I-R_\ell^{-1} A_\ell\right)^{m_{\text{post}}}
+    \left(I-B_{\ell-1}^{-1}A_{\ell-1} P_{\ell-1}\right)^{m_{\text{coarse}}}
+     \left(I-R_\ell^{-1} A_\ell\right)^{m_{\text{pre}}}
+  \end{gather}
+\end{lemma}
+
+\begin{proof}
+  For the smoother, we use the standard technique for Richardson's
+  method outlined in Lemma~\ref{lemma:richardson:1}.
+\end{proof}
+
+
 \section{The V-cycle}
 
 \section{The W-cycle and two-grid convergence}
