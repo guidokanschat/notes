@@ -259,7 +259,9 @@
     = C n_L \sum_{\ell=1}^L \left(\frac{m_{\text{coarse}}}{2^d}\right)^l.
   \end{gather}
   It remains to notice that the sum converges and is bounded
-  independent of $L$ if and only if $m_{\text{coarse}}/2^d < 1$.
+  independent of $L$ if and only if $m_{\text{coarse}}/2^d < 1$. The
+  statements of the theorem follow immediately, observing that $L
+  \simeq \log n_L$.
 \end{proof}
 
 \begin{lemma}
@@ -283,13 +285,150 @@
 
 \begin{proof}
   For the smoother, we use the standard technique for Richardson's
-  method outlined in Lemma~\ref{lemma:richardson:1}.
+  method outlined in Lemma~\ref{lemma:richardson:1}. For the coarse
+  grid correction, we use Lemma~\ref{lemma:schwarz:2}.
 \end{proof}
 
+\begin{note}
+  The structure of the error propagation operator~\eqref{eq:mg:8}
+  already suggests the course of the multigrid analysis (as well as
+  the design of smoothers). Namely, we will have to decompose $V_l$
+  into $V_{l-1}$ and its $A$-orthogonal complement. Then, we use the
+  induction argument that $I-B_{\ell-1}^{-1}A_{\ell-1}$ is is small on
+  $V_{l-1}$, while bounded on its complement. Vice versa,
+  $I-R_\ell^{-1} A_\ell$ must be bounded on all of $V_\ell$, while
+  providing good reduction properties on the complement of $V_{l-1}$.
+\end{note}
 
 \section{The V-cycle}
 
-\section{The W-cycle and two-grid convergence}
+\begin{assumption}
+  \label{assumption:mg:1}
+  Let the smoother $R_\ell$ be symmetric, positive definite and let
+  the following two conditions hold, the second for some positive
+  constant $\alpha$ independent of $\ell$:
+  \begin{subequations}
+    \label{eq:mg:9}
+    \begin{xalignat}{2}
+      \label{eq:mg:10}
+      a\bigl((I-R_\ell^{-1}A_\ell)v,v\bigr) & \ge 0
+      & \forall v &\in V_\ell, \\
+      r(w,w) &\le \alpha a(w,w)
+      & \forall v &\in V_\ell, \quad w = (I-P_{\ell-1}) v
+    \end{xalignat}
+  \end{subequations}
+\end{assumption}
+
+\begin{theorem}
+  Let $a(.,.)$ be symmetric, positive definite and let
+  Assumption~\ref{assumption:mg:1} hold. Then, the V-cycle operator
+  with $m_{\text{pre}} =m_{\text{post}} = m$ admits the estimate
+  \begin{gather}
+    \label{eq:mg:11}
+    0 \le a(\bigl((I-B_\ell^{-1}A_\ell)v,v\bigr) \le \delta a(v,v),
+    \qquad \forall v \in V_\ell,
+  \end{gather}
+  where
+  \begin{gather}
+    \label{eq:mg:12}
+    \delta = \frac{\alpha}{\alpha+2m}.
+  \end{gather}
+  In particular, the contraction number of the multigrid method is
+  bounded by a number less than 1, independent of the level.
+\end{theorem}
+
+\begin{proof}
+  \footnote{This version of the proof is taken
+    from~\cite{ArnoldFalkWinther97Hdiv}. It can also be found
+    in~\cite{BraessHackbusch83,Bramble93}.}
+  First, abbreviate $K_{\ell} = I-R_{\ell}^{-1} A_\ell$, the error
+  propagation operator of a smoothing step. Now we will prove the
+  theorem by induction over $\ell$. First, since $B_0 = A_0$, it holds
+  on level zero. For higher levels, we derive from~\eqref{eq:mg:8} the
+  relation
+  \begin{gather}
+    \label{eq:mg:13}
+    E_\ell = I-B_\ell^{-1} A_\ell = K_\ell^m\Bigl(
+    (I-P_{\ell-1}) + (I-B_{\ell-1}^{-1} A_{\ell-1}) P_{\ell-1}
+    \Bigr) K_\ell^m.
+  \end{gather}
+  Non-negativity follows readily by the induction argument and
+  the same properties of the smoother and the Ritz-projection. For the
+  upper bound, let $w = K_\ell^m v$ to obtain by the induction
+  hypothesis
+  \begin{multline}
+    \label{eq:mg:14}
+    a(E_\ell v,v) \le a\bigl((I-P_{\ell-1}) w,w\bigr) + \delta
+    a(P_{\ell-1}w,w)
+    \\
+    = (1-\delta) a\bigl((I-P_{\ell-1}) w,w\bigr)
+   + \delta a(w,w).
+  \end{multline}
+  Now we use the smoothing hypothesis anf the
+  Bunyakovsky-Cauchy-Schwarz inequality for the bilinear form $r(.,.)$
+  associated with the smoothing operator $R_\ell$ to obtain
+  \begin{align*}
+    a\bigl((I-P_{\ell-1}) w,w\bigr)
+    &= \scal({(I-P_{\ell-1}) w}, A_\ell w) \\
+    &= \scal(R_\ell {(I-P_{\ell-1})} w, R_\ell^{-1} A_\ell w)
+    \\
+    &= r\bigl((I-P_{\ell-1}) w, R_\ell^{-1} A_\ell w\bigr) \\
+    &\le \sqrt{r\bigl((I-P_{\ell-1}) w,(I-P_{\ell-1}) w\bigr)}
+    \sqrt{r\bigl(R_\ell^{-1} A_\ell w, R_\ell^{-1} A_\ell w\bigr)}
+    \\
+    &\le \sqrt{\alpha a\bigl((I-P_{\ell-1}) w,(I-P_{\ell-1}) w\bigr)}
+    \sqrt{a\bigl(R_\ell^{-1} A_\ell w, w\bigr)}
+  \end{align*}
+  Using the projection property of $I-P_{\ell-1}$, we obtain
+  \begin{gather}
+    \label{eq:mg:15}
+    a\bigl((I-P_{\ell-1}) w,w\bigr) \le \alpha a\bigl(R_\ell^{-1} A_\ell
+    w, w\bigr)
+    = \alpha a\bigl((I-K_\ell) K_\ell^{2m} v,v\bigr).
+  \end{gather}
+  
+  The smoothing assumption also guarantees that the spectrum of
+  $K_\ell$ is contained in the interval $[0,1]$. Therefore,
+  \begin{gather}
+    \label{eq:mg:16}
+    a\bigl((I-K_\ell) K_\ell^{2m} v,v\bigr)
+    \le a\bigl((I-K_\ell) K_\ell^{i} v,v\bigr),
+    \qquad i=0,\dots,2m,
+  \end{gather}
+  yielding by deflating the telescoping sum
+  \begin{gather}
+    \label{eq:mg:17}
+    a\bigl((I-K_\ell) K_\ell^{2m} v,v\bigr)
+    \le \frac1{2m} \sum_{i=0}^{2m-1}
+    a\bigl((I-K_\ell) K_\ell^{i} v,v\bigr)
+    = \frac1{2m} a\bigl((I-K_\ell^{2m}) v,v\bigr)
+  \end{gather}
+  Combining~\eqref{eq:mg:14}, \eqref{eq:mg:15}, and~\eqref{eq:mg:17},
+  we obtain
+  \begin{gather}
+    \begin{split}
+      a(E_\ell v,v) &\le (1-\delta)\frac\alpha{2m}
+      a\bigl((I-K_\ell^{2m}) v,v\bigr)
+      + \delta a(K_\ell^m u,K_\ell^m u)
+      \\
+      &= (1-\delta)\frac\alpha{2m} a(v,v)
+      + \left(\delta - (1-\delta)\frac\alpha{2m}\right)
+      a(K_\ell^m u,K_\ell^m u).
+    \end{split}
+  \end{gather}
+  Finally, we enter $\delta=\alpha/(\alpha+2m)$ to obtain
+  \begin{gather*}
+    \delta - (1-\delta)\frac\alpha{2m} = 0,
+  \end{gather*}
+  and thus
+  \begin{gather}
+    \label{eq:mg:18}
+    a(E_\ell v,v) \le \left(1-\frac\alpha{\alpha+2m}\right)\frac\alpha{2m}
+    a(v,v) = \frac\alpha{\alpha+2m}a(v,v). 
+  \end{gather}
+\end{proof}
+
+%\section{The W-cycle and two-grid convergence}
 
 
 %%% Local Variables: 
