@@ -283,14 +283,25 @@
   \end{gather}
   or in other words, $a(v,v)$ has to be bounded by the sum on the
   right for any decomposition $v=\sum v_j$. On the other hand, in
-  order to bound $1/\lambda(B,A)$, we need an estimate of the form
+  order to bound $1/\lambda(B,A)$, we need an estimate in the opposite direction,
+  where it is sufficient to find one decomposition $v=\sum v_j$ such
+  that it holds. We reduce these
+  conditions to the following two abstract assumptions, which guarantee that
+  Theorem~\ref{theorem:schwarz:1} holds true.
+\end{note}
+
+\begin{assumption}[Stable decomposition]
+  \label{assumption:schwarz:stable-decomposition}
+  For each $v\in V$ there is a decomposition
+  \begin{gather*}
+    v = \sum_{j=1^J} v_j, \qquad v_j\in V_j,
+  \end{gather*}
+  such that there holds
   \begin{gather}
     \label{eq:schwarz:24}
-     \min_{v=\sum v_j}\sum_{j=1}^J a(v_j, v_j) \lesssim a(v,v),
-  \end{gather}
-  where it is sufficient to find one decomposition $v=\sum v_j$ such
-  that the sum is bounded by the right hand side.
-\end{note}
+     \min_{v=\sum v_j}\sum_{j=1}^J a(v_j, v_j) \lesssim a(v,v).
+  \end{gather}  
+\end{assumption}
 
 \begin{assumption}[Strengthened Cauchy-Schwarz inequalities]
   \label{assumption:schwarz:1}
@@ -479,6 +490,7 @@
 \end{example}
 
 \begin{notation}
+  \label{par:schwarz:1}
   The solution space of our problem is the space $V=V_h$ given by the
   finite element space on the mesh $\T_h$. We define finite element
   spaces on $\Omega_j$ by
@@ -1049,7 +1061,7 @@
   
   The modifications in the analysis are as follows: first, replace the
   stable decomposition lemma~\ref{lemma:schwarz:stable-decomposition}
-  by assumption~\ref{assumption:schwarz:stable-decomposition}. Then,
+  by assumption~\ref{assumption:schwarz:stable-decomposition-2}. Then,
   introduce the additional assumption
   \ref{assumption:schwarz:local-stability}, which is ellipticity of
   the modified forms in $V_j$ with respect to the norm established by the
@@ -1062,7 +1074,7 @@
 
 \begin{assumption}[Stable decomposition]
   \index{stable decomposition}
-  \label{assumption:schwarz:stable-decomposition}
+  \label{assumption:schwarz:stable-decomposition-2}
     For each $v\in V_h$ there exists a decomposition $v=\sum_{j=0}^J
   v_j$ with $v_j\in V_j$, such that
   \begin{gather}

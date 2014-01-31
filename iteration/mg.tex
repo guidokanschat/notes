@@ -313,6 +313,7 @@
       \label{eq:mg:10}
       a\bigl((I-R_\ell^{-1}A_\ell)v,v\bigr) & \ge 0
       & \forall v &\in V_\ell, \\
+      \label{eq:mg:20}
       r(w,w) &\le \alpha a(w,w)
       & \forall v &\in V_\ell, \quad w = (I-P_{\ell-1}) v
     \end{xalignat}
@@ -409,11 +410,11 @@
     \begin{split}
       a(E_\ell v,v) &\le (1-\delta)\frac\alpha{2m}
       a\bigl((I-K_\ell^{2m}) v,v\bigr)
-      + \delta a(K_\ell^m u,K_\ell^m u)
+      + \delta a(K_\ell^m v,K_\ell^m v)
       \\
       &= (1-\delta)\frac\alpha{2m} a(v,v)
       + \left(\delta - (1-\delta)\frac\alpha{2m}\right)
-      a(K_\ell^m u,K_\ell^m u).
+      a(K_\ell^m v,K_\ell^m v).
     \end{split}
   \end{gather}
   Finally, we enter $\delta=\alpha/(\alpha+2m)$ to obtain
@@ -426,6 +427,40 @@
     a(E_\ell v,v) \le \left(1-\frac\alpha{\alpha+2m}\right)\frac\alpha{2m}
     a(v,v) = \frac\alpha{\alpha+2m}a(v,v). 
   \end{gather}
+\end{proof}
+
+\begin{lemma}
+  Let $R_\ell$ be the scaled additive Schwarz method
+  \begin{gather}
+    \label{eq:mg:19}
+    R_a^{-1} = \omega \sum_{j=1}^J P_j A^{-1},
+  \end{gather}
+  where the subspaces $V_j$ are defined by overlapping subdomains
+  $\Omega_j$ as in~\eqref{eq:schwarz:9}. Not that we do not include
+  the coarse space here. Then, for $\omega$ sufficiently small, this
+  smoother fulfills Assumption~\ref{assumption:mg:1}.
+\end{lemma}
+
+\begin{proof}
+  The positive definiteness and symmetry of the smoother have been
+  proven in an abstract way in Lemma~\ref{lemma:schwarz:3}. In order
+  to prove estimate~\eqref{eq:mg:10}, we observe that by
+  Lemma~\ref{lemma:schwarz:5} and Lemma~\ref{lemma:schwarz:6}
+  \begin{gather*}
+    r(v,v) = \omega \min_{v=\sum v_j} a(v_j, v_j) \gtrsim \omega a(v,v),
+  \end{gather*}
+  where the implicit constant depends on the number of overlaps in
+  Definition~\ref{definition:schwarz:finite-covering}. Thus, we can
+  choose $\omega$ independent of $\ell$ such that
+  \begin{gather*}
+    r(v,v) \ge a(v,v) \qquad \forall v\in V_\ell.
+  \end{gather*}
+  Accordingly, $R_\ell - A_\ell$ is positive definite, and since
+  $R_\ell^{-1}$ is as well, so is $I-R_\ell^{-1} A_\ell$.
+  It remains to prove~\eqref{eq:mg:20}, but this is exactly the second
+  half of the proof of Lemma~\ref{lemma:schwarz:stable-decomposition},
+  if we replace the Clément interpolant into the coarse space by the
+  Ritz projection.
 \end{proof}
 
 %\section{The W-cycle and two-grid convergence}
