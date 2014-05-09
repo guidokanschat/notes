@@ -1,0 +1,114 @@
+% $Id: mathsim.sty 4561 2014-01-08 17:30:08Z kanschat $
+
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{mathsim}[2013/08/01 Mathematical Methods of Simulation]
+
+\RequirePackage{amsthm,amsfonts,amssymb}
+\RequirePackage{amsmath,amstext}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{makeidx}
+\RequirePackage{babel}
+
+\RequirePackage{graphicx}
+\RequirePackage{xcolor,framed}
+\RequirePackage{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Optional use of subversion package
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\IfFileExists{svn-multi.sty}{%
+  \RequirePackage{svn-multi}}{%
+  \def\svnid#1{}%
+  \def\svntoday{\today}%
+  \def\svnrev{unknown}%
+}
+
+\newif\ifm@thsimfinal\m@thsimfinalfalse
+\DeclareOption{final}{\m@thsimfinaltrue}
+\ProcessOptions\relax
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% todo environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifm@thsimfinal
+\excludecomment{todo}
+\else
+\newenvironment{todo}{%
+  \def\FrameCommand{\fboxsep=\FrameSep \fcolorbox{black}{yellow}}%
+  \color{black}\MakeFramed {\FrameRestore}}%
+ {\endMakeFramed}
+\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Theorem and related environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+\parindent0pt
+\parskip2ex plus 1ex minus 1ex
+\newtheorem{theorem}{\iflanguage{german}{Satz}{}\iflanguage{english}{Theorem}{}}[chapter]
+\newtheorem{lemma}[theorem]{\iflanguage{german}{Hilfssatz}{}\iflanguage{english}{Lemma}{}}
+\newtheorem{corollary}[theorem]{\iflanguage{german}{Korollar}{}\iflanguage{english}{Corollary}{}}
+\newtheorem{assumption}[theorem]{\iflanguage{german}{Annahme}{}\iflanguage{english}{Assumption}{}}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{algorithm}[theorem]{\iflanguage{german}{Algorithmus}{}\iflanguage{english}{Algorithm}{}}
+\newtheorem{example}[theorem]{\iflanguage{german}{Beispiel}{}\iflanguage{english}{Example}{}}
+%\theoremstyle{remark}
+\newtheorem{intro}[theorem]{\iflanguage{german}{Einleitung}{}\iflanguage{english}{Introduction}{}}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{remark}[theorem]{\iflanguage{german}{Bemerkung}{}\iflanguage{english}{Remark}{}}
+\newtheorem{note}[theorem]{\iflanguage{german}{Anmerkung}{}\iflanguage{english}{Note}{}}
+\newtheorem{review}[theorem]{\iflanguage{german}{Zusammenfassung}{}\iflanguage{english}{Review}{}}
+
+% Definitions for index
+\def\defindex#1{\index{#1|textbf}}
+\def\define#1{\textbf{#1}\defindex{#1}}
+\def\putindex#1{#1\index{#1}}
+
+% Definitions for symbols in order to easily change notation later
+
+% Single letters
+\def\C{\mathbb C}
+\def\co{\mathcal C}
+\def\Q{\mathbb Q}
+\def\Pol{\mathcal P}
+\def\R{\mathbb R}
+\def\T{\mathbb T}
+\def\Z{\mathbb Z}
+\let\epsilon\varepsilon
+\let\rho\varrho
+\let\theta\vartheta
+\let\phi\varphi
+
+% Matrices
+\def\identity{\mathbb I}
+\def\fundam{Y}
+\def\fundamental(#1;#2){\fundam(#1;#2)}
+\def\verfahren{F}
+
+\def\mat#1{\mathfrak{#1}}
+\def\vec#1{\mathfrak{#1}}
+
+% Spaces, norms, and forms
+\def\pol{\mathbb P} % Polynomraum P_n
+\def\scal(#1,#2){\left<#1,#2\right>}
+\def\Scal(#1,#2){\left<\!\left<#1,#2\right>\!\right>}
+\def\norm#1{\left\|#1\right\|}
+
+% Operators
+\def\supp{\operatorname{supp}}
+\def\esssup{\operatorname{ess sup}}
+% differential quotients for integrals
+\def\diffd{\mathrm{d}}
+\def\diffq[#1]{\frac{\mathrm{d}}{\mathrm{d}#1}}
+\def\pdiffq[#1]{\frac{\partial}{\partial #1}}
+\def\ds{\,\diffd s}
+\def\dt{\,\diffd t}
+\def\dx{\,\diffd x}
+
+\endinput
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
