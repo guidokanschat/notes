@@ -49,26 +49,42 @@
   \label{definition:schwarz:1}
   \index{Pj@$P_j$|see {Ritz projection}}
   Let the operator $P_j: V \to V_j$ be defined such that $P_j u \in V_j$ is
-  the solution to the problem
+  the unique (Lemma~\ref{lemma:schwarz:1}) solution to the problem
   \begin{gather}
     \label{eq:schwarz:2}
     a(P_j u_j,v_j) = a(u,v_j),\quad\forall v_j\in V_j.
   \end{gather}
   \index{A-orthogonal projection@$A$-orthogonal projection|see {Ritz projection}}
   We call $P_j$ the $A$-orthogonal projection or \define{Ritz projection} to
-  $V_j$. The left hand side of this equation induces an operator $A_j:
+  $V_j$. Since $V_j$ is a subspace of $V$, we will also understand $P_j$
+  as an endomorphism of $V$.
+  The left hand side of this equation induces an operator $A_j:
   V_j \to V_j^*$ by $A_j u_j = a(u_j,.)$.
 \end{definition}
 
 \begin{lemma}
   \label{lemma:schwarz:ritz}
-  The projections $P_j$ are self-adjoint with respect to the
+  The projections $P_j$ as mappings from $V$ to itself
+  are self-adjoint with respect to the
   $a(.,.)$-inner product and positive semi-definite. Furthermore,
   $P_j$ acts as identity on $P_j$ and there holds $P_j^2 = P_j$.
 \end{lemma}
 \begin{proof}
-  These are all known facts following immediately from the definition
-  of $P_j$ as an orthogonal projection.
+  This is a well-known fact about orthogonal projections, which we
+  will prove shortly.
+  First, we note that by the uniqueness in
+  Lemma~\ref{lemma:schwarz:1} $P_j u_j = u_j$
+  for all $u_j\in V_j$. Thus, for all $u\in V$: $P_j P_j u = P_j u$.
+  Let now $u,v\in V$ arbitrary. Then, there holds
+  \begin{gather*}
+    a(u, P_j v) = a(P_j u, P_j v) = a(P_j v, P_j u)
+    = a(v, P_j u) = a(P_j u, v).
+  \end{gather*}
+  Furthermore,
+  \begin{gather*}
+    a(P_j u,u) = a(u, P_j u) = a(P_j u, P_j u)\ge 0,
+  \end{gather*}
+  since $a(.,.)$ is positive definite.
 \end{proof}
 
 \begin{definition}
@@ -80,7 +96,7 @@
     \scal(\Pi_j u_j,v_j) = \scal(u,v_j),\quad\forall v_j\in V_j.
   \end{gather}
   \index{Pijt@$\Pi^T_j$}
-  We define its adjoint $\Pi_j^T: V_j^* \to V^*$ by
+  We define its dual $\Pi_j^T: V_j^* \to V^*$ by
   \begin{gather}
     \label{eq:schwarz:3}
     \scal(\Pi_j^T \phi_j,v)_{V^*\times V} =  \scal( \phi_j,\Pi_j
@@ -102,10 +118,13 @@
 \end{lemma}
 
 \begin{proof}
-  We rewrite equation~\eqref{eq:schwarz:2} as
-  \begin{gather}
-    \scal(A_j P_j u, v_j) = \scal(A u, v_j) = \scal(\Pi^T_j A u, v_j).
-  \end{gather}
+  Let $u,v\in V$ arbitrary. Let $v_j=\Pi_j v$. We rewrite
+  equation~\eqref{eq:schwarz:2} as
+  \begin{gather*}
+    \scal(A_j P_j u, v)_{V^*\times V} = \scal(A_j P_j u, v_j)_{V^*\times V}
+    = \scal(A u, v_j)_{V^*\times V}
+    = \scal(\Pi^T_j A u, v)_{V^*\times V}.
+  \end{gather*}
 \end{proof}
 
 \begin{definition}
@@ -170,8 +189,8 @@
   Therefore, for each term in this sum and arbitrary elements
   $\phi,\psi\in V^*$, we have
   \begin{gather*}
-    \scal(A_j^{-1} \Pi^T_j \phi, \psi)
-    = \scal(A_j^{-1} \Pi^T_j \phi, \Pi^T_j \psi)
+    \scal(A_j^{-1} \Pi^T_j \phi, \psi)_{V\times V^*}
+    = \scal(A_j^{-1} \Pi^T_j \phi, \Pi^T_j \psi)_{V\times V^*}
     = \scal(\Pi^T_j \phi, A_j^{-1}\Pi^T_j \psi)
     = \scal(\phi, A_j^{-1}\Pi^T_j \psi).
   \end{gather*}
