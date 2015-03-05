@@ -17,20 +17,22 @@
 \subsection{The abstract framework}
 
 \begin{intro}
-  Let $V$ be a Hilbert space and let $a(.,.): V\times V$ be a
-  symmetric and $V$-elliptic bilinear form. Let the set of auxiliary
+  Let $V$ be a Hilbert space with inner product $\scal(.,.)$
+  and let $a(.,.): V\times V$ be a
+  symmetric and $V$-elliptic not necessarily bounded bilinear form.
+  Let a set of auxiliary
   subspaces $\{V_j\}_{j=1,\dots,J}$ of $V$ be chosen such that
   \begin{gather*}
-    V = \sum_{j=1}^J V_j,
+    V = \sum_{j=1}^J V_j.
   \end{gather*}
-  but the sum is not required to be direct, that is, a vector $v\in V$
+  The sum is not required to be direct, that is, a vector $v\in V$
   may have several decompositions $v = \sum \alpha_j v_j$ with $v_j\in
   V_j$.
 \end{intro}
 
 \begin{lemma}
   \label{lemma:schwarz:1}
-  If the form $a(.,.)$ is bounded and V-elliptic, then the weak
+  Let the form $a(.,.)$ be bounded and $V_j$-elliptic. Then, the weak
   formulation: find $u_j\in V_j$ such that
   \begin{gather}
     \label{eq:schwarz:1}
@@ -41,8 +43,7 @@
 \end{lemma}
 
 \begin{proof}
-  This lemma follows from the fact that boundedness and V-ellipticity
-  transfer from $V$ to its subspaces.
+  This is the Lax-Milgram lemma for $V_j$.
 \end{proof}
 
 \begin{definition}[Ritz-projection]
@@ -52,7 +53,7 @@
   the unique (Lemma~\ref{lemma:schwarz:1}) solution to the problem
   \begin{gather}
     \label{eq:schwarz:2}
-    a(P_j u_j,v_j) = a(u,v_j),\quad\forall v_j\in V_j.
+    a(P_j u,v_j) = a(u,v_j),\quad\forall v_j\in V_j.
   \end{gather}
   \index{A-orthogonal projection@$A$-orthogonal projection|see {Ritz projection}}
   We call $P_j$ the $A$-orthogonal projection or \define{Ritz projection} to
@@ -110,7 +111,7 @@
 
 \begin{lemma}
   \label{lemma:schwarz:2}  
-  From definition~\ref{definition:schwarz:1}, we deduce
+  There holds
   \begin{gather}
     \label{eq:schwarz:15}
     A_j P_j = \Pi^T_j A.
@@ -121,7 +122,8 @@
   Let $u,v\in V$ arbitrary. Let $v_j=\Pi_j v$. We rewrite
   equation~\eqref{eq:schwarz:2} as
   \begin{gather*}
-    \scal(A_j P_j u, v)_{V^*\times V} = \scal(A_j P_j u, v_j)_{V^*\times V}
+    \scal(A_j P_j u, v)_{V^*\times V}
+    = \scal(A_j P_j u, v_j)_{V^*\times V}
     = \scal(A u, v_j)_{V^*\times V}
     = \scal(\Pi^T_j A u, v)_{V^*\times V}.
   \end{gather*}
