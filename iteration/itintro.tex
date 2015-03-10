@@ -7,6 +7,22 @@
   be covered by these notes. 
 \end{remark}
 
+\begin{notation}
+  Iterative methods will be considered in a Hilbert space $X$ with
+  inner product $\scal(.,.)$.
+\end{notation}
+
+\begin{remark}
+  For purposes of analysis we typically choose the space $X =
+  L^2(\Omega)$. We admit a small inaccuracy here: when we run the
+  algorithms on a computer, we usually employ the Eiclidean inner
+  product, thus $X$ should be the space of degrees of freedom. But
+  this is a discrete space, where we cannot use theory of function
+  spaces easily. Instead, we note that the $L^2$-inner product of
+  standard finite element bases yield inner products equivalent to the
+  Euclidean up to the local mesh size (see Lemma~\ref{lemma:itintro:1}).
+\end{remark}
+
 \begin{example}
   While the methods developed in this chapter are fairly general, we
   introduce a specific model problem as a simple benchmark case. To
@@ -26,18 +42,14 @@
 \end{example}
 
 \begin{notation}
-  With a bilinear form $a(.,.)$ on $V\times V$ we associate the
-  operator $A: V\to V^*$ by
+  With a bilinear form $a(.,.)$ on $X\times X$ we associate the
+  operator $A: X\to X$ by
   \begin{gather}
     \label{eq:itintro:2}
     \scal(Au,v) = a(u,v), \quad \forall v\in V,
   \end{gather}
-  where $\scal(.,.):V^*\times V \to \R$ is the canonical bilinear form of an
-  element of $V^*$ and an element of $V$, namely
-  \begin{gather}
-    \label{eq:richardson:9}
-    \scal(f,v) = f(v), \quad \forall f\in V^*, v\in V.
-  \end{gather}
+  where now $V = \mathcal D(A)$ is the \define{domain} of $A$, that is, the
+  subset of functions $v\in X$, such that $Av$ is defined and in $X$.
   
   We will tacitly assume that operators $A$, $B$, etc.\ are defined by
   equation~\eqref{eq:itintro:2} and the bilinear forms $a(.,.)$,
@@ -45,12 +57,12 @@
 \end{notation}
 
 \begin{definition}
-  We call the bilinear form $a(.,.)$ \define{symmetric} and its
-  associated operator $A$ self-adjoint, if there holds
+  We call the bilinear form $a(.,.)$ and its associated operator $A$
+  \define{symmetric}, if there holds
   \begin{gather*}
     a(u,v) = a(v,u) \qquad \forall u,v \in V.
   \end{gather*}
-  They are called \define{elliptic}, if for there is a positive number
+  They are called $V$-\define{elliptic}, if for there is a positive number
   $\gamma$ such that
   \begin{gather*}
     a(u,u) \ge \gamma \norm{u}_V^2 \qquad \forall u\in V.
@@ -60,13 +72,13 @@
 \begin{definition}
   \defindex{Lambdaa@$\Lambda(A)$}
   \defindex{lambdaa@$\lambda(A)$}
-  For positive definite self adjoint operators, we obtain the possibly
+  For positive definite symmetric operators, we obtain the possibly
   infinite bounds of the spectrum
   \begin{gather}
     \label{eq:richardson:8}
-    \Lambda(A) = \sup_{u\in V}\frac{a(u,u)}{\norm{u}_V^2},
+    \Lambda(A) = \sup_{u\in V}\frac{a(u,u)}{\norm{u}_X^2},
     \qquad
-    \lambda(A) = \inf_{u\in V}\frac{a(u,u)}{\norm{u}_V^2},
+    \lambda(A) = \inf_{u\in V}\frac{a(u,u)}{\norm{u}_X^2},
   \end{gather}
   \defindex{kappaa@$\kappa(A)$}
   \index{condition number|see {spectral condition number}}
@@ -78,12 +90,12 @@
 
 \begin{note}
   Note that the spectral condition number depends on the norm of the
-  space $V$. It is bounded, if and only if $A$ is bounded with respect
+  space $X$. It is bounded, if and only if $A$ is bounded with respect
   to this norm.
 \end{note}
 
 \begin{example}
-  Let $V=H^1_0(\Omega)$ with the inner product
+  Let $X=H^1_0(\Omega)$ with the inner product
   \begin{gather*}
     \scal(u,v)_1 = \int_\Omega \nabla u\cdot \nabla v \dx.  
   \end{gather*}
@@ -92,14 +104,14 @@
   \begin{gather*}
     \Lambda(A) = \lambda(A) = \kappa(A) = 1.    
   \end{gather*}
-  If on the other hand $V = L^2(\Omega)$ equipped with the usual
+  If on the other hand $X = L^2(\Omega)$ equipped with the usual
   $L^2$-inner product, then $A$ is unbounded and thus $\kappa(A) =
   \infty$. $\lambda(A)$ is the constant in Friedrichs' inequality.
 \end{example}
 
 \begin{notation}
-  After choosing a basis for a finite dimensional space $V_n$ or a
-  Schauder basis for the space $V$ (assuming $V$ separable), say
+  After choosing a basis for a finite dimensional space $X_n$ or a
+  Schauder basis for the space $X$ (assuming $X$ separable), say
   $\{\phi_i\}$, we can define a (possibly infinite-dimensional) matrix
   $\mat A$ associated with the bilinear form $a(.,.)$ with the entries
   \begin{gather*}
@@ -107,7 +119,7 @@
   \end{gather*}
   
   If we restrict the bilinear forms to a finite dimensional subspace
-  $V_n$, we denote the matrices $\mat A$ restricted to this subspace
+  $X_n$, we denote the matrices $\mat A$ restricted to this subspace
   by $\mat A_n$.
 \end{notation}
 
@@ -132,19 +144,31 @@
 
 \begin{note}
   The spectral condition number of the operator $A$ depends on the
-  bilinear form $a(.,.)$ and the choice of the norm in $V$. On the
+  bilinear form $a(.,.)$ and the choice of the norm in $X$. On the
   other hand, the spectral condition number of the matrix $\mat A$
-  depends on the choice of a basis of the space $V_n$.
+  depends on the choice of a basis of the space $X_n$.
 \end{note}
 
-\begin{example}
+\begin{lemma}
+  \label{lemma:itintro:1}
   Let $\{\phi_i\}$ be the standard, piecewise linear, finite element
   basis on a quasi-uniform triangulation of mesh size $h$. Let $\mat
   M$, the so called \define{mass matrix} be the matrix associated with
-  the $L^2$-inner product. It has the entries
+  the $L^2$-inner product with entries
   \begin{gather*}
     m_{ij} = \int_\Omega \phi_i(x) \phi_j(x) \dx.
   \end{gather*}
+  Then,
+  \begin{gather*}
+    \Lambda(\mat M) \simeq h^{d} \simeq  \lambda(\mat M)
+  \end{gather*}
+  Therefore, the condition number is
+  \begin{gather*}
+    \kappa(\mat M) = \frac{\mathcal O(h^{d})}{\mathcal O(h^{d})} = {\mathcal O(1)}.
+  \end{gather*}
+\end{lemma}
+
+\begin{proof}
   It is easy to verify, that $m_{ii}> 0$, and that not more
   entries in each row as edges of the triangulation meet in one vertex
   are different from zero. Furthermore, that the size of those entries
@@ -170,11 +194,7 @@
   equivalent on the reference cell, and the $L^2$-norm scales with
   $h^d$ when transforming to the real cell $T$. Thus, we have
   $\lambda(\mat M) = \mathcal O(h^{d})$.
-  Therefore, the condition number is
-  \begin{gather*}
-    \kappa(\mat M) = \frac{\mathcal O(h^{d})}{\mathcal O(h^{d})} = {\mathcal O(1)}.
-  \end{gather*}
-\end{example}
+\end{proof}
 
 \begin{note}
   A closer inspection of the proof yields, that on a shape regular
@@ -186,6 +206,10 @@
     \kappa(\mat M) &= \mathcal O\left(\left(\frac Hh\right)^{d}\right)
   \end{align*}
 \end{note}
+
+\begin{todo}
+  This can be fixed by using weighted norms in $\R^n$.
+\end{todo}
 
 %%% Local Variables: 
 %%% mode: latex

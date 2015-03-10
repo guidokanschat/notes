@@ -115,20 +115,21 @@
 \end{intro}
 
 \begin{intro}
-  Elements of an abstract Hilbert space $V$ will be denoted by
+  Elements of an abstract Hilbert space $X$ will be denoted by
   $u,v,w$, etc. On the other hand, coefficient vectors in $\R^n$ are
   denoted by letters $\vec x,\vec y,\vec z$, etc.
 \end{intro}
 
 \begin{definition}
-  Let $V$ be a Hilbert space with inner product $\scal(.,.)_V$. Let
-  $a(.,.)$ be a second bilinear form on $V$. Then, for any right hand
-  side $f\in V^*$ and any start vector $u^{(0)}\in V$,
+  Let $X$ be a Hilbert space with inner product $\scal(.,.)$. Let
+  $a(.,.)$ be a second bilinear form on $X$ and the domain of its
+  operator is $V$. Then, for any right hand
+  side $f\in V$ and any start vector $u^{(0)}\in V$,
   \define{Richardson's method} is defined by the iteration
   \begin{gather}
     \label{eq:richardson:5}
-    \scal(u^{(k+1)},v)_V = \scal(u^{(k)},v)_V
-    - \omega_k \bigl(a(u^{(k)},v) - f(v)\bigr), \qquad \forall v\in V.
+    \scal(u^{(k+1)},v) = \scal(u^{(k)},v)
+    - \omega_k \bigl(a(u^{(k)},v) - \scal(f,v)\bigr), \qquad \forall v\in X.
   \end{gather}
   $\omega_k$ is a suitable \putindex{relaxation parameter}, chosen
   such that the method converges.
@@ -138,21 +139,21 @@
   The scalar products in~\eqref{eq:richardson:5} become necessary,
   since different from the case in $\R^n$, the result of applying the
   bilinear form $a(.,.)$ to $u^{(k)}$ in the first argument yields a
-  linear form on $V$. In order to convert this to a vector in $V$, we
+  linear form on $X$. In order to convert this to a vector in $X$, we
   have to apply the isomorphism induced by the \putindex{Riesz
     representation theorem}.
 \end{note}
 
 \begin{theorem}
   \label{theorem:richardson:2}
-  Let the bilinear form $a(.,.)$ be bounded and elliptic on $V\times
-  V$, namely, let there exist positive constants $\Lambda$ and $\lambda$ such
-  that for all $u,v\in V$ there holds
+  Let the bilinear form $a(.,.)$ be bounded and elliptic on $X\times
+  X$, namely, let there exist positive constants $\Lambda$ and $\lambda$ such
+  that for all $u,v\in X$ there holds
   \begin{gather}
     \label{eq:richardson:6}
-    a(u,v) \le \Lambda \norm{u}_V \norm{v}_V,
+    a(u,v) \le \Lambda \norm{u} \norm{v},
     \qquad
-    a(u,u) \ge \lambda \norm{u}_V^2.
+    a(u,u) \ge \lambda \norm{u}^2.
   \end{gather}
   Then, Richardson's iteration converges for
   $\omega_k = \omega$ for any $\omega \in (0, 2\lambda/\Lambda^2)$.
@@ -161,23 +162,23 @@
 \begin{proof}
   We define the iteration operator $T$ as the solution operator of
   equation~\eqref{eq:richardson:5}, namely $T u^{(k)} := u^{(k+1)}$. We
-  have to prove that $T$ is a contraction on $V$ under the assumptions
+  have to prove that $T$ is a contraction on $X$ under the assumptions
   of the theorem.
 
-  For two arbitrary vectors $u^1, u^2 \in V$, let $w = u^1-u^2$ be
+  For two arbitrary vectors $u^1, u^2 \in X$, let $w = u^1-u^2$ be
   their difference. Due to linearity, we have $T w = T u^1-T u^2$ and
   \begin{gather*}
-    \scal(T w,v)_V = \scal(w,v)_V - \omega a(w,v) = \scal(w-\omega A w,v)_V.
+    \scal(T w,v) = \scal(w,v) - \omega a(w,v) = \scal(w-\omega A w,v).
   \end{gather*}
   Using $v=Tw$ as a test function, we obtain
   \begin{align*}
-    \norm{Tw}_V^2
-    & = \scal(w-\omega A w,w-\omega A w)_V \\
-    &= \norm{w}_V^2 - 2\omega a(w,w) + \omega^2 \norm{Aw}_V^2\\
-    & \le \norm{w}_V^2 - 2\lambda\omega \norm{w}_V^2
-    +  \Lambda^2 \omega^2\norm{w}_V^2\\
+    \norm{Tw}^2
+    & = \scal(w-\omega A w,w-\omega A w) \\
+    &= \norm{w}^2 - 2\omega a(w,w) + \omega^2 \norm{Aw}^2\\
+    & \le \norm{w}^2 - 2\lambda\omega \norm{w}^2
+    +  \Lambda^2 \omega^2\norm{w}^2\\
     & = \underbrace{\bigl(1-2\lambda\omega
-      + \Lambda^2\omega^2\bigr)}_{=:\rho(\omega)} \norm{w}_V^2.
+      + \Lambda^2\omega^2\bigr)}_{=:\rho(\omega)} \norm{w}^2.
   \end{align*}
   The function $\rho(\omega)$ is a parabola open to the top, which
   at zero equals one and has a negative derivative. Thus, it is less
@@ -198,19 +199,19 @@
 \begin{note}
   It is clear that the boundedness and ellipticity
   estimates~\eqref{eq:richardson:6} hold for any finite dimensional
-  subspace $V_n\subset V$, and thus the convergence
+  subspace $X_n\subset X$, and thus the convergence
   estimate~\eqref{eq:richardson:4} becomes independent of $n$.
   
   More interesting and also more common is the case where the bilinear form
-  $a(.,.)$ is unbounded on $V$. While it is still bounded on each
-  finite subspace $V_n$, this bound cannot be independent of $n$ if
-  the sequence $\{V_n\}$ approximates $V$.
+  $a(.,.)$ is unbounded on $X$. While it is still bounded on each
+  finite subspace $X_n$, this bound cannot be independent of $n$ if
+  the sequence $\{X_n\}$ approximates $X$.
 \end{note}  
 
 \begin{note}
-  We define an operator $B:V\to V^*$ such that $Bu = b(u,.) :=
-  \scal(u,.)_V$. By the Riesz representation theorem, there is a
-  continuous inverse operator $B^{-1}: V^*\to V$, which is often
+  We define an operator $B:X\to X^*$ such that $Bu = b(u,.) :=
+  \scal(u,.)$. By the Riesz representation theorem, there is a
+  continuous inverse operator $B^{-1}: X^*\to X$, which is often
   called \define{Riesz isomorphism}.
 \end{note}
 
@@ -238,21 +239,21 @@
   naturally and with necessity.
   
   The goal of this chapter is finding preconditioners $\mat B^{-1}$, or
-  equivalently inner products $\scal(.,.)_V$, such that the bilinear
+  equivalently inner products $\scal(.,.)$, such that the bilinear
   form $a(.,.)$ is bounded and the condition number
   $\kappa = \Lambda/\lambda$ is small.
   
   In order to reduce (or increase) confusion, we will refer to the
   inner product that we search in order to bound the condition number
-  as $b(.,.)$ instead of $\scal(.,.)_V$, this way separating the
-  Hilbert space $V$ more clearly from the task of
+  as $b(.,.)$ instead of $\scal(.,.)$, this way separating the
+  Hilbert space $X$ more clearly from the task of
   preconditioning. Thus, the operator $B$ and the matrix $\mat B$ will
   be associated with a bilinear form $b(.,.)$ and the final version of
-  the preconditioned Richardson iteration in the space $V$ is
+  the preconditioned Richardson iteration is
   \begin{gather}
     \label{eq:richardson:10}
-    b(u^{(k+1)},v)_V = b(u^{(k)},v)_V
-    - \omega_k \bigl(a(u^{(k)},v) - f(v)\bigr), \qquad \forall v\in V,
+    b(u^{(k+1)},v) = b(u^{(k)},v)
+    - \omega_k \bigl(a(u^{(k)},v) - f(v)\bigr), \qquad \forall v\in X,
   \end{gather}
   or in operator form
   \begin{gather}
@@ -261,9 +262,18 @@
   \end{gather}
 \end{definition}
 
+\begin{remark}
+  The space $X$ and is inner product does not appear anymore in this
+  formulation, since the bilinear form $b(.,.)$ has replaced
+  it. Thus, finding a preconditioner also amounds to changing the
+  space in which we iterate. This is reflected by the following:
+\end{remark}
+
 \begin{corollary}
   Let the symmetric bilinear forms $a(.,.)$ and $b(.,.)$ in the
-  Richardson iteration~\eqref{eq:richardson:10} fulfill the
+  Richardson iteration~\eqref{eq:richardson:10} be both bounded and
+  positive definite on the
+  same space $V$ and fulfill the
   \define{spectral equivalence} relation
   \begin{gather}
     \label{eq:richardson:12}
@@ -277,41 +287,48 @@
 
 \begin{proof}
   This corollary is equivalent to Theorem~\ref{theorem:richardson:2}
-  if the inner product $\scal(.,.)_V$ is replaced by the bilinear form
+  if the inner product $\scal(.,.)$ is replaced by the bilinear form
   $b(.,.)$.
 \end{proof}
+
+\begin{remark}
+  Originally, the space $V$ was chosen as the domain of $A$ which
+  essentially meant $V \subset H^2(\Omega)$, since we required $Av \in
+  X$. An additional benefit of the preconditioned version is, that now
+  $V \subset H^1(\Omega)$ is sufficient and at least here no
+  regularity assumption is required.
+\end{remark}
 
 \begin{notation}
   \index{lambdaBA@$\lambda(B,A)$}
   \index{Lambdaba@$\Lambda(B,A)$}
   In order to distinguish different preconditioners, we will also us
   the notation $\lambda(B,A)$ and $\Lambda(B,A)$ to refer to the
-  constants in the norm equivalence~\eqref{eq:richardson:12}. This
-  notation 
+  constants in the norm equivalence~\eqref{eq:richardson:12}.
 \end{notation}
 
 
 \begin{example}
   Let us take the example~\eqref{eq:itintro:1}.
   By the Poincaré-Friedrichs inequality, $a(.,.)$ is an inner product
-  on $V$ and thus we can choose $\scal(.,.)_V = a(.,.)$. In
+  on $X$ and thus we can choose $\scal(.,.) = a(.,.)$. In
   particular, $\lambda = \Lambda = 1$ and the optimal choice is
   $\omega = 1$. Then, Richardson's iteration becomes
   \begin{gather*}
     a(u^{(k+1)},v) = a(u^{(k)},v)
-    - \bigl(a(u^{(k)},v) - f(v)\bigr) =  f(v), \qquad \forall v\in V,
+    - \bigl(a(u^{(k)},v) - f(v)\bigr) =  f(v), \qquad \forall v\in X,
   \end{gather*}
   which converges in a single step, but we have to solve the original
   equation for $u$. Thus, either the inversion of the matrix $A_n$ is
-  trivial on each finite dimensional subspace $V_n$, or the method is
+  trivial on each finite dimensional subspace $X_n$, or the method is
   useless. With usual finite element bases, the latter is true.
 \end{example}
 
 \begin{example}
   In the other extreme, we would like to use the $\R^n$ or $L^2$
-  inner product on $V_n$ or $V$, such that the Riesz isomorphism is
+  inner product on $X_n$ or $X$, such that the Riesz isomorphism is
   easily computable. But then, the bilinear form $a(.,.)$ is unbounded
-  on $V$. Thus, while for each finite $n$, the condition number
+  on $X$. Thus, while for each finite $n$, the condition number
   $\kappa_n = \Lambda_n/\lambda_n$ exists, it converges to infinity if
   $n\to\infty$.
 \end{example}
