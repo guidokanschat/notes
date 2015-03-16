@@ -1,0 +1,104 @@
+
+\begin{intro}
+  Linear algebra deals with abstract vector spaces, but most results
+  on linear mappings are restricted to finite dimensional spaces,
+  since they exploit the fact that we can choose a basis.
+
+  The choice of a basis becomes a more involved endeavor if we allow
+  for spaces that do not have a finite basis. We can actually go by
+  two very different routes. The route of Hamel bases, which are bases
+  of inifintely many vectors, but in order to represent a vector in
+  such a basis, we only allow for finite linear combinations.
+  
+  The other route defines a Schauder basis as a set of vectors, such
+  that every vector in the space is the linear combination of
+  infinitely many basis vectors. In order to define such a linear
+  combination, we have to define the meaning of such an infinite sum,
+  namely the convergence of the sum. In the course of such a
+  definition, we will learn about a natural extension of
+  Euclidean\footnote{And we will not have to distinguish between
+    Euclidean real spaces and unitary complex spaces anymore.}
+  spaces, namely pre-Hilbert and Hilbert spaces.
+\end{intro}
+
+\begin{definition}
+  Let $V$ be a vector space over $\mathbb K$ with $\mathbb K = \mathbb
+  C$ or $\mathbb K = \R$. An \define{inner product} on $V$ is a mapping
+  $\scal(.,.): V\times V \to \mathbb K$ with the properties
+  \begin{xalignat}2
+    \scal(\alpha x+y,z) &= \alpha \scal(x,z) + \scal(y,z)
+    && \forall x,y,z \in V; \alpha \in \mathbb K\\
+    \scal(x,y) &= \overline{\scal(y,x)} && \forall x,y \in V \\
+    \scal(x,x) & \ge 0 \quad\forall x\in V &\text{and}
+    & \scal(x,x)=0 \Leftrightarrow x=0,
+  \end{xalignat}
+  usually referred to as (bi-)linearity, symmetry, and
+  definiteness. We note that linearity in the second argument follows
+  immediately by symmetry.
+\end{definition}
+
+\begin{definition}
+  A vector space $V$ equipped with an inner product $\scal(.,.)$ and a
+  norm defined by
+  \begin{gather*}
+    \|v\| = \sqrt{\scal(v,v)}
+  \end{gather*}
+  is called a \define{pre-Hilbert space}. A \define{Hilbert space} is
+  a pre-Hilbert space which is also \putindex{complete}, that is,
+  every \putindex{Cauchy sequence} with elements in the space has a
+  limit in the space.
+\end{definition}
+
+\begin{example}
+  For any positive integer, the space $\R^n$ equipped with the
+  Euclidean inner product
+  \begin{gather*}
+    \scal(x,y) = \sum_{i=1}^n x_i y_i
+  \end{gather*}
+  is a Hilbert space. The same holds for $\mathbb C^n$ and
+  \begin{gather*}
+    \scal(x,y) = \sum_{i=1}^n x_i \overline{y_i}.
+  \end{gather*}
+\end{example}
+
+\begin{example}
+  The space $\ell^2$ of sequences $\{x_i\}_{i=1,\dots}$ of complex
+  numbers is a Hilbert space if equipped with the inner product
+  \begin{gather*}
+    \scal(x,y) = \sum_{i=1}^\infty x_i \overline{y_i}
+    = \lim_{n\to\infty}\sum_{i=1}^n x_i \overline{y_i}.
+  \end{gather*}
+\end{example}
+
+\begin{example}
+  On the space of continuous functions on the interval
+  $[-\pi/2,\pi/2]$ define the inner product
+  \begin{gather*}
+    \scal(f,g) = \int_{-\pi/2}^{\pi/2} f(x)g(x)\,dx.
+  \end{gather*}
+  Let
+  \begin{gather*}
+    V = \bigl\{f\in C[-\pi/2,\pi/2] \big| \scal(f,f) < \infty \bigr\}.
+  \end{gather*}
+  Then $V$ is a vector space with an inner product and thus a
+  pre-Hilbert space, but it is not a Hilbert space, since for any $n$
+  the sum
+  \begin{gather*}
+    f_n(x) = \frac4\pi \sum_{k=1}^n \frac{\sin\bigl((2k-1) x\bigr)}{2k-1}
+  \end{gather*}
+  is continuous, but
+  \begin{gather*}
+    \lim_{n\to\infty} f_n =
+    \begin{cases}
+      -1 & x<0 \\
+      0 & x=0 \\
+      1 & x>0
+    \end{cases}
+  \end{gather*}
+  is not.
+\end{example}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
