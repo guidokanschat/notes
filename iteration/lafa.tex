@@ -21,6 +21,8 @@
   spaces, namely pre-Hilbert and Hilbert spaces.
 \end{intro}
 
+\section{Hilbert spaces and orthogonal bases}
+
 \begin{definition}
   Let $V$ be a vector space over $\mathbb K$ with $\mathbb K = \mathbb
   C$ or $\mathbb K = \R$. An \define{inner product} on $V$ is a mapping
@@ -43,7 +45,8 @@
   \begin{gather*}
     \|v\| = \sqrt{\scal(v,v)}
   \end{gather*}
-  is called a \define{pre-Hilbert space}. A \define{Hilbert space} is
+  is called an \define{inner product space}
+  or \define{pre-Hilbert space}. A \define{Hilbert space} is
   a pre-Hilbert space which is also \putindex{complete}, that is,
   every \putindex{Cauchy sequence} with elements in the space has a
   limit in the space.
@@ -62,12 +65,20 @@
 \end{example}
 
 \begin{example}
-  The space $\ell^2$ of sequences $\{x_i\}_{i=1,\dots}$ of complex
-  numbers is a Hilbert space if equipped with the inner product
+  The spaces $\ell^2(\R)$ and $\ell^2(\mathbb C)$ of sequences
+  $\{x_k\}_{k=1,\dots}$ of real and complex numbers, respectively, are
+  Hilbert spaces, if equipped with the inner product
   \begin{gather*}
-    \scal(x,y) = \sum_{i=1}^\infty x_i \overline{y_i}
-    = \lim_{n\to\infty}\sum_{i=1}^n x_i \overline{y_i}.
+    \scal(x,y) = \sum_{i=k}^\infty x_k \overline{y_k}
+    = \lim_{n\to\infty}\sum_{k=1}^n x_k \overline{y_k}.
   \end{gather*}
+  An example for a sequence in $\ell^2(\R)$ is for instance the
+  sequence $v = \{1/k\}$, since
+  \begin{gather*}
+    \norm{v}^2 = \sum_{i=k}^\infty \frac1{k^2} < \infty.
+  \end{gather*}
+  The sequence $w = \{1\}$ is not, since it does not converge
+  quadratically.
 \end{example}
 
 \begin{example}
@@ -97,6 +108,179 @@
   \end{gather*}
   is not.
 \end{example}
+
+\begin{definition}
+  Let $V$ be a vector space over a field $\mathbb K$. A basis of $V$
+  is a set $\{x_i\}$ of linearly independent vectors with coefficients
+  $i\in I$ from an index set $I$, such that each $v\in V$ has a
+  representation of the form
+  \begin{gather*}
+    v = \sum_{i\in I} \alpha_i x_i,
+  \end{gather*}
+  with coefficients $\alpha_i \in \mathbb K$. For a \define{Hamel
+    basis}, it is required that only finitely many coefficients in
+  this representation are nonzero. For a \define{Schauder basis}, we
+  assume $I = \mathbb N$ and require that the sum in the linear
+  combination exists as the limit of a series.
+\end{definition}
+
+\begin{notation}
+  We will use the term \putindex{sequence} to denote an at most
+  countable set. The elements of a sequence are numbered by indices
+  and the index set is $\mathbb N$ or a subset thereof.
+\end{notation}
+
+\begin{definition}
+  Let $V$ be an inner product space over a field $\mathbb K$. Two
+  vectors $x,y\in V$ are called orthogonal if $\scal(x,y) = 0$. We
+  write $x\perp y$. A set of nonzero mutually orthogonal vectors
+  $\{x_i\} \subset V$ is called \define{orthogonal set}. If
+  additionally $\|x_i\| = 1$ for all vectors, it is called an
+  \define{orthonormal set}. These notions transfer directly from
+  finite to countable sets.
+\end{definition}
+
+\begin{lemma}[Gram--Schmidt]
+  \index{Gram--Schmidt} For every linearly independent sequence of
+  vectors $\{v_i\}$ there is an up to scaling unique orthogonal set
+  $\{x_i\}$ with the property that
+  \begin{gather*}
+    \forall n\in \mathbb N:\quad
+    \operatorname*{span}_{i=1,\dots,n} \{x_i\}
+    =
+    \operatorname*{span}_{i=1,\dots,n} \{v_i\}.
+  \end{gather*}
+\end{lemma}
+
+\begin{todo}
+  \begin{proof}
+    
+  \end{proof}
+\end{todo}
+
+\begin{definition}
+  A subset $M$ of a Hilbert space $V$ is called \define{dense}, if
+  every vector in $V$ is an accumulation point of $M$, that is, $V$ is
+  the closure of $M$.  A Hilbert space is called \define{separable},
+  if it has a countable dense subset.
+\end{definition}
+
+\begin{note}
+  From the point of view of numerical analysis and computation, spaces
+  which are not separable are of limited interest. In fact, every
+  result of a numerical calculation is in a finite set. When we look
+  at convergence for $n\to\infty$ or $h\to 0$, we are usually studying
+  sequences with countable index sets. Therefore, vectors in
+  nonseparable spaces cannot be approximaetd reliably.
+\end{note}
+
+\begin{theorem}
+  Every separable Hilbert space has an at most countable orthonormal basis.
+\end{theorem}
+
+\begin{proof}
+  See e.g.~\cite{Yosida80}. The proof is constructive and uses the
+  Gram--Schmidt procedure. First, let $M$ be a countable dense subset
+  of $V$, which exists due to the separability assumption. Now choose
+  any numbering of $M$ and $v_1$ the first nonzero element in
+  $M$. For $i=2,\dots,\infty$ choose with $v_1,\dots,v_{i-1}$ given
+  $v_i$ as the next vector in $M$ which is not in the subspace spanned
+  by $v_1,\dots,v_{i-1}$. This procedure generates an at most
+  countable sequence $\{v_i\}$ of linearly independent vectors. It
+  will only stop, if $V$ is finite dimensional, and we have that every
+  element in $M$ can be written as a finite linear combination of
+  vectors $v_i$.
+  
+  The sequence $\{v_i\}$ is a Schauder basis for $V$. In fact, given a
+  vector $v\in V$ we have to show that for every $\epsilon$, there is
+  a finite linear combination $s_n = \sum_{i=1}^n \alpha_i v_i$ such
+  that $\|v-s_n\| < \epsilon$. Let by separability $w_\epsilon$ in $M$
+  be such that $\|v-w_\epsilon\| < \epsilon$ and choose $s_n =
+  w_\epsilon$.
+  
+  Finally, by the Gram--Schmidt procedure, we can construct an
+  orthonormal set $\{x_i\}$ from the linearly independent set $\{v_i\}$.
+\end{proof}
+
+\begin{example}
+  In the Hilbert spaces $\R^n$, $\mathbb C^n$, $\ell^2(\R)$, and
+  $\ell^2(\mathbb C)$, an orthonormal basis is obtained by choosing
+  basis vectors $x_i$ with entries $x_{i,j} = \delta_{ij}$.
+\end{example}
+
+\section{Linear operators}
+
+\begin{intro}
+  Linear mappings are the next central topic of linear algebra, which
+  we want to extend to infinite dimensional spaces. Here, the basic
+  definition remains the same, that is, a \define{linear operator} is
+  a mapping of a Hilbert space $V$ to a Hilbert space $W$ which is
+  compatible with vector operations. But Hilbert spaces have
+  additional structure by their norms and their completeness.
+\end{intro}
+
+\begin{todo}
+  Operators are well defined on a basis
+\end{todo}
+
+\begin{example}
+  Let $\phi:\ell^2(\R)\to\ell^2(\R)$ be such that
+  \begin{gather*}
+    v =
+    \begin{pmatrix}
+      x_1 \\ x_2 \\ \vdots \\ x_k \\ \vdots
+    \end{pmatrix}
+    \mapsto \phi(v) =
+    \begin{pmatrix}
+      x_1 \\ 2x_2 \\ \vdots \\ kx_k \\ \vdots
+    \end{pmatrix}.
+  \end{gather*}
+  Clearly, $\phi$ is linear. But if we consider the sequence of
+  vectors $v_n = \{\delta_{nk}\}$, we see that $v_n \mapsto n v_n$ and
+  thus, while the sequence is bounded in $\ell^2(\R)$, its image is
+  not.
+  
+  Moreover, take now the sequence of vectors
+  \begin{gather*}
+    v_n = \sum_{k=1}^n \frac1k
+    \quad \mapsto \quad \phi(v_n) = \sum_{k=1}^n 1.
+  \end{gather*}
+  The sequence $v_n$ converges to a limit $v \in \ell^2(\R)$, while
+  the sequence $\phi(v_n)$ diverges. While $\phi(v_n)$ is defined for
+  all $v_n$, it is not for the limit $v$.
+\end{example}
+
+\begin{definition}
+  A linear operator $\phi: V\to W$ is \textbf{bounded}\defindex{bounded
+  linear operator}, if there is a constant
+  $C > 0$ such that
+  \begin{gather*}
+    \forall v\in V: \norm{\phi(v)}_W \le C \norm{v\vphantom{()}}_V.
+  \end{gather*}
+\end{definition}
+
+\begin{remark}
+  By virtue of completeness of the space, whenever a linear operator
+  is not bounded, it must be undefined for some vectors. We could
+  exclude such operators from our considerations, but we would
+  severely limit the theory we want to develop. Instead, we will
+  accept the fact, that we have to extend the notion of a linear
+  mapping $\phi: V\to W$ to a linear operator $\phi: V\to W$, which
+  may not be defined on all of $V$. The following definition fixes
+  this problem somewhat.
+\end{remark}
+
+\begin{definition}
+  Let $\phi: V\to W$ be a linear operator. Then, the \define{domain}
+  of $\phi$ is
+  \begin{gather*}
+    \mathcal D(\phi) = \bigl\{ v\in V \big|
+    \phi(v) \in W \bigr\}.
+  \end{gather*}
+  Here, $\phi(v) \in W$ implies that $\phi(v)$ is also well defined.
+\end{definition}
+
+
 
 %%% Local Variables: 
 %%% mode: latex
