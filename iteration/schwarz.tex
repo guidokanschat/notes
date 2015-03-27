@@ -326,21 +326,26 @@
 \begin{assumption}[Strengthened Cauchy-Schwarz inequalities]
   \label{assumption:schwarz:1}
   \defindex{strengthened Cauchy-Schwarz inequalities}
-  for $1\le i,j \le J$, there are constants $\epsilon_{ij} \in [0,1]$
-  such that for all $v_i \in V_i$ and $v_j \ni V_j$ there holds
+  \index{E@$\mathcal E$} There is a symmetric $J\times J$-matrix
+  $\mathcal E$ with entries $\epsilon_{ij} \in [0,1]$ and a constant
+  $C$ independent of $J$, such that for the spectral radius
+  $\rho(\mathcal E)$ there holds
+  \begin{gather*}
+    \rho(\mathcal E) \le C
+  \end{gather*}
+  and for all $1 \le i,j \le J$, $v_i \in V_i$ and $v_j \in V_j$ there
+  holds
   \begin{gather}
     \label{eq:schwarz:25}
     \left| a(v_i, v_j)\right|
-    \le \epsilon_{ij} \sqrt{a(v_i,v_i)} \sqrt{a(v_j,v_j)}.
+    \le \epsilon_{ij} \sqrt{a(v_i,v_{\phantom ji})} \sqrt{a(v_j,v_j)}.
   \end{gather}
-  \index{E@$\mathcal E$}
-  The symmetric $J\times J$-matrix with entries $\epsilon_{ij}$ is called
-  $\mathcal E$, and $\rho(\mathcal E)$ is its spectral radius.
 \end{assumption}
 
 \begin{note}
-  Inequality~\eqref{eq:schwarz:25} with $\epsilon_{ij}$ holds by the
-  regular \putindex{Bunyakovsky-Cauchy-Schwarz inequality}. But for such a matrix, the
+  Inequality~\eqref{eq:schwarz:25} with $\epsilon_{ij} \equiv 1$ holds by the
+  regular \putindex{Bunyakovsky-Cauchy-Schwarz inequality}.
+  But for such a matrix, the
   spectral radius is $J$. As the following lemma will reveal, it is
   necessary to obtain $\rho(\mathcal E)$ independent of $J$ to obtain
   estimate~\eqref{eq:schwarz:23}.
