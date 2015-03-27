@@ -109,6 +109,8 @@
   is not.
 \end{example}
 
+
+
 \begin{definition}
   Let $V$ be a vector space over a field $\mathbb K$. A basis of $V$
   is a set $\{x_i\}$ of linearly independent vectors with coefficients
@@ -133,12 +135,33 @@
 \begin{definition}
   Let $V$ be an inner product space over a field $\mathbb K$. Two
   vectors $x,y\in V$ are called orthogonal if $\scal(x,y) = 0$. We
-  write $x\perp y$. A set of nonzero mutually orthogonal vectors
+  write $x\perp y$. Let $W$ be a subspace of $V$. Then, a vector $v$
+  is orthogonal to $W$, if it is orthogonal to every vector in $W$. By
+  $w^\perp$ we denote the set of all vectors in $V$ which are
+  orthogonal to $W$.
+
+  A set of nonzero mutually orthogonal vectors
   $\{x_i\} \subset V$ is called \define{orthogonal set}. If
   additionally $\|x_i\| = 1$ for all vectors, it is called an
   \define{orthonormal set}. These notions transfer directly from
   finite to countable sets.
 \end{definition}
+
+\begin{theorem}
+  Let $W$ be a \putindex{closed subspace} of a Hilbert space $V$. Then,
+  $W^\perp$ is a closed subspace as well and every vector $v\in V$ has
+  a unique decomposition
+  \begin{gather}
+    \label{eq:lafa:1}
+    v = w + u, \quad w\in W, u\in W^\perp.
+  \end{gather}
+\end{theorem}
+
+\begin{todo}
+  \begin{proof}
+    See for instance~\cite[p. 82]{Yosida80}
+  \end{proof}
+\end{todo}
 
 \begin{lemma}[Gram--Schmidt]
   \index{Gram--Schmidt} For every linearly independent sequence of
