@@ -1,0 +1,223 @@
+\section{Nitsche's method}
+
+\begin{intro}
+Let us consider the inhomogeneous Dirichlet boundary value problem
+\begin{gather}
+  \label{eq:nitsche:1}
+    \arraycolsep1pt
+  \begin{array}{rclrl}
+    -\Delta u &=& f
+    &\text{ in }&\Omega\\
+    u &=& u^D &\text{ on }&\partial\Omega.
+  \end{array}
+\end{gather}
+
+We already know that for $u^d\equiv 0$ we can discretize this problem
+by choosing a finite element space $V_h \subset H^1_0(\Omega)$. For
+general $u^D$, there are two options:
+\begin{enumerate}
+\item Compute an arbitrary ``lifting'' $u^D\in H^1(\Omega)$ such that
+  it is equal to $u^D$ on the boundary and compute
+  $w=u-u^D \in H^1_0(\Omega)$ as the solution to the weak formulation
+  \begin{gather}
+    \label{eq:nitsche:1a}
+    \int_\Omega \nabla w\cdot\nabla v\dx
+    = \int_\Omega f v\dx
+    + \int_\Omega \nabla u^D\cdot\nabla v\dx.
+  \end{gather}
+\item Compute an interpolation or projection $u^D_h$ of the boundary
+  data $u^D$. Then, eliminate each row of the matrix corresponding to
+  a degree of freedom on the boundary. In particular, let $i$ be the
+  index of such a degree of freedom and let $k$ be an index
+  corresponding to an interior degree of freedom not constraint by a
+  boundary condition, but such that $a_{ik}\neq 0 \neq a_{ki}$. Then,
+  replace the rows
+  \begin{gather}
+    \arraycolsep1pt
+    \begin{array}{ccccccccccl}
+      \cdots &+& a_{ii} u_i &+& \cdots &+& a_{ik} u_k &+& \cdots &=& f_i \\
+      \cdots &+& a_{ki} u_i &+& \cdots &+& a_{kk} u_k &+& \cdots &=& f_k
+    \end{array}
+  \end{gather}
+  by the rows
+  \begin{gather}
+    \arraycolsep1pt
+    \begin{array}{ccccccccccl}
+      && u_i &&  && &&  &=& u^D_i \\
+      \cdots &+& 0 &+& \cdots &+& a_{kk} u_k &+& \cdots &=& f_k - a_{ki} u^D_i
+    \end{array}
+  \end{gather}
+\end{enumerate}
+
+The first option introduces the complication of finding a function in
+$H^1(\Omega)$, which cannot be achieved automatically. The second can
+be implemented in an automatic way, but it complicates code, in
+particular for nonlinear problems.
+
+A completely different approach modifying the bilinear form was first
+suggested in the 60s and then perfected by Joachim Nitsche in 1971. In
+this section, we motivate this method and derive its error
+estimates. Its key feature is the transition from
+$V_h \subset H^1_0(\Omega)$ to $V_h \subset H^1(\Omega)$.
+\end{intro}
+
+\begin{intro}
+  If we simply derive our weak formulation in $H^1(\Omega)$, we end up
+  with an additional boundary term
+  \begin{gather}
+    \int_\Omega \nabla u \cdot \nabla v \dx
+    =
+    - \int_\Omega \Delta u v \dx
+    + \int_{\partial\Omega} \partial_n u v \ds.
+  \end{gather}
+  Thus, we obtain the natural boundary condition $\partial_n u=0$,
+  which is not consistent with the original BVP. The first step for
+  deriving Nitsche's method is subtracting this boundary term on both
+  sides. The result is the equation
+  \begin{gather}
+    \label{eq:nitsche:2}
+    \int_\Omega \nabla u \cdot \nabla v \dx
+    -\int_{\partial\Omega} \partial_n u v \ds
+    = \int_\Omega fv\dx
+    \qquad\forall v\in H^1(\Omega).
+  \end{gather}
+  We observe that the left hand side vanishes for any constant
+  function $u$. Thus, we do not have unique solvability and we will
+  have to fix this problem. Furthermore, the boundary data $u^D$ does
+  not appear in this formulation. We enforce $u=u^D$ in our
+  formulation by a so called ``penalty term'' with penalty parameter
+  $\alpha$, modifying~\eqref{eq:nitsche:2} to
+  \begin{multline}
+    \label{eq:nitsche:3}
+    \int_\Omega \nabla u \cdot \nabla v \dx
+    -\int_{\partial\Omega} \partial_n u v \ds
+    + \int_{\partial\Omega} \alpha u v \ds
+    \\
+    = \int_\Omega fv\dx
+    + \int_{\partial\Omega} \alpha u^D v \ds
+    \qquad\forall v\in H^1(\Omega).
+  \end{multline}
+  Integrating by parts, we see that $u$ is a solution to this weak
+  formulation. Following Nitsche, we make one additional modification
+  which restores the symmetry of our form:
+  \begin{multline}
+    \label{eq:nitsche:4}
+    \int_\Omega \nabla u \cdot \nabla v \dx
+    -\int_{\partial\Omega} \partial_n u v \ds
+    -\int_{\partial\Omega} \partial_n v u \ds
+    + \int_{\partial\Omega} \alpha u v \ds
+    \\
+    = \int_\Omega fv\dx
+    -\int_{\partial\Omega} \partial_n v u^D \ds
+    + \int_{\partial\Omega} \alpha u^D v \ds
+    \qquad\forall v\in H^1(\Omega).
+  \end{multline}
+  We abbreviate this equation to
+  \begin{gather}
+    \label{eq:nitsche:5}
+    a_h(u,v) = f_h(v) \qquad\forall v\in H^1(\Omega).
+  \end{gather}
+\end{intro}
+
+\begin{note}
+  Unfortunately, the problem~\eqref{eq:nitsche:5} is not well-posed
+  for any finite parameter $\alpha$. Thus, it cannot be used to
+  determine $u\in H^1(\Omega)$. Nevertheless, we can establish
+  well-posedness on discrete spaces $V_h$ in order to compute a
+  discrete solution $u_h$ and use the fact that $u$ is already
+  determined by the continuous problem. Our immediate goals are thus:
+  \begin{enumerate}
+  \item Establish the assumptions of the Lax-Milgram theorem on $V_h$,
+    which in this case involves a suitable new norm for measuring the
+    error.
+  \item Establish a relation between the discrete and continuous
+    solution replacing Galerkin orthogonality.
+  \item Deriving error estimates in suitable norms.
+  \end{enumerate}
+\end{note}
+
+\begin{notation}
+  From now on, we will use the inner product notation
+  \begin{gather*}
+    \form(u,v) \equiv \int_\Omega uv\dx
+    \qquad
+    \form(\nabla u,\nabla v) \equiv \int_\Omega \nabla u\cdot\nabla v\dx,
+  \end{gather*}
+  on $\Omega$ as well as
+  \begin{gather*}
+    \forme(u,v) \equiv \int_{\partial\Omega} uv\ds,
+  \end{gather*}
+  on its boundary.
+\end{notation}
+
+\begin{definition}
+  A discrete problem~\eqref{eq:nitsche:5} is called \define{consistent},
+  if for the solution $u$ of the BVP~\eqref{eq:nitsche:1} there holds
+  \begin{gather}
+    a_h(u,v_h) = f_h(v_h) \qquad \forall v_h\in V_h.
+  \end{gather}
+\end{definition}
+
+\begin{corollary}
+  Let $u \in H^1(\Omega)$ be the weak solution to~\eqref{eq:nitsche:1}
+  in the sense of~\eqref{eq:nitsche:1a}. Then, the discrete
+  problem~\eqref{eq:nitsche:5} is consistent.
+\end{corollary}
+
+\begin{proof}
+  Since $u \in H^1(\Omega)$ and $v_h\in V_h$, all boundary terms in
+  $a_h(u,v-h)$ and $f_h(v_h)$ are well-defined and consistency follows
+  from $u=u^D$ in the sense of $L^2(\partial\Omega)$.
+\end{proof}
+
+\begin{definition}
+  The problem dependent norm used for the analysis of Nitsche's method
+  is defined by
+  \begin{gather}
+    \tnorm{v}^2 = \form(\nabla v,\nabla v) + \forme(\alpha v,v).
+  \end{gather}
+\end{definition}
+
+This choice is justified by
+\begin{lemma}
+  Let $V_h \subset V = H^1(\Omega)$ be a piecewise polynomial finite
+  element space on a shape-regular mesh $\T_h$. Then, if $\alpha$
+  sufficiently large, there exist constants $M$ and $\gamma$ such that
+  \begin{align*}
+    a_h(u_h, v_h) &\le M \tnorm{u_h}\tnorm{v_h}\\
+    a_h(u_h,u_h) &\ge \gamma \tnorm{u_h}^2.
+  \end{align*}
+\end{lemma}
+
+\begin{proof}
+  Key for the proof is the inverse trace estimate
+  \begin{gather*}
+    |v|_{H^1(\partial T)} \le c h^{-1/2} |v|_{H^1(T)},
+  \end{gather*}
+  which holds with a constant $c$ depending on shape regularity and
+  polynomial degree. Thus, for a cell $T$ at the boundary, there holds
+  \begin{align*}
+    |\forme(\partial_n u_h, v_h)_{\partial T \cap \partial\Omega}|
+    & \le c h^{-1/2} |u_h|_{H^1(T)} \norm{v_h}_{L^2(\partial T \cap \partial\Omega)}
+    \\
+    \le \tfrac{1}{2} |u_h|_{H^1(T)}^2
+    + \tfrac{c^2}{2h_T}\norm{v_h}_{L^2(\partial T \cap \partial\Omega)},
+  \end{align*}
+  We apply this to the lower bound to obtain
+  \begin{gather*}
+    a_h(u_h, u_h) \ge \left(1-\tfrac{1}{2}\right)
+    |u_h|_{H^1(\Omega)}^2
+    + \left(\alpha - \tfrac{c^2}{2h_T}\right)
+    \norm{u_h}_{L^2(\partial\Omega)}^2.
+  \end{gather*}
+  Choosing $\alpha(x) = c^2/h(x)$, where $h(x)$ is the size of the
+  cell such that $x\in\partial T$, we obtain
+  \begin{gather*}
+    a_h(u_h, u_h) \ge \frac12 \tnorm{u_h}^2.
+  \end{gather*}
+\end{proof}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
