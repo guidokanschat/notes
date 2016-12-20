@@ -1,0 +1,23 @@
+\documentclass[USenglish]{report}
+\usepackage{../mathsim}
+\usepackage[notref,notcite]{showkeys}
+%\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{svg.path}
+\usepackage[math]{iwona}
+\usepackage[backend=bibtexu,style=alphabetic]{biblatex}
+\addbibresource{all}
+
+\def\constref#1{C_{\text{\ref{#1}}}}
+\title{\textbf{Notes on Applied Mathematics}
+\\[5mm]
+{\large Discontinuous Galerkin methods}}
+\author{Guido Kanschat}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\chapter{Discontinuous Galerkin methods}
+\include{nitsche}
+\end{document}
