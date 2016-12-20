@@ -670,7 +670,7 @@
     \label{eq:schwarz:20}
     \begin{split}
       |v_H|_1 &\lesssim |v|_1 \\
-      \|v-v_H\|_0 &\lesssim H |v|_1.
+      \norm{v-v_H}_0 &\lesssim H |v|_1.
     \end{split}
   \end{gather}
   From~\eqref{eq:schwarz:20} there holds
@@ -696,21 +696,23 @@
   used). Therefore,
   \begin{gather*}
     a(v_j,v_j) = |v_j|_1^2 \lesssim |\phi_j w|_1^2
-    \lesssim \|\nabla \phi_j w\|_0^2 + \|\phi_j \nabla w\|_0^2.
+    \lesssim \norm{\nabla \phi_j w}_0^2 + \norm{\phi_j \nabla w}_0^2.
   \end{gather*}
   Using the properties of the partition of unity, we obtain
   \begin{gather*}
-    a(v_j,v_j) \lesssim \frac1{\delta^2} \|\chi(\Omega_j) w\|_0^2 + |\chi(\Omega_j)w|_1^2.
+    a(v_j,v_j) \lesssim \frac1{\delta^2} \norm{\chi(\Omega_j) w}_0^2
+    + |\chi(\Omega_j)w|_1^2.
   \end{gather*}
   Summing up yields
   \begin{gather}
     \label{eq:schwarz:21}
     \begin{split}
       \sum_{j=1}^J a(v_j, v_j)
-      &\lesssim \sum_{j=1}^J \left(\frac1{\delta^2} \|\chi(\Omega_j)
-        w\|_0^2 + |\chi(\Omega_j)w|_1^2\right) \\
-      &\le N_O \left(\frac1{\delta^2}\|w\|_0^2 + |w|_1^2\right) \\
-      &=  N_O \left(\frac1{\delta^2} \|v-v_H\|_0^2 + |v-v_H|_1^2\right)
+      &\lesssim \sum_{j=1}^J \left(
+        \frac1{\delta^2} \norm{\chi(\Omega_j) w}_0^2
+        + |\chi(\Omega_j)w|_1^2\right) \\
+      &\le N_O \left(\frac1{\delta^2}\norm{w}_0^2 + |w|_1^2\right) \\
+      &=  N_O \left(\frac1{\delta^2} \norm{v-v_H}_0^2 + |v-v_H|_1^2\right)
       \\
       & \lesssim \frac{H^2}{\delta^2} |v|_1^2 + |v|_1^2 \\
       &= \left(1+\frac{H^2}{\delta^2}\right) a(v,v).      
@@ -950,7 +952,7 @@
   propagation operator satisfies
   \begin{gather}
     \label{eq:schwarz:47}
-    \|E_J\|_A^2 \le 1 - \frac{1}{\rho(\mathcal E) \constref{eq:schwarz:24}} < 1,
+    \norm{E_J}_A^2 \le 1 - \frac{1}{\rho(\mathcal E) \constref{eq:schwarz:24}} < 1,
   \end{gather}
 \end{theorem}
 
@@ -967,7 +969,7 @@
     \label{eq:schwarz:49}
     a(E_J v, E_J v) \le a(v,v) - \sum_{j=1}^J a(E_{j-1}v, P_j E_{j-1}v).
   \end{gather}
-  Thus, $\|E_J\|_A^2 \le 1$, but we have to show that the sum on the
+  Thus, $\norm{E_J}_A^2 \le 1$, but we have to show that the sum on the
   right is sufficiently positive to get an estimate of the convergence
   rate. Therefore, we start with equation~\eqref{eq:schwarz:46} of
   Lemma~\ref{lemma:schwarz:9}, yielding by Lemma~\ref{lemma:schwarz:10}
@@ -991,8 +993,8 @@
   
   \begin{gather}
     \label{eq:schwarz:48}
-    \sum_{j=1}^J a(P_j v,v) \le \|\mathcal E z\|^2
-    \le \rho(\mathcal E)^2 \|z\|^2
+    \sum_{j=1}^J a(P_j v,v) \le \norm{\mathcal E z}^2
+    \le \rho(\mathcal E)^2 \norm{z}^2
     = \rho(\mathcal E)^2 \sum_{k=1}^{j} a(P_k E_{k-1} v,E_{k-1} v).
   \end{gather}
   At this point, we use Lemma~\ref{lemma:schwarz:11} to estimate
