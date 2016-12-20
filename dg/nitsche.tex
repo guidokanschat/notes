@@ -99,28 +99,31 @@ $V_h \subset H^1_0(\Omega)$ to $V_h \subset H^1(\Omega)$.
   \end{multline}
   Integrating by parts, we see that $u$ is a solution to this weak
   formulation. Following Nitsche, we make one additional modification
-  which restores the symmetry of our form:
-  \begin{multline}
-    \label{eq:nitsche:4}
-    \int_\Omega \nabla u \cdot \nabla v \dx
-    -\int_{\partial\Omega} \partial_n u v \ds
-    -\int_{\partial\Omega} \partial_n v u \ds
-    + \int_{\partial\Omega} \alpha u v \ds
-    \\
-    = \int_\Omega fv\dx
-    -\int_{\partial\Omega} \partial_n v u^D \ds
-    + \int_{\partial\Omega} \alpha u^D v \ds
-    \qquad\forall v\in H^1(\Omega).
-  \end{multline}
-  We abbreviate this equation to
+  which restores the symmetry of our form. We obtain the weak
+  formulation
   \begin{gather}
     \label{eq:nitsche:5}
-    a_h(u,v) = f_h(v) \qquad\forall v\in H^1(\Omega).
+    a_h(u,v) = f_h(v) \qquad\forall v\in H^1(\Omega),
   \end{gather}
+  where
+  \begin{gather}
+    \label{eq:nitsche:4}
+    \begin{split}
+    a_h(u,v) &= \int_\Omega \nabla u \cdot \nabla v \dx
+    -\int_{\partial\Omega} \partial_n u v \ds
+    -\int_{\partial\Omega} \partial_n v u \ds
+    + \int_{\partial\Omega} \alpha u v \ds,
+    \\
+    f_h(v) &= \int_\Omega fv\dx
+    -\int_{\partial\Omega} \partial_n v u^D \ds
+    + \int_{\partial\Omega} \alpha u^D v \ds.
+  \end{split}
+\end{gather}
+  We abbreviate this equation to
 \end{intro}
 
 \begin{note}
-  Unfortunately, the problem~\eqref{eq:nitsche:5} is not well-posed
+  Unfortunately, the problem~\eqref{eq:nitsche:4} is not well-posed
   for any finite parameter $\alpha$. Thus, it cannot be used to
   determine $u\in H^1(\Omega)$. Nevertheless, we can establish
   well-posedness on discrete spaces $V_h$ in order to compute a
@@ -151,7 +154,7 @@ $V_h \subset H^1_0(\Omega)$ to $V_h \subset H^1(\Omega)$.
 \end{notation}
 
 \begin{definition}
-  A discrete problem~\eqref{eq:nitsche:5} is called \define{consistent},
+  A discrete problem~\eqref{eq:nitsche:4} is called \define{consistent},
   if for the solution $u$ of the BVP~\eqref{eq:nitsche:1} there holds
   \begin{gather}
     a_h(u,v_h) = f_h(v_h) \qquad \forall v_h\in V_h.
@@ -161,7 +164,7 @@ $V_h \subset H^1_0(\Omega)$ to $V_h \subset H^1(\Omega)$.
 \begin{corollary}
   Let $u \in H^1(\Omega)$ be the weak solution to~\eqref{eq:nitsche:1}
   in the sense of~\eqref{eq:nitsche:1a}. Then, the discrete
-  problem~\eqref{eq:nitsche:5} is consistent.
+  problem~\eqref{eq:nitsche:4} is consistent.
 \end{corollary}
 
 \begin{proof}
@@ -174,12 +177,14 @@ $V_h \subset H^1_0(\Omega)$ to $V_h \subset H^1(\Omega)$.
   The problem dependent norm used for the analysis of Nitsche's method
   is defined by
   \begin{gather}
+    \label{eq:nitsche:8}
     \tnorm{v}^2 = \form(\nabla v,\nabla v) + \forme(\alpha v,v).
   \end{gather}
 \end{definition}
 
 This choice is justified by
 \begin{lemma}
+  \label{lemma:nitsche:1}
   Let $V_h \subset V = H^1(\Omega)$ be a piecewise polynomial finite
   element space on a shape-regular mesh $\T_h$. Then, if $\alpha$
   sufficiently large, there exist constants $M$ and $\gamma$ such that
@@ -200,22 +205,182 @@ This choice is justified by
     |\forme(\partial_n u_h, v_h)_{\partial T \cap \partial\Omega}|
     & \le c h^{-1/2} |u_h|_{H^1(T)} \norm{v_h}_{L^2(\partial T \cap \partial\Omega)}
     \\
-    \le \tfrac{1}{2} |u_h|_{H^1(T)}^2
-    + \tfrac{c^2}{2h_T}\norm{v_h}_{L^2(\partial T \cap \partial\Omega)},
+    &\le \tfrac{1}{4} |u_h|_{H^1(T)}^2
+    + \tfrac{c^2}{h_T}\norm{v_h}_{L^2(\partial T \cap \partial\Omega)},
   \end{align*}
   We apply this to the lower bound to obtain
   \begin{gather*}
     a_h(u_h, u_h) \ge \left(1-\tfrac{1}{2}\right)
     |u_h|_{H^1(\Omega)}^2
-    + \left(\alpha - \tfrac{c^2}{2h_T}\right)
+    + \left(\alpha - \tfrac{2c^2}{h_T}\right)
     \norm{u_h}_{L^2(\partial\Omega)}^2.
   \end{gather*}
-  Choosing $\alpha(x) = c^2/h(x)$, where $h(x)$ is the size of the
+  Choosing
+  \begin{gather}
+    \label{eq:nitsche:6}
+    \alpha(x) = \frac{\alpha_0}{h(x)} \ge \frac{4c^2}{h(x)}, 
+  \end{gather}
+  where $h(x)$ is the size of the
   cell such that $x\in\partial T$, we obtain
   \begin{gather*}
     a_h(u_h, u_h) \ge \frac12 \tnorm{u_h}^2.
   \end{gather*}
+  The proof of the upper bound follows the same fashion.
 \end{proof}
+
+\begin{corollary}
+  Let $\alpha$ be chosen according to
+  equation~\eqref{eq:nitsche:6}. Then, the discrete
+  problem~\eqref{eq:nitsche:5} has a unique solution $u_h\in V_h$.
+\end{corollary}
+
+\begin{proof}
+  According to the previous lemma, the lemma of Lax-Milgram applies to
+  the bilinear form $a_h(.,.)$. For the right hand side $f_h(.,)$, we
+  have again because of trace estimates in $H^1(\Omega)$ and inverse
+  estimates in $V_h$
+  \begin{gather*}
+    f_h(v) \le c \left(\norm{f}_{0,\Omega}+
+      \norm{u^D}_{H^1(\Omega)}\right)\tnorm{v}.
+  \end{gather*}
+\end{proof}
+
+\begin{theorem}
+\label{theorem:nitsche:1}
+  Let $u \in H^{k+1}(\Omega)$ with $k\ge 1$ be the solution
+  of~\eqref{eq:nitsche:1} and let $u_h\in V_h$ be the solution
+  to~\eqref{eq:nitsche:5} and let the assumptions of
+  Lemma~\ref{lemma:nitsche:1} hold. Let furthermore $\{\T_h\}$ be a
+  family of quasi-uniform, shape-regular meshes of maximal cell
+  diameter $h$, and let the shape function spaces contain the
+  polynomial space $P_k$. Then, there holds
+  \begin{gather}
+    \tnorm{u-u_h} \le c h^k |u|_{k+1,\T_h}.
+  \end{gather}
+\end{theorem}
+
+\begin{proof}
+  We begin with the triangle inequality
+  \begin{gather*}
+    \tnorm{u-u_h} \le \tnorm{u-I_h u} + \tnorm{I_h u-u_h}.
+  \end{gather*}
+  The interpolation error can be estimated by
+  \begin{gather}
+    \label{eq:nitsche:7}
+    \begin{split}
+      \left| u-I_h u\right|_{1,\Omega}
+      &\le h^k \left|u\right|_{2,\Omega},
+      \\
+      \left| u-I_h u\right|_{0,\partial\Omega}
+      & \le h^{3/2} \left|u\right|_{2,\Omega}.
+      \\
+      \left| u-I_h u\right|_{1,\partial\Omega}
+      & \le h^{1/2} \left|u\right|_{2,\Omega}.
+    \end{split}
+  \end{gather}
+  The second and third estimate actually require some deeper arguments from
+  functional analysis, which is beyond the scope of this class. It
+  involves an intuitive notion of Sobolev spaces with non-integer
+  derivatives. Allowing such spaces, the trace estimate becomes
+  \begin{gather}
+    \norm{u}_{1/2, \partial\Omega} \le c \norm{u}_{1,\Omega}.
+  \end{gather}
+
+  For the remaining error term, we use $V_h$-ellipticity of the
+  discrete form and consistency to obtain
+  \begin{gather}
+    \gamma \tnorm{I_h u-u_h}^2
+    \le a_h(I_h u-u_h,I_h u-u_h)
+    = a_h(I_h u - u, I_h u-u_h).
+  \end{gather}
+  Using Young's inequality, we estimate the right hand side with
+  $\epsilon_h = u-I_h u$ and $\eta_h = I_h u-u_h$ on each boundary
+  cell $T$ with boundary edge $E$ by
+  \begin{gather}
+    \begin{split}
+      \left|\form(\nabla \epsilon_h, \nabla \eta_h)_T\right|
+      & \le \tfrac{1}{\gamma} \snorm{\epsilon_h}_{1,T}^2 + \tfrac\gamma4
+      \snorm{\eta_h}_{1,T}^2,
+      \\
+      \left|\forme(\alpha \epsilon_h, \eta_h)_E\right|
+      & \le \tfrac2\gamma \norm{\sqrt{\alpha} \epsilon_h}_{0,E}^2
+      +
+      \tfrac\gamma8 \norm{\sqrt{\alpha} \eta_h}_{0,E}^2
+      \\
+      \left|\forme( \epsilon_h, \partial_n\eta_h)_E\right|
+      & \le 
+      \tfrac1\gamma \norm{\sqrt{\alpha} \epsilon_h}_{0,E}^2
+      + \tfrac\gamma4 \snorm{\eta_h}_{1,T}^2
+      + \tfrac{\gamma}{4} \norm{\sqrt{\tfrac{\alpha_0}{h_T}} \eta_h}_{0,E}^2
+      \\
+      \left|\forme(\partial_n\epsilon_h, \eta_h)_E\right|
+      & \le \tfrac{2h_T}{\gamma\alpha_0} \snorm{\epsilon_h}_{0,E}^2
+      + \tfrac{\gamma\alpha_0}{8h_T} \norm{\eta_h}_{0,E}^2.
+    \end{split}
+  \end{gather}
+  Adding these over all cells, we obtain
+  \begin{multline*}
+    \gamma \tnorm{I_h u-u_h}^2
+    \\
+    \le \tfrac{\gamma}{2} \tnorm{I_h u-u_h}^2
+    \left(
+      \tfrac1\gamma \snorm{u-I_h u}_{1,\Omega}^2
+      + \tfrac3\gamma \norm{\sqrt{\alpha} (u-I_h u)}_{0,E}^2
+      + \tfrac{2h_T}{\gamma\alpha_0} \snorm{u-I_hu}_{0,E}^2\right),
+  \end{multline*}
+  and thus, by the interpolation estimate~\eqref{eq:nitsche:7}
+  \begin{gather*}
+    \tnorm{I_h u-u_h}^2 \le \tfrac2\gamma
+    c h^{2k} \snorm{u}_{k+1,\Omega}^2.
+  \end{gather*}
+\end{proof}
+
+\begin{theorem}
+  Assume in addition to the assumptions of
+  Theorem~\ref{theorem:nitsche:1} that the adjoint problem
+\begin{gather}
+  \arraycolsep1pt
+  \begin{array}{rclrl}
+    -\Delta z &=& u-u_h
+    &\text{ in }&\Omega\\
+    z &=& 0 &\text{ on }&\partial\Omega.
+  \end{array}
+\end{gather}
+admits elliptic regularity, namely
+\begin{gather}
+  \snorm{z}_2 \le c \norm{u-u_h}_0.
+\end{gather}
+Then, the solutions $u$ and $u_h$ admit the estimate
+\begin{gather}
+  \norm{u-u_h}_0 \le c h^{k+1} \snorm{u}_{k+1}.
+\end{gather}
+\end{theorem}
+
+\begin{proof}
+  Due to symmetry of the discrete bilinear form, we have adjoint
+  consistency:
+  \begin{gather}
+    a_h(v_h, z) = \form(u-u_h,v_h) \qquad \forall v_h\in V_h.
+  \end{gather}
+  From here, we proceed like in the continuous case:
+  \begin{gather*}
+    \norm{u-u_h}_0^2 = a_h(u-u_h,z) = a_h(u-u_h,z-I_h z).
+  \end{gather*}
+  Using the same derivation as in the previous theorem, we obtain the
+  result.
+\end{proof}
+
+\begin{remark}
+  We chose the norm defined in~\eqref{eq:nitsche:8} for our energy
+  norm analysis in Theorem~\ref{theorem:nitsche:1}. We could have done
+  the same using the operator norm $\sqrt{a_h(v,v)}$. In fact,
+  Lemma~\ref{lemma:nitsche:1} states that both norms are
+  equivalent. Therefore, we chose the one involving less terms and
+  providing for simpler interpolation estimates.
+
+  The ``triple norm'' notation $\tnorm{.}$ is very common as a
+  notation for problem adjusted norms.
+\end{remark}
 
 %%% Local Variables: 
 %%% mode: latex
