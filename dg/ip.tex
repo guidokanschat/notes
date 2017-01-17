@@ -1,0 +1,41 @@
+\section{Interior penalty methods}
+\label{sec:interior-penalty}
+
+\begin{intro}
+  In this section we extend the weakening of continuity, which we
+  explored for boundary values in Section~\ref{sec:nitsches-method}
+  using Nitsche's method to interior interfaces between mesh
+  cells. While the methods obtained may look much more complicated,
+  the mathematical analysis is completely analogue to that
+  section. Thus, we can be fairly brief.
+\end{intro}
+
+\begin{definition}
+  Let $\T_h$ be a mesh of $\Omega \subset \R^d$ consisting of mesh
+  cells $T_i$. For every boundary facet $F\subset \partial T_i$, we
+  assume\footnote{This assumption can indeed be relaxed} that either
+  $F \subset \partial \Omega$ or $F$ is a boundary facet of another
+  cell $T_j$. In the second case, we indicate this relation by
+  labeling this facet $F_{ij}$. The set of all facets $F_{ij}$ is the
+  set of interior faces $\F_h^i$. The set of facets on the boundary is
+  $\F_h^\partial$.
+\end{definition}
+
+\begin{definition}
+  The discontinuous finite element space on $\T_h$ is constructed by
+  concatenation of all shape function spaces $P_T$ for $T\in \T_h$
+  without additional continuity requirements:
+  \begin{gather}
+    V_h = \bigl\{v\in L^2(\Omega) \big|
+    v_{|T} \in P_T \;\forall T\in \T_h\bigr\}
+  \end{gather}
+\end{definition}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
+
+
+
+
