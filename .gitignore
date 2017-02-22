@@ -2,3 +2,5 @@ main.*
 main-blx.bib
 **/auto
 *~
+block-*.tex
+*.aux

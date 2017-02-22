@@ -12,6 +12,88 @@
   inner product $\scal(.,.)$.
 \end{notation}
 
+\begin{intro}
+  The motivation for the use of iterative methods lies in the fact
+  that matrices resulting from the discretization of partial
+  differential equations tend to be very big, but sparse, that is,
+  most of their entries are zero. Let us take for example trilinear
+  finite elements on a uniform grid of $(n-1)$ cells in each
+  direction. This leeds to $n^3$ degrees of freedom which we number
+  lexicographically. The matrix stencil, that is, the distribution of
+  nonzero entries, in ome dimension is tridiagonal, that is,
+  \begin{gather*}
+    S_1 =
+    \begin{pmatrix}
+      * & * \\ * & * & * \\
+      & \ddots & \ddots & \ddots \\
+      && * & *
+    \end{pmatrix}
+  \end{gather*}
+  In two dimensions, we obtain the stencil
+  \begin{gather*}
+    S_2 = S_1 \otimes S_1
+    =
+    \begin{pmatrix}
+      S_1 & S_1 \\
+      S_1 & S_1 & S_1 \\
+      & \ddots & \ddots & \ddots \\
+      &&S_1 & S_1
+    \end{pmatrix},
+  \end{gather*}
+  and in three dimensions
+  \begin{gather*}
+    S_3 = S_1 \otimes S_1 \otimes S_1
+    =
+    \begin{pmatrix}
+      S_2 & S_2 \\
+      S_2 & S_2 & S_2 \\
+      & \ddots & \ddots & \ddots \\
+      &&S_2 & S_2      
+    \end{pmatrix}.
+  \end{gather*}
+  The corresponding matrix has $N=n^3$ rows and columns. Let us compare
+  some solution methods for $n=100$ with respect to memory and a
+  hypothetic hardware which executes $10^9$ multiplications per second
+  (additions are free).
+  \begin{description}
+  \item[Gaussian elimination] The effort needed is $\tfrac13
+    N^3+\mathcal O(N^2)$,
+    leading to the computing time
+    \begin{gather*}
+      T_{G} = \frac{10^{18}}{3\cdot 10^9} \;\text{sec}
+      \approx 3\cdot10^8 \;\text{sec}
+      \approx 10.6 \;\text{years}
+    \end{gather*}
+    The backward substitution is only of order $N^2$ and can be
+    neglected. The memory requirement with double precision is
+    $8\cdot10^{12}$ Bytes, almost 10 terabytes.
+  \item[Banded LU decomposition] Here we make use of the fact that LU
+    decomposition can be restricted to the hull of the outermost
+    nonzero elements of the matrix, the so called banded or skyline
+    version. Let $M$ be the greatest distance of a nonzero matrix
+    element $a_{ij}$ from the diagonal, that is, $M=\left|i-j\right|$. Then,
+    the leading term of the effort is $\tfrac13 N\cdot M^2$, yielding
+    with $M=n^2$ a computing time of
+      \begin{gather*}
+        T_{BLU} = \frac{10^{6}\cdot 10^{4} \cdot 10^{4}}{3\cdot 10^9} \;\text{sec}
+      \approx 3\cdot10^4 \;\text{sec}
+      \approx 9 \;\text{hours}
+      \end{gather*}
+      The storage requirement for $N\cdot M$ double precision numbers
+      is $8\cdot 10^{10}$ Bytes, almost 100 gigabytes.
+    \item[matrix vector product] For comparison, the multiplication
+      with such a matrix, given that there are at most 9 nonzero
+      entries per row costs
+      \begin{gather*}
+        T_{mult} = \frac{9\cdot 10^6}{10^9} \approx 0.01 \;\text{sec},
+      \end{gather*}
+      that is, we can perform more than $10^6$ steps of an iterative
+      method before we reach the effort of the banded LU
+      decomposition. The storage requirement is roughly 1 gigabyte and
+      can be reduced to almost zero by a smart implementation. 
+  \end{description}
+\end{intro}
+
 \begin{remark}
   For purposes of analysis we typically choose the space $X =
   L^2(\Omega)$. We admit a small inaccuracy here: when we run the

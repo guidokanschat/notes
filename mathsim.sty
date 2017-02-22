@@ -4,24 +4,18 @@
 \ProvidesPackage{mathsim}[2013/08/01 Mathematical Methods of Simulation]
 
 \RequirePackage{amsthm,amsfonts,amssymb}
-\RequirePackage{amsmath,amstext}
+\RequirePackage{amsmath,amstext,mathtools}
 \RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
 \RequirePackage{makeidx}
 \RequirePackage{babel}
+\RequirePackage{stringstrings}
 
 \RequirePackage{graphicx}
 \RequirePackage{xcolor,framed}
 \RequirePackage{comment}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Optional use of subversion package
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\IfFileExists{svn-multi.sty}{%
-  \RequirePackage{svn-multi}}{%
-  \def\svnid#1{}%
-  \def\svntoday{\today}%
-  \def\svnrev{unknown}%
-}
+\RequirePackage{tikz,tikzscale}
+\RequirePackage{tcolorbox}
 
 \newif\ifm@thsimfinal\m@thsimfinalfalse
 \DeclareOption{final}{\m@thsimfinaltrue}
@@ -40,17 +34,49 @@
  {\endMakeFramed}
 \fi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Theorem and related environments
+% Counters and their representation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand{\thesection}{\thechapter.\arabic{section}}
+\newcounter{blockcount}
+\setcounter{blockcount}{100}
+\newcounter{theorem}
+\numberwithin{theorem}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Outputting blocks for beamer file
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\long\def\commenttheorem#1{\message{Theorem #1}%
+  \csarg\def{After#1Comment}{%
+    \immediate\write\CommentStream{\unexpanded{\end{blocktheorem}}}%
+  \CloseAndInputCutFile}%
+  \csarg\def{#1}{\endgroup  \message{Processing '#1'.}%
+    \stepcounter{blockcount}%
+    \def\CommentCutFile{block-\arabic{blockcount}.tex}
+    \SetUpCutFile
+    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}}}
+      \ProcessComment{#1}}
+    \CommentEndDef{#1}}
+
 \parindent0pt
 \parskip2ex plus 1ex minus 1ex
-\newtheorem{theorem}{\iflanguage{german}{Satz}{}\iflanguage{english}{Theorem}{}}[chapter]
-\newtheorem{lemma}[theorem]{\iflanguage{german}{Hilfssatz}{}\iflanguage{english}{Lemma}{}}
-\newtheorem{corollary}[theorem]{\iflanguage{german}{Korollar}{}\iflanguage{english}{Corollary}{}}
-\newtheorem{assumption}[theorem]{\iflanguage{german}{Annahme}{}\iflanguage{english}{Assumption}{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Theorem and related environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\BT@without#1{\begin{tcolorbox} \refstepcounter{theorem}
+    \textbf{\capitalizewords{#1} \thetheorem:}}
+\def\BT@with[#1]#2{\begin{tcolorbox} \refstepcounter{theorem}
+    \textbf{\capitalizewords{#2} \thetheorem (#1):}}
+\def\blocktheorem{\@ifnextchar[{\BT@with}{\BT@without}}%
+\def\endblocktheorem{\end{tcolorbox}}
+\commenttheorem{definition}
+\commenttheorem{theorem}
+\commenttheorem{lemma}
+\commenttheorem{corollary}
+\commenttheorem{assumption}
+\commenttheorem{Example}
+%\newtheorem{theorem}{\iflanguage{german}{Satz}{}\iflanguage{english}{Theorem}{}}[chapter]
 \theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{definition}[theorem]{Definition}
 \newtheorem{algorithm}[theorem]{\iflanguage{german}{Algorithmus}{}\iflanguage{english}{Algorithm}{}}
 \newtheorem{example}[theorem]{\iflanguage{german}{Beispiel}{}\iflanguage{english}{Example}{}}
 %\theoremstyle{remark}
@@ -92,13 +118,18 @@
 
 % Spaces, norms, and forms
 \def\pol{\mathbb P} % Polynomraum P_n
-\def\scal(#1,#2){\left<#1,#2\right>}
-\def\Scal(#1,#2){\left<\!\left<#1,#2\right>\!\right>}
-\def\norm#1{\left\|#1\right\|}
-\def\snorm#1{\left|#1\right|}
-\def\tnorm#1{\left|\!\left|\!\left|#1\right|\!\right|\!\right|}
-\def\form(#1,#2){\left(#1,#2\right)}
-\def\forme(#1,#2){\left<#1,#2\right>}
+\DeclarePairedDelimiterX\@scal[2]{\langle}{\rangle}{#1,#2}
+\DeclarePairedDelimiterX\@Scal[2]{\langle\!\langle}{\rangle\!\rangle}{#1,#2}
+\DeclarePairedDelimiterX\@form[2]{(}{)}{#1,#2}
+\DeclarePairedDelimiterX\@forme[2]{\langle}{\rangle}{#1,#2}
+\def\scal(#1,#2){\@scal{#1}{#2}}
+\def\Scal(#1,#2){\@Scal{#1}{#2}}
+\def\form(#1,#2){\@form{#1}{#2}}
+\def\forme(#1,#2){\@forme{#1}{#2}}
+
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\snorm}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\tnorm}{\vert\!\lvert\!\lvert}{\rvert\!\rvert\!\rvert}
 
 % Operators
 \def\supp{\operatorname{supp}}
