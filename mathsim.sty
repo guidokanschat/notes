@@ -51,9 +51,10 @@
   \CloseAndInputCutFile}%
   \csarg\def{#1}{\endgroup  \message{Processing '#1'.}%
     \stepcounter{blockcount}%
+    \refstepcounter{theorem}%
     \def\CommentCutFile{block-\arabic{blockcount}.tex}
     \SetUpCutFile
-    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}}}
+    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}}(\thetheorem)}
       \ProcessComment{#1}}
     \CommentEndDef{#1}}
 
@@ -62,10 +63,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Theorem and related environments
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\BT@without#1{\begin{tcolorbox} \refstepcounter{theorem}
-    \textbf{\capitalizewords{#1} \thetheorem:}}
-\def\BT@with[#1]#2{\begin{tcolorbox} \refstepcounter{theorem}
-    \textbf{\capitalizewords{#2} \thetheorem (#1):}}
+\def\BT@without#1(#2){\begin{tcolorbox}
+    \textbf{\capitalizewords{#1} #2:}}
+\def\BT@with[#1]#2(#3){\begin{tcolorbox}
+    \textbf{\capitalizewords{#2} #3 (#1):}}
 \def\blocktheorem{\@ifnextchar[{\BT@with}{\BT@without}}%
 \def\endblocktheorem{\end{tcolorbox}}
 \commenttheorem{definition}
