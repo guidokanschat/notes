@@ -17,58 +17,91 @@
 \subsection{The abstract framework}
 
 \begin{intro}
-  Let $V$ be a Hilbert space with inner product $\scal(.,.)$
-  and let $a(.,.): V\times V$ be a
-  symmetric and $V$-elliptic not necessarily bounded bilinear form.
-  Let a set of auxiliary
-  subspaces $\{V_j\}_{j=1,\dots,J}$ of $V$ be chosen such that
+  Let $V$ be a Hilbert space with inner product $\scal(.,.)$ and let
+  $a(.,.): V\times V$ be a symmetric and $V$-elliptic not necessarily
+  bounded bilinear form. Let a set of subspaces
+  $\{V_j\}_{j=1,\dots,J}$ of $V$ be chosen such that
   \begin{gather*}
     V = \sum_{j=1}^J V_j.
   \end{gather*}
-  The sum is not required to be direct, that is, a vector $v\in V$
-  may have several decompositions $v = \sum \alpha_j v_j$ with $v_j\in
-  V_j$.
+  The sum is not required to be direct, that is, a vector $v\in V$ may
+  have several decompositions $v = \sum \alpha_j v_j$ with
+  $v_j\in V_j$. Methods below based on the subspaces $V_j$ are called
+  \define{subspace correction} methods.
+
+  Alternatively, we consider methods based on abstract auxiliary
+  spaces $\hat V_j$, such that
+  \begin{gather*}
+    V = \sum_{j=1}^J R_j^T \hat V_j,
+  \end{gather*}
+  where $R_j^T$ is an operator embedding the auxiliary space
+  $\hat V_j$ into $V$.  Such methods are called \define{auxiliary
+    space methods}. Subspace correction and auxiliary space methods
+  are equivalent by considering $V_j = R_j^T \hat V_j$.
 \end{intro}
 
-\begin{lemma}
+\begin{assumption}
   \label{lemma:schwarz:1}
-  Let the form $a(.,.)$ be bounded and $V_j$-elliptic. Then, the weak
-  formulation: find $u_j\in V_j$ such that
+  There are bilinear forms $a_j(.,.)$ defined on $V_j$ such that the weak formulation
   \begin{gather}
     \label{eq:schwarz:1}
-    a(u_j,v_j) = f(v_j),
+    a_j(u_j,v_j) = f(v_j),
     \quad\forall v_j\in V_j,
   \end{gather}
-  has a unique solution for all $f\in V^*$.
-\end{lemma}
+  has a unique solution $u_j\in V_j$ for all $f\in V_j^*$. In the
+  context of auxiliary space methods, we assume that there are
+  bilinear forms $\hat a_j(.,.)$ defined on $\hat V_j$ such
+  that the weak formulation
+  \begin{gather}
+    \label{eq:schwarz:1a}
+    \hat a_j(u_j,v_j) = f(v_j),
+    \quad\forall v_j\in \hat V_j,
+  \end{gather}
+  has a unique solution $u_j\in \hat V_j$ for all $f\in \hat V_j^*$.
+\end{assumption}
 
-\begin{proof}
-  This is the Lax-Milgram lemma for $V_j$.
-\end{proof}
-
-\begin{definition}[Ritz-projection]
+\begin{definition}[Subspace projection]
   \label{definition:schwarz:1}
-  \index{Pj@$P_j$|see {Ritz projection}}
-  Let the operator $P_j: V \to V_j$ be defined such that $P_j u \in V_j$ is
-  the unique (Lemma~\ref{lemma:schwarz:1}) solution to the problem
+  \index{Pj@$P_j$|see {Ritz projection}} Let the \define{subspace
+    projection} operator $P_j: V \to V_j$ be defined such that
+  $P_j u \in V_j$ is the unique (Assumption~\ref{lemma:schwarz:1})
+  solution to the problem
   \begin{gather}
     \label{eq:schwarz:2}
-    a(P_j u,v_j) = a(u,v_j),\quad\forall v_j\in V_j.
+    a_j(P_j u,v_j) = a(u,v_j),\quad\forall v_j\in V_j.
   \end{gather}
-  \index{A-orthogonal projection@$A$-orthogonal projection|see {Ritz projection}}
-  We call $P_j$ the $A$-orthogonal projection or \define{Ritz projection} to
-  $V_j$. Since $V_j$ is a subspace of $V$, we will also understand $P_j$
-  as an endomorphism of $V$.
-  The left hand side of this equation induces an operator $A_j:
-  V_j \to V_j^*$ by $A_j u_j = a(u_j,.)$.
+  Note that this is a projection only if $a_j(.,.)$ is the restriction
+  of the bilinear form $a(.,.)$ to the subspace $V_j$. In this
+  case,\index{A-orthogonal projection@$A$-orthogonal projection|see
+    {Ritz projection}} we call $P_j$ the $A$-orthogonal projection or
+  \define{Ritz projection} to $V_j$. If $a_j(.,.)$ is not the
+  restriction of $a(.,.)$, the operator $P_j$ still maps into $V_j$,
+  but it is not idempotent.
+
+  Since $V_j$ is a subspace of $V$, we will also understand $P_j$ as
+  an endomorphism of $V$ iteself. The left hand side of this equation
+  induces an operator $A_j: V_j \to V_j^*$ by $A_j u_j = a_j(u_j,.)$.
+\end{definition}
+
+\begin{definition}[Auxiliary space projection]
+  \label{definition:schwarz:1a}
+  Let the operator $\hat P_j: V \to \hat V_j$ be defined such that $\hat P_j u \in \hat V_j$ is
+  the unique (Assumption~\ref{lemma:schwarz:1}) solution to the problem
+  \begin{gather}
+    \label{eq:schwarz:2a}
+    \hat a_j(\hat P_j u,v_j) = a(u,R_j^T v_j),\quad\forall v_j\in \hat V_j.
+  \end{gather}
+  The left hand side of this equation induces an operator $\hat A_j:
+  \hat V_j \to \hat V_j^*$ by $\hat A_j u_j = \hat a_j(u_j,.)$.
 \end{definition}
 
 \begin{lemma}
   \label{lemma:schwarz:ritz}
-  The projections $P_j$ as mappings from $V$ to itself
-  are self-adjoint with respect to the
-  $a(.,.)$-inner product and positive semi-definite. Furthermore,
-  $P_j$ acts as identity on $P_j$ and there holds $P_j^2 = P_j$.
+  If the local bilinear forms $a_j(.,.)$ are the restrictions of
+  $a(.,.)$ to $V_j$, then the projections $P_j$ as mappings from $V$
+  to itself are self-adjoint with respect to the $a(.,.)$-inner
+  product and positive semi-definite. Furthermore, $P_j$ acts as
+  identity on $P_j$ and there holds $P_j^2 = P_j$.
 \end{lemma}
 \begin{proof}
   This is a well-known fact about orthogonal projections, which we
@@ -90,24 +123,37 @@
 
 \begin{definition}
   \label{definition:schwarz:1a}
-  We define the orthogonal projection operator
+  For subspace and auxiliary space methods, we define the operators
+  \begin{gather}
+    \begin{split}
+      \Pi_j: V &\to V_j\\
+      R_j: V &\to\hat V_j
+    \end{split}
+  \end{gather}
   \index{Pij@$\Pi_j$}
-  $\Pi_j: V \to V_j$ such that $\Pi_j u\in V_j$ is the solution to the problem
+  such that $\Pi_j u\in V_j$ is the solution to the problem
   \begin{gather}
     \scal(\Pi_j u_j,v_j) = \scal(u,v_j),\quad\forall v_j\in V_j.
   \end{gather}
-  \index{Pijt@$\Pi^T_j$}
-  We define its dual $\Pi_j^T: V_j^* \to V^*$ by
+
+  For auxiliary spaces $\hat V_j$, we define the projection like
+  operators  through
   \begin{gather}
-    \label{eq:schwarz:3}
-    \scal(\Pi_j^T \phi_j,v)_{V^*\times V} =  \scal( \phi_j,\Pi_j
-    v)_{V_j^*\times V_j}
+    \scal(R_j u_j,v_j)_{\hat V_j} = \scal(u,R_j^T v_j),\quad\forall v_j\in \hat V_j.
   \end{gather}
+  
+  % \index{Pijt@$\Pi^T_j$}
+  % We define its dual $\Pi_j^T: V_j^* \to V^*$ by
+  % \begin{gather}
+  %   \label{eq:schwarz:3}
+  %   \scal(\Pi_j^T \phi_j,v)_{V^*\times V} =  \scal( \phi_j,\Pi_j
+  %   v)_{V_j^*\times V_j}
+  % \end{gather}
 \end{definition}
 
-\begin{todo}
-  Show that $\Pi^T$ is an orthogonal projection, and onto which space.
-\end{todo}
+% \begin{todo}
+%   Show that $\Pi^T$ is an orthogonal projection, and onto which space.
+% \end{todo}
 
 \begin{lemma}
   \label{lemma:schwarz:2}  
@@ -799,7 +845,7 @@
       u_j^{(k+1)} = u_j^{(k)} - \omega_k P_j \bigl(u^{(k)} - A^{-1}f\bigr).
   \end{gather}
   Since the updates are orthogonal, this is equivalent to the sum
-  in~\eqref{eq:schwarz:28}. In the \putindex{Gauß-Seidel method}, these
+  in~\eqref{eq:schwarz:28}. In the \putindex{Gauss-Seidel method}, these
   projections are done consecutively. For instance, if we introduce
   broken indices, we can write it in the form
   \begin{gather}
@@ -818,7 +864,7 @@
       - \omega_k P_j \left(u^{(k+\frac{j-1}{J})} - u\right) \\
       = (I-\omega_k P_j) \left(u^{(k+\frac{j-1}{J})} - u\right).
   \end{multline}
-  The error after a whole Gauß-Seidel step is
+  The error after a whole Gauss-Seidel step is
   \begin{gather}
     \label{eq:schwarz:32}
       u^{(k+1)} - u
@@ -833,7 +879,7 @@
 \end{example}
 
 \begin{intro}
-  The example of the Jacobi and Gauß-Seidel methods is generic in the
+  The example of the Jacobi and Gauss-Seidel methods is generic in the
   way that for any subspace decomposition of $V$ into the sum of
   $V_j$, we can define an additive and a multiplicative method. Not
   surprisingly, their analysis also rests on the same ingredients.
