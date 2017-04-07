@@ -39,8 +39,8 @@
 \renewcommand{\thesection}{\thechapter.\arabic{section}}
 \newcounter{blockcount}
 \setcounter{blockcount}{100}
-\newcounter{theorem}
-\numberwithin{theorem}{section}
+\newcounter{theocount}
+\numberwithin{theocount}{section}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Outputting blocks for beamer file
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -49,12 +49,12 @@
   \csarg\def{After#1Comment}{%
     \immediate\write\CommentStream{\unexpanded{\end{blocktheorem}}}%
   \CloseAndInputCutFile}%
-  \csarg\def{#1}{\endgroup  \message{Processing '#1'.}%
+  \expandafter\def\csname#1\endcsname##1{\endgroup  \message{Processing '#1 ##1'.}%
     \stepcounter{blockcount}%
-    \refstepcounter{theorem}%
-    \def\CommentCutFile{block-\arabic{blockcount}.tex}
+    \refstepcounter{theocount}%
+    \def\CommentCutFile{block-##1.tex}
     \SetUpCutFile
-    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}}(\thetheorem)}
+    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}}(\thetheocount)\unexpanded{\label}{##1}}
       \ProcessComment{#1}}
     \CommentEndDef{#1}}
 
@@ -69,15 +69,18 @@
     \textbf{\capitalizewords{#2} #3 (#1):}}
 \def\blocktheorem{\@ifnextchar[{\BT@with}{\BT@without}}%
 \def\endblocktheorem{\end{tcolorbox}}
-\commenttheorem{definition}
-\commenttheorem{theorem}
-\commenttheorem{lemma}
-\commenttheorem{corollary}
-\commenttheorem{assumption}
+\commenttheorem{Definition}
+\commenttheorem{Theorem}
+\commenttheorem{Lemma}
+\commenttheorem{Corollary}
+\commenttheorem{Assumption}
 \commenttheorem{Example}
-%\newtheorem{theorem}{\iflanguage{german}{Satz}{}\iflanguage{english}{Theorem}{}}[chapter]
+\newtheorem{theorem}{\iflanguage{german}{Satz}{}\iflanguage{english}{Theorem}{}}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
-%\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{definition}[theorem]{Definition}
 \newtheorem{algorithm}[theorem]{\iflanguage{german}{Algorithmus}{}\iflanguage{english}{Algorithm}{}}
 \newtheorem{example}[theorem]{\iflanguage{german}{Beispiel}{}\iflanguage{english}{Example}{}}
 %\theoremstyle{remark}

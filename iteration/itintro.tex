@@ -138,7 +138,7 @@
   $b(.,.)$, etc., respectively, if they are not defined otherwise.
 \end{notation}
 
-\begin{definition}
+\begin{Definition}{bilinear-properties}
   We call the bilinear form $a(.,.)$ and its associated operator $A$
   \define{symmetric}, if there holds
   \begin{gather*}
@@ -149,12 +149,12 @@
   \begin{gather*}
     a(u,u) \ge \gamma \norm{u}_V^2 \qquad \forall u\in V.
   \end{gather*}
-\end{definition}
+\end{Definition}
 
-\begin{definition}
+\begin{Definition}{spd-condition-number}
   \defindex{Lambdaa@$\Lambda(A)$}
   \defindex{lambdaa@$\lambda(A)$}
-  For positive definite symmetric operators, we obtain the possibly
+  For positive definite, symmetric operators, we obtain the possibly
   infinite bounds of the spectrum
   \begin{gather}
     \label{eq:richardson:8}
@@ -168,7 +168,7 @@
   \begin{gather*}
    \kappa(A) = \frac{\Lambda(A)}{\lambda(A)}.
   \end{gather*}
-\end{definition}
+\end{Definition}
 
 \begin{note}
   Note that the spectral condition number depends on the norm of the
@@ -205,7 +205,7 @@
   by $\mat A_n$.
 \end{notation}
 
-\begin{definition}
+\begin{Definition}{matrix-condition-number}
   \defindex{Lambdama@$\Lambda(\mat A)$}
   \defindex{lambdama@$\lambda(\mat A)$}
   The two extremal eigenvalues of the matrix $\mat A_n$ can be
@@ -222,7 +222,7 @@
   \begin{gather*}
     \kappa_n(\mat A) = \frac{\Lambda(\mat A)}{\lambda(\mat A)}.
   \end{gather*}
-\end{definition}
+\end{Definition}
 
 \begin{note}
   The spectral condition number of the operator $A$ depends on the
@@ -231,7 +231,7 @@
   depends on the choice of a basis of the space $X_n$.
 \end{note}
 
-\begin{lemma}
+\begin{Lemma}{condition-number-mass-matrix}
   \label{lemma:itintro:1}
   Let $\{\phi_i\}$ be the standard, piecewise linear, finite element
   basis on a quasi-uniform triangulation of mesh size $h$. Let $\mat
@@ -248,7 +248,7 @@
   \begin{gather*}
     \kappa(\mat M) = \frac{\mathcal O(h^{d})}{\mathcal O(h^{d})} = {\mathcal O(1)}.
   \end{gather*}
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   It is easy to verify, that $m_{ii}> 0$, and that not more

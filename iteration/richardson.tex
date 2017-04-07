@@ -16,7 +16,7 @@
   $\omega_k = \omega$.
 \end{intro}  
 
-\begin{lemma}
+\begin{Lemma}{richardson-error-step}
   \label{lemma:richardson:1}
   The error after one step of the Richardson method is given by
   \begin{gather}
@@ -29,7 +29,7 @@
     \label{eq:richardson:15}
     \mat E = \mat I - \omega \mat A.
   \end{gather}
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   Using the fact that $\vec x = \mat A^{-1} \vec b$, we write
@@ -42,7 +42,7 @@
   \end{gather*}
 \end{proof}
 
-\begin{theorem}
+\begin{Theorem}{richardson-convergence1}
   \label{theorem:richardson:1}
   If $\mat A$ is symmetric, positive definite, with extremal
   eigenvalues $\lambda>0$ and $\Lambda>0$, then Richardson's method
@@ -64,7 +64,7 @@
   \end{gather}
   where $\kappa = \Lambda/\lambda$ is the so called \define{spectral
     condition number}.
-\end{theorem}
+\end{Theorem}
 
 \begin{proof}
   Convergence of this method is analyzed through the \putindex{Banach
@@ -120,7 +120,7 @@
   denoted by letters $\vec x,\vec y,\vec z$, etc.
 \end{intro}
 
-\begin{definition}
+\begin{Definition}{richardson-method}
   Let $X$ be a Hilbert space with inner product $\scal(.,.)$. Let
   $a(.,.)$ be a second bilinear form on $X$ and the domain of its
   operator is $V$. Then, for any right hand
@@ -133,7 +133,7 @@
   \end{gather}
   $\omega_k$ is a suitable \putindex{relaxation parameter}, chosen
   such that the method converges.
-\end{definition}
+\end{Definition}
 
 \begin{note}
   The scalar products in~\eqref{eq:richardson:5} become necessary,
@@ -144,7 +144,7 @@
     representation theorem}.
 \end{note}
 
-\begin{theorem}
+\begin{theorem}{richardson-convergence2}
   \label{theorem:richardson:2}
   Let the bilinear form $a(.,.)$ be bounded and elliptic on $X\times
   X$, namely, let there exist positive constants $\Lambda$ and $\lambda$ such
@@ -215,7 +215,7 @@
   called \define{Riesz isomorphism}.
 \end{note}
 
-\begin{definition}
+\begin{Definition}{p-richardson-method}
   \label{definition:richardson:2}
   When we apply Richardson's method as in~\eqref{eq:richardson:5} on a
   computer, each step involves a multiplication with the matrix $\mat A$,
@@ -260,7 +260,7 @@
     \label{eq:richardson:11}
     u^{(k+1)} = u^{(k)} - \omega_k B^{-1} (A u^{(k)} - f).
   \end{gather}
-\end{definition}
+\end{Definition}
 
 \begin{remark}
   The space $X$ and is inner product does not appear anymore in this

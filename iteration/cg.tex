@@ -18,7 +18,7 @@
   iteration method.
 \end{intro}
 
-\begin{definition}[Conjugate gradient method]
+\begin{Definition}{cg-method}
   Let $V$ be a Hilbert space and $V^*$ its dual. The \define{conjugate
   gradient method} for an iteration vector $u^{(k)} \in V$ involves the
   residuals $r^{(k)} \in V^*$ as well as the update direction $p^{(k)}
@@ -42,7 +42,7 @@
       p^{(k+1)} &= w^{(k+1)} + \beta_k p^{(k)}
       \end{xalignat*}
   \end{enumerate}
-\end{definition}
+\end{Definition}
 
 \begin{remark}
   The results on orthogonality and minimization properties of the cg
@@ -61,7 +61,7 @@
 %   gradient method. Furthermore, there are the 
 % \end{lemma}
 
-\begin{definition}
+\begin{Definition}{pcg-method}
   The \define{preconditioned cg method} is obtained from
   above algorithm by reinterpreting the \putindex{Riesz isomorphism}
   in the computation of $w^{(k+1)}$ as a preconditioning operation,
@@ -73,9 +73,9 @@
   \end{xalignat*}
   Here, like there, the preconditioner enters naturally from the weak
   form of the algorithm.
-\end{definition}
+\end{Definition}
 
-\begin{definition}
+\begin{Definition}{krylov-space}
   The $n$th \define{Krylov space} as subspace of the Hilbert space $V$
   with inner product $b(.,.)$ of the operator $A$ and seed vector
   $w \in V$ is
@@ -84,9 +84,9 @@
     \mathcal K_n = \mathcal K_n(B^{-1}A, w)
     = \operatorname{span}\left\{w, B^{-1}A w, (B^{-1}A)^2 w, \dots, (B^{-1}A w)^{n-1}\right\}.
   \end{gather}
-\end{definition}
+\end{Definition}
 
-\begin{lemma}
+\begin{Lemma}{cg-minimization}
   The iterates of the cg method have the following minimization
   properties:
   \begin{gather}
@@ -97,9 +97,9 @@
       \norm{u^{(0)} + p(B^{-1}A) w -u}_A.
     \end{split}
   \end{gather}
-\end{lemma}
+\end{Lemma}
 
-\begin{theorem}
+\begin{Theorem}{cg-convergence}
   Let the bilinear form $a(.,.)$ be symmetric, and let the
   \putindex{spectral equivalence}~\eqref{eq:richardson:12} hold. Then,
   the preconditioned cg method converges and we have the estimate
@@ -110,7 +110,7 @@
   \end{gather}
   Here, $\kappa = \Lambda/\lambda$ is the \putindex{spectral condition
     number} of the preconditioned problem.
-\end{theorem}
+\end{Theorem}
 
 %%% Local Variables: 
 %%% mode: latex

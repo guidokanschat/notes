@@ -9,7 +9,7 @@
   assume that the solution process is cheap.
 \end{intro}
 
-\begin{definition}
+\begin{Definition}{hierarchy-spaces}
   A \define{hierarchy of spaces} $\{V_\ell\}_0\le \ell \le L$ is a
   sequence of the form
   \begin{gather}
@@ -20,9 +20,9 @@
   of the matrix $\mat A$ is bad. On the other end of the spectrum, we
   assume that the solution of~\eqref{eq:itintro:1} on $V_0$ is easily
   possible.
-\end{definition}
+\end{Definition}
 
-\begin{definition}
+\begin{Definition}{multigrid-method}
   A \define{multigrid method} consists of the following components:
   \begin{enumerate}
   \item A \define{smoother} $R_\ell$ acting on the level space
@@ -98,7 +98,7 @@
   is either \define{V-cycle} for $m_{\text{coarse}} = 1$ or
   \define{W-cycle} for $m_{\text{coarse}} = 2$. The structure of the
   cycles can be seen in Figure~\ref{fig:mg:1}.
-\end{definition}
+\end{Definition}
 \begin{figure}[tp]
   \centering
   \begin{minipage}[t]{.49\linewidth}
@@ -200,13 +200,13 @@
   $m_{\text{coarse}}$ do not lead to efficient algorithms.
 \end{remark}
 
-\begin{definition}
+\begin{Definition}{variable-v-cycle}
   If the numbers of pre- and post smoothing steps in the V-cycle are
   dependent on the level $\ell$, we speak of the \define{variable
     V-cycle}. A typical choice is $m_\ell = 2^{L-\ell} m_L$, thus
   doubling the number of smoothing steps whenever stepping down one
   level.
-\end{definition}
+\end{Definition}
 
 \begin{note}
   The variable V-cycle with $m_\ell$ as mentioned in the previous
@@ -231,7 +231,7 @@
   different. Therefore, we separate them into two sections.
 \end{remark}
 
-\begin{theorem}
+\begin{Theorem}{mg-complexity}
   Let $n_\ell$ be the dimension of $V_\ell$. Assume that the effort
   needed to for the operations in equations~\eqref{eq:mg:5}b/c/e is
   linear in $n_\ell$ and assume that $ n_{\ell+1}/n_\ell \approx 2^d$,
@@ -240,7 +240,7 @@
   one step of the V-cycle is of order $n_L$. The effort for one step
   of the W-cycle is of order $n_L$ for $d \ge 2$, while it is of order
   $n_L \log(n_L)$ in one dimension.
-\end{theorem}
+\end{Theorem}
 
 \begin{proof}
   Start the recursion on level $L$ with the function $MG_L(0,
@@ -263,7 +263,7 @@
   \simeq \log n_L$.
 \end{proof}
 
-\begin{lemma}
+\begin{Lemma}{mg-error-step}
   Let $B_\ell^{-1}$ be the operator associated with the action of the
   multigrid preconditioner on level $\ell$ for
   $\ell=0,\ldots,L$. Then, the error after one step of the multigrid
@@ -280,7 +280,7 @@
     \left(I-B_{\ell-1}^{-1}A_{\ell-1} P_{\ell-1}\right)^{m_{\text{coarse}}}
      \left(I-R_\ell^{-1} A_\ell\right)^{m_{\text{pre}}}
   \end{gather}
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   For the smoother, we use the standard technique for Richardson's
@@ -319,7 +319,7 @@
   \end{subequations}
 \end{assumption}
 
-\begin{theorem}
+\begin{Theorem}{v-cycle-convergence}
   Let $a(.,.)$ be symmetric, positive definite and let
   Assumption~\ref{assumption:mg:1} hold. Then, the V-cycle operator
   with $m_{\text{pre}} =m_{\text{post}} = m$ admits the estimate
@@ -335,7 +335,7 @@
   \end{gather}
   In particular, the contraction number of the multigrid method is
   bounded by a number less than 1, independent of the level.
-\end{theorem}
+\end{Theorem}
 
 \begin{proof}
   \footnote{This version of the proof is taken
@@ -428,7 +428,7 @@
   \end{gather}
 \end{proof}
 
-\begin{lemma}
+\begin{Lemma}{mg-additive}
   Let $R_\ell$ be the scaled additive Schwarz method
   \begin{gather}
     \label{eq:mg:19}
@@ -438,7 +438,7 @@
   $\Omega_j$ as in~\eqref{eq:schwarz:9}. Not that we do not include
   the coarse space here. Then, for $\omega$ sufficiently small, this
   smoother fulfills Assumption~\ref{assumption:mg:1}.
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   The positive definiteness and symmetry of the smoother have been

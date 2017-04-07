@@ -60,7 +60,7 @@
   has a unique solution $u_j\in \hat V_j$ for all $f\in \hat V_j^*$.
 \end{assumption}
 
-\begin{definition}[Subspace projection]
+\begin{Definition}{subspace-projection}
   \label{definition:schwarz:1}
   \index{Pj@$P_j$|see {Ritz projection}} Let the \define{subspace
     projection} operator $P_j: V \to V_j$ be defined such that
@@ -81,9 +81,9 @@
   Since $V_j$ is a subspace of $V$, we will also understand $P_j$ as
   an endomorphism of $V$ iteself. The left hand side of this equation
   induces an operator $A_j: V_j \to V_j^*$ by $A_j u_j = a_j(u_j,.)$.
-\end{definition}
+\end{Definition}
 
-\begin{definition}[Auxiliary space projection]
+\begin{Definition}{auxiliary-space-projection}
   \label{definition:schwarz:1a}
   Let the operator $\hat P_j: V \to \hat V_j$ be defined such that $\hat P_j u \in \hat V_j$ is
   the unique (Assumption~\ref{lemma:schwarz:1}) solution to the problem
@@ -93,16 +93,16 @@
   \end{gather}
   The left hand side of this equation induces an operator $\hat A_j:
   \hat V_j \to \hat V_j^*$ by $\hat A_j u_j = \hat a_j(u_j,.)$.
-\end{definition}
+\end{Definition}
 
-\begin{lemma}
+\begin{Lemma}{schwarz-ritz}
   \label{lemma:schwarz:ritz}
   If the local bilinear forms $a_j(.,.)$ are the restrictions of
   $a(.,.)$ to $V_j$, then the projections $P_j$ as mappings from $V$
   to itself are self-adjoint with respect to the $a(.,.)$-inner
   product and positive semi-definite. Furthermore, $P_j$ acts as
   identity on $P_j$ and there holds $P_j^2 = P_j$.
-\end{lemma}
+\end{Lemma}
 \begin{proof}
   This is a well-known fact about orthogonal projections, which we
   will prove shortly.
@@ -121,7 +121,7 @@
   since $a(.,.)$ is positive definite.
 \end{proof}
 
-\begin{definition}
+\begin{Definition}{l2-projection}
   \label{definition:schwarz:1a}
   For subspace and auxiliary space methods, we define the operators
   \begin{gather}
@@ -149,20 +149,20 @@
   %   \scal(\Pi_j^T \phi_j,v)_{V^*\times V} =  \scal( \phi_j,\Pi_j
   %   v)_{V_j^*\times V_j}
   % \end{gather}
-\end{definition}
+\end{Definition}
 
 % \begin{todo}
 %   Show that $\Pi^T$ is an orthogonal projection, and onto which space.
 % \end{todo}
 
-\begin{lemma}
+\begin{Lemma}{schwarz-ritz-representation}
   \label{lemma:schwarz:2}  
   There holds
   \begin{gather}
     \label{eq:schwarz:15}
     A_j P_j = \Pi^T_j A.
   \end{gather}
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   Let $u,v\in V$ arbitrary. Let $v_j=\Pi_j v$. We rewrite
@@ -175,8 +175,8 @@
   \end{gather*}
 \end{proof}
 
-\begin{definition}
-  The additive Schwarz preconditioner for the operator $A$ associated
+\begin{Definition}{additive-schwarz}
+  The \define{additive Schwarz preconditioner} for the operator $A$ associated
   with the symmetric, and $V$-elliptic bilinear form $a(.,.)$ with
   respect to the subspace decomposition $V_j$ is the mapping $B:
   V \to V^*$ such that
@@ -184,7 +184,7 @@
     \label{eq:schwarz:4}
     B^{-1} = \sum_{j=1}^J P_j A^{-1}.
   \end{gather}
-\end{definition}
+\end{Definition}
 
 \begin{example}
   \label{example:schwarz:Jacobi}
@@ -220,11 +220,11 @@
   \end{gather}
 \end{example}
 
-\begin{lemma}
+\begin{Lemma}{additive-positive-definite}
   \label{lemma:schwarz:3}
   If $A$ is symmetric and positive definite, so is $B^{-1}$ as defined
   in~\eqref{eq:schwarz:4}.
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   By Lemma~\ref{lemma:schwarz:2} and the fact that $P_j$ maps into $V_j$, we have that
@@ -245,7 +245,7 @@
   The result now follows by linearity.
 \end{proof}
 
-\begin{lemma}
+\begin{Lemma}{additive-minimum}
   \label{lemma:schwarz:5}
   For $v\in V$ holds
   \begin{gather}
@@ -254,7 +254,7 @@
   \end{gather}
   where the minimum is taken over all possible decompositions of $v$
   into a sum of elements $v_j\in V_j$ with $j=1,\dots,J$.
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   Since $B^{-1}$ is s.p.d., so is $B$. Therefore, $\scal(.,A_j^{-1}.)$
@@ -300,7 +300,7 @@
   \end{align*}
 \end{proof}
 
-\begin{theorem}
+\begin{Theorem}{schwarz-equivalence}
   \label{theorem:schwarz:1}
   Let $A$ be s.p.d. and $B$ defined by
   equation~\eqref{eq:schwarz:4}. Then, the \putindex{spectral
@@ -316,7 +316,7 @@
       \sum\limits_{j=1}^J a(v_j, v_j)}.
 %    \end{split}
   \end{gather}
-\end{theorem}
+\end{Theorem}
 
 \begin{proof}
   Here we use the fact, that $b(.,.)$ is an inner product on
@@ -397,12 +397,12 @@
   estimate~\eqref{eq:schwarz:23}.
 \end{note}
 
-\begin{lemma}
+\begin{Lemma}{schwarz-maximum}
   \label{lemma:schwarz:7}
   Let the estimate~\eqref{eq:schwarz:25} hold. Then,
   estimate~\eqref{eq:schwarz:23} holds with the constant
   $\rho(\mathcal E)$.
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   Let $v\in V$ and its decomposition $v=\sum v_j$ with $v_j\in V_j$ be
@@ -466,7 +466,7 @@
   \label{fig:schwarz:ddmeshes}
 \end{figure}
 
-\begin{definition}
+\begin{definition}{dd-overlap}
   \label{definition:schwarz:overlap}
   A covering of $\Omega$ with subdomains $\Omega_j$ is called
   \define{overlapping} with minimal \define{overlap} $\delta$, if for
@@ -478,7 +478,7 @@
   \end{gather*}
 \end{definition}
 
-\begin{definition}
+\begin{Definition}{dd-finite-covering}
   \label{definition:schwarz:finite-covering}
 \defindex{NO@$N_O$}
   \defindex{finite covering}
@@ -487,9 +487,9 @@
   subdomains, such that for each $j$ the intersection
   $\Omega_j\cap\Omega_k$ is nonempty for at most $N_O$ subdomains
   $\Omega_k$.
-\end{definition}
+\end{Definition}
 
-\begin{definition}
+\begin{Definition}{partition-of-unity}
   A smooth \define{partition of unity} with respect to the subdomains
   $\Omega_1,\Omega_2,\dots,\Omega_J$ of $\Omega$ is a set of
   nonnegative functions $\{\phi_1,\dots,\phi_J\}\subset
@@ -513,7 +513,7 @@
     \norm{\nabla\phi j}_{L^\infty(\Omega)} \lesssim \frac 1\delta,
   \end{gather}
   where the implicit constant is independent of $h$, $\delta$ and $J$.
-\end{definition}
+\end{Definition}
 
 \begin{note}
   The term overlap for $\delta$ is justified by the following
@@ -584,7 +584,7 @@
   method due to Lemma~\ref{lemma:schwarz:stable-decomposition}.
 \end{notation}
 
-\begin{definition}
+\begin{Definition}{two-level-additive}
   Let the spaces $V_j$, $j=0,\dots,J$ be defined as above. Then, the
   \define{two-level additive Schwarz preconditioner} is defined as
   \begin{gather}
@@ -596,7 +596,7 @@
   \begin{gather}
     \scal(A_j u_j, v_j)_V = a(u_j, v_j),\quad\forall u_j, v_j \in V_j.
   \end{gather}
-\end{definition}
+\end{Definition}
 
 \begin{note}
   In order to simplify notation, we have assigned index zero to
@@ -604,14 +604,14 @@
   over subdomains, or at zero, summing over all subspaces.
 \end{note}
 
-\begin{lemma}
+\begin{Lemma}{schwarz4}
   \label{lemma:schwarz:4}
   There holds
   \begin{gather}
     \label{eq:schwarz:11}
     V_h = \sum_{j=1}^J V_j.
   \end{gather}
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   Let $I_h: C(\overline\Omega) \to V_h$ be the interpolation operator
@@ -637,7 +637,7 @@
   was chosen arbitrarily, the lemma is proven.
 \end{proof}
 
-\begin{lemma}
+\begin{Lemma}{finite-overlap-cauchy-schwarz}
   \label{lemma:schwarz:8}
   Let the covering $\{\Omega_j\}_{j=1,\dots,J}$ for $\Omega$ be finite
   according to
@@ -648,7 +648,7 @@
     \label{eq:schwarz:26}
     \rho(\mathcal E) \le N_O.
   \end{gather}
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   The term $a(v_i, v_j)$ is nonzero only if the supports of the two
@@ -658,7 +658,7 @@
   estimate the greatest eigenvalue.
 \end{proof}
 
-\begin{lemma}
+\begin{Lemma}{two-level-bound1}
   \label{lemma:schwarz:6}
   Let $v_j\in V_j$ for $j=0,\dots,J$ be a composition of $v\in V_h$
   such that
@@ -671,7 +671,7 @@
     a(v,v) \lesssim \sum_{j=0}^J a(v_j, v_j),
   \end{gather}
   where the implicit constant does not depend on $h$, $H$, or $J$.
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   First a note: the inequality would be obvious, if $V_h$ was a direct
@@ -695,7 +695,7 @@
 \end{proof}
 
 
-\begin{lemma}[Stable decomposition]
+\begin{Lemma}{stable-decomposition}
   \index{stable decomposition}
   \label{lemma:schwarz:stable-decomposition}
   For each $v\in V_h$ there exists a decomposition $v=\sum_{j=0}^J
@@ -705,7 +705,7 @@
     \sum_{j=0}^J a(v_j, v_j)
     \lesssim \left(1+\frac H\delta\right)^2 a(v,v).
   \end{gather}
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   Let $\tilde I_H: H^1_0(\Omega) \to V_H$ be an interpolation operator
@@ -768,7 +768,7 @@
   from~\eqref{eq:schwarz:22} and~\eqref{eq:schwarz:21}.
 \end{proof}
 
-\begin{theorem}
+\begin{Theorem}{two-level-additive-convergence}
   \label{theorem:schwarz:two-level-convergence}
   Under the assumptions made so far in this section, there holds
   \begin{gather}
@@ -779,7 +779,7 @@
     \lesssim \left(1+\frac H\delta\right)^2,
   \end{gather}
   where the implicit constant is independent of $h$, $\delta$, $H$, and $J$.
-\end{theorem}
+\end{Theorem}
 
 \begin{proof}
   The proof follows Note~\ref{note:schwarz:1}. Indeed,
@@ -885,11 +885,11 @@
   surprisingly, their analysis also rests on the same ingredients.
 \end{intro}
 
-\begin{definition}
-  The \define{multiplicative Schwarz preconditioner} for the operator $A$ associated
-  with the symmetric, and $V$-elliptic bilinear form $a(.,.)$ with
-  respect to the subspace decomposition $V_j$ is the mapping $B_m:
-  V \to V^*$ such that
+\begin{Definition}{multiplicative-schwarz}
+  The \define{multiplicative Schwarz preconditioner} for the operator
+  $A$ associated with the symmetric, and $V$-elliptic bilinear form
+  $a(.,.)$ with respect to the subspace decomposition $V_j$ is the
+  mapping $B_m: V \to V^*$ such that
   \begin{gather}
     \label{eq:schwarz:34}
     B_m^{-1} = (I -  E_J) A^{-1},
@@ -899,9 +899,9 @@
     \label{eq:schwarz:35}
     E_J = (I - P_J)(I - P_{J-1})\dots(I - P_1).
   \end{gather}
-\end{definition}
+\end{Definition}
 
-\begin{lemma}
+\begin{Lemma}{error-propagation}
   The error after one step of the iteration
   \begin{gather*}
     u^{(k+1)} = u^{(k)} - B_m^{-1}\left(A u^{(k)} - f\right)
@@ -910,7 +910,7 @@
   \begin{gather*}
     u^{(k+1)} - u = E_J \left(u^{(k)} - u\right).
   \end{gather*}
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   First, we use the definition of $B_m$ to obtain
@@ -933,7 +933,7 @@
   \end{gather}
 \end{remark}
 
-\begin{lemma}
+\begin{Lemma}{error-propagation-recursion}
   \label{lemma:schwarz:9}
   The error propagation operator $E_j$ has the following porperties:
   \begin{align}
@@ -944,7 +944,7 @@
     I - E_j &= \sum_{k=1}^{j} P_k E_{k-1}.
   \end{align}
   Here, $E^*$ is the $a(.,.)$-adjoint of $E$.
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   In order to prove the first identity, we use the recursion
@@ -962,7 +962,7 @@
   \end{align*}
 \end{proof}
 
-\begin{lemma}
+\begin{lemma}{schwarz10}
   \label{lemma:schwarz:10}
   Let Assumption~\ref{assumption:schwarz:1} (\putindex{strengthened
     Cauchy-Schwarz inequalities}) be satisfied. Then the following
@@ -992,7 +992,7 @@
   \end{gather*}
 \end{proof}
 
-\begin{theorem}
+\begin{Theorem}{schwarz-multiplicative-convergence}
   Let Assumptions~\ref{assumption:schwarz:1} and the
   estimate~\eqref{eq:schwarz:23} be satisfied. Then, the error
   propagation operator satisfies
@@ -1000,7 +1000,7 @@
     \label{eq:schwarz:47}
     \norm{E_J}_A^2 \le 1 - \frac{1}{\rho(\mathcal E) \constref{eq:schwarz:24}} < 1,
   \end{gather}
-\end{theorem}
+\end{Theorem}
 
 \begin{proof}
   We use equation~\eqref{eq:schwarz:44} of Lemma~\ref{lemma:schwarz:9} to obtain
@@ -1060,7 +1060,7 @@
   which is the statement of the theorem.
 \end{proof}
 
-\begin{lemma}
+\begin{Lemma}{schwarz11}
   \label{lemma:schwarz:11}
   Let inequality~\eqref{eq:schwarz:24} hold for some \putindex{stable
     decomposition} $v=\sum v_j$ with the constant
@@ -1069,7 +1069,7 @@
     \label{eq:schwarz:50}
     \sum_{j=1}^J a(P_j v,v) \ge \frac1{\constref{eq:schwarz:24}^2} a(v,v).
   \end{gather}
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   From inequality~\eqref{eq:schwarz:24} for the decomposition $v=\sum

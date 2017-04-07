@@ -23,7 +23,7 @@
 
 \section{Hilbert spaces and orthogonal bases}
 
-\begin{definition}[Inner product]
+\begin{Definition}{inner-product}
   Let $V$ be a vector space over $\mathbb K$ with $\mathbb K = \mathbb
   C$ or $\mathbb K = \R$. An \define{inner product} on $V$ is a mapping
   $\scal(.,.): V\times V \to \mathbb K$ with the properties
@@ -37,9 +37,9 @@
   usually referred to as (bi-)linearity, symmetry, and
   definiteness. We note that linearity in the second argument follows
   immediately by symmetry.
-\end{definition}
+\end{Definition}
 
-\begin{definition}
+\begin{Definition}{hilbert-space}
   A vector space $V$ equipped with an inner product $\scal(.,.)$ and a
   norm defined by
   \begin{gather*}
@@ -50,7 +50,7 @@
   a pre-Hilbert space which is also \putindex{complete}, that is,
   every \putindex{Cauchy sequence} with elements in the space has a
   limit in the space.
-\end{definition}
+\end{Definition}
 
 \begin{example}
   For any positive integer, the space $\R^n$ equipped with the
@@ -109,22 +109,47 @@
   is not.
 \end{example}
 
+\begin{Definition}{separable}
+  A subset $M$ of a Hilbert space $V$ is called \define{dense}, if
+  every vector in $V$ is an accumulation point of $M$, that is, $V$ is
+  the closure of $M$.  A Hilbert space is called \define{separable},
+  if it has a countable dense subset.
+\end{Definition}
 
+\begin{note}
+  From the point of view of numerical analysis and computation, spaces
+  which are not separable are of limited interest. In fact, every
+  result of a numerical calculation is in a finite set. When we look
+  at convergence for $n\to\infty$ or $h\to 0$, we are usually studying
+  sequences with countable index sets. Therefore, vectors in
+  nonseparable spaces cannot be approximaetd reliably.
+\end{note}
 
-\begin{definition}
-  Let $V$ be a vector space over a field $\mathbb K$. A basis of $V$
-  is a set $\{x_i\}$ of linearly independent vectors with coefficients
-  $i\in I$ from an index set $I$, such that each $v\in V$ has a
-  representation of the form
+\begin{Definition}{schauder-basis}
+  Let $V$ be a Hilbert space over a field $\mathbb K$. A
+  \define{Schauder basis} or short \define{basis} of $V$ is a set
+  $\{x_i\}$ of linearly independent vectors with coefficients $i\in I$
+  from an index set $I$, such that each $v\in V$ has a representation
+  of the form
   \begin{gather*}
     v = \sum_{i\in I} \alpha_i x_i,
   \end{gather*}
-  with coefficients $\alpha_i \in \mathbb K$. For a \define{Hamel
-    basis}, it is required that only finitely many coefficients in
-  this representation are nonzero. For a \define{Schauder basis}, we
-  assume $I = \mathbb N$ and require that the sum in the linear
-  combination exists as the limit of a series.
-\end{definition}
+  with coefficients $\alpha_i \in \mathbb K$. The index set $I$ may be
+  finite in the case of a finite dimensional vector space, or
+  countable if $V$ is inifinte dimensional and separable. In the
+  latter case it is required that the sum in the linear combination
+  exists as the limit of a series.
+\end{Definition}
+
+\begin{remark}
+  In the infinite dimensional case, the norm of the vector space is
+  part of the definition of the basis. This is the usual view in
+  functional analysis, but it fails if no norm is defined on a general
+  vector space $V$. In that case, only finite sums can be admitted,
+  leading to a \define{Hamel basis}. While these seem to be more
+  immediate extensions of bases on finite dimensional spaces, we will
+  not have good use for them here.
+\end{remark}
 
 \begin{notation}
   We will use the term \putindex{sequence} to denote an at most
@@ -132,7 +157,7 @@
   and the index set is $\mathbb N$ or a subset thereof.
 \end{notation}
 
-\begin{definition}
+\begin{Definition}{orthogonal}
   Let $V$ be an inner product space over a field $\mathbb K$. Two
   vectors $x,y\in V$ are called orthogonal if $\scal(x,y) = 0$. We
   write $x\perp y$. Let $W$ be a subspace of $V$. Then, a vector $v$
@@ -145,9 +170,9 @@
   additionally $\|x_i\| = 1$ for all vectors, it is called an
   \define{orthonormal set}. These notions transfer directly from
   finite to countable sets.
-\end{definition}
+\end{Definition}
 
-\begin{theorem}
+\begin{Theorem}{orthogonal-complement}
   Let $W$ be a \putindex{closed subspace} of a Hilbert space $V$. Then,
   $W^\perp$ is a closed subspace as well and every vector $v\in V$ has
   a unique decomposition
@@ -155,7 +180,7 @@
     \label{eq:lafa:1}
     v = w + u, \quad w\in W, u\in W^\perp.
   \end{gather}
-\end{theorem}
+\end{Theorem}
 
 \begin{todo}
   \begin{proof}
@@ -163,7 +188,7 @@
   \end{proof}
 \end{todo}
 
-\begin{lemma}[Gram--Schmidt]
+\begin{Lemma}{gram-schmidt}
   \index{Gram--Schmidt} For every linearly independent sequence of
   vectors $\{v_i\}$ there is an up to scaling unique orthogonal set
   $\{x_i\}$ with the property that
@@ -173,7 +198,7 @@
     =
     \operatorname*{span}_{i=1,\dots,n} \{v_i\}.
   \end{gather*}
-\end{lemma}
+\end{Lemma}
 
 \begin{todo}
   \begin{proof}
@@ -181,25 +206,9 @@
   \end{proof}
 \end{todo}
 
-\begin{definition}
-  A subset $M$ of a Hilbert space $V$ is called \define{dense}, if
-  every vector in $V$ is an accumulation point of $M$, that is, $V$ is
-  the closure of $M$.  A Hilbert space is called \define{separable},
-  if it has a countable dense subset.
-\end{definition}
-
-\begin{note}
-  From the point of view of numerical analysis and computation, spaces
-  which are not separable are of limited interest. In fact, every
-  result of a numerical calculation is in a finite set. When we look
-  at convergence for $n\to\infty$ or $h\to 0$, we are usually studying
-  sequences with countable index sets. Therefore, vectors in
-  nonseparable spaces cannot be approximaetd reliably.
-\end{note}
-
-\begin{theorem}
+\begin{Theorem}{separable-basis}
   Every separable Hilbert space has an at most countable orthonormal basis.
-\end{theorem}
+\end{Theorem}
 
 \begin{proof}
   See e.g.~\cite{Yosida80}. The proof is constructive and uses the
@@ -273,14 +282,14 @@
   all $v_n$, it is not for the limit $v$.
 \end{example}
 
-\begin{definition}
+\begin{Definition}{bounded-operator}
   A linear operator $\phi: V\to W$ is \textbf{bounded}\defindex{bounded
   linear operator}, if there is a constant
   $C > 0$ such that
   \begin{gather*}
     \forall v\in V: \norm{\phi(v)}_W \le C \norm{v\vphantom{()}}_V.
   \end{gather*}
-\end{definition}
+\end{Definition}
 
 \begin{remark}
   By virtue of completeness of the space, whenever a linear operator
@@ -293,7 +302,7 @@
   this problem somewhat.
 \end{remark}
 
-\begin{definition}
+\begin{Definition}{operator-domain}
   Let $\phi: V\to W$ be a linear operator. Then, the \define{domain}
   of $\phi$ is
   \begin{gather*}
@@ -301,7 +310,7 @@
     \phi(v) \in W \bigr\}.
   \end{gather*}
   Here, $\phi(v) \in W$ implies that $\phi(v)$ is also well defined.
-\end{definition}
+\end{Definition}
 
 
 
