@@ -167,7 +167,7 @@
 
   A set of nonzero mutually orthogonal vectors
   $\{x_i\} \subset V$ is called \define{orthogonal set}. If
-  additionally $\|x_i\| = 1$ for all vectors, it is called an
+  additionally $\norm{x_i} = 1$ for all vectors, it is called an
   \define{orthonormal set}. These notions transfer directly from
   finite to countable sets.
 \end{Definition}
@@ -226,8 +226,8 @@
   The sequence $\{v_i\}$ is a Schauder basis for $V$. In fact, given a
   vector $v\in V$ we have to show that for every $\epsilon$, there is
   a finite linear combination $s_n = \sum_{i=1}^n \alpha_i v_i$ such
-  that $\|v-s_n\| < \epsilon$. Let by separability $w_\epsilon$ in $M$
-  be such that $\|v-w_\epsilon\| < \epsilon$ and choose $s_n =
+  that $\norm{v-s_n} < \epsilon$. Let by separability $w_\epsilon$ in $M$
+  be such that $\norm{v-w_\epsilon} < \epsilon$ and choose $s_n =
   w_\epsilon$.
   
   Finally, by the Gram--Schmidt procedure, we can construct an

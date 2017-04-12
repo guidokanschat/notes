@@ -39,8 +39,8 @@
 \renewcommand{\thesection}{\thechapter.\arabic{section}}
 \newcounter{blockcount}
 \setcounter{blockcount}{100}
-\newcounter{theocount}
-\numberwithin{theocount}{section}
+\newcounter{theorem}
+\numberwithin{theorem}{section}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Outputting blocks for beamer file
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -51,10 +51,10 @@
   \CloseAndInputCutFile}%
   \expandafter\def\csname#1\endcsname##1{\endgroup  \message{Processing '#1 ##1'.}%
     \stepcounter{blockcount}%
-    \refstepcounter{theocount}%
+    \refstepcounter{theorem}%
     \def\CommentCutFile{block-##1.tex}
     \SetUpCutFile
-    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}}(\thetheocount)\unexpanded{\label}{##1}}
+    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}}(\thetheorem)\unexpanded{\label}{##1}}
       \ProcessComment{#1}}
     \CommentEndDef{#1}}
 
@@ -75,7 +75,7 @@
 \commenttheorem{Corollary}
 \commenttheorem{Assumption}
 \commenttheorem{Example}
-\newtheorem{theorem}{\iflanguage{german}{Satz}{}\iflanguage{english}{Theorem}{}}[chapter]
+%\newtheorem{theorem}{\iflanguage{german}{Satz}{}\iflanguage{english}{Theorem}{}}[chapter]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
@@ -89,6 +89,7 @@
 \newtheorem{remark}[theorem]{\iflanguage{german}{Bemerkung}{}\iflanguage{english}{Remark}{}}
 \newtheorem{note}[theorem]{\iflanguage{german}{Anmerkung}{}\iflanguage{english}{Note}{}}
 \newtheorem{review}[theorem]{\iflanguage{german}{Zusammenfassung}{}\iflanguage{english}{Review}{}}
+\newtheorem{problem}[theorem]{\iflanguage{german}{Aufgabe}{}\iflanguage{english}{Problem}{}}
 
 % Definitions for index
 \def\defindex#1{\index{#1|textbf}}

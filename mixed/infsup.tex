@@ -1,4 +1,153 @@
 
+\section{Finite-dimensional problems}
+
+\begin{intro}
+  So far, our power horse for well-posedness was the Lax-Milgram
+  lemma, which applied under the conditions
+  \begin{xalignat}2
+    a(u,v) &\le M \norm{u}\norm{v} & \forall u,v&\in V\\
+    \label{eq:infsup:elliptic}
+    a(u,u) &\ge \gamma \norm{u}^2 & \forall u&\in V.
+  \end{xalignat}
+  The second condition can also be rewritten in terms of the
+  \putindex{Rayleigh quotient} as
+  \begin{gather*}
+    0 < \gamma = \inf_{u\in V}\frac{a(u,u)}{\norm{u}^2}.
+  \end{gather*}
+  Restricting this to finite a dimensional space, the notation usually
+  changes from
+  \begin{gather}
+    a(u,v) = f(v)
+    \qquad\text{to}\qquad
+    v^TA u = v^Tf,
+  \end{gather}
+  where $A\in \R^{n\times n}$ is the matrix associated with the
+  bilinear form. The bound for the Rayleigh quotient means nothing but
+  that the real parts of all eigenvalues of $A$ are bounded from below
+  by $\gamma$. Thus, a matrix $A$ for which we can apply the
+  Lax-Milgram lemma is positive definite. And the statement of the
+  lemma in finite dimension is, that a positive definite matrix is
+  invertible. We know from linear algebra that this is true, but we
+  also know that the condition is all but necessary.
+\end{intro}
+
+\begin{problem}
+  Find an invertible, symmetric matrix $A\in \R^{2\times 2}$ and a
+  vector $v\in \R^2$ such that $v^TAv=0$ and thus the Lax-Milgram
+  lemma is inconclusive.
+\end{problem}
+
+The question of well-posedness in finite dimensions can be answered by:
+
+\begin{Theorem}{la-invertible}
+  A matrix $A\in\R^{n\times n}$ is invertible if and only if one of
+  the following equivalent coditions holds:
+  \begin{enumerate}
+  \item all its (possibly complex) eigenvalues are nonzero,
+  \item all its singular values are nonzero,
+  \item for each $v\in\R^n$ holds $Av\neq 0$.
+  \end{enumerate}
+\end{Theorem}
+
+\begin{intro}
+  Why did we replace this clear theorem by the weaker Lax-Milgram
+  lemma, when we studied elliptic partial differential equations?  For
+  the first condition, it should be noted that spectral properties of
+  operators between spaces of infinite dimension are much harder to
+  obtain. Further, we do not need information on the whole spectrum,
+  but only on the eigenvalue closest to zero. Therefore, we used a
+  simple estimate in order to avoid discussing the spectrum at
+  all. But, there is an important difference between
+  Theorem~\ref{la-invertible} and the
+  estimate~\eqref{eq:infsup:elliptic}: the assumption of the theorem
+  is qualitativ, $\lambda \neq 0$, while the assumption of Lax-Milgram
+  is quantitative,
+  \begin{gather*}
+    \Re\lambda \ge \gamma> 0.
+  \end{gather*}
+  Why this change?
+\end{intro}
+
+\begin{problem}
+  On the space $\ell_2(\R)$ define the operator $A$ by its eigenvalue
+  decomposition
+  \begin{align*}
+    A: \ell_2(\R) &\to \ell_2(\R)\\
+    e_k & \mapsto \tfrac1k e_k.
+  \end{align*}
+  Show that this operator does not have a bounded inverse, albeit all
+  its eigenvalues are positive.
+\end{problem}
+
+\begin{intro}
+  We focus on the second and third conditions, respectively, in
+  Theorem~\ref{la-invertible}. But, the problem above tells us that we
+  will run into trouble, if we do not quantify this. Therefore, we
+  start our attempt by requiring:
+  \begin{gather*}
+    \norm{Au}^2 \ge \gamma \norm{u}^2 \forall u\in V.
+  \end{gather*}
+  But while this is a condition we can easily write down for matrices
+  and operators, it does not work that well for bilinear forms. For
+  those, we have the condition which was introduced in this form by
+  Nečas. It implies that the linear form on $V$, defined by $a(u,.)$
+  is not the zero-form.
+
+  It turns out, if we go this far, we can even consider bilinear forms
+  $a(.,.)$ on two different spaces $V$ and $W$ with an associated
+  operator $A: V\to W^*$.
+\end{intro}
+
+\begin{Definition}{infsup1}
+  A bilinear form $a(.,.)$ on $V\times W$ is said to admit the
+  \define{inf-sup condition} or is called \define{inf-sup stable}, if
+  there holds
+  \begin{gather}
+    \label{eq:infsup:1}
+    \inf_{u\in V} \sup_{w\in W} \frac{a(u,w)}{\norm{u}_V\norm{w}_W}
+    \ge \gamma > 0.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{infsup2}
+  The following statements are equivalent to the inf-sup
+  condition~\eqref{eq:infsup:1}:
+  \begin{gather}
+    \label{eq:infsup:2}
+    \forall u\in V \;\exists w\in W \;:\; a(u,w) \ge \gamma \norm{u}_V\norm{w}_W
+  \end{gather}
+  \begin{gather}
+    \label{eq:infsup:3}
+    \forall u\in V
+    \;\exists w\in W \;:\;
+    \left\{
+    \arraycolsep0.3ex
+    \begin{array}{rcl}
+      \norm{w}_W &\le&\norm{u}_V\\
+      a(u,w) &\ge& \gamma \norm{u}_V^2
+    \end{array}
+    \right.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  The proof is left as a problem.
+\end{proof}
+
+\begin{Theorem}{infsup-well-posedness}
+  Let $a(.,.)$ on $V\times W$ be a bounded bilinear form such that
+  \begin{gather}
+    a(u,w) \le M \norm{u}_V \norm{w}_W.
+  \end{gather}
+  Then, the problem finding $u\in V$ such that
+  \begin{gather}
+    a(u,w) = f(w) \qquad\forall w\in W,
+  \end{gather}
+  has a unique solution and
+  \begin{gather}
+    \norm{u}_V \le \frac1\gamma \norm{f}_{W^*}
+  \end{gather}
+\end{Theorem}
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "main"
