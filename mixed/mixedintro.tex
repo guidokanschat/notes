@@ -323,6 +323,34 @@ mathematical detail refer to~\cite{Ciarlet88}.
   of this class.
 \end{intro}
 
+\begin{Definition}{displacement-pressure}
+  The \define{displacement-pressure formulation} of the Lam\'e-Navier
+  equations reads: find a pair $(u,p) \in V\times Q$ such that
+  \begin{gather}
+    \begin{aligned}
+      2\mu\form(\strain u, \strain v) &+ \form(p,\div v) &=&\form(f,v)
+      &\forall v&\in V\\
+      \form(q,\div u) &-\tfrac1\lambda \form(p,q) &=&0
+      &\forall q&\in Q.\\      
+    \end{aligned}
+  \end{gather}
+  Alternatively, we write this in a single equation as
+  \begin{multline}
+    2\mu\form(\strain u, \strain v) + \form(p,\div v)
+    + \form(q,\div u) -\tfrac1\lambda \form(p,q)
+    = \form(f,v)
+    \\
+    \qquad\forall v\in V, q\in Q,
+  \end{multline}
+  or in the nonsymmetric, (semi-)definite version
+  \begin{multline}
+    2\mu\form(\strain u, \strain v) + \form(p,\div v)
+    - \form(q,\div u) +\tfrac1\lambda \form(p,q)
+    = \form(f,v)
+    \\
+    \qquad\forall v\in V, q\in Q,
+  \end{multline}
+\end{Definition}
 
 %%% Local Variables: 
 %%% mode: latex
