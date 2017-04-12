@@ -52,9 +52,10 @@
   \expandafter\def\csname#1\endcsname##1{\endgroup  \message{Processing '#1 ##1'.}%
     \stepcounter{blockcount}%
     \refstepcounter{theorem}%
-    \def\CommentCutFile{block-##1.tex}
+%    \expandafter\edef\csname#1label\endcsname{\caselower[v]{#1}}
+    \def\CommentCutFile{blocks/#1-##1.tex}
     \SetUpCutFile
-    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}}(\thetheorem)\unexpanded{\label}{##1}}
+    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}}(\thetheorem)\unexpanded{\label}{#1:##1}}
       \ProcessComment{#1}}
     \CommentEndDef{#1}}
 
@@ -75,6 +76,8 @@
 \commenttheorem{Corollary}
 \commenttheorem{Assumption}
 \commenttheorem{Example}
+\commenttheorem{Notation}
+\commenttheorem{Problem}
 %\newtheorem{theorem}{\iflanguage{german}{Satz}{}\iflanguage{english}{Theorem}{}}[chapter]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -84,7 +87,8 @@
 \newtheorem{algorithm}[theorem]{\iflanguage{german}{Algorithmus}{}\iflanguage{english}{Algorithm}{}}
 \newtheorem{example}[theorem]{\iflanguage{german}{Beispiel}{}\iflanguage{english}{Example}{}}
 %\theoremstyle{remark}
-\newtheorem{intro}[theorem]{\iflanguage{german}{Einleitung}{}\iflanguage{english}{Introduction}{}}
+\newtheorem{intro}[theorem]{%\iflanguage{german}{Einleitung}{}\iflanguage{english}{Introduction}
+}{}
 \newtheorem{notation}[theorem]{Notation}
 \newtheorem{remark}[theorem]{\iflanguage{german}{Bemerkung}{}\iflanguage{english}{Remark}{}}
 \newtheorem{note}[theorem]{\iflanguage{german}{Anmerkung}{}\iflanguage{english}{Note}{}}
@@ -101,6 +105,7 @@
 % Single letters
 \def\C{\mathbb C}
 \def\co{\mathcal C}
+\let\domain\Omega
 \def\F{\mathbb F}
 \def\Q{\mathbb Q}
 \def\Pol{\mathcal P}
@@ -114,6 +119,7 @@
 
 % Matrices
 \def\identity{\mathbb I}
+\def\id{\mathbb I}
 \def\fundam{Y}
 \def\fundamental(#1;#2){\fundam(#1;#2)}
 \def\verfahren{F}
@@ -132,14 +138,19 @@
 \def\form(#1,#2){\@form{#1}{#2}}
 \def\forme(#1,#2){\@forme{#1}{#2}}
 
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
 \DeclarePairedDelimiter{\snorm}{\lvert}{\rvert}
 \DeclarePairedDelimiter{\tnorm}{\vert\!\lvert\!\lvert}{\rvert\!\rvert\!\rvert}
 
 % Operators
+\def\deformed#1{\widehat{#1}}
+\def\div{\nabla\!\cdot\!}
+\def\strain#1{\epsilon(#1)}
 \def\supp{\operatorname{supp}}
 \def\esssup{\operatorname{ess sup}}
 % differential quotients for integrals
+\let\d\partial
 \def\diffd{\mathrm{d}}
 \def\diffq[#1]{\frac{\mathrm{d}}{\mathrm{d}#1}}
 \def\pdiffq[#1]{\frac{\partial}{\partial #1}}

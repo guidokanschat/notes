@@ -1,0 +1,24 @@
+\documentclass[USenglish]{report}
+\usepackage{../mathsim}
+\usetikzlibrary{svg.path}
+\makeatletter
+\def\BT@without#1(#2){%
+    \textbf{\capitalizewords{#1} #2:}}
+\def\BT@with[#1]#2(#3){%
+    \textbf{\capitalizewords{#2} #3 (#1):}}
+\def\endblocktheorem{\vfill}
+\makeatother
+
+\begin{document}
+
+\input{blocks/Problem-frobenius}
+
+\input{blocks/Problem-elasticity-standard}
+
+\end{document}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

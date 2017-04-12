@@ -1,3 +1,328 @@
+\section{Linear elasticity}
+
+In this section, we study the simplest mathematical model for elastic
+deformation of solids based on Hooke's law. For comparison,
+consider~\cite{Braess97}. For the full nonlinear model in all
+mathematical detail refer to~\cite{Ciarlet}.
+
+\begin{Notation}{vector-diff-operators}
+  Differential operators for vector fields $u:\R^d\to\R^d$
+  are defined as follows:
+  \begin{xalignat}2
+    \nabla u &=
+    \begin{pmatrix}
+      \d_1 u_1 & \cdots & \d_d u_1\\
+      \vdots && \vdots \\
+      \d_1 u_d & \cdots & \d_d u_d
+    \end{pmatrix}
+    &&\text{(gradient)}
+    \\
+    \div u &= \sum_{i=1^d} \d_iu_i
+    &&\text{(divergence)}
+  \end{xalignat}
+
+  For a tensor field $\sigma: \R^d\to \R^{d\times d}$, the divergence
+  is a vector defined row-wise as
+  \begin{gather}
+    \div\sigma = \left(\sum_{i=1}^d \d_i \sigma_{ij}\right)_{j=1,\dots,d}
+  \end{gather}
+\end{Notation}
+
+\begin{intro}
+  The deformation of a solid body is described as a mapping $\Phi$
+  from the \define{reference configuration} $\domain\subset \R^d$ to a
+  deformed configuration $\deformed\domain \subset \R^d$, such that
+  each undeformed point $x\in\domain$ is mapped to the point
+  $\deformed x$ after deformation. The domain $d$ is 3 for physically
+  relevent models, but we investigate two-dimensional problems in
+  order to study mathematical properties and numerical methods more
+  easily.
+
+  Actually, we are not quite interested in this mapping $\Phi$, since
+  it depends on the position of the points $x$. On the other hand, a
+  basic principle of physical laws is frame invariance, namely, if we
+  change from one Cartesian coordinate system to another, the physical
+  law may only change by the same coordinate transformation, not in
+  its physical implications. Therefore, only the differences
+  $\deformed x-x$ should matter. Thus, we introduce the
+  \define{displacement} $u$, such that
+  \begin{gather*}
+    \Phi = \id + u.
+  \end{gather*}
+  The symbol $\id$ will refer to all occurrences of identical mappings
+  and their matrices.
+
+  So far, by the introduction of $u$, we divide translations of the
+  reference configuration out of our model. But, in addition, we have
+  to eliminate the influence of solid body rotations. These are
+  operations, which leave all distances and angles unchanged. Thus, we
+  investigate the change of the distance between $x$ and $x+z$ under
+  the mapping $\Phi$. By definition of the derivative, we have
+  \begin{align*}
+    \abs{\Phi(x+z) - \Phi(x)}^2 &= \norm{\nabla\Phi z} + o(\abs{z})
+    \\
+                              &= z^T\nabla\Phi^T\nabla\Phi z + o(\abs{z})
+    \\
+    &= z^T(I + \nabla u^T + \nabla u + \nabla u^T \nabla u) z + o(\abs{z})
+    \\
+    &= \abs{z}^2 + 2 z^T\strain u z + o(\abs{z}),
+  \end{align*}
+  where
+  \begin{gather}
+    \tilde\epsilon(u) = \tfrac12
+    \bigl(\nabla u^T + \nabla u + \nabla u^T \nabla u\bigr)
+  \end{gather}
+  is the \textbf{strain tensor}. From linear algebra, we know that a
+  linear mapping which preserves all distances is orthogonal and thus
+  also preserves angles. Thus, every deformation with $\strain u=0$
+  is a solid body transformation, namely a combination of translation
+  and rotation.
+
+  In this class we are concerned only with linear problems, which can
+  be justified by the notion of infinitely small deformations
+  $u$. Then, we only study first order effects in $u$, which implies
+  that we are going to neglect the quadratic term in
+  $\strain u$. This is justified by the fact that we obtain a model,
+  which is sufficiently accurate for small deformations.
+\end{intro}
+
+\begin{Definition}{strain-tensor}
+  The linearized \define{strain tensor} or \define{symmetric gradient}
+  of $u$ is
+  \begin{gather}
+    \strain u = \frac{\nabla u + \nabla u^T}2.
+  \end{gather}
+\end{Definition}
+
+\begin{intro}
+  Next, we have to consider the interplay of forces and
+  deformations. The basic principle is Newton's axiom of force
+  balance. If a body force $f$ acts on a small volume $V$, there have
+  to be surface forces acting against $f$ in order to keep $V$ at
+  rest. Similarly, if a torque is applied inside this volume, there
+  must be tangential forces on the surface balancing this torque. Due
+  to Euler, we model these forces as a mapping $t$, which at each
+  point $x$ maps a direction vector $n$ to a force vector
+  $t(x,n)$. Thus, the balance of forces is written as
+  \begin{alignat*}2
+    \int_V f \dx &+ \int_{\d V} t(x,n) \ds &=&0\\
+    \int_V x\times f \dx &+ \int_{\d V} x\times t(x,n) \ds &=&0.
+  \end{alignat*}
+  Due to Euler and Cauchy, this mapping $t(x,n)$ can be expressed as
+  $\sigma(x)n$ by the \define{stress tensor} $\sigma$. Without proof,
+  we note that the balance of torque implies that $\sigma$ is
+  symmetric, while the force balance equation after integration by
+  parts becomes
+  \begin{gather}
+    \label{eq:mixedintro:3}
+    f + \div \sigma = 0.
+  \end{gather}
+  What is missing now is a relation between the displacement $u$ and
+  the stress $\sigma$, which is not the result of fundamental
+  principles, but of material properties.
+\end{intro}
+
+\begin{remark}
+  At this point, we play again the card of small deformations, such
+  that we do not have to distinugish whether equations are formulated
+  on the reference domain $\domain$ or on the deformed domain
+  $\deformed\domain$. Such a discussion becomes confusing easily and
+  thus remains a subject for a more specialized class.
+\end{remark}
+
+\begin{Definition}{hooke}
+  \define{Hooke's law} states that the stress depends linearly on the
+  strain. Together with frame invariance, this implies the relation
+  \begin{gather}
+    \label{eq:mixedintro:4}
+    \sigma = 2\mu \strain u + \lambda \operatorname{tr} \strain u,
+  \end{gather}
+  where $\lambda\ge 0$ and $\mu> 0$ are material properties called
+  \define{Lam\'e-Navier parameters}.
+\end{Definition}
+
+\begin{remark}
+  The trace of the strain operator is equal to the trace of the
+  gradient. Thus, we have
+  \begin{gather}
+    \label{eq:mixedintro:5}
+    \operatorname{tr} \strain u = \div u \,\id.
+  \end{gather}
+\end{remark}
+
+\begin{intro}
+  Equations~\eqref{eq:mixedintro:3} and~\eqref{eq:mixedintro:4}
+  together define a second order partial differential equation, for
+  which we have to impose boundary conditions. A natural choice, which
+  keeps the mathematical analysis simple is the \define{Dirichlet
+    boundary condition} $u=0$, corresponding to an elastic body whose
+  boundary is fixed. The alternative is the traction free boundary
+  condition $\sigma n=0$ with vanishing normal traces. Combinations
+  are possible, for instance $u\cdot n=0$ for a boundary that allows
+  sliding but no penetration. Constraining ourselves to Dirichlet
+  condition on $\Gamma_D\subset \d\domain$ and traction free on
+  $\gamma_N = \d\domain\setminus\Gamma_D$, we obtain the
+  boundary value problem
+  \begin{gather}
+    \label{eq:mixedintro:lame-navier-bvp}
+    \begin{aligned}
+      -\div \sigma(x) &= f(x) & x&\in\domain,\\
+      u(x) &= 0 & x&\in\Gamma_D, \\
+      \sigma(x)n &=0& x&\in\Gamma_N,
+    \end{aligned}
+  \end{gather}
+  together with the material law~\eqref{eq:mixedintro:4}.  Once we
+  test and integrate by parts to obtain our weak formulation, we
+  obtain
+  \begin{gather*}
+    \int_{\domain} -\div \sigma \cdot v\dx
+    = \int_{\domain} \sigma\nabla: v\dx
+    - \int_{\Gamma_N} \sigma n\cdot v\ds,
+  \end{gather*}
+  such that traction free is actually the natural boundary condition
+  comparable to the Neumann condition for the Laplacian. Note that $:$
+  is the double contraction or Frobenius product (see
+  Problem~\ref{problem:frobenius} below) of the two tensors.
+\end{intro}
+
+\begin{intro}
+  We now walk the missing steps to obtain a weak formulation. first,
+  we enter Hooke's law for $\sigma$ to obtain:
+  \begin{gather*}
+    \int_\domain \bigl[2\mu \strain u : \nabla v
+    + \lambda \div u \id : \nabla v
+    \bigr]\dx = \int_\domain f\cdot v\dx.
+  \end{gather*}
+  Then, we choose the space
+  \begin{gather}
+    V = H^1_{\Gamma_D}(\domain; \R^d) = \bigl\{v\in H^1(\domain;\R^d) \big\vert
+    v_{|\Gamma_D} = 0 \bigr\}.
+  \end{gather}
+  We notice for the second term that
+  \begin{gather*}
+    \id : \nabla v = \sum_{i=1}^d \d_i v_i = \div v.
+  \end{gather*}
+  Furthermore, we use the result of Problem~\ref{problem:frobenius} to
+  obtain
+  \begin{gather*}
+    \strain u:\nabla v = \strain u : \strain v.
+  \end{gather*}
+\end{intro}
+
+\begin{Definition}{weak-lame-navier}
+  The weak formulation of the Lam\'e-Navier boundary value
+  problem
+  \begin{gather*}
+    \begin{aligned}
+      -\div \sigma(x) &= f(x) & x&\in\domain,\\
+      u(x) &= 0 & x&\in\Gamma_D, \\
+      \sigma(x)n &=0& x&\in\Gamma_N,
+    \end{aligned}
+  \end{gather*}
+  is: find $u\in V = H^1_{\Gamma_D}(\domain;\R^d)$ such that
+  \begin{gather}
+    a(u,v) \equiv 2\mu\form(\strain u, \strain v)
+    + \lambda \form(\div u, \div v)
+    = \form(f,v)
+    \quad\forall v\in V.
+  \end{gather}
+\end{Definition}
+
+\begin{Problem}{frobenius}
+  Given the vector space of square matrices $X = \R^{d\times d}$ with the
+  Frobenius inner product
+  \begin{gather}
+    \label{eq:mixedintro:frobenius}
+    \scal(A,B) = A:B = \sum_{ij} a_{ij}b_{ij}.
+  \end{gather}
+  Show that the subspaces of symmetric and skew-symmetric matrices,
+  respectively, are orthogonal to each other and $X$ is the direct sum
+  of those.
+\end{Problem}
+
+\begin{intro}
+  The form $a(.,.)$ is symmetric and thus semi-definite on $V$. It can
+  also be bounded easily by the $H^1$-norm. But, for well-posedness of
+  the weak formulation, we also require ellipticity. This question is
+  indeed not trivial and rests on the fact that for a function
+  $u\in V$, such that $\nabla u$ is skew-symmetric everywhere, there
+  holds $\strain u\equiv 0$. Thus, such functions must be excluded by
+  the boundary conditions. Note, that in particular for rigid body
+  translations and rotations $\strain u = 0$. Therefore, the Dirichlet
+  boundary conditions must exclude such solutions.
+  
+  The condition needed for well-posedness is called Korn's inequality,
+  and it will be posed as an assumption. We will give a proof for a
+  simple case and refer the readers to a plethora of articles on more
+  complicated cases.
+\end{intro}
+
+\begin{Assumption}{korn-inequality}
+  We assume that the boundary conditions defining the space $V$ in the
+  weak formulation of the Lam\'e-Navier equations are such that
+  \define{Korn's inequality}
+  \begin{gather}
+    \label{eq:mixedintro:korn}
+    \norm{u}_{H^1(\domain;\R^d)}^2
+    \le c_K^2 \norm{u}_{L^2(\Omega;\R^d)}^2
+    + \norm{\strain u}_{L^2(\Omega;\R^d)}^2,
+  \end{gather}
+  holds for all $u\in V$ with a uniform constant $c_K>0$.
+\end{Assumption}
+
+\begin{Lemma}{korn}
+  Let $V = H^1_0(\domain;\R^d)$ for a Lipschitz domain
+  $\domain$. Then, Korn's inequality holds on $V$ with a constant
+  $c_K>0$.
+\end{Lemma}
+
+\begin{proof}
+  
+\end{proof}
+
+\begin{Problem}{elasticity-standard}
+  Let the space $V=H^1_0(\domain;\R^d)$ be equipped with the inner
+  product $\scal(u,v) = a(u,v)$ with the bilinear form of the
+  Lam\'e-Navier equations and the corresponding norm $\norm{.}_V$.
+
+  Show using techniques from the standard theory of elliptic partial
+  differential equations:
+  \begin{enumerate}
+  \item The weak formulation has a unique solution for which there holds
+    \begin{gather*}
+      \norm{u}_V \le \norm{f}_{V^*}.
+    \end{gather*}
+  \item The ``energy estimate'' for conforming finite element
+    approximation with a space $V_h\subset V$
+    \begin{gather*}
+      \norm{u-u_h}_V = \inf_{v_h\in V_h} \norm{u-v_h}_V.
+    \end{gather*}
+  \item The $H^1$-error estimate
+    \begin{gather}
+      \norm{u-u_h}_{H^1}
+      \le \frac{2\mu+d\lambda}{2c_K\mu}
+      \inf_{v_h\in V_h} \norm{u-v_h}_{H^1}.
+    \end{gather}
+    Use the fact that the space $V$ can be composed into the space
+    $V^0$ of divergence-free functions ($\div v=0$) and its
+    complement.
+  \item For $\lambda \gg \mu$, the previous estimate is useless. Can
+    it be improved easily? In view of the ``energy estimate'', can you
+    think of conditions?
+  \end{enumerate}
+\end{Problem}
+
+\begin{intro}
+  As we could see in the preceding problem, approximation of the
+  solution to the Lamé-Navier equations becomes difficult, if
+  $\lambda \gg \mu$. In this case, the material is called almost
+  incompressible, since the divergence measures compression or
+  dilation and the dominating divergence term forces the divergence of
+  the solution to be small. These cases are important in engineering
+  and they initiated a lot of the research that resulted in the topics
+  of this class.
+\end{intro}
+
 
 %%% Local Variables: 
 %%% mode: latex
