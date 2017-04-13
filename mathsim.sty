@@ -137,6 +137,9 @@
 \def\Scal(#1,#2){\@Scal{#1}{#2}}
 \def\form(#1,#2){\@form{#1}{#2}}
 \def\forme(#1,#2){\@forme{#1}{#2}}
+\def\mixedform(#1,#2,#3,#4){\@form*%
+  {\begin{pmatrix}#1\\#2\end{pmatrix}}%
+  {\begin{pmatrix}#3\\#4\end{pmatrix}}}
 
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}

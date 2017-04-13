@@ -323,21 +323,31 @@ mathematical detail refer to~\cite{Ciarlet88}.
   of this class.
 \end{intro}
 
+\begin{intro}
+  A way to approach this problem is the introduction of an auxiliary variable
+  \begin{gather*}
+    p = -\lambda \div u.
+  \end{gather*}
+  Entering this definition into the Lamé-Navier equations, we obtain
+  the following weak formulation.
+\end{intro}
+
 \begin{Definition}{displacement-pressure}
   The \define{displacement-pressure formulation} of the Lam\'e-Navier
   equations reads: find a pair $(u,p) \in V\times Q$ such that
   \begin{gather}
+    \label{eq:lame-navier-mixed}
     \begin{aligned}
-      2\mu\form(\strain u, \strain v) &+ \form(p,\div v) &=&\form(f,v)
+      2\mu\form(\strain u, \strain v) &- \form(p,\div v) &=&\form(f,v)
       &\forall v&\in V\\
-      \form(q,\div u) &-\tfrac1\lambda \form(p,q) &=&0
+      -\form(q,\div u) &-\tfrac1\lambda \form(p,q) &=&0
       &\forall q&\in Q.\\      
     \end{aligned}
   \end{gather}
-  Alternatively, we write this in a single equation as
+  Equivalently, we write this in a single equation as
   \begin{multline}
-    2\mu\form(\strain u, \strain v) + \form(p,\div v)
-    + \form(q,\div u) -\tfrac1\lambda \form(p,q)
+    2\mu\form(\strain u, \strain v) - \form(p,\div v)
+    - \form(q,\div u) -\tfrac1\lambda \form(p,q)
     = \form(f,v)
     \\
     \qquad\forall v\in V, q\in Q,
@@ -350,7 +360,163 @@ mathematical detail refer to~\cite{Ciarlet88}.
     \\
     \qquad\forall v\in V, q\in Q,
   \end{multline}
+  Here, $V$ is as before and $Q=L^2(\domain)$.
 \end{Definition}
+
+\begin{remark}
+  The three forms have different purposes and will be used
+  accordingly. The first one highlights the fact that we now have a
+  system of equations, each equation tested with its own test
+  function. The second and third stress the fact that we now have a
+  bilinear form on the product space $X=V\times Q$.
+  
+  The second form is symmetric, but we will see later that is
+  indefinite. Thus, non of our tools from functional analysis
+  apply. In contrast, the third form is nonsymmetric, but we have
+  \begin{multline*}
+    2\mu\form(\strain u, \strain u) + \form(p,\div u)
+    - \form(p,\div u) +\tfrac1\lambda \form(p,p)
+    \\
+    = 2\mu\form(\strain u, \strain u) + \tfrac1\lambda \form(p,p)
+    \ge \tfrac{2\mu}{c_K} \norm{u}_{H^1}^2 + \tfrac1\lambda \form(p,p).
+  \end{multline*}
+  Thus, we have ellipticity with respect to the norm
+  \begin{gather}
+    \norm{(u,p)}_X^2 = \norm{u}_{H^1}^2 + \norm{p}_{L^2}^2.
+  \end{gather}
+  Nevertheless, the ellipticity constant depends on $\lambda$, and for
+  large $\lambda$, we loose sharpness of estimates again.
+\end{remark}
+
+\begin{Definition}{lame-navier-strong}
+  Integrating the first equation by parts, we
+  obtain the \textbf{strong form} of the Lam\'e-Navier equations
+  \begin{gather}
+    \arraycolsep.2ex
+    \begin{matrix}
+      2\mu \div \strain u &+& \nabla p &=& f \\
+      \div u &+& \tfrac1\lambda p &=& 0
+    \end{matrix}
+  \end{gather}
+\end{Definition}
+
+\begin{intro}
+  In order to study the mathematics not only of the Lamé-Navier
+  equations but of more general systems of the form of
+  equation~\eqref{eq:lame-navier-mixed}, we introduce abstract
+  bilinear forms
+  \begin{gather}
+    \begin{aligned}
+      a(u,v) &= 2\mu\form(\strain u, \strain u), &u,v&\in V \\
+      b(u,p) &=  -\form(p,\div u), & u&\in V, p\in Q\\
+      c(p,q) &= \tfrac1\lambda \form(p,q) & p,q&\in Q.
+    \end{aligned}
+  \end{gather}
+\end{intro}
+
+\begin{Definition}{saddle-point-operators}
+  For each of the bilinear forms, we define associated operators
+  \begin{gather}
+    \begin{aligned}
+      A&\colon V \to V^* & \scal(Au,v) &= a(u,v), \\
+      B&\colon V \to Q^* & \scal(Bu,q) &= b(u,q), \\
+      B^T&\colon Q \to V^* & \scal(B^Tp,v) &= b(v,p), \\
+      C&\colon Q\to Q^* & \scal(Cp,q) &= c(p,q).
+    \end{aligned}
+  \end{gather}
+  Here, $\scal(.,.)$ is the canonical pairing between an element of
+  the dual space nd the space itself.
+\end{Definition}
+
+\begin{Definition}{saddle-point-abstract}
+  The abstract saddle-point problem in weak form reads: find a pair
+  $(u,p)\in V\times Q$ such that
+  \begin{gather}
+    \label{eq:saddle-point-weak}
+    \arraycolsep.1em
+    \begin{matrix}
+      a(u,v) &+& b(v,p) &=& f &\quad&\forall v\in V, \\
+      b(u,q) &-& c(p,q) &=& g &&\forall q\in Q.
+    \end{matrix}
+  \end{gather}
+  In operator notation, it reads
+  \begin{gather}
+    \label{eq:saddle-point-operator}
+    \arraycolsep.1em
+    \begin{matrix}
+      Au &+& B^Tp &=& f &\quad&\text{in } V^*, \\
+      Bu &-& Cp &=& g &&\text{in } Q^*.
+    \end{matrix}
+  \end{gather}  
+\end{Definition}
+
+\begin{Notation}{saddle-point-form}
+  In order to consider the whole bilinear form of the saddle-point
+  system on the space $X = V\times Q$, we introduce
+  \begin{gather}
+    \mathcal A\mixedform(u,p,v,q)
+      = a(u,v) + b(v,p) + b(u,q) - c(p,q)
+  \end{gather}
+\end{Notation}
+
+\begin{Definition}{schur-complement}
+  Let in equation~\eqref{eq:saddle-point-operator} $A:V\to V^*$ be
+  invertible. Then, we define the \define{Schur complement} operator
+  $S\colon Q\to Q^*$ of the system~\eqref{eq:saddle-point-operator} as
+  \begin{gather}
+      S= -B A^{-1} B^T - C.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{schur-complement1}
+  Formally, the system~\eqref{eq:saddle-point-operator} can be solved
+  in two steps by solving
+  \begin{align}
+    S p &= g - B A^{-1} f,\\
+    A u &= f-B^T p.
+  \end{align}
+\end{Lemma}
+
+\begin{proof}
+  Formally solve the first equation
+  of~\eqref{eq:saddle-point-operator} for $u$ and enter into the
+  second.
+\end{proof}
+
+\begin{Lemma}{schur-definiteness}
+  Let $a(.,.)$ be elliptic and $c(.,.)$ be positive semi-definite, and
+  let $b(.,.)$ not be the zero form. Then, the bilinear form
+  $\mathcal A(.,.)$ is indefinite.
+\end{Lemma}
+
+\begin{proof}
+  First, we note that because of ellipticity of $a(.,.)$
+  \begin{gather*}
+    \mathcal A\mixedform(u,0,u,0) = a(u,u) \ge \gamma \norm{u}_V^2,
+  \end{gather*}
+  for some positive constant $\gamma$. Furthermore, $A$ is invertible
+  and its inverse is positive definite. Furthermore,
+  $A^{-1}B^T\colon Q\to V$. Then, choosing $v=-A^{-1}B^Tp$ yields
+  \begin{align*}
+    \mathcal A\mixedform(v,p,v,p)
+    &= a(A^{-1}B^Tp,A^{-1}B^Tp) - 2b(A^{-1}B^Tp,p) - c(p,p) \\
+    &= \scal(B^Tp,A^{-1}B^Tp) - 2\scal(A^{-1}B^Tp,B^Tp) - c(p,p)\\
+    &= -\scal(B^Tp,A^{-1}B^Tp) - c(p,p).
+  \end{align*}
+  The first term is a quadratic term with the bilinear form associated
+  with $A^{-T}$, which is positive definite. Since $b(.,.)$ is not the
+  zero form, there is some $p$ such that $v\neq 0$. Therefore, with
+  the minus sign and the semi-definiteness of $c(.,.)$ we have found a
+  vector such that
+  \begin{gather*}
+    \mathcal A\mixedform(v,p,v,p) < 0.
+  \end{gather*}
+\end{proof}
+
+\begin{remark}
+  The previous result holds in particular for $c(.,.) \equiv 0$.
+\end{remark}
+
 
 %%% Local Variables: 
 %%% mode: latex
