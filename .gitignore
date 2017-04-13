@@ -1,6 +1,14 @@
 main.*
 main-blx.bib
 **/auto
+blocks
 *~
-block-*.tex
 *.aux
+*.log
+*.toc
+*.out
+*.nav
+*.snm
+*.idx
+*-blx.bib
+*.run.xml

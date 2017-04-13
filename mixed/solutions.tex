@@ -1,13 +1,13 @@
 \documentclass[USenglish]{report}
 \usepackage{../mathsim}
 \usetikzlibrary{svg.path}
-\excludecomment{solution}
+\includecomment{solution}
 
 \makeatletter
 \def\BT@without#1(#2){%
-    \textbf{#2 \capitalizewords{#1}:}}
+    \textbf{\capitalizewords{#1} #2:}}
 \def\BT@with[#1]#2(#3){%
-    \textbf{#3 \capitalizewords{#2} (#1):}}
+    \textbf{\capitalizewords{#2} #3 (#1):}}
 \def\endblocktheorem{\vfill}
 \makeatother
 

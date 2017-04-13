@@ -138,7 +138,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
     \sigma = 2\mu \strain u + \lambda \operatorname{tr} \strain u,
   \end{gather}
   where $\lambda\ge 0$ and $\mu> 0$ are material properties called
-  \define{Lam\'e-Navier parameters}.
+  \define{Lamé-Navier parameters}.
 \end{Definition}
 
 \begin{remark}
@@ -210,7 +210,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
 \end{intro}
 
 \begin{Definition}{weak-lame-navier}
-  The weak formulation of the Lam\'e-Navier boundary value
+  The weak formulation of the Lamé-Navier boundary value
   problem
   \begin{gather*}
     \begin{aligned}
@@ -259,7 +259,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
 
 \begin{Assumption}{korn-inequality}
   We assume that the boundary conditions defining the space $V$ in the
-  weak formulation of the Lam\'e-Navier equations are such that
+  weak formulation of the Lamé-Navier equations are such that
   \define{Korn's inequality}
   \begin{gather}
     \label{eq:mixedintro:korn}
@@ -283,7 +283,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
 \begin{Problem}{elasticity-standard}
   Let the space $V=H^1_0(\domain;\R^d)$ be equipped with the inner
   product $\scal(u,v) = a(u,v)$ with the bilinear form of the
-  Lam\'e-Navier equations and the corresponding norm $\norm{.}_V$.
+  Lamé-Navier equations and the corresponding norm $\norm{.}_V$.
 
   Show using techniques from the standard theory of elliptic partial
   differential equations:
@@ -333,7 +333,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
 \end{intro}
 
 \begin{Definition}{displacement-pressure}
-  The \define{displacement-pressure formulation} of the Lam\'e-Navier
+  The \define{displacement-pressure formulation} of the Lamé-Navier
   equations reads: find a pair $(u,p) \in V\times Q$ such that
   \begin{gather}
     \label{eq:lame-navier-mixed}
@@ -390,7 +390,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
 
 \begin{Definition}{lame-navier-strong}
   Integrating the first equation by parts, we
-  obtain the \textbf{strong form} of the Lam\'e-Navier equations
+  obtain the \textbf{strong form} of the Lamé-Navier equations
   \begin{gather}
     \arraycolsep.2ex
     \begin{matrix}
@@ -399,6 +399,9 @@ mathematical detail refer to~\cite{Ciarlet88}.
     \end{matrix}
   \end{gather}
 \end{Definition}
+
+\section{Abstract saddle-point systems}
+\subsection{Notation and basic properties}
 
 \begin{intro}
   In order to study the mathematics not only of the Lamé-Navier
@@ -460,17 +463,17 @@ mathematical detail refer to~\cite{Ciarlet88}.
 \end{Notation}
 
 \begin{Definition}{schur-complement}
-  Let in equation~\eqref{eq:saddle-point-operator} $A:V\to V^*$ be
+  Let the operator $A:V\to V^*$ in the saddle-point system be
   invertible. Then, we define the \define{Schur complement} operator
-  $S\colon Q\to Q^*$ of the system~\eqref{eq:saddle-point-operator} as
+  $S\colon Q\to Q^*$ of the system as
   \begin{gather}
       S= -B A^{-1} B^T - C.
   \end{gather}
 \end{Definition}
 
 \begin{Lemma}{schur-complement1}
-  Formally, the system~\eqref{eq:saddle-point-operator} can be solved
-  in two steps by solving
+  Formally, the saddle-point system~\eqref{eq:saddle-point-operator}
+  can be solved in two steps by solving
   \begin{align}
     S p &= g - B A^{-1} f,\\
     A u &= f-B^T p.
@@ -516,6 +519,10 @@ mathematical detail refer to~\cite{Ciarlet88}.
 \begin{remark}
   The previous result holds in particular for $c(.,.) \equiv 0$.
 \end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Stokes equations}
 
 
 %%% Local Variables: 

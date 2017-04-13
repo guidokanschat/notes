@@ -8,8 +8,9 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{makeidx}
-\RequirePackage{babel}
+\RequirePackage[USenglish]{babel}
 \RequirePackage{stringstrings}
+\RequirePackage{xr}
 
 \RequirePackage{graphicx}
 \RequirePackage{xcolor,framed}
@@ -36,7 +37,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Counters and their representation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand{\thesection}{\thechapter.\arabic{section}}
+\ifdefined\thechapter\renewcommand{\thesection}{\thechapter.\arabic{section}}\fi
 \newcounter{blockcount}
 \setcounter{blockcount}{100}
 \newcounter{theorem}
@@ -44,18 +45,27 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Outputting blocks for beamer file
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newwrite\block@list
+\immediate\openout\block@list=\jobname.frm
 
-\long\def\commenttheorem#1{\message{Theorem #1}%
+\renewcommand\ThisComment[1]{%
+  \immediate\write\CommentStream{\unexpanded{#1}}%
+}
+
+\long\def\commenttheorem#1{%
   \csarg\def{After#1Comment}{%
     \immediate\write\CommentStream{\unexpanded{\end{blocktheorem}}}%
   \CloseAndInputCutFile}%
-  \expandafter\def\csname#1\endcsname##1{\endgroup  \message{Processing '#1 ##1'.}%
+  \expandafter\def\csname#1\endcsname##1{\endgroup%  \message{Processing '#1 ##1'.}%
     \stepcounter{blockcount}%
     \refstepcounter{theorem}%
+    \label{#1:##1}
 %    \expandafter\edef\csname#1label\endcsname{\caselower[v]{#1}}
+    \immediate\write\block@list{\unexpanded{\frame{\input{blocks/#1-##1.tex}}}}
     \def\CommentCutFile{blocks/#1-##1.tex}
     \SetUpCutFile
-    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}}(\thetheorem)\unexpanded{\label}{#1:##1}}
+    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}}(\thetheorem)%\unexpanded{\label}{#1:##1}
+      }
       \ProcessComment{#1}}
     \CommentEndDef{#1}}
 
@@ -91,7 +101,7 @@
 }{}
 \newtheorem{notation}[theorem]{Notation}
 \newtheorem{remark}[theorem]{\iflanguage{german}{Bemerkung}{}\iflanguage{english}{Remark}{}}
-\newtheorem{note}[theorem]{\iflanguage{german}{Anmerkung}{}\iflanguage{english}{Note}{}}
+%\newtheorem{note}[theorem]{\iflanguage{german}{Anmerkung}{}\iflanguage{english}{Note}{}}
 \newtheorem{review}[theorem]{\iflanguage{german}{Zusammenfassung}{}\iflanguage{english}{Review}{}}
 \newtheorem{problem}[theorem]{\iflanguage{german}{Aufgabe}{}\iflanguage{english}{Problem}{}}
 
