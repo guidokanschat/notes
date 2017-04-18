@@ -17,7 +17,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
     \end{pmatrix}
     &&\text{(gradient)}
     \\
-    \div u &= \sum_{i=1^d} \d_iu_i
+    \div u &= \sum_{i=1^d} \d_i u_i
     &&\text{(divergence)}
   \end{xalignat}
 
@@ -34,7 +34,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
   deformed configuration $\deformed\domain \subset \R^d$, such that
   each undeformed point $x\in\domain$ is mapped to the point
   $\deformed x$ after deformation. The domain $d$ is 3 for physically
-  relevent models, but we investigate two-dimensional problems in
+  relevant models, but we investigate two-dimensional problems in
   order to study mathematical properties and numerical methods more
   easily.
 
@@ -124,7 +124,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
 
 \begin{remark}
   At this point, we play again the card of small deformations, such
-  that we do not have to distinugish whether equations are formulated
+  that we do not have to distinguish whether equations are formulated
   on the reference domain $\domain$ or on the deformed domain
   $\deformed\domain$. Such a discussion becomes confusing easily and
   thus remains a subject for a more specialized class.
@@ -251,7 +251,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
   translations and rotations $\strain u = 0$. Therefore, the Dirichlet
   boundary conditions must exclude such solutions.
   
-  The condition needed for well-posedness is called Korn's inequality,
+  The condition needed for well-posedness is called Korn inequality,
   and it will be posed as an assumption. We will give a proof for a
   simple case and refer the readers to a plethora of articles on more
   complicated cases.
@@ -260,15 +260,27 @@ mathematical detail refer to~\cite{Ciarlet88}.
 \begin{Assumption}{korn-inequality}
   We assume that the boundary conditions defining the space $V$ in the
   weak formulation of the Lamé-Navier equations are such that
-  \define{Korn's inequality}
+  a \define{Korn inequality}
   \begin{gather}
     \label{eq:mixedintro:korn}
-    \norm{u}_{H^1(\domain;\R^d)}^2
-    \le c_K^2 \norm{u}_{L^2(\Omega;\R^d)}^2
+    c_K^2 \norm{u}_{H^1(\domain;\R^d)}^2
+    \le \norm{u}_{L^2(\Omega;\R^d)}^2
     + \norm{\strain u}_{L^2(\Omega;\R^d)}^2,
   \end{gather}
   holds for all $u\in V$ with a uniform constant $c_K>0$.
 \end{Assumption}
+
+\begin{remark}
+  We use the indefinite article `a' for this inequality, because it
+  comes in many different forms, for instance replacing the $L^2$-norm
+  by a boundary term. It's mathematics is not trivial. There is
+  nevertheless a very simple interpretation of this inequality: the
+  kernel of the gradient consists of constant functions, in the
+  context of elastic deformations of translations by a constant
+  vector. The kernel of the strain tensor contains translation
+  \emph{and} rotations. Thus, a Korn inequality can only hold, if the
+  boundary conditions rule out rotations.
+\end{remark}
 
 \begin{Lemma}{korn}
   Let $V = H^1_0(\domain;\R^d)$ for a Lipschitz domain
@@ -277,7 +289,10 @@ mathematical detail refer to~\cite{Ciarlet88}.
 \end{Lemma}
 
 \begin{proof}
-  
+  While the inequality is of high importance in the mathematical
+  and numerical analysis of problems in continuum mechanics, it a
+  peripheral topic to this class. Therefore, we omit the proof and
+  refer to Theorem 3.3 in~\cite[Section III.3.3]{DuvautLions76}.
 \end{proof}
 
 \begin{Problem}{elasticity-standard}
@@ -401,7 +416,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
 \end{Definition}
 
 \section{Abstract saddle-point systems}
-\subsection{Notation and basic properties}
+%\subsection{Notation and basic properties}
 
 \begin{intro}
   In order to study the mathematics not only of the Lamé-Navier
@@ -409,6 +424,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
   equation~\eqref{eq:lame-navier-mixed}, we introduce abstract
   bilinear forms
   \begin{gather}
+    \label{eq:mixedintro:1}
     \begin{aligned}
       a(u,v) &= 2\mu\form(\strain u, \strain u), &u,v&\in V \\
       b(u,p) &=  -\form(p,\div u), & u&\in V, p\in Q\\
@@ -423,12 +439,12 @@ mathematical detail refer to~\cite{Ciarlet88}.
     \begin{aligned}
       A&\colon V \to V^* & \scal(Au,v) &= a(u,v), \\
       B&\colon V \to Q^* & \scal(Bu,q) &= b(u,q), \\
-      B^T&\colon Q \to V^* & \scal(B^Tp,v) &= b(v,p), \\
-      C&\colon Q\to Q^* & \scal(Cp,q) &= c(p,q).
+      B^T&\colon Q \to V^* & \scal(B^T p,v) &= b(v,p), \\
+      C&\colon Q\to Q^* & \scal(C p,q) &= c(p,q).
     \end{aligned}
   \end{gather}
   Here, $\scal(.,.)$ is the canonical pairing between an element of
-  the dual space nd the space itself.
+  the dual space and the space itself.
 \end{Definition}
 
 \begin{Definition}{saddle-point-abstract}
@@ -447,8 +463,8 @@ mathematical detail refer to~\cite{Ciarlet88}.
     \label{eq:saddle-point-operator}
     \arraycolsep.1em
     \begin{matrix}
-      Au &+& B^Tp &=& f &\quad&\text{in } V^*, \\
-      Bu &-& Cp &=& g &&\text{in } Q^*.
+      Au &+& B^T p &=& f &\quad&\text{in } V^*, \\
+      Bu &-& C p &=& g &&\text{in } Q^*.
     \end{matrix}
   \end{gather}  
 \end{Definition}
@@ -499,12 +515,12 @@ mathematical detail refer to~\cite{Ciarlet88}.
   \end{gather*}
   for some positive constant $\gamma$. Furthermore, $A$ is invertible
   and its inverse is positive definite. Furthermore,
-  $A^{-1}B^T\colon Q\to V$. Then, choosing $v=-A^{-1}B^Tp$ yields
+  $A^{-1}B^T\colon Q\to V$. Then, choosing $v=-A^{-1}B^T p$ yields
   \begin{align*}
     \mathcal A\mixedform(v,p,v,p)
-    &= a(A^{-1}B^Tp,A^{-1}B^Tp) - 2b(A^{-1}B^Tp,p) - c(p,p) \\
-    &= \scal(B^Tp,A^{-1}B^Tp) - 2\scal(A^{-1}B^Tp,B^Tp) - c(p,p)\\
-    &= -\scal(B^Tp,A^{-1}B^Tp) - c(p,p).
+    &= a(A^{-1}B^T p,A^{-1}B^T p) - 2b(A^{-1}B^T p,p) - c(p,p) \\
+    &= \scal(B^T p,A^{-1}B^T p) - 2\scal(A^{-1}B^T p,B^T p) - c(p,p)\\
+    &= -\scal(B^T p,A^{-1}B^T p) - c(p,p).
   \end{align*}
   The first term is a quadratic term with the bilinear form associated
   with $A^{-T}$, which is positive definite. Since $b(.,.)$ is not the
@@ -527,10 +543,173 @@ mathematical detail refer to~\cite{Ciarlet88}.
 \begin{intro}
   When we write the Lamé-Navier equations in mixed form according to
   Definition~\ref{Definition:displacement-pressure}, there is no
-  parameter $\lambda$ tending to infinity whne the material bcomes
+  parameter $\lambda$ tending to infinity when the material becomes
   more and more compressible. Instead, there is the parameter
-  $1/\lambda$ tending to zero.
+  $1/\lambda$ tending to zero. Thus, we can simply consider the case
+  of incompressible material by setting $1/\lambda=0$ or, in our
+  abstract framework~\eqref{eq:mixedintro:1} setting $c(.,.) = 0$. The
+  resulting system is not only important for incompressible
+  elasticity, but also models the slow flow of a very viscous liquid,
+  so called \putindex{creeping flow}.
 \end{intro}
+
+\begin{Definition}{stokes-eq1}
+  The \define{Stokes equations} in strong form are
+    \begin{gather}
+      \label{eq:mixedintro:stokes-strong1}
+      \arraycolsep.2ex
+      \begin{matrix}
+        2\mu \div \strain u &+& \nabla p &=& f \\
+        \div u && &=& 0.
+      \end{matrix}
+    \end{gather}
+    In weak form, they are: find $u\in V \subset H^1(\domain;\R^d)$
+    and $p\in Q \subset L^2(\domain)$ such that
+  \begin{gather}
+    \label{eq:mixedintro:stokes-weak1}
+    \begin{aligned}
+      2\mu\form(\strain u, \strain v) &- \form(\div v,p) &=&\form(f,v)
+      + \text{bdry}
+      &\forall v&\in V\\
+      -\form(\div u,q) & &=&0+ \text{bdry}
+      &\forall q&\in Q.\\      
+    \end{aligned}
+  \end{gather}
+  The subspaces $V$ and $Q$ are determined by boundary conditions.
+\end{Definition}
+
+\begin{Definition}{solenoidal}
+  A vector-valued function $u$ is called \define{divergence-free} or
+  \define{solenoidal}, if there holds
+  \begin{gather*}
+    \div u = 0.
+  \end{gather*}
+  Flow described by a solenoidal function is called
+  \define{incompressible}.
+\end{Definition}
+
+\begin{Lemma}{stokes-equivalence}
+  Let $V=H^1_0(\domain;\R^d)$. Then, for any solenoidal function $u\in
+  V$ there holds
+  \begin{gather}
+    \label{eq:mixedintro:6}
+    2\mu\form(\strain u, \strain v) = \mu\form(\nabla u, \nabla v)
+    \qquad\forall v\in V.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  We have
+  \begin{align*}
+    \strain u: \strain v &= \sum_{i}^d \left[
+    \d_i u_i\d_i v_i
+    + \frac14\sum_{j\neq i} (\d_i u_j+\d_j u_i) (\d_i v_j+\d_j v_i)
+    \right]
+    \\
+    &= \frac12\sum_{i,j=1}^d \d_i u_j\d_iv_j
+    + \frac12\sum_{i=1}^d \d_i u_i \d_iv_i
+    + \frac12\sum_{\substack{i,j=1\\j\neq i}}^d \d_i u_j\d_j v_i.
+  \end{align*}
+  The first term is the desired result, thus we have to eliminate the
+  other two. We integrate by parts to obtain
+  \begin{align*}
+    \int_\domain \sum_{j\neq i} \d_i u_j\d_j v_i \dx
+    &= - \int_\domain \sum_{j\neq i} \d_{ij}u_j v_i \dx\\
+    &= \int_\domain \d_{ii} u_i v_i \dx \\
+    &= -\int_\domain \d_i u_i \d_i v_i,
+  \end{align*}
+  where the second equality is due to $\div u=0$. Entering in the
+  previous equation, we obtain
+  \begin{gather*}
+    \int_\domain \strain u:\strain v\dx
+    = \int_\domain \nabla u:\nabla v\dx.
+  \end{gather*}
+\end{proof}
+
+\begin{intro}
+  In order to simplify subsequent discussion, it is customary to use
+  the previous lemma to simplify the Stokes equations and to replace
+  the strain tensor by the gradient. As a result, we can avoid the use
+  of a Korn inequality and operate directly with the inner product of
+  $H^1$. We note though that this formulation, while mathematically
+  simpler, is physically wrong if $u\neq H^1_0(\domain;\R^d)$.
+\end{intro}
+
+\begin{Definition}{stokes-eq2}
+  The simplified \define{Stokes equations} in strong form are
+    \begin{gather}
+      \label{eq:mixedintro:stokes-strong2}
+      \arraycolsep.2ex
+      \begin{matrix}
+        \nu \Delta u &+& \nabla p &=& f \\
+        \div u && &=& 0.
+      \end{matrix}
+    \end{gather}
+    In weak form, they are: find $u\in V \subset H^1(\domain;\R^d)$
+    and $p\in Q \subset L^2(\domain)$ such that
+  \begin{gather}
+    \label{eq:mixedintro:stokes-weak2}
+    \begin{aligned}
+      2\mu\form(\nabla u, \nabla v) &- \form(\div v,p) &=&\form(f,v)
+      + \text{bdry}
+      &\forall v&\in V\\
+      -\form(\div u,q) & &=&0+ \text{bdry}
+      &\forall q&\in Q.\\      
+    \end{aligned}
+  \end{gather}
+  The subspaces $V$ and $Q$ are determined by boundary conditions.
+\end{Definition}
+
+\begin{Definition}{stokes-boundary2}
+  Typical boundary conditions for the Stokes problem are
+  \begin{xalignat}3
+    \text{no-slip:}&& u &= 0,\\
+    \text{free:}&& \d_n u + p n &= 0 ,\\
+    \text{slip:}&& u_n &= 0 & \d_n u_\tau = 0,\\
+    \text{friction:}&& u_n &= 0 & \d_n u_\tau = \alpha u_\tau.
+  \end{xalignat}
+  Here, $u_n$ and $u_\tau$ are the normal and tangential components of
+  $u$ at the boundary.
+\end{Definition}
+
+\begin{remark}
+  Very much the same way as for elliptic equations, boundary
+  conditions on the function $u$ itself are essential boundary
+  conditions which have to be incorporated into the space $V$, while
+  those on the normal derivatives are the result of integration by
+  parts and thus of the type of natural boundary conditions.
+
+  All of the conditions above can also be imposed with nonzero data,
+  where the physical meaning of such a condition might be debatable in
+  some cases. Mathematically, inhomogeneous essential boundary
+  conditions are achieved by lifting an arbitrary function with this
+  boundary condition and modifying the right hand side of the
+  equation, while inhomogeneous conditions on the normal derivative
+  are implemented by boundary integrals on the right hand side.
+\end{remark}
+
+\begin{remark}
+  Physically, the condition $u_n=0$ models an impermeable wall. It
+  says in particular, that no mass is lost through this boundary and
+  is thus related to the first principle of mass conservation.
+
+  The conditions on the tangential velocity model the fact that
+  molecules very close to the wall stick to the wall. While this claim
+  is not supported by a frist principle, it has been verified by
+  measurements to very high accuracy. Nevertheless, in the study of
+  turbulent flow, a friction condition comes up quite naturally.
+\end{remark}
+
+\begin{Lemma}{divergence-compatibility}
+  For any solenoidal $u$ function there holds
+  \begin{gather}
+    \int_{\d\domain} u\cdot n\ds = 0.
+  \end{gather}
+  Furthermore, if the boundary condition $u_n=0$ holds on the whole
+  boundary $\d\domain$, then the pressure $p$ is determined by the
+  Stokes equations only up to a constant.
+\end{Lemma}
+
 
 %%% Local Variables: 
 %%% mode: latex
