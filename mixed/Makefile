@@ -2,11 +2,13 @@ classmaterial: print.pdf problems.pdf
 
 debug:  main.pdf solutions.pdf
 
-main.pdf:
-	-mkdir blocks
+main.bbl: *.tex
 	pdflatex main
-	pdflatex problems
 	bibtex main
+
+main.pdf: *.tex main.bbl
+	-mkdir blocks
+	pdflatex problems
 	pdflatex main
 	makeindex main
 	pdflatex main
