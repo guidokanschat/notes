@@ -327,8 +327,35 @@ mathematical detail refer to~\cite{Ciarlet88}.
   \end{enumerate}
 \end{Problem}
 
+\begin{example}
+  We study the finite element approximation of the following problem:
+  a square sheet of elastic material is hanging from the top, subject
+  to gravity acting as body force pointing downward. We choose $\mu=1$
+  and vary $\lambda$ from 1 to
+  $10^5$. Figure~\ref{fig:elasticity-compressibility} shows
+  approximations with standard bilinear finite elements (red) and a
+  ``good'' approximation (blue). In fact, the red solution for
+  $\lambda = 10^5$ is almost identical with the undeformed
+  configuration, although the material is not as hard. This phenomenon
+  was discovered early in finite element history and is called
+  ``locking''.
+\end{example}
+\begin{figure}[tp]
+  \centering
+  \subfigure[{$\lambda = 1$}]{\includegraphics[width=.45\textwidth]{./graph/elasticity/stalactite-0}}
+  \subfigure[{$\lambda = 10$}]{\includegraphics[width=.45\textwidth]{./graph/elasticity/stalactite-1}}
+  \subfigure[{$\lambda = 100$}]{\includegraphics[width=.45\textwidth]{./graph/elasticity/stalactite-2}}
+  \subfigure[{$\lambda = 1000$}]{\includegraphics[width=.45\textwidth]{./graph/elasticity/stalactite-3}}
+  \subfigure[{$\lambda = 10000$}]{\includegraphics[width=.45\textwidth]{./graph/elasticity/stalactite-4}}
+  \subfigure[{$\lambda = 100000$}]{\includegraphics[width=.45\textwidth]{./graph/elasticity/stalactite-5}}
+  \caption{Approximation with standard finite elements (red) and
+    ``good'' elements (blue) for $\mu=1$ and different values of
+    $\lambda$.}
+  \label{fig:elasticity-compressibility}
+\end{figure}
+
 \begin{intro}
-  As we could see in the preceding problem, approximation of the
+  As we could see in the preceding problem and example, approximation of the
   solution to the Lamé-Navier equations becomes difficult, if
   $\lambda \gg \mu$. In this case, the material is called almost
   incompressible, since the divergence measures compression or
@@ -454,8 +481,8 @@ mathematical detail refer to~\cite{Ciarlet88}.
     \label{eq:saddle-point-weak}
     \arraycolsep.1em
     \begin{matrix}
-      a(u,v) &+& b(v,p) &=& f &\quad&\forall v\in V, \\
-      b(u,q) &-& c(p,q) &=& g &&\forall q\in Q.
+      a(u,v) &+& b(v,p) &=& f(v) &\quad&\forall v\in V, \\
+      b(u,q) &-& c(p,q) &=& g(q) &&\forall q\in Q.
     \end{matrix}
   \end{gather}
   In operator notation, it reads
@@ -729,12 +756,26 @@ mathematical detail refer to~\cite{Ciarlet88}.
   constant.
 \end{proof}
 
-\begin{corollary}
+\begin{Notation}
   If in Definition~\ref{Definition:stokes-eq2} the space $V$ is chosen
   such that for all $v\in V$ there holds $v\cdot n =0$ on the whole
   boundary $\d\domain$, then the pressure solution $p$ cannot be
-  determined uniquely in $L^2(\domain)$.
-\end{corollary}
+  determined uniquely in $L^2(\domain)$. In such cases, we chose the
+  pressure space
+  \begin{gather}
+    L^2_0(\domain) = L^2(\domain)/\R
+    = \biggl\{q\in L^2(\domain)\bigg| \int_\domain q\dx = 0\bigg\}. 
+  \end{gather}
+\end{Notation}
+
+\begin{remark}
+  As we could see from the preceding lemma, solvability of
+  equation~\eqref{eq:mixedintro:stokes-weak2} depends on some
+  compatibility of the spaces $V$ and $Q$ we had not seen in the
+  elliptic case. Indeed, we need a whole new tool from functional
+  analysis to replace the Lax-Milgram lemma. This tool will be studied
+  in Chapter~\ref{sec:welposedness}.
+\end{remark}
 
 %%% Local Variables: 
 %%% mode: latex
