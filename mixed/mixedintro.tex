@@ -17,12 +17,12 @@ mathematical detail refer to~\cite{Ciarlet88}.
     \end{pmatrix}
     &&\text{(gradient)}
     \\
-    \div u &= \sum_{i=1^d} \d_i u_i
+    \div u &= \sum_{i=1}^d \d_i u_i
     &&\text{(divergence)}
   \end{xalignat}
 
   For a tensor field $\sigma: \R^d\to \R^{d\times d}$, the divergence
-  is a vector defined row-wise as
+  is a vector defined column-wise as
   \begin{gather}
     \div\sigma = \left(\sum_{i=1}^d \d_i \sigma_{ij}\right)_{j=1,\dots,d}
   \end{gather}
@@ -135,7 +135,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
   strain. Together with frame invariance, this implies the relation
   \begin{gather}
     \label{eq:mixedintro:4}
-    \sigma = 2\mu \strain u + \lambda \operatorname{tr} \strain u,
+    \sigma = 2\mu \strain u + \lambda \operatorname{tr} \strain u \id,
   \end{gather}
   where $\lambda\ge 0$ and $\mu> 0$ are material properties called
   \define{Lamé-Navier parameters}.
@@ -710,6 +710,31 @@ mathematical detail refer to~\cite{Ciarlet88}.
   Stokes equations only up to a constant.
 \end{Lemma}
 
+\begin{proof}
+  The first statement is simple application of the Gauss theorem
+  \begin{gather*}
+    \int_{\domain} \div u\dx = \int_{\d\domain} u\cdot n\ds.
+  \end{gather*}
+  For the second statement, we note that the only term in the
+  equations which determines the pressure is $\form(\div v,
+  p)$. Integrating by parts and using the boundary condition, we
+  obtain
+  \begin{gather*}
+    \int_\domain \div vp\dx = -\int_\domain v\nabla p\dx +
+    \int_{\d\domain} v\cdot n p\ds = -\int_\domain v\nabla p\dx.
+  \end{gather*}
+  Since the gradient of a constant is zero, we can add any constant
+  function to a given dolution $p$ without changing the term
+  $\form(\div v,p)$, thus leaving $p$ determined only up to a
+  constant.
+\end{proof}
+
+\begin{corollary}
+  If in Definition~\ref{Definition:stokes-eq2} the space $V$ is chosen
+  such that for all $v\in V$ there holds $v\cdot n =0$ on the whole
+  boundary $\d\domain$, then the pressure solution $p$ cannot be
+  determined uniquely in $L^2(\domain)$.
+\end{corollary}
 
 %%% Local Variables: 
 %%% mode: latex
