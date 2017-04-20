@@ -238,6 +238,36 @@ mathematical detail refer to~\cite{Ciarlet88}.
   Show that the subspaces of symmetric and skew-symmetric matrices,
   respectively, are orthogonal to each other and $X$ is the direct sum
   of those.
+
+\begin{solution}
+\paragraph{Solution}
+\begin{enumerate}
+\item 
+  First, we note that for every matrix $A$, there holds
+  \begin{gather*}
+    A = A_S + A_A, \quad A_S = \frac{A+A^T}2, \quad A_A = \frac{A-A^T}2.
+  \end{gather*}
+  Furthermore, we see that $A_S$ is symmetric and $A_A$ is
+  skew-symmetric. The sum of two symmetric matrices is symmetric,
+  the same for skew-symmetric. Thus, the sets $X_S$ and $X_A$ of
+  symmetric and skew-symmetric matrices, respectively, are vector
+  spaces and $X=X_S+X_A$.
+  
+\item The only matrix which is symmetric and skew-symmetric is
+  zero. Thus, $X=X_S\oplus X_A$.
+  
+\item It remains to show orthogonality. To this end, we first note
+  that for any skew-symmetric matrix $A$, there holds $a_{ii}=0$
+  for all diagonal elements. Thus, the inner product of $A$ with a
+  symmetric matrix $S$ is
+  \begin{align*}
+    \scal(A,S) &= \sum_{i\neq j} a_{ij}s_{ij}\\
+               &= \sum_{i<j} (a_{ij}s_{ij} + a_{ji}s_{ji})\\
+               &= \sum_{i<j} (a_{ij}-a_{ji})s_{ij}\\
+               &= 0.
+  \end{align*}
+\end{enumerate}
+\end{solution}
 \end{Problem}
 
 \begin{intro}

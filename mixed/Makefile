@@ -21,12 +21,21 @@ main.bbl: *.tex
 	pdflatex main
 	bibtex main
 
-main.pdf: *.tex main.bbl
+main.pdf: *.tex
 	mkdir -p blocks
-	pdflatex problems
 	pdflatex main
 	makeindex main
 	pdflatex main
+
+print.pdf: *.tex
+	mkdir -p blocks
+	pdflatex print
+	makeindex print
+	pdflatex print
+	pdfcrop print.pdf
+
+problems.pdf: main.pdf
+solutions.pdf: main.pdf
 
 %.pdf: %.tex
 	mkdir -p blocks

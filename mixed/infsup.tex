@@ -30,11 +30,21 @@
   also know that the condition is all but necessary.
 \end{intro}
 
-\begin{problem}
+\begin{Problem}{lax-milgram-not-applicable}
   Find an invertible, symmetric matrix $A\in \R^{2\times 2}$ and a
   vector $v\in \R^2$ such that $v^TAv=0$ and thus the Lax-Milgram
   lemma is inconclusive.
-\end{problem}
+\begin{solution}
+
+\textbf{Solution:}
+  \begin{gather*}
+    A =
+    \begin{pmatrix}
+      1 & 0 \\ 0 & -1
+    \end{pmatrix}
+  \end{gather*}
+\end{solution}
+\end{Problem}
 
 The question of well-posedness in finite dimensions can be answered by:
 
@@ -67,7 +77,7 @@ The question of well-posedness in finite dimensions can be answered by:
   Why this change?
 \end{intro}
 
-\begin{problem}
+\begin{Problem}{unbounded-inverse}
   On the space $\ell_2(\R)$ define the operator $A$ by its eigenvalue
   decomposition
   \begin{align*}
@@ -76,7 +86,7 @@ The question of well-posedness in finite dimensions can be answered by:
   \end{align*}
   Show that this operator does not have a bounded inverse, albeit all
   its eigenvalues are positive.
-\end{problem}
+\end{Problem}
 
 \begin{intro}
   We focus on the second and third conditions, respectively, in
