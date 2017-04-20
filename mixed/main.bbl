@@ -1,0 +1,210 @@
+% $ biblatex auxiliary file $
+% $ biblatex version 2.6 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\entry{ArnoldFalkWinther06acta}{article}{}
+  \name{author}{3}{}{%
+    {{}%
+     {Arnold}{A.}%
+     {Douglas~N.}{D.~N.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Falk}{F.}%
+     {Richard~S.}{R.~S.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Winther}{W.}%
+     {Ragnar}{R.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{ADNFRSWR1}
+  \strng{fullhash}{ADNFRSWR1}
+  \field{labelalpha}{AFW06}
+  \field{sortinit}{A}
+  \verb{doi}
+  \verb 10.1017/S0962492906210018
+  \endverb
+  \field{pages}{1\bibrangedash 155}
+  \field{title}{Finite element exterior calculus, homological techniques, and
+  applications}
+  \field{volume}{15}
+  \field{journaltitle}{Acta Numerica}
+  \field{year}{2006}
+\endentry
+
+\entry{ArnoldFalkWinther10}{article}{}
+  \name{author}{3}{}{%
+    {{}%
+     {Arnold}{A.}%
+     {Douglas~N.}{D.~N.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Falk}{F.}%
+     {Richard~S.}{R.~S.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Winther}{W.}%
+     {Ragnar}{R.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{ADNFRSWR1}
+  \strng{fullhash}{ADNFRSWR1}
+  \field{labelalpha}{AFW10}
+  \field{sortinit}{A}
+  \verb{doi}
+  \verb 10.1090/S0273-0979-10-01278-4
+  \endverb
+  \field{issn}{0273-0979}
+  \field{number}{2}
+  \field{pages}{281\bibrangedash 354}
+  \field{title}{Finite element exterior calculus: from {H}odge theory to
+  numerical stability}
+  \verb{url}
+  \verb http://dx.doi.org/10.1090/S0273-0979-10-01278-4
+  \endverb
+  \field{volume}{47}
+  \field{journaltitle}{Bull. Amer. Math. Soc. (N.S.)}
+  \field{year}{2010}
+\endentry
+
+\entry{BoffiBrezziFortin13}{book}{}
+  \name{author}{3}{}{%
+    {{}%
+     {Boffi}{B.}%
+     {D.}{D.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Fortin}{F.}%
+     {M.}{M.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Brezzi}{B.}%
+     {F.}{F.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Springer}%
+  }
+  \strng{namehash}{BDFMBF1}
+  \strng{fullhash}{BDFMBF1}
+  \field{labelalpha}{BFB13}
+  \field{sortinit}{B}
+  \field{series}{Springer series in computational mathematics}
+  \field{title}{Mixed finite element methods and applications}
+  \list{location}{1}{%
+    {Berlin, Heidelberg}%
+  }
+  \field{year}{2013}
+\endentry
+
+\entry{Braess13}{book}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Braess}{B.}%
+     {D.}{D.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Springer}%
+  }
+  \strng{namehash}{BD1}
+  \strng{fullhash}{BD1}
+  \field{labelalpha}{Bra13}
+  \field{sortinit}{B}
+  \field{edition}{5. Aufl.}
+  \field{title}{Finite Elemente}
+  \field{year}{2013}
+\endentry
+
+\entry{Braess97}{book}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Braess}{B.}%
+     {D.}{D.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Cambridge University Press}%
+  }
+  \strng{namehash}{BD1}
+  \strng{fullhash}{BD1}
+  \field{labelalpha}{Bra97}
+  \field{sortinit}{B}
+  \field{title}{Finite elements}
+  \field{year}{1997}
+\endentry
+
+\entry{Ciarlet88}{book}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Ciarlet}{C.}%
+     {Ph.~G.}{P.~G.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {North-Holland}%
+  }
+  \strng{namehash}{CPG1}
+  \strng{fullhash}{CPG1}
+  \field{labelalpha}{Cia88}
+  \field{sortinit}{C}
+  \field{series}{Studies in mathematics and its applications}
+  \field{title}{Mathematical Elasticity. Vol. I: Three-dimensional Elasticity}
+  \field{volume}{20}
+  \field{year}{1988}
+\endentry
+
+\entry{DuvautLions76}{book}{}
+  \name{author}{2}{}{%
+    {{}%
+     {Duvaut}{D.}%
+     {G.}{G.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Lions}{L.}%
+     {J.~L.}{J.~L.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Springer}%
+  }
+  \strng{namehash}{DGLJL1}
+  \strng{fullhash}{DGLJL1}
+  \field{labelalpha}{DL76}
+  \field{sortinit}{D}
+  \field{title}{Inequalities in Mechanics and Physics}
+  \field{year}{1976}
+\endentry
+
+\lossort
+\endlossort
+
+\endinput
