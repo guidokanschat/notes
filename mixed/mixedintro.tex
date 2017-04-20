@@ -59,13 +59,13 @@ mathematical detail refer to~\cite{Ciarlet88}.
   investigate the change of the distance between $x$ and $x+z$ under
   the mapping $\Phi$. By definition of the derivative, we have
   \begin{align*}
-    \abs{\Phi(x+z) - \Phi(x)}^2 &= \norm{\nabla\Phi z} + o(\abs{z})
+    \abs{\Phi(x+z) - \Phi(x)}^2 &= \norm{\nabla\Phi z}^2 + o(\abs{z}^4)
     \\
-                              &= z^T\nabla\Phi^T\nabla\Phi z + o(\abs{z})
+                              &= z^T\nabla\Phi^T\nabla\Phi z + o(\abs{z}^4)
     \\
-    &= z^T(I + \nabla u^T + \nabla u + \nabla u^T \nabla u) z + o(\abs{z})
+    &= z^T(I + \nabla u^T + \nabla u + \nabla u^T \nabla u) z + o(\abs{z}^4)
     \\
-    &= \abs{z}^2 + 2 z^T\strain u z + o(\abs{z}),
+    &= \abs{z}^2 + 2 z^T\strain u z + o(\abs{z}^4),
   \end{align*}
   where
   \begin{gather}
@@ -175,7 +175,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
   test and integrate by parts to obtain our weak formulation, we
   obtain
   \begin{gather*}
-    \int_{\domain} -\div \sigma \cdot v\dx
+    \int_{\domain} -(\div \sigma) \cdot v\dx
     = \int_{\domain} \sigma\nabla: v\dx
     - \int_{\Gamma_N} \sigma n\cdot v\ds,
   \end{gather*}
@@ -190,7 +190,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
   we enter Hooke's law for $\sigma$ to obtain:
   \begin{gather*}
     \int_\domain \bigl[2\mu \strain u : \nabla v
-    + \lambda \div u \id : \nabla v
+    + \lambda (\div u \id) : \nabla v
     \bigr]\dx = \int_\domain f\cdot v\dx.
   \end{gather*}
   Then, we choose the space
@@ -271,7 +271,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
 \end{Problem}
 
 \begin{intro}
-  The form $a(.,.)$ is symmetric and thus semi-definite on $V$. It can
+  The form $a(\cdot,\cdot)$ is symmetric and thus semi-definite on $V$. It can
   also be bounded easily by the $H^1$-norm. But, for well-posedness of
   the weak formulation, we also require ellipticity. This question is
   indeed not trivial and rests on the fact that for a function
@@ -500,7 +500,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
       C&\colon Q\to Q^* & \scal(C p,q) &= c(p,q).
     \end{aligned}
   \end{gather}
-  Here, $\scal(.,.)$ is the canonical pairing between an element of
+  Here, $\scal(\cdot,\cdot)$ is the canonical pairing between an element of
   the dual space and the space itself.
 \end{Definition}
 
@@ -560,13 +560,13 @@ mathematical detail refer to~\cite{Ciarlet88}.
 \end{proof}
 
 \begin{Lemma}{schur-definiteness}
-  Let $a(.,.)$ be elliptic and $c(.,.)$ be positive semi-definite, and
+  Let $a(\cdot,\cdot)$ be elliptic and $c(\cdot,\cdot)$ be positive semi-definite, and
   let $\ker B^T\cap\ker C \neq \{0\}$. Then, the bilinear form
-  $\mathcal A(.,.)$ is indefinite.
+  $\mathcal A(\cdot,\cdot)$ is indefinite.
 \end{Lemma}
 
 \begin{proof}
-  First, we note that because of ellipticity of $a(.,.)$
+  First, we note that because of ellipticity of $a(\cdot,\cdot)$
   \begin{gather*}
     \mathcal A\mixedform(u,0,u,0) = a(u,u) \ge \gamma \norm{u}_V^2,
   \end{gather*}
@@ -580,9 +580,9 @@ mathematical detail refer to~\cite{Ciarlet88}.
     &= -\scal(B^T p,A^{-1}B^T p) - c(p,p).
   \end{align*}
   The first term is a quadratic term with the bilinear form associated
-  with $A^{-T}$, which is positive definite. Since $b(.,.)$ is not the
+  with $A^{-T}$, which is positive definite. Since $b(\cdot,\cdot)$ is not the
   zero form, there is some $p$ such that $v\neq 0$. Therefore, with
-  the minus sign and the semi-definiteness of $c(.,.)$ we have found a
+  the minus sign and the semi-definiteness of $c(\cdot,\cdot)$ we have found a
   vector such that
   \begin{gather*}
     \mathcal A\mixedform(v,p,v,p) < 0.
@@ -590,7 +590,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
 \end{proof}
 
 \begin{remark}
-  The previous result holds in particular for $c(.,.) \equiv 0$.
+  The previous result holds in particular for $c(\cdot,\cdot) \equiv 0$.
 \end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -604,7 +604,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
   more and more compressible. Instead, there is the parameter
   $1/\lambda$ tending to zero. Thus, we can simply consider the case
   of incompressible material by setting $1/\lambda=0$ or, in our
-  abstract framework~\eqref{eq:mixedintro:1} setting $c(.,.) = 0$. The
+  abstract framework~\eqref{eq:mixedintro:1} setting $c(\cdot,\cdot) = 0$. The
   resulting system is not only important for incompressible
   elasticity, but also models the slow flow of a very viscous liquid,
   so called \putindex{creeping flow}.
@@ -678,8 +678,31 @@ mathematical detail refer to~\cite{Ciarlet88}.
   where the second equality is due to $\div u=0$. Entering in the
   previous equation, we obtain
   \begin{gather*}
-    \int_\domain \strain u:\strain v\dx
+    2\int_\domain \strain u:\strain v\dx
     = \int_\domain \nabla u:\nabla v\dx.
+  \end{gather*}
+  ALTERNATIVE:
+  We have
+  \begin{align*}
+    \strain u: \strain v &= \frac14\sum_{i,j=1}^d\left[ (\d_i u_j+\d_j u_i) (\d_i v_j+\d_j v_i)
+    \right]
+%     \\    &
+     = 
+    \frac12\sum_{i,j=1}^d\left[ \d_i u_j\d_iv_j + \d_i u_j\d_j v_i\right].
+  \end{align*}
+  The first term is the desired result, thus we have to eliminate the
+  other one. We integrate by parts to obtain
+  \begin{align*}
+    \int_\domain \sum_{i,j=1}^d \d_i u_j\d_j v_i \dx
+    &= - \int_\domain \sum_{i,j=1}^d \d_{ij}u_j v_i \dx
+%     \\ &
+    = \int_\domain \d_j u_j \d_i v_i \dx 
+  \end{align*}
+  Entering in the
+  previous equation, we obtain
+  \begin{gather*}
+    2(\strain u,\strain v) = (\nabla u,\nabla v)+(\nabla\cdot u,\nabla\cdot v)
+                           = (\nabla u,\nabla v).
   \end{gather*}
 \end{proof}
 
@@ -707,7 +730,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
   \begin{gather}
     \label{eq:mixedintro:stokes-weak2}
     \begin{aligned}
-      2\mu\form(\nabla u, \nabla v) &- \form(\div v,p) &=&\form(f,v)
+      \nu\form(\nabla u, \nabla v) &- \form(\div v,p) &=&\form(f,v)
       + \text{bdry}
       &\forall v&\in V\\
       -\form(\div u,q) & &=&0+ \text{bdry}
@@ -752,7 +775,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
 
   The conditions on the tangential velocity model the fact that
   molecules very close to the wall stick to the wall. While this claim
-  is not supported by a frist principle, it has been verified by
+  is not supported by a first principle, it has been verified by
   measurements to very high accuracy. Nevertheless, in the study of
   turbulent flow, a friction condition comes up quite naturally.
 \end{remark}
@@ -781,7 +804,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
     \int_{\d\domain} v\cdot n p\ds = -\int_\domain v\nabla p\dx.
   \end{gather*}
   Since the gradient of a constant is zero, we can add any constant
-  function to a given dolution $p$ without changing the term
+  function to a given solution $p$ without changing the term
   $\form(\div v,p)$, thus leaving $p$ determined only up to a
   constant.
 \end{proof}
@@ -790,7 +813,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
   If in Definition~\ref{Definition:stokes-eq2} the space $V$ is chosen
   such that for all $v\in V$ there holds $v\cdot n =0$ on the whole
   boundary $\d\domain$, then the pressure solution $p$ cannot be
-  determined uniquely in $L^2(\domain)$. In such cases, we chose the
+  determined uniquely in $L^2(\domain)$. In such cases, we choose the
   pressure space
   \begin{gather}
     L^2_0(\domain) = L^2(\domain)/\R

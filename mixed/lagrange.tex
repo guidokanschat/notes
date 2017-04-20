@@ -10,7 +10,7 @@
 \end{intro}
 
 \begin{Theorem}{minimization}
-  Assume that $a(.,.)$ is symmetric and $V$-elliptic on the Hilbert
+  Assume that $a(\cdot,\cdot)$ is symmetric and $V$-elliptic on the Hilbert
   space $V$. Let
   \begin{gather}
     J(v) = \tfrac12 a(v,v) - f(v).    
@@ -63,13 +63,13 @@
 
 \begin{proof}
   A closed subspace of a Hilbert space is a Hilbert space
-  itself. Then, the $V$-ellipticity of $a(.,.)$ is inherited on
+  itself. Then, the $V$-ellipticity of $a(\cdot,\cdot)$ is inherited on
   $\ker B$, and thus the Lax-Milgram lemma provides a unique solution
   for the first order necessary condition on $\ker B$.
 \end{proof}
 
 \begin{remark}
-  Here we already note that $V$-ellipticity of $a(.,.)$ is sufficient,
+  Here we already note that $V$-ellipticity of $a(\cdot,\cdot)$ is sufficient,
   but not necessary. Indeed, ellipticity on $\ker B$ would have been
   sufficient for well-posedness of the reduced problem.
 \end{remark}
@@ -114,10 +114,10 @@
   The Stokes equations with no-slip boundary conditiond are the first
   order necessary conditions for the constrained minimization problem:
   find a velocity $u\in V = H^1_0(\domain)$ such that
-  \begin{gather*}
-    \tfrac12\form(\nabla u,\nabla u) - f(u) = \min,
-    \qquad\quad\form(\div u,q) = 0 \;\forall q\in Q.
-  \end{gather*}
+  \begin{align*}
+    \tfrac12\form(\nabla u,\nabla u) - f(u) &= \min,\\
+    \form(\div u,q) &= 0 \qquad\forall q\in Q.
+  \end{align*}
 \end{Corollary}
 
 %%% Local Variables: 

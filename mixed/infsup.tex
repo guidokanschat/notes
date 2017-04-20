@@ -2,7 +2,7 @@
 \section{Finite-dimensional problems}
 \begin{intro}
   So far, our power horse for well-posedness was the Lax-Milgram
-  lemma, which applied under the conditions
+  lemma, which can be applied under the conditions
   \begin{xalignat}2
     a(u,v) &\le M \norm{u}\norm{v} & \forall u,v&\in V\\
     \label{eq:infsup:elliptic}
@@ -13,7 +13,7 @@
   \begin{gather*}
     0 < \gamma = \inf_{u\in V}\frac{a(u,u)}{\norm{u}^2}.
   \end{gather*}
-  Restricting this to finite a dimensional space, the notation usually
+  Restricting this to a finite dimensional space, the notation usually
   changes from
   \begin{gather}
     a(u,v) = f(v)
@@ -100,16 +100,16 @@ The question of well-posedness in finite dimensions can be answered by:
   But while this is a condition we can easily write down for matrices
   and operators, it does not work that well for bilinear forms. For
   those, we have the condition which was introduced in this form by
-  Nečas. It implies that the linear form on $V$, defined by $a(u,.)$
+  Nečas. It implies that the linear form on $V$, defined by $a(u,\cdot)$
   is not the zero-form.
 
   It turns out, if we go this far, we can even consider bilinear forms
-  $a(.,.)$ on two different spaces $V$ and $W$ with an associated
+  $a(\cdot,\cdot)$ on two different spaces $V$ and $W$ with an associated
   operator $A: V\to W^*$.
 \end{intro}
 
 \begin{Definition}{infsup1}
-  A bilinear form $a(.,.)$ on $V\times W$ is said to admit the
+  A bilinear form $a(\cdot,\cdot)$ on $V\times W$ is said to admit the
   \define{inf-sup condition} or is called \define{inf-sup stable}, if
   there holds
   \begin{gather}
@@ -145,7 +145,7 @@ The question of well-posedness in finite dimensions can be answered by:
 \end{proof}
 
 \begin{Theorem}{infsup-well-posedness}
-  Let $a(.,.)$ on $V\times W$ be a bounded bilinear form such that
+  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form such that
   \begin{gather}
     a(u,w) \le M \norm{u}_V \norm{w}_W.
   \end{gather}
