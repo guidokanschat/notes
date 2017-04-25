@@ -72,8 +72,12 @@
   \end{enumerate}
 \begin{solution}  
   \begin{enumerate}
-  \item For each $e_k$, the inverse is $A^{-1} e_k = k e_k$, which for
-    $k\to\infty$ is clearly unbounded.
+  \item For each $e_k$, the inverse is $A^{-1} e_k = k e_k$. In particular, $A$ is injective.
+    On the other hand, it holds
+    \begin{gather*}
+      \lim_{k\to\infty}\frac{\norm{A^{-1}e_k}}{\norm{e_k}}=\lim_{k\to\infty}k=\infty
+    \end{gather*}
+      and the inverse cannot be bounded.
   \item We have to construct a convergent sequence in the range of $A$
     such that the pre-image of the sequence does not converge.
     \begin{enumerate}
@@ -94,6 +98,8 @@
         \begin{gather*}
           v_n = A \sum_{k=1}^n e_k =: A u_n.
         \end{gather*}
+      \item Due to the injectivity of $A$ for $v$ to be in the range of $A$,
+            $u_n$ has to converge in $\ell_2(\R)$.
       \item The sequence $u_n$ is not a Cauchy sequence, since
         \begin{gather*}
           \norm{v_m-v_n}^2 = \norm*{\sum_{k=m}^n e_k}^2
