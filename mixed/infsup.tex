@@ -30,13 +30,86 @@
   also know that the condition is all but necessary.
 \end{intro}
 
+\begin{intro}
+  Why did we replace this clear theorem by the weaker Lax-Milgram
+  lemma, when we studied elliptic partial differential equations?  For
+  the first condition, it should be noted that spectral properties of
+  operators between spaces of infinite dimension are much harder to
+  obtain. Further, we do not need information on the whole spectrum,
+  but only on the eigenvalue closest to zero. Therefore, we used a
+  simple estimate in order to avoid discussing the spectrum at
+  all. But, there is an important difference between
+  Theorem~\ref{Theorem:la-invertible} and the
+  estimate~\eqref{eq:infsup:elliptic}: the assumption of the theorem
+  is qualitativ, $\lambda \neq 0$, while the assumption of Lax-Milgram
+  is quantitative,
+  \begin{gather*}
+    \Re\lambda \ge \gamma> 0.
+  \end{gather*}
+  The following problem shows why such a change is necessary.
+\end{intro}
+
+\begin{Problem}{unbounded-inverse}
+  On the space $\ell_2(\R)$ define the operator $A$ by its eigenvalue
+  decomposition
+  \begin{align*}
+    A: \ell_2(\R) &\to \ell_2(\R)\\
+    e_k & \mapsto \tfrac1k e_k.
+  \end{align*}
+  Here, $\{e_k\}$ is the orthogonal basis of unit vectors of the form
+  \begin{gather*}
+    \arraycolsep0.1em
+    \begin{array}{cccccccc}
+      e_k =(0&,\ldots,&0&,&1&,&0&,\ldots)^T.\\
+      &&&&\uparrow\\
+      &&&&k
+    \end{array}
+  \end{gather*}
+  \begin{enumerate}
+  \item Show that this operator does not have a bounded inverse, albeit
+    its eigenvalues are positive.
+  \item Show that the range of $A$ is not closed in $\ell_2(\R)$
+  \end{enumerate}
+\begin{solution}  
+  \begin{enumerate}
+  \item For each $e_k$, the inverse is $A^{-1} e_k = k e_k$, which for
+    $k\to\infty$ is clearly unbounded.
+  \item We have to construct a convergent sequence in the range of $A$
+    such that the pre-image of the sequence does not converge.
+    \begin{enumerate}
+    \item Choose
+      \begin{gather*}
+        v_n = \sum_{k=1}^n \frac1k e_k.
+      \end{gather*}
+      \item $v_n$ is a Cauchy-sequence, since
+        \begin{gather*}
+          \norm{v_m-v_n}^2 = \norm*{\sum_{k=m}^n \frac1k e_k}^2
+          = \sum_{k=m}^n \frac1{k^2}\norm*{e_k}^2
+          \le \frac1{m^2} \sum_{k=1}^\infty \frac1{k^2}
+          = \frac{\pi^2}{6} \frac1{m^2}.
+        \end{gather*}
+      \item We conclude that $v=\lim_{n\to\infty}v_n$ exists in the
+        closure of the range of $A$.
+      \item There holds
+        \begin{gather*}
+          v_n = A \sum_{k=1}^n e_k =: A u_n.
+        \end{gather*}
+      \item The sequence $u_n$ is not a Cauchy sequence, since
+        \begin{gather*}
+          \norm{v_m-v_n}^2 = \norm*{\sum_{k=m}^n e_k}^2
+          = \sum_{k=m}^n \norm*{e_k}^2
+          = n-m.
+        \end{gather*}
+    \end{enumerate}
+  \end{enumerate}
+\end{solution}
+\end{Problem}
+
 \begin{Problem}{lax-milgram-not-applicable}
   Find an invertible, symmetric matrix $A\in \R^{2\times 2}$ and a
   vector $v\in \R^2$ such that $v^TAv=0$ and thus the Lax-Milgram
   lemma is inconclusive.
 \begin{solution}
-
-\textbf{Solution:}
   \begin{gather*}
     A =
     \begin{pmatrix}
@@ -59,53 +132,22 @@ The question of well-posedness in finite dimensions can be answered by:
 \end{Theorem}
 
 \begin{intro}
-  Why did we replace this clear theorem by the weaker Lax-Milgram
-  lemma, when we studied elliptic partial differential equations?  For
-  the first condition, it should be noted that spectral properties of
-  operators between spaces of infinite dimension are much harder to
-  obtain. Further, we do not need information on the whole spectrum,
-  but only on the eigenvalue closest to zero. Therefore, we used a
-  simple estimate in order to avoid discussing the spectrum at
-  all. But, there is an important difference between
-  Theorem~\ref{Theorem:la-invertible} and the
-  estimate~\eqref{eq:infsup:elliptic}: the assumption of the theorem
-  is qualitativ, $\lambda \neq 0$, while the assumption of Lax-Milgram
-  is quantitative,
-  \begin{gather*}
-    \Re\lambda \ge \gamma> 0.
-  \end{gather*}
-  Why this change?
-\end{intro}
-
-\begin{Problem}{unbounded-inverse}
-  On the space $\ell_2(\R)$ define the operator $A$ by its eigenvalue
-  decomposition
-  \begin{align*}
-    A: \ell_2(\R) &\to \ell_2(\R)\\
-    e_k & \mapsto \tfrac1k e_k.
-  \end{align*}
-  Show that this operator does not have a bounded inverse, albeit all
-  its eigenvalues are positive.
-\end{Problem}
-
-\begin{intro}
   We focus on the second and third conditions, respectively, in
   Theorem~\ref{Theorem:la-invertible}.
   But, the problem above tells us that we
   will run into trouble, if we do not quantify this. Therefore, we
   start our attempt by requiring:
   \begin{gather*}
-    \norm{Au}^2 \ge \gamma \norm{u}^2 \forall u\in V.
+    \norm{Au}^2 \ge \gamma \norm{u}^2 \qquad\forall u\in V.
   \end{gather*}
   But while this is a condition we can easily write down for matrices
   and operators, it does not work that well for bilinear forms. For
   those, we have the condition which was introduced in this form by
   Nečas. It implies that the linear form on $V$, defined by $a(u,\cdot)$
-  is not the zero-form.
-
-  It turns out, if we go this far, we can even consider bilinear forms
-  $a(\cdot,\cdot)$ on two different spaces $V$ and $W$ with an associated
-  operator $A: V\to W^*$.
+  is bounded frmo below.
+  % It turns out, if we go this far, we can even consider bilinear forms
+  % $a(\cdot,\cdot)$ on two different spaces $V$ and $W$ with an associated
+  % operator $A: V\to W^*$.
 \end{intro}
 
 \begin{Definition}{infsup1}
@@ -118,6 +160,13 @@ The question of well-posedness in finite dimensions can be answered by:
     \ge \gamma > 0.
   \end{gather}
 \end{Definition}
+
+\begin{remark}
+  In this finite dimensional exposition, is clear that $V$ and $W$
+  must have the same dimension, and thus $V=W=\R^n$. This will be
+  different, when we consider infinite dimensional spaces and indeed
+  consider different spaces $V$ and $W$.
+\end{remark}
 
 \begin{Lemma}{infsup2}
   The following statements are equivalent to the inf-sup
@@ -140,15 +189,105 @@ The question of well-posedness in finite dimensions can be answered by:
   \end{gather}
 \end{Lemma}
 
+\begin{Problem}{inf-sup-equivalence}
+  Prove \blockref{Lemma}{infsup2}.
+\end{Problem}
+
+\input{svd}
+
+\begin{Definition}{ker-range-rn}
+  \index{ker}
+  Let $A: V\to W$ be a linear operator. Then, we define
+  the \define{kernel} and the \define{range} of $A$ as
+  \begin{align*}
+    \ker A &= \bigl\{ v\in V \big| Av = 0\bigr\} \\
+    \range A &= \bigl\{ w\in W \big| \;\exists\,v\in V: Av=w\bigr\}.
+  \end{align*}
+\end{Definition}
+
+\begin{Definition}{orthogonal1}
+  Let $V\subset\R^n$ be a subspace. We define the \define{orthogonal
+    complement} of $V$ as
+  \begin{gather}
+    \label{eq:infsup:4}
+    V^\perp = \bigl\{w\in \R^n \big| \;\forall\,v\in V \scal(w,v) = 0 \bigr\}.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{ker-coker-rn}
+  Let $A\in \R^{m\times n}$ and $A^T$ its transpose. Then, there holds
+  \begin{gather}
+    \label{eq:infsup:5}
+    \begin{split}
+      \ker A &= \range{A^T}^\perp\\
+      \range A &= \ker{A^T}^\perp\\
+      \ker{A^T} &= \range A^\perp\\
+      \range{A^T} &= \ker{A}^\perp
+    \end{split}
+  \end{gather}
+\end{Lemma}
+
 \begin{proof}
-  The proof is left as a problem.
+  % First, we note that
+  % \begin{gather*}
+  %   \R^n = \ker A \oplus \ker A^\perp,
+  %   \qquad
+  %   \R^m = \ker{A^T} \oplus \ker{A^T}^\perp.
+  % \end{gather*}
+  Let $A=U\Sigma V^T$ be the singular value decomposition of $A$ and
+  $r$ be the number of nonzero singular values. Then, the first $r$
+  vectors of $U$ span the range of $A$ and the last $n-r$ vectors of
+  $V$ span its kernel. Furthermore,
+  \begin{gather}
+    A^T = \bigl(U\Sigma V^T\bigr)^T = V \Sigma U^T.
+  \end{gather}
+  Therefore, the first $r$ vectors of V span the range of $A^T$ and
+  the last $n-r$ vectors of $U$ span its kernel.
 \end{proof}
 
-\begin{Theorem}{infsup-well-posedness}
-  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form such that
+\begin{Corollary}{ker-coker-iso}
+  Let $A\in \R^{m\times n}$ and $A^T$ its transpose. Then, the
+  restrictions $A\colon \ker A^\perp \to \range A$ and $A^T\colon
+  \ker{A^T}^\perp \to \range{A^T}$ are isomorphisms.
+\end{Corollary}
+
+\begin{proof}
+  We note that $\dim \range A = \dim \range{A^T}$. Thus, by
+  \blockref{Lemma}{ker-coker-rn} the dimensions of domain and range of
+  each of the restricted operators are equal, say $\dim \range A =
+  r$. The singular value decomposition of the operators is
+  \begin{gather*}
+    A = U\Sigma V^T \qquad A^T = V\Sigma U^T,
+  \end{gather*}
+  where all matrices are in $\R^{r\times r}$ and
+  \begin{gather*}
+    \Sigma = \diag(\sigma_1,\dots,\sigma_r),
+  \end{gather*}
+  and all singular values are positive. Thus, $A$ and $A^T$ are invertible.
+\end{proof}
+
+\begin{Corollary}{svd-infsup}
+  Let $r=\dim \ker A^\perp$. Then, for the smallest nonzero singular
+  value there holds
   \begin{gather}
-    a(u,w) \le M \norm{u}_V \norm{w}_W.
+    \label{eq:infsup:6}
+    \sigma_r
+    = \inf_{v\in \ker{A}^\perp} \sup_{w\in \R^m} \frac{w^TAv}{\abs{v}\abs{w}}
+    = \inf_{w\in \ker{A^T}^\perp} \sup_{v\in \R^n} \frac{w^TAv}{\abs{v}\abs{w}}.
   \end{gather}
+\end{Corollary}
+
+\begin{proof}
+  
+\end{proof}
+
+
+\begin{Theorem}{infsup-well-posedness}
+  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form such
+  that the inf-sup condition~\eqref{eq:infsup:1} holds.
+  % \begin{gather}
+  %   a(u,w) \le M \norm{u}_V \norm{w}_W.
+  % \end{gather}
   Then, the problem finding $u\in V$ such that
   \begin{gather}
     a(u,w) = f(w) \qquad\forall w\in W,

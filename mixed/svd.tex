@@ -1,0 +1,97 @@
+\begin{Theorem}{svd}
+  Let $A\in\R^{m\times n}$ be a real matrix. Then, there exist two
+  orthogonal matrices $U\in\R^{m\times m}$ and $V\in \R^{n\times n}$
+  as well as a nonnegative diagonal matrix $\hat\Sigma$, such
+  that
+  \begin{gather}
+    \label{eq:svd:1}
+    A = U \Sigma V^T,
+    \qquad\text{and }
+    \Sigma =
+    \begin{cases}
+      \begin{bmatrix}
+        \hat\Sigma &0
+      \end{bmatrix}
+      &\text{for } m<n\\
+      \hat\Sigma&\text{for } m=n\\
+      \begin{bmatrix}
+        \hat\Sigma \\0
+      \end{bmatrix}
+      &\text{for } m>n
+    \end{cases}
+  \end{gather}
+  This is the \define{singular value decomposition} (\define{SVD}) of
+  $A$, the diagonal entries of $\hat \Sigma$ are the
+  \define{singular values} of $A$ and the column vectors of $U$ and
+  $V$ are the left and right \define{singular vectors} of $A$,
+  respectively. The same theorem holds for complex matrices with
+  unitary $U$ and $V$.
+\end{Theorem}
+
+\begin{proof}
+  We prove constructively for the real case by induction. For $m=1$ or
+  $n=1$ the theorem is obvious. Let now $m,n>1$ and assume the theorem
+  has been proven for $A\in \R^{(m-1)\times (n-1)}$. Let $\sigma_1^2$
+  be the largest eigenvalue of $A^TA$, which due to the symmetry of
+  $A^TA$ is real and nonnegative. Actually, if it is zero, then
+  $A^TA=0$ and thus $A=0$ and $\Sigma=0$. Now assume $\sigma_1^2 >
+  0$. Choose $x_1$ as an eigenvector to the eigenvalue $\sigma_1^2$ of
+  $A^TA$ and
+  \begin{gather*}
+    y_1 = \frac1{\sigma_1} A x_1.
+  \end{gather*}
+  We can complete both $x_1$ and $y_1$ to an orthonormal basis $X$ and
+  $Y$, respectively. Then, there holds for $e_1 \in \R^n$ and
+  $\bar e_1\in \R^m$:
+  \begin{align*}
+    Y^TAX e_1 &= Y^T A x_1 = \sigma_1 Y^Ty_1 = \sigma_1 \bar e_1\\
+    (Y^TAX)^T \bar e_1 = X^TA^TY\bar e_1,
+              &= X^TA^T y_1 =  \tfrac1{\sigma_1} X^TA^TA x_1
+                = \sigma_1 X^Tx_1 = \sigma_1 e_1.
+  \end{align*}
+  Thus,
+  \begin{gather*}
+    Y^TAX =
+    \begin{bmatrix}
+      \sigma_1 & 0 \\ 0 & \tilde A
+    \end{bmatrix}
+  \end{gather*}
+  with $\tilde A\in \R^{(m-1)\times (n-1)}$. By induction, there holds
+  $\tilde A = \tilde U \tilde \Sigma \tilde V^T$ with orthogonal
+  matrices $U$ and $V$ and $\tilde\Sigma$ of the same form as $\Sigma$
+  and both dimensions reduced by 1. Now let
+  \begin{gather*}
+    U = Y
+    \begin{bmatrix}
+      1 & 0\\ 0& \tilde U
+    \end{bmatrix},
+    \qquad
+    V = X
+    \begin{bmatrix}
+      1 & 0 \\ 0& \tilde V
+    \end{bmatrix},
+    \qquad
+    \Sigma =
+    \begin{bmatrix}
+      \sigma_1 & 0 \\ 0 & \tilde\Sigma
+    \end{bmatrix}
+  \end{gather*}
+  $U$ and $V$ as the product of orthogonal matrices are orthogonal,
+  $\sigma$ has the claimed structure and there holds $A=U\Sigma V^T$.
+\end{proof}
+
+\begin{Corollary}{svd-order}
+  By the construction of the proof, the singular values are ordered by
+  decreasing magnitude,
+  \begin{gather}
+    \label{eq:svd:2}
+    \sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_r > 0.
+  \end{gather}
+  The number $r$ of nonzero singular values is the dimension of the
+  range of the matrix $A$.
+\end{Corollary}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

@@ -238,9 +238,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
   Show that the subspaces of symmetric and skew-symmetric matrices,
   respectively, are orthogonal to each other and $X$ is the direct sum
   of those.
-
 \begin{solution}
-\paragraph{Solution}
 \begin{enumerate}
 \item 
   First, we note that for every matrix $A$, there holds
@@ -658,48 +656,22 @@ mathematical detail refer to~\cite{Ciarlet88}.
 \begin{proof}
   We have
   \begin{align*}
-    \strain u: \strain v &= \sum_{i}^d \left[
-    \d_i u_i\d_i v_i
-    + \frac14\sum_{j\neq i} (\d_i u_j+\d_j u_i) (\d_i v_j+\d_j v_i)
-    \right]
+    \strain u: \strain v
+    &= \frac14\sum_{i,j=1}^d\left[ (\d_i u_j+\d_j u_i) (\d_i v_j+\d_j v_i)
+      \right]
     \\
-    &= \frac12\sum_{i,j=1}^d \d_i u_j\d_iv_j
-    + \frac12\sum_{i=1}^d \d_i u_i \d_iv_i
-    + \frac12\sum_{\substack{i,j=1\\j\neq i}}^d \d_i u_j\d_j v_i.
-  \end{align*}
-  The first term is the desired result, thus we have to eliminate the
-  other two. We integrate by parts to obtain
-  \begin{align*}
-    \int_\domain \sum_{j\neq i} \d_i u_j\d_j v_i \dx
-    &= - \int_\domain \sum_{j\neq i} \d_{ij}u_j v_i \dx\\
-    &= \int_\domain \d_{ii} u_i v_i \dx \\
-    &= -\int_\domain \d_i u_i \d_i v_i,
-  \end{align*}
-  where the second equality is due to $\div u=0$. Entering in the
-  previous equation, we obtain
-  \begin{gather*}
-    2\int_\domain \strain u:\strain v\dx
-    = \int_\domain \nabla u:\nabla v\dx.
-  \end{gather*}
-  ALTERNATIVE:
-  We have
-  \begin{align*}
-    \strain u: \strain v &= \frac14\sum_{i,j=1}^d\left[ (\d_i u_j+\d_j u_i) (\d_i v_j+\d_j v_i)
-    \right]
-%     \\    &
-     = 
-    \frac12\sum_{i,j=1}^d\left[ \d_i u_j\d_iv_j + \d_i u_j\d_j v_i\right].
+    &= \frac12\sum_{i,j=1}^d\left[ \d_i u_j\d_iv_j + \d_i u_j\d_j v_i\right].
   \end{align*}
   The first term is the desired result, thus we have to eliminate the
   other one. We integrate by parts to obtain
   \begin{align*}
-    \int_\domain \sum_{i,j=1}^d \d_i u_j\d_j v_i \dx
-    &= - \int_\domain \sum_{i,j=1}^d \d_{ij}u_j v_i \dx
+    \int_\domain \d_i u_j\d_j v_i \dx
+    &= - \int_\domain \d_{ij}u_j v_i \dx
 %     \\ &
     = \int_\domain \d_j u_j \d_i v_i \dx 
   \end{align*}
   Entering in the
-  previous equation, we obtain
+  previous equation and summing over $i$ and $j$, we obtain
   \begin{gather*}
     2(\strain u,\strain v) = (\nabla u,\nabla v)+(\nabla\cdot u,\nabla\cdot v)
                            = (\nabla u,\nabla v).
