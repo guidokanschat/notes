@@ -364,16 +364,20 @@ The question of well-posedness in finite dimensions can be answered by:
 
 \begin{Theorem}{orthogonal-complement}
   Let $W$ be a subspace of a Hilbert space $V$ and $W^\perp$ its
-  orthogonal complement. Then, $V = W \oplus W^\perp$ if and only if
-  $W$ is closed.
+  orthogonal complement. Then, $W^\perp = \overline{W}^\perp$. Further,
+  $V = W \oplus W^\perp$ if and only if $W$ is closed.
 \end{Theorem}
 
 \begin{proof}
-  We show that $W^\perp = \overline{W}^\perp$. Once this is
-  established, the ``only if'' follows by the fact, that if $W$ is not
+  Clearly, $\overline{W}^\perp \subset W^\perp$ since $W\subset\overline{W}$.
+  
+
+  Now, the ``only if'' follows by the fact, that if $W$ is not
   closed, there is an element $w\in \overline{W}$ but not in $W$ such that
   $\scal(w,u)=0$ for all $u\in W^\perp$. Thus, $w\not\in W^\perp$ and
   consequently $w\not\in W^\perp \oplus W$.
+
+
 \end{proof}
 
 \begin{Theorem}{infsup-well-posedness}

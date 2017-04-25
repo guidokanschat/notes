@@ -3,7 +3,7 @@
 \usecolortheme{iwr}
 \usepackage{../mathsim}
 \mathtoolsset{showonlyrefs}
-
+\excludecomment{solution}
 \externaldocument{main}
 
 \makeatletter
@@ -17,15 +17,15 @@
 
 \begin{document}
 \frame{\tableofcontents}
-\section{Examples for mixed problems}
+\section{From elliptic to mixed problems}
 \frame {\input {blocks/Notation-vector-diff-operators.tex}}
 \frame {\input {blocks/Definition-strain-tensor.tex}}
 \frame {\input {blocks/Definition-hooke.tex}}
 \frame {\input {blocks/Definition-weak-lame-navier.tex}}
 \frame {\input {blocks/Problem-frobenius.tex}}
-\frame {\input {blocks/Assumption-korn-inequality.tex}}
-\frame {\input {blocks/Lemma-korn.tex}}
-\frame {\input {blocks/Problem-elasticity-standard.tex}}
+\frame {\input {blocks/Assumption-korn-inequality.tex}
+  \input {blocks/Lemma-korn.tex}}
+\frame {\small\input {blocks/Problem-elasticity-standard.tex}}
 
 \begin{frame}
   \frametitle{Example: hanging sheet}
@@ -49,18 +49,44 @@
 \frame {\input {blocks/Definition-saddle-point-operators.tex}}
 \frame {\input {blocks/Definition-saddle-point-abstract.tex}}
 \frame {\input {blocks/Notation-saddle-point-form.tex}}
-\frame {\input {blocks/Definition-schur-complement.tex}}
-\frame {\input {blocks/Lemma-schur-complement1.tex}}
+\frame {\input {blocks/Definition-schur-complement.tex}
+  \input {blocks/Lemma-schur-complement1.tex}}
 \frame {\input {blocks/Lemma-schur-definiteness.tex}}
 \frame {\input {blocks/Definition-stokes-eq1.tex}}
 \frame {\input {blocks/Definition-solenoidal.tex}}
 \frame {\input {blocks/Lemma-stokes-equivalence.tex}}
 \frame {\input {blocks/Definition-stokes-eq2.tex}}
 \frame {\input {blocks/Definition-stokes-boundary2.tex}}
-\frame {\input {blocks/Lemma-divergence-compatibility.tex}}
+\frame {\input {blocks/Lemma-divergence-compatibility.tex}
+\input {blocks/Notation-pressure-constant.tex}}
+\frame {\input {blocks/Theorem-minimization.tex}}
+\frame {\input {blocks/Definition-reduced-problem.tex}
+\input {blocks/Lemma-reduced-wellposedness.tex}}
+\frame {\input {blocks/Theorem-lagrange-multiplier.tex}}
+\frame {\input {blocks/Problem-lagrange-multiplier.tex}}
+\frame {\input {blocks/Corollary-stokes-lagrange.tex}}
 
+\section{Conditions for well-posedness}
+\frame {\input {blocks/Problem-unbounded-inverse.tex}}
+\frame {\input {blocks/Problem-lax-milgram-not-applicable.tex}}
 \frame {\input {blocks/Theorem-la-invertible.tex}}
-\frame {\input {blocks/Definition-infsup1.tex}}
-\frame {\input {blocks/Lemma-infsup2.tex}}
-\frame {\input {blocks/Theorem-infsup-well-posedness.tex}}
+\frame {\input {blocks/Definition-infsup1.tex}
+\input {blocks/Lemma-infsup2.tex}
+\input {blocks/Problem-inf-sup-equivalence.tex}}
+\frame {\input {blocks/Theorem-svd.tex}}
+\frame {\input {blocks/Corollary-svd-order.tex}}
+\frame {\input {blocks/Definition-ker-range-rn.tex}
+\input {blocks/Definition-orthogonal1.tex}}
+\frame {\input {blocks/Lemma-ker-coker-rn.tex}
+\input {blocks/Corollary-ker-coker-iso.tex}
+\input {blocks/Corollary-svd-infsup.tex}}
+\frame {\input {blocks/Definition-polar-orthogonal.tex}
+\input {blocks/Lemma-orthogonal-closed.tex}
+\input {blocks/Theorem-orthogonal-complement.tex}}
+
 \end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
