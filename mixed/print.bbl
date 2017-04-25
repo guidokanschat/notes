@@ -204,6 +204,31 @@
   \field{year}{1976}
 \endentry
 
+\entry{GiraultRaviart86}{book}{}
+  \name{author}{2}{}{%
+    {{}%
+     {Girault}{G.}%
+     {V.}{V.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Raviart}{R.}%
+     {P.-A.}{P.-A.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Springer}%
+  }
+  \strng{namehash}{GVRPA1}
+  \strng{fullhash}{GVRPA1}
+  \field{labelalpha}{GR86}
+  \field{sortinit}{G}
+  \field{title}{Finite element approximations of the {N}avier-{S}tokes
+  equations}
+  \field{year}{1986}
+\endentry
+
 \lossort
 \endlossort
 

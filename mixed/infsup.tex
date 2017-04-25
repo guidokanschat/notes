@@ -18,7 +18,7 @@
   \begin{gather}
     a(u,v) = f(v)
     \qquad\text{to}\qquad
-    v^TA u = v^Tf,
+    v^TA u = v^T f,
   \end{gather}
   where $A\in \R^{n\times n}$ is the matrix associated with the
   bilinear form. The bound for the Rayleigh quotient means nothing but
@@ -41,7 +41,7 @@
   all. But, there is an important difference between
   Theorem~\ref{Theorem:la-invertible} and the
   estimate~\eqref{eq:infsup:elliptic}: the assumption of the theorem
-  is qualitativ, $\lambda \neq 0$, while the assumption of Lax-Milgram
+  is qualitative, $\lambda \neq 0$, while the assumption of Lax-Milgram
   is quantitative,
   \begin{gather*}
     \Re\lambda \ge \gamma> 0.
@@ -107,7 +107,7 @@
 
 \begin{Problem}{lax-milgram-not-applicable}
   Find an invertible, symmetric matrix $A\in \R^{2\times 2}$ and a
-  vector $v\in \R^2$ such that $v^TAv=0$ and thus the Lax-Milgram
+  vector $v\in \R^2$ such that $v^T A v=0$ and thus the Lax-Milgram
   lemma is inconclusive.
 \begin{solution}
   \begin{gather*}
@@ -123,7 +123,7 @@ The question of well-posedness in finite dimensions can be answered by:
 
 \begin{Theorem}{la-invertible}
   A matrix $A\in\R^{n\times n}$ is invertible if and only if one of
-  the following equivalent coditions holds:
+  the following equivalent conditions holds:
   \begin{enumerate}
   \item all its (possibly complex) eigenvalues are nonzero,
   \item all its singular values are nonzero,
@@ -144,7 +144,7 @@ The question of well-posedness in finite dimensions can be answered by:
   and operators, it does not work that well for bilinear forms. For
   those, we have the condition which was introduced in this form by
   Nečas. It implies that the linear form on $V$, defined by $a(u,\cdot)$
-  is bounded frmo below.
+  is bounded from below.
   % It turns out, if we go this far, we can even consider bilinear forms
   % $a(\cdot,\cdot)$ on two different spaces $V$ and $W$ with an associated
   % operator $A: V\to W^*$.
@@ -272,15 +272,109 @@ The question of well-posedness in finite dimensions can be answered by:
   \begin{gather}
     \label{eq:infsup:6}
     \sigma_r
-    = \inf_{v\in \ker{A}^\perp} \sup_{w\in \R^m} \frac{w^TAv}{\abs{v}\abs{w}}
-    = \inf_{w\in \ker{A^T}^\perp} \sup_{v\in \R^n} \frac{w^TAv}{\abs{v}\abs{w}}.
+    = \inf_{v\in \ker{A}^\perp} \sup_{w\in \R^m} \frac{w^T A v}{\abs{v}\abs{w}}
+    = \inf_{w\in \ker{A^T}^\perp} \sup_{v\in \R^n} \frac{w^T A v}{\abs{v}\abs{w}}.
   \end{gather}
 \end{Corollary}
 
 \begin{proof}
-  
+  Since the Cauchy-Schwarz inequality turns into an equation if and
+  only if the two vectors are coaligned, there holds for any $v\in \R^n$:
+  \begin{gather*}
+    \sup_{w\in\R^m}\frac{w^T A v}{\abs{w}} = \frac{v^T A^T A v}{\abs{Av}}.
+  \end{gather*}
+  Therefore,
+  \begin{gather*}
+    \inf_{v\in \ker{A}^\perp} \sup_{w\in \R^m}
+    \frac{w^T A v}{\abs{v}\abs{w}}
+    = \inf_{v\in \ker{A}^\perp} \frac{\abs{Av}}{\abs{v}}.
+  \end{gather*}
+  Now, let $v = \sum \alpha_i v_i$ where $v_i$ are the columns of $V$
+  in the SVD of $A$. Then,
+  \begin{gather*}
+    \abs{Av}^2 = \abs*{A\sum_{i=1}^r \alpha_i v_i}^2
+    = \abs*{\sum_{i=1}^r \sigma_i \alpha_i u_i}^2
+    = \sum_{i=1}^r \sigma_i^2 \alpha_i^2.
+  \end{gather*}
+  The quotient
+  \begin{gather*}
+    \frac{\sum_{i=1}^r \sigma_i^2 \alpha_i^2}{\sum_{i=1}^r \alpha_i^2}
+  \end{gather*}
+  clearly has its minimum if $\alpha_1 = \dots=\alpha_{r-1} = 0$.
 \end{proof}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Infinite dimensional Hilbert spaces}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{intro}
+  In the previous section, we derived quantitative conditions to
+  ensure the invertibility of a matrix $A$ or its restriction to its
+  cokernel $\ker A^\perp$. The arguments there have a natural
+  extension to infinite dimensional Hilbert spaces, which we will
+  derive in this section. We already saw in
+  \blockref{Problem}{unbounded-inverse} that we may run into trouble
+  if the range of $A$ is not closed. On the other hand, it turns out
+  that most notions of linear algebra related to orthogonality can be
+  maintained in Hilbert spaces if closed subspaces are considered.
+  We begin by citing the most important results.
+\end{intro}
+
+\begin{Definition}{polar-orthogonal}
+  Let $W\subset V$ be a subspace of a Hilbert space $V$. We define its
+  \define{polar space} $W^0\subset V^*$ and its
+  \define{orthogonal complement} $W^\perp\subset V$ by
+  \begin{gather}
+    \label{eq:infsup:7}
+    \begin{split}
+    W^0 &= \bigl\{f\in V^* \big| \scal(f,w)_{V^*\times V} = 0
+    \;\forall\,w\in W\bigr\},
+    \\
+    W^\perp &= \bigl\{v\in V \big| \scal(v,w)_{V} = 0
+    \;\forall\,w\in W\bigr\}.
+    \end{split}
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{orthogonal-closed}
+  The polar space $W^0$ and the orthogonal complement $W^\perp$ of a
+  subspace $W\subset V$ are both closed.
+\end{Lemma}
+
+\begin{proof}
+  Consider the mapping
+  \begin{align*}
+    \Phi_w\colon V^* &\to \R,\\
+    v&\mapsto \scal(v,w)_{V^*\times V}.
+  \end{align*}
+  For any $w$, the kernel of $\phi$ is closed as
+  the pre-image of a closed set. $W^0$ is closed since it is the
+  intersection of these kernels for all $w\in W$.
+
+  The inner product is continuous on $V\times V$. Therefore, the
+  mapping
+  \begin{align*}
+    \phi_w\colon V &\to \R,\\
+    v&\mapsto \scal(v,w),
+  \end{align*}
+  is continuous. The argument continues as above.
+\end{proof}
+
+\begin{Theorem}{orthogonal-complement}
+  Let $W$ be a subspace of a Hilbert space $V$ and $W^\perp$ its
+  orthogonal complement. Then, $V = W \oplus W^\perp$ if and only if
+  $W$ is closed.
+\end{Theorem}
+
+\begin{proof}
+  We show that $W^\perp = \overline{W}^\perp$. Once this is
+  established, the ``only if'' follows by the fact, that if $W$ is not
+  closed, there is an element $w\in \overline{W}$ but not in $W$ such that
+  $\scal(w,u)=0$ for all $u\in W^\perp$. Thus, $w\not\in W^\perp$ and
+  consequently $w\not\in W^\perp \oplus W$.
+\end{proof}
 
 \begin{Theorem}{infsup-well-posedness}
   Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form such
@@ -297,6 +391,14 @@ The question of well-posedness in finite dimensions can be answered by:
     \norm{u}_V \le \frac1\gamma \norm{f}_{W^*}
   \end{gather}
 \end{Theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The inf-sup condition for mixed problems}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "main"
