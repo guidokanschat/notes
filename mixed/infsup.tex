@@ -623,7 +623,7 @@ The question of well-posedness in finite dimensions can be answered by:
   \end{gather*}
 \end{proof}
 
-\begin{Corollary}{infsup-well-posedness}
+\begin{Corollary}{infsup-well-posedness1}
   Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form such that
   \begin{gather}
     a(v,w) \le M \norm{v}_V \norm{w}_W.
@@ -638,15 +638,70 @@ The question of well-posedness in finite dimensions can be answered by:
   \begin{gather*}
     a(v,w) = f(v) \qquad\forall v\in V,
   \end{gather*}
-  has a unique solution and
+  has a unique solution for $f\in \ker A^0$ and
   \begin{gather}
-    \norm{w}_W \le \frac1\gamma \norm{f}_{V^*}
+    \norm{w}_W \le \frac1\gamma \norm{f}_{V^*}.
   \end{gather}
 \end{Corollary}
+
+\begin{remark}
+  \blockref{Theorem}{infsup-well-equivalence} exhibits an asymmetry
+  between the left and right argument. In particular, we obtain a
+  unique solution only for the adjoint operator $A^T$, which is
+  exactly what we need, when we compute say a pressure from the
+  divergence of a velocity field. In general, we consider the
+  restriction of $f$ to the polar set of the kernal in the above
+  well-posedness result detrimental and would prefer a result that
+  holds for all $f\in V^*$. This on the other hand requires
+  $\ker A=\{0\}$, or $\overline{\range{A^T}} = W^*$. Then, on the
+  other hand, we see that $\range{A^T}$ is closed since $\range{A}$ is
+  closed and the closed range theorem holds. Therefore, we obtain the
+  following theorem for the case that we require a unique solution for
+  all right hand sides.
+\end{remark}
+
+\begin{Theorem}{infsup-well-posedness2}
+  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form such that
+  \begin{gather}
+    a(v,w) \le M \norm{v}_V \norm{w}_W.
+  \end{gather}
+  Let for some $\gamma>0$ the inf-sup-conditions
+  \begin{align*}
+    \inf_{w\in W}\sup_{v\in V}
+    \frac{a(v,w)}{\norm{v}_V\norm{w}_W}
+    &\ge \gamma,\\
+    \inf_{v\in V}\sup_{w\in W}
+    \frac{a(v,w)}{\norm{v}_V\norm{w}_W}
+    &\ge \gamma
+  \end{align*}
+  hold.  Then, the problem finding $v\in V$ such that
+  \begin{gather*}
+    a(v,w) = f(w) \qquad\forall w\in W,
+  \end{gather*}
+  has a unique solution for $f\in W^*$ and
+  \begin{gather}
+    \norm{v}_V \le \frac1\gamma \norm{f}_{W^*}.
+  \end{gather}  
+\end{Theorem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The inf-sup condition for mixed problems}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{intro}
+  In the previous section, we have developed a framework for
+  well-posedness of problems which are not $V$-elliptic. In principle,
+  this theorey can be applied to the bilinear form $\mathcal
+  A((u,p),(v,q))$ as a whole. On the other hand, we can formally split
+  the solution of a constrained minimization problem into the reduced
+  problem and then computing the Lagrange multiplier. 
+\end{intro}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Galerkin approximation of mixed problems}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
