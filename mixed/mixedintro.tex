@@ -353,6 +353,79 @@ mathematical detail refer to~\cite{Ciarlet88}.
     it be improved easily? In view of the ``energy estimate'', can you
     think of conditions?
   \end{enumerate}
+\begin{solution}
+We consider the problem:\\
+  Find $u\in V = H^1_{\Gamma_D}(\domain;\R^d)$ such that
+  \begin{gather*}
+    a(u,v) \equiv 2\mu\form(\strain u, \strain v)
+    + \lambda \form(\div u, \div v)
+    = \form(f,v)
+    \quad\forall v\in V.
+  \end{gather*}
+  where the norm on $V$ is given through $a$ as
+  \begin{align*}
+    \norm{u}_V^2=a(u,u)=2\mu\norm{\strain u}_0^2+ \lambda \norm{\div u}_0^2
+    \end{align*}
+  \begin{enumerate}
+   \item Testing symmetrically ($v=u$) gives
+   \begin{align*}
+   \norm{u}_V=\frac{a(u,u)}{\norm{u}_V}= \frac{\form(f,u)}{\norm{u}_V} \leq \norm{f}_{V^*}.
+   \end{align*}
+   \item Applying Céa's lemma gives
+   \begin{align*}
+   \norm{u-u_h}_V&=\frac{a(u-u_h, u-u_h)}{\norm{u-u_h}_V}\\
+               &=\frac{a(u-u_h, u-v_h)}{\norm{u-u_h}_V}\leq \norm{u-v_h}_V\quad \forall v_h \in V_h
+   \end{align*} and hence $\norm{u-u_h}_V = \inf_{v_h\in V_h} \norm{u-v_h}_V$.
+   \item For the $H^1$-error estimate we make use of Korn's inequality to note
+   \begin{align*}
+    \norm{u}_V^2=2\mu\norm{\strain u}_0^2+ \lambda \norm{\div u}_0^2\geq
+    2\mu(c_K^2\norm{u}_1^2-\norm{u}_0^2)
+   \end{align*}
+   and on the other hand
+   \begin{align*}
+    \norm{u}_V^2=2\mu\norm{\strain u}_0^2+ \lambda \norm{\div u}_0^2\leq
+    (2\mu+\lambda d^2)\norm{u}_1^2
+   \end{align*}
+   where we used
+   \begin{align*}
+    \norm{\nabla \cdot u}_0^2 = \norm{\sum_i \partial_i u_i}_0^2 &\leq (\sum_{i,j} \norm{\partial_j u_i}_0\delta_{i,j})^2\\
+    & \leq \sum_{i,j} \left(\norm{\partial_j u_i}_0^2\right) d^2 \leq \norm{u}_1^2 d^2.
+   \end{align*}
+   Using Poincaré's inequality
+   \begin{align*}
+    \norm{u}_0\leq C_P |u|_1
+   \end{align*}
+   we further notice
+   \begin{align*}
+    \norm{u}_V^2+2\mu\norm{u}_0^2\leq (1+C_P^2) \norm{u}_V^2.
+   \end{align*}
+   Combining these estimates gives
+   \begin{align*}
+   2\mu c_K^2\norm{u}_1^2\leq
+    \norm{u}_V^2+2\mu \norm{u}_0^2\leq
+    (1+C_P^2)\norm{u}_V^2\leq
+    (1+C_P^2)(2\mu+\lambda d^2)\norm{u}_1^2.
+   \end{align*}
+   and therefore
+   \begin{align*}
+    \norm{u-u_h}_1^2\leq \inf_{v\in V_h} \frac{(1+C_P^2)(2\mu+\lambda d^2)}{2\mu c_K^2}\norm{u-v_h}_1^2.
+   \end{align*}
+   If the solution is even $H_0^1(\Omega)$-regular, we can improve the estimate to
+   \begin{align*}
+    \norm{u}_1^2\leq \inf_{v\in V_h}\frac{(\mu+(\lambda+\mu) d^2)}{\mu}\norm{u-v_h}_1^2.
+   \end{align*}
+   by using the identity
+   \begin{align*}
+    (\strain u, \strain v) = (\nabla u, \nabla v) + (\nabla \cdot u, \nabla \cdot v).
+   \end{align*}
+
+   \item A more refined estimate would be
+   \begin{align*}
+    \norm{u-u_h}_1^2\leq \inf_{v\in V_h}\frac{(1+C_P^2)}{2\mu c_K^2}\left(2\mu\norm{u-v_h}_1^2+\lambda \norm{\nabla\cdot (u-v_h)}_0^2\right).
+   \end{align*}
+   Choosing a divergence-preserving interpolation operator, the second term vanishes.
+  \end{enumerate}
+\end{solution}
 \end{Problem}
 
 \begin{example}
