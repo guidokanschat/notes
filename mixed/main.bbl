@@ -229,6 +229,25 @@
   \field{year}{1986}
 \endentry
 
+\entry{Yosida80}{book}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Yosida}{Y.}%
+     {K.}{K.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Springer}%
+  }
+  \strng{namehash}{YK1}
+  \strng{fullhash}{YK1}
+  \field{labelalpha}{Yos80}
+  \field{sortinit}{Y}
+  \field{title}{Functional Analysis}
+  \field{year}{1980}
+\endentry
+
 \lossort
 \endlossort
 

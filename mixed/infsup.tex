@@ -147,57 +147,9 @@ The question of well-posedness in finite dimensions can be answered by:
     \norm{Au}^2 \ge \gamma \norm{u}^2 \qquad\forall u\in V.
   \end{gather*}
   But while this is a condition we can easily write down for matrices
-  and operators, it does not work that well for bilinear forms. For
-  those, we have the condition which was introduced in this form by
-  Nečas. It implies that the linear form on $V$, defined by $a(u,\cdot)$
-  is bounded from below.
-  % It turns out, if we go this far, we can even consider bilinear forms
-  % $a(\cdot,\cdot)$ on two different spaces $V$ and $W$ with an associated
-  % operator $A: V\to W^*$.
+  and operators, it does not work that well for bilinear forms. Thus,
+  we first look at the singular value decomposition.
 \end{intro}
-
-\begin{Definition}{infsup1}
-  A bilinear form $a(\cdot,\cdot)$ on $V\times W$ is said to admit the
-  \define{inf-sup condition} or is called \define{inf-sup stable}, if
-  there holds
-  \begin{gather}
-    \label{eq:infsup:1}
-    \inf_{u\in V} \sup_{w\in W} \frac{a(u,w)}{\norm{u}_V\norm{w}_W}
-    \ge \gamma > 0.
-  \end{gather}
-\end{Definition}
-
-\begin{remark}
-  In this finite dimensional exposition, is clear that $V$ and $W$
-  must have the same dimension, and thus $V=W=\R^n$. This will be
-  different, when we consider infinite dimensional spaces and indeed
-  consider different spaces $V$ and $W$.
-\end{remark}
-
-\begin{Lemma}{infsup2}
-  The following statements are equivalent to the inf-sup
-  condition~\eqref{eq:infsup:1}:
-  \begin{gather}
-    \label{eq:infsup:2}
-    \forall u\in V \;\exists w\in W \;:\; a(u,w) \ge \gamma \norm{u}_V\norm{w}_W
-  \end{gather}
-  \begin{gather}
-    \label{eq:infsup:3}
-    \forall u\in V
-    \;\exists w\in W \;:\;
-    \left\{
-    \arraycolsep0.3ex
-    \begin{array}{rcl}
-      \norm{w}_W &\le&\norm{u}_V\\
-      a(u,w) &\ge& \gamma \norm{u}_V^2
-    \end{array}
-    \right.
-  \end{gather}
-\end{Lemma}
-
-\begin{Problem}{inf-sup-equivalence}
-  Prove \blockref{Lemma}{infsup2}.
-\end{Problem}
 
 \input{svd}
 
@@ -309,6 +261,62 @@ The question of well-posedness in finite dimensions can be answered by:
   clearly has its minimum if $\alpha_1 = \dots=\alpha_{r-1} = 0$.
 \end{proof}
 
+\begin{Definition}{infsup1}
+  A bilinear form $a(\cdot,\cdot)$ on $V\times W$ is said to admit the
+  \define{inf-sup condition} or is called \define{inf-sup stable}, if
+  there holds
+  \begin{gather}
+    \label{eq:infsup:1}
+    \inf_{u\in V} \sup_{w\in W} \frac{a(u,w)}{\norm{u}_V\norm{w}_W}
+    \ge \gamma > 0.
+  \end{gather}
+\end{Definition}
+
+\begin{remark}
+  In this finite dimensional exposition, is clear that $V$ and $W$
+  must have the same dimension, and thus $V=W=\R^n$. This will be
+  different, when we consider infinite dimensional spaces and indeed
+  consider different spaces $V$ and $W$.
+\end{remark}
+
+\begin{Lemma}{infsup2}
+  The following statements are equivalent to the inf-sup
+  condition~\eqref{eq:infsup:1}:
+  \begin{gather}
+    \label{eq:infsup:2}
+    \forall u\in V \;\exists w\in W \;:\; a(u,w) \ge \gamma \norm{u}_V\norm{w}_W
+  \end{gather}
+  \begin{gather}
+    \label{eq:infsup:3}
+    \forall u\in V
+    \;\exists w\in W \;:\;
+    \left\{
+    \arraycolsep0.3ex
+    \begin{array}{rcl}
+      \norm{w}_W &\le&\norm{u}_V\\
+      a(u,w) &\ge& \gamma \norm{u}_V^2
+    \end{array}
+    \right.
+  \end{gather}
+  \begin{gather}
+    \label{eq:infsup:3a}
+    \forall u\in V
+    \;\exists w\in W \;:\;
+    \left\{
+    \arraycolsep0.3ex
+    \begin{array}{rcl}
+      \gamma \norm{w}_W &\le&\norm{u}_V\\
+      Aw &=& u
+    \end{array}
+    \right.
+  \end{gather}
+\end{Lemma}
+
+\begin{Problem}{inf-sup-equivalence}
+  Prove \blockref{Lemma}{infsup2}.
+\end{Problem}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Infinite dimensional Hilbert spaces}
@@ -336,17 +344,23 @@ The question of well-posedness in finite dimensions can be answered by:
     \label{eq:infsup:7}
     \begin{split}
     W^0 &= \bigl\{f\in V^* \big| \scal(f,w)_{V^*\times V} = 0
-    \;\forall\,w\in W\bigr\},
+    \quad\forall\,w\in W\bigr\},
     \\
     W^\perp &= \bigl\{v\in V \big| \scal(v,w)_{V} = 0
-    \;\forall\,w\in W\bigr\}.
+    \quad\forall\,w\in W\bigr\}.
     \end{split}
+  \end{gather}
+  For a subspace $U\subset V^*$, we define its polar space
+  \begin{gather}
+    U^0 = \bigl\{v\in V \big| \scal(u,v)_{V^*\times V} = 0
+    \quad\forall\,u\in U\bigr\}
   \end{gather}
 \end{Definition}
 
 \begin{Lemma}{orthogonal-closed}
   The polar space $W^0$ and the orthogonal complement $W^\perp$ of a
-  subspace $W\subset V$ are both closed.
+  subspace $W\subset V$ are both closed. So is the polar space $U^0$
+  of a subspace $U\subset V^*$.
 \end{Lemma}
 
 \begin{proof}
@@ -365,7 +379,7 @@ The question of well-posedness in finite dimensions can be answered by:
     \phi_w\colon V &\to \R,\\
     v&\mapsto \scal(v,w),
   \end{align*}
-  is continuous. The argument continues as above.
+  is continuous. The argument continues as above. Similar for $U^0$.
 \end{proof}
 
 \begin{Theorem}{orthogonal-complement}
@@ -375,38 +389,267 @@ The question of well-posedness in finite dimensions can be answered by:
 \end{Theorem}
 
 \begin{proof}
-  Clearly, $\overline{W}^\perp \subset W^\perp$ since $W\subset\overline{W}$.
-  
+  Clearly, $\overline{W}^\perp \subset W^\perp$ since
+  $W\subset\overline{W}$. Let now $u\in W^\perp$. Then, $\phi =
+  \scal(u,\cdot)$ is a continuous linear functional on $V$. Therefore,
+  if a sequence $w_n \subset W$ converges to $w\in \overline{W}$, we
+  have
+  \begin{gather*}
+    \scal(u,w) = \lim_{n\to\infty} \scal(u,w_n) = 0.
+  \end{gather*}
+  Hence, $u\in \overline{W}^\perp$ and $W^\perp = \overline{W}^\perp$.
 
   Now, the ``only if'' follows by the fact, that if $W$ is not
   closed, there is an element $w\in \overline{W}$ but not in $W$ such that
   $\scal(w,u)=0$ for all $u\in W^\perp$. Thus, $w\not\in W^\perp$ and
   consequently $w\not\in W^\perp \oplus W$.
 
+  Let now $W$ be closed. We show that there is a unique decomposition
+  \begin{gather}
+    \label{eq:infsup:8}
+    v = w + u,\qquad w\in W, \;u\in W^\perp,
+  \end{gather}
+  which is equivalent to $V = W \oplus W^\perp$. Uniqueness follows,
+  since
+  \begin{gather*}
+    v = w_1+u_1 = w_2+u_2
+  \end{gather*}
+  implies that for any $y\in V$
+  \begin{gather*}
+    0 = \scal(w_1-w_2+u_1-u_2,y) = \scal(w_1-w_2,y) + \scal(u_1-u_2,y).
+  \end{gather*}
+  Choosing $y=u_1-u_2$ and $w_1-w_2$ in turns, we see that one of the
+  inner products vanishes for orthogonality and the other implies that
+  the difference is zero.
 
+  If $v\in W$, we choose $w=v$ and $u=0$. For $v\not\in W$, we prove
+  existence by considering that due to the closedness of $W$ there holds
+  \begin{gather*}
+    d=\inf_{w\in W} \norm{v-w} >0.
+  \end{gather*}
+  Let $w_n$ be a minimizing sequence. Using the parallelogram identity
+  \begin{gather*}
+    \norm{a+b}^2+\norm{a-b}^2 = 2\norm{a}^2+2\norm{b}^2,
+  \end{gather*}
+  we prove that $\{w_n\}$ is a Cauchy sequence by
+  \begin{align*}
+    \norm{w_m-w_n}^2 &= \norm{(v-w_n)-(v-w_m)}^2\\
+    &= 2\norm{v-w_n}^2+2\norm{v-w_m}^2-\norm{2v-w_m-w_n}^2\\
+    &= 2\norm{v-w_n}^2+2\norm{v-w_m}^2-4\norm*{v-\frac{w_m+w_n}2}^2\\
+    &\le 2\norm{v-w_n}^2+2\norm{v-w_m}^2-4d^2,
+  \end{align*}
+  since $(w_m+w_n)/2\in W$ and $d$ is the infimum. Now we use the
+  minimizing property to obtain
+  \begin{gather*}
+    \lim_{m,n\to\infty}\norm{w_m-w_n}^2 = 2d^2-2d^2 -4d^2=0.
+  \end{gather*}
+  By completeness of $V$, $w=\lim w_n$ exists and by the closedness of
+  $W$, we have $w\in W$. Let $u=v-w$. By continuity of the norm, we
+  have $\norm{u}=d$. It remains to show that $u\in W^\perp$. To this
+  end, we introduce the variation $w+\epsilon \tilde w$ with $\tilde
+  w\in W$ to obtain
+  \begin{align*}
+    d^2 &\le \norm{v-w-\epsilon \tilde w}^2\\
+    &= \norm{u}^2-2\epsilon\scal(u,\tilde w)+\epsilon^2 \norm{\tilde w},
+  \end{align*}
+  implying for any $\epsilon>0$
+  \begin{gather*}
+    0\le-2\epsilon\scal(u,\tilde w)+\epsilon^2 \norm{\tilde w},
+  \end{gather*}
+  which requires $\scal(u,\tilde w) = 0$.
 \end{proof}
 
-\begin{Theorem}{infsup-well-posedness}
-  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form such
-  that the inf-sup condition~\eqref{eq:infsup:1} holds.
-  % \begin{gather}
-  %   a(u,w) \le M \norm{u}_V \norm{w}_W.
-  % \end{gather}
-  Then, the problem finding $u\in V$ such that
+\begin{Definition}{orthogonal-projection}
+  Let $V$ be a Hilbert space and $W\subset W$ be a closed
+  subspace. For a vector $v\in V$, let $v=w+u$ be the unique
+  decomposition with $w\in W$ and $u\in W^\perp$. Then we call $w$ and
+  $u$ the \define{orthogonal projection}s of $v$ into $W$ and $W^\perp$,
+  repsectively. We write
+  \begin{gather*}
+    \Pi_W = w, \qquad \Pi_{W^\perp} = u.
+  \end{gather*}
+\end{Definition}
+
+\begin{Lemma}{polar-orthogonal-hilbert}
+  Let $V$ be a Hilbert space and $W\subset W$ be a closed
+  subspace. Then, the polar space $W^0\subset V^*$ and the orthogonal
+  space $W^\perp$ can be isometrically identified by \putindex{Riesz
+    representation}.
+\end{Lemma}
+
+\begin{proof}
+  For every $f$ in the
+  dual of $W^\perp$, define $g\in V^*$ by
+  \begin{gather*}
+    \scal(g,v)_{V^*\times V} =
+    \scal(f,\Pi_{V^\perp}v)_{(V^\perp)^*\times V^\perp}.
+  \end{gather*}
+  Clearly, $g(v)=0$ for $v\in W$, therefore $g\in W^0$.
+\end{proof}
+
+% \begin{Corollary}
+  
+% \end{Corollary}
+
+
+\begin{Theorem}{closed-range}
+  Let $V,W$ be Hilbert spaces and $A\colon V\to W$ a continuous linear
+  operator. Then, the following statements are equivalent:
   \begin{gather}
-    a(u,w) = f(w) \qquad\forall w\in W,
-  \end{gather}
-  has a unique solution and
-  \begin{gather}
-    \norm{u}_V \le \frac1\gamma \norm{f}_{W^*}
+    \label{eq:infsup:9}
+    \begin{split}
+      \range A &\text{is closed in } W,\\
+      \range{A^T} &\text{is closed in } V^*,\\
+      \range A &= \ker{A^T}^0,\\
+      \range{A^T} &= \ker{A}^0.
+    \end{split}
   \end{gather}
 \end{Theorem}
+
+\begin{remark}
+  This is the famous \emph{\putindex{closed range theorem}} by Banach.
+  It actually holds under weaker assumptions, for instance $V,W$ only
+  Banach spaces. The proof can be found for instance
+  in~\cite[p.~205--209]{Yosida80}.
+\end{remark}
+
+\begin{Theorem}{open-mapping}
+  Let $A\colon V\to W$ be continuous and surjective. Then, the image
+  $A(U)\subset W$ of any open set $U\subset V$ is open.
+\end{Theorem}
+
+\begin{remark}
+  This is the \emph{\putindex{open mapping theorem}} by Banach. The
+  proof can be found for instance in~\cite[p.75--76]{Yosida80}.
+\end{remark}
+
+\begin{Lemma}{closed-infsup}
+  Let $A\colon V\to W$ be continuous. Then, $\range A$ is closed in
+  $W^*$ if and only if there exists $\gamma>0$ such that
+  \begin{gather}
+    \label{eq:infsup:10}
+    \forall \,w\in W\;
+    \exists \,v\in V\quad
+    Av = w
+    \;\wedge\;
+    \gamma \norm{v}_V \le \norm{w}_W.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  We first show that the inf-sup condition~\eqref{eq:infsup:10}
+  implies $\range A$ closed. To this end, let $\{w_n\}$ be a Cauchy
+  sequence in $\range A$ converging to a point $w\in W$. Thus, there
+  is a sequence $\{v_n\}$ in $V$ such that $Av_n = w_n$ and
+  $\gamma \norm{v_n} \le \norm{w_n}$. Hence,
+  \begin{gather*}
+    \norm{v_m-v_n}_V \le \frac1\gamma \norm{w_m-w_n}_W,
+  \end{gather*}
+  and $\{v_n\}$ is a Cauchy sequence in $V$. Therefore, $v_n\to v\in
+  V$ and due to continuity of $A$ we obtain $Av=w$ and thus $w\in
+  \range A$.
+
+  Conversely, let $\range A$ be closed in $W$. Thus, it is a Banach
+  space and the \putindex{open mapping theorem} applies to $A\colon
+  V\to\range A$. We map the open unit ball $B_1(0)\subset V$ and
+  obtain that $A(B_1(0))$ is open in $\range A$, implying that there
+  is an open ball $B_\delta(0) \subset A(B_1(0))$. This is sufficient
+  to construct $v$:
+
+  Let $w\in\range A$. Then,
+  \begin{gather*}
+    \tilde w\frac\delta2 \frac{w}{\norm{w}} \in B_\delta(0) \subset A(B_1(0)).
+  \end{gather*}
+  Hence, there is $v\in V$ with $\norm{v}<1$ such that $Av=\tilde w$,
+  which proves the lemma.
+\end{proof}
+
+\begin{Theorem}{infsup-well-equivalence}
+  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form such that
+  \begin{gather}
+    a(v,w) \le M \norm{v}_V \norm{w}_W,
+  \end{gather}
+  and $A\colon V\to W^*$ its associated operator.
+  Then, the following statements are equivalent:
+  \begin{enumerate}
+  \item There exists $\gamma>0$ such that
+    \begin{gather}
+      \label{eq:infsup:11}
+      \inf_{w\in W}\sup_{v\in V}
+      \frac{a(v,w)}{\norm{v}_V\norm{w}_W}
+      \ge \gamma.
+    \end{gather}
+  \item The operator $A^T\colon W\to \ker A^0$ is an isomorphism and
+    \begin{gather}
+      \label{eq:infsup:12}
+      \norm{A^Tw}_{V^*} \ge \norm{w}_{W} \qquad\forall w\in W.
+    \end{gather}
+  \item The operator $A\colon \ker A^\perp\to W^*$ is an isomorphism
+    and
+    \begin{gather}
+      \label{eq:infsup:13}
+      \norm{Av}_{W^*} \ge \gamma\norm{v}_V\qquad \forall v\in \ker A^\perp.
+    \end{gather}
+  \end{enumerate}
+\end{Theorem}
+
+\begin{proof}
+  First, we show the equivalence of the first two statements. Let us
+  rephrase the inf-sup condition to
+  \begin{gather*}
+    \norm{A^T w}_{V^*}
+    = \sup_{v\in V}\frac{\scal(A^T w,v)}{\norm{v}_V}
+    = \sup_{v\in V}\frac{a(v,w)}{\norm{v}_V}
+    \ge \gamma\norm{w} \qquad
+    \forall w\in W.
+  \end{gather*}
+  Thus, equations~\eqref{eq:infsup:11} and~\eqref{eq:infsup:12} are
+  equivalent and we have already proven that the second statement
+  implies the first. It remains to show the $A^T$ is an isomorphism
+  from $W$ onto $\ker A^0$. Equation~\eqref{eq:infsup:12} implies that
+  $A^T\colon W \to \range{A^T}$ is an isomorphism and its inverse is
+  bounded by $1/\gamma$ (multiply both sides by $A^{-1}$). Using
+  \blockref{Lemma}{closed-infsup}, we obtain that $\range{A^T}$ is
+  closed in $V^*$ and the \putindex{closed range theorem} settles the
+  issue.
+
+  In order to prove equivalence of the second and third statement, we
+  use \blockref{Lemma}{polar-orthogonal-hilbert} to isometrically
+  identify $(\ker A^\perp)^*$ with $\ker A^0$. Thus, $A$ is an
+  isomorphism from $\ker A^\perp$ onto $W$ if and only if $A^T$ is an
+  isomorphism from $W$ onto $(\ker A^\perp)^* = \ker A^0$. and
+  \begin{gather*}
+    \norm{A}_{W^*\to \ker A^\perp} = \norm{A^T}_{\ker A^0\to W}.
+  \end{gather*}
+\end{proof}
+
+\begin{Corollary}{infsup-well-posedness}
+  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form such that
+  \begin{gather}
+    a(v,w) \le M \norm{v}_V \norm{w}_W.
+  \end{gather}
+  Let the inf-sup-condition
+  \begin{gather*}
+    \inf_{w\in W}\sup_{v\in V}
+    \frac{a(v,w)}{\norm{v}_V\norm{w}_W}
+    \ge \gamma > 0    
+  \end{gather*}
+  hold.  Then, the problem finding $w\in W$ such that
+  \begin{gather*}
+    a(v,w) = f(v) \qquad\forall v\in V,
+  \end{gather*}
+  has a unique solution and
+  \begin{gather}
+    \norm{w}_W \le \frac1\gamma \norm{f}_{V^*}
+  \end{gather}
+\end{Corollary}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The inf-sup condition for mixed problems}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 
 %%% Local Variables: 
