@@ -464,7 +464,7 @@ The question of well-posedness in finite dimensions can be answered by:
   subspace. For a vector $v\in V$, let $v=w+u$ be the unique
   decomposition with $w\in W$ and $u\in W^\perp$. Then we call $w$ and
   $u$ the \define{orthogonal projection}s of $v$ into $W$ and $W^\perp$,
-  repsectively. We write
+  respectively. We write
   \begin{gather*}
     \Pi_W = w, \qquad \Pi_{W^\perp} = u.
   \end{gather*}
@@ -525,7 +525,7 @@ The question of well-posedness in finite dimensions can be answered by:
 
 \begin{Lemma}{closed-infsup}
   Let $A\colon V\to W$ be continuous. Then, $\range A$ is closed in
-  $W^*$ if and only if there exists $\gamma>0$ such that
+  $W$ if and only if there exists $\gamma>0$ such that
   \begin{gather}
     \label{eq:infsup:10}
     \forall \,w\in W\;
@@ -684,6 +684,26 @@ The question of well-posedness in finite dimensions can be answered by:
   \end{gather}  
 \end{Theorem}
 
+\begin{remark}
+  If we compare \blockref{Theorem}{infsup-well-posedness2} with
+  \blockref{Corollary}{infsup-well-posedness1}, we see that the only
+  difference lies in the fact that the second inf-sup condition
+  ensures surjectivity of $A$ by injectivity of $A^T$. In some cases
+  it may be difficult to prove both inf-sup conditions. Then, it is
+  sufficient to prove one inf-sup condition, say the first, and then
+  only
+  \begin{gather*}
+     \inf_{v\in V}\sup_{w\in W}
+    \frac{a(v,w)}{\norm{v}_V\norm{w}_W} > 0,
+  \end{gather*}
+  thus, injectivity of $A^T$. Although we verify less than the
+  assumptions of \blockref{Theorem}{infsup-well-posedness2}, the
+  closed range theorem saves us from the additional work. We further
+  note that this notion is symmetric between $A$ and $A^T$, that is,
+  it is sufficient to prove inf-sup for either operator and
+  injectivity for the other.
+\end{remark}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The inf-sup condition for mixed problems}
@@ -693,11 +713,71 @@ The question of well-posedness in finite dimensions can be answered by:
 \begin{intro}
   In the previous section, we have developed a framework for
   well-posedness of problems which are not $V$-elliptic. In principle,
-  this theorey can be applied to the bilinear form $\mathcal
-  A((u,p),(v,q))$ as a whole. On the other hand, we can formally split
-  the solution of a constrained minimization problem into the reduced
-  problem and then computing the Lagrange multiplier. 
+  this theory can be applied to the bilinear form
+  $\mathcal A((u,p),(v,q))$ as a whole. On the other hand, we can
+  formally split the solution of a constrained minimization problem
+  into the reduced problem and then computing the Lagrange multiplier,
+  which more clearly exhibits the relation of the two spaces $V$ and
+  $Q$ involved in the mixed formulation. Here are the resulting
+  theorems.
 \end{intro}
+
+\begin{Theorem}{infsup-mixed1}
+  Let $V$ and $Q$ be Hilbert spaces and let the mixed bilinear form
+  \begin{gather*}
+        \mathcal A\mixedform(u,p,v,q)
+      = a(u,v) + b(v,p) + b(u,q)
+  \end{gather*}
+  be defined and bounded for any $u,v\in V$ and $p,q\in Q$.
+  Then, the problem
+  \begin{gather*}
+    \mathcal A\mixedform(u,p,v,q) = \scal(f,v)+\scal(g,q)
+    \quad\forall v\in V, q\in Q,
+  \end{gather*}
+  has a unique solution for any $f\in V^*$ and any $g\in Q^*$ if and
+  only if there exists $\gamma>0$ such that
+  \begin{gather*}
+    \forall
+    \begin{bmatrix}
+      u\in V\\p\in Q
+    \end{bmatrix}
+    \;
+    \exists
+    \begin{bmatrix}
+      v\in V\\q\in Q
+    \end{bmatrix}
+    \colon
+    \quad
+    \mathcal A\mixedform(u,p,v,q) \ge \gamma
+    \norm{(u,p)}_{V\times Q}\norm{(v,q)}_{V\times Q},
+  \end{gather*}
+  and vice versa.
+\end{Theorem}
+
+\begin{proof}
+  Straight application of \blockref{Theorem}{infsup-well-posedness2}.
+\end{proof}
+
+\begin{Theorem}{infsup-mixed2}
+  Let $V$ and $Q$ be Hilbert spaces and let
+  \begin{gather}
+    \begin{split}
+      \ker B &= \bigl\{v\in V \big| b(v,q) = 0 \;\forall q\in Q\bigr\}.
+    \end{split}
+  \end{gather}
+  Then, the problem finding $(u,p)\in V\times Q$ such that
+  \begin{gather}
+    a(u,v) + b(v,p) + b(u,q) = f(v)+g(q) \quad\forall v\in V, q\in Q,
+  \end{gather}
+  is well-posed if and only if the problem finding $u\in \ker B$ such that
+    \begin{gather}
+      a(u,v) = f(v) \quad\forall v\in \ker B
+    \end{gather}
+    is well-posed and there is a positive constant $\beta$ such that
+    \begin{gather}
+      \inf_{q\in Q}\sup_{v\in V} \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} \ge \beta.
+    \end{gather}
+\end{Theorem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
