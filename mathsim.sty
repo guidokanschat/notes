@@ -140,6 +140,10 @@
 \def\vec#1{\mathfrak{#1}}
 
 % Spaces, norms, and forms
+\def\ker#1{\operatorname{ker}(#1)}
+\def\range#1{\operatorname{im}(#1)}
+\def\polar#1{#1^0}
+\def\ortho#1{#1^\perp}
 \def\pol{\mathbb P} % Polynomraum P_n
 \DeclarePairedDelimiterX\@scal[2]{\langle}{\rangle}{#1,#2}
 \DeclarePairedDelimiterX\@Scal[2]{\langle\!\langle}{\rangle\!\rangle}{#1,#2}
@@ -164,8 +168,6 @@
 \def\strain#1{\epsilon(#1)}
 \def\supp{\operatorname{supp}}
 \def\esssup{\operatorname{ess sup}}
-\def\ker#1{\operatorname{ker}(#1)}
-\def\range#1{\operatorname{im}(#1)}
 % differential quotients for integrals
 \let\d\partial
 \def\diffd{\mathrm{d}}

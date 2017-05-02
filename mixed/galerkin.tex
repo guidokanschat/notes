@@ -173,7 +173,7 @@ We introduce the mixed discrete problem: find $(u_h,p_h)\in
   \end{gather}
   By the third condition in
   \blockref{Theorem}{infsup-well-equivalence}, there is a unique
-  $z_h\in \ker{B_h}^\perp$ such that
+  $z_h\in \ortho{\ker{B_h}}$ such that
   \begin{gather*}
     B_h z_h = B_h(u-v_h),\qquad \forall v_h\in V_h,
   \end{gather*}
@@ -315,7 +315,7 @@ We introduce the mixed discrete problem: find $(u_h,p_h)\in
   constant $\tilde\beta>0$. Then, for any $v\in V$ let
   $g(.) = b(v,.) \in Q_h^*$. By
   \blockref{Theorem}{infsup-well-equivalence}, there is a unique
-  element $\Pi_{V_h} v \in \ker{B_h}^\perp$ such that
+  element $\Pi_{V_h} v \in \ortho{\ker{B_h}}$ such that
   \begin{gather*}
     b(\Pi_{V_h}v , q_h) = b(v,q_h),\qquad\forall q_h\in Q_h
   \end{gather*}
