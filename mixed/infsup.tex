@@ -313,7 +313,71 @@ The question of well-posedness in finite dimensions can be answered by:
 \end{Lemma}
 
 \begin{Problem}{inf-sup-equivalence}
-  Prove \blockref{Lemma}{infsup2}.
+  Prove Lemma 2.1.16.
+\begin{solution}
+  We have to prove the following statements are equivalent to the inf-sup condition:
+  \begin{align}
+    \forall u\in V \;\exists w\in W \;:\; a(u,w) \ge \gamma \norm{u}_V\norm{w}_W     \tag{1}
+  \end{align}
+  \begin{align}
+   \begin{aligned}
+    \forall u\in V \;\exists w\in W \;:\;
+    \begin{cases}
+      \norm{w}_W \le\norm{u}_V\\
+      a(u,w) \ge \gamma \norm{u}_V^2
+    \end{cases}
+   \end{aligned}
+   \tag{2}
+  \end{align}
+  \begin{align}
+   \begin{aligned}
+    \forall u\in V \;\exists w\in W \;:\;
+    \begin{cases}
+      \gamma \norm{w}_W \le \norm{u}_V\\
+      Aw = u
+      \end{cases}
+  \end{aligned}
+      \tag{3}
+  \end{align}
+  The inf-sup condition reads
+  \begin{align}
+   \inf_{u\in V} \sup_{w\in W} \frac{a(u,w)}{\norm{u}_V\norm{w}_W} \ge \gamma \tag{IS}
+  \end{align}
+
+  $(IS)\Rightarrow(3)$\\
+  The inf-sup condition is equivalent to $A: ker(A)^\perp\to V^*$ being an isomorphism.
+  By the Riesz representation theorem there exists for a given $u\in V$ a $w\in W$ such that
+  $Aw=Ju$ where $J$ is the Riesz map. Hence, it holds
+  \begin{align*}
+a(u,w)=\langle A w, u\rangle = \langle J u, u\rangle = \norm{u}_V^2.
+  \end{align*}
+ Due to $w\in ker(A)^\perp$, $A^{-1}$ is bounded and
+ \begin{align*}
+ \norm{w}_W=\norm{A^{-1}u}_V\leq \frac{1}{\gamma}\norm{u}_V.
+  \end{align*}
+
+  $(3)\Rightarrow(2)$ \\
+  Define $\tilde{w}=\gamma w$. Then,
+  \begin{align*}
+a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
+  \end{align*}
+  and
+  \begin{align*}
+\norm{\tilde{w}}_W=\gamma \norm{w}_W\leq\norm{u}_V
+  \end{align*}
+
+  $(2)\Rightarrow(1)$ \\
+  \begin{align*}
+  a(u,w) \ge \gamma \norm{u}_V^2 \ge \gamma \norm{u}_V \norm{w}_W
+  \end{align*}
+
+  $(1)\Rightarrow(IS)$ \\
+  \begin{align*}
+  &\forall u\in V \exists w\in W: a(u,w)\ge \gamma \norm{u}_V\norm{w}_W\\
+  &\Rightarrow \forall u\in V: \sup_{w\in W} \frac{a(u,w)}{\norm{w}_W}\ge \gamma \norm{u}_V\\
+  &\Rightarrow \inf_{u\in V}\sup_{w\in W} \frac{a(u,w)}{\norm{w}_W\norm{u}_V}\ge \gamma
+  \end{align*}
+\end{solution}
 \end{Problem}
 
 
@@ -498,8 +562,8 @@ The question of well-posedness in finite dimensions can be answered by:
   \begin{gather}
     \label{eq:infsup:9}
     \begin{split}
-      \range A &\text{is closed in } W,\\
-      \range{A^T} &\text{is closed in } V^*,\\
+      \range A &\text{ is closed in } W,\\
+      \range{A^T} &\text{ is closed in } V^*,\\
       \range A &= \ker{A^T}^0,\\
       \range{A^T} &= \ker{A}^0.
     \end{split}

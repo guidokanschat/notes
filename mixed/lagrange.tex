@@ -91,7 +91,7 @@
   the pair $(u,p)\in V\times Q$ is a stationary point of
   the \define{Lagrange functional}
   \begin{gather}
-    \mathscr L(v,q) = \tfrac12 a(v,v) - f(v) + b(v,q).
+    \mathscr{L}(v,q) = \tfrac12 a(v,v) - f(v) + b(v,q).
   \end{gather}
   Here, $p\in Q$ is called the \define{Lagrange multiplier}.
 \end{Theorem}
@@ -107,7 +107,36 @@
     \end{matrix}
   \end{gather*}
   To this end, recall the type of objects that derivatives of linear
-  functionals are and compute the derivatives of $\mathscr L$.
+  functionals are and compute the derivatives of $\mathscr{L}$.
+\begin{solution}
+Remember the Lagrange functional
+\begin{align*}
+ \mathscr{L}(v,q) = \tfrac12 a(v,v) - f(v) + b(v,q).
+\end{align*}
+For an extremal point $u$ of the constrained problem,
+there has to exist an $p\in Q$ such that
+\begin{align*}
+  \mathscr{L}(u,p) = \min_{(v,q)\in V\times Q} \mathscr{L}(v,q).
+\end{align*}
+In particular, it has to hold
+\begin{align*}
+  \mathscr{L}(u+\epsilon_v v,p+\epsilon_q q) -\mathscr{L}(u,p)\in\mathcal{O}(\epsilon_v\epsilon_q+\epsilon_v^2+\epsilon_q^2).
+\end{align*}
+for all $(v,q)\in\{(v,q)\in V\times Q: \norm{v}_V=1, \norm{q}_Q=1\}$.
+In fact,
+\begin{align*}
+ &\mathscr{L}(u+\epsilon_v v,p+\epsilon_q q) - \mathscr{L}(u,p)\\
+ &=\tfrac12 a(u+\epsilon_v,u+\epsilon_v) - f(u+\epsilon_v) + b(u+\epsilon_v,p+\epsilon_q q)\\&\quad
+   -\tfrac12 a(u,u) + f(u) - b(u,p)\\
+   &=\tfrac12 a(\epsilon_v v,u)+a(u,\epsilon_v v)+a(\epsilon_v,\epsilon_v) - f(\epsilon_v v)\\&\quad + b(\epsilon_v,p )+b(u,\epsilon_q q)+b(\epsilon_v v,\epsilon_q q)\\
+   &=a(u, \epsilon_v v)-f(\epsilon_v v) + b(\epsilon_v,p )+b(u,\epsilon_q q)+\mathcal{O}(\epsilon_v\epsilon_q+\epsilon_v^2+\epsilon_q^2).
+\end{align*}
+and this implies
+\begin{align*}
+      a(u,v) + b(v,p)  &= f(v) &&\forall v\in V, \\
+               b(u,q)  &= 0    &&\forall q\in Q.
+\end{align*}
+\end{solution}
 \end{Problem}
 
 \begin{Corollary}{stokes-lagrange}
