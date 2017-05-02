@@ -831,17 +831,71 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
   \end{gather}
   Then, the problem finding $(u,p)\in V\times Q$ such that
   \begin{gather}
-    a(u,v) + b(v,p) + b(u,q) = f(v)+g(q) \quad\forall v\in V, q\in Q,
+    a(u,v) + b(v,p) + b(u,q) = f(v) \quad\forall v\in V, q\in Q,
   \end{gather}
   is well-posed if and only if the problem finding $u\in \ker B$ such that
     \begin{gather}
       a(u,v) = f(v) \quad\forall v\in \ker B
     \end{gather}
-    is well-posed and there is a positive constant $\beta$ such that
+    is well-posed for any $f\in V^*$ and there is a positive constant
+    $\beta$ such that
     \begin{gather}
       \inf_{q\in Q}\sup_{v\in V} \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} \ge \beta.
     \end{gather}
 \end{Theorem}
+
+\begin{proof}
+  By requiring well-posedness of the reduced problem, $u\in V$ is
+  well-determined and bounded by the data $f\in V^*$ without knowledge
+  of the Lagrange multiplier. Hence, with $u\in V$ given and
+  $b(u,q) = 0$, the problem of determining the Lagrange multiplier $p$
+  reduces to
+  \begin{gather}
+    b(v,p) = f(v) - a(u,v), \qquad\forall v\in V.
+  \end{gather}
+  Applying \blockref{Corollary}{infsup-well-posedness1} to the
+  bilinear form $b(.,.)$, we deduce that this equation has a unique
+  solution $p\in Q$ if and only if $f(v)-a(u,v) \in \ker B^0$, which
+  is the reduced problem.
+\end{proof}
+
+\begin{remark}
+  Since $V$ is a Hilbert space, the decomposition
+  $V = \ker B \oplus \ker B^\perp$ is uniquely determined and there is
+  a corresponding decomposition $V^* = \ker B^0+(\ker B^\perp)^0$,
+  such that $f = f^0+f^\perp$ above. The way we solve the reduced
+  problem first and then compute the Lagrange multiplier implies that
+  the solution $u$ only depends on $f^\perp$, while the Lagrange
+  multiplier $p$ only depends on $f^0$.
+\end{remark}
+
+\begin{remark}
+  We have imposed well-posedness of the reduced problem only in an
+  abstract way. Depending on $a(.,.)$ we can fomulate two conditions:
+  ellipticity on $\ker B$ or inf-sup stability on $\ker B$. Indeed,
+  most problems considered in this class will have symmetric bilinear
+  forms $a(.,.)$, such that ellipticity serves as our usual
+  assumption.  In these cases, not that $V$-ellipticity already
+  implies the well-posedness on $\ker B$.
+\end{remark}
+
+\begin{Problem}{inhomogeneous-continuity}
+  Show that \blockref{Theorem}{infsup-mixed2} can be extended to the
+  case with right hand side $f(v)+g(q)$ with $g\in Q^*$.
+
+\begin{solution}
+  \begin{enumerate}
+  \item Due to \blockref{Theorem}{infsup-well-equivalence}, the
+    operator $B: V\to Q^*$ is surjective and thus, there exists
+    $u_g\in V$ such that
+    \begin{gather*}
+      b(u_g,q) = q(q) \quad\forall q\in Q.
+    \end{gather*}
+  \item The function $u_0 = u-u_g$ solves a problem as in
+    \blockref{Theorem}{infsup-mixed2}.
+  \end{enumerate}
+\end{solution}
+\end{Problem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
