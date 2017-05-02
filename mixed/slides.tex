@@ -14,6 +14,8 @@
 \def\mylabel#1{}
 \let\label\mylabel
 %\renewcommand{\label}[1]{}
+\renewcommand{\eqref}[1]{(\ref{#1})}
+\renewcommand{\define}[1]{\textbf{#1}}
 
 \begin{document}
 \frame{\tableofcontents}
@@ -70,7 +72,6 @@
 \frame {\input {blocks/Problem-unbounded-inverse.tex}}
 \frame {\input {blocks/Problem-lax-milgram-not-applicable.tex}}
 \frame {\input {blocks/Theorem-la-invertible.tex}}
-%\frame {\input {blocks/Definition-infsup1.tex}
 \frame {\input {blocks/Theorem-svd.tex}}
 \frame {\input {blocks/Corollary-svd-order.tex}}
 \frame {\input {blocks/Definition-ker-range-rn.tex}
@@ -78,6 +79,7 @@
 \frame {\input {blocks/Lemma-ker-coker-rn.tex}
 \input {blocks/Corollary-ker-coker-iso.tex}
 \input {blocks/Corollary-svd-infsup.tex}}
+\frame {\input {blocks/Definition-infsup1.tex}
 \input {blocks/Lemma-infsup2.tex}
 \input {blocks/Problem-inf-sup-equivalence.tex}}
 \frame {\input {blocks/Definition-polar-orthogonal.tex}
@@ -86,11 +88,20 @@
 \frame {\input {blocks/Definition-orthogonal-projection.tex}}
 \frame {\input {blocks/Lemma-polar-orthogonal-hilbert.tex}}
 \frame {\input {blocks/Theorem-closed-range.tex}}
-\frame {\input {blocks/Theorem-open-mapping.tex}}
-\frame {\input {blocks/Lemma-closed-infsup.tex}}
+\frame {\input {blocks/Theorem-open-mapping.tex}
+\input {blocks/Lemma-closed-infsup.tex}}
 \frame {\input {blocks/Theorem-infsup-well-equivalence.tex}}
 \frame {\input {blocks/Corollary-infsup-well-posedness1.tex}}
 \frame {\input {blocks/Theorem-infsup-well-posedness2.tex}}
+\frame {\input {blocks/Theorem-infsup-mixed1.tex}}
+\frame {\input {blocks/Theorem-infsup-mixed2.tex}}
+\frame {\input {blocks/Definition-kerbh.tex}}
+\frame {\input {blocks/Definition-mixed-galerkin.tex}}
+\frame {\input {blocks/Theorem-galerkin-mixed-u-kerbh.tex}}
+\frame {\input {blocks/Corollary-galerkin-mixed-u-kerb.tex}}
+\frame {\input {blocks/Theorem-galerkin-mixed-existence-p.tex}}
+\frame {\input {blocks/Problem-infsup-uniform.tex}}
+\frame {\input {blocks/Lemma-fortin.tex}}
 
 \end{document}
 

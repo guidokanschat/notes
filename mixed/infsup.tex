@@ -168,7 +168,7 @@ The question of well-posedness in finite dimensions can be answered by:
     complement} of $V$ as
   \begin{gather}
     \label{eq:infsup:4}
-    V^\perp = \bigl\{w\in \R^n \big| \;\forall\,v\in V \scal(w,v) = 0 \bigr\}.
+    \ortho{V} = \bigl\{w\in \R^n \big| \;\forall\,v\in V \scal(w,v) = 0 \bigr\}.
   \end{gather}
 \end{Definition}
 
@@ -177,10 +177,10 @@ The question of well-posedness in finite dimensions can be answered by:
   \begin{gather}
     \label{eq:infsup:5}
     \begin{split}
-      \ker A &= \range{A^T}^\perp\\
-      \range A &= \ker{A^T}^\perp\\
-      \ker{A^T} &= \range A^\perp\\
-      \range{A^T} &= \ker{A}^\perp
+      \ker A &= \ortho{\range{A^T}}\\
+      \range A &= \ortho{\ker{A^T}}\\
+      \ker{A^T} &= \ortho{\range A}\\
+      \range{A^T} &= \ortho{\ker{A}}
     \end{split}
   \end{gather}
 \end{Lemma}
@@ -188,9 +188,9 @@ The question of well-posedness in finite dimensions can be answered by:
 \begin{proof}
   % First, we note that
   % \begin{gather*}
-  %   \R^n = \ker A \oplus \ker A^\perp,
+  %   \R^n = \ker A \oplus \ortho{\ker A},
   %   \qquad
-  %   \R^m = \ker{A^T} \oplus \ker{A^T}^\perp.
+  %   \R^m = \ker{A^T} \oplus \ortho{\ker{A^T}}.
   % \end{gather*}
   Let $A=U\Sigma V^T$ be the singular value decomposition of $A$ and
   $r$ be the number of nonzero singular values. Then, the first $r$
@@ -205,8 +205,8 @@ The question of well-posedness in finite dimensions can be answered by:
 
 \begin{Corollary}{ker-coker-iso}
   Let $A\in \R^{m\times n}$ and $A^T$ its transpose. Then, the
-  restrictions $A\colon \ker A^\perp \to \range A$ and $A^T\colon
-  \ker{A^T}^\perp \to \range{A^T}$ are isomorphisms.
+  restrictions $A\colon \ortho{\ker A} \to \range A$ and $A^T\colon
+  \ortho{\ker{A^T}} \to \range{A^T}$ are isomorphisms.
 \end{Corollary}
 
 \begin{proof}
@@ -225,13 +225,13 @@ The question of well-posedness in finite dimensions can be answered by:
 \end{proof}
 
 \begin{Corollary}{svd-infsup}
-  Let $r=\dim \ker A^\perp$. Then, for the smallest nonzero singular
+  Let $r=\dim \ortho{\ker A}$. Then, for the smallest nonzero singular
   value there holds
   \begin{gather}
     \label{eq:infsup:6}
     \sigma_r
-    = \inf_{v\in \ker{A}^\perp} \sup_{w\in \R^m} \frac{w^T A v}{\abs{v}\abs{w}}
-    = \inf_{w\in \ker{A^T}^\perp} \sup_{v\in \R^n} \frac{w^T A v}{\abs{v}\abs{w}}.
+    = \inf_{v\in \ortho{\ker A}} \sup_{w\in \R^m} \frac{w^T A v}{\abs{v}\abs{w}}
+    = \inf_{w\in \ortho{\ker{A^T}}} \sup_{v\in \R^n} \frac{w^T A v}{\abs{v}\abs{w}}.
   \end{gather}
 \end{Corollary}
 
@@ -243,9 +243,9 @@ The question of well-posedness in finite dimensions can be answered by:
   \end{gather*}
   Therefore,
   \begin{gather*}
-    \inf_{v\in \ker{A}^\perp} \sup_{w\in \R^m}
+    \inf_{v\in \ortho{\ker A}} \sup_{w\in \R^m}
     \frac{w^T A v}{\abs{v}\abs{w}}
-    = \inf_{v\in \ker{A}^\perp} \frac{\abs{Av}}{\abs{v}}.
+    = \inf_{v\in \ortho{\ker A}} \frac{\abs{Av}}{\abs{v}}.
   \end{gather*}
   Now, let $v = \sum \alpha_i v_i$ where $v_i$ are the columns of $V$
   in the SVD of $A$. Then,
@@ -390,7 +390,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
 \begin{intro}
   In the previous section, we derived quantitative conditions to
   ensure the invertibility of a matrix $A$ or its restriction to its
-  cokernel $\ker A^\perp$. The arguments there have a natural
+  cokernel $\ortho{\ker A}$. The arguments there have a natural
   extension to infinite dimensional Hilbert spaces, which we will
   derive in this section. We already saw in
   \blockref{Problem}{unbounded-inverse} that we may run into trouble
@@ -402,28 +402,28 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
 
 \begin{Definition}{polar-orthogonal}
   Let $W\subset V$ be a subspace of a Hilbert space $V$. We define its
-  \define{polar space} $W^0\subset V^*$ and its
-  \define{orthogonal complement} $W^\perp\subset V$ by
+  \define{polar space} $\polar{W}\subset V^*$ and its
+  \define{orthogonal complement} $\ortho{W}\subset V$ by
   \begin{gather}
     \label{eq:infsup:7}
     \begin{split}
-    W^0 &= \bigl\{f\in V^* \big| \scal(f,w)_{V^*\times V} = 0
+    \polar{W} &= \bigl\{f\in V^* \big| \scal(f,w)_{V^*\times V} = 0
     \quad\forall\,w\in W\bigr\},
     \\
-    W^\perp &= \bigl\{v\in V \big| \scal(v,w)_{V} = 0
+    \ortho{W} &= \bigl\{v\in V \big| \scal(v,w)_{V} = 0
     \quad\forall\,w\in W\bigr\}.
     \end{split}
   \end{gather}
   For a subspace $U\subset V^*$, we define its polar space
   \begin{gather}
-    U^0 = \bigl\{v\in V \big| \scal(u,v)_{V^*\times V} = 0
+    \polar{U} = \bigl\{v\in V \big| \scal(u,v)_{V^*\times V} = 0
     \quad\forall\,u\in U\bigr\}
   \end{gather}
 \end{Definition}
 
 \begin{Lemma}{orthogonal-closed}
-  The polar space $W^0$ and the orthogonal complement $W^\perp$ of a
-  subspace $W\subset V$ are both closed. So is the polar space $U^0$
+  The polar space $\polar{W}$ and the orthogonal complement $\ortho{W}$ of a
+  subspace $W\subset V$ are both closed. So is the polar space $\polar{U}$
   of a subspace $U\subset V^*$.
 \end{Lemma}
 
@@ -434,7 +434,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
     v&\mapsto \scal(v,w)_{V^*\times V}.
   \end{align*}
   For any $w$, the kernel of $\phi$ is closed as
-  the pre-image of a closed set. $W^0$ is closed since it is the
+  the pre-image of a closed set. $\polar{W}$ is closed since it is the
   intersection of these kernels for all $w\in W$.
 
   The inner product is continuous on $V\times V$. Therefore, the
@@ -443,37 +443,37 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
     \phi_w\colon V &\to \R,\\
     v&\mapsto \scal(v,w),
   \end{align*}
-  is continuous. The argument continues as above. Similar for $U^0$.
+  is continuous. The argument continues as above. Similar for $\polar{U}$.
 \end{proof}
 
 \begin{Theorem}{orthogonal-complement}
-  Let $W$ be a subspace of a Hilbert space $V$ and $W^\perp$ its
-  orthogonal complement. Then, $W^\perp = \overline{W}^\perp$. Further,
-  $V = W \oplus W^\perp$ if and only if $W$ is closed.
+  Let $W$ be a subspace of a Hilbert space $V$ and $\ortho{W}$ its
+  orthogonal complement. Then, $\ortho{W} = \ortho{\overline{W}}$. Further,
+  $V = W \oplus \ortho{W}$ if and only if $W$ is closed.
 \end{Theorem}
 
 \begin{proof}
-  Clearly, $\overline{W}^\perp \subset W^\perp$ since
-  $W\subset\overline{W}$. Let now $u\in W^\perp$. Then, $\phi =
+  Clearly, $\ortho{\overline{W}} \subset \ortho{W}$ since
+  $W\subset\overline{W}$. Let now $u\in \ortho{W}$. Then, $\phi =
   \scal(u,\cdot)$ is a continuous linear functional on $V$. Therefore,
   if a sequence $w_n \subset W$ converges to $w\in \overline{W}$, we
   have
   \begin{gather*}
     \scal(u,w) = \lim_{n\to\infty} \scal(u,w_n) = 0.
   \end{gather*}
-  Hence, $u\in \overline{W}^\perp$ and $W^\perp = \overline{W}^\perp$.
+  Hence, $u\in \ortho{\overline{W}}$ and $\ortho{W} = \ortho{\overline{W}}$.
 
   Now, the ``only if'' follows by the fact, that if $W$ is not
   closed, there is an element $w\in \overline{W}$ but not in $W$ such that
-  $\scal(w,u)=0$ for all $u\in W^\perp$. Thus, $w\not\in W^\perp$ and
-  consequently $w\not\in W^\perp \oplus W$.
+  $\scal(w,u)=0$ for all $u\in \ortho{W}$. Thus, $w\not\in \ortho{W}$ and
+  consequently $w\not\in \ortho{W} \oplus W$.
 
   Let now $W$ be closed. We show that there is a unique decomposition
   \begin{gather}
     \label{eq:infsup:8}
-    v = w + u,\qquad w\in W, \;u\in W^\perp,
+    v = w + u,\qquad w\in W, \;u\in \ortho{W},
   \end{gather}
-  which is equivalent to $V = W \oplus W^\perp$. Uniqueness follows,
+  which is equivalent to $V = W \oplus \ortho{W}$. Uniqueness follows,
   since
   \begin{gather*}
     v = w_1+u_1 = w_2+u_2
@@ -509,7 +509,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
   \end{gather*}
   By completeness of $V$, $w=\lim w_n$ exists and by the closedness of
   $W$, we have $w\in W$. Let $u=v-w$. By continuity of the norm, we
-  have $\norm{u}=d$. It remains to show that $u\in W^\perp$. To this
+  have $\norm{u}=d$. It remains to show that $u\in \ortho{W}$. To this
   end, we introduce the variation $w+\epsilon \tilde w$ with $\tilde
   w\in W$ to obtain
   \begin{align*}
@@ -524,31 +524,31 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
 \end{proof}
 
 \begin{Definition}{orthogonal-projection}
-  Let $V$ be a Hilbert space and $W\subset W$ be a closed
+  Let $V$ be a Hilbert space and $W\subset V$ be a closed
   subspace. For a vector $v\in V$, let $v=w+u$ be the unique
-  decomposition with $w\in W$ and $u\in W^\perp$. Then we call $w$ and
-  $u$ the \define{orthogonal projection}s of $v$ into $W$ and $W^\perp$,
+  decomposition with $w\in W$ and $u\in \ortho{W}$. Then we call $w$ and
+  $u$ the \define{orthogonal projection}s of $v$ into $W$ and $\ortho{W}$,
   respectively. We write
   \begin{gather*}
-    \Pi_W = w, \qquad \Pi_{W^\perp} = u.
+    \Pi_W = w, \qquad \Pi_{\ortho{W}} = u.
   \end{gather*}
 \end{Definition}
 
 \begin{Lemma}{polar-orthogonal-hilbert}
-  Let $V$ be a Hilbert space and $W\subset W$ be a closed
-  subspace. Then, the polar space $W^0\subset V^*$ and the orthogonal
-  space $W^\perp$ can be isometrically identified by \putindex{Riesz
+  Let $V$ be a Hilbert space and $W\subset V$ be a closed
+  subspace. Then, the polar space $\polar{W}\subset V^*$ and the orthogonal
+  space $\ortho{W}$ can be isometrically identified by \putindex{Riesz
     representation}.
 \end{Lemma}
 
 \begin{proof}
   For every $f$ in the
-  dual of $W^\perp$, define $g\in V^*$ by
+  dual of $\ortho{W}$, define $g\in V^*$ by
   \begin{gather*}
     \scal(g,v)_{V^*\times V} =
-    \scal(f,\Pi_{V^\perp}v)_{(V^\perp)^*\times V^\perp}.
+    \scal(f,\Pi_{\ortho{V}}v)_{(\ortho{V})^*\times \ortho{V}}.
   \end{gather*}
-  Clearly, $g(v)=0$ for $v\in W$, therefore $g\in W^0$.
+  Clearly, $g(v)=0$ for $v\in W$, therefore $g\in \polar{W}$.
 \end{proof}
 
 % \begin{Corollary}
@@ -564,8 +564,8 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
     \begin{split}
       \range A &\text{ is closed in } W,\\
       \range{A^T} &\text{ is closed in } V^*,\\
-      \range A &= \ker{A^T}^0,\\
-      \range{A^T} &= \ker{A}^0.
+      \range A &= \polar{\ker{A^T}},\\
+      \range{A^T} &= \polar{\ker A}.
     \end{split}
   \end{gather}
 \end{Theorem}
@@ -643,16 +643,16 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
       \frac{a(v,w)}{\norm{v}_V\norm{w}_W}
       \ge \gamma.
     \end{gather}
-  \item The operator $A^T\colon W\to \ker A^0$ is an isomorphism and
+  \item The operator $A^T\colon W\to \polar{\ker A}$ is an isomorphism and
     \begin{gather}
       \label{eq:infsup:12}
-      \norm{A^Tw}_{V^*} \ge \norm{w}_{W} \qquad\forall w\in W.
+      \norm{A^Tw}_{V^*} \ge \gamma \norm{w}_{W} \qquad\forall w\in W.
     \end{gather}
-  \item The operator $A\colon \ker A^\perp\to W^*$ is an isomorphism
+  \item The operator $A\colon \ortho{\ker A}\to W^*$ is an isomorphism
     and
     \begin{gather}
       \label{eq:infsup:13}
-      \norm{Av}_{W^*} \ge \gamma\norm{v}_V\qquad \forall v\in \ker A^\perp.
+      \norm{Av}_{W^*} \ge \gamma\norm{v}_V\qquad \forall v\in \ortho{\ker A}.
     \end{gather}
   \end{enumerate}
 \end{Theorem}
@@ -670,7 +670,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
   Thus, equations~\eqref{eq:infsup:11} and~\eqref{eq:infsup:12} are
   equivalent and we have already proven that the second statement
   implies the first. It remains to show the $A^T$ is an isomorphism
-  from $W$ onto $\ker A^0$. Equation~\eqref{eq:infsup:12} implies that
+  from $W$ onto $\polar{\ker A}$. Equation~\eqref{eq:infsup:12} implies that
   $A^T\colon W \to \range{A^T}$ is an isomorphism and its inverse is
   bounded by $1/\gamma$ (multiply both sides by $A^{-1}$). Using
   \blockref{Lemma}{closed-infsup}, we obtain that $\range{A^T}$ is
@@ -679,11 +679,11 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
 
   In order to prove equivalence of the second and third statement, we
   use \blockref{Lemma}{polar-orthogonal-hilbert} to isometrically
-  identify $(\ker A^\perp)^*$ with $\ker A^0$. Thus, $A$ is an
-  isomorphism from $\ker A^\perp$ onto $W$ if and only if $A^T$ is an
-  isomorphism from $W$ onto $(\ker A^\perp)^* = \ker A^0$. and
+  identify $(\ortho{\ker A})^*$ with $\polar{\ker A}$. Thus, $A$ is an
+  isomorphism from $\ortho{\ker A}$ onto $W$ if and only if $A^T$ is an
+  isomorphism from $W$ onto $(\ortho{\ker A})^* = \polar{\ker A}$. and
   \begin{gather*}
-    \norm{A}_{W^*\to \ker A^\perp} = \norm{A^T}_{\ker A^0\to W}.
+    \norm{A}_{W^*\to \ortho{\ker A}} = \norm{A^T}_{\polar{\ker A}\to W}.
   \end{gather*}
 \end{proof}
 
@@ -702,7 +702,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
   \begin{gather*}
     a(v,w) = f(v) \qquad\forall v\in V,
   \end{gather*}
-  has a unique solution for $f\in \ker A^0$ and
+  has a unique solution for $f\in \polar{\ker A}$ and
   \begin{gather}
     \norm{w}_W \le \frac1\gamma \norm{f}_{V^*}.
   \end{gather}
@@ -849,7 +849,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+\input{../mixed/galerkin}
 
 %%% Local Variables: 
 %%% mode: latex
