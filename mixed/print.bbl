@@ -204,6 +204,35 @@
   \field{year}{1976}
 \endentry
 
+\entry{ErnGuermond04}{book}{}
+  \name{author}{2}{}{%
+    {{}%
+     {Ern}{E.}%
+     {A.}{A.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Guermond}{G.}%
+     {J.-L.}{J.-L.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Springer-Verlag, New York}%
+  }
+  \strng{namehash}{EAGJL1}
+  \strng{fullhash}{EAGJL1}
+  \field{labelalpha}{EG04}
+  \field{sortinit}{E}
+  \verb{doi}
+  \verb 10.1007/978-1-4757-4355-5
+  \endverb
+  \field{series}{Applied Mathematical Sciences}
+  \field{title}{Theory and practice of finite elements}
+  \field{volume}{159}
+  \field{year}{2004}
+\endentry
+
 \entry{GiraultRaviart86}{book}{}
   \name{author}{2}{}{%
     {{}%
@@ -227,6 +256,25 @@
   \field{title}{Finite element approximations of the {N}avier-{S}tokes
   equations}
   \field{year}{1986}
+\endentry
+
+\entry{Yosida80}{book}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Yosida}{Y.}%
+     {K.}{K.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Springer}%
+  }
+  \strng{namehash}{YK1}
+  \strng{fullhash}{YK1}
+  \field{labelalpha}{Yos80}
+  \field{sortinit}{Y}
+  \field{title}{Functional Analysis}
+  \field{year}{1980}
 \endentry
 
 \lossort

@@ -1,0 +1,338 @@
+\begin{intro}
+  The Galerkin approximation of mixed problems starts out the same way
+  as for elliptic problems, namely, choose discrete subspaces
+  $V_h\subset V$ and $Q_h \subset Q$. There is a fundamental
+  difference though: the inf-sup condition is not inherited
+  automatically on the subspaces like $V$-ellipticity. It actually becomes an additional requirement on the choice of $V_h$ and
+  $Q_h$. We will thus work our way in several steps towards the final
+  result.
+\end{intro}
+
+\begin{Definition}{kerbh}
+  Let $V_h\subset V$ and $Q_h\subset Q$. Then, we define the subspace
+  \begin{gather}
+    \label{eq:galerkin:1}
+    \ker{B_h} = \bigl\{v_h\in V_h \big|
+    b(v_h, q_h) = 0 \quad\forall q_h\in Q_h
+    \bigr\}.
+  \end{gather}
+  Furthermore, we define the affine space
+  \begin{gather}
+    \label{eq:galerkin:2}
+    V_h^g =  \bigl\{v_h\in V_h \big|
+    b(v_h, q_h) = g(q) \quad\forall q_h\in Q_h
+    \bigr\}.
+  \end{gather}
+\end{Definition}
+
+
+\begin{Definition}{mixed-galerkin}
+We introduce the mixed discrete problem: find $(u_h,p_h)\in
+  V_h\times Q_h$ such that
+  \begin{gather}
+    \label{eq:galerkin:3}
+    a(u_h, v_h) + b(v_h, p_h) + b(u_h, q_h) = f(v_h)+g(q_h),
+    \quad\forall v_h\in V_h, q_h\in Q_h,
+  \end{gather}
+  and the discrete reduced problem: find $u_h\in V_h^g$ such that
+  \begin{gather}
+    \label{eq:galerkin:4}
+    a(u_h, v_h) = f(v_h), \qquad\forall v_h \in \ker{B_h}.
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem}{galerkin-mixed-u-kerbh}
+  Let $V_h^g$ be nonempty and let $a(.,.)$ and $b(.,.)$ be bounded
+  with norms $\norm a$ and $\norm b$, respectively, and let there be constant and $\gamma_h$
+  such that
+  \begin{gather}
+    \label{eq:galerkin:5}
+    a(v_h, v_h) \ge \gamma_h \norm{v_h}^2_V,
+    \qquad\forall v_h\in \ker{B_h}.      
+  \end{gather}
+  Let furthermore the continuous mixed problem be well-posed with
+  solution $(u,p)\in V\times Q$.
+  Then, the discrete reduced problem~\eqref{eq:galerkin:4} has a
+  unique solution and there holds
+  \begin{gather}
+    \label{eq:galerkin:8}
+    \norm{u-u_h}_V \le \left(1+\frac{\norm a}{\gamma_h}\right)
+    \inf_{w_h\in V_h^g}\norm{u-w_h}_V
+    + \frac{\norm b}{\gamma_h}
+    \inf_{q_h\in Q_h}\norm{p-q_h}_Q
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  Let $u_h^g \in V_h^g$ arbitrary. By the ellipticity assumption,
+  there is a unique function $u_h^0\in \ker{B_h}$ such that
+  \begin{gather*}
+    a(u_h^0,v_h) = f(v_h) - a(u_h^g,v_h),
+    \qquad\forall v_h\in \ker{B_h}.
+  \end{gather*}
+  Hence, $u_h = u_h^g + u_h^0$ is the unique solution
+  to~\eqref{eq:galerkin:4}. Choose now $w_h\in V_h^g$
+  arbitrarily. Then, $v_h = u_h-w_h\in \ker{B_h}$ and using
+  \begin{gather*}
+    f(v_h) = a(u, v_h) - b(v_h, p),
+  \end{gather*}
+  we obtain
+  \begin{gather}
+    \begin{split}
+      \label{eq:galerkin:9}
+      a(v_h, v_h)
+      &= f(v_h) - a(u_h-v_h, v_h) \\
+      &= a(u-w_h, v_h) - b(v_h, p) \\
+      &= a(u-w_h, v_h) - b(v_h, p-q_h)      
+    \end{split}
+  \end{gather}
+  for any $q_h\in Q_h$, yielding
+  \begin{gather*}
+    \gamma_h\norm{v_h}^2_V
+    \le \abs{a(v_h, v_h)}
+    \le \norm a \norm{u-w_h}_V \norm{v_h}_V
+      + \norm b \norm{p-q_h}_Q \norm{v_h}_V.
+  \end{gather*}
+  We conclude by the standard triangle inequality argument
+  \begin{multline*}
+    \norm{u-u_h}_V \le \norm{u-w_h}_V + \norm{u_h-w_h}_V
+    \\
+    \le \norm{u-w_h}_V + \frac{\norm a}{\gamma_h} \norm{u-w_h}_V
+    + \frac{\norm b}{\gamma_h} \norm{p-q_h}_Q.
+  \end{multline*}
+  The estimate follows since $w_h\in V_h^g$ and $q_h\in Q_h$ were
+  chosen arbitrarily.
+\end{proof}
+
+\begin{remark}
+  Note that we only used ellipticity of $a(.,.)$ on the subspace
+  $\ker{B_h}$ for the discrete problem and on $\ker B$ for the
+  continuous problem. Since the union of two vector spaces is not a
+  vector space, this is a strange condition. In practice, we will
+  encounter two situations: either ellipticity holds on the whole
+  space $V$ or $\ker{B_h}\subset\ker{B}$, where the latter is again a
+  vector space.
+\end{remark}
+
+\begin{Corollary}{galerkin-mixed-u-kerb}
+  If in addition to the assumptions of
+  \blockref{Theorem}{galerkin-mixed-u-kerbh} there holds
+  \begin{gather}
+    \label{eq:galerkin:6}
+    \ker{B_h}\subset \ker B,
+  \end{gather}
+  then
+  \begin{gather}
+    \label{eq:galerkin:7}
+    \norm{u-u_h}_V \le \left(1+\frac{\norm a}{\gamma_h}\right)
+    \inf_{w_h\in V_h^g}\norm{u-w_h}_V
+  \end{gather}
+\end{Corollary}
+
+\begin{proof}
+  Consider that in equation~\eqref{eq:galerkin:9} there holds
+  $v_h\in\ker B$.
+\end{proof}
+
+\begin{Theorem}{galerkin-mixed-existence-p}
+  Assume in addition the assumptions of
+  \blockref{Theorem}{galerkin-mixed-u-kerbh} that there are constants
+  $\beta_h$, possibly depending on the parameter $h$, such that
+  \begin{gather}
+    \label{eq:galerkin:10}
+    \inf_{q_h\in Q_h} \sup_{v_h\in V_h}
+    \frac{b(v_h, q_h)}{\norm{v_h}_V\norm{q_h}_Q}
+    \ge \beta_h.
+  \end{gather}
+  Then,there is a unique solution $p_h\in Q_h$ such that $(u_h, p_h)$
+  is the unique solution to the discrete mixed
+  problem~\eqref{eq:galerkin:3}. There are a constants $c_h^{(i)}$
+  only depending on $\norm a$, $\norm b$, $\gamma_h$ and $\beta_h$
+  such that
+  \begin{align}
+    \label{eq:galerkin:11}
+    \norm{u-u_h}_V 
+    &\le c_h^{(1)} \inf_{v_h\in V_h^g}\norm{u-v_h}_V
+    + c_h^{(2)} \inf_{q_h\in Q_h}\norm{p-q_h}_Q \\
+    \norm{p-p_h}_Q
+    &\le c_h^{(3)} \inf_{v_h\in V_h}\norm{u-v_h}_V
+    + c_h^{(4)} \inf_{q_h\in Q_h}\norm{p-q_h}_Q.
+  \end{align}
+\end{Theorem}
+
+\begin{proof}
+  Applying \blockref{Theorem}{infsup-mixed2} to the discrete
+  problem~\eqref{eq:galerkin:3}, we conclude that there is a unique
+  solution $(u_h,p_h)\in V_h\times Q_h$. Let us begin estimating the
+  error by establishing the bound
+  \begin{gather}
+    \label{eq:galerkin:12}
+    \inf_{w_h\in V_h^g} \norm{u-w_h}_V
+    \le \left(1+\frac{\norm b}{\beta_h}\right)
+    \inf_{v_h\in V_h} \norm{u-v_h}_V.
+  \end{gather}
+  By the third condition in
+  \blockref{Theorem}{infsup-well-equivalence}, there is a unique
+  $z_h\in \ker{B_h}^\perp$ such that
+  \begin{gather*}
+    B_h z_h = B_h(u-v_h),\qquad \forall v_h\in V_h,
+  \end{gather*}
+  and
+  \begin{gather*}
+    \norm{z_h}_V \le \frac1{\beta_h}\norm{B_h(u-v_h)}_{Q_h^*}
+    \le\frac{\norm b}{\beta_h} \norm{u-v_h}_V.
+  \end{gather*}
+  Let $w_h = z_h+v_h$. Then,  $w_h\in V_h^g$ since
+  \begin{gather*}
+    b(w_h, q_h) = b(u-v_h, q_h) = b(u, q_h) = g(q_h),
+    \qquad\forall q_h\in Q_h.
+  \end{gather*}
+  Furthermore,
+  \begin{gather*}
+    \norm{u-w_h}_V \le \norm{u-v_h}_V + \norm{z_h}_V
+    \le \left(1+\frac{\norm b}{\beta_h}\right)
+    \norm{u-v_h}_V.
+  \end{gather*}
+  Since $v_h \in V_h$ was chosen arbitrarily, we have
+  proven~\eqref{eq:galerkin:12} and thus by
+  \blockref{Theorem}{galerkin-mixed-u-kerbh} the estimate for
+  $\norm{u-u_h}_V$ with
+  \begin{gather}
+    c_h^{(1)} = \left(1+\frac{\norm b}{\beta_h}\right)
+    \left(1+\frac{\norm a}{\gamma_h}\right),
+    \qquad
+    c_h^{(2)} = \left(1+\frac{\norm b}{\beta_h}\right)
+    \frac{\norm b}{\gamma_h}.
+  \end{gather}
+  It remains to prove the estimate for $\norm{p-p_h}_Q$. Using Glerkin
+  orthogonality for the test function $v_h$, we obtain
+  \begin{gather}
+    \label{eq:galerkin:13}
+    a(u-u_h, v_h) + b(v_h, p-p_h) = 0.
+  \end{gather}
+  Hence, for any $q_h\in Q_h$ there is by the inf-sup condition
+  $v_h\in V_h$ with $\norm{v_h}_V=1$ such that
+  \begin{align*}
+    \beta_h \norm{p_h-q_h}_Q
+    &\le b(v_h, p_h-q_h)\\
+    & = a(u-u_h, v_h) + b(v_h, p-q_h)\\
+    &\le \norm a \norm{u-u_h}_V + \norm b \norm{p-q_h}_Q.
+  \end{align*}
+  Again, the estimate for $\norm{p-p_h}_Q$ follows by triangle
+  inequality.
+\end{proof}
+
+\begin{remark}
+  Indeed, if~\eqref{eq:galerkin:10} holds, we do not have to require
+  that $V_h^g$ is nonempty anymore, since $B\colon V\to Q^*$ is
+  surjective.
+\end{remark}
+
+\begin{remark}
+  We purposely proved the preceding theorems with $\gamma_h$ and
+  $\beta_h$ depending on the parameter $h$, typically the mesh
+  size. This is the minimal condition for well-posedness of the
+  discrete problems. Nevertheless, this well-posedness is not uniform
+  in $h$, which causes loss of approximation, as the following problem
+  shows. Therefore, we will only be satisfied with uniform inf-sup
+  constants in applications.
+\end{remark}
+
+\begin{Problem}{infsup-uniform}
+  Let the following interpolation estimates hold:
+  \begin{gather*}
+    \inf_{v_h\in V_h}\norm{u-v_h}_V = \mathcal O(h^k),
+    \qquad
+    \inf_{q_h\in Q_h}\norm{p-q_h}_V = \mathcal O(h^k).
+  \end{gather*}
+  Then, the estimates in
+  \blockref{Theorem}{galerkin-mixed-existence-p} are asymptotically
+  optimal if and only if there are constants $\tilde \gamma>0$ and
+  $\tilde \beta>0$ independent of $h$ such that
+  \begin{gather}
+    \label{eq:galerkin:14}
+    \gamma_h\ge \tilde\gamma,\quad\beta_h\ge\tilde\beta,
+  \end{gather}
+  independent of $h$.
+\end{Problem}
+
+\begin{intro}
+  As we can see from the form
+  \begin{gather*}
+    \forall q_h\in Q_h \;
+    \exists  v_h\in V_h\colon
+    \quad B_h v_h = q_h
+    \quad\wedge\quad
+    \norm{v_h}_V \le \norm{q_h}_Q,
+  \end{gather*}
+  the uniform, discrete inf-sup condition introduces a compatibility
+  condition between the spaces $V_h$ and $Q_h$. An immediate necessary
+  condition is
+  \begin{gather}
+    \dim V_h \ge \dim Q_h.
+  \end{gather}
+  We often say that the space $V_h$ is ``rich enough'' to control
+  functions in $Q_h$. Obviously, counting dimensions is not
+  sufficient, since we could have added basis functions in
+  $\ker{B_h}$. Even the condition
+  \begin{gather*}
+    \dim\ker{B_h}^T = \dim Q_h
+  \end{gather*}
+  is necessary and sufficient only for the existence of an inf-sup
+  constant $\beta_h$ depending on $h$. Therefore, we need a stronger
+  argument in order to ensure compatibility of the discrete
+  spaces. Such an argument is the following lemma by Fortin. The
+  projection operator $\Pi_{V_h}$ introduced there is usually referred
+  to as \define{Fortin projection}.
+\end{intro}
+
+\begin{Lemma}{fortin}
+  Let the inf-sup condition for the bilinear form $b(.,.)$
+  hold on $V\times Q$ with a constant
+  $\beta>0$. Then, it holds on $V_h\times Q_h$ uniformly with a
+  constant $\tilde\beta>0$ if and only if there exists a linear
+  operator $\Pi_{V_h}\colon V\to V_h$ satisfying for any $v\in V$
+  \begin{align}
+    \label{eq:galerkin:15}
+    b(v-\Pi_{V_h}v,q_h) &= 0,\qquad\forall q_h\in Q_h,\\
+    \norm{\Pi_{V_h}v}_V \le c \norm{v}_V,
+  \end{align}
+  with $c$ independent of $h$. There holds $\tilde\beta = \beta/c$.
+\end{Lemma}
+
+\begin{proof}
+  Assume first that $\Pi_{V_h}$ exists. then, there holds for any
+  $q_h\in Q_h$
+  \begin{gather*}
+    \sup_{v_h\in V_h} \frac{b(v_h, q_h)}{\norm{v_h}_V}
+    \ge
+    \sup_{v\in V} \frac{b(\Pi_{V_h}v_h, q_h)}{\norm{\Pi_{V_h} v_h}_V}
+    =
+    \sup_{v\in V} \frac{b(v, q_h)}{\norm{\Pi_{V_h} v_h}_V}
+    \ge \frac{\beta}{c} \norm{q_h}_Q.
+  \end{gather*}
+  Conversely, we assume the existence of a uniform, discrete inf-sup
+  constant $\tilde\beta>0$. Then, for any $v\in V$ let
+  $g(.) = b(v,.) \in Q_h^*$. By
+  \blockref{Theorem}{infsup-well-equivalence}, there is a unique
+  element $\Pi_{V_h} v \in \ker{B_h}^\perp$ such that
+  \begin{gather*}
+    b(\Pi_{V_h}v , q_h) = b(v,q_h),\qquad\forall q_h\in Q_h
+  \end{gather*}
+  and
+  \begin{gather*}
+    \norm{\Pi_{V_h}v}_V
+    \le \frac1{\tilde\beta}\norm{B_h v}_{Q_H^*}
+    \le \frac{\norm b}{\tilde\beta} \norm{v}_V.
+  \end{gather*}
+  Thus, $\Pi_{V_h}$ is bounded and~\eqref{eq:galerkin:15} holds with
+  $c=\norm b/\tilde\beta$.
+\end{proof}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
+
