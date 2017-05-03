@@ -70,7 +70,7 @@
     its eigenvalues are positive.
   \item Show that the range of $A$ is not closed in $\ell_2(\R)$
   \end{enumerate}
-\begin{solution}  
+\begin{solution}
   \begin{enumerate}
   \item For each $e_k$, the inverse is $A^{-1} e_k = k e_k$. In particular, $A$ is injective.
     On the other hand, it holds
@@ -552,7 +552,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
 \end{proof}
 
 % \begin{Corollary}
-  
+
 % \end{Corollary}
 
 
@@ -696,7 +696,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
   \begin{gather*}
     \inf_{w\in W}\sup_{v\in V}
     \frac{a(v,w)}{\norm{v}_V\norm{w}_W}
-    \ge \gamma > 0    
+    \ge \gamma > 0
   \end{gather*}
   hold.  Then, the problem finding $w\in W$ such that
   \begin{gather*}
@@ -745,7 +745,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
   has a unique solution for $f\in W^*$ and
   \begin{gather}
     \norm{v}_V \le \frac1\gamma \norm{f}_{W^*}.
-  \end{gather}  
+  \end{gather}
 \end{Theorem}
 
 \begin{remark}
@@ -880,19 +880,36 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
 \end{remark}
 
 \begin{Problem}{inhomogeneous-continuity}
-  Show that \blockref{Theorem}{infsup-mixed2} can be extended to the
+  Show that %\blockref{Theorem}{infsup-mixed2}
+  Theorem~2.3.3 can be extended to the
   case with right hand side $f(v)+g(q)$ with $g\in Q^*$.
 
 \begin{solution}
+  We want to solve the problem
+  \begin{align*}
+    a(u,v) + b(v,p) + b(u,q) = f(v)+g(q) \quad\forall v\in V, q\in Q,
+  \end{align*}
+  where $b(v,p)$ fulfills a inf-sup condition.
+
   \begin{enumerate}
-  \item Due to \blockref{Theorem}{infsup-well-equivalence}, the
+  \item Due to %\blockref{Theorem}{infsup-well-equivalence}
+    Theorem~2.2.12, the
     operator $B: V\to Q^*$ is surjective and thus, there exists
     $u_g\in V$ such that
     \begin{gather*}
       b(u_g,q) = q(q) \quad\forall q\in Q.
     \end{gather*}
-  \item The function $u_0 = u-u_g$ solves a problem as in
-    \blockref{Theorem}{infsup-mixed2}.
+  \item Now consider the function $u_0 = u-u_g$. For $u$ to solve the
+    orginal problem $u_0$ has to solve
+    \begin{align*}
+      a(u_0+u_g,v) + b(v,p) + b(u_0+u_g,q) = f(v)+g(q) \quad\forall v\in V, q\in Q\\
+      \Leftrightarrow a(u_0,v) + b(v,p) + b(u_0,q) = f(v)-a(u_g,v) \quad\forall v\in V, q\in Q
+    \end{align*}
+  \item Due to $a(u_g,v) \leq \norm{a}\norm{u_g}_V\norm{v}_V$,
+    the right-hand side $f(\cdot)-a(u_g,\cdot)$ is in $V^*$
+    and we are in the the setting of
+    %\blockref{Theorem}{infsup-mixed2}.
+    Theorem~2.3.3 .
   \end{enumerate}
 \end{solution}
 \end{Problem}
@@ -905,7 +922,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
 
 \input{../mixed/galerkin}
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
-%%% End: 
+%%% End:

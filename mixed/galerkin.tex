@@ -3,7 +3,8 @@
   as for elliptic problems, namely, choose discrete subspaces
   $V_h\subset V$ and $Q_h \subset Q$. There is a fundamental
   difference though: the inf-sup condition is not inherited
-  automatically on the subspaces like $V$-ellipticity. It actually becomes an additional requirement on the choice of $V_h$ and
+  automatically on the subspaces like $V$-ellipticity. It actually becomes
+  an additional requirement on the choice of $V_h$ and
   $Q_h$. We will thus work our way in several steps towards the final
   result.
 \end{intro}
@@ -19,7 +20,7 @@
   Furthermore, we define the affine space
   \begin{gather}
     \label{eq:galerkin:2}
-    V_h^g =  \bigl\{v_h\in V_h \big|
+    V_h^g = \bigl\{v_h\in V_h \big|
     b(v_h, q_h) = g(q) \quad\forall q_h\in Q_h
     \bigr\}.
   \end{gather}
@@ -27,7 +28,7 @@
 
 
 \begin{Definition}{mixed-galerkin}
-We introduce the mixed discrete problem: find $(u_h,p_h)\in
+  We introduce the mixed discrete problem: find $(u_h, p_h)\in
   V_h\times Q_h$ such that
   \begin{gather}
     \label{eq:galerkin:3}
@@ -48,7 +49,7 @@ We introduce the mixed discrete problem: find $(u_h,p_h)\in
   \begin{gather}
     \label{eq:galerkin:5}
     a(v_h, v_h) \ge \gamma_h \norm{v_h}^2_V,
-    \qquad\forall v_h\in \ker{B_h}.      
+    \qquad\forall v_h\in \ker{B_h}.
   \end{gather}
   Let furthermore the continuous mixed problem be well-posed with
   solution $(u,p)\in V\times Q$.
@@ -83,7 +84,7 @@ We introduce the mixed discrete problem: find $(u_h,p_h)\in
       a(v_h, v_h)
       &= f(v_h) - a(u_h-v_h, v_h) \\
       &= a(u-w_h, v_h) - b(v_h, p) \\
-      &= a(u-w_h, v_h) - b(v_h, p-q_h)      
+      &= a(u-w_h, v_h) - b(v_h, p-q_h)
     \end{split}
   \end{gather}
   for any $q_h\in Q_h$, yielding
@@ -144,14 +145,14 @@ We introduce the mixed discrete problem: find $(u_h,p_h)\in
     \frac{b(v_h, q_h)}{\norm{v_h}_V\norm{q_h}_Q}
     \ge \beta_h.
   \end{gather}
-  Then,there is a unique solution $p_h\in Q_h$ such that $(u_h, p_h)$
+  Then, there is a unique solution $p_h\in Q_h$ such that $(u_h, p_h)$
   is the unique solution to the discrete mixed
   problem~\eqref{eq:galerkin:3}. There are a constants $c_h^{(i)}$
   only depending on $\norm a$, $\norm b$, $\gamma_h$ and $\beta_h$
   such that
   \begin{align}
     \label{eq:galerkin:11}
-    \norm{u-u_h}_V 
+    \norm{u-u_h}_V
     &\le c_h^{(1)} \inf_{v_h\in V_h^g}\norm{u-v_h}_V
     + c_h^{(2)} \inf_{q_h\in Q_h}\norm{p-q_h}_Q \\
     \norm{p-p_h}_Q
@@ -182,7 +183,7 @@ We introduce the mixed discrete problem: find $(u_h,p_h)\in
     \norm{z_h}_V \le \frac1{\beta_h}\norm{B_h(u-v_h)}_{Q_h^*}
     \le\frac{\norm b}{\beta_h} \norm{u-v_h}_V.
   \end{gather*}
-  Let $w_h = z_h+v_h$. Then,  $w_h\in V_h^g$ since
+  Let $w_h = z_h+v_h$. Then, $w_h\in V_h^g$ since
   \begin{gather*}
     b(w_h, q_h) = b(u-v_h, q_h) = b(u, q_h) = g(q_h),
     \qquad\forall q_h\in Q_h.
@@ -204,7 +205,7 @@ We introduce the mixed discrete problem: find $(u_h,p_h)\in
     c_h^{(2)} = \left(1+\frac{\norm b}{\beta_h}\right)
     \frac{\norm b}{\gamma_h}.
   \end{gather}
-  It remains to prove the estimate for $\norm{p-p_h}_Q$. Using Glerkin
+  It remains to prove the estimate for $\norm{p-p_h}_Q$. Using Galerkin
   orthogonality for the test function $v_h$, we obtain
   \begin{gather}
     \label{eq:galerkin:13}
@@ -245,22 +246,59 @@ We introduce the mixed discrete problem: find $(u_h,p_h)\in
     \qquad
     \inf_{q_h\in Q_h}\norm{p-q_h}_V = \mathcal O(h^k).
   \end{gather*}
-  Then, the estimates in
-  \blockref{Theorem}{galerkin-mixed-existence-p} are asymptotically
-  optimal if and only if there are constants $\tilde \gamma>0$ and
-  $\tilde \beta>0$ independent of $h$ such that
+  Then, the estimates in %\blockref{Theorem}{galerkin-mixed-existence-p}
+  Theorem~2.4.7 are asymptotically optimal if and only if there are
+  constants $\tilde \gamma>0$ and $\tilde \beta>0$ independent of
+  $h$ such that
   \begin{gather}
     \label{eq:galerkin:14}
     \gamma_h\ge \tilde\gamma,\quad\beta_h\ge\tilde\beta,
   \end{gather}
   independent of $h$.
+\begin{solution}
+  The estimates in Theorem~2.4.7 state
+  \begin{align*}
+    \norm{u-u_h}_V &\le c_h^{(1)} \inf_{v_h\in V_h^g}\norm{u-v_h}_V
+	      + c_h^{(2)} \inf_{q_h\in Q_h}\norm{p-q_h}_Q \\
+    \norm{p-p_h}_Q &\le c_h^{(3)} \inf_{v_h\in V_h}\norm{u-v_h}_V
+	      + c_h^{(4)} \inf_{q_h\in Q_h}\norm{p-q_h}_Q.
+  \end{align*}
+  such that the additional assumptions imply
+  \begin{align*}
+    \norm{u-u_h}_V &\le c_h^{(1)} C h^k + c_h^{(2)} C h^k \\
+    \norm{p-p_h}_Q &\le c_h^{(3)} C h^k + c_h^{(4)} C h^k.
+  \end{align*}
+    where the first constants are given by
+  \begin{align*}
+    c_h^{(1)} = \left(1+\frac{\norm b}{\beta_h}\right)
+    \left(1+\frac{\norm a}{\gamma_h}\right),
+    \qquad
+    c_h^{(2)} = \left(1+\frac{\norm b}{\beta_h}\right)
+    \frac{\norm b}{\gamma_h}.
+  \end{align*}
+  For the last two estimates, the relevant estimates read
+  \begin{align*}
+    \beta_h \norm{p_h-q_h}_Q
+    &\le b(v_h,p_h-q_h)\\
+    & = a(u-u_h, v_h) + b(v_h, p-q_h)\\
+    &\le \norm a \norm{u-u_h}_V + \norm b \norm{p-q_h}_Q\\
+    \Rightarrow \norm{p-p_h}_Q
+    &\le \norm{p-q_h} + \norm{p_h-q_h}_Q \\
+    &\le \frac{\norm a}{\beta_h} \norm{u-u_h}_V + \left(1+\frac{\norm b}{\beta_h}\right) \norm{p-q_h}_Q.
+  \end{align*}
+  Therefore, the remaining constants are
+  \begin{align*}
+    c_h^{(3)} = \frac{\norm a}{\beta_h}c_h^{(1)}, \qquad
+    c_h^{(4)} = \frac{\norm a}{\beta_h}c_h^{(2)}+\left(1+\frac{\norm b}{\beta}\right).
+  \end{align*}
+\end{solution}
 \end{Problem}
 
 \begin{intro}
   As we can see from the form
   \begin{gather*}
     \forall q_h\in Q_h \;
-    \exists  v_h\in V_h\colon
+    \exists v_h\in V_h\colon
     \quad B_h v_h = q_h
     \quad\wedge\quad
     \norm{v_h}_V \le \norm{q_h}_Q,
@@ -294,7 +332,7 @@ We introduce the mixed discrete problem: find $(u_h,p_h)\in
   operator $\Pi_{V_h}\colon V\to V_h$ satisfying for any $v\in V$
   \begin{align}
     \label{eq:galerkin:15}
-    b(v-\Pi_{V_h}v,q_h) &= 0,\qquad\forall q_h\in Q_h,\\
+    b(v-\Pi_{V_h}v,q_h) &= 0,\qquad\forall q_h\in Q_h, \\
     \norm{\Pi_{V_h}v}_V \le c \norm{v}_V,
   \end{align}
   with $c$ independent of $h$. There holds $\tilde\beta = \beta/c$.
@@ -317,7 +355,7 @@ We introduce the mixed discrete problem: find $(u_h,p_h)\in
   \blockref{Theorem}{infsup-well-equivalence}, there is a unique
   element $\Pi_{V_h} v \in \ortho{\ker{B_h}}$ such that
   \begin{gather*}
-    b(\Pi_{V_h}v , q_h) = b(v,q_h),\qquad\forall q_h\in Q_h
+    b(\Pi_{V_h}v,q_h) = b(v, q_h),\qquad\forall q_h\in Q_h
   \end{gather*}
   and
   \begin{gather*}
