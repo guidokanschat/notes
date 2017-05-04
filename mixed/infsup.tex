@@ -6,12 +6,12 @@
   \begin{xalignat}2
     a(u,v) &\le M \norm{u}\norm{v} & \forall u,v&\in V\\
     \label{eq:infsup:elliptic}
-    a(u,u) &\ge \gamma \norm{u}^2 & \forall u&\in V.
+    a(u,u) &\ge \ellipa \norm{u}^2 & \forall u&\in V.
   \end{xalignat}
   The second condition can also be rewritten in terms of the
   \putindex{Rayleigh quotient} as
   \begin{gather*}
-    0 < \gamma = \inf_{u\in V}\frac{a(u,u)}{\norm{u}^2}.
+    0 < \ellipa = \inf_{u\in V}\frac{a(u,u)}{\norm{u}^2}.
   \end{gather*}
   Restricting this to a finite dimensional space, the notation usually
   changes from
@@ -23,7 +23,7 @@
   where $A\in \R^{n\times n}$ is the matrix associated with the
   bilinear form. The bound for the Rayleigh quotient means nothing but
   that the real parts of all eigenvalues of $A$ are bounded from below
-  by $\gamma$. Thus, a matrix $A$ for which we can apply the
+  by $\ellipa$. Thus, a matrix $A$ for which we can apply the
   Lax-Milgram lemma is positive definite. And the statement of the
   lemma in finite dimension is, that a positive definite matrix is
   invertible. We know from linear algebra that this is true, but we
@@ -44,7 +44,7 @@
   is qualitative, $\lambda \neq 0$, while the assumption of Lax-Milgram
   is quantitative,
   \begin{gather*}
-    \Re\lambda \ge \gamma> 0.
+    \Re\lambda \ge \ellipa> 0.
   \end{gather*}
   The following problem shows why such a change is necessary.
 \end{intro}
@@ -144,7 +144,7 @@ The question of well-posedness in finite dimensions can be answered by:
   will run into trouble, if we do not quantify this. Therefore, we
   start our attempt by requiring:
   \begin{gather*}
-    \norm{Au}^2 \ge \gamma \norm{u}^2 \qquad\forall u\in V.
+    \norm{Au}^2 \ge \ellipa \norm{u}^2 \qquad\forall u\in V.
   \end{gather*}
   But while this is a condition we can easily write down for matrices
   and operators, it does not work that well for bilinear forms. Thus,
@@ -268,7 +268,7 @@ The question of well-posedness in finite dimensions can be answered by:
   \begin{gather}
     \label{eq:infsup:1}
     \inf_{u\in V} \sup_{w\in W} \frac{a(u,w)}{\norm{u}_V\norm{w}_W}
-    \ge \gamma > 0.
+    \ge \ellipa > 0.
   \end{gather}
 \end{Definition}
 
@@ -284,7 +284,7 @@ The question of well-posedness in finite dimensions can be answered by:
   condition~\eqref{eq:infsup:1}:
   \begin{gather}
     \label{eq:infsup:2}
-    \forall u\in V \;\exists w\in W \;:\; a(u,w) \ge \gamma \norm{u}_V\norm{w}_W
+    \forall u\in V \;\exists w\in W \;:\; a(u,w) \ge \ellipa \norm{u}_V\norm{w}_W
   \end{gather}
   \begin{gather}
     \label{eq:infsup:3}
@@ -294,7 +294,7 @@ The question of well-posedness in finite dimensions can be answered by:
     \arraycolsep0.3ex
     \begin{array}{rcl}
       \norm{w}_W &\le&\norm{u}_V\\
-      a(u,w) &\ge& \gamma \norm{u}_V^2
+      a(u,w) &\ge& \ellipa \norm{u}_V^2
     \end{array}
     \right.
   \end{gather}
@@ -305,7 +305,7 @@ The question of well-posedness in finite dimensions can be answered by:
     \left\{
     \arraycolsep0.3ex
     \begin{array}{rcl}
-      \gamma \norm{w}_W &\le&\norm{u}_V\\
+      \ellipa \norm{w}_W &\le&\norm{u}_V\\
       Aw &=& u
     \end{array}
     \right.
@@ -317,14 +317,14 @@ The question of well-posedness in finite dimensions can be answered by:
 \begin{solution}
   We have to prove the following statements are equivalent to the inf-sup condition:
   \begin{align}
-    \forall u\in V \;\exists w\in W \;:\; a(u,w) \ge \gamma \norm{u}_V\norm{w}_W     \tag{1}
+    \forall u\in V \;\exists w\in W \;:\; a(u,w) \ge \ellipa \norm{u}_V\norm{w}_W     \tag{1}
   \end{align}
   \begin{align}
    \begin{aligned}
     \forall u\in V \;\exists w\in W \;:\;
     \begin{cases}
       \norm{w}_W \le\norm{u}_V\\
-      a(u,w) \ge \gamma \norm{u}_V^2
+      a(u,w) \ge \ellipa \norm{u}_V^2
     \end{cases}
    \end{aligned}
    \tag{2}
@@ -333,7 +333,7 @@ The question of well-posedness in finite dimensions can be answered by:
    \begin{aligned}
     \forall u\in V \;\exists w\in W \;:\;
     \begin{cases}
-      \gamma \norm{w}_W \le \norm{u}_V\\
+      \ellipa \norm{w}_W \le \norm{u}_V\\
       Aw = u
       \end{cases}
   \end{aligned}
@@ -341,7 +341,7 @@ The question of well-posedness in finite dimensions can be answered by:
   \end{align}
   The inf-sup condition reads
   \begin{align}
-   \inf_{u\in V} \sup_{w\in W} \frac{a(u,w)}{\norm{u}_V\norm{w}_W} \ge \gamma \tag{IS}
+   \inf_{u\in V} \sup_{w\in W} \frac{a(u,w)}{\norm{u}_V\norm{w}_W} \ge \ellipa \tag{IS}
   \end{align}
 
   $(IS)\Rightarrow(3)$\\
@@ -353,29 +353,29 @@ a(u,w)=\langle A w, u\rangle = \langle J u, u\rangle = \norm{u}_V^2.
   \end{align*}
  Due to $w\in ker(A)^\perp$, $A^{-1}$ is bounded and
  \begin{align*}
- \norm{w}_W=\norm{A^{-1}u}_V\leq \frac{1}{\gamma}\norm{u}_V.
+ \norm{w}_W=\norm{A^{-1}u}_V\leq \frac{1}{\ellipa}\norm{u}_V.
   \end{align*}
 
   $(3)\Rightarrow(2)$ \\
-  Define $\tilde{w}=\gamma w$. Then,
+  Define $\tilde{w}=\ellipa w$. Then,
   \begin{align*}
-a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
+a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   \end{align*}
   and
   \begin{align*}
-\norm{\tilde{w}}_W=\gamma \norm{w}_W\leq\norm{u}_V
+\norm{\tilde{w}}_W=\ellipa \norm{w}_W\leq\norm{u}_V
   \end{align*}
 
   $(2)\Rightarrow(1)$ \\
   \begin{align*}
-  a(u,w) \ge \gamma \norm{u}_V^2 \ge \gamma \norm{u}_V \norm{w}_W
+  a(u,w) \ge \ellipa \norm{u}_V^2 \ge \ellipa \norm{u}_V \norm{w}_W
   \end{align*}
 
   $(1)\Rightarrow(IS)$ \\
   \begin{align*}
-  &\forall u\in V \exists w\in W: a(u,w)\ge \gamma \norm{u}_V\norm{w}_W\\
-  &\Rightarrow \forall u\in V: \sup_{w\in W} \frac{a(u,w)}{\norm{w}_W}\ge \gamma \norm{u}_V\\
-  &\Rightarrow \inf_{u\in V}\sup_{w\in W} \frac{a(u,w)}{\norm{w}_W\norm{u}_V}\ge \gamma
+  &\forall u\in V \exists w\in W: a(u,w)\ge \ellipa \norm{u}_V\norm{w}_W\\
+  &\Rightarrow \forall u\in V: \sup_{w\in W} \frac{a(u,w)}{\norm{w}_W}\ge \ellipa \norm{u}_V\\
+  &\Rightarrow \inf_{u\in V}\sup_{w\in W} \frac{a(u,w)}{\norm{w}_W\norm{u}_V}\ge \ellipa
   \end{align*}
 \end{solution}
 \end{Problem}
@@ -589,14 +589,14 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
 
 \begin{Lemma}{closed-infsup}
   Let $A\colon V\to W$ be continuous. Then, $\range A$ is closed in
-  $W$ if and only if there exists $\gamma>0$ such that
+  $W$ if and only if there exists $\ellipa>0$ such that
   \begin{gather}
     \label{eq:infsup:10}
-    \forall \,w\in W\;
-    \exists \,v\in V\quad
+    \forall w\in \range A\;
+    \exists v\in V\quad
     Av = w
     \;\wedge\;
-    \gamma \norm{v}_V \le \norm{w}_W.
+    \ellipa \norm{v}_V \le \norm{w}_W.
   \end{gather}
 \end{Lemma}
 
@@ -605,9 +605,9 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
   implies $\range A$ closed. To this end, let $\{w_n\}$ be a Cauchy
   sequence in $\range A$ converging to a point $w\in W$. Thus, there
   is a sequence $\{v_n\}$ in $V$ such that $Av_n = w_n$ and
-  $\gamma \norm{v_n} \le \norm{w_n}$. Hence,
+  $\ellipa \norm{v_n} \le \norm{w_n}$. Hence,
   \begin{gather*}
-    \norm{v_m-v_n}_V \le \frac1\gamma \norm{w_m-w_n}_W,
+    \norm{v_m-v_n}_V \le \frac1\ellipa \norm{w_m-w_n}_W,
   \end{gather*}
   and $\{v_n\}$ is a Cauchy sequence in $V$. Therefore, $v_n\to v\in
   V$ and due to continuity of $A$ we obtain $Av=w$ and thus $w\in
@@ -636,23 +636,23 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
   and $A\colon V\to W^*$ its associated operator.
   Then, the following statements are equivalent:
   \begin{enumerate}
-  \item There exists $\gamma>0$ such that
+  \item There exists $\ellipa>0$ such that
     \begin{gather}
       \label{eq:infsup:11}
       \inf_{w\in W}\sup_{v\in V}
       \frac{a(v,w)}{\norm{v}_V\norm{w}_W}
-      \ge \gamma.
+      \ge \ellipa.
     \end{gather}
   \item The operator $A^T\colon W\to \polar{\ker A}$ is an isomorphism and
     \begin{gather}
       \label{eq:infsup:12}
-      \norm{A^Tw}_{V^*} \ge \gamma \norm{w}_{W} \qquad\forall w\in W.
+      \norm{A^Tw}_{V^*} \ge \ellipa \norm{w}_{W} \qquad\forall w\in W.
     \end{gather}
   \item The operator $A\colon \ortho{\ker A}\to W^*$ is an isomorphism
     and
     \begin{gather}
       \label{eq:infsup:13}
-      \norm{Av}_{W^*} \ge \gamma\norm{v}_V\qquad \forall v\in \ortho{\ker A}.
+      \norm{Av}_{W^*} \ge \ellipa\norm{v}_V\qquad \forall v\in \ortho{\ker A}.
     \end{gather}
   \end{enumerate}
 \end{Theorem}
@@ -664,7 +664,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
     \norm{A^T w}_{V^*}
     = \sup_{v\in V}\frac{\scal(A^T w,v)}{\norm{v}_V}
     = \sup_{v\in V}\frac{a(v,w)}{\norm{v}_V}
-    \ge \gamma\norm{w} \qquad
+    \ge \ellipa\norm{w} \qquad
     \forall w\in W.
   \end{gather*}
   Thus, equations~\eqref{eq:infsup:11} and~\eqref{eq:infsup:12} are
@@ -672,7 +672,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
   implies the first. It remains to show the $A^T$ is an isomorphism
   from $W$ onto $\polar{\ker A}$. Equation~\eqref{eq:infsup:12} implies that
   $A^T\colon W \to \range{A^T}$ is an isomorphism and its inverse is
-  bounded by $1/\gamma$ (multiply both sides by $A^{-1}$). Using
+  bounded by $1/\ellipa$ (multiply both sides by $A^{-1}$). Using
   \blockref{Lemma}{closed-infsup}, we obtain that $\range{A^T}$ is
   closed in $V^*$ and the \putindex{closed range theorem} settles the
   issue.
@@ -696,7 +696,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
   \begin{gather*}
     \inf_{w\in W}\sup_{v\in V}
     \frac{a(v,w)}{\norm{v}_V\norm{w}_W}
-    \ge \gamma > 0
+    \ge \ellipa > 0
   \end{gather*}
   hold.  Then, the problem finding $w\in W$ such that
   \begin{gather*}
@@ -704,7 +704,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
   \end{gather*}
   has a unique solution for $f\in \polar{\ker A}$ and
   \begin{gather}
-    \norm{w}_W \le \frac1\gamma \norm{f}_{V^*}.
+    \norm{w}_W \le \frac1\ellipa \norm{f}_{V^*}.
   \end{gather}
 \end{Corollary}
 
@@ -729,14 +729,14 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
   \begin{gather}
     a(v,w) \le M \norm{v}_V \norm{w}_W.
   \end{gather}
-  Let for some $\gamma>0$ the inf-sup-conditions
+  Let for some $\ellipa>0$ the inf-sup-conditions
   \begin{align*}
     \inf_{w\in W}\sup_{v\in V}
     \frac{a(v,w)}{\norm{v}_V\norm{w}_W}
-    &\ge \gamma,\\
+    &\ge \ellipa,\\
     \inf_{v\in V}\sup_{w\in W}
     \frac{a(v,w)}{\norm{v}_V\norm{w}_W}
-    &\ge \gamma
+    &\ge \ellipa
   \end{align*}
   hold.  Then, the problem finding $v\in V$ such that
   \begin{gather*}
@@ -744,7 +744,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
   \end{gather*}
   has a unique solution for $f\in W^*$ and
   \begin{gather}
-    \norm{v}_V \le \frac1\gamma \norm{f}_{W^*}.
+    \norm{v}_V \le \frac1\ellipa \norm{f}_{W^*}.
   \end{gather}
 \end{Theorem}
 
@@ -799,7 +799,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
     \quad\forall v\in V, q\in Q,
   \end{gather*}
   has a unique solution for any $f\in V^*$ and any $g\in Q^*$ if and
-  only if there exists $\gamma>0$ such that
+  only if there exists $\ellipa>0$ such that
   \begin{gather*}
     \forall
     \begin{bmatrix}
@@ -812,7 +812,7 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
     \end{bmatrix}
     \colon
     \quad
-    \mathcal A\mixedform(u,p,v,q) \ge \gamma
+    \mathcal A\mixedform(u,p,v,q) \ge \ellipa
     \norm{(u,p)}_{V\times Q}\norm{(v,q)}_{V\times Q},
   \end{gather*}
   and vice versa.
@@ -914,6 +914,43 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
 \end{solution}
 \end{Problem}
 
+\begin{intro}
+  We summarize the result of this section in an assumption for
+  well-posedness which will be the basis for further results in this
+  course. We know from the discussion above that this assumption is
+  only sufficient and weaker conditions may be imposed on
+  $a(.,.)$. But indeed, it helps us through a lot of problems and is a
+  good compromise between generality and ease of use.
+\end{intro}
+
+\begin{Assumption}{mixed-elliptic}
+  Let $V$ and $Q$ be Hilbert spaces and let $a(.,.)$ and $b(.,.)$ be
+  bounded bilinear forms on $V\times V$ and $V\times Q$,
+  respectively. We define their norms as the smallest constants such
+  that for all arguments there holds
+  \begin{gather}
+    a(u,v) \le \norm a \norm{u}_V \norm{v}_V,
+    \qquad
+    b(v,q) \le \norm b \norm{v}_V \norm{q}_Q.
+  \end{gather}
+  With these forms, we associate bounded operators $A$, $B$, and $B^T$
+  according to \blockref{Definition}{saddle-point-operators}. With
+  $b(.,.)$ we associate the spaces
+  \begin{gather}
+    \begin{split}
+      \ker B &= \bigl\{v\in V \big| b(v,q) = 0 \;\forall q\in Q\bigr\},\\
+      \ker B^T &= \bigl\{q\in Q \big| b(v,q) = 0 \;\forall v\in V\bigr\}.
+    \end{split}
+  \end{gather}
+  Furthermore, we assume that $a(.,.)$ is positive semi-definite on
+  $V$ and elliptic on $\ker B$,
+  \begin{gather}
+    a(u,u) \ge 0 \quad\forall u\in V,
+    \qquad
+    a(u,u) \ge \ellipa \norm{u}_V^2 \quad\forall u\in \ker B.
+  \end{gather}
+\end{Assumption}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Galerkin approximation of mixed problems}
@@ -922,7 +959,92 @@ a(u,\tilde{w})=\gamma a(u,w) = \gamma \norm{u}_V^2
 
 \input{../mixed/galerkin}
 
-%%% Local Variables:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Bringing back $c(p,q)$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{intro}
+  The key to the mixed analysis which is also underlying our
+  quasi-bestapproximation result was a splitting of the solution
+  process into the reduced problem for $u$ and then applying the
+  inf-sup condition for $b(.,.)$ in order to estimate $p$. This way,
+  we will be able to obtain estimates for the Stokes problem, but we
+  have tacitly abandoned weakly compressible elasticity. Indeed, the
+  mixed form of the Lamé-Navier equations is not a constrained
+  minimization problem. In this section, we will fill the gap and
+  derive estimates for the solution of this problem which are robust
+  in $\lambda$.
+
+  In the Lamé-Navier equations, we had
+  \begin{gather*}
+    c(p,q) = -\tfrac1\lambda \scal(q,p)_{L^2(\domain)},
+  \end{gather*}
+  which suggests assuming symmetric and $Q$-elliptic. But, we want
+  estimates independent of $\lambda$! Therefore, we should only
+  require semi-definite, which on the other hand turns out a bit too
+  weak.
+\end{intro}
+
+\begin{Assumption}{mixed-elliptic-stabilized}
+  In addition to \blockref{Assumption}{mixed-elliptic}, let $c(.,.)$
+  be positive semi-definite and elliptic on $\ker{B^T}$,
+  \begin{gather}
+    c(q,q) \ge u\quad\forall q\in Q,
+    \qquad
+    c(q,q) \ge \ellipc \norm{q}_Q^2 \quad\forall q\in \ker{B^T}.
+  \end{gather}
+\end{Assumption}
+
+\begin{remark}
+  Again, this assumption is not necessary for the analysis, but it
+  yields a convenient and useful theorem which goes far beyond weakly
+  compressible elasticity and covers stabilized methods for spaces
+  where the inf-sup condition for $b(.,.)$ does not hold for the whole
+  space $Q$.
+\end{remark}
+
+\begin{Theorem}{mixed-stabilized-well-posed}
+  Let \blockref{Assumption}{mixed-elliptic-stabilized} hold and in
+  addition let there be $\beta>0$ such that
+  \begin{gather}
+    \begin{split}
+      \inf_{q\in \ortho{\ker{B^T}}}  \sup_{v\in V}
+      \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} &\ge \beta\\
+      \inf_{v\in \ortho{\ker{B}}}  \sup_{q\in Q}
+      \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} &\ge \beta
+    \end{split}
+  \end{gather}
+  Then, the problem finding $(u,p)\in V\times Q$ such that
+  \begin{multline}
+    a(u,v) + b(v,p) + b(u,q) - c(p,q) = f(v)+g(q)
+    \\
+    \forall v\in V, q\in Q
+  \end{multline}
+  has a unique solution for all $f\in V^*$ and $g\in Q^*$ and there is
+  a constant $C$ such that
+  \begin{gather}
+    \norm{u}_V+\norm{p}_Q \le C \bigl(\norm{f}_{V^*} + \norm{g}_{Q^*}.
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  First, note that the ellipticity assumptions as well as the inf-sup
+  conditions are symmetric in $V$ and $Q$. Indeed, replacing the test
+  functions by their negatives, we can transform the problem into one
+  where $V$ and $Q$ have exchanged their roles. Thus, it is sufficient
+  to show well-posedness for $g=0$. The same result then holds for
+  $f=0$ and it holds for both nonzero by linearity.
+  
+  We note that by the inf-sup conditions both $\range B$ and
+  $\range{B^T}$ are closed. Thus, assuming $g=0$ we can decompose
+  $f=f^0+f^\perp$, where $f^\perp\in \polar{\ker B}$ and
+  $f^0 \in\polar{{\ortho{\ker B}}}$ and $u=u^0+u^\perp$ with
+  $u^0\in\ker B$ and $u^\perp$ in its orthogonal complement.
+\end{proof}
+
+%%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "main"
 %%% End:
