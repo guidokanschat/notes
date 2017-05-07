@@ -967,7 +967,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 
 \begin{intro}
   The key to the mixed analysis which is also underlying our
-  quasi-bestapproximation result was a splitting of the solution
+  quasi-best\-ap\-proxi\-mation result was a splitting of the solution
   process into the reduced problem for $u$ and then applying the
   inf-sup condition for $b(.,.)$ in order to estimate $p$. This way,
   we will be able to obtain estimates for the Stokes problem, but we
@@ -1006,8 +1006,9 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \end{remark}
 
 \begin{Theorem}{mixed-stabilized-well-posed}
-  Let \blockref{Assumption}{mixed-elliptic-stabilized} hold and in
-  addition let there be $\beta>0$ such that
+  Let \blockref{Assumption}{mixed-elliptic-stabilized} hold and
+  let$a(.,.)$ and $c(.,)$ be symmetric. In addition, let there be
+  $\beta>0$ such that
   \begin{gather}
     \begin{split}
       \inf_{q\in \ortho{\ker{B^T}}}  \sup_{v\in V}
@@ -1025,22 +1026,121 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   has a unique solution for all $f\in V^*$ and $g\in Q^*$ and there is
   a constant $C$ such that
   \begin{gather}
-    \norm{u}_V+\norm{p}_Q \le C \bigl(\norm{f}_{V^*} + \norm{g}_{Q^*}.
+    \norm{u}_V+\norm{p}_Q
+    \le C \bigl(\norm{f}_{V^*} + \norm{g}_{Q^*}\bigr).
   \end{gather}
 \end{Theorem}
 
 \begin{proof}
   First, note that the ellipticity assumptions as well as the inf-sup
   conditions are symmetric in $V$ and $Q$. Indeed, replacing the test
-  functions by their negatives, we can transform the problem into one
-  where $V$ and $Q$ have exchanged their roles. Thus, it is sufficient
-  to show well-posedness for $g=0$. The same result then holds for
-  $f=0$ and it holds for both nonzero by linearity.
+  functions and the form $b(.,.)$ by their negatives, we can transform
+  the problem into one where $V$ and $Q$ have exchanged their
+  roles. Thus, it is sufficient to show well-posedness for $f=0$. The
+  same result then holds for $g=0$ and it holds for both nonzero by
+  linearity.
   
   We note that by the inf-sup conditions both $\range B$ and
-  $\range{B^T}$ are closed. Thus, assuming $f=0$ we can decompose
-  $u=u^0+u^\perp$ with $u^0\in\ker B$ and $u^\perp$ in its orthogonal
-  complement.
+  $\range{B^T}$ are closed. Thus, we can decompose $u=u^0+u^\perp$
+  with $u^0\in\ker B$ and $u^\perp$ in its orthogonal
+  complement. Assuming $f=0$ and testing with $q=0$ we obtain the
+  equation
+  \begin{gather}
+    \label{eq:infsup:14}
+    a(u,v) = -b(v,p) = 0.
+  \end{gather}
+  In particular, testing with $v=u^0$ yields
+  \begin{gather*}
+    a(u,u^0) = -b(u^0,p) = 0.
+  \end{gather*}
+  Hence,
+  \begin{gather*}
+    \ellipa \norm{u^0}^2_V \le a(u^0,u^0)
+    = -a(u^\perp,u^0)
+    \le \norm a \norm{u^\perp}\norm{u^0},
+  \end{gather*}
+  which implies
+  \begin{gather}
+    \label{eq:infsup:15}
+    \norm{u^0}_V \le \frac{\norm a}{\ellipa} \norm{u^\perp}_V.
+  \end{gather}
+  Testing with $v=u$ and $q=-p$ yields
+  \begin{gather*}
+    a(u,u)+c(p,p) \le g(p) = g^0(p^0) + g^\perp(p^\perp),
+  \end{gather*}
+  where $p^0\in \ker{B^T}$, $g^\perp\in \polar{\ker{B^T}}$ and the
+  other two are defined by orthogonality in $Q$ and $Q^*$,
+  respectively. Let first $g^0=0$. Then, by~\eqref{eq:infsup:14} and
+  the inf-sup condition for $p$, there is $v\in V$ with $\norm{v}_V = 1$
+  such that
+  \begin{gather*}
+    \beta \norm{p^\perp} \le
+    \abs{b(v,p^\perp)} = \abs{b(v,p)} = \abs{a(u,v)}
+    \le \sqrt{a(u,u)}\sqrt{a(v,v)},
+  \end{gather*}
+  by the Bunyakovsky-Cauchy-Schwarz inequality for symmetric bilinear
+  forms.  Therefore, squaring and using the definition of the operator
+  norm of $g^\perp$ yields
+  \begin{gather*}
+    \norm{p^\perp}_Q \le \frac{\norm a}{\beta^2}\norm{g^\perp}_{Q^*}.
+  \end{gather*}
+  Furthermore, we have
+  \begin{gather*}
+    c(p,p^0) = b(u,p^0) - g^\perp(p^0) = 0.
+  \end{gather*}
+  Hence,
+  \begin{gather*}
+    \ellipc \norm{p^0}_Q^2 \le c(p^0,p^0)
+    = c(p^\perp,p^0) \le \norm c \norm{p^0}_Q \norm{p^\perp}_Q,
+  \end{gather*}
+  concluding
+  \begin{gather*}
+    \norm{p^0}_Q
+    \le \frac{\norm a \norm c}{\ellipc\beta^2}
+    \norm{g^\perp}_{Q^*}.
+  \end{gather*}
+
+  We continue our proof for $g^\perp=0$ and $g^0 \neq 0$. Testing with
+  $q=p^0$, we obtain
+  \begin{align*}
+    c(p^0,p^0)
+    &= c(p,p^0) - c(p^\perp,p^0) \\
+    &= b(u,p^0) - g^0(p^0) - c(p^\perp,p^0) \\
+    &\le \norm{g^0}_{Q^*} \norm{p^0}_Q
+      + \norm c \norm{p^\perp}_Q \norm{p^0}_Q,
+  \end{align*}
+  yielding
+  \begin{gather*}
+    \norm{p^0}_Q \le \frac1{\ellipc}
+    \left(\norm{g^0}_{Q^*} + \norm c \norm{p^\perp}_Q\right).
+  \end{gather*}
+  $p^\perp$ is estimated as before by
+  \begin{align*}
+    \norm{p^\perp}_Q^2
+    &\le \frac{\norm a}{\beta^2}\norm{g^0}_{Q^*} \norm{p^0}_Q \\
+    &\le \frac{\norm a}{\ellipc\beta^2} \norm{g^0}_{Q^*}^2
+      + \frac{\norm a\norm c}{\ellipc\beta^2}
+      \norm{g^0}_{Q^*}\norm{p^\perp}_Q\\
+    &\le \frac{\norm a}{\ellipc\beta^2} \norm{g^0}_{Q^*}^2
+      + \frac12 \norm{p^\perp}_Q^2
+      + \frac{\norm a^2 \norm c^2}{2{\ellipc}^2\beta^4} \norm{g^0}_{Q^*}^2.
+  \end{align*}
+  We conclude that $p^\perp$ and $p^0$ are bounded by $g^0$. Summing
+  up, we obtain for $f=0$ and $g\in Q^*$ the estimate
+  \begin{gather*}
+    \norm{p}_Q \le c \norm{g}_{Q^*}.
+  \end{gather*}
+
+  We estimate $u^0$ by $u^\perp$ using~\eqref{eq:infsup:15} and
+  $u^\perp$ by the inf-sup condition, choosing $q\in Q$ with
+  $\norm{q}_Q = 1$ such that
+  \begin{gather*}
+    \beta\norm{u^\perp} = b(u,q) = c(p,q) + g(q)
+    \le \norm{c}\norm{p}_Q +  \norm{g}_{Q^*}.
+  \end{gather*}
+  Thus, we have estimated all components of the solution by the norm
+  of $g$, assuming $f=0$. Now we conclude the proof by reverting the
+  roles of $u$ and $p$, respectively $f$ and $g$.
 \end{proof}
 
 %%% Local Variables: 
