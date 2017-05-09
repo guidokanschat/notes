@@ -1,7 +1,254 @@
 
 \section{Well-posedness of the continuous problem}
 
+\begin{intro}
+  We begin our investigation into the Stokes problem by investigating
+  the well-posedness of the continuous problem. This is particularly
+  simple, since we have
+  \begin{gather*}
+    a(u,v) = \form(\strain u,\strain v)
+  \end{gather*}
+  for the original Stokes problem in \blockref{Definition}{stokes-eq1}
+  and
+  \begin{gather*}
+    a(u,v) = \form(\nabla u,\nabla v)
+  \end{gather*}
+  for the simplified \putindex{Stokes equations} in
+  \blockref{Definition}{stokes-eq2}. From the standard theory for the
+  Laplacian, we know that the second one is $V$-elliptic on
+  $V=H^1_0(\domain;\R^d)$. For the first one, we conclude this by using a
+  \putindex{Korn inequality}. Therefore, we can already conclude a
+  first result:
+\end{intro}
+
+\begin{Lemma}{stokes-a-elliptic}
+  Let $V=H^1_0(\domain, \R^d)$ and $V_h\subset V$ a finite dimensional
+  subspace. Then, $a(.,.)$ is elliptic on $\ker B$ and on $\ker{B_h}$
+  independent of the choices of $Q$ and $Q_h$.
+\end{Lemma}
+
+\begin{remark}
+  We focus here on no-slip boundary condition on the whole boundary as
+  the exemplary case. Other boundary conditions are possible, but as
+  soon as the Dirichlet boundary for one velocity component becomes
+  too small, the ellipticity of $a(.,.)$ on $V$ must be established by
+  new arguments known for instance for Robin boundary conditions. In
+  the extreme case of natural boundary conditions all around, $V$ is
+  the subspace of $H^1(\domain, \R^d)$ obtained by dividing by the
+  space of all translations for the simplified form and by the space
+  of all rigid body movements.
+
+  Not that we have established already in
+  \blockref{Lemma}{divergence-compatibility} that the condition
+  $V=H^1_0(\domain, \R^d)$ implies the reduction of the pressure to
+  the space $Q = L^2_0(\domain)$ from
+  \blockref{Notation}{pressure-constant}.
+\end{remark}
+
+\begin{intro}
+  The previous lemma guarantees well-posedness of the
+  \putindex{reduced problem} in all possible cases. Therefore, the
+  remainder of this section is only concerned with the inf-sup
+  condition for the divergence operator. We
+  follow~\cite{GiraultRaviart86} in this presentation.
+\end{intro}
+
+\begin{Lemma}{stokes-helmholtz}
+  Let $V=H^1_0(\domain,\R^d)$. Then, the divergence operator
+  $\div\colon V \to L^2(\domain)$ is continuous and the subspace
+  \begin{gather*}
+    V^0 = \ker \div
+    = \bigl\{v\in V \big|
+    \div v = 0 \text{ a.e.} \bigr\}
+  \end{gather*}
+  is closed in $V$ and $V$ admits the orthogonal decomposition
+  \begin{gather*}
+    V = V^0\oplus V^\perp.
+  \end{gather*}
+\end{Lemma}
+
+\begin{proof}
+  We have that
+  \begin{gather*}
+    \norm{\div v}_{L^2(\domain)}^2
+    = \int_\domain \left(\sum \d_iv_i\right)^2\dx
+    \le d \int_\domain \sum \abs{\d_iv_i}^2\dx
+    \le d \norm{v}_{H^1(\domain;\R^d)}^2.
+  \end{gather*}
+  Thus, the divergence operator is a continuous mapping from $V$ to
+  $L^2(\domain)$. The definition of $V^0$ is equivalent to the
+  definition of zero in $L^2(\domain)$. Finally, since the kernel is
+  the pre-image of a closed set under a continuous map, it is
+  closed. The existence of the decomposition follows from
+  \blockref{Theorem}{orthogonal-complement}.
+\end{proof}
+
+\begin{Lemma}{stokes-grad}
+  If $f\in V^* = H^{-1}(\domain;\R^d)$ satisfies
+  \begin{gather*}
+    f(v) = 0 \quad\forall v\in V^0,
+  \end{gather*}
+  then, there exists $p\in L^2(\domain)$ such that
+  \begin{gather*}
+    f = \nabla p.
+  \end{gather*}
+  If $\domain$ is connected, then $p$ is unique up to an additive
+  constant.
+\end{Lemma}
+
+\begin{proof}
+  First, we identify $L^2(\domain)$ with its dual. Then, by
+  \begin{gather*}
+    \scal(-\nabla p, v)_{V^*\times V} = \scal(p, div
+    v)_{L^2(\domain)},
+    \qquad\forall v\in V,
+  \end{gather*}
+  we see that $-\nabla\colon L^2(\domain)\to V^*$ is the dual to the
+  divergence operator. Using the Cauchy-sequence argument, we see that
+  $\range{\div}$ is closed in $L^2(\domain)$ and the closed range
+  theorem applies. Thus, $\range{-\nabla}$ is closed in $V^*$ and
+  \begin{gather*}
+    \range{\nabla} = \polar{(V^0)} \cong V^\perp
+  \end{gather*}
+  is the polar set of the kernel $V^0$. This implies the statement
+  that there is a $p$ for every $f$. Uniqueness follows by the fact
+  that the only differentiable functions on a connected domain with
+  $\nabla p=0$ are the constant functions, and by density of such
+  functions in $L^2(\domain)$.
+\end{proof}
+
+\begin{Corollary}{stokes-iso}
+  Let $domain$ be connected. Then,
+  \begin{enumerate}
+  \item $\nabla\colon L^2_0(\domain) \to V^0$ is an isomorphism
+  \item $\div\colon V^\perp \to L^2_0(\domain)$ is an isomorphism
+  \end{enumerate}
+\end{Corollary}
+
+\begin{Theorem}{stokes-infsup}
+  Let $\domain\subset \R^d$ be a Lipschitz-domain,
+  $V=H^1_0(\domain,\R^d)$ and $Q=L^2_0(\domain)$. Then, there is a
+  constant $\beta>0$ depending only on the geometry of $\domain$ such
+  that
+  \begin{gather}
+    \label{eq:stokes:1}
+    \inf_{q\in Q}\sup_{v\in V}\frac{\form(\div
+      v,q)}{\norm{v}_V\norm{q}_Q} \ge \beta.
+  \end{gather}
+  Furthermore, the problem finding $(u,p)\in V\times Q$ such that
+  \begin{gather}
+    \label{eq:stokes:3}
+    a(u,v)+\form(\div v,p)+\form(\div u,q) = f(v)+g(q)
+    \quad\forall v\in V, q\in Q,
+  \end{gather}
+  has a unique solution for any right hand side $f\in V^*$ and $g\in
+  \range{\div}$.
+\end{Theorem}
+
 \section{Stable discretizations}
+
+\begin{intro}
+  We begin by application of the generic theory of the previous
+  chapter to the Stokes problem in order to obtain a generic error
+  estimate based on the concrete choice of norms and a single
+  assumption. Guided by this theorem, we spend the remaining part of
+  this section exploring different options for the discrete spaces.
+\end{intro}
+
+\begin{Theorem}{stokes-convergence}
+  Let $V=H^1_0(\domain;\R^d)$ and $Q=L^0_0(\domain)$. Let furthermore
+  $V_h\subset V$ and $Q_h\subset Q$ be discrete subspaces such that
+  there exists $\beta>0$ such that
+  \begin{gather}
+    \label{eq:stokes:2}
+    \inf_{q\in Q}\sup_{v\in V}\frac{\form(\div
+      v,q)}{\norm{v}_V\norm{q}_Q} \ge \beta.    
+  \end{gather}
+  Then, the Galerkin approximation of~\eqref{eq:stokes:3} admits a
+  unique solution $(u_h, p_h)\in V_h\times Q_h$ with the
+  quasi-bestapproximation property
+  \begin{gather}
+    \label{eq:stokes:4}
+    \begin{split}
+      \norm{u-u_h}_1
+      &\le c_1 \inf_{v_h\in V_h}{u-v_h}_1
+      + c_2 \inf_{q_h\in Q_h}{p-q_h}_0
+      \\
+      \norm{p-p_h}_1
+      &\le c_3 \inf_{v_h\in V_h}{u-v_h}_1
+      + c_4 \inf_{q_h\in Q_h}{p-q_h}_0.
+    \end{split}
+  \end{gather}
+\end{Theorem}
+
+\begin{Corollary}{stokes-convergence2}
+  Under the assumptions of \blockref{Theorem}{stokes-convergence2},
+  let there be in addition interpolation operators $I_{V_h}$ and
+  $I_{Q_h}$ such that
+  \begin{gather}
+    \label{eq:stokes:5}
+    \begin{split}
+      \norm{u-I_{V_h} u}_1 &\le c h^k \snorm{u}_{k+1} \\
+      \norm{p-I_{Q_h} p}_0 &\le c h^k \snorm{p}_{k}.
+    \end{split}
+  \end{gather}
+  Then, there is a constant $c$ independent of the approximation
+  spaces such that
+  \begin{gather}
+    \label{eq:stokes:6}
+    \begin{split}
+      \norm{u-u_h}_1 &\le c h^k \bigl(\snorm{u}_{k+1} +
+      \snorm{p}_{k}\bigr)
+      \\
+      \norm{p-p_h}_1 &\le c h^k \bigl(\snorm{u}_{k+1} +
+      \snorm{p}_{k}\bigr).
+    \end{split}
+  \end{gather}
+\end{Corollary}
+\begin{intro}
+  We continue showing that the most natural discretizations
+  in two dimensions are not inf-sup stable. This holds for the
+  discretization using continuous linear or bilinear elements for both
+  velocity components and the pressure as well as for continuous
+  linear or bilinear velocity functions combined with piecewise
+  constant pressure functions.
+\end{intro}
+
+\begin{example}
+  Take a patch of four quadrilaterals or triangles meeting in a common
+  vertex. Let $\domain$ be the union of these grid cells. Choose
+  linear and bilinear shape functions for $V_h$, respectively. Then, $\dim
+  V_h = 2$, since we have one interior vertex with one basis function for
+  each velocity component. Choose piecewise constant pressure
+  functions. Dividing out the global constant, we conclude that $\dim
+  Q_h = 3$. Thus, the statement
+  \begin{gather*}
+    \forall q_h\in Q_h \;\exists v_h\in V_h:
+    \quad \norm{v_h}_1 = \norm{q_h}_0
+    \;\wedge\; b(v_h, q_h) \ge \beta \norm{q_h}^2
+  \end{gather*}
+  cannot hold true. Therefore, the inf-sup condition does not hold. In
+  fact, $\ker{B_h} = \{0\}$.
+
+  Thus, we conclude that for this combination of shape function
+  spaces, there is a mesh such that they are not suited for the
+  approximation of the Stokes problem. But, this may be a problem of a
+  mesh with too few cells. In fact, asymptotically, a triangular mesh
+  contains twice as many vertices as cells, a quadrilateral mesh as
+  many. Therefore, $\dim V_h > \dim Q_h$ as soon as the mesh is
+  sufficiently fine. Will this be sufficient?
+\end{example}
+
+\begin{Problem}{checker-board}
+  Let $\domain = (0,1)^2$ be the unit square and let the mesh consist
+  of Cartesian squares of side length $1/n$. Choose $V_h \subset V$
+  based on bilinear shape functions. Show that the piecewise constant
+  pressure function $p_c=\pm 1$ in a checkerboard fashion is in the
+  kernel of $B_h^T$, that is
+  \begin{gather*}
+    b(v_h, p_c) = 0 \quad\forall v_h\in V_h.
+  \end{gather*}
+\end{Problem}
 
 \section{Nearly incompressible elasticity}
 
