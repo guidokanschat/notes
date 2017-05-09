@@ -347,7 +347,7 @@ The question of well-posedness in finite dimensions can be answered by:
   $(IS)\Rightarrow(3)$\\
   The inf-sup condition is equivalent to $A: ker(A)^\perp\to V^*$ being an isomorphism.
   By the Riesz representation theorem there exists for a given $u\in V$ a $w\in W$ such that
-  $Aw=Ju$ where $J$ is the Riesz map. Hence, it holds
+  $Aw=J u$ where $J$ is the Riesz map. Hence, it holds
   \begin{align*}
 a(u,w)=\langle A w, u\rangle = \langle J u, u\rangle = \norm{u}_V^2.
   \end{align*}
@@ -646,7 +646,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   \item The operator $A^T\colon W\to \polar{\ker A}$ is an isomorphism and
     \begin{gather}
       \label{eq:infsup:12}
-      \norm{A^Tw}_{V^*} \ge \ellipa \norm{w}_{W} \qquad\forall w\in W.
+      \norm{A^T w}_{V^*} \ge \ellipa \norm{w}_{W} \qquad\forall w\in W.
     \end{gather}
   \item The operator $A\colon \ortho{\ker A}\to W^*$ is an isomorphism
     and
@@ -714,7 +714,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   unique solution only for the adjoint operator $A^T$, which is
   exactly what we need, when we compute say a pressure from the
   divergence of a velocity field. In general, we consider the
-  restriction of $f$ to the polar set of the kernal in the above
+  restriction of $f$ to the polar set of the kernel in the above
   well-posedness result detrimental and would prefer a result that
   holds for all $f\in V^*$. This on the other hand requires
   $\ker A=\{0\}$, or $\overline{\range{A^T}} = W^*$. Then, on the
@@ -900,7 +900,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
       b(u_g,q) = q(q) \quad\forall q\in Q.
     \end{gather*}
   \item Now consider the function $u_0 = u-u_g$. For $u$ to solve the
-    orginal problem $u_0$ has to solve
+    original problem $u_0$ has to solve
     \begin{align*}
       a(u_0+u_g,v) + b(v,p) + b(u_0+u_g,q) = f(v)+g(q) \quad\forall v\in V, q\in Q\\
       \Leftrightarrow a(u_0,v) + b(v,p) + b(u_0,q) = f(v)-a(u_g,v) \quad\forall v\in V, q\in Q
