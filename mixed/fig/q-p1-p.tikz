@@ -1,0 +1,19 @@
+\begin{tikzpicture}[thick]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (2,0);
+  \coordinate (C) at (0,2);
+  \coordinate (D) at (2,2);
+  \coordinate (AB) at ($(A)!0.5!(B)$);
+  \coordinate (AC) at ($(A)!0.5!(C)$);
+  \coordinate (BD) at ($(B)!0.5!(D)$);
+  \coordinate (CD) at ($(C)!0.5!(D)$);
+  \coordinate (center) at ($(A)!0.5!(D)$);
+  \coordinate (P1) at ($(center)!.2!(CD)$);
+  \coordinate (P2) at ($(center)!.2!120:(CD)$);
+  \coordinate (P3) at ($(center)!.2!240:(CD)$);
+  
+  \draw (A) -- (B) -- (D) -- (C) -- cycle;
+
+  \foreach \point in {P1,P2,P3}
+    \draw [shape pressure] (\point) circle (3pt);
+\end{tikzpicture}
