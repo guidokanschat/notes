@@ -1007,7 +1007,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 
 \begin{Theorem}{mixed-stabilized-well-posed}
   Let \blockref{Assumption}{mixed-elliptic-stabilized} hold and
-  let$a(.,.)$ and $c(.,)$ be symmetric. In addition, let there be
+  let $a(.,.)$ and $c(.,)$ be symmetric. In addition, let there be
   $\beta>0$ such that
   \begin{gather}
     \begin{split}
@@ -1143,6 +1143,110 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   roles of $u$ and $p$, respectively $f$ and $g$.
 \end{proof}
 
+\begin{intro}
+  The extension of \blockref{Theorem}{galerkin-mixed-p} to the
+  saddle-point problem of \blockref{Definition}{saddle-point-abstract}
+  with bilinear form $c(.,.)$ is even more cumbersome than this
+  theorem. Nevertheless, the use of residual operators as a technique
+  to structure the proof of convergence is instructive and may come
+  handy at some point.
+\end{intro}
+
+\begin{Definition}{mixed-residual}
+  For the saddle-point problem
+  \begin{gather*}
+    a(u,v) + b(v,p) + b(u,q) - c(p,q),
+  \end{gather*}
+  and functions $w_h\in V_h$ and $r_h\in Q_h$ we introduce the the
+  residual operators $R_f \in V_h^*$ and $R_g\in Q_h^*$ as
+  \begin{gather*}
+    \begin{split}
+      R_f(v_h) &= a(u-w_h, v_h) + b(v_h, p-r_h) \\
+      R_g(q_h) &= b(u-w_h, q_h) - c(p-r_h, q_h).
+    \end{split}
+  \end{gather*}
+\end{Definition}
+
+\begin{Corollary}{mixed-residual-bounded}
+  Under \blockref{Assumption}{mixed-elliptic-stabilized}, we have
+  \begin{gather}
+    \begin{split}
+      \abs{R_f(v_h)}
+      &\le \bigl(\norm a \norm{u-w_h}_V + \norm b \norm{p-r_h}\bigr)
+      \norm{v_h}_V
+      \\
+      \abs{R_g(q_h)}
+      &\le \bigl(\norm b \norm{u-w_h}_V + \norm c \norm{p-r_h}\bigr)
+      \norm{q_h}_Q.
+    \end{split}
+  \end{gather}
+\end{Corollary}
+
+\begin{Lemma}{stabilized-mixed-approximation}
+  Let the assumptions of
+  \blockref{Theorem}{mixed-stabilized-well-posed} hold. Then, there
+  are constants $c_1$ to $c_4$ independent of the solutions $u$, $p$,
+  $u_h$, and $p_h$ and the discretization parameter $h$, such that for
+  any $v_h\in V_h$ and $q_h\in Q_h$
+  \begin{gather}
+    \label{eq:infsup:16}
+    \begin{split}
+      \norm{u_h-v_h} &\le c_1 \norm{R_f}_{V_h^*} + c_2
+      \norm{R_g}_{Q_h^*}
+      \\
+      \norm{p_h-q_h} &\le c_3 \norm{R_f}_{V_h^*} + c_4
+      \norm{R_g}_{Q_h^*}.
+    \end{split}
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  The proof is lengthy and follows the lines of the proof of
+  well-posedness for
+  \blockref{Theorem}{mixed-stabilized-well-posed}. It is obtained by
+  considering the components $u_h^0-v_h^0$ and $u_h^\perp-v_h^\perp$
+  as well as $p_h^0-q_h^0$ and $p_h^\perp-q_h^\perp$ separately.
+\end{proof}
+
+\begin{intro}
+  In spite of the bad treatment the proof of the previous lemma
+  received in these notes, in contains the main parts of the
+  convergence proof, and whenever a saddle-point problem including
+  $c(.,.)$ is solved, it has to be reproduced. It is just the fact
+  that the proof is overwhelmingly technical that led to the decision
+  to leave this experience to the first time the reader actually needs
+  this result.
+\end{intro}
+
+\begin{Corollary}{stabilized-mixed-convergence}
+    Let the assumptions of
+  \blockref{Theorem}{mixed-stabilized-well-posed} hold. Then, there
+  are constants $c_1$ to $c_4$ independent of the solutions $u$, $p$,
+  $u_h$, and $p_h$ and the discretization parameter $h$, such that
+  \begin{gather}
+    \label{eq:infsup:17}
+    \begin{split}
+      \norm{u-u_h}
+      &\le c_1 \inf_{v_h\in V_h}\norm{u-v_h}_V
+      + c_2 \inf_{q_h\in Q_h} \norm{p-q_h}_Q
+      \\
+      \norm{p-p_h}
+      &\le c_3 \inf_{v_h\in V_h}\norm{u-v_h}_V
+      + c_4 \inf_{q_h\in Q_h} \norm{p-q_h}_Q.
+    \end{split}
+  \end{gather}
+\end{Corollary}
+
+\begin{proof}
+  The proof begins with the standard approach with triangle inequality
+  \begin{align*}
+    \norm{u-u_h} &\le \norm{u-v_h} + \norm{v_h-u_h} \\
+    \norm{p-p_h} &\le \norm{p-q_h} + \norm{q_h-p_h}.
+  \end{align*}
+  Then, we employ \blockref{Lemma}{stabilized-mixed-approximation} on
+  the terms on the right and use the estimate of
+  \blockref{Corollary}{mixed-residual-bounded}.
+\end{proof}
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "main"
