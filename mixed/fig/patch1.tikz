@@ -1,0 +1,23 @@
+\begin{tikzpicture}[thick]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (2,0);
+  \coordinate (C) at (0,2);
+  \coordinate (D) at (2,2);
+  \coordinate (AB) at ($(A)!0.5!(B)$);
+  \coordinate (AC) at ($(A)!0.5!(C)$);
+  \coordinate (BD) at ($(B)!0.5!(D)$);
+  \coordinate (CD) at ($(C)!0.5!(D)$);
+  \coordinate (center) at ($(A)!0.5!(D)$);
+  \coordinate (c1) at ($(A)!0.5!(center)$);
+  \coordinate (c2) at ($(B)!0.5!(center)$);
+  \coordinate (c3) at ($(C)!0.5!(center)$);
+  \coordinate (c4) at ($(D)!0.5!(center)$);
+  \draw (A) -- (B) -- (D) -- (C) -- cycle;
+  \draw (AB) -- (CD);
+  \draw (AC) -- (BD);
+
+  \foreach \point in {c1,c2,c3,c4}
+    \draw [shape pressure] (\point) circle (3pt);
+
+  \draw [shape veloxy] (center) circle (3pt);
+\end{tikzpicture}
