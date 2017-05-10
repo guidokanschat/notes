@@ -38,7 +38,7 @@
   space of all translations for the simplified form and by the space
   of all rigid body movements.
 
-  Not that we have established already in
+  Note that we have established already in
   \blockref{Lemma}{divergence-compatibility} that the condition
   $V=H^1_0(\domain, \R^d)$ implies the reduction of the pressure to
   the space $Q = L^2_0(\domain)$ from
@@ -156,13 +156,13 @@
 \end{intro}
 
 \begin{Theorem}{stokes-convergence}
-  Let $V=H^1_0(\domain;\R^d)$ and $Q=L^0_0(\domain)$. Let furthermore
+  Let $V=H^1_0(\domain;\R^d)$ and $Q=L^2_0(\domain)$. Let furthermore
   $V_h\subset V$ and $Q_h\subset Q$ be discrete subspaces such that
-  there exists $\beta>0$ such that
+  there exists $\beta>0$ independent of $h$ such that
   \begin{gather}
     \label{eq:stokes:2}
-    \inf_{q\in Q}\sup_{v\in V}\frac{\form(\div
-      v,q)}{\norm{v}_V\norm{q}_Q} \ge \beta.    
+    \inf_{q_h\in Q_h}\sup_{v_h\in V_h}\frac{\form(\div
+      v_h,q_h)}{\norm{v_h}_V\norm{q_h}_Q} \ge \beta.
   \end{gather}
   Then, the Galerkin approximation of~\eqref{eq:stokes:3} admits a
   unique solution $(u_h, p_h)\in V_h\times Q_h$ with the
@@ -171,18 +171,18 @@
     \label{eq:stokes:4}
     \begin{split}
       \norm{u-u_h}_1
-      &\le c_1 \inf_{v_h\in V_h}{u-v_h}_1
-      + c_2 \inf_{q_h\in Q_h}{p-q_h}_0
+      &\le c_1 \inf_{v_h\in V_h}\norm{u-v_h}_1
+      + c_2 \inf_{q_h\in Q_h}\norm{p-q_h}_0
       \\
       \norm{p-p_h}_1
-      &\le c_3 \inf_{v_h\in V_h}{u-v_h}_1
-      + c_4 \inf_{q_h\in Q_h}{p-q_h}_0.
+      &\le c_3 \inf_{v_h\in V_h}\norm{u-v_h}_1
+      + c_4 \inf_{q_h\in Q_h}\norm{p-q_h}_0.
     \end{split}
   \end{gather}
 \end{Theorem}
 
 \begin{Corollary}{stokes-convergence2}
-  Under the assumptions of \blockref{Theorem}{stokes-convergence2},
+  Under the assumptions of \blockref{Theorem}{stokes-convergence},
   let there be in addition interpolation operators $I_{V_h}$ and
   $I_{Q_h}$ such that
   \begin{gather}
@@ -252,7 +252,7 @@
 
 \section{Nearly incompressible elasticity}
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
-%%% End: 
+%%% End:
