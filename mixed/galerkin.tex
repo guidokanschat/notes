@@ -367,6 +367,74 @@
   $c=\norm b/\tilde\beta$.
 \end{proof}
 
+\begin{Problem}{schur-complement}
+Let $A\in\mathbb{R}^{n\times n}$, $B\in\mathbb{R}^{k\times n}$, $k\leq n$.
+Moreover, assume that $B$ has full rank and that $A$ is symmetric and
+positive definite.\\
+Consider the problem
+\begin{align}
+\begin{aligned}
+\begin{pmatrix} A & B^* \\ B & 0 \end{pmatrix}
+\begin{pmatrix} x \\ y \end{pmatrix}
+= \begin{pmatrix} F \\ G \end{pmatrix}
+\end{aligned}
+\tag{*}
+\label{problem9-stokes}
+\end{align}
+\begin{enumerate}
+\item Prove that then $S := BA^{-1}B^*$ is symmetric and positive definite, too.
+How can this matrix be used to solve (\ref{problem9-stokes})?
+\item Show that
+\begin{align*}
+ P := I - B^*(BB^*)^{-1}B.
+\end{align*}
+is a projector on the kernel of $B$ with $\norm{P}_2=1$.
+\item Show for the case $G = 0$ that $x$ is a solution of
+\begin{align*}
+PAPx = PF
+\end{align*}
+if $(x,y)$ is a solution of (\ref{problem9-stokes}).
+\end{enumerate}
+\begin{solution}
+\begin{enumerate}
+ \item Let's first consider the symmetry:
+  \begin{align*}
+    S^*=(BA^{-1}B^*)^*=B(A^*)^{-1}B^*=BA^{-1}B^*=S
+  \end{align*}
+  We further observe
+  \begin{align*}
+   \norm{v}_S^2 &= v^*Sv = v^*BA^{-1}B^*v = (B^*v)^*A^{-1}B^*v \leq 0 \\
+   \norm{v}_S^2 &\Longleftrightarrow B^*v = 0 \Longleftrightarrow v=0
+  \end{align*}
+  since $A$ and $B$ have full rank.
+
+  The first equation implies
+  \begin{align*}
+   x=A^{-1} (F-B^* y)
+  \end{align*}
+  and eliminating $x$ in the second equation yields
+  \begin{align*}
+   BA^{-1} (F-B^* y)=G \Longleftrightarrow BA^{-1} B^* y=BA^{-1} F-G.
+   \end{align*}
+
+  \item \begin{align*}P^2&=(I - B^*(BB^*)^{-1}B)(I - B^*(BB^*)^{-1}B)\\
+            &=I - 2B^*(BB^*)^{-1}B+ B^*(BB^*)^{-1}BB^*(BB^*)^{-1}B\\
+            &= I-B^*(BB^*)^{-1}B=P
+        \end{align*}
+        Therefore, $\norm{P}_2=1$ if $\operatorname{ker} B\not=\{0\}$.
+        Note that $k<n$ implies this.
+
+        Further, $Px=x$ for all $x\in \operatorname{ker} B$ and $BPy=0$ for all $y$.
+  \item Let $x$ be a solution of (\ref{problem9-stokes}) for $G=0$.
+  \begin{align*}
+PAPx &= (I-B^*(BB^*)^{-1}B) A (I-B^*(BB^*)^{-1}B) x\\
+&= (I-B^*(BB^*)^{-1}B) Ax\\
+&= (I-B^*(BB^*)^{-1}B) (F-B^* y)\\
+&= (I-B^*(BB^*)^{-1}B) F = PF
+        \end{align*}
+\end{enumerate}
+\end{solution}
+\end{Problem}
 
 
 %%% Local Variables:

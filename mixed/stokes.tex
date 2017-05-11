@@ -267,6 +267,26 @@
   sufficiently fine. Will this be sufficient?
 \end{example}
 
+\begin{Problem}{p1-p0-unstable}
+The domain $\Omega=[0,1]^2$ is decomposed into $N \times N$ congruent squares where each
+of them is again divided into two triangles. The decomposition $\mathcal{T}_h$
+is given by these triangles.
+
+We again choose piecewise linear ansatz functions for the velocity for $V_h$
+(vanishing on $\partial \Omega$) and piecewise constant ansatz functions
+for $Q_h$.
+
+Is there a $N$ and an orientation of the triangles such that $V_h\times Q_h$ is
+inf-sup stable?
+\begin{solution}
+  The number of degrees of freedom for the velocity is $2(N-1)^2$ and for the
+  pressure $2N^2-1$. Hence, there is always a pressure ansatz functions such that
+  \begin{align*}
+    (\nabla \cdot \boldsymbol{v}_h, q_h)=0 \quad \forall \boldsymbol{v}_h\in V_h.
+  \end{align*}
+\end{solution}
+\end{Problem}
+
 \begin{Problem}{checker-board}
   Let $\domain = (0,1)^2$ be the unit square and let the mesh consist
   of Cartesian squares of side length $1/n$. Choose $V_h \subset V$
@@ -276,6 +296,52 @@
   \begin{gather*}
     b(v_h, p_c) = 0 \quad\forall v_h\in V_h.
   \end{gather*}
+\begin{solution}
+This time there are $2N^2$ for the velocity and $2N^2-1$ ansatz functions for
+the pressure. Therefore, we have to look a big deeper.
+
+Denote by $p_{i+\frac12, j+\frac12}$ the pressure constant on cell $K_{i,j}$
+($0\leq i,j \leq N-1$). The values of the velocity at the four vertices are
+denoted by $u^1_{i,j}$, $u^1_{i,j+1}$, $u^1_{i+1,j}$, $u^1_{i+1,j+1}$ for the
+first component and similarly for the second component.
+
+Using this notation we can write the divergence constraint in terms of nodal and cell values:
+\begin{align*}
+ &(\nabla \cdot \boldsymbol{v}_h, q_h)\\
+   &= \sum_{i,j} q_{i+\frac12,j+\frac12} \int_{K_{i,j}} \nabla \cdot \boldsymbol{v}_h \,\mathrm{d}x\\
+   &= \sum_{i,j} q_{i+\frac12,j+\frac12} \int_{\partial K_{i,j}} \boldsymbol{n} \cdot \boldsymbol{v}_h \,\mathrm{d}x\\
+   &= \sum_{i,j} q_{i+\frac12,j+\frac12} \frac{h}{2}(u^1_{i+1,j}-u^1_{i,j+1}+u^1_{i+1,j}-u^1_{i+1,j+1})\\
+      &\quad +\sum_{i,j} q_{i,j} \frac{h}{2}(u^2_{i,j+1}-u^2_{i+1,j}+u^2_{i,j+1}-u^2_{i+1,j+1})\\
+   &= \frac{h}{2}\sum_{i,j} u^1_{i,j}(q_{i-\frac12,j+\frac12}+q_{i-\frac12,j-\frac12}-q_{i+\frac12,j+\frac12}-q_{i+\frac12,j-\frac12})\\
+      &\quad +\frac{h}{2}\sum_{i,j} u^2_{i,j}(q_{i+\frac12,j-\frac12}+q_{i-\frac12,j-\frac12}-q_{i+\frac12,j+\frac12}-q_{i-\frac12,j+\frac12})
+\end{align*}
+Thus,
+\begin{align*}
+(\nabla \cdot \boldsymbol{v}_h, q_h)=0 \quad \forall \boldsymbol{v}_h\in V_h
+\end{align*}
+implies
+\begin{align*}
+q_{i-\frac12,j+\frac12}+q_{i-\frac12,j-\frac12}-q_{i+\frac12,j+\frac12}-q_{i+\frac12,j-\frac12} &=0 \\
+q_{i+\frac12,j-\frac12}+q_{i-\frac12,j-\frac12}-q_{i+\frac12,j+\frac12}-q_{i-\frac12,j+\frac12} &=0.
+\end{align*}
+for all ($0\leq i,j \leq N-1$).
+These two constraints can be rephrased as
+\begin{align*}
+q_{i-\frac12,j+\frac12} &= q_{i+\frac12,j-\frac12} \\
+q_{i-\frac12,j-\frac12} &= q_{i+\frac12,j+\frac12}
+\end{align*}
+for all ($0\leq i,j \leq N-1$). Since the mean value of the pressure must be zero,
+the set of pressure functions that fulfill
+\begin{align*}
+(\nabla \cdot \boldsymbol{v}_h, q_h)=0 \quad \forall \boldsymbol{v}_h\in V_h
+\end{align*}
+can be described by
+\begin{align*}
+ p_{i,j} = c \quad \text{if } (i+j) \operatorname{mod} 2 = 0\\
+ p_{i,j} = -c \quad \text{if } (i+j) \operatorname{mod} 2 = 1
+\end{align*}
+where $c\not=0$.
+\end{solution}
 \end{Problem}
 
 \subsection{The MINI element}
