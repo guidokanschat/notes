@@ -215,6 +215,23 @@
 \end{intro}
 
 \begin{example}
+  We begin with a one-dimensional example. Piecewise linear velocity
+  and piecewise linear pressure. Both continuous. Then, $\div v_h$ is
+  piecewise constant. Consequently, a pressure function which has zero
+  mean value on each cell is in the kernel of $B_h$.
+  \begin{figure}[tp]
+    \centering
+    \includegraphics[width=.6\textwidth]{./fig/p1-p1-1d.tikz}
+    \caption[Example for the $P_1-P_1$ pair in one
+    dimension]{Piecewise linear pressure (\tikz\draw[color=cyan] (0,0)
+      -- (1em,0);) and divergence (\tikz\draw[color=red] (0,0)
+      -- (1em,0);) of
+      piecewise linear velocity.}
+    \label{fig:stokes:p1p1-1d}
+  \end{figure}
+\end{example}
+
+\begin{example}
   Take a patch of four quadrilaterals or triangles meeting in a common
   vertex. Let $\domain$ be the union of these grid cells. Choose
   linear and bilinear shape functions for $V_h$, respectively. Then, $\dim
