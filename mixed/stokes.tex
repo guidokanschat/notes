@@ -275,7 +275,7 @@
   \end{gather*}
 \end{Problem}
 
-\subsection{The Mini element}
+\subsection{The MINI element}
 
 \begin{Definition}{barycentric-coordinates}
   A simplex $T\in \R^d$ with vertices $x_0,\dots,x_d$ is described by
@@ -342,16 +342,37 @@
     \caption{Degrees of freedom and shape functions of simplicial elements
       in terms of barycentric coordinates}
     \label{tab:barycentric-shapes}
-  \end{table}
-  
+  \end{table}  
 \end{example}
+
+\begin{Notation}
+  We denote by
+  \begin{gather}
+    \label{eq:stokes:8}
+    H^k_h(\mathcal P) =
+    \bigl\{ v\in H^k(\Omega) \big\vert
+    v_{|\cell} \in \mathcal P \;\forall \cell\in\mesh_h\bigr\}
+  \end{gather}
+  the finite element space which is based on the shape function space
+  $\mathcal P$, the mesh $\mesh_h$ and is a subspace of
+  $H^k(\domain)$. Examples are the continuous spaces of piecewise
+  polynomials or tensor product polynomials of degree $k$
+  \begin{gather*}
+    H^1_h(\P_k) \qquad H^1_h(\Q_k),
+  \end{gather*}
+  and the discontinuous spaces
+  \begin{gather*}
+    H^0_h(\P_k) \qquad H^0_h(\Q_k).
+  \end{gather*}
+\end{Notation}
+
 \begin{Definition}{h1-bubble-space}
   An $H^1$-\define{bubble function} on a mesh cell $\cell$ is a
   function $b\in H^1_0(\cell)$. A \define{bubble space} $b_\cell$ on
   $\cell$ is a discrete vector space of such bubble functions.  We
   denote the space of bubble functions on the mesh $\mesh_h$ by
   \begin{gather*}
-    B_h(b_\cell) = \bigl\{ v\in H^1(\mesh_h) \big\vert
+    B_h(b_\cell) = \bigl\{ v\in H^1(\domain) \big\vert
     v_{|_\cell} \in b_\cell \;\forall \cell\in\mesh_h
     \bigr\}.
   \end{gather*}
@@ -359,8 +380,157 @@
   write just $B_h$.
 \end{Definition}
 
+\begin{example}
+  A bubble function on a triangle $\cell$ is easily defined by
+  \begin{gather}
+    \label{eq:stokes:7}
+    b_3 = \lambda_0\lambda_1\lambda_2.
+  \end{gather}
+\end{example}
 
+\begin{Definition}{mini-element-p}
+  The \define{MINI element} consists of the spaces
+  \begin{gather}
+    V_h = \bigl(H^1_h(\P_1) \oplus B_h(b_3) \cap V\bigr)^2,
+    \qquad
+    Q_h = H^1_h(\P_1) \cap Q.
+  \end{gather}
+  Its degrees of freedom are:
+  \begin{center}
+    \includegraphics[width=.2\textwidth]{./fig/p-mini-v.tikz}
+    \hspace{1cm}
+    \includegraphics[width=.2\textwidth]{./fig/p1-p.tikz}
+  \end{center}
+\end{Definition}
 
+\begin{intro}
+  We will show now that the MINI element is indeed inf-sup stable. To
+  this end, we construct the \putindex{Fortin projection} according to
+  \blockref{Lemma}{fortin}. Since the construction of such a
+  projection operator turns out a bit complicated, we first introduce
+  a construction principle, which will help us in our further
+  analysis. The idea of this principle is separating the interpolation
+  into $V_h$ from the preservation of the divergence.
+\end{intro}
+
+\begin{Lemma}{fortin-construction-1}
+  Let there be operators $\Pi_1,\Pi_2\colon V \to V_h$ such that
+  \begin{xalignat}2
+    \label{eq:stokes:10}
+    \norm{\Pi_1 v}_V &\le c1 \norm{v}_V
+    &\forall v&\in V,\\
+    \label{eq:stokes:11}
+    \norm{\Pi_2(\identity-\Pi_1)v}_V &\le c_2 \norm{v}_V
+    &\forall v&\in V,\\
+    \label{eq:stokes:12}
+    b(v-\Pi_2v,q_h) &= 0
+    &\forall v&\in V, \;q_h\in Q_h,
+  \end{xalignat}
+  with constants $c_1$ and $c_2$ independent of the discretization
+  parameter $h$. Then, the operator
+  \begin{gather}
+    \label{eq:stokes:9}
+    \Pi_h = \Pi_1 + \Pi_2 - \Pi_2\Pi_1
+  \end{gather}
+  is a \putindex{Fortin projection}, that is, it is bounded on $V$ and
+  \begin{gather*}
+    b(v-\Pi_h v, q_h) =0 \qquad\forall q_h\in Q_h.
+  \end{gather*}
+\end{Lemma}
+
+\begin{proof}
+  Boundedness of $\Pi_h$ is obvious, such that we only focus on
+  preservation of the kernel ob $B$:
+  \begin{multline*}
+    b(v-\Pi_h v,q_h) = b(v-\Pi_1 v - \Pi_2 v + \Pi_2\Pi_1 v, q_h)
+    \\
+    = b(v-\Pi_2 v, q_h) - b(\Pi_1 v - \Pi_2\Pi_1 v,q_h) = 0-0 = 0.
+  \end{multline*}
+\end{proof}
+
+\begin{Assumption}{h1-stable-interpolation}
+  There exists an $H^1$-stable interpolation operator $I_h:V\to V_h$
+  such that for each cell $\cell \in \mesh_h$ there holds for $m=0,1$
+  \begin{gather}
+    \label{eq:stokes:13}
+    \snorm{v-I_h v}_{m,\cell} \le c \sum_{\cell'\cap\cell
+      \neq\emptyset} h_{\cell'}^{1-m}\snorm{v}_{1,\cell'},
+  \end{gather}
+  with a constant $c$ independent of the mesh parameter $h$.
+\end{Assumption}
+
+\begin{remark}
+  The interpolation operators of Clément, Scott and Zhang, Schöberl or
+  Ern and Guermond fullfil these assumptions.
+\end{remark}
+
+\begin{Definition}{locally-quasi-uniform}
+  A family of meshes $\{\mesh_h\}$ is called \define{locally
+    quasi-uniform}, if there is a constant $c$ such that
+  \begin{gather}
+    \label{eq:stokes:14}
+    \forall h
+    \;
+    \forall \cell,\cell'\in \T_h
+    \quad
+    \cell\cap\cell'\neq \emptyset
+    \Rightarrow
+    h_\cell \le c h_{\cell'}.
+  \end{gather}
+\end{Definition}
+
+\begin{Assumption}{locally-quasi-uniform}
+  We assume of all families of meshes that they are shape regular and
+  locally quasi-uniform, such that with
+  \blockref{Assumption}{h1-stable-interpolation} there holds
+  \begin{gather}
+    \label{eq:stokes:15}
+    \snorm{v-I_h v}_{m,\cell} \le c h_\cell \snorm{v}_{1,\domain_\cell},
+  \end{gather}
+  where $\Omega_\cell$ is the union of all cells with nonempty
+  intersection with $\cell$.
+\end{Assumption}
+
+\begin{Theorem}{mini-stability}
+  Under \blockref{Assumption}{locally-quasi-uniform},
+  the MINI element is inf-sup stable.
+\end{Theorem}
+
+\begin{proof}
+  We construct a \putindex{Fortin projection} by choosing
+  $\Pi_1 = I_h$, where $I_h:V\to \bigl(H^1_h(\P_1)\bigr)^2$ is an
+  $H^1$-stable interpolation operator into the standard linear finite
+  element space. Now, we construct $\Pi_2: V \to \bigl(B_h\bigr)^2$
+  such that for all $q_h\in Q_h$
+  \begin{gather*}
+    \int_\domain \div(\Pi_2 v-v) q_h \dx
+    = \int_\domain (v-\Pi_2v)\cdot\nabla q_h\dx
+    = 0.
+  \end{gather*}
+  Indeed, $\Pi_2 v$ can be chosen on each cell. Since $\nabla q_h$ is
+  constant on a cell $\cell$, we choose
+  \begin{gather*}
+    \int_\cell \Pi_2 v_i \dx
+    = \alpha_{\cell,i} \int_\cell b_3\dx
+    = \int_\cell v_i\dx,
+  \end{gather*}
+  where $i=1,2$ enumerates the velocity components. This is possible,
+  since the mean value of $b_3$ is strictly positive. Assuming shape
+  regularity, we can use the inverse estimate for $b_3$ to obtain
+  \begin{gather*}
+    \norm{\Pi_2 v}_{1,\cell}
+    \le c h_\cell^{-1} \norm{\Pi_2 v}_{0,\cell}
+    \le c h_\cell^{-1} \norm{v}_{0,\cell}.
+  \end{gather*}
+  Finally, we use the estimates for $I_h$ to obtain
+  \begin{gather*}
+    \norm{\Pi_2 (\identity-\Pi_1) v}_{1,\cell}
+    \le c h_\cell^{-1} \norm{v-I_h v}_{0,\cell}
+    \le c \snorm{v}_{1,\domain_\cell}.
+  \end{gather*}
+  Since the number of intersecting of cells of shape regular meshes is
+  bounded, the finale term is bounded by $\norm v_{1,\domain}$.
+\end{proof}
 \section{Nearly incompressible elasticity}
 
 %%% Local Variables:
