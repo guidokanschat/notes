@@ -247,10 +247,13 @@
   cannot hold true. Therefore, the inf-sup condition does not hold. In
   fact, $\ker{B_h} = \{0\}$.
   \begin{figure}[tp]
-    \centering
-    \includegraphics[width=.4\textwidth]{./fig/patch1.tikz}
+    \begin{center}
     \hfill
-    \includegraphics[width=.4\textwidth]{./fig/patch2.tikz}
+    \includegraphics[width=.3\textwidth]{./fig/patch1.tikz}
+    \hfill
+    \includegraphics[width=.3\textwidth]{./fig/patch2.tikz}
+    \hfill\mbox{}
+    \end{center}
     \caption[Very coarse meshes with Dirichlet boundary.]{Very coarse meshes with Dirichlet boundary. Degrees of freedom for pressure (\tikz\draw[shape pressure] (0,0) circle (1ex);) and for both velocity components(\tikz\draw[shape veloxy] (0,0) circle (1ex);).}
     \label{fig:stokes:example1}
   \end{figure}
@@ -345,7 +348,7 @@
   \end{table}  
 \end{example}
 
-\begin{Notation}
+\begin{Notation}{piecewise-polynomial-spaces}
   We denote by
   \begin{gather}
     \label{eq:stokes:8}
@@ -531,6 +534,28 @@
   Since the number of intersecting of cells of shape regular meshes is
   bounded, the finale term is bounded by $\norm v_{1,\domain}$.
 \end{proof}
+
+\begin{Problem}{quadrilateral-mini}
+  Show that the MINI element can be generalized to quadrilateral
+  meshes. Design a suitable bubble function $b_Q$ of minimal tensor
+  degree such that
+  \begin{gather*}
+    V_h = \bigl(H^1_h(\Q_1) \oplus B_h(b_Q) \cap V\bigr)^2,
+    \qquad
+    Q_h = H^1_h(\P_1) \cap Q,
+  \end{gather*}
+  and the degrees of freedom are
+  \begin{center}
+    \includegraphics[width=.2\textwidth]{./fig/q-mini-v.tikz}
+    \hspace{1cm}
+    \includegraphics[width=.2\textwidth]{./fig/q1-p.tikz}
+  \end{center}
+
+  Discuss extensions to tetrahedra and hexahedra in three dimensions.
+\end{Problem}
+
+\subsection{The $P_2-P_0$ element}
+
 \section{Nearly incompressible elasticity}
 
 %%% Local Variables:
