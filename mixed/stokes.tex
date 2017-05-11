@@ -258,6 +258,39 @@
   \end{gather*}
 \end{Problem}
 
+\subsection{The Mini element}
+
+\begin{Definition}{h1-bubble-space}
+  An $H^1$-\define{bubble function} on a mesh cell $\cell$ is a
+  function $b\in H^1_0(\cell)$. A \define{bubble space} $b_\cell$ on
+  $\cell$ is a discrete vector space of such bubble functions.  We
+  denote the space of bubble functions on the mesh $\mesh_h$ by
+  \begin{gather*}
+    B_h(b_\cell) = \bigl\{ v\in H^1(\mesh_h) \big\vert
+    v_{|_\cell} \in b_\cell \;\forall \cell\in\mesh_h
+    \bigr\}.
+  \end{gather*}
+\end{Definition}
+
+\begin{Definition}{barycentric-coordinates}
+  A simplex $T\in \R^d$ with vertices $x_0,\dots,x_d$ is described by
+  a set of $d+1$ \define{barycentric coordinates}
+  $\lambda_0,\dots,\lambda_d$ such that
+  \begin{xalignat}2
+    0\le\lambda_i(x) &\le 1& i&=0,\dots,d;\quad x\in T\\
+    \lambda_i(x_j) &= \delta_{ij}& i,j&=0,\dots,d\\
+    \sum \lambda_i(x) &= 1.
+  \end{xalignat}
+\end{Definition}
+
+\begin{remark}
+  The functions $\lambda_i(x)$ are the shape functions of the linear
+  $P_1$ element on $T$. They allow us to define basis functions on the
+  cell $T$ without use of a reference element $\widehat T$.
+  
+  Note that $\lambda_i\equiv 0$ on the face opposite to the
+  vertex $x_i$.
+\end{remark}
 \section{Nearly incompressible elasticity}
 
 %%% Local Variables:
