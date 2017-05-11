@@ -361,7 +361,7 @@ where $c\not=0$.
   The functions $\lambda_i(x)$ are the shape functions of the linear
   $P_1$ element on $T$. They allow us to define basis functions on the
   cell $T$ without use of a reference element $\widehat T$.
-  
+
   Note that $\lambda_i\equiv 0$ on the face opposite to the
   vertex $x_i$.
 \end{remark}
@@ -411,7 +411,7 @@ where $c\not=0$.
     \caption{Degrees of freedom and shape functions of simplicial elements
       in terms of barycentric coordinates}
     \label{tab:barycentric-shapes}
-  \end{table}  
+  \end{table}
 \end{example}
 
 \begin{Notation}{piecewise-polynomial-spaces}
@@ -598,7 +598,7 @@ where $c\not=0$.
     \le c \snorm{v}_{1,\domain_\cell}.
   \end{gather*}
   Since the number of intersecting of cells of shape regular meshes is
-  bounded, the finale term is bounded by $\norm v_{1,\domain}$.
+  bounded, the final term is bounded by $\norm v_{1,\domain}$.
 \end{proof}
 
 \begin{Problem}{quadrilateral-mini}
@@ -618,7 +618,42 @@ where $c\not=0$.
   \end{center}
 
   Discuss extensions to tetrahedra and hexahedra in three dimensions.
+\begin{solution}
+  For simplices in any dimension consider the bubble function
+  \begin{align*}
+    b_T=\prod_{i=1}^d\lambda_i\in \mathbb{P}_d(\mathcal{T}_h).
+  \end{align*}
+  For quadrilaterals and higher-dimensional generalizations consider
+  on the reference cell $[-1,1]^d$
+  \begin{align*}
+    \hat{b}_T=\prod_{i=1}^d(1-x_i^2)\in \mathbb{Q}_{2d}(\hat{\mathcal{T}}_h).
+  \end{align*}
+  In particular, we have to satisfy
+  \begin{gather*}
+    \int_\domain \div(\Pi_2 v-v) q_h \dx
+    = \int_\domain (v-\Pi_2v)\cdot\nabla q_h\dx
+    = 0.
+  \end{gather*}
+  Since $\nabla Q_h$ is spanned by
+  \begin{align*}
+    \left\{
+      \begin{pmatrix} 1 \\0 \end{pmatrix},
+      \begin{pmatrix} 0 \\1 \end{pmatrix},
+      \begin{pmatrix} y \\x \end{pmatrix}
+    \right\},
+  \end{align*}
+  we need three additional bubble functions we choose as
+  \begin{align*}
+    b_{T,1}= \begin{pmatrix} \hat{b}_T   \\ 0         \end{pmatrix},
+    b_{T,1}= \begin{pmatrix}         0   \\ \hat{b}_T \end{pmatrix},
+    b_{T,1}= \begin{pmatrix} \hat{b}_T y \\ \hat{b}_T x \end{pmatrix}.
+  \end{align*}
+  With respect to the reference element $[-1,1]^2$, these functions are orthogonal
+  to the basis of $\nabla Q_h$ and non-negative. Hence, there exists a function
+  fulfilling the three requirements.
+\end{solution}
 \end{Problem}
+
 
 \subsection{The $P_2-P_0$ element}
 
