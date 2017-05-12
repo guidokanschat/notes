@@ -603,19 +603,12 @@ where $c\not=0$.
 
 \begin{Problem}{quadrilateral-mini}
   Show that the MINI element can be generalized to quadrilateral
-  meshes. Design a suitable bubble function $b_Q$ of minimal tensor
-  degree such that
+  meshes. Design a bubble space $b_Q$ of minimal tensor degree such that
   \begin{gather*}
     V_h = \bigl(H^1_h(\Q_1) \oplus B_h(b_Q) \cap V\bigr)^2,
     \qquad
-    Q_h = H^1_h(\P_1) \cap Q,
+    Q_h = H^1_h(\Q_1) \cap Q.
   \end{gather*}
-  and the degrees of freedom are
-  \begin{center}
-    \includegraphics[width=.2\textwidth]{./fig/q-mini-v.tikz}
-    \hspace{1cm}
-    \includegraphics[width=.2\textwidth]{./fig/q1-p.tikz}
-  \end{center}
 
   Discuss extensions to tetrahedra and hexahedra in three dimensions.
 \begin{solution}
@@ -632,7 +625,7 @@ where $c\not=0$.
   \begin{gather*}
     \int_\domain \div(\Pi_2 v-v) q_h \dx
     = \int_\domain (v-\Pi_2v)\cdot\nabla q_h\dx
-    = 0.
+    = 0 \quad \forall q_h\in Q_h.
   \end{gather*}
   Since $\nabla Q_h$ is spanned by
   \begin{align*}
@@ -645,12 +638,13 @@ where $c\not=0$.
   we need three additional bubble functions we choose as
   \begin{align*}
     b_{T,1}= \begin{pmatrix} \hat{b}_T   \\ 0         \end{pmatrix},
-    b_{T,1}= \begin{pmatrix}         0   \\ \hat{b}_T \end{pmatrix},
-    b_{T,1}= \begin{pmatrix} \hat{b}_T y \\ \hat{b}_T x \end{pmatrix}.
+    b_{T,2}= \begin{pmatrix}         0   \\ \hat{b}_T \end{pmatrix},
+    b_{T,3}= \begin{pmatrix} \hat{b}_T y \\ \hat{b}_T x \end{pmatrix}.
   \end{align*}
   With respect to the reference element $[-1,1]^2$, these functions are orthogonal
   to the basis of $\nabla Q_h$ and non-negative. Hence, there exists a function
-  fulfilling the three requirements.
+  fulfilling the three requirements and we define $\Pi_2$ to be the projection to the
+  space spanned by $b_{T,1}, b_{T,2}$ and $b_{T,3}$.
 \end{solution}
 \end{Problem}
 
