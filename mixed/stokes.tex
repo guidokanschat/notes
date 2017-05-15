@@ -269,7 +269,7 @@
 
 \begin{Problem}{p1-p0-unstable}
 The domain $\Omega=[0,1]^2$ is decomposed into $N \times N$ congruent squares where each
-of them is again divided into two triangles. The decomposition $\mathcal{T}_h$
+of them is again divided into two triangles. The decomposition $\mesh_h$
 is given by these triangles.
 
 We again choose piecewise linear ansatz functions for the velocity for $V_h$
@@ -453,14 +453,14 @@ where $c\not=0$.
   A bubble function on a triangle $\cell$ is easily defined by
   \begin{gather}
     \label{eq:stokes:7}
-    b_3 = \lambda_0\lambda_1\lambda_2.
+    b_3 = b_3(\cell) = \lambda_0\lambda_1\lambda_2.
   \end{gather}
 \end{example}
 
 \begin{Definition}{mini-element-p}
   The \define{MINI element} consists of the spaces
   \begin{gather}
-    V_h = \bigl(H^1_h(\P_1) \oplus B_h(b_3) \cap V\bigr)^2,
+    V_h = \bigl(H^1_h(\P_1) \oplus B_h(b_3)\bigr)^2 \cap V,
     \qquad
     Q_h = H^1_h(\P_1) \cap Q.
   \end{gather}
@@ -540,7 +540,7 @@ where $c\not=0$.
     \label{eq:stokes:14}
     \forall h
     \;
-    \forall \cell,\cell'\in \T_h
+    \forall \cell,\cell'\in \mesh_h
     \quad
     \cell\cap\cell'\neq \emptyset
     \Rightarrow
@@ -580,7 +580,7 @@ where $c\not=0$.
   constant on a cell $\cell$, we choose
   \begin{gather*}
     \int_\cell \Pi_2 v_i \dx
-    = \alpha_{\cell,i} \int_\cell b_3\dx
+    = \alpha_{\cell,i} \int_\cell b_3(\cell)\dx
     = \int_\cell v_i\dx,
   \end{gather*}
   where $i=1,2$ enumerates the velocity components. This is possible,
@@ -600,6 +600,129 @@ where $c\not=0$.
   Since the number of intersecting of cells of shape regular meshes is
   bounded, the final term is bounded by $\norm v_{1,\domain}$.
 \end{proof}
+
+\begin{Notation}{broken-bilinear-form}
+  We use the abbreviation
+  \begin{gather}
+    \label{eq:stokes:18}
+    \form(f,g)_{\mesh_h} = \sum_{\cell\in\mesh_h} \form(f,g)_\cell,
+  \end{gather}
+  for so called \define{broken bilinear form}s, where instead of
+  integrating over the union of subsets, we sume the integrals.
+\end{Notation}
+
+\begin{Lemma}{mini-stabilized}
+  The discretization of the Stokes problem~\eqref{eq:stokes:3} with
+  the MINI element is equivalent to solving
+  \begin{multline}
+    \label{eq:stokes:16}
+    \form(\nabla u,\nabla v) + \form(\div v,p) + \form(\div u,q)
+    - \form(c_T \nabla p, \nabla q)_{\mesh_h}
+    \\
+    = f(v) + g(q) + \form(c_T f_T,\nabla q)_{\T_h}
+  \end{multline}
+  with standard, continuous linear finite elements for velocity and
+  pressure. Here,
+  \begin{gather*}
+    f_T = \int_\cell f\dx,
+    \qquad
+    c_T = \frac{\form(b_3,1)_\cell}{\norm{\nabla
+      b_3}_\cell^2}.
+  \end{gather*}
+\end{Lemma}
+
+\begin{proof}
+  Let $V_h^1 = H^1_h(\P_1)^2$ be the linear, vector-valued velocity
+  space and $V_h^b = B_h(b_3)^2$ the bubble function space, such that
+  the MINI element space is
+  \begin{gather*}
+    V_h = V_h^1 \oplus V_h^b.
+  \end{gather*}
+  Accordingly, we split the solution with the MINI element into
+  $u_h = u_h^1 + u_h^b$.  By integration by parts, we obtain for the
+  cubic bubble $b_3$
+  \begin{gather*}
+    \form(\nabla v,\nabla b_3(\cell))_\cell = \form(-\Delta v,b_3(cell))_\cell = 0
+    \qquad\forall v\in \P_1,
+  \end{gather*}
+  such that
+  \begin{gather*}
+    \form(\nabla v, \nabla b) = \form(\nabla b, \nabla v) = 0
+    \qquad
+    \forall v\in V_h^1,b\in V_h^b.
+  \end{gather*}
+
+  Thus, testing~\eqref{eq:stokes:3} with $v_h\in V_h^1$ yields
+  \begin{gather}
+    \label{eq:stokes:17}
+    \form(\nabla u_h^1,\nabla v_h)
+    + \form(\div v_h, p_h) = f(v_h)
+    \qquad\forall v_h\in V_h^1.
+  \end{gather}
+  Testing the same equation with $v\in V_h^b$, we obtain
+  \begin{gather}
+    \form(\nabla u_h^b,\nabla v_h)
+    = f(v_h) - \form(\div v_h, p_h)
+    = f(v_h) + \form(v_h,\nabla p_h)_{\mesh_h}.
+  \end{gather}
+  Choosing more specifically $v_h$ as the bubble function $b_3(\cell)$ of the
+  cell $\cell$ for each vector component yields
+  \begin{gather}
+    \label{eq:stokes:20}
+    \mu_\cell^{(i)}  = \frac{1}{\norm{\nabla b_3}_\cell^2}\form(f+\d_i p_h,b_3)_\cell,
+  \end{gather}
+  where $\mu_\cell^{(i)}$ is the coefficient in front of the basis
+  function $b_3(\cell)$ on cell $\cell$ in the basis representation of
+  $u_h^{(i)}$, such that
+  \begin{gather}
+    \label{eq:stokes:19}
+    u_h^b = \sum_{\cell\in\mesh_h}
+    \begin{pmatrix}
+      \mu_\cell^{(1)} b_3(\cell)\\
+      \mu_\cell^{(2)} b_3(\cell)
+    \end{pmatrix}
+  \end{gather}
+  Testing the Stokes equations with $q_h\in Q_h$, we obtain the
+  divergence equation
+  \begin{gather}
+    \form(\div u_h^1 + \div u_h^b,q_h)
+    = \form(\div u_h^1, q_h)
+    - \form(u_h^b, \nabla q_h)_{\mesh_h} = g(q_h).
+  \end{gather}
+  Using~\eqref{eq:stokes:20}, \eqref{eq:stokes:19} and using
+  $f_T^{(i)} = \form(f^{(i)},1)_\cell$ yields
+  \begin{align*}
+    \form(u_h^b, \nabla q_h)_{\mesh_h}
+    &=
+    \sum_{\cell\in\mesh_h} \frac{1}{\norm{\nabla b_3}_\cell^2}
+    \sum_{i=1,2}\form(f_\cell^{(i)}+\d_i
+      p_h,{b_3(T)}\d_i q_h)_\cell\\
+    &= \sum_{\cell\in\mesh_h} \frac{\form(b_3,1)_\cell}{\norm{\nabla
+      b_3}_\cell^2}
+      \form(f_T+\nabla p_h,\nabla q_h)_\cell
+  \end{align*}
+\end{proof}
+
+\begin{remark}
+  The constant $c_T$ in the previous lemma was computed by the formula
+  \begin{gather*}
+    c_T = \frac{\form(b_3,1)_\cell}{\norm{\nabla b_3}_\cell^2}.
+  \end{gather*}
+  This formula is complicated and we would rather like to avoid
+  computing $c_T$ for every mesh cell, since we have to evaluate
+  integrals of cubic functions. On the other hand, the same constant
+  $c_T$ appears on the left and on the right of the modified
+  equation~\eqref{eq:stokes:16}. Therefore, we can replace both by a
+  constant of similar size without affecting consistency or the
+  characteristic properties of the equation. Therefore, we estimate
+  \begin{gather}
+    c_T = \frac{\form(b_3,1)_\cell}{\norm{\nabla b_3}_\cell^2}
+    \simeq \frac{\norm{b_3}_\cell^2}{\norm{\nabla b_3}_\cell^2}
+    \simeq h_T^2,
+  \end{gather}
+  where ``$\simeq$'' indicates equality up to a constant independent
+  of $h$, but depending on the constant in \putindex{shape regularity}.
+\end{remark}
 
 \begin{Problem}{quadrilateral-mini}
   Show that the MINI element can be generalized to quadrilateral
