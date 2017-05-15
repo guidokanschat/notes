@@ -724,6 +724,18 @@ where $c\not=0$.
   of $h$, but depending on the constant in \putindex{shape regularity}.
 \end{remark}
 
+\begin{remark}
+  The method introduced in \blockref{Lemma}{mini-stabilized} is an
+  example for a \define{stabilized method}, here in particular
+  \define{pressure stabilization}. Such methods were particularly
+  popular in the early decades of finite element computation, since
+  they only involve simple shape function spaces. They are still
+  widely used due to their simplicity. The method constructed this way
+  is consistent, i.~e.~, the continuous solution $(u,p)$ solves the
+  discrete problem.
+\end{remark}
+
+
 \begin{Problem}{quadrilateral-mini}
   Show that the MINI element can be generalized to quadrilateral
   meshes. Design a bubble space $b_Q$ of minimal tensor degree such that
@@ -771,8 +783,9 @@ where $c\not=0$.
 \end{solution}
 \end{Problem}
 
-
 \subsection{The $P_2-P_0$ element}
+
+\subsection{The family of Taylor-Hood elements}
 
 \section{Nearly incompressible elasticity}
 
