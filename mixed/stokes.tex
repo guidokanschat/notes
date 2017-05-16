@@ -145,7 +145,11 @@
   \range{\div}$.
 \end{Theorem}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Stable discretizations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{intro}
   We begin by application of the generic theory of the previous
@@ -344,7 +348,11 @@ where $c\not=0$.
 \end{solution}
 \end{Problem}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The MINI element}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{Definition}{barycentric-coordinates}
   A simplex $T\in \R^d$ with vertices $x_0,\dots,x_d$ is described by
@@ -642,7 +650,7 @@ where $c\not=0$.
   $u_h = u_h^1 + u_h^b$.  By integration by parts, we obtain for the
   cubic bubble $b_3$
   \begin{gather*}
-    \form(\nabla v,\nabla b_{3,\cell})_\cell = \form(-\Delta v,b_{3,cell})_\cell = 0
+    \form(\nabla v,\nabla b_{3,\cell})_\cell = \form(-\Delta v,b_{3,\cell})_\cell = 0
     \qquad\forall v\in \P_1,
   \end{gather*}
   such that
@@ -789,7 +797,104 @@ where $c\not=0$.
 \end{solution}
 \end{Problem}
 
+\begin{Problem}{mini-3d}
+  By introducing barycentric coordinates $\lambda_0,\dots,\lambda_3$
+  for a tetrahedron $\cell\subset\R^3$ and the quartic bubble
+  \begin{gather}
+    b_{4,\cell} = \lambda_0\lambda_1\lambda_2\lambda_3,
+  \end{gather}
+  show that the MINI element has a natural generalization to three
+  dimensional problems.
+\end{Problem}
+
+\begin{intro}
+  The reasoning behind the MINI element can be applied easily to
+  pressure spaces og higher order. Take for instance the pair
+  $P_k-P_k$. The, there holds $\div v_h \in \P_{k-1}$ on each cell,
+  and the term
+  \begin{gather*}
+    \int_\cell \div v_h q_h\dx
+  \end{gather*}
+  does not control the function in $\hat p_\cell \in \P_k$ which is
+  orthogonal to $\P_{k-1}$. The only function $p_h\in Q_h$ such that
+  $p_{h|\cell} = \hat p_\cell$ for each cell $\cell\in\mesh_h$ may be
+  zero or not, depending on the mesh geometry. Thus, the element is
+  not stable on arbitrary shape regular meshes. But, as we prove
+  below, the same enrichment process by bubble functions can be
+  employed for its stabilization.
+\end{intro}
+
+\begin{Definition}{higher-order-bubble}
+  With any pressure space $Q_h$ we associate the \define{bubble space}
+  \begin{gather}
+    \label{eq:stokes:24}
+    B_h(b_\cell \nabla Q_h)
+    = \bigl\{ v\in V \big\vert
+    \; \exists q_h\in Q_h \colon v_{|\cell} = b_\cell \nabla q_h \bigr\}.
+  \end{gather}
+  Here, $b_\cell$ is a bubble function on $\cell$ like the cubic buble
+  $b_{3,\cell}$ of a triangle, the quartic bubble $b_{4,\cell}$, the
+  biquadratic bubble $b_{2^2,\cell}$ of a quadrilateral or the
+  triquadratic bubble $b_{2^3,\cell}$ of a hexahedron.
+  
+  We also define the cell bubble space
+  \begin{gather}
+    \label{eq:stokes:25}
+    B_\cell(\nabla Q_h) = \bigl\{ v\in L^2(\cell) \big\vert
+    \;\exists q_h\in Q_h \colon v = b_T q_{h|\cell}\bigr\}.
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem}{higher-order-bubble}
+  Assume that the pair $V_h\times Q_h$ is chosen such that there is
+  an $H^1$-stable interpolation operator according to
+  \blockref{Assumption}{h1-stable-interpolation}, such that $Q_h\subset
+  C^0(\domain)$ and such that
+  \begin{gather}
+    B_h(b_\cell \nabla Q_h)^d \subset V_h.
+  \end{gather}
+  Then, the pair $V_h\times Q_h$ is inf-sup stable.
+\end{Theorem}
+
+\begin{proof}
+  We construct the \putindex{Fortin projection} by
+  \blockref{Lemma}{fortin-construction-1} choosing $\Pi_1$ as the
+  $H^1$-stable interpolation operator. The operator $\Pi_2$ is
+  constructed cell-wise such that $\Pi_2\colon H^1(\cell) \to
+  B_\cell(\nabla Q_h)$ fulfills
+  \begin{gather}
+    \label{eq:stokes:26}    
+    \int_\cell (\Pi_2 u - u) \cdot\nabla q = 0,
+    \qquad
+    \forall q\in Q_{h|\cell}.
+  \end{gather}
+  Clearly, the dimension of $B_\cell(\nabla Q_h)$ equals the dimension
+  of $Q_{h|\cell}$. Then, since the bubble functions are strictly
+  positive inside $\cell$, equation~\eqref{eq:stokes:26} defines
+  $\Pi_2 u$ uniquely. It remains to show the $H^1$-stability of
+  $\Pi_2(\identity-\Pi_1)$, which is done by the standard scaling
+  argument
+  \begin{gather*}
+    \snorm{\Pi_2 v}_{1,\cell}
+    =\snorm{\widehat{\Pi_2 v}}_{1,\widehat\cell}
+    \le c \norm{\widehat v}_{1,\widehat\cell}
+    \le c \bigl(h_\cell^{-1} \norm{v}_{0,\cell} + \snorm{v}_{1,\cell}\bigr).
+  \end{gather*}
+\end{proof}
+
+\begin{Corollary}{pk-bubble}
+  Let $Q_h\subset Q$ be continuous and cell-wise differentiable. If
+  \begin{gather*}
+    H^1_h(\P_1)^d\oplus B_h(b_\cell\nabla Q_h)^d \subset V_h \subset V,
+  \end{gather*}
+  then the pair $V_h\times Q_h$ is inf-sup stable.
+\end{Corollary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The $P_2-P_0$ element}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{intro}
   In this section, we consider a second stable element, which like
@@ -870,6 +975,23 @@ where $c\not=0$.
   encounter again and again. Nevertheless, we will not change the
   cartoons for the degrees of freedom and just note that a degree of
   freedom on an edge, while drawn as a point, may be an integral value.
+\end{remark}
+
+\begin{Theorem}{p2-p0-convergence}
+  Let $(u,p)\in V\times Q$ be a solution to the Stokes problem and let
+  the pair $(u_h,p_h) \in V_h\times Q_h$ be the approximation on a
+  mesh $\mesh_h$ of mesh size $h$ with the $P_2-P_0$ element of
+  \blockref{Definition}{p2-p0-element}. Then, we have the error
+  estimate
+  \begin{gather*}
+    \norm{u-u_h}_1 + \norm{p-p_h}_0
+    \le c \bigl(h^2\snorm{u}_2 + h \snorm{p}_1\bigr).
+  \end{gather*}
+\end{Theorem}
+
+\begin{remark}
+  While this theorem is optimal with respect to our analysis, it is
+  not optimal with respect to the approximation properties of $V_h$.
 \end{remark}
 
 \begin{remark}
