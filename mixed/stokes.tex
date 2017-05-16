@@ -887,7 +887,8 @@ where $c\not=0$.
   \begin{gather*}
     H^1_h(\P_1)^d\oplus B_h(b_\cell\nabla Q_h)^d \subset V_h \subset V,
   \end{gather*}
-  then the pair $V_h\times Q_h$ is inf-sup stable.
+  then the pair $V_h\times Q_h$ is inf-sup stable. The same holds on
+  quadrilateral and hexahedral meshes replacing $\P_1$ by $\Q_1$.
 \end{Corollary}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1051,6 +1052,86 @@ where $c\not=0$.
   is inf-sup stable. Does the proof translate to the $P_2-P_0$ element
   on tetrahedra or the $Q_2-P_0$ element on hexahedra?
 \end{Problem}
+
+\begin{intro}
+  In spite of our remarks above, there is a generalization of the
+  $P_2-P_0$ element involving bubble functions. We will discuss it in
+  an abstract theorem first and then derive a family of inf-sup stable
+  pairs.
+\end{intro}
+
+\begin{Lemma}{bubble-discontinuous}
+  Given a space $Q_h\subset Q$ possibly discontinuous, choose
+  $V_h\subset V$ such that
+  \begin{gather*}
+    B_h(b_\cell \nabla Q_h)^d \subset V_h.
+  \end{gather*}
+  If there is an operator $\Pi_1$ such that
+  \begin{xalignat*}2
+    \norm{\Pi_1 v}_V & \le \norm{v}_V
+    &\forall v&\in V,\\
+    \int_\cell \div (v-\Pi_1v) \dx &= 0
+    \forall v&\in V, \cell\in\mesh_h,
+  \end{xalignat*}
+  then the pair $V_h\times Q_h$ is inf-sup stable.
+\end{Lemma}
+
+\begin{proof}
+  We construct the \putindex{Fortin projection} using $\Pi_1$ and
+  define $\Pi_2$ only on $V^0 = \ker{\div}$. This is sufficient, since
+  for any $v\in V$ there holds $v-\Pi_1 v \in V^0$. Therefore, define
+  cell-wise $\Pi_2\colon V^0_{|\cell} \to B_\cell(b_\cell \nabla Q_h)$
+  by the conditions
+  \begin{gather}
+    \int_\cell \div (\Pi_2 v - v ) q_h \dx = 0
+    \qquad\forall q_h\in Q_{h|\cell}.
+  \end{gather}
+  By this condition, $\Pi_2 v$ is divergence free itself.
+  Note that by the Gauss theorem, the divergence of a bubble function
+  has always zero mean. Therefore, we have unique solvability and
+  $\Pi_h v$ is well defined. It remains to apply the standard scaling
+  argument to prove
+  \begin{gather*}
+    \norm{\Pi_2 v}_1 \le c \norm{v}_1.
+  \end{gather*}
+\end{proof}
+
+\begin{remark}
+  The divergence condition in the previous lemma is different from the
+  condition on Fortin projections, since it only involves piecewise
+  constant pressure. Therefore, the lemma in effect splits the
+  pressure space into a piecewise constant part and its
+  complement. Then, the pressure in the complement is controlled by
+  the bubble functions. It still remains to guarantee the existence
+  ofg the operator $\Pi_1$. In one case, we have verified the
+  existence of such an operator: the Fortin operator for the $P_2-P_0$
+  element. Therefore, we have
+\end{remark}
+
+\begin{Corollary}{bubble-p2}
+  Let $Q_h\subset Q$ be a space of piecewise differentiable
+  functions. If for $V_h\subset V$ holds
+  \begin{gather*}
+    H^1_h(\P_2)^2 \oplus B_h(b_\cell \nabla Q_h)^2 \subset V_h,
+  \end{gather*}
+  then the pair $V_h\times Q_h$ is inf-sup stable.
+\end{Corollary}
+
+\begin{Corollary}{pk-pk2}
+  Let the space dimension be $d=2$ and $k\ge 2$. Then, the spaces
+  \begin{gather}
+    V_h = H^1_h(\P_k)^2 \cap V,
+    \qquad
+    Q_k = H^0_h(\P_{k-2}) \cap Q,
+  \end{gather}
+  form an inf-sup stable pair.
+\end{Corollary}
+
+\begin{proof}
+  For $k=2$, this is the $P_2-P_0$ element. For $k>2$, we have for all
+  $q_h\in Q_h$ on every cell $\nabla q_h\in \P_{k-3}$. Therefore,
+  $(b_{3,\cell} q_h)_{|\cell} \in \P_k$.
+\end{proof}
 
 \subsection{The family of Taylor-Hood elements}
 
