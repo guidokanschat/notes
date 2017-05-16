@@ -749,8 +749,14 @@ where $c\not=0$.
 \begin{solution}
   For simplices in any dimension consider the bubble function
   \begin{align*}
-    b_T=\prod_{i=1}^d\lambda_i\in \mathbb{P}_d(\mathcal{T}_h).
+    b_T=\prod_{i=1}^d\lambda_i\in \mathbb{P}_d(\mathcal{T}_h)
   \end{align*}
+  and we can procede exactly as in the 2D case, i.e. the bubble
+  space is spanned by
+  \begin{align*}
+   \left\{b_T e_1,\dotsc, b_T e_d\right\}.
+  \end{align*}
+
   For quadrilaterals and higher-dimensional generalizations consider
   on the reference cell $[-1,1]^d$
   \begin{align*}
@@ -768,9 +774,9 @@ where $c\not=0$.
       \begin{pmatrix} 1 \\0 \end{pmatrix},
       \begin{pmatrix} 0 \\1 \end{pmatrix},
       \begin{pmatrix} y \\x \end{pmatrix}
-    \right\},
+    \right\}
   \end{align*}
-  we need three additional bubble functions we choose as
+  in 3D, we need three additional bubble functions we choose as
   \begin{align*}
     b_{T,1}= \begin{pmatrix} \hat{b}_T   \\ 0         \end{pmatrix},
     b_{T,2}= \begin{pmatrix}         0   \\ \hat{b}_T \end{pmatrix},

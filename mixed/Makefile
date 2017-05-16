@@ -1,6 +1,6 @@
 .PHONY: classmaterial debug all clean
 
-classmaterial: print.pdf problems.pdf
+classmaterial: print.pdf problems.pdf slides.pdf
 
 debug:  main.pdf solutions.pdf
 
