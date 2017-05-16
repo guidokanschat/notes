@@ -1,0 +1,10 @@
+\begin{tikzpicture}[thick]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (2,0);
+  \coordinate (C) at (0,2);
+  \coordinate (D) at (2,2);
+  \coordinate (center) at ($(A)!0.5!(D)$);
+  \draw (A) -- (B) -- (D) -- (C) -- cycle;
+
+  \draw [shape pressure] (center) circle (3pt);
+\end{tikzpicture}

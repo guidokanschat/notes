@@ -453,7 +453,7 @@ where $c\not=0$.
   A bubble function on a triangle $\cell$ is easily defined by
   \begin{gather}
     \label{eq:stokes:7}
-    b_3 = b_3(\cell) = \lambda_0\lambda_1\lambda_2.
+    b_3 = b_{3,\cell} = \lambda_0\lambda_1\lambda_2.
   \end{gather}
 \end{example}
 
@@ -580,7 +580,7 @@ where $c\not=0$.
   constant on a cell $\cell$, we choose
   \begin{gather*}
     \int_\cell \Pi_2 v_i \dx
-    = \alpha_{\cell,i} \int_\cell b_3(\cell)\dx
+    = \alpha_{\cell,i} \int_\cell b_{3,\cell}\dx
     = \int_\cell v_i\dx,
   \end{gather*}
   where $i=1,2$ enumerates the velocity components. This is possible,
@@ -642,7 +642,7 @@ where $c\not=0$.
   $u_h = u_h^1 + u_h^b$.  By integration by parts, we obtain for the
   cubic bubble $b_3$
   \begin{gather*}
-    \form(\nabla v,\nabla b_3(\cell))_\cell = \form(-\Delta v,b_3(cell))_\cell = 0
+    \form(\nabla v,\nabla b_{3,\cell})_\cell = \form(-\Delta v,b_{3,cell})_\cell = 0
     \qquad\forall v\in \P_1,
   \end{gather*}
   such that
@@ -665,21 +665,21 @@ where $c\not=0$.
     = f(v_h) - \form(\div v_h, p_h)
     = f(v_h) + \form(v_h,\nabla p_h)_{\mesh_h}.
   \end{gather}
-  Choosing more specifically $v_h$ as the bubble function $b_3(\cell)$ of the
+  Choosing more specifically $v_h$ as the bubble function $b_{3,\cell}$ of the
   cell $\cell$ for each vector component yields
   \begin{gather}
     \label{eq:stokes:20}
     \mu_\cell^{(i)}  = \frac{1}{\norm{\nabla b_3}_\cell^2}\form(f+\d_i p_h,b_3)_\cell,
   \end{gather}
   where $\mu_\cell^{(i)}$ is the coefficient in front of the basis
-  function $b_3(\cell)$ on cell $\cell$ in the basis representation of
+  function $b_{3,\cell}$ on cell $\cell$ in the basis representation of
   $u_h^{(i)}$, such that
   \begin{gather}
     \label{eq:stokes:19}
     u_h^b = \sum_{\cell\in\mesh_h}
     \begin{pmatrix}
-      \mu_\cell^{(1)} b_3(\cell)\\
-      \mu_\cell^{(2)} b_3(\cell)
+      \mu_\cell^{(1)} b_{3,\cell}\\
+      \mu_\cell^{(2)} b_{3,\cell}
     \end{pmatrix}
   \end{gather}
   Testing the Stokes equations with $q_h\in Q_h$, we obtain the
@@ -784,6 +784,145 @@ where $c\not=0$.
 \end{Problem}
 
 \subsection{The $P_2-P_0$ element}
+
+\begin{intro}
+  In this section, we consider a second stable element, which like
+  the MINI element is not so much of practical use, but exhibits
+  typical properties of the analysis of finite element spaces for the
+  Stokes problem.
+\end{intro}
+
+\begin{Definition}{p2-p0-element}
+  The \textbf{$\mathbf{P_2-P_0}$ element} on triangles consists of the finite
+  element spaces
+  \begin{gather}
+    V_h = H^1_h(\P_2)^2 \cap V,
+    \qquad
+    Q_h = H^0_h(\P_0) \cap Q.
+  \end{gather}
+  Its degrees of freedom are:
+    \begin{center}
+    \includegraphics[width=.2\textwidth]{./fig/p2-v.tikz}
+    \hspace{1cm}
+    \includegraphics[width=.2\textwidth]{./fig/p0-p.tikz}
+  \end{center}
+\end{Definition}
+
+\begin{Lemma}{p2-p0-stability}
+  The $P_2-P_0$ element is inf-sup stable.
+\end{Lemma}
+
+\begin{proof}
+  We again prove stability by constructing a \putindex{Fortin
+    projection} using the two step algorithm of
+  \blockref{Lemma}{fortin-construction-1}. Again, we choose for
+  $\Pi_1$ an $H^1$-stable interpolation according to
+  \blockref{Assumption}{h1-stable-interpolation}. It remains therefore
+  to construct $\Pi_2$. First, since $q_{h|\cell}$ is constant on
+  each cell $\cell\in\mesh_h$, we can apply the Gauss theorem to the
+  divergence condition to obtain
+  \begin{gather}
+    \label{eq:stokes:23}
+    \int_\cell \div (u-\Pi_2u)\dx = \int_{\d\cell} (u-\Pi_2u)\cdot\n\ds.
+  \end{gather}
+  Hence, the following interpolation conditions on each cell $\cell$
+  define a divergence preserving operator $\Pi_2$:
+  \begin{xalignat}2
+    \label{eq:stokes:21}
+    \Pi_2 u(x) &= 0
+    & \forall x &\text{ is vertex of } \cell\\
+    \label{eq:stokes:22}
+    \int_E \Pi_2 u\ds &= \int_E u\ds
+    & \forall E &\text{ is edge of } \cell
+  \end{xalignat}
+  This is true, since~\eqref{eq:stokes:22} implies the right hand side
+  of~\eqref{eq:stokes:23}. It remains to show the $H^1$-stability of
+  $\Pi_2(\identity-\Pi_1)$. Let us first observe that the
+  interpolation operator only involves edge integrals of $u$, which
+  are well-defined on $H^1$. Thus, we have by the standard scaling
+  argument
+  \begin{gather*}
+    \snorm{\Pi_2 v}_{1,\cell}
+    =\snorm{\widehat{\Pi_2 v}}_{1,\widehat\cell}
+    \le c \norm{\widehat v}_{1,\widehat\cell}
+    \le c \bigl(h_\cell^{-1} \norm{v}_{0,\cell} + \snorm{v}_{1,\cell}\bigr).
+  \end{gather*}
+  Entering $v=u-\Pi_1 u$ and the estimates~\eqref{eq:stokes:15} of
+  \blockref{Assumption}{locally-quasi-uniform}, we obtain
+  \begin{gather*}
+    \norm{\Pi_2 (\identity-\Pi_1)u}_1^2
+    = \sum_{\cell\in\mesh_h}\norm{\Pi_2
+      (\identity-\Pi_1)u}_{1,\cell}^2
+    \le c \norm{u}_1^2
+  \end{gather*}
+\end{proof}
+
+\begin{remark}
+  The proof shows, that from a mathematical point of view degrees of
+  freedom on edges are more reasonably defined by integrals along the
+  edge than by values in the mid points. This is something, we will
+  encounter again and again. Nevertheless, we will not change the
+  cartoons for the degrees of freedom and just note that a degree of
+  freedom on an edge, while drawn as a point, may be an integral value.
+\end{remark}
+
+\begin{remark}
+  Let us review the construction principles behind the \putindex{MINI
+    element} and the $P_2-P_0$ element. The uncontrolled pressure
+  modes in $\ker B_h^T$ of the $P_1-P_1$ element were those pressures
+  with alternating signs at neighboring vertices, such that the mean
+  value of $p_h$ is zero on each cell. Therefore, $p_h$ is orthogonal
+  to the constant derivatives of the linear velocity space. Thus, we
+  add a local function on each cell with nonconstant gradient, and the
+  mean value of the pressure can be controlled.
+
+  The kernel of $B_h^T$ for the element $H^1(\P_1)^2 - H^0(\P_0)$ on
+  the other hand contains functions that are constant on each cell,
+  but jump over cell boundaries. By integration by parts, we have
+  \begin{gather*}
+    \int_\cell \div b_\cell q_h \dx
+    = -\int_\cell b_\cell \cdot\nabla q_h
+    + \int_{\d\cell} b_\cell q_h \ds
+    = 0.
+  \end{gather*}
+  Hence, no kind of bubble function helps controlling the jump of
+  $p_h$ over an edge. Instead, we introduce a degree of freedom on the
+  edge. Integrating by parts on two neighboring cells $\cell_1$ and
+  $\cell_2$, we obtain on the common edge $E_{12}$ a term of the form
+  \begin{gather*}
+    \int_{E_{12}} \left[u\cdot\n_1 q_1 + u\cdot\n_2 q_2\right],
+  \end{gather*}
+  which by the continuity of $u\cdot\n$ translates to
+  \begin{gather}
+    \int_{E_{12}} u\cdot\n_1 (q_1- q_2).
+  \end{gather}
+  Thus, we can use the interpolation operator $\Pi_2$ to obtain a
+  function $u$ such that
+  \begin{gather*}
+    \int_{E_{12}} u\cdot\n_1 \ds = (q_1-q_2),
+  \end{gather*}
+  such that
+  \begin{gather*}
+    \form(\div u,q_h) = \int_{E_{12}} \abs{q_1-q_2}^2\ds + \text{
+      other terms}.
+  \end{gather*}
+\end{remark}
+
+\begin{Problem}{q2-q0}
+  Show that the quadrilateral element
+  \begin{gather}
+    V_h = H^1_h(\Q_2)^2\cap V,
+    \qquad Q_h = H^0_h(\P_0) \cap Q,
+  \end{gather}
+  with degrees of freedom
+  \begin{center}
+    \includegraphics[width=.2\textwidth]{./fig/q2-v.tikz}
+    \hspace{1cm}
+    \includegraphics[width=.2\textwidth]{./fig/q0-p.tikz}
+  \end{center}
+  is inf-sup stable. Does the proof translate to the $P_2-P_0$ element
+  on tetrahedra or the $Q_2-P_0$ element on hexahedra?
+\end{Problem}
 
 \subsection{The family of Taylor-Hood elements}
 
