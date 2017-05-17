@@ -1,0 +1,11 @@
+\begin{tikzpicture}[thick]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (2,0);
+  \coordinate (C) at (0,2);
+  \coordinate (D) at (2,2);
+  \draw (A) -- (B) -- (D) -- (C) -- cycle;
+
+  \foreach \x in {0,0.33,0.67,1}
+    \foreach \y in {0,0.33,0.67,1}
+      \draw [shape veloxy] (2*\x,2*\y) circle (3pt);
+\end{tikzpicture}

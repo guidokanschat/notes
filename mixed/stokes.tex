@@ -350,7 +350,7 @@ where $c\not=0$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The MINI element}
+\subsection{Bubble stabilization and the MINI element}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -893,7 +893,7 @@ where $c\not=0$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The $P_2-P_0$ element}
+\subsection{Elements with discontinuous pressure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1133,7 +1133,143 @@ where $c\not=0$.
   $(b_{3,\cell} q_h)_{|\cell} \in \P_k$.
 \end{proof}
 
-\subsection{The family of Taylor-Hood elements}
+\begin{intro}
+  Studying the proof of \blockref{Lemma}{p2-p0-stability} in more
+  detail, we can find a much more general result with much weaker
+  assumptions. Indeed, we only need to be able to have a single degree
+  of freedom on each edge or face which allows to adjust the average
+  normal velocity over this edge of face. We summarize this in:
+\end{intro}
+
+\begin{Theorem}{discontinuous-pressure-normal-velocity}
+  Let $Q_h\subset Q$ and let $V_h \subset V$ be such that there is an
+  $H^1$-stable interpolation according to
+  \blockref{Assumption}{h1-stable-interpolation}. Furthermore, let
+  there be a degree of freedom on each edge (face in 3D) controlling
+  the average normal derivative of $u\in V_h$ on this face. Finally,
+  let $V_h$ contain the bubble space for $\nabla Q_h$,
+  \begin{gather*}
+    B_h(b_\cell \nabla Q_h)^d \subset V_h.    
+  \end{gather*}
+  Then, the pair $V_h\times Q_h$ is inf-sup stable.
+\end{Theorem}
+
+\begin{proof}
+  With the assumptions made, it is sufficient to construct the
+  operator $\Pi_1$ in \blockref{Lemma}{bubble-discontinuous}. Then, we
+  can apply this lemma and the result is proven. Going back
+  to~\eqref{eq:stokes:23}, we see that the interpolation condition
+  ~\eqref{eq:stokes:22} is more than needed.
+
+  Now, let $\{\nodal_{\cell,i}$ be the $n_\cell$ node values for the
+  discrete velocity space $V_\cell = V_{h|\cell}$ on the cell $\cell$. For
+  convenience, let them be ordered in a way, that the first ones
+  control the normal derivatives of $u_h$ on the faces of the cell,
+  that is,
+  \begin{gather}
+    \nodal_{\cell,i} = \int_{F_i} u\cdot\n \ds
+    \qquad i=1,\dots,n_F,
+  \end{gather}
+  where $n_F$ is the number of faces per cell. Given the $H^1$-stable
+  interpolation operator $I_h$, define $\Pi_2$ cell-wise such that
+  \begin{xalignat}2
+    \nodal_{\cell,i}(\Pi_2 u) &= \nodal_{\cell,i}(u)
+    &i&=1,\dots,n_F\\
+    \nodal_{\cell,i}(\Pi_2 u) &= 0
+    &i&=n_F+1,\dots,n_\cell.
+  \end{xalignat}
+  Choosing the basis on $V_T$ which is dual to $\{\nodal_{\cell,i}$,
+  we see that this indeed implies
+  \begin{gather*}
+    0\int_{\d\cell} (\Pi_2 u - u) \ds = \int_\cell \div (\Pi_2 u-u)\dx.
+  \end{gather*}
+  Therefore, $\Pi_1 = I_h + \Pi_2(\identity-I_h)$ is divergence
+  preserving. Boundedness follows by the standard scaling argument.
+\end{proof}
+
+\begin{Corollary}{qk-pk1}
+  The finite-element pair $V_h\times Q_h$ with
+  \begin{gather*}
+    V_h = H^1_h(\Q_k)^2 \cap V,
+    \qquad
+    Q_h = H^0_h(\P_{k-1}) \cap Q,
+  \end{gather*}
+  called the $Q_k-P_{k-1}$ element is inf-sup stable for any $k\ge 2$.
+\end{Corollary}
+
+\begin{proof}
+  First, we prove that $B_h(b_\cell \nabla Q_h)^d \subset V_h$. To
+  this end, we note that on each cell, we have that the restriction
+  $q_T$ of a discrete pressure $q_h$ is in $\P_{k-2}\subset \Q_{k-2}$.
+  The bubble function $b_T$ is in $\Q_2$, such that
+  $b_T\nabla q_T \in \Q_k$, which was to be proven.
+  
+  For the assumption on the degrees of freedom, we refer to the
+  following definition. Once the degrees of freedom for each velocity
+  component are determined by this definition, we can simply select
+  the normal component on Cartesian meshes. On meshes with straight
+  interfaces, it is clear that we can choose a linear combination of
+  the components of $u$ splitting into normal and tangential and thus
+  get the desired result. In general, we refer to the \putindex{Piola
+    transformation} in the next chapter.
+\end{proof}
+
+\begin{Definition}{momentum-dofs-qk-2d}
+  The momentum degrees of freedom of the $\Q_k$ element are defined on
+  the reference cell $\widehat T$ in two space dimensions as
+  \begin{xalignat*}3
+    \nodal_{0,i}(u) &= u(x_i)
+    &&&x_i&\text{ is vertex of } \widehat T\\
+    \nodal_{1,i,j}(u) &= \int_{E_i} u q\ds
+    &\forall q&\in\Q_{k-1}(E_i)&E_i&\text{ is edge of } \widehat T\\
+    \nodal_{2,j}(u) &=\int_{\widehat T} u q \dx
+    &\forall q&\in\Q_{k-1}(\widehat T).
+  \end{xalignat*}
+\end{Definition}
+
+\begin{Definition}{momentum-dofs-qk-3d}
+  The momentum degrees of freedom of the $\Q_k$ element are defined on
+  the reference cell $\widehat T$ in three space dimensions as
+  \begin{xalignat*}3
+    \nodal_{0,i}(u) &= u(x_i)
+    &&&x_i&\text{ is vertex of } \widehat T\\
+    \nodal_{1,i,j}(u) &= \int_{E_i} u q\ds
+    &\forall q&\in\Q_{k-1}(E_i)&E_i&\text{ is edge of } \widehat T\\
+    \nodal_{2,i,j}(u) &= \int_{F_i} u q\ds
+    &\forall q&\in\Q_{k-1}(F_i)&F_i&\text{ is face of } \widehat T\\
+    \nodal_{3,j}(u) &=\int_{\widehat T} u q \dx
+    &\forall q&\in\Q_{k-1}(\widehat T).
+  \end{xalignat*}
+\end{Definition}
+
+\begin{Example}{qk-pk1}
+  The first two members of the $Q_k-P_{k-1}$ family have the nodal
+  representations
+  \begin{center}
+    \begin{tabular}{c@{\hspace{.2\textwidth}}c}
+      \includegraphics[width=.2\textwidth]{./fig/q2-v.tikz}
+      &
+      \includegraphics[width=.2\textwidth]{./fig/q-p1-p.tikz}
+      \\[5mm]
+      \includegraphics[width=.2\textwidth]{./fig/q3-v.tikz}
+      &
+      \includegraphics[width=.2\textwidth]{./fig/q-p2-p.tikz}
+    \end{tabular}    
+  \end{center}
+\end{Example}
+
+\begin{remark}
+  When we map the reference square to a quadrilateral mesh cell, this
+  mapping may be affine for parallelograms or bilinear for general
+  quadrilaterals. At some point, we have proven that the mapped $\Q_k$
+  space has optimal approximation properties, that is, approximation
+  of order $k$ in $H^1$ and of order $k+1$ in $L^2$. Such a thing has
+  not been proven for a bilinearly mapped $\P_k$ element. And,
+  unfortunately it is not true. We therefore have to distinguish
+  between a mapped and an unmapped pressure space.
+\end{remark}
+
+\subsection{The family of Hood-Taylor elements}
 
 \section{Nearly incompressible elasticity}
 
