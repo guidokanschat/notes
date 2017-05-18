@@ -1266,8 +1266,165 @@ where $c\not=0$.
   of order $k$ in $H^1$ and of order $k+1$ in $L^2$. Such a thing has
   not been proven for a bilinearly mapped $\P_k$ element. And,
   unfortunately it is not true. We therefore have to distinguish
-  between a mapped and an unmapped pressure space.
+  between a mapped and an unmapped pressure
+  space. In~\cite{ArnoldBoffiFalk02}, it is proven that the mapped
+  polynomial space has worse approximation, in the worst case one
+  order less than the unmapped.
 \end{remark}
+
+\subsection{The macroelement technique}
+
+\begin{intro}
+  The arguments of the previous section can be extended to the case
+  where instead of individual mesh cell $\cell$ we condider small
+  groups of such cells, called
+  \putindex{macroelement}s~\cite{Stenberg84}. This will give us some
+  more freedom for testing the inf-sup condition locally, but possibly
+  not on each cell separately. In order to get uniform estimates, we
+  introduce a generalization of the concept of shape regularity.
+\end{intro}
+
+\begin{Definition}{macro-equivalence}
+  A \define{macroelement} $M\subset \T_h$ is a union of cell
+  $\cell_i\in\T_h$. Given the mappings $\Phi_\cell\colon \widehat\cell \to
+  \cell$, there is a reference macroelement $\widehat M$ and a mapping
+  $\Phi_M\colon \widehat M\to M$ such that $\Phi_M(\widehat M) = M$. We say
+  that $M$ is equivalent to $\widehat M$.
+\end{Definition}
+
+\begin{Definition}{macro-spaces}
+  For a \putindex{macroelement} $M$, we introduce the spaces
+  \begin{align}
+    \label{eq:stokes:27}
+    V_M &= \bigl\{ u\in H^1_0(M;\R^d) \big\vert
+            \;\exists v_h\in V_h\colon u=v_{h|M}\bigr\},
+    \\
+    \label{eq:stokes:28}
+    Q_M &= \bigl\{ p\in L^2_0(M) \big\vert
+            \;\exists q_h\in Q_h\colon p=q_{h|M}\bigr\},
+  \end{align}
+  the kernel of the discrete, local gradient operator
+  \begin{gather}
+    \label{eq:stokes:29}
+    \ker{B^T_M} = \bigl\{q\in Q_M \big\vert 
+    \;\forall v\in V_M\colon \form(\div v,q) = 0\bigr\}.
+  \end{gather}
+  For a mesh $\mesh_h$ which is subdivided into a nonoverlapping set
+  of macros $M_j$, we define the space of pressure functions
+  $Q_M^0\subset Q$ which are constant on each macro with the
+  $L^2$-projection $\Pi_M\colon Q_h\to Q_M^0$.
+\end{Definition}
+
+\begin{Lemma}{macro-local}
+  Let $\{M\}$ with $M\subset \mesh_h$ be a set of macroelements
+  equivalent to the same reference macroelement $\widehat M$. Let the
+  family $\{\mesh_h\}$ be shape regular and assume
+  $\ker{B^T_{M}} = \{0\}$. Then, there is a constant
+  $\beta_M>0$ independent of $h$ such that for all $M$ there holds
+  \begin{gather}
+    \label{eq:stokes:31}
+    \inf_{p\in Q_M} \sup_{v\in V_M}
+    \frac{\form(\div v,q)_M}{\norm{v}_{1,M}\norm{q}_{0,M}}
+    \ge \beta_{\widehat M}.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  For each $M$, the existence of such a constant $\beta_{M}$ is
+  equivalent to the fact that the smallest nonzero singular value is
+  strictly greater than zero in finite dimensional spaces. Next, we
+  observe that $\nabla \Phi_{M}$ is bounded by the
+  $\nabla\Phi_{\cell_i}$, which in turn is uniformly bounded by the
+  shape regularity. Therefore, by a cell-wise scaling argument and the
+  fact that $\widehat M$ has only finitely many cells we have
+  \begin{gather*}
+    \beta_{\widehat M} = \min_M \beta_M > 0.
+  \end{gather*}
+\end{proof}
+
+\begin{remark}
+  Depending on the technique of proof being used, we also may decide
+  to impose~\eqref{eq:stokes:31} directly for each macroelement.
+\end{remark}
+
+\begin{Lemma}{macro-projection}
+  Let $\mesh_h$ be subdivided into a nonoverlapping set of
+  macroelements $M$ such that there is a finite set of reference macro
+  elements $\widehat M$, and let $\ker{B^T_M} = \{0\}$. Then, there is
+  a constant $c_1>0$ such that for all $q_h\in Q_h$ exists $v_h\in V_h$
+  satisfying
+  \begin{gather}
+    \label{eq:stokes:32}
+    \begin{split}
+      \form(\div v_h, q_h) = \form(\div v_h,{(\identity-\Pi_M)} q_h)
+      &\ge c_1 \norm{(\identity-\Pi_M) q_h}_0^2\\
+      \norm{v_h}_2 & \le \norm{(\identity-\Pi_M) q_h}_0.
+    \end{split}
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  For any $q_h\in Q_h$, we have $(\identity-\Pi_M) q_h\in Q_M$ for each
+  macroelement $M$. Applying \blockref{Lemma}{macro-local}, for each
+  $M$ there exists $v_M\in V_M$ such that
+  \begin{gather*}
+    \form(\div v_M, {(\identity-\Pi_M)} q_h)_M
+    \ge c_1 \norm{v_M}_{1,M}\norm{(\identity-\Pi_M) q_h}_{0,M},
+  \end{gather*}
+  with $c=\min \beta_{\widehat M}$. Let now $v_M$ such that
+  $\norm{v_M}_{1,M} = \norm{(\identity-\Pi_M) q_h}_{0,M}$ and $v$ such that
+  $v_{|M} = v_M$. Since $v_M$ is zero on $\d M$, we have $v\in
+  V_h$. By construction,~\eqref{eq:stokes:32} holds.
+\end{proof}
+
+\begin{Lemma}{macro-constant}
+  Let $\{M_j\}$ be a covering of $\mesh_h$ with macroelements. For any
+  two macros $M_i$ and $M_j$ let $T_{ij}$ be their common
+  boundary. Then, if every $T_{ij}$ of codimension one contains at
+  least one degree of freedom controlling $u\cdot\n$, there is a
+  constant $c_2>0$ such that for every $q_h\in Q_h$ exists $w_h\in
+  V_h$ such that
+  \begin{gather}
+    \label{eq:stokes:33}
+    \begin{split}
+      \form(\div w_h, \Pi_M q_h) &\ge c_2 \norm{\Pi_M q_h}^2_0\\
+      \norm{w_h}_1 &\le \norm{\Pi_M q_h}_0.
+    \end{split}
+  \end{gather}
+\end{Lemma}
+
+\begin{Problem}
+  Prove \blockref{Lemma}{macro-constant}
+\end{Problem}
+
+\begin{Theorem}{macroelement}
+  Let the assumptions of \blockref{Lemma}{macro-projection}
+  hold. Then, the pair $V_h\times Q_h$ is inf-sup stable.
+\end{Theorem}
+
+\begin{proof}
+  Let $q_h\in Q_h$. Then, applying \blockref{Lemma}{macro-projection}
+  and \blockref{Lemma}{macro-constant}, we obtain functions $v_h$ and
+  $w_h$ such that for $u_h = v_h+ \delta w_h$ for any $\delta>0$ there
+  holds
+  \begin{align*}
+    \form(\div u_h, q_h)
+    &= \form(\div v_h, q_h) + \form(\div w_h, q_h) \\
+    &\ge c_1 \norm{(\identity-\Pi_M) q_h}_0^2
+      + \delta c_2 \norm{\Pi_M q_h}_0^2
+      - \delta \norm{w_h}_1 \norm{(\identity-\Pi_M) q_h}_0 \\
+    & = (c_1 - \delta) \norm{(\identity-\Pi_M) q_h}_0^2
+      + \delta c_2 \norm{\Pi_M q_h}_0^2.
+  \end{align*}
+  Choosing $\delta = c_1/(1+c_2)$, we obtain
+  \begin{gather}
+    \label{eq:stokes:34}
+    \begin{split}
+      \form(\div u_h, q_h) &\ge \frac{c_1c_2}{1+c_2} \norm{q}_0^2 \\
+      \norm{u}_1 &\le \norm{q}_0.
+    \end{split}
+  \end{gather}
+\end{proof}
 
 \subsection{The family of Hood-Taylor elements}
 
