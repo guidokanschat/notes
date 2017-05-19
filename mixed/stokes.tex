@@ -1214,31 +1214,90 @@ where $c\not=0$.
     transformation} in the next chapter.
 \end{proof}
 
-\begin{Definition}{momentum-dofs-qk-2d}
-  The momentum degrees of freedom of the $\Q_k$ element are defined on
+\begin{Definition}{moment-basis-1d}
+  The shape function space $\P_k$ on the reference element $\widehat
+  T = [-1,1]$ in one dimension can be split into
+  \begin{gather}
+    \label{eq:stokes:35}
+    \P_k^0 \oplus \overline{\P_k},
+  \end{gather}
+  where $\P_k^0 = \P_k \cap H^1_0(\widehat T)$. We choose
+  orthogonal basis for $\P_k^0$ with respect to the $H^1_0$-inner
+  product $\scal(p,q) = \int p'q'\dx$ by
+  \begin{gather}
+    \label{eq:Lobatto-polynomials}
+    \phi_i(x) = \int_{-1}^x L_{i}(t)\dt\quad i=1,\dots,k-1,
+  \end{gather}
+  where $L_i$ is the Legendre polynomial of degree $i$. The two
+  basis functions for $\overline{\P_k}$ are chosen such that
+  \begin{xalignat*}2
+    \phi_0(-1) &= 1, & \scal(\phi_0,\phi_i) &= 0 \quad i=1,\dots,k-1,\\
+    \phi_k(1) &= 1, & \scal(\phi_k,\phi_i) &= 0 \quad i=1,\dots,k-1.
+  \end{xalignat*}
+\end{Definition}
+
+\begin{Lemma}{moment-dofs-1d}
+  The degrees of freedom
+  \begin{gather}
+    \label{eq:stokes:30}
+    \begin{aligned}
+    \nodal_0(\phi) &= \phi(-1),&
+    \nodal_k(\phi) &= \phi(1),\\
+    \nodal_i(\phi) &= \frac1{\int {\phi_i'}^2} \int_{-1}^{1}
+    \phi'\phi_i'\dx
+    &i&=1,\dots,k-1,
+    \end{aligned}
+  \end{gather}
+  are the dual basis for the basis described in
+  \blockref{Definition}{moment-basis-1d}.
+\end{Lemma}
+
+\begin{proof}
+  The proof is left to the reader.
+\end{proof}
+
+\begin{Definition}{qk0}
+  Let $\widehat T = [-1,1]^d$ be the reference square in $\R^d$. We
+  define the space
+  \begin{gather}
+    \label{eq:stokes:36}
+    \Q_k^0 = \Q_k \cap H^1_0(\widehat T).
+  \end{gather}
+  A basis for $\Q_k^0$ consists of the functions
+  \begin{gather}
+    \label{eq:stokes:37}
+    \phi_{i_1\cdots i_d}(x) = \phi_{i_1}(x_1) \cdots \phi_{i_d}(x_d),
+  \end{gather}
+  where $i_j=1,\dots,k-1$. For a tensor product mesh cell $T$, the
+  space $\Q_k^0(T) = \Q_k(T) \cap H^1_0(T)$ is defined through
+  $\Q_h^0$ by mapping.
+\end{Definition}
+
+\begin{Definition}{moment-dofs-qk-2d}
+  The moment degrees of freedom of the $\Q_k$ element are defined on
   the reference cell $\widehat T$ in two space dimensions as
   \begin{xalignat*}3
     \nodal_{0,i}(u) &= u(x_i)
     &&&x_i&\text{ is vertex of } \widehat T\\
-    \nodal_{1,i,j}(u) &= \int_{E_i} u q\ds
-    &\forall q&\in\Q_{k-1}(E_i)&E_i&\text{ is edge of } \widehat T\\
-    \nodal_{2,j}(u) &=\int_{\widehat T} u q \dx
-    &\forall q&\in\Q_{k-1}(\widehat T).
+    \nodal_{1,i,j}(u) &= \int_{E_i} u \phi_j\ds
+    &\phi_j&\in\Q_{k}^0(E_i)&E_i&\text{ is edge of } \widehat T\\
+    \nodal_{2,j}(u) &=\int_{\widehat T} u \phi_j \dx
+    &\phi_j&\in\Q_{k}^0(\widehat T).
   \end{xalignat*}
 \end{Definition}
 
-\begin{Definition}{momentum-dofs-qk-3d}
-  The momentum degrees of freedom of the $\Q_k$ element are defined on
+\begin{Definition}{moment-dofs-qk-3d}
+  The moment degrees of freedom of the $\Q_k$ element are defined on
   the reference cell $\widehat T$ in three space dimensions as
   \begin{xalignat*}3
     \nodal_{0,i}(u) &= u(x_i)
     &&&x_i&\text{ is vertex of } \widehat T\\
-    \nodal_{1,i,j}(u) &= \int_{E_i} u q\ds
-    &\forall q&\in\Q_{k-1}(E_i)&E_i&\text{ is edge of } \widehat T\\
-    \nodal_{2,i,j}(u) &= \int_{F_i} u q\ds
-    &\forall q&\in\Q_{k-1}(F_i)&F_i&\text{ is face of } \widehat T\\
-    \nodal_{3,j}(u) &=\int_{\widehat T} u q \dx
-    &\forall q&\in\Q_{k-1}(\widehat T).
+    \nodal_{1,i,j}(u) &= \int_{E_i} u \phi_j\ds
+    &\phi_j&\in\Q_{k}^0(E_i)&E_i&\text{ is edge of } \widehat T\\
+    \nodal_{2,i,j}(u) &= \int_{F_i} u \phi_j\ds
+    &\phi_j&\in\Q_{k}^0(F_i)&F_i&\text{ is face of } \widehat T\\
+    \nodal_{3,j}(u) &=\int_{\widehat T} u \phi_j \dx
+    &\phi_j&\in\Q_{k}^0(\widehat T).
   \end{xalignat*}
 \end{Definition}
 
