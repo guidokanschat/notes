@@ -135,14 +135,14 @@
   such that the method converges.
 \end{Definition}
 
-\begin{note}
+\begin{intro}
   The scalar products in~\eqref{eq:richardson:5} become necessary,
   since different from the case in $\R^n$, the result of applying the
   bilinear form $a(.,.)$ to $u^{(k)}$ in the first argument yields a
   linear form on $X$. In order to convert this to a vector in $X$, we
   have to apply the isomorphism induced by the \putindex{Riesz
     representation theorem}.
-\end{note}
+\end{intro}
 
 \begin{Theorem}{richardson-convergence2}
   \label{theorem:richardson:2}
@@ -186,7 +186,7 @@
   point where $\rho(\omega) = 1$ is $\omega = 2\lambda/\Lambda^2$.
 \end{proof}
 
-\begin{note}
+\begin{remark}
   The condition on $\omega$ in Theorem~\ref{theorem:richardson:2} is
   more restrictive than in Theorem~\ref{theorem:richardson:1}, since
   $\lambda/\Lambda \le 1$. This is
@@ -194,9 +194,9 @@
   assume symmetry, and thus orthogonal diagonalizability of the matrix
   $\mat A$. With similar assumptions,
   Theorem~\ref{theorem:richardson:2} could be made sharper.
-\end{note}
+\end{remark}
 
-\begin{note}
+\begin{remark}
   It is clear that the boundedness and ellipticity
   estimates~\eqref{eq:richardson:6} hold for any finite dimensional
   subspace $X_n\subset X$, and thus the convergence
@@ -206,14 +206,14 @@
   $a(.,.)$ is unbounded on $X$. While it is still bounded on each
   finite subspace $X_n$, this bound cannot be independent of $n$ if
   the sequence $\{X_n\}$ approximates $X$.
-\end{note}  
+\end{remark}  
 
-\begin{note}
+\begin{Definition}{riesz-isomorphism}
   We define an operator $B:X\to X^*$ such that $Bu = b(u,.) :=
   \scal(u,.)$. By the Riesz representation theorem, there is a
   continuous inverse operator $B^{-1}: X^*\to X$, which is often
   called \define{Riesz isomorphism}.
-\end{note}
+\end{Definition}
 
 \begin{Definition}{p-richardson-method}
   \label{definition:richardson:2}

@@ -336,7 +336,7 @@
   and the same for the minimum.
 \end{proof}
 
-\begin{note}
+\begin{remark}
   \label{note:schwarz:1}
   In order to estimate the condition number $\Lambda(B,A)/\lambda(B,A)$ of a Schwarz
   preconditioner, it is now sufficient to bound the two quotients
@@ -354,7 +354,7 @@
   that it holds. We reduce these
   conditions to the following two abstract assumptions, which guarantee that
   Theorem~\ref{theorem:schwarz:1} holds true.
-\end{note}
+\end{remark}
 
 \begin{assumption}[Stable decomposition]
   \label{assumption:schwarz:stable-decomposition}
@@ -388,14 +388,14 @@
   \end{gather}
 \end{assumption}
 
-\begin{note}
-  Inequality~\eqref{eq:schwarz:25} with $\epsilon_{ij} \equiv 1$ holds by the
-  regular \putindex{Bunyakovsky-Cauchy-Schwarz inequality}.
-  But for such a matrix, the
-  spectral radius is $J$. As the following lemma will reveal, it is
-  necessary to obtain $\rho(\mathcal E)$ independent of $J$ to obtain
+\begin{remark}
+  Inequality~\eqref{eq:schwarz:25} with $\epsilon_{ij} \equiv 1$ holds
+  trivially by the regular \putindex{Bunyakovsky-Cauchy-Schwarz
+    inequality}.  But for such a matrix, the spectral radius is
+  $J$. As the following lemma will reveal, it is necessary to obtain
+  $\rho(\mathcal E)$ independent of $J$ to obtain
   estimate~\eqref{eq:schwarz:23}.
-\end{note}
+\end{remark}
 
 \begin{Lemma}{schwarz-maximum}
   \label{lemma:schwarz:7}
@@ -515,7 +515,7 @@
   where the implicit constant is independent of $h$, $\delta$ and $J$.
 \end{Definition}
 
-\begin{note}
+\begin{remark}
   The term overlap for $\delta$ is justified by the following
   consideration. Let $x \in \Omega_j$ be a point which is not in any
   other $\Omega_i$. Then, $\phi_j(x) = 1$. If~\eqref{eq:schwarz:8} is
@@ -525,7 +525,7 @@
   in~\eqref{eq:schwarz:8}). Thus, the points of distance less than
   $\delta$ from $\partial\Omega_j$ must be elements of another
   subdomain as well, which is then said to overlap with $\Omega_j$.
-\end{note}
+\end{remark}
 
 \begin{example}
   \label{example:schwarz:2}
@@ -598,11 +598,11 @@
   \end{gather}
 \end{Definition}
 
-\begin{note}
+\begin{Notation}{H-equals-0}
   In order to simplify notation, we have assigned index zero to
   $V_H$. Thus, sums in future terms may either start at one, summing
   over subdomains, or at zero, summing over all subspaces.
-\end{note}
+\end{Notation}
 
 \begin{Lemma}{schwarz4}
   \label{lemma:schwarz:4}

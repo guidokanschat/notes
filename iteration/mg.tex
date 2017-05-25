@@ -208,10 +208,10 @@
   level.
 \end{Definition}
 
-\begin{note}
+\begin{remark}
   The variable V-cycle with $m_\ell$ as mentioned in the previous
   definition has as many smoothing steps per iteration as the W-cycle.
-\end{note}
+\end{remark}
 
 \begin{remark}
   If we use an additive or multiplicative Schwarz method (omitting the
@@ -288,7 +288,7 @@
   grid correction, we use Lemma~\ref{lemma:schwarz:2}.
 \end{proof}
 
-\begin{note}
+\begin{remark}
   The structure of the error propagation operator~\eqref{eq:mg:8}
   already suggests the course of the multigrid analysis (as well as
   the design of smoothers). Namely, we will have to decompose $V_l$
@@ -297,7 +297,7 @@
   $V_{l-1}$, while bounded on its complement. Vice versa,
   $I-R_\ell^{-1} A_\ell$ must be bounded on all of $V_\ell$, while
   providing good reduction properties on the complement of $V_{l-1}$.
-\end{note}
+\end{remark}
 
 \section{The V-cycle}
 

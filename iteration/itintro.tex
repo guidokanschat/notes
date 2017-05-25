@@ -170,11 +170,11 @@
   \end{gather*}
 \end{Definition}
 
-\begin{note}
+\begin{remark}
   Note that the spectral condition number depends on the norm of the
   space $X$. It is bounded, if and only if $A$ is bounded with respect
   to this norm.
-\end{note}
+\end{remark}
 
 \begin{example}
   Let $X=H^1_0(\Omega)$ with the inner product
@@ -224,12 +224,12 @@
   \end{gather*}
 \end{Definition}
 
-\begin{note}
+\begin{remark}
   The spectral condition number of the operator $A$ depends on the
   bilinear form $a(.,.)$ and the choice of the norm in $X$. On the
   other hand, the spectral condition number of the matrix $\mat A$
   depends on the choice of a basis of the space $X_n$.
-\end{note}
+\end{remark}
 
 \begin{Lemma}{condition-number-mass-matrix}
   \label{lemma:itintro:1}
@@ -278,16 +278,15 @@
   $\lambda(\mat M) = \mathcal O(h^{d})$.
 \end{proof}
 
-\begin{note}
-  A closer inspection of the proof yields, that on a shape regular
-  triangulation with cell radii ranging between the minimum $h$ and
-  the maximum $H$, we have
+\begin{Corollary}{refined-condition-number}
+  Let $\mesh_h$ be a mesh with cell sizes ranging between the minimum $h$ and
+  the maximum $H$. Then, we have
   \begin{align*}
     \Lambda(\mat M) &= \mathcal O(H^{d}) \\
     \lambda(\mat M) &= \mathcal O(h^{d}) \\
     \kappa(\mat M) &= \mathcal O\left(\left(\frac Hh\right)^{d}\right)
   \end{align*}
-\end{note}
+\end{Corollary}
 
 \begin{todo}
   This can be fixed by using weighted norms in $\R^n$.
