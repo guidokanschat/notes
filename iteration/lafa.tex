@@ -2,7 +2,12 @@
 \begin{intro}
   Linear algebra deals with abstract vector spaces, but most results
   on linear mappings are restricted to finite dimensional spaces,
-  since they exploit the fact that we can choose a basis.
+  since they exploit the fact that we can choose a basis of finite
+  length. After such a choice, every linear mapping is well-defined by
+  assigning its values on the finite set of basis vectors. Thus,
+  vector spaces and linear mappings, while typically sets with
+  infinitely many elements, can be characterized completely by finite
+  sets. The resulting theory yields very strong results by simple means.
 
   The choice of a basis becomes a more involved endeavor if we allow
   for spaces that do not have a finite basis. We can actually go by
@@ -16,12 +21,20 @@
   combination, we have to define the meaning of such an infinite sum,
   namely the convergence of the sum. In the course of such a
   definition, we will learn about a natural extension of
-  Euclidean\footnote{And we will not have to distinguish between
-    Euclidean real spaces and unitary complex spaces anymore.}
+  Euclidean\footnote{We will not distinguish between
+    Euclidean real spaces and unitary complex spaces.}
   spaces, namely pre-Hilbert and Hilbert spaces.
+
+  Hilbert spaces share with $\R^n$ the concept of orthogonality. Thus,
+  they allow us to define orthogonal bases. Furthermore, they admit
+  simple generalizations of the theorem, that for any matrix $A$ with
+  $n$ columns there exists an orthogonal decomposition
+  \begin{gather}
+    \R^n = \ker A \oplus \range{A^T}.
+  \end{gather}
 \end{intro}
 
-\section{Hilbert spaces and orthogonal bases}
+\section{Hilbert spaces and their duals}
 
 \begin{Definition}{inner-product}
   Let $V$ be a vector space over $\mathbb K$ with $\mathbb K = \mathbb
@@ -136,9 +149,10 @@
   \end{gather*}
   with coefficients $\alpha_i \in \mathbb K$. The index set $I$ may be
   finite in the case of a finite dimensional vector space, or
-  countable if $V$ is inifinte dimensional and separable. In the
+  countable if $V$ is infinite dimensional and separable. In the
   latter case it is required that the sum in the linear combination
-  exists as the limit of a series.
+  exists as the limit of a series. In particular, the sum must be a
+  Cauchy-sequence with respect to the norm of $V$.
 \end{Definition}
 
 \begin{remark}
@@ -156,6 +170,51 @@
   countable set. The elements of a sequence are numbered by indices
   and the index set is $\mathbb N$ or a subset thereof.
 \end{notation}
+
+\begin{Definition}{linear-operator}
+  Let $V,W$ be two vector spaces. A \define{linear mapping} or
+  \define{linear operator} $L\colon V\to W$ is a mapping such that
+  \begin{gather*}
+    L(\alpha u+\beta v) = \alpha L(u) + \beta L(v),
+  \end{gather*}
+  for all $\alpha,\beta\in\mathbb K$ and for all $u,v\in V$ such that
+  $L(u)$ and $L(v)$ are defined.
+\end{Definition}
+
+\begin{remark}
+  The last subclause of the previous definition seems to be nonsense,
+  and in a way, it is. Nevertheless, we will see later that it is
+  actually a good idea to allow for linear operators, which are
+  well-defined only on a subset of $V$.
+\end{remark}
+
+\begin{Definition}{bounded-operator}
+  A linear operator $L\colon V\to W$ is called \define{bounded} on $V$
+  if there exists a constant $c$ such that
+  \begin{gather}
+    \norm{L v}_W \le c \norm{v}_V
+    \quad\forall v\in V.
+  \end{gather}
+  We define the operator norm $\norm{L}$ as
+  \begin{gather}
+    \norm L = \sup_{v\in V} \frac{\norm{L v}_W}{\norm{v}_V}.
+  \end{gather}
+\end{Definition}
+
+
+\begin{Definition}{dual-space}
+  A linear functional on a vector space $V$ is a linear mapping from
+  $V$ to $\mathbb K$.
+
+  The \define{dual space} $V^*$ of a vector space $V$, also called the
+  \define{normed dual}, is the space of all bounded linear functionals
+  on $V$ equipped with the norm
+  \begin{gather}
+    \norm{\phi}_{V^*} = \sup_{v\in V} \frac{\phi(v)}{\norm{v}_V}.
+  \end{gather}
+\end{Definition}
+
+\subsection{Orthogonality}
 
 \begin{Definition}{orthogonal}
   Let $V$ be an inner product space over a field $\mathbb K$. Two
