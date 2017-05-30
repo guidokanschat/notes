@@ -287,30 +287,6 @@
   \field{year}{1986}
 \endentry
 
-\entry{Stenberg84}{article}{}
-  \name{author}{1}{}{%
-    {{}%
-     {Stenberg}{S.}%
-     {Rolf}{R.}%
-     {}{}%
-     {}{}}%
-  }
-  \strng{namehash}{SR1}
-  \strng{fullhash}{SR1}
-  \field{labelalpha}{Ste84}
-  \field{sortinit}{S}
-  \verb{doi}
-  \verb 10.2307/2007557
-  \endverb
-  \field{number}{165}
-  \field{pages}{9\bibrangedash 23}
-  \field{title}{Analysis of mixed finite elements methods for the {S}tokes
-  problem: a unified approach}
-  \field{volume}{42}
-  \field{journaltitle}{Math. Comput.}
-  \field{year}{1984}
-\endentry
-
 \entry{Yosida80}{book}{}
   \name{author}{1}{}{%
     {{}%

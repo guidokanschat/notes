@@ -1331,35 +1331,115 @@ where $c\not=0$.
   order less than the unmapped.
 \end{remark}
 
-\subsection{The macroelement technique}
+\subsection{The family of Hood-Taylor elements}
+
+\begin{Definition}{hood-taylor}
+  The family of Hood-Taylor elements on simplices in dimension $d=2,3$
+  for polynomial degrees $k\ge 1$ consists of the pairs
+  \begin{gather}
+    \label{eq:stokes:38}
+    V_h = H^1_h(\P_k)^d \cap V,
+    \qquad
+    Q_h = H^1_h(\P_{k-1}) \cap Q.
+  \end{gather}
+  On quadrilaterals and hexahedra, it consists of the pairs
+  \begin{gather}
+    \label{eq:stokes:39}
+    V_h = H^1_h(\Q_k)^d \cap V,
+    \qquad
+    Q_h = H^1_h(\Q_{k-1}) \cap Q.
+  \end{gather}
+\end{Definition}
+
+\begin{Example}{hood-taylor-triangle}
+  The first two members of the Hood-Taylor family on triangles have
+  the nodal representations
+  \begin{center}
+    \begin{tabular}{cc@{\hspace{.2\textwidth}}c}
+      $\P_2-\P_1$
+      &\includegraphics[width=.2\textwidth]{./fig/p2-v.tikz}
+      &\includegraphics[width=.2\textwidth]{./fig/p1-p.tikz}
+      \\[5mm]
+      $\P_3-\P_2$
+      &\includegraphics[width=.2\textwidth]{./fig/p3-v.tikz}
+      &\includegraphics[width=.2\textwidth]{./fig/p2-p.tikz}
+    \end{tabular}    
+  \end{center}
+\end{Example}
+
+\begin{Example}{hood-taylor-triangle}
+  The first two members of the Hood-Taylor family on quadrilaterals
+  have the nodal representations
+  \begin{center}
+    \begin{tabular}{cc@{\hspace{.2\textwidth}}c}
+      $\Q_2-\Q_1$
+      &\includegraphics[width=.2\textwidth]{./fig/q2-v.tikz}
+      &\includegraphics[width=.2\textwidth]{./fig/q1-p.tikz}
+      \\[5mm]
+      $\Q_3-\Q_2$
+      &\includegraphics[width=.2\textwidth]{./fig/q3-v.tikz}
+      &\includegraphics[width=.2\textwidth]{./fig/q2-p.tikz}
+    \end{tabular}    
+  \end{center}
+\end{Example}
 
 \begin{intro}
-  The arguments of the previous section can be extended to the case
-  where instead of individual mesh cell $\cell$ we condider small
-  groups of such cells, called
-  \putindex{macroelement}s~\cite{Stenberg84}. This will give us some
-  more freedom for testing the inf-sup condition locally, but possibly
-  not on each cell separately. In order to get uniform estimates, we
-  introduce a generalization of the concept of shape regularity.
+  The stable elements of the previous section featured discontinuous
+  pressure spaces. Therefore, it was natural to split the analysis
+  into cell-wise constant pressure and higher order. This is the basic
+  technique behind \blockref{Lemma}{bubble-discontinuous} and
+  \blockref{Theorem}{discontinuous-pressure-normal-velocity}. Here,
+  the pressure is continuous, such that a cell-wise analysis is not
+  feasible anymore. The solution is looking at patches, so called
+  macro elements. The analysis is due to~\cite{Stenberg90} and
+  consists of three parts: first, the covering of the domain with a
+  macro element partitioning, then the local stability on each macro
+  element with respect to an auxiliary norm on the pressure space, and
+  finally the application of an abstract argument known as Verfürth's
+  trick~\cite{Verfuerth84}.
 \end{intro}
 
 \begin{Definition}{macro-equivalence}
-  A \define{macroelement} $M\subset \T_h$ is a union of cell
-  $\cell_i\in\T_h$. Given the mappings $\Phi_\cell\colon \widehat\cell \to
-  \cell$, there is a reference macroelement $\widehat M$ and a mapping
-  $\Phi_M\colon \widehat M\to M$ such that $\Phi_M(\widehat M) = M$. We say
-  that $M$ is equivalent to $\widehat M$.
+  A \define{macro element} $M\subset \T_h$ is a union of cells
+  $\cell_i\in\T_h$ connected by their boundary faces. Given the
+  mappings $\Phi_\cell\colon \widehat\cell \to \cell$, there is a
+  reference macro element $\widehat M$ and a mapping
+  $\Phi_M\colon \widehat M\to M$ such that $\Phi_M(\widehat M) =
+  M$. We say that $M$ is equivalent to $\widehat M$.
+
+  We will use the symbol $M$ for the set of cells constituting a macro
+  element as well as for the subset of $\domain$ covered by their union.
 \end{Definition}
 
+\begin{Problem}{reference-macros}
+  Suggest reference macro elements $\widehat M$ for the following
+  situations:
+  \begin{enumerate}
+  \item Two triangles sharing an edge
+  \item Two quadrilaterals sharing an edge
+  \item Two hexahedra sharing a face
+  \item Three quadrialterals at the edge between a coarse cell and a
+    refined cell
+  \end{enumerate}
+  Based on the mappings $\Phi_\cell$ from the reference cell to the
+  actual mesh cells, define a continuously invertible mapping from
+  $\Psi_M:\widehat M \to M$ (it is sufficent to describe the
+  construction without writing a closed formula). Argue, that under the
+  assumption of shape regularity, all macro elements $M$ with the same
+  connectivity between their cells are equivalent to the same
+  reference macro element $\widehat M$.
+\end{Problem}
+
+
 \begin{Definition}{macro-spaces}
-  For a \putindex{macroelement} $M$, we introduce the spaces
+  For a \putindex{macro element} $M$, we introduce the spaces
   \begin{align}
     \label{eq:stokes:27}
     V_M &= \bigl\{ u\in H^1_0(M;\R^d) \big\vert
             \;\exists v_h\in V_h\colon u=v_{h|M}\bigr\},
     \\
     \label{eq:stokes:28}
-    Q_M &= \bigl\{ p\in L^2_0(M) \big\vert
+    Q_M &= \bigl\{ p\in L^2(M) \big\vert
             \;\exists q_h\in Q_h\colon p=q_{h|M}\bigr\},
   \end{align}
   the kernel of the discrete, local gradient operator
@@ -1368,126 +1448,256 @@ where $c\not=0$.
     \ker{B^T_M} = \bigl\{q\in Q_M \big\vert 
     \;\forall v\in V_M\colon \form(\div v,q) = 0\bigr\}.
   \end{gather}
-  For a mesh $\mesh_h$ which is subdivided into a nonoverlapping set
-  of macros $M_j$, we define the space of pressure functions
-  $Q_M^0\subset Q$ which are constant on each macro with the
-  $L^2$-projection $\Pi_M\colon Q_h\to Q_M^0$.
 \end{Definition}
 
+\begin{Definition}{verfuerth-norm}
+  Let $\faces_h^i$ be the set of interior faces of the mesh $\mesh_h$.
+  We introduce the alternative norm on $Q_h$ defined by
+  \begin{gather}
+    \label{eq:stokes:40}
+    \norm{p}_{h}^2 =
+    \sum_{\cell\in\mesh_h} h^2_\cell \norm{\nabla p}_\cell^2
+    +
+    \sum_{\face\in\faces_h^i} \norm{\jmp{p}}_\face^2,
+  \end{gather}
+  where for a face $\face$ between two cells $\cell_1$ and $\cell_2$
+  we define the \define{jump operator}
+  \begin{gather}
+    \jmp{p} = p_1-p_2.
+  \end{gather}
+\end{Definition}
+
+\begin{remark}
+  For continuous pressure spaces, the norm $\norm{p}_h$ is simply the
+  norm of the gradient taken in the interior of all cells.
+\end{remark}
+
+\begin{Definition}{macro-seminorm}
+  On each macro element $M$, let $\faces_M^i$ be the set of interior
+  faces of $M$. We define the seminorm
+  \begin{gather}
+    \label{eq:stokes:41}
+    \snorm{p}_M
+    = \sum_{\cell\in M} h^2_\cell \norm{\nabla p}_\cell^2
+    + \sum_{\face\in\faces_M^i} \norm{\jmp{p}}_\face^2.
+  \end{gather}
+  It is not a norm because $Q_M$ contains constant functions.
+\end{Definition}
+
+\begin{Lemma}{macro1}
+  Assume that there is a covering of $\domain$ by macro elements such
+  that every interior face $\face \in \faces_h^i$ is an interior face
+  of one macro element and each cell $\cell\in\mesh_h$ is an element
+  of not more than $n_O$ macro elements. Then, the local stability
+  estimate
+  \begin{gather}
+    \label{eq:stokes:42}
+    \sup_{v\in V_M} \frac{\form(\div v,q)_M}{\snorm{v}_{1,M}}
+    \ge \widehat \beta \snorm{q}_M
+    \qquad\forall q\in Q_M,
+  \end{gather}
+  implies the stability estimate
+  \begin{gather}
+    \label{eq:stokes:43}
+    \sup_{v\in V_h} \frac{\form(\div v,q)}{\norm{v}_{1}}
+    \ge \beta \norm{q}_h
+    \qquad\forall q\in Q_h,
+  \end{gather}
+  with a constant $\beta$ independent of the mesh size $h$.
+\end{Lemma}
+
+\begin{proof}
+  For arbitrarily chosen $q\in Q_h$, choose for each $M$ according to
+  assumption~\eqref{eq:stokes:42} functions $v_M\in V_M$ with
+  $\norm{v_M}_1 \le \snorm{q}_M$
+  such that
+  \begin{gather*}
+    \form(\div v_M,q)
+    = \form(\div v_M,q)_M
+    \ge \widehat \beta \snorm{q}_M^2.
+  \end{gather*}
+  Define $v = \sum v_M$. Since every face is an interior face of a
+  macro element, every cell is element of at least one macro
+  element. Hence,
+  \begin{gather*}
+    \form(\div v, q) = \sum_M \form(\div v_M,q)
+    \ge \widehat \beta \sum_M \snorm{q}_M^2
+    \ge \widehat \beta \norm{q}_h^2.
+  \end{gather*}
+  Furthermore, there holds by Poincaré inequality
+  \begin{gather*}
+    c_S \norm{v}_1 \le \snorm{v}_1
+    \le \sum_M \snorm{v_M}_{1} \le \sum_M \snorm{q}_M
+    \le n_O \norm{q}_h.
+  \end{gather*}
+  Thus, the estimate holds with
+  \begin{gather*}
+    \beta = \frac{c_S\widehat\beta}{n_O}.
+  \end{gather*}
+\end{proof}
+
 \begin{Lemma}{macro-local}
-  Let $\{M\}$ with $M\subset \mesh_h$ be a set of macroelements
-  equivalent to the same reference macroelement $\widehat M$. Let the
-  family $\{\mesh_h\}$ be shape regular and assume
-  $\ker{B^T_{M}} = \{0\}$. Then, there is a constant
-  $\beta_M>0$ independent of $h$ such that for all $M$ there holds
+  Let $\{M\}$ with $M\subset \mesh_h$ be a set of macro elements
+  equivalent to the same reference macro element $\widehat M$. Let the
+  family $\{\mesh_h\}$ be shape regular and assume that on each macro
+  $M$ the set $\ker{B^T_{M}}$ only contains the constant functions. Then,
+  there is a constant $\beta_M>0$ independent of $h$ such that for all
+  $M$ there holds
   \begin{gather}
     \label{eq:stokes:31}
     \inf_{p\in Q_M} \sup_{v\in V_M}
-    \frac{\form(\div v,q)_M}{\norm{v}_{1,M}\norm{q}_{0,M}}
+    \frac{\form(\div v,q)_M}{\snorm{v}_{1,M}\snorm{q}_{M}}
     \ge \beta_{\widehat M}.
   \end{gather}
 \end{Lemma}
 
-\begin{proof}
+\begin{Problem}{macro-local}
+  Prove \blockref{Lemma}{macro-local}. Furthermore, prove that under
+  the assumption that there is a finite set of reference macro
+  elements $\widehat M_i$, such that all macro elements in a family
+  are equivalent to one of them, the estimate holds with a uniform
+  constant $\beta>0$.
+\begin{solution}
   For each $M$, the existence of such a constant $\beta_{M}$ is
   equivalent to the fact that the smallest nonzero singular value is
-  strictly greater than zero in finite dimensional spaces. Next, we
-  observe that $\nabla \Phi_{M}$ is bounded by the
+  strictly greater than zero in finite dimensional
+  spaces. Furthermore, the kernel of the seminorm and of $B_M^T$
+  coincide.
+
+  Next, we observe that $\nabla \Phi_{M}$ is bounded by the
   $\nabla\Phi_{\cell_i}$, which in turn is uniformly bounded by the
   shape regularity. Therefore, by a cell-wise scaling argument and the
   fact that $\widehat M$ has only finitely many cells we have
   \begin{gather*}
     \beta_{\widehat M} = \min_M \beta_M > 0.
   \end{gather*}
-\end{proof}
+\end{solution}
+\end{Problem}
 
 \begin{remark}
   Depending on the technique of proof being used, we also may decide
-  to impose~\eqref{eq:stokes:31} directly for each macroelement.
+  to impose~\eqref{eq:stokes:31} directly for each macro element.
 \end{remark}
 
-\begin{Lemma}{macro-projection}
-  Let $\mesh_h$ be subdivided into a nonoverlapping set of
-  macroelements $M$ such that there is a finite set of reference macro
-  elements $\widehat M$, and let $\ker{B^T_M} = \{0\}$. Then, there is
-  a constant $c_1>0$ such that for all $q_h\in Q_h$ exists $v_h\in V_h$
-  satisfying
+\begin{remark}
+  So far, we have proven that under the assumption that the kernel of
+  the macro problems only contains the constant functions, we have an
+  inf-sup condition with the pressure norm $\norm{.}_h$. It remains to
+  use Verfürth's trick to prove the condition for $\norm{.}_0$.
+\end{remark}
+
+\begin{Lemma}{verfuerth1}
+  Assume that there is an $H^1$-stable interpolation operator $I_h :
+  V\to V_h$
+  according to \blockref{Assumption}{locally-quasi-uniform}. Then,
+  there are positive constants $c_1$ and $c_2$ independent of $h$ such
+  that for any $q_h\in Q_h$ there holds
   \begin{gather}
-    \label{eq:stokes:32}
-    \begin{split}
-      \form(\div v_h, q_h) = \form(\div v_h,{(\identity-\Pi_M)} q_h)
-      &\ge c_1 \norm{(\identity-\Pi_M) q_h}_0^2\\
-      \norm{v_h}_2 & \le \norm{(\identity-\Pi_M) q_h}_0.
-    \end{split}
+    \label{eq:stokes:44}
+    \sup_{v_h\in V_h} \frac{\form(\div v_h, q_h)}{\norm{v_h}_V}
+    \ge c_1 \norm{q_h}_Q - c_2 \norm{q_h}_h.
   \end{gather}
 \end{Lemma}
 
 \begin{proof}
-  For any $q_h\in Q_h$, we have $(\identity-\Pi_M) q_h\in Q_M$ for each
-  macroelement $M$. Applying \blockref{Lemma}{macro-local}, for each
-  $M$ there exists $v_M\in V_M$ such that
+  We begin by using the continuous inf-sup condition to deduce that
+  for arbitrary $q_h\in Q_h$ there is $v\in V$ with
+  $\norm{v}_V \le \norm{q_h}_Q$ such that
   \begin{gather*}
-    \form(\div v_M, {(\identity-\Pi_M)} q_h)_M
-    \ge c_1 \norm{v_M}_{1,M}\norm{(\identity-\Pi_M) q_h}_{0,M},
+    \form(\div v,q_h) \ge c_1 \norm{q_h}_Q^2.
   \end{gather*}
-  with $c=\min \beta_{\widehat M}$. Let now $v_M$ such that
-  $\norm{v_M}_{1,M} = \norm{(\identity-\Pi_M) q_h}_{0,M}$ and $v$ such that
-  $v_{|M} = v_M$. Since $v_M$ is zero on $\d M$, we have $v\in
-  V_h$. By construction,~\eqref{eq:stokes:32} holds.
+  Now, let $v_h = I_h v$. Hence,
+  \begin{align*}
+    \form(\div v_h, q_h)
+    &= \form(\div v_h - \div v,q_h) + \form(\div v,q_h)\\
+    &\ge \sum_{\cell\in\mesh_h} \form(v-v_h,\nabla q_h)_{\cell}
+      + \sum_{\face\in\faces_h^i}
+      \form([v_h-v]\cdot\n_1,\jmp{q_h})_\face
+      + c_1 \norm{q_h}_Q\\
+    &\ge -\left[\sum_{\cell\in\mesh_h} h_\cell^{-2} \norm{v-v_h}_\cell^2
+      +\sum_{\face\in\faces_h^i} h_\face^{-1}
+      \norm{v-v_h}_\face\right]
+      \norm{q_h}_h + c_1 \norm{q_h}_Q\\
+    &\ge -c \snorm{v}_1\norm{q_h}_h+ c_1 \norm{q_h}_Q\\
+    &\ge \left[c_1 \norm{q_h}_Q - c_2 \norm{q_h}_h\right]
+      \norm{q_h}_Q.
+  \end{align*}
+  Furthermore, we have by the interpolation estimate
+  \begin{gather*}
+    \snorm{v_h} \le c \snorm{v} \le c \norm{q_h}_Q,
+  \end{gather*}
+  which proves the result by dividing $\form(\div v_h,q_h)$ by the
+  norm of $v_h$.
 \end{proof}
 
-\begin{Lemma}{macro-constant}
-  Let $\{M_j\}$ be a covering of $\mesh_h$ with macroelements. For any
-  two macros $M_i$ and $M_j$ let $T_{ij}$ be their common
-  boundary. Then, if every $T_{ij}$ of codimension one contains at
-  least one degree of freedom controlling $u\cdot\n$, there is a
-  constant $c_2>0$ such that for every $q_h\in Q_h$ exists $w_h\in
-  V_h$ such that
-  \begin{gather}
-    \label{eq:stokes:33}
-    \begin{split}
-      \form(\div w_h, \Pi_M q_h) &\ge c_2 \norm{\Pi_M q_h}^2_0\\
-      \norm{w_h}_1 &\le \norm{\Pi_M q_h}_0.
-    \end{split}
-  \end{gather}
+\begin{Lemma}{verfuerth2}
+  Let the assumptions of \blockref{Lemma}{verfuerth1} hold, and assume
+  that there is a constant $\tilde \beta$ such that
+  \begin{gather*}
+    \sup_{v\in V_h} \frac{\form(\div v,q)}{\norm{v}_{1}}
+    \ge \tilde \beta \norm{q}_h
+    \qquad\forall q\in Q_h.
+  \end{gather*}
+  Then, the inf-sup condition
+  \begin{gather*}
+    \sup_{v\in V_h} \frac{\form(\div v,q)}{\norm{v}_{1}}
+    \ge \beta \norm{q}_Q
+    \qquad\forall q\in Q_h,
+  \end{gather*}
+  holds with $\beta$ determined by $c_1$, $c_2$ and $\tilde \beta$.
 \end{Lemma}
 
-\begin{Problem}{macroelement-constant}
-  Prove \blockref{Lemma}{macro-constant}
-\end{Problem}
+\begin{proof}
+  For any $q_h\in Q_h$ and $\theta\in[0,1]$ we have
+  \begin{align*}
+    \sup_{v_h\in V_h} \frac{\form(\div v_h,q_h)}{\norm{v_h}_V}
+    &=
+      \theta \sup_{v_h\in V_h} \frac{\form(\div v_h,q_h)}{\norm{v_h}_V}
+    + (1-\theta)\sup_{v_h\in V_h} \frac{\form(\div
+      v_h,q_h)}{\norm{v_h}_V}
+    \\
+    &\ge \theta c_1 \norm{q_h}_Q - c_2 \theta \norm{q_h}_h
+      + (1-\theta) \tilde\beta \norm{q_h}_h
+    \\
+    & \ge \frac{c_1 \tilde\beta}{c_2+\tilde\beta} \norm{q_h}_Q,
+  \end{align*}
+  by choosing $\theta = \tilde\beta/(c_2+\tilde\beta)$.
+\end{proof}
 
-\begin{Theorem}{macroelement}
-  Let the assumptions of \blockref{Lemma}{macro-projection}
-  hold. Then, the pair $V_h\times Q_h$ is inf-sup stable.
+\begin{Theorem}{hood-taylor-stability}
+  The Hood-Taylor families are inf-sup stable. Thus, for solutions
+  $u\in H^{k+1}(\domain;\R^d)\cap V$ and $q\in H^k(\domain)\cap Q$,
+  there holds
+  \begin{gather}
+    \norm{u-u_h}_1 + \norm{p-p_h}_0
+    \le c h^2\bigl(\snorm{u}_{k+1} + \snorm{p}_k\bigr).
+  \end{gather}
 \end{Theorem}
 
 \begin{proof}
-  Let $q_h\in Q_h$. Then, applying \blockref{Lemma}{macro-projection}
-  and \blockref{Lemma}{macro-constant}, we obtain functions $v_h$ and
-  $w_h$ such that for $u_h = v_h+ \delta w_h$ for any $\delta>0$ there
-  holds
-  \begin{align*}
-    \form(\div u_h, q_h)
-    &= \form(\div v_h, q_h) + \form(\div w_h, q_h) \\
-    &\ge c_1 \norm{(\identity-\Pi_M) q_h}_0^2
-      + \delta c_2 \norm{\Pi_M q_h}_0^2
-      - \delta \norm{w_h}_1 \norm{(\identity-\Pi_M) q_h}_0 \\
-    & = (c_1 - \delta) \norm{(\identity-\Pi_M) q_h}_0^2
-      + \delta c_2 \norm{\Pi_M q_h}_0^2.
-  \end{align*}
-  Choosing $\delta = c_1/(1+c_2)$, we obtain
-  \begin{gather}
-    \label{eq:stokes:34}
-    \begin{split}
-      \form(\div u_h, q_h) &\ge \frac{c_1c_2}{1+c_2} \norm{q}_0^2 \\
-      \norm{u}_1 &\le \norm{q}_0.
-    \end{split}
-  \end{gather}
+  Summarizing all results of this section, the only thing that is left
+  is defining a covering of $\mesh_h$ with macro elements, such that
+  $\ker{B_M^T}$ contains only the constant functions. We do this
+  at the example of the lowest order elements on quadrilaterals and
+  triangles.
+  
+  \textbf{Quadrilaterals: } Choose macro elements consisting of two
+  quadrilateral charing an edge. Then, the reference macro element
+  $\widehat M$ consists of the cells $[-1,0]\times [0,1]$ and
+  $[0,1]^2$. First, observe that a function constant on $M$ is also
+  constant on $\widehat M$ and vice versa.
 \end{proof}
 
-\subsection{The family of Hood-Taylor elements}
 
-\section{Nearly incompressible elasticity}
+\subsection{Nearly incompressible elasticity}
+
+\begin{remark}
+  If we discretize the mixed formulation of nearly incompressible
+  elasticity with any of the stable Stokes pairs of the preceding
+  sections, we can apply
+  \blockref{Corollary}{stabilized-mixed-convergence} to obtain optimal
+  error estimates.
+\end{remark}
 
 %%% Local Variables:
 %%% mode: latex

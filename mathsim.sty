@@ -3,7 +3,7 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
 \ProvidesPackage{mathsim}[2013/08/01 Mathematical Methods of Simulation]
 
-\RequirePackage{amsthm,amsfonts,amssymb,mathrsfs}
+\RequirePackage{amsthm,amsfonts,amssymb,mathrsfs,stmaryrd}
 \RequirePackage{amsmath,amstext,mathtools}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
@@ -119,7 +119,10 @@
 % Finite elements
 \def\mesh{\mathbb T}
 \def\cell{T}
+\def\faces{\mathbb F}
+\def\face{F}
 \def\nodal{\mathcal N}
+\def\jmp#1{\left\llbracket#1\right\rrbracket}
 
 % Single letters
 \def\C{\mathbb C}
