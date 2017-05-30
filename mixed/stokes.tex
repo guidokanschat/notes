@@ -805,6 +805,40 @@ where $c\not=0$.
   \end{gather}
   show that the MINI element has a natural generalization to three
   dimensional problems.
+\begin{solution}
+  We procede just as in the two-dimensional case and observe for any
+  $\Pi_2: V \to \bigl(B_h\bigr)^3$
+  \begin{align*}
+    \int_\domain \div(\Pi_2 v-v) q_h \dx
+    = \int_\domain (v-\Pi_2v)\cdot\nabla q_h\dx = \sum_\cell\int_\cell (v-\Pi_2v)\dx\cdot\nabla q_\cell\dx
+  \end{align*}
+  due to the continuity of the ansatz spaces.
+  If we choose $\Pi_2: V \to \bigl(B_h\bigr)^3$ such that for all $q_h\in Q_h$,
+  \begin{align*}
+   \int_\cell \Pi_2 v_i \dx
+    = \alpha_{\cell,i} \int_\cell b_{4,\cell}\dx
+    = \int_\cell v_i\dx,
+  \end{align*}
+  we indeed get the desired property
+  \begin{align*}
+    \int_\domain \div(\Pi_2 v-v) q_h \dx = 0.
+  \end{align*}
+  This is possible as $b_{4,\cell}$ is nonnegative. Stability follows as in the two-dimensional case.
+  \begin{gather*}
+    \norm{\Pi_2 v}_{1,\cell}
+    \le c h_\cell^{-1} \norm{\Pi_2 v}_{0,\cell}
+    \le c h_\cell^{-1} \norm{v}_{0,\cell}.
+  \end{gather*}
+  Finally, we use the estimates for $I_h$ to obtain
+  \begin{gather*}
+    \norm{\Pi_2 (\identity-\Pi_1) v}_{1,\cell}
+    \le c h_\cell^{-1} \norm{v-I_h v}_{0,\cell}
+    \le c \snorm{v}_{1,\domain_\cell}.
+  \end{gather*}
+  Since the number of intersecting of cells of shape regular meshes is
+  bounded, the final term is bounded by $\norm v_{1,\domain}$.
+\end{solution}
+
 \end{Problem}
 
 \begin{intro}
@@ -836,7 +870,7 @@ where $c\not=0$.
   $b_{3,\cell}$ of a triangle, the quartic bubble $b_{4,\cell}$, the
   biquadratic bubble $b_{2^2,\cell}$ of a quadrilateral or the
   triquadratic bubble $b_{2^3,\cell}$ of a hexahedron.
-  
+
   We also define the cell bubble space
   \begin{gather}
     \label{eq:stokes:25}
@@ -863,7 +897,7 @@ where $c\not=0$.
   constructed cell-wise such that $\Pi_2\colon H^1(\cell) \to
   B_\cell(\nabla Q_h)$ fulfills
   \begin{gather}
-    \label{eq:stokes:26}    
+    \label{eq:stokes:26}
     \int_\cell (\Pi_2 u - u) \cdot\nabla q = 0,
     \qquad
     \forall q\in Q_{h|\cell}.
@@ -1051,6 +1085,78 @@ where $c\not=0$.
   \end{center}
   is inf-sup stable. Does the proof translate to the $P_2-P_0$ element
   on tetrahedra or the $Q_2-P_0$ element on hexahedra?
+\begin{solution}
+  Let's first consider the element pair $\mathbb{Q}_2/\mathbb{P}\_0^-$ in 2D.
+  Since any function in the pressure ansatz space is piecewise constant, we observe
+  for any $\Pi_2: V \to \bigl(V_h\bigr)^2$
+  \begin{align*}
+    \int_\domain \div(\Pi_2 v-v) q_h \dx
+    = \sum_\cell\int_{\partial \cell} (v-\Pi_2v)q_h \cdot n \ds \,q_\cell.
+  \end{align*}
+  If we choose $\Pi_2: V \to \bigl(V_h\bigr)^2$ such that for all $q_h\in Q_h$,
+  \begin{align*}
+    \Pi_2 u(x) &= 0
+    & \forall x &\text{ is vertex or midpoint of } \cell\\
+    \int_E \Pi_2 u\ds &= \int_E u\ds
+    & \forall E &\text{ is edge of } \cell
+  \end{align*}
+  we clearly get the desired property
+  \begin{align*}
+    \int_\domain \div(\Pi_2 v-v) q_h \dx = 0.
+  \end{align*}
+  In fact, the first condition determines 5 of the 9 degrees of freedom
+  and the second condition the remaining 4. This means that the interpolation
+  again is given by face integrals alone and we achieve stability via
+  \begin{align*}
+    \snorm{\Pi_2 v}_{1,\cell}
+    =\snorm{\widehat{\Pi_2 v}}_{1,\widehat\cell}
+    \le c \norm{\widehat v}_{1,\widehat\cell}
+    \le c \bigl(h_\cell^{-1} \norm{v}_{0,\cell} + \snorm{v}_{1,\cell}\bigr).
+  \end{align*}
+  Entering $v=u-\Pi_1 u$ and the estimates~\eqref{eq:stokes:15} of
+  \blockref{Assumption}{locally-quasi-uniform}, we obtain
+  \begin{align*}
+    \norm{\Pi_2 (\identity-\Pi_1)u}_1^2
+    = \sum_{\cell\in\mesh_h}\norm{\Pi_2
+      (\identity-\Pi_1)u}_{1,\cell}^2
+    \le c \norm{u}_1^2.
+  \end{align*}
+
+  For the pair $\mathbb{P}_2/\mathbb{P}_0^-$ in 3D on tetrahedra we have
+  4 degrees of freedom at the vertices and 6 degrees of freedom on the midpoints of the edges.
+  Again, the condition we need to satisfy is
+  \begin{align*}
+    \int_{\partial \cell} (v-\Pi_2v)q_h \cdot n \ds \,q_\cell = 0.
+  \end{align*}
+  Hence, one way to choose the interpolation operator is by requiring
+  \begin{align*}
+    \int_E \Pi_2 u\ds &= 0           & \forall E &\text{ is edge of } \cell\\
+    \int_F \Pi_2 u\ds &= \int_F u\ds & \forall F &\text{ is face of } \cell.
+  \end{align*}
+  The first and second condition determine 6 respectively 4 degrees of freedom
+  and stability follows as usual by inverse estimates.
+
+  For the pair $\mathbb{Q}_2/\mathbb{P}_0^-$ in 3D on hexahedra we have the
+  following number of degree of freedoms:
+  \begin{itemize}
+  \item 1 in the interior
+  \item 6 on the 6 faces
+  \item 12 on the 12 edges
+  \item 8 at the 8 vertices
+  \end{itemize}
+  Again, the condition we need to satisfy is
+  \begin{align*}
+    \int_{\partial \cell} (v-\Pi_2v)q_h \cdot n \ds \,q_\cell = 0.
+  \end{align*}
+  Hence, one way to choose the interpolation operator is by requiring
+  \begin{align*}
+    \Pi_2 u(x)        &= 0           & \forall x &\text{ is vertex, edge or midpoint of } \cell\\
+    \int_F \Pi_2 u\ds &= \int_F u\ds & \forall F &\text{ is face of } \cell.
+  \end{align*}
+  The first and second condition determine 6 respectively 4 degrees of freedom
+  and stability follows as usual by inverse estimates. In fact, the interpolator again
+  just relies on face integrals.
+\end{solution}
 \end{Problem}
 
 \begin{intro}
@@ -1149,7 +1255,7 @@ where $c\not=0$.
   the average normal derivative of $u\in V_h$ on this face. Finally,
   let $V_h$ contain the bubble space for $\nabla Q_h$,
   \begin{gather*}
-    B_h(b_\cell \nabla Q_h)^d \subset V_h.    
+    B_h(b_\cell \nabla Q_h)^d \subset V_h.
   \end{gather*}
   Then, the pair $V_h\times Q_h$ is inf-sup stable.
 \end{Theorem}
@@ -1199,11 +1305,11 @@ where $c\not=0$.
 
 \begin{proof}
   First, we prove that $B_h(b_\cell \nabla Q_h)^d \subset V_h$. To
-  this end, we note that on each cell, we have that the restriction
-  $q_T$ of a discrete pressure $q_h$ is in $\P_{k-2}\subset \Q_{k-2}$.
-  The bubble function $b_T$ is in $\Q_2$, such that
-  $b_T\nabla q_T \in \Q_k$, which was to be proven.
-  
+  this end, we note that on each cell, we have that the gradient of
+  a discrete pressure $q_h$ restricted to this cell is in
+  $\P_{k-2}\subset \Q_{k-2}$. The bubble function $b_T$ is in $\Q_2$,
+  such that $b_T\nabla q_T \in \Q_k$, which was to be proven.
+
   For the assumption on the degrees of freedom, we refer to the
   following definition. Once the degrees of freedom for each velocity
   component are determined by this definition, we can simply select
@@ -1211,7 +1317,7 @@ where $c\not=0$.
   interfaces, it is clear that we can choose a linear combination of
   the components of $u$ splitting into normal and tangential and thus
   get the desired result. In general, we refer to the \putindex{Piola
-    transformation} in the next chapter.
+  transformation} in the next chapter.
 \end{proof}
 
 \begin{Definition}{moment-basis-1d}
@@ -1313,7 +1419,7 @@ where $c\not=0$.
       \includegraphics[width=.2\textwidth]{./fig/q3-v.tikz}
       &
       \includegraphics[width=.2\textwidth]{./fig/q-p2-p.tikz}
-    \end{tabular}    
+    \end{tabular}
   \end{center}
 \end{Example}
 
@@ -1445,7 +1551,7 @@ where $c\not=0$.
   the kernel of the discrete, local gradient operator
   \begin{gather}
     \label{eq:stokes:29}
-    \ker{B^T_M} = \bigl\{q\in Q_M \big\vert 
+    \ker{B^T_M} = \bigl\{q\in Q_M \big\vert
     \;\forall v\in V_M\colon \form(\div v,q) = 0\bigr\}.
   \end{gather}
 \end{Definition}
