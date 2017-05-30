@@ -494,7 +494,7 @@ where $c\not=0$.
   Let there be operators $\Pi_1,\Pi_2\colon V \to V_h$ such that
   \begin{xalignat}2
     \label{eq:stokes:10}
-    \norm{\Pi_1 v}_V &\le c1 \norm{v}_V
+    \norm{\Pi_1 v}_V &\le c_1 \norm{v}_V
     &\forall v&\in V,\\
     \label{eq:stokes:11}
     \norm{\Pi_2(\identity-\Pi_1)v}_V &\le c_2 \norm{v}_V
@@ -1209,7 +1209,7 @@ where $c\not=0$.
   pressure space into a piecewise constant part and its
   complement. Then, the pressure in the complement is controlled by
   the bubble functions. It still remains to guarantee the existence
-  ofg the operator $\Pi_1$. In one case, we have verified the
+  of the operator $\Pi_1$. In one case, we have verified the
   existence of such an operator: the Fortin operator for the $P_2-P_0$
   element. Therefore, we have
 \end{remark}
@@ -1267,7 +1267,7 @@ where $c\not=0$.
   to~\eqref{eq:stokes:23}, we see that the interpolation condition
   ~\eqref{eq:stokes:22} is more than needed.
 
-  Now, let $\{\nodal_{\cell,i}$ be the $n_\cell$ node values for the
+  Now, let $\{\nodal_{\cell,i}\}$ be the $n_\cell$ node values for the
   discrete velocity space $V_\cell = V_{h|\cell}$ on the cell $\cell$. For
   convenience, let them be ordered in a way, that the first ones
   control the normal derivatives of $u_h$ on the faces of the cell,
@@ -1284,10 +1284,10 @@ where $c\not=0$.
     \nodal_{\cell,i}(\Pi_2 u) &= 0
     &i&=n_F+1,\dots,n_\cell.
   \end{xalignat}
-  Choosing the basis on $V_T$ which is dual to $\{\nodal_{\cell,i}$,
+  Choosing the basis on $V_T$ which is dual to $\{\nodal_{\cell,i}\}$,
   we see that this indeed implies
   \begin{gather*}
-    0\int_{\d\cell} (\Pi_2 u - u) \ds = \int_\cell \div (\Pi_2 u-u)\dx.
+    0=\int_{\d\cell} (\Pi_2 u - u) \ds = \int_\cell \div (\Pi_2 u-u)\dx.
   \end{gather*}
   Therefore, $\Pi_1 = I_h + \Pi_2(\identity-I_h)$ is divergence
   preserving. Boundedness follows by the standard scaling argument.
@@ -1327,7 +1327,7 @@ where $c\not=0$.
     \label{eq:stokes:35}
     \P_k^0 \oplus \overline{\P_k},
   \end{gather}
-  where $\P_k^0 = \P_k \cap H^1_0(\widehat T)$. We choose
+  where $\P_k^0 = \P_k \cap H^1_0(\widehat T)$. We choose an
   orthogonal basis for $\P_k^0$ with respect to the $H^1_0$-inner
   product $\scal(p,q) = \int p'q'\dx$ by
   \begin{gather}
