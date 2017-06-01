@@ -1,0 +1,34 @@
+\begin{tikzpicture}[thick]
+  \coordinate (a) at (-2,0);
+  \coordinate (b) at (0,0);
+  \coordinate (c) at (2,0);
+  \coordinate (d) at (-2,2);
+  \coordinate (e) at (0,2);
+  \coordinate (f) at (2,2);
+  
+  \coordinate (x1) at ($(a)!0.5!(e)$);
+  \coordinate (x2) at ($(b)!0.5!(f)$);
+  \coordinate (x3) at ($(b)!0.5!(e)$);
+
+  \draw (a) node[below] {$a$} --
+  (b) node[below] {$b$} --
+  (e) node[above] {$e$} --
+  (d) node[above] {$d$} -- cycle;
+
+  \draw (b) -- (c) node[below] {$c$} --
+  (f) node[above] {$f$} -- (e) -- cycle;
+  
+  \node at ($(x1)!.5!(d)$) {$\cell_1$};
+  \node at ($(x2)!.5!(f)$) {$\cell_2$};
+
+  {
+    \small
+    \node (x1) at (x1) {$\bullet$};
+    \node[right] at (x1) {$x_1$};
+    \node (x2) at (x2) {$\bullet$};
+    \node[right] at (x2) {$x_2$};
+    \node (x3) at (x3) {$\bullet$};
+    \node[right] at (x3) {$x_3$};    
+  }
+
+\end{tikzpicture}

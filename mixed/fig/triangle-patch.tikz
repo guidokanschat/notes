@@ -1,0 +1,34 @@
+\begin{tikzpicture}
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (2,0);
+  \coordinate (AB) at ($(A)!0.5!(B)$);
+  \coordinate (C) at ($(AB)!2*sin(60)!90:(B)$);
+  \coordinate (AC) at ($(A)!0.5!(C)$);
+  \coordinate (BC) at ($(B)!0.5!(C)$);
+  \coordinate (D) at ($(AC)!2*sin(60)!90:(C)$);
+  \coordinate (E) at ($(BC)!2*sin(60)!90:(B)$);
+  \coordinate (C1) at ($(AB)!.333!(C)$);
+  \coordinate (C2) at ($(AC)!.333!(D)$);
+  \coordinate (C3) at ($(BC)!.333!(E)$);
+
+  \draw (A) -- (B) -- (C) -- cycle;
+  \draw (A) -- (C) -- (D) -- cycle;
+  \draw (B) -- (E) -- (C) -- cycle;
+  \draw (C1) node {$\cell_1$};
+  \draw (C2) node {$\cell_2$};
+  \draw (C3) node {$\cell_3$};
+
+  { 
+    \small
+    \node (x1) at (AC) {$\bullet$};
+    \node[right] at (x1) {$x_1$};
+    \draw[very thick,->] (AC) -- node[right] {$t_1$} ($(AC)!.4!(A)$);
+    \draw[very thick,->] (AC) -- node[below] {$n_1$} ($(AC)!.4!-90:(A)$);
+
+    \node (x2) at (BC) {$\bullet$};
+    \node[left] at (x2) {$x_2$};
+    \draw[very thick,->] (BC) -- node[left] {$t_2$} ($(BC)!.4!(B)$);
+    \draw[very thick,->] (BC) -- node[below] {$n_2$} ($(BC)!.4!90:(B)$);
+  }
+
+\end{tikzpicture}
