@@ -1,0 +1,113 @@
+
+\section{Modelling diffusion problems}
+
+\begin{intro}
+  Diffusion problems arise when a balance law, for instance for mass
+  in ground water flow or for energy in temperature conduction is
+  coupled with a constitutive equation relating the direction of
+  movement to the gradient of the quantity of interest.
+\end{intro}
+
+\begin{intro}
+  Let $\rho$ be the density of a conserved quantity. Then, for any given
+  volume we have the ``mass''
+  \begin{gather*}
+    m = \int_V \rho\dx.
+  \end{gather*}
+  Changes of this mass can be due to two processes:
+  \begin{enumerate}
+  \item Generation of additional mass by a source $g$,
+  \item Flow of mass over the boundary of $V$ at a velocity $v$.
+  \end{enumerate}
+  In formulas, we have
+  \begin{gather*}
+    \tfrac{d}{dt} m = \int_V g\dx - \oint_{\d V} J\cdot \n \ds,
+  \end{gather*}
+  also known as \define{Reynolds transport theorem}. Here, $J$ is the
+  \define{flux}. The exact form of the flux will be modelled later.
+  The formula above is somewhat unwieldy, since it combines volume and
+  surface integrals. Therefore, we apply the \putindex{Gauss theorem}
+  to obtain
+  \begin{gather}
+    \label{eq:darcy:2}
+    \frac{d}{dt} \int_V \rho\dx = \int_V g\dx - \int_V \div J \dx.
+  \end{gather}
+  Concentrating and assuming sufficient regularity, we arrive at the
+  equation
+  \begin{gather}
+    \label{eq:darcy:3}
+    \d_t \rho + \div J = g.
+  \end{gather}
+  As before in these notes, we ignore the time dependence and only
+  look at stationary limits. In this case, this reduces to
+  \begin{gather}
+    \label{eq:darcy:4}
+    \div J = g.
+  \end{gather}
+\end{intro}
+
+\begin{example}
+  Next we consider constitutive relations between $\rho$ and $J$ such
+  that we can complement equation~\eqref{eq:darcy:4} by a second
+  equation and obtain a solvable system. To this end, we consider
+  thermal diffusion and ground water flow.
+
+  \begin{description}
+  \item[Heat conduction:] Here, the conserved quantity is not the
+    density $\rho$, but the temperature $T$. \define{Fourier's law}
+    states that the flux is proportional to the gradient of the
+    temperature, pointing in opposite direction:
+    \begin{gather*}
+      J = -k\nabla T.
+    \end{gather*}
+    The constant of proportionality $k$ is the heat conductivity.
+  \item[Porous media flow:] The conserved quantity is the amount of
+    fluid, represented by the hydraulic head or pressure
+    $p$. \define{Darcy's law} says that the flux is the product of the
+    hydraulic \define{permeability} of the media and the gradient of the
+    pressure:
+    \begin{gather*}
+      J = -K\nabla p.
+    \end{gather*}
+    Here, the permeability $K$ is either a positive scalar function or
+    a symmetric, positive definite matrix. Note that in the latter
+    case, $J$ and $\nabla p$ do not point in the same direction.
+    \item[General diffusion processes:] \define{Fick's law} states,
+      that the flux of a diffusion process is determined by the
+      gradient of the diffusing quantity $p$ by the relation
+    \begin{gather*}
+      J = -D\nabla p.
+    \end{gather*}
+    $D$ is the symmetric, positive definite \define{diffusion tensor}.
+  \end{description}
+\end{example}
+
+\begin{intro}
+  From the two equations for $J$, we derive the following system of
+  PDE:
+  \begin{gather*}
+    \arraycolsep2pt
+    \begin{matrix}
+      K^{-1} J &-& \nabla p &=& 0
+      \div J &&&= f.
+    \end{matrix}
+  \end{gather*}
+\end{intro}
+
+
+% \begin{Definition}{mass-balance}
+%   We call a quantity $p$ conserved, if the \define{conservation law}
+%   \begin{gather}
+%     \label{eq:darcy:1}
+%     \d_t p = \div p + g
+%   \end{gather}
+%   holds with a \define{source} function $g$. In words, the change of
+%   the quantity within a control volume is equal to the balance of
+%   sources and the flow over the boundary of the volume.
+% \end{Definition}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
