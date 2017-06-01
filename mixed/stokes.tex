@@ -1807,6 +1807,57 @@ where $c\not=0$.
   \end{gather}
 \end{Lemma}
 
+\begin{proof}
+  First, we observe that $\nabla q_h$ is constant on each cell and
+  that the tangential derivatives $t_i\cdot\nabla q_h$ coincide for
+  both adjacent cells due to the continuity of $q_h$. Now, we will
+  derive conditions for $\ker{B_M^T}$ by choosing special test
+  functions in $V_M$ defined through interpolation in the points $x_1$
+  and $x_2$.
+
+  Furthermore, note that the shape function $\phi$ in $\P_2$
+  associated with the center of an edge is of the form
+  $\lambda_1\lambda_2$ using the barycentric coordinates associated to
+  the vertices at the ends of this edge. This function is positive
+  everywhere inside the triangle $\cell_i$. Hence, there are positive
+  numbers
+  \begin{gather*}
+    w_1 = \int_{\cell_1} \phi\dx,
+    \quad
+    w_1 = \int_{\cell_2} \phi\dx,
+  \end{gather*}
+  Now, let $u(x_1)\cdot t_1 = 1$, $u(x_1)\cdot\n_1 = 0$, and $u(x_2)
+  = 0$. Then,
+  \begin{gather*}
+    \form(\div u,q_h)_M = -\form(u,\nabla q_h)_M
+    = -(w_1+w_2) \nabla q_h\cdot t_1.
+  \end{gather*}
+  Hence, $q_h\in \ker{B_M^T}$ implies $\nabla q_h\cdot t_1 = 0$ in
+  $\cell_1$ and $\cell_2$.
+
+  Exchanging $x_2$ for $x_1$, there holds  $\nabla q_h\cdot t_2 = 0$ in
+  $\cell_2$ and $\cell_3$. Since $t_1$ and $t_2$ are not collinear, we
+  obtain
+  \begin{gather}
+    \label{eq:stokes:34}
+    \nabla q_h|_{\cell_1} = 0.
+  \end{gather}
+
+  Now we choose the test function $u(x_1)\cdot \n_1 = 1$,
+  $u(x_1)\cdot t_1 = 0$, and $u(x_2) = 0$. We get
+  \begin{gather*}
+    0 = \form(\div u,q_h) = -w_1 \nabla q_h|_{\cell_1}\cdot\n_1
+    - w_2 \nabla q_h|_{\cell_2}\cdot\n_1.
+  \end{gather*}
+  Due to~\eqref{eq:stokes:34}, the first term vanishes and together
+  with the tangential condition before, we obtain
+  \begin{gather*}
+    \nabla q_h|_{\cell_2} = 0.
+  \end{gather*}
+  Exchanging again $x_2$ for $x_1$, we have the same for $\cell_3$,
+  which proves the result.
+\end{proof}
+
 \begin{Lemma}{patch-test-quad}
   For the $Q_2-Q_1$ element choose the patch $\widehat M$ as in
   \begin{center}
@@ -1991,6 +2042,7 @@ where $c\not=0$.
   exact on $Q_h$, but zero for all higher order polynomials occuring
   in $\div u_h$.
 \end{remark}
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
