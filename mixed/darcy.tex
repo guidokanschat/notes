@@ -84,28 +84,239 @@
 
 \begin{intro}
   From the two equations for $J$, we derive the following system of
-  PDE:
-  \begin{gather*}
+  PDE, where we replace the letter $J$ by the more familiar $u$:
+  \begin{gather}
+    \label{eq:darcy:5}
     \arraycolsep2pt
     \begin{matrix}
-      K^{-1} J &-& \nabla p &=& 0
-      \div J &&&= f.
+      K^{-1} u &+& \nabla p &=& 0 \\
+      \div u &&&=& f.
     \end{matrix}
+  \end{gather}
+  This system is closed by boundary conditions. Let $\Gamma_D$ be the
+  Dirichlet boundary and $\Gamma_N$ be the Neumann boundary such that
+  $\Gamma_D \cap \Gamma_N = \emptyset$ and
+  $\Gamma_D\cup\Gamma_N = \d\domain$. Then, we let
+  \begin{gather}
+    \label{eq:darcy:6}
+    \begin{aligned}
+      p(x) &= p^D(x) & x & \in \Gamma_D, \\
+      u(x)\cdot\n &= u^N(x)\cdot n & x & \in \Gamma_N.
+    \end{aligned}
+  \end{gather}
+
+  Following the concept of finding spaces such that we have an inf-sup
+  condition, we are looking for a pair with minimal regularity, such
+  that we have a stable and bounded inf-sup condition. We begin the
+  usual way by multiplying with a test function and integrating:
+  \begin{gather}
+    \label{eq:darcy:7}
+    \arraycolsep2pt
+    \begin{matrix}
+      \displaystyle\int_\domain K^{-1} u\cdot v\dx
+      &+&
+      \displaystyle\int_\domain \nabla p \cdot v\dx
+      &=& 0 \\
+      \displaystyle\int_\domain \div u q\dx
+      &&&=&
+      \displaystyle\int_\domain fq\dx.
+    \end{matrix}
+  \end{gather}
+  It turns out, we have two immediate options: first, we can integrate
+  the first equation by parts, having all derivatives on $u$. On the
+  other hand, we can integrate by parts in the second equation,
+  leaving all derivatives on $p$ on $p$ and $q$. In the second case,
+  we obtain the equation
+  \begin{gather*}
+    -\int_\domain u\cdot\nabla q\dx + \int_{\d\domain} u\cdot\n q \ds
+    = \int_\domain fq\dx.
   \end{gather*}
+  Applying the boundary condition, we first follow the recipe of
+  elliptic partial differential equations and implement $p=p^D$ as an
+  \putindex{essential boundary condition}, that is, the test function
+  space has zero trace on $\Gamma_D$. Then, we can swap in $u^N$ for
+  $u$ on $\Gamma_N$, such that the boundary term ends up on the right
+  hand side.
 \end{intro}
 
+\begin{Definition}{primal-mixed}
+  The \define{primal mixed formulation} of the mixed diffusion
+  problem~\eqref{eq:darcy:5} reads: find $(u,p)\in V\times Q$ such
+  that for all $v\in V$ and $q\in Q$ holds
+  \begin{gather}
+    \label{eq:darcy:8}
+    \arraycolsep2pt
+    \begin{array}{rcccl}
+      \form(K^{-1} u, v) &+& \form( \nabla p, v)
+      &=& 0 \\
+      -\form(u,\nabla q)
+      &&&=& \form(f,q) - \forme(u^N\cdot\n, q)_{\Gamma_N}.
+    \end{array}
+  \end{gather}
+  The spaces are
+  \begin{gather}
+    \label{eq:darcy:9}
+    \begin{split}
+      V_h &= L^2(\domain;\R^d), \\
+      Q_h &= H^1_{\Gamma_D}(\domain) = \bigl\{
+      q\in H^1(\domain) \big| \;q_{|\Gamma_D} = 0
+      \bigr\}.
+    \end{split}
+  \end{gather}
+\end{Definition}
 
-% \begin{Definition}{mass-balance}
-%   We call a quantity $p$ conserved, if the \define{conservation law}
-%   \begin{gather}
-%     \label{eq:darcy:1}
-%     \d_t p = \div p + g
-%   \end{gather}
-%   holds with a \define{source} function $g$. In words, the change of
-%   the quantity within a control volume is equal to the balance of
-%   sources and the flow over the boundary of the volume.
-% \end{Definition}
+\begin{remark}
+  Since the first equation is tested with the test function $v$ itself
+  in all terms, we can eliminate this equation and there holds
+  $u= K\nabla P$ in $L^2(\domain;\R^d)$. Entering this into the second
+  equation, we obtain the well-known \putindex{primal formulation}
+  \begin{gather*}
+    \form(K \nabla p,\nabla q) = \form(f,q)
+    - \forme(u^N\cdot\n, q)_{\Gamma_N}.
+  \end{gather*}
+  Just keep in mind that the ``\putindex{natural boundary condition}''
+  in this case is
+  \begin{gather*}
+    K\nabla p\cdot n = 0.
+  \end{gather*}
+  Hence, the primal mixed formulation does not provide any advantages
+  compared to the primal formulation, and we are not going to pursue
+  it further.
+\end{remark}
 
+\begin{intro}
+  Now we return to the first alternative, namely integrating by parts
+  in the first equation of~\eqref{eq:darcy:7}:
+  \begin{gather*}
+    \int_\domain K^{-1} u \cdot v \dx - \int_\domain p \div v\dx 
+    + \int_{\d\domain} v\cdot \n p\ds = 0.
+  \end{gather*}
+  Ensuing is a formulation multiplying and integrating the divergences
+  of $u$ and $v$, respectively, with functions in $Q$. In order to fit
+  this into our standard framework, we have to introduce a new Sobolev
+  space. In addition, since $u\cdot\n$ does not appear as a boundary
+  integral, we must make this an \putindex{essential boundary
+    condition}. Thus, we require that the test functions have zero
+  normal trace on $\Gamma_N$ (and justify this below). Note that now
+  the Dirichlet condition $p=0$ has become a ``\putindex{natural
+    boundary condition}''!
+\end{intro}
+
+\begin{Definition}{hdiv}
+  Let $\domain \subset \R^d$ be a domain.  We define the
+  Sobolev space
+  \begin{gather}
+    \Hdiv(\domain) = \bigl\{
+    v\in L^2(\domain;\R^d) \big\vert
+    \div v\in L^2(\domain)\bigr\},
+  \end{gather}
+  and its inner product
+  \begin{gather}
+    \scal(u,v)_{\Hdiv} = \form(u,v)_0 + \form(\div u,\div v)_0.
+  \end{gather}
+  Furthermore, let $C^\infty_{00}(\domain)$ be the space of smooth
+  functions with compact support in $\domain$. Then, we define its
+  closure in $\Hdiv(\domain)$:
+  \begin{gather}
+    \Hdiv_0(\domain) = \overline{C^\infty_{00}(\domain)}.
+  \end{gather}
+  For subset $\Gamma\subset\d\domain$, the space
+  $\Hdiv_\Gamma(\domain)$ is defined accordingly (compare to
+  $H^1_\Gamma(\domain)$)
+\end{Definition}
+
+Using the space $\Hdiv$ and for the moment the assumption, that
+$\Hdiv_0$ and $\Hdiv_\Gamma$ serve to set boundary conditions, we can
+write down our second weak fromulation of the mixed diffusion problem:
+
+\begin{Definition}{dual-mixed}
+  The \define{dual mixed formulation} of the mixed diffusion
+  problem~\eqref{eq:darcy:5} reads: find $(u,p) \in V\times Q$ such
+  that for all $v\in V$ and $q\in Q$ holds
+  \begin{gather}
+    \label{eq:darcy:10}
+    \arraycolsep2pt
+    \begin{array}{rcccl}
+      \form(K^{-1} u, v) &-& \form(p, \div v)
+      &=& \forme(p^D,v\cdot \n)_{\Gamma_D} \\
+      \form(\div u, q)
+      &&&=& \form(f,q).
+    \end{array}
+  \end{gather}
+  The spaces are
+  \begin{gather}
+    \label{eq:darcy:11}
+    V_h = \Hdiv_{\Gamma_N}(\domain),
+    \qquad
+    Q_h = L^2(\domain).
+  \end{gather}  
+\end{Definition}
+
+\begin{Problem}{mixed-inhomogeneous-bc}
+  In both the primal and the dual mixed formulation, we ignored
+  inhomogeneous essential boundary conditions. Show that the usual
+  lifting method applies. Determine the modified equations and the
+  spaces needed for the liftings.
+\end{Problem}
+
+\subsection{Properties of $\Hdiv(\domain)$}
+
+\begin{Theorem}{Hdiv-separable}
+  Let $\domain$ be a bounded Lipschitz domain. Then, the space
+  $C^\infty(\overline\domain)$ is dense in $\Hdiv(\domain)$.
+\end{Theorem}
+
+\begin{proof}
+  
+\end{proof}
+
+\begin{remark}
+  The condition of boundedness entered the assumptions since we use
+  the space $C^\infty(\overline\domain)$. It could be dropped, if we
+  used a more appropriate space (cf.~\cite[Theorem
+  2.4]{GiraultRaviart86}).
+\end{remark}
+
+\begin{Theorem}{Hdiv-trace}
+  The \putindex{trace operator}
+  $\gamma_n\colon C^\infty(\overline\domain;\R^d) \to
+  C^\infty(\overline{\d\domain})$
+  which maps $v\mapsto v\cdot\n_{|\d\domain}$ can be extended to a
+  continuous, linear mapping
+  \begin{gather}
+    \gamma_n\colon \Hdiv(\domain) \to H^{-1/2}(\d\domain),
+  \end{gather}
+  where $H^{-1/2}(\d\domain)$ is the dual of $H^{1/2}(\d\domain)$.
+\end{Theorem}
+
+\begin{proof}
+  
+\end{proof}
+
+\begin{remark}
+  The trace theorem tells us that our interpretation of the spaces
+  $\Hdiv_0(\domain)$ and $\Hdiv_\Gamma(\domain)$ as spaces with zero
+  boundary condition of the normal component is justified. This notion
+  will be fortified by the following two theorems.
+\end{remark}
+
+\begin{Problem}{trace-dnu}
+  Show the following resut. Let $p\in H^1(\domain)$ and
+  $\Delta p \in L^2(\domain)$. Then, $\d_n p\in H^{-1/2}(\d\domain)$
+  and
+  \begin{gather*}
+    \form(\nabla p,\nabla q) = -\form(\Delta p,q) + \forme(\d_n
+    p,q)_{\d\domain} \quad\forall q\in H^1(\domain).
+  \end{gather*}
+\end{Problem}
+
+\begin{Theorem}{Hdiv-trace-surjective}
+  The trace theorem is optimal in the sense that
+  $\gamma_n\colon \Hdiv(\domain) \to H^{-1/2}(\d\domain)$ is
+  surjective.
+\end{Theorem}
+
+\subsection{Well-posedness of the dual mixed formulation}
 
 %%% Local Variables:
 %%% mode: latex

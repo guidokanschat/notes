@@ -287,6 +287,83 @@
   \field{year}{1986}
 \endentry
 
+\entry{StenbergSuri96}{article}{}
+  \name{author}{2}{}{%
+    {{}%
+     {Stenberg}{S.}%
+     {R.}{R.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Suri}{S.}%
+     {M.}{M.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{SRSM1}
+  \strng{fullhash}{SRSM1}
+  \field{labelalpha}{SS96}
+  \field{sortinit}{S}
+  \verb{doi}
+  \verb 10.1007/s002110050174
+  \endverb
+  \field{number}{3}
+  \field{pages}{367\bibrangedash 389}
+  \field{title}{Mixed $hp$ finite element methods for problems in elasticity
+  and {S}tokes flow}
+  \field{volume}{72}
+  \field{journaltitle}{Numer. Math.}
+  \field{year}{1996}
+\endentry
+
+\entry{Stenberg90}{article}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Stenberg}{S.}%
+     {R.}{R.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{SR1}
+  \strng{fullhash}{SR1}
+  \field{labelalpha}{Ste90}
+  \field{sortinit}{S}
+  \verb{doi}
+  \verb 10.1002/fld.1650110615
+  \endverb
+  \field{number}{6}
+  \field{pages}{935\bibrangedash 948}
+  \field{title}{A technique for analysing finite element methods for viscous
+  incompressible flow}
+  \field{volume}{11}
+  \field{journaltitle}{Int. J. Numer. Methods Fluids}
+  \field{year}{1990}
+\endentry
+
+\entry{Verfuerth84}{article}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Verfürth}{V.}%
+     {R.}{R.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{VR1}
+  \strng{fullhash}{VR1}
+  \field{labelalpha}{Ver84}
+  \field{sortinit}{V}
+  \verb{doi}
+  \verb 10.1051/m2an/1984180201751
+  \endverb
+  \field{number}{2}
+  \field{pages}{175\bibrangedash 182}
+  \field{title}{Error estimates for a mixed finite element approximation of
+  {S}tokes problem}
+  \field{volume}{18}
+  \field{journaltitle}{RAIRO Anal. Numer.}
+  \field{year}{1984}
+\endentry
+
 \entry{Yosida80}{book}{}
   \name{author}{1}{}{%
     {{}%
