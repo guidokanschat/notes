@@ -426,6 +426,19 @@ write down our second weak fromulation of the mixed diffusion problem:
   theorem is proven.
 \end{proof}
 
+\begin{example}
+  The trace theorem involves the space $H^{-1/2}(\d\domain)$, which
+  requires a short discussion. On one dimensional boundaries, elements
+  in $H^{1/2}(\d\domain)$ have continuous representatives. The
+  situation in three dimensions is similar, where no jumps across a
+  line, for instance between two faces is allowed. Therefore,
+  functions in $H^{-1/2}(\d\domain)$ cannot be localized to parts of
+  the boundary, for instance the edge of a cell.
+
+  We give an example (modified from \cite[Section
+  2.5.1]{BoffiBrezziFortin13}) of this phenomenon.
+\end{example}
+
 \begin{Theorem}{Hdiv-helmholtz}
   Let $\domain$ be connected. Let
   \begin{gather}
@@ -569,7 +582,19 @@ Combining these lemmas, we obtain
 \end{Lemma}
 
 \begin{proof}
-  
+  Since $V_h$ is by definition finite dimensional, all norms are
+  bounded. It remains to show that the distributional divergence is
+  in $L^2(\domain)$, that is, all its contributions which are Borel
+  measures of faces vanish. To this end, let $\phi\in
+  C^\infty_{00}(\domain)$ be a test function such that its support
+  does not have a nonempty intersection with any face except
+  $\face$. Then, we have by Green's formula for $u\in V_h$
+  \begin{gather*}
+    \form(\div u,\phi) = -\form(u,\nabla \phi)
+    + \forme(v_1 \cdot \n_1 + v_2 \cdot\n_2, \phi)_F
+  \end{gather*}
+  We have $\div u \in L^2(\domain)$ if and only if the face term
+  vanishes.
 \end{proof}
 
 \begin{intro}
