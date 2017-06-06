@@ -252,22 +252,32 @@ write down our second weak fromulation of the mixed diffusion problem:
   \end{gather}  
 \end{Definition}
 
-\begin{Problem}{mixed-inhomogeneous-bc}
-  In both the primal and the dual mixed formulation, we ignored
-  inhomogeneous essential boundary conditions. Show that the usual
-  lifting method applies. Determine the modified equations and the
-  spaces needed for the liftings.
-\end{Problem}
-
 \subsection{Properties of $\Hdiv(\domain)$}
 
 \begin{Theorem}{Hdiv-separable}
   Let $\domain$ be a bounded Lipschitz domain. Then, the space
-  $C^\infty(\overline\domain)$ is dense in $\Hdiv(\domain)$.
+  $C^\infty(\overline\domain;\R^d)$ is dense in $\Hdiv(\domain)$.
 \end{Theorem}
 
 \begin{proof}
-  
+  % We use the statement, that a subspace $W$ is dense in a space $V$ if
+  % and only if all linear functionals vanishing on $W$ also vanish on
+  % $V$. Therefore, let $L \in \Hdiv(\domain)^*$. By the
+  % \putindex{Riesz representation theorem}, there is
+  % $u\in\Hdiv(\domain)$ such that
+  % \begin{gather*}
+  %   L(v) = \scal(u,v)_{\Hdiv} = \sum_{i=1}^d \scal(u_i,v_i)_0
+  %   + \scal(\div u,\div v)_0
+  %   \quad\forall v\in \Hdiv(\domain).
+  % \end{gather*}
+  % Now assume $L(\phi) = 0$ for all $\phi\in
+  % C^\infty(\overline\domain;\R^d)$. Let us extend $u$ and $\div u$ outside
+  % of the domain $\domain$ by zero. Then, there holds
+  % \begin{gather*}
+  %   \int_{\R^d} u\cdot \phi \dx + \int_{\R^d}
+  % \end{gather*}
+  Either by a standard mollifier argument~\cite{AdamsFournier03} or
+  following~\cite[Theorem 2.4]{GiraultRaviart86}
 \end{proof}
 
 \begin{remark}
@@ -290,18 +300,54 @@ write down our second weak fromulation of the mixed diffusion problem:
 \end{Theorem}
 
 \begin{proof}
-  
+  Let $q\in C^\infty(\overline\domain)$ and
+  $v\in C^\infty(\overline\domain;\R^d)$. Then, there holds
+  \putindex{Green's formula}
+  \begin{gather*}
+    \form(v,\nabla q)_\domain
+    + \form(\div v,q)_\domain
+    = \forme(v\cdot\n,q)_{\d\domain}.
+  \end{gather*}
+  Hence,
+  \begin{gather*}
+    \left\vert\int_{\d\domain} v\cdot \n q \ds \right\vert
+    \le \norm{v}_{\Hdiv} \norm{q}_{H^1}.
+  \end{gather*}
+  Applying the density of $C^\infty(\overline\domain)$ in
+  $H^1(\domain)$ and of $C^\infty(\overline\domain;\R^d)$ in
+  $\Hdiv(\domain)$, we can let $q$ and $v$ pass to a limit, but the
+  inequality holds uniformly.
+
+  Now apply that $H^{1/2}(\d\domain)$ is the trace space of
+  $H^1(\domain)$. Therefore, for any $g\in H^{1/2}(\d\domain)$, there
+  is a $q\in H^1(\domain)$ such that $q_{|\d\domain} = g$ and
+  $\norm{q}_{1;\domain} \le \norm{g}_{1/2;\d\domain}$. We obtain
+  \begin{gather*}
+    \left\vert\int_{\d\domain} v\cdot \n g \ds \right\vert
+    \le \norm{v}_{\Hdiv(\domain)} \norm{g}_{H^{1/2}(\d\domain)}
+    \qquad\forall v\in \Hdiv(\domain), g\in H^{1/2}(\d\domain).
+  \end{gather*}
+  Hence,
+  \begin{gather*}
+    \norm{v\cdot\n}_{H^{-1/2}(\d\domain)} \le
+    \norm{v}_{\Hdiv(\domain)}
+    \qquad\forall v\in \Hdiv(\domain).
+  \end{gather*}
+  Thus, we have proven the continuity of the extension of $\gamma_n$
+  to $\Hdiv(\domain)$.
 \end{proof}
 
 \begin{remark}
   The trace theorem tells us that our interpretation of the spaces
   $\Hdiv_0(\domain)$ and $\Hdiv_\Gamma(\domain)$ as spaces with zero
   boundary condition of the normal component is justified. This notion
-  will be fortified by the following two theorems.
+  will be fortified by the two theorems below. Therefore, we will
+  later avoid the notational overhead of using $\gamma_n$ and will
+  simply write $v\cdot\n_{|\d\domain}$.
 \end{remark}
 
 \begin{Problem}{trace-dnu}
-  Show the following resut. Let $p\in H^1(\domain)$ and
+  Show the following result. Let $p\in H^1(\domain)$ and
   $\Delta p \in L^2(\domain)$. Then, $\d_n p\in H^{-1/2}(\d\domain)$
   and
   \begin{gather*}
@@ -316,7 +362,240 @@ write down our second weak fromulation of the mixed diffusion problem:
   surjective.
 \end{Theorem}
 
+\begin{proof}
+  Let $\mu \in H^{-1/2}(\d\domain)$. We have to show that there exists
+  $v\in \Hdiv(\domain)$ such that
+  \begin{gather*}
+    v\cdot\n = \mu \quad\text{on } \d\domain
+    \qquad\text{and}\qquad
+    \norm{v}_{\Hdiv(\domain)} \le \norm{\mu}_{H^{-1/2}(\d\domain)}.
+  \end{gather*}
+
+  We know that the problem
+  \begin{xalignat*}2
+    -\Delta \phi + \phi &= 0 &\text{in }&\domain, \\
+    \d_n \phi &= \mu &\text{on }&\d\domain,
+  \end{xalignat*}
+  has a unique solution $\phi\in H^1(\domain)$ with
+  \begin{gather*}
+    \norm{\phi}_{H^1(\domain)}^2 = \forme(\mu,\phi)_{\d\domain}
+    \le \norm{\mu}_{H^{-1/2}(\d\domain)}\norm{\phi}_{H^1(\domain)}.
+  \end{gather*}
+  The first equation then implies $\Delta\phi\in L^2(\domain)$ and
+  thus $v=\nabla \phi\in \Hdiv(\domain)$. Since from this equation
+  there even holds $\div v=\phi$, we obtain
+  \begin{gather*}
+    \norm{v}_{\Hdiv(\domain)} \le \norm{\mu}_{H^{-1/2}(\d\domain)}.
+  \end{gather*}
+\end{proof}
+
+\begin{Theorem}{Hdiv-trace-kernel}
+  There holds
+  \begin{gather}
+    \ker{\gamma_n} = \Hdiv_0(\domain).
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  The inclusion $\Hdiv_0(\domain) \subset \ker{\gamma_n}$ follows
+  immediately from the definition and continuity of $\gamma_n$. For
+  the opposite inclusion, we have to show that the traces of functions
+  in $C^\infty_{00}(\domain)$ are dense in $\ker{\gamma_n}$. We do
+  this by using, that a subspace $W$ is dense in a space $V$ if and
+  only if all linear functionals vanishing on $W$ also vanish on
+  $V$. Choose $u\in\ker{\gamma_n}$ and use the \putindex{Riesz
+    representation theorem} to associate with it
+  $L\in \ker{\gamma_n}^*$ by
+  \begin{gather*}
+    L(v) = \scal(u,v)_{\Hdiv} \qquad\forall v\in \ker{\gamma_n}.
+  \end{gather*}
+  Assume now that $L(\phi) = 0$ for all $\phi\in
+  C^\infty_{00}(\domain;\R^d)$. This implies by
+  \begin{gather*}
+    0 = L(\phi) = \form(u,\phi)_{L^2} + \form(\div u, \div \phi),
+  \end{gather*}
+  that $u=\nabla \div u$ in distributional sense, and by taking limits
+  of $\phi$ in $H^1$ that $\div u\in H^1(\domain)$. Hence, Green's
+  formula yields
+  \begin{gather*}
+    L(v) = \form(\nabla\div u,v)+\form(\div u,\div v)
+    = \forme(v\cdot\n,\div u)_{\d\domain} = 0
+    \qquad\forall v\in \ker{\gamma_n}.
+  \end{gather*}
+  Thus, $L$ vanishes on all elements of $\ker{\gamma_n}$ and the
+  theorem is proven.
+\end{proof}
+
+\begin{Theorem}{Hdiv-helmholtz}
+  Let $\domain$ be connected. Let
+  \begin{gather}
+    \label{eq:darcy:1}
+    V_0 = \bigl\{ v\in \Hdiv_0(\domain) \big\vert
+    \div v = 0 \bigr\}.
+  \end{gather}
+  Then,
+  \begin{gather}
+    L^2(\domain;\R^d) = V_0 \oplus \ortho V,
+  \end{gather}
+  and
+  \begin{gather}
+    \ortho V = \bigl\{ v = \nabla q \big\vert
+    q\in H^1(\domain) \bigr\}.
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  Let $X=\{ v= \nabla q \vert q\in H^1(\domain)\}$. we have to show
+  $\ortho V = X$. Observe that $X$ is closed in $L^2$ since $H^1$ is
+  complete. We show that $V_0 = \ortho X$ and thus
+  \begin{gather*}
+    \ortho {V_0} = \ortho{(\ortho{V_0})} = \overline X = X.
+  \end{gather*}
+  First, let $u\in V_0$. Then, Green's formula reduces to
+  \begin{gather*}
+    \form(u,\nabla q) = 0 \qquad\forall q\in H^1(\domain).
+  \end{gather*}
+  Hence, $V_0\subset \ortho X$. Let now conversely
+  $u\in L^2(\domain;\R^d)$ such that the previous identity
+  holds. Choosing $q\in C^\infty_{00}(\domain)$ yields $\div u=0$,
+  which in turn means $u\in\Hdiv(\domain)$. Therefore, we can use
+  Green's formula to obtain $u\cdot\n=0$ on $\d\domain$. This together
+  implies $u\in V_0$, proving $\ortho X \subset V_0$.
+\end{proof}
+
 \subsection{Well-posedness of the dual mixed formulation}
+
+\begin{intro}
+  In order to apply the theorey from
+  Chapter~\ref{sec:mixed-wellposedness}, we have to define the
+  abstract bilinear forms $a(.,.)$ and $b(.,.)$. We read from the dual
+  mixed formulation
+  \begin{align*}
+    a(u,v) &= \form(K^{-1}u,v) \\
+    b(v,q) &= \form(\div v,q).
+  \end{align*}
+\end{intro}
+
+
+\begin{Problem}{mixed-inhomogeneous-bc}
+  In both the primal and the dual mixed formulation, we ignored
+  inhomogeneous essential boundary conditions. Show that the usual
+  lifting method applies. Determine the modified equations and the
+  spaces needed for the liftings.
+\end{Problem}
+
+
+\begin{Lemma}{darcy-reduced-wellposed}
+  Let $V=\Hdiv(\domain)$ and $Q=L^2(\domain)$ with their norms. Let
+  \begin{gather}
+    \label{eq:darcy:12}
+    V_0 = \ker{B} = \bigl\{v\in V\big\vert
+    \form(\div v,q) =0 \;\forall q\in Q\bigr\}.
+  \end{gather}
+  Assume there exist constants $\ellipa$ and $\norm a$ such that
+  \begin{gather}
+    \label{eq:darcy:13}
+    \ellipa \abs{\xi}^2
+    \le \xi^T K^{-1} \xi \le \norm a \abs{\xi}^2
+    \qquad\forall \xi\in\R^d.
+  \end{gather}
+  Then, there holds
+  \begin{xalignat}2
+    \label{eq:darcy:14}
+    a(u,v) & \le \norm a \norm{u}_V \norm{v}_V
+    & \forall u,v&\in V\\
+    \label{eq:darcy:15}
+    a(u,u) & \ge \ellipa \norm{u}_V^2
+    & \forall u &\in \ker B.
+  \end{xalignat}
+\end{Lemma}
+
+\begin{remark}
+  Differing from the Stokes problem, ellipticity of $a(.,.)$ cannot be
+  extended to the whole space $V$. This is going to be the major
+  difference between this chapter and the previous.
+\end{remark}
+
+\begin{Lemma}{darcy-infsup}
+  Let $V=\Hdiv(\domain)$ and $Q=L^2(\domain)$ with their norms.  Then,
+  the inf-sup condition
+  \begin{gather}
+    \inf_{q\in Q} \sup_{v\in V} \frac{b(v,q)}{\norm{v}_V\norm{q}_Q}
+    \ge \beta
+  \end{gather}
+  holds with a constant $\beta$ depending on the domain.
+\end{Lemma}
+
+\begin{proof}
+  We can use the construction leading to
+  \blockref{Corollary}{stokes-iso}. In fact, since the norm of $\Hdiv$
+  is weaker than the one of $H^1$, the same function $v$ can be chosen
+  in the Stokes inf-sup condition~\eqref{eq:stokes:1}, yielding a
+  constant $\beta$ not worse than for Stokes.
+\end{proof}
+
+Combining these lemmas, we obtain
+
+\begin{Theorem}{darcy-well-posed}
+  Under the assumptions on \blockref{Lemma}{darcy-reduced-wellposed},
+  the \putindex{dual mixed formulation} is well-posed.
+\end{Theorem}
+
+\section{Discretization of dual mixed problems}
+
+\subsection{Conforming subspaces of $\Hdiv(\domain)$}
+
+\begin{intro}
+  Our goal in this section is the derivation of general criteria
+  applying to the approximation of $\Hdiv(\domain)$ by piecewise
+  polynomial functions. This affects in particular continuity
+  conditions and the properties of $\ker{B_h}$.
+  
+  As be before, we will assume that all families of meshes $\mesh_h$
+  for $h\to 0$ are shape-regular. We will also assume that meshes are
+  regular, unless otherwise stated.
+\end{intro}
+
+\begin{Lemma}{normal-continuity}
+  Let $\mesh_h$ be a subdivision of the domain $\domain$. Let the
+  space $V_h$ be cell-wise polynomial. We have $V_h \subset
+  \Hdiv(\domain)$ if and only if on each interior face $\face$
+  between two cells $\cell_1$ and $\cell_2$ holds
+  \begin{gather}
+    v_1 \cdot \n_1 + v_2 \cdot\n_2 = 0.
+  \end{gather}
+  Here, $v_1$ and $v_2$ are the traces of the functions on $\face$
+  from each cell.
+\end{Lemma}
+
+\begin{proof}
+  
+\end{proof}
+
+\begin{intro}
+  In \blockref{Lemma}{darcy-reduced-wellposed}, we saw that the
+  bilinear form $a(.,.)$ is elliptic only on the kernel of
+  $B$. Indeed, for the simplest case with $K\equiv 1$, we conclude
+  that if the uniform estimate for $v_h\in \ker{B_h}$
+  \begin{gather*}
+    \norm{v_h}^2_{L^2}
+    \ge \ellipa \norm{v_h}^2_{\Hdiv}
+    = \ellipa \bigl(\norm{v_h}^2_{L^2} + \norm{\div v_h}^2_{L^2}\bigr),
+  \end{gather*}
+  necessary for quasi-bestapproximation requires a constant $c$
+  independent of $h$ such that
+  \begin{gather*}
+    \norm{\div v_h}^2_{L^2} \le c \norm{v_h}^2_{L^2}
+    \qquad\forall v_h\in\ker{B_h}.
+  \end{gather*}
+  The inverse estimate is insufficient by two powers of $h$, such that
+  this is actually a hard condition. Therefore, we focus on
+  methods where
+  \begin{gather}
+    \label{eq:darcy:16}
+    \ker{B_h} \subset \ker B.
+  \end{gather}
+\end{intro}
 
 %%% Local Variables:
 %%% mode: latex

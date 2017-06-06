@@ -346,6 +346,27 @@
   which requires $\scal(u,\tilde w) = 0$.
 \end{proof}
 
+\begin{Corollary}{dual-density}
+  A subspace $W$ of a Hilbert space $V$ is dense in $V$ if and only if
+  every linear functional vanishing on $W$ also vanishes on $V$.
+\end{Corollary}
+
+\begin{proof}
+  The ``only if'' is an immediate application of
+  \blockref{Theorem}{orthogonal-complement}. For the opposite
+  direction, assume $\overline W \neq V$. Choose $v\in V$ such that
+  $v\not\in \overline W$. By
+  \blockref{Theorem}{orthogonal-complement}, there are unique elements
+  $w\in W$ and $u\in \ortho W$, such that $v=w+u$. In particular,
+  $u\neq 0$. Now, let $\phi = \scal(u,.) \in V^*$. Then, there holds
+  \begin{align*}
+    \phi(u) &= \norm{u}_V^2 \neq 0 \\
+    \phi(w) &= 0 \quad\forall w\in W.
+  \end{align*}
+  Thus, from the fact that $W$ is not dense follows the existence of a
+  linear functional which vanishes on $W$, but not on $V$.
+\end{proof}
+
 \begin{Lemma}{gram-schmidt}
   \index{Gram--Schmidt} For every linearly independent sequence of
   vectors $\{v_i\}$ there is an up to scaling unique orthogonal set
