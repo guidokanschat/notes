@@ -436,7 +436,73 @@ write down our second weak fromulation of the mixed diffusion problem:
   the boundary, for instance the edge of a cell.
 
   We give an example (modified from \cite[Section
-  2.5.1]{BoffiBrezziFortin13}) of this phenomenon.
+  2.5.1]{BoffiBrezziFortin13}) of this phenomenon.  On the disc
+  $\mathcal D$ around the origin of radius $e^{-1}$ consider the
+  function
+  \begin{gather*}
+    u(x,y) = \ln\Bigl(-\ln\bigl(\sqrt{x^2+y^2}\bigr)\Bigr).
+  \end{gather*}
+  There holds $u\in H^1_0(\mathcal D)$.\marginpar{Volunteers computing
+    the derivative?} Now, consider the domain $\domain$ consisting
+  only of the upper half circle:
+  \begin{align*}
+    \domain &= \bigl\{(x,y)\in \R^2 \big\vert
+              x^2+y^2<e^{-2} \text{ and } y>0 \bigr\}
+    \\
+    \d\domain &= [-e^{-1},e^{-1}]
+                \cup \bigl\{ (x,\sqrt{e^{-2}-x^2}) \big\vert
+                x\in (-e^{-1},e^{-1}) \bigr\}
+  \end{align*}
+  Thus, the trace of $u$ on the boundary is in
+  $H^{1/2}(\d\domain)$. We now define $\mu\in H^{-1/2}(\d\domain)$ as
+  the distributional derivative in tangential direction, say
+  counter-clockwise,
+  \begin{gather*}
+    \scal(\mu,\phi) = - \int_{\d\domain} u \d_{\tau} \phi
+    \qquad\forall \phi\in C^1(\d\domain).
+  \end{gather*}
+
+  Computation yields
+  \begin{gather*}
+    \mu(x) = \frac1{x\ln \abs{x}} \times
+    \begin{cases}
+      1 & x\in (-e^{-1},0) \\
+      -1& x\in (0,e^{-1}).
+    \end{cases}
+  \end{gather*}
+  Both integrals
+  \begin{gather*}
+    \int_{-e^{-1}}^0 \mu(x)\dx
+    \qquad
+    \int^{e^{-1}}_0 \mu(x)\dx,
+  \end{gather*}
+  are not bounded, such that on these parts of the boundary, $\mu$
+  cannot even be tested with a constant function.
+  Now, we consider the integral
+  \begin{gather*}
+    \forme(\mu,\phi) = \int_{-e^{-1}}^{e^{-1}} \ln(-\ln\abs x) \d_\tau \phi \dx.
+  \end{gather*}
+  If we split $\phi$ into an odd and an even part, the intgral with
+  the even part vanishes, since $\ln(-\ln\abs x)$ is even and the
+  derivative is odd. Therefore,
+  \begin{gather*}
+    \forme(\mu,\phi)
+    = \int_{-e^{-1}}^{e^{-1}}
+    \frac{\phi_{\text{odd}}(x)}{x\ln\abs x} \dx
+  \end{gather*}
+  Finally, we use the fact that $\phi_{\text{odd}}(0) = 0$ and that
+  it's growth is limited by its regularity. In order to be square
+  integrable, the groth of $\phi_{\text{odd}}$ must be limited by a
+  positive, fractional power,
+  \begin{gather*}
+    \abs{\phi_{\text{odd}}(x)} \le c \abs x^\alpha,
+    \qquad \alpha>0.
+  \end{gather*}
+  Then,
+  \begin{gather*}
+    \int_0^{e^{-1}} \frac{\abs{\phi_{\text{odd}}(x)}}{x\ln\abs x} \dx
+    \le \frac{x^{\alpha-1}}{\ln\abs x} \dx < \infty.
+  \end{gather*}
 \end{example}
 
 \begin{Theorem}{Hdiv-helmholtz}
@@ -597,6 +663,110 @@ Combining these lemmas, we obtain
   vanishes.
 \end{proof}
 
+\begin{remark}
+  The corresponding condition for $H^1$-conforming finite elements is
+  continuity of the function. This implies in particular continuity at
+  vertices.
+
+  The continuity of the normal component over faces does not imply
+  continuity at vertices, since it is not transferred in tangential
+  direction.
+
+  As a consequence of this remark, part of the construction of
+  $\Hdiv$-conforming finite element spaces consists of defining a
+  polynomial trace space on each face, such that continuity of normal
+  traces can be established by this space.
+\end{remark}
+
+\begin{intro}
+  We would like to continue defining shape functions on reference
+  cells. But, when mapping from a reference cell $\refcell$ to
+  the actual mesh cell $\cell$, we have to preserve the information
+  whether a vector field is normal or tangential to a face. To this
+  end, we recapitulate the basic notation and properties of the
+  transformation of scalar fields and then addthe definition for
+  vector fields in $\Hdiv(\domain)$.
+\end{intro}
+
+\begin{Notation}{recap-reference-transform}
+  Let $\refcell$ be a reference cell, either the reference
+  simplex spanned by $\{0,e_1,\dots,e_d\}$ or the reference hypercube
+  $[-1,1]^d$. Then, a mesh cell $\cell\in\mesh_h$ is defined as the
+  image of $\widehat \cell$ under a mapping $\Phi$ (we suppress the
+  index $\cell$ and understand that $\Phi$ is different for every
+  cell). We define the Jacobi matrix, the Jacobi determinant, and the
+  face Jacobian
+  \begin{gather}
+    \mathrm D\Phi(\widehat x) = \Bigl(\d_j\Phi_i\Bigr),
+    \qquad
+    \mathrm J(\widehat x) = \det \mathrm D\Phi,
+    \qquad
+    \mathrm J_n(\widehat x) = J
+    \abs{\mathrm D\Phi^{-T} \widehat\n},    
+  \end{gather}
+
+ The basic relations are for $\widehat x\in\widehat \cell$ and
+  shape functions $\widehat p$:
+  \begin{gather}
+    x = \Phi(\widehat x),
+    \qquad p(x) = \widehat p(\widehat x)
+    \qquad \nabla p(x) = \mathrm D\Phi^{-T}
+    \bigl[\widehat\nabla\widehat p(\widehat x)\bigr].
+  \end{gather}
+  Integrals transform as
+  \begin{xalignat*}2
+    \int_\cell p \dx &= \int_{\refcell} \widehat p J \dxref
+    &
+    \int_{\d\cell} p \ds &= \int_{\d\refcell} \widehat p J_n \dsref
+  \end{xalignat*}
+\end{Notation}
+
+\begin{Definition}{Piola-transform}
+  The \define{Piola transform} or \putindex{contravariant}
+    transformation of a vector field under the mapping
+  $\Phi\colon\refcell\to\cell$ is the mapping
+  \begin{gather}
+    v(x) = \tfrac1{\mathrm J} \mathrm D\Phi \widehat v(\widehat x)
+  \end{gather}
+  There holds
+  \begin{gather}
+    \nabla v(x) = \tfrac1{\mathrm J} \mathrm D\Phi
+    \bigl[\widehat\nabla \widehat v(\widehat x)\bigr] \mathrm D\Phi^{-1},
+    \qquad
+    \div v(x) = \tfrac1{\mathrm J} \widehat\nabla\!\cdot\!
+    \widehat v(\widehat x).
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{Piola-transform-integrals}
+  Let $q$ be a scalar function and $v$ be a \putindex{contravariant}
+  vector field mapped by the \putindex{Piola transform}. Then, cell
+  and surface integrals are transformed according to the rules
+  \begin{gather}
+    \begin{split}
+      \int_{\cell} v \cdot \nabla q \dx
+      &= \int_{\refcell} \widehat v \cdot \widehat \nabla \widehat q \dxref,
+      \\
+      \int_{\cell} q \div v \dx
+      &= \int_{\refcell} \widehat q \widehat \nabla\!\cdot\! \widehat v \dxref,
+      \\
+      \int_{\d\cell} q v\cdot\n \ds
+      &= \int_{\d\refcell} \widehat q \widehat v\cdot\widehat \n \dsref.
+    \end{split}
+  \end{gather}
+\end{Lemma}
+
+\begin{Problem}{Piola-transform-integrals}
+  Verify \blockref{Lemma}{Piola-transform-integrals}.
+\end{Problem}
+
+\begin{remark}
+  The last equation of the previous lemma indicates, that the
+  \putindex{Piola transform} preserves normal components of a vector
+  field. Thus, it can be used to define shape functions for normal
+  continuity on a reference cell.
+\end{remark}
+
 \begin{intro}
   In \blockref{Lemma}{darcy-reduced-wellposed}, we saw that the
   bilinear form $a(.,.)$ is elliptic only on the kernel of
@@ -621,6 +791,22 @@ Combining these lemmas, we obtain
     \ker{B_h} \subset \ker B.
   \end{gather}
 \end{intro}
+
+\begin{remark}
+  A particularly elegant way to achieve~\eqref{eq:darcy:16} is the
+  choice
+  \begin{gather}
+    \div V_h = Q_h.
+  \end{gather}
+  We will indeed focus on methods with this property.
+\end{remark}
+
+
+
+\subsection{Finite elements on simplices}
+
+
+\subsection{Finite elements on hypercubes}
 
 %%% Local Variables:
 %%% mode: latex

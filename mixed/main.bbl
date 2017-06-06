@@ -45,6 +45,33 @@
   \field{year}{2002}
 \endentry
 
+\entry{AdamsFournier03}{book}{}
+  \name{author}{2}{}{%
+    {{}%
+     {Adams}{A.}%
+     {R.~A.}{R.~A.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Fournier}{F.}%
+     {J.~J.~F.}{J.~J.~F.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Academic Press}%
+  }
+  \strng{namehash}{ARAFJJF1}
+  \strng{fullhash}{ARAFJJF1}
+  \field{labelalpha}{AF03}
+  \field{sortinit}{A}
+  \field{edition}{2nd edition}
+  \field{series}{Pure and Applied Mathematics}
+  \field{title}{Sobolev Spaces}
+  \field{volume}{140}
+  \field{year}{2003}
+\endentry
+
 \entry{ArnoldFalkWinther06acta}{article}{}
   \name{author}{3}{}{%
     {{}%
@@ -124,22 +151,22 @@
      {}{}%
      {}{}}%
     {{}%
-     {Fortin}{F.}%
-     {M.}{M.}%
+     {Brezzi}{B.}%
+     {F.}{F.}%
      {}{}%
      {}{}}%
     {{}%
-     {Brezzi}{B.}%
-     {F.}{F.}%
+     {Fortin}{F.}%
+     {M.}{M.}%
      {}{}%
      {}{}}%
   }
   \list{publisher}{1}{%
     {Springer}%
   }
-  \strng{namehash}{BDFMBF1}
-  \strng{fullhash}{BDFMBF1}
-  \field{labelalpha}{BFB13}
+  \strng{namehash}{BDBFFM1}
+  \strng{fullhash}{BDBFFM1}
+  \field{labelalpha}{BBF13}
   \field{sortinit}{B}
   \field{series}{Springer series in computational mathematics}
   \field{title}{Mixed finite element methods and applications}
