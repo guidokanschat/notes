@@ -45,6 +45,33 @@
   \field{year}{2002}
 \endentry
 
+\entry{AdamsFournier03}{book}{}
+  \name{author}{2}{}{%
+    {{}%
+     {Adams}{A.}%
+     {R.~A.}{R.~A.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Fournier}{F.}%
+     {J.~J.~F.}{J.~J.~F.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Academic Press}%
+  }
+  \strng{namehash}{ARAFJJF1}
+  \strng{fullhash}{ARAFJJF1}
+  \field{labelalpha}{AF03}
+  \field{sortinit}{A}
+  \field{edition}{2nd edition}
+  \field{series}{Pure and Applied Mathematics}
+  \field{title}{Sobolev Spaces}
+  \field{volume}{140}
+  \field{year}{2003}
+\endentry
+
 \entry{ArnoldFalkWinther06acta}{article}{}
   \name{author}{3}{}{%
     {{}%
@@ -124,22 +151,22 @@
      {}{}%
      {}{}}%
     {{}%
-     {Fortin}{F.}%
-     {M.}{M.}%
+     {Brezzi}{B.}%
+     {F.}{F.}%
      {}{}%
      {}{}}%
     {{}%
-     {Brezzi}{B.}%
-     {F.}{F.}%
+     {Fortin}{F.}%
+     {M.}{M.}%
      {}{}%
      {}{}}%
   }
   \list{publisher}{1}{%
     {Springer}%
   }
-  \strng{namehash}{BDFMBF1}
-  \strng{fullhash}{BDFMBF1}
-  \field{labelalpha}{BFB13}
+  \strng{namehash}{BDBFFM1}
+  \strng{fullhash}{BDBFFM1}
+  \field{labelalpha}{BBF13}
   \field{sortinit}{B}
   \field{series}{Springer series in computational mathematics}
   \field{title}{Mixed finite element methods and applications}
@@ -287,27 +314,80 @@
   \field{year}{1986}
 \endentry
 
-\entry{Stenberg84}{article}{}
+\entry{StenbergSuri96}{article}{}
+  \name{author}{2}{}{%
+    {{}%
+     {Stenberg}{S.}%
+     {R.}{R.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Suri}{S.}%
+     {M.}{M.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{SRSM1}
+  \strng{fullhash}{SRSM1}
+  \field{labelalpha}{SS96}
+  \field{sortinit}{S}
+  \verb{doi}
+  \verb 10.1007/s002110050174
+  \endverb
+  \field{number}{3}
+  \field{pages}{367\bibrangedash 389}
+  \field{title}{Mixed $hp$ finite element methods for problems in elasticity
+  and {S}tokes flow}
+  \field{volume}{72}
+  \field{journaltitle}{Numer. Math.}
+  \field{year}{1996}
+\endentry
+
+\entry{Stenberg90}{article}{}
   \name{author}{1}{}{%
     {{}%
      {Stenberg}{S.}%
-     {Rolf}{R.}%
+     {R.}{R.}%
      {}{}%
      {}{}}%
   }
   \strng{namehash}{SR1}
   \strng{fullhash}{SR1}
-  \field{labelalpha}{Ste84}
+  \field{labelalpha}{Ste90}
   \field{sortinit}{S}
   \verb{doi}
-  \verb 10.2307/2007557
+  \verb 10.1002/fld.1650110615
   \endverb
-  \field{number}{165}
-  \field{pages}{9\bibrangedash 23}
-  \field{title}{Analysis of mixed finite elements methods for the {S}tokes
-  problem: a unified approach}
-  \field{volume}{42}
-  \field{journaltitle}{Math. Comput.}
+  \field{number}{6}
+  \field{pages}{935\bibrangedash 948}
+  \field{title}{A technique for analysing finite element methods for viscous
+  incompressible flow}
+  \field{volume}{11}
+  \field{journaltitle}{Int. J. Numer. Methods Fluids}
+  \field{year}{1990}
+\endentry
+
+\entry{Verfuerth84}{article}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Verfürth}{V.}%
+     {R.}{R.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{VR1}
+  \strng{fullhash}{VR1}
+  \field{labelalpha}{Ver84}
+  \field{sortinit}{V}
+  \verb{doi}
+  \verb 10.1051/m2an/1984180201751
+  \endverb
+  \field{number}{2}
+  \field{pages}{175\bibrangedash 182}
+  \field{title}{Error estimates for a mixed finite element approximation of
+  {S}tokes problem}
+  \field{volume}{18}
+  \field{journaltitle}{RAIRO Anal. Numer.}
   \field{year}{1984}
 \endentry
 

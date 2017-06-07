@@ -1,0 +1,814 @@
+
+\section{Modelling diffusion problems}
+
+\begin{intro}
+  Diffusion problems arise when a balance law, for instance for mass
+  in ground water flow or for energy in temperature conduction is
+  coupled with a constitutive equation relating the direction of
+  movement to the gradient of the quantity of interest.
+\end{intro}
+
+\begin{intro}
+  Let $\rho$ be the density of a conserved quantity. Then, for any given
+  volume we have the ``mass''
+  \begin{gather*}
+    m = \int_V \rho\dx.
+  \end{gather*}
+  Changes of this mass can be due to two processes:
+  \begin{enumerate}
+  \item Generation of additional mass by a source $g$,
+  \item Flow of mass over the boundary of $V$ at a velocity $v$.
+  \end{enumerate}
+  In formulas, we have
+  \begin{gather*}
+    \tfrac{d}{dt} m = \int_V g\dx - \oint_{\d V} J\cdot \n \ds,
+  \end{gather*}
+  also known as \define{Reynolds transport theorem}. Here, $J$ is the
+  \define{flux}. The exact form of the flux will be modelled later.
+  The formula above is somewhat unwieldy, since it combines volume and
+  surface integrals. Therefore, we apply the \putindex{Gauss theorem}
+  to obtain
+  \begin{gather}
+    \label{eq:darcy:2}
+    \frac{d}{dt} \int_V \rho\dx = \int_V g\dx - \int_V \div J \dx.
+  \end{gather}
+  Concentrating and assuming sufficient regularity, we arrive at the
+  equation
+  \begin{gather}
+    \label{eq:darcy:3}
+    \d_t \rho + \div J = g.
+  \end{gather}
+  As before in these notes, we ignore the time dependence and only
+  look at stationary limits. In this case, this reduces to
+  \begin{gather}
+    \label{eq:darcy:4}
+    \div J = g.
+  \end{gather}
+\end{intro}
+
+\begin{example}
+  Next we consider constitutive relations between $\rho$ and $J$ such
+  that we can complement equation~\eqref{eq:darcy:4} by a second
+  equation and obtain a solvable system. To this end, we consider
+  thermal diffusion and ground water flow.
+
+  \begin{description}
+  \item[Heat conduction:] Here, the conserved quantity is not the
+    density $\rho$, but the temperature $T$. \define{Fourier's law}
+    states that the flux is proportional to the gradient of the
+    temperature, pointing in opposite direction:
+    \begin{gather*}
+      J = -k\nabla T.
+    \end{gather*}
+    The constant of proportionality $k$ is the heat conductivity.
+  \item[Porous media flow:] The conserved quantity is the amount of
+    fluid, represented by the hydraulic head or pressure
+    $p$. \define{Darcy's law} says that the flux is the product of the
+    hydraulic \define{permeability} of the media and the gradient of the
+    pressure:
+    \begin{gather*}
+      J = -K\nabla p.
+    \end{gather*}
+    Here, the permeability $K$ is either a positive scalar function or
+    a symmetric, positive definite matrix. Note that in the latter
+    case, $J$ and $\nabla p$ do not point in the same direction.
+    \item[General diffusion processes:] \define{Fick's law} states,
+      that the flux of a diffusion process is determined by the
+      gradient of the diffusing quantity $p$ by the relation
+    \begin{gather*}
+      J = -D\nabla p.
+    \end{gather*}
+    $D$ is the symmetric, positive definite \define{diffusion tensor}.
+  \end{description}
+\end{example}
+
+\begin{intro}
+  From the two equations for $J$, we derive the following system of
+  PDE, where we replace the letter $J$ by the more familiar $u$:
+  \begin{gather}
+    \label{eq:darcy:5}
+    \arraycolsep2pt
+    \begin{matrix}
+      K^{-1} u &+& \nabla p &=& 0 \\
+      \div u &&&=& f.
+    \end{matrix}
+  \end{gather}
+  This system is closed by boundary conditions. Let $\Gamma_D$ be the
+  Dirichlet boundary and $\Gamma_N$ be the Neumann boundary such that
+  $\Gamma_D \cap \Gamma_N = \emptyset$ and
+  $\Gamma_D\cup\Gamma_N = \d\domain$. Then, we let
+  \begin{gather}
+    \label{eq:darcy:6}
+    \begin{aligned}
+      p(x) &= p^D(x) & x & \in \Gamma_D, \\
+      u(x)\cdot\n &= u^N(x)\cdot n & x & \in \Gamma_N.
+    \end{aligned}
+  \end{gather}
+
+  Following the concept of finding spaces such that we have an inf-sup
+  condition, we are looking for a pair with minimal regularity, such
+  that we have a stable and bounded inf-sup condition. We begin the
+  usual way by multiplying with a test function and integrating:
+  \begin{gather}
+    \label{eq:darcy:7}
+    \arraycolsep2pt
+    \begin{matrix}
+      \displaystyle\int_\domain K^{-1} u\cdot v\dx
+      &+&
+      \displaystyle\int_\domain \nabla p \cdot v\dx
+      &=& 0 \\
+      \displaystyle\int_\domain \div u q\dx
+      &&&=&
+      \displaystyle\int_\domain fq\dx.
+    \end{matrix}
+  \end{gather}
+  It turns out, we have two immediate options: first, we can integrate
+  the first equation by parts, having all derivatives on $u$. On the
+  other hand, we can integrate by parts in the second equation,
+  leaving all derivatives on $p$ on $p$ and $q$. In the second case,
+  we obtain the equation
+  \begin{gather*}
+    -\int_\domain u\cdot\nabla q\dx + \int_{\d\domain} u\cdot\n q \ds
+    = \int_\domain fq\dx.
+  \end{gather*}
+  Applying the boundary condition, we first follow the recipe of
+  elliptic partial differential equations and implement $p=p^D$ as an
+  \putindex{essential boundary condition}, that is, the test function
+  space has zero trace on $\Gamma_D$. Then, we can swap in $u^N$ for
+  $u$ on $\Gamma_N$, such that the boundary term ends up on the right
+  hand side.
+\end{intro}
+
+\begin{Definition}{primal-mixed}
+  The \define{primal mixed formulation} of the mixed diffusion
+  problem~\eqref{eq:darcy:5} reads: find $(u,p)\in V\times Q$ such
+  that for all $v\in V$ and $q\in Q$ holds
+  \begin{gather}
+    \label{eq:darcy:8}
+    \arraycolsep2pt
+    \begin{array}{rcccl}
+      \form(K^{-1} u, v) &+& \form( \nabla p, v)
+      &=& 0 \\
+      -\form(u,\nabla q)
+      &&&=& \form(f,q) - \forme(u^N\cdot\n, q)_{\Gamma_N}.
+    \end{array}
+  \end{gather}
+  The spaces are
+  \begin{gather}
+    \label{eq:darcy:9}
+    \begin{split}
+      V_h &= L^2(\domain;\R^d), \\
+      Q_h &= H^1_{\Gamma_D}(\domain) = \bigl\{
+      q\in H^1(\domain) \big| \;q_{|\Gamma_D} = 0
+      \bigr\}.
+    \end{split}
+  \end{gather}
+\end{Definition}
+
+\begin{remark}
+  Since the first equation is tested with the test function $v$ itself
+  in all terms, we can eliminate this equation and there holds
+  $u= K\nabla P$ in $L^2(\domain;\R^d)$. Entering this into the second
+  equation, we obtain the well-known \putindex{primal formulation}
+  \begin{gather*}
+    \form(K \nabla p,\nabla q) = \form(f,q)
+    - \forme(u^N\cdot\n, q)_{\Gamma_N}.
+  \end{gather*}
+  Just keep in mind that the ``\putindex{natural boundary condition}''
+  in this case is
+  \begin{gather*}
+    K\nabla p\cdot n = 0.
+  \end{gather*}
+  Hence, the primal mixed formulation does not provide any advantages
+  compared to the primal formulation, and we are not going to pursue
+  it further.
+\end{remark}
+
+\begin{intro}
+  Now we return to the first alternative, namely integrating by parts
+  in the first equation of~\eqref{eq:darcy:7}:
+  \begin{gather*}
+    \int_\domain K^{-1} u \cdot v \dx - \int_\domain p \div v\dx 
+    + \int_{\d\domain} v\cdot \n p\ds = 0.
+  \end{gather*}
+  Ensuing is a formulation multiplying and integrating the divergences
+  of $u$ and $v$, respectively, with functions in $Q$. In order to fit
+  this into our standard framework, we have to introduce a new Sobolev
+  space. In addition, since $u\cdot\n$ does not appear as a boundary
+  integral, we must make this an \putindex{essential boundary
+    condition}. Thus, we require that the test functions have zero
+  normal trace on $\Gamma_N$ (and justify this below). Note that now
+  the Dirichlet condition $p=0$ has become a ``\putindex{natural
+    boundary condition}''!
+\end{intro}
+
+\begin{Definition}{hdiv}
+  Let $\domain \subset \R^d$ be a domain.  We define the
+  Sobolev space
+  \begin{gather}
+    \Hdiv(\domain) = \bigl\{
+    v\in L^2(\domain;\R^d) \big\vert
+    \div v\in L^2(\domain)\bigr\},
+  \end{gather}
+  and its inner product
+  \begin{gather}
+    \scal(u,v)_{\Hdiv} = \form(u,v)_0 + \form(\div u,\div v)_0.
+  \end{gather}
+  Furthermore, let $C^\infty_{00}(\domain)$ be the space of smooth
+  functions with compact support in $\domain$. Then, we define its
+  closure in $\Hdiv(\domain)$:
+  \begin{gather}
+    \Hdiv_0(\domain) = \overline{C^\infty_{00}(\domain)}.
+  \end{gather}
+  For subset $\Gamma\subset\d\domain$, the space
+  $\Hdiv_\Gamma(\domain)$ is defined accordingly (compare to
+  $H^1_\Gamma(\domain)$)
+\end{Definition}
+
+Using the space $\Hdiv$ and for the moment the assumption, that
+$\Hdiv_0$ and $\Hdiv_\Gamma$ serve to set boundary conditions, we can
+write down our second weak fromulation of the mixed diffusion problem:
+
+\begin{Definition}{dual-mixed}
+  The \define{dual mixed formulation} of the mixed diffusion
+  problem~\eqref{eq:darcy:5} reads: find $(u,p) \in V\times Q$ such
+  that for all $v\in V$ and $q\in Q$ holds
+  \begin{gather}
+    \label{eq:darcy:10}
+    \arraycolsep2pt
+    \begin{array}{rcccl}
+      \form(K^{-1} u, v) &-& \form(p, \div v)
+      &=& \forme(p^D,v\cdot \n)_{\Gamma_D} \\
+      \form(\div u, q)
+      &&&=& \form(f,q).
+    \end{array}
+  \end{gather}
+  The spaces are
+  \begin{gather}
+    \label{eq:darcy:11}
+    V_h = \Hdiv_{\Gamma_N}(\domain),
+    \qquad
+    Q_h = L^2(\domain).
+  \end{gather}  
+\end{Definition}
+
+\subsection{Properties of $\Hdiv(\domain)$}
+
+\begin{Theorem}{Hdiv-separable}
+  Let $\domain$ be a bounded Lipschitz domain. Then, the space
+  $C^\infty(\overline\domain;\R^d)$ is dense in $\Hdiv(\domain)$.
+\end{Theorem}
+
+\begin{proof}
+  % We use the statement, that a subspace $W$ is dense in a space $V$ if
+  % and only if all linear functionals vanishing on $W$ also vanish on
+  % $V$. Therefore, let $L \in \Hdiv(\domain)^*$. By the
+  % \putindex{Riesz representation theorem}, there is
+  % $u\in\Hdiv(\domain)$ such that
+  % \begin{gather*}
+  %   L(v) = \scal(u,v)_{\Hdiv} = \sum_{i=1}^d \scal(u_i,v_i)_0
+  %   + \scal(\div u,\div v)_0
+  %   \quad\forall v\in \Hdiv(\domain).
+  % \end{gather*}
+  % Now assume $L(\phi) = 0$ for all $\phi\in
+  % C^\infty(\overline\domain;\R^d)$. Let us extend $u$ and $\div u$ outside
+  % of the domain $\domain$ by zero. Then, there holds
+  % \begin{gather*}
+  %   \int_{\R^d} u\cdot \phi \dx + \int_{\R^d}
+  % \end{gather*}
+  Either by a standard mollifier argument~\cite{AdamsFournier03} or
+  following~\cite[Theorem 2.4]{GiraultRaviart86}
+\end{proof}
+
+\begin{remark}
+  The condition of boundedness entered the assumptions since we use
+  the space $C^\infty(\overline\domain)$. It could be dropped, if we
+  used a more appropriate space (cf.~\cite[Theorem
+  2.4]{GiraultRaviart86}).
+\end{remark}
+
+\begin{Theorem}{Hdiv-trace}
+  The \putindex{trace operator}
+  $\gamma_n\colon C^\infty(\overline\domain;\R^d) \to
+  C^\infty(\overline{\d\domain})$
+  which maps $v\mapsto v\cdot\n_{|\d\domain}$ can be extended to a
+  continuous, linear mapping
+  \begin{gather}
+    \gamma_n\colon \Hdiv(\domain) \to H^{-1/2}(\d\domain),
+  \end{gather}
+  where $H^{-1/2}(\d\domain)$ is the dual of $H^{1/2}(\d\domain)$.
+\end{Theorem}
+
+\begin{proof}
+  Let $q\in C^\infty(\overline\domain)$ and
+  $v\in C^\infty(\overline\domain;\R^d)$. Then, there holds
+  \putindex{Green's formula}
+  \begin{gather*}
+    \form(v,\nabla q)_\domain
+    + \form(\div v,q)_\domain
+    = \forme(v\cdot\n,q)_{\d\domain}.
+  \end{gather*}
+  Hence,
+  \begin{gather*}
+    \left\vert\int_{\d\domain} v\cdot \n q \ds \right\vert
+    \le \norm{v}_{\Hdiv} \norm{q}_{H^1}.
+  \end{gather*}
+  Applying the density of $C^\infty(\overline\domain)$ in
+  $H^1(\domain)$ and of $C^\infty(\overline\domain;\R^d)$ in
+  $\Hdiv(\domain)$, we can let $q$ and $v$ pass to a limit, but the
+  inequality holds uniformly.
+
+  Now apply that $H^{1/2}(\d\domain)$ is the trace space of
+  $H^1(\domain)$. Therefore, for any $g\in H^{1/2}(\d\domain)$, there
+  is a $q\in H^1(\domain)$ such that $q_{|\d\domain} = g$ and
+  $\norm{q}_{1;\domain} \le \norm{g}_{1/2;\d\domain}$. We obtain
+  \begin{gather*}
+    \left\vert\int_{\d\domain} v\cdot \n g \ds \right\vert
+    \le \norm{v}_{\Hdiv(\domain)} \norm{g}_{H^{1/2}(\d\domain)}
+    \qquad\forall v\in \Hdiv(\domain), g\in H^{1/2}(\d\domain).
+  \end{gather*}
+  Hence,
+  \begin{gather*}
+    \norm{v\cdot\n}_{H^{-1/2}(\d\domain)} \le
+    \norm{v}_{\Hdiv(\domain)}
+    \qquad\forall v\in \Hdiv(\domain).
+  \end{gather*}
+  Thus, we have proven the continuity of the extension of $\gamma_n$
+  to $\Hdiv(\domain)$.
+\end{proof}
+
+\begin{remark}
+  The trace theorem tells us that our interpretation of the spaces
+  $\Hdiv_0(\domain)$ and $\Hdiv_\Gamma(\domain)$ as spaces with zero
+  boundary condition of the normal component is justified. This notion
+  will be fortified by the two theorems below. Therefore, we will
+  later avoid the notational overhead of using $\gamma_n$ and will
+  simply write $v\cdot\n_{|\d\domain}$.
+\end{remark}
+
+\begin{Problem}{trace-dnu}
+  Show the following result. Let $p\in H^1(\domain)$ and
+  $\Delta p \in L^2(\domain)$. Then, $\d_n p\in H^{-1/2}(\d\domain)$
+  and
+  \begin{gather*}
+    \form(\nabla p,\nabla q) = -\form(\Delta p,q) + \forme(\d_n
+    p,q)_{\d\domain} \quad\forall q\in H^1(\domain).
+  \end{gather*}
+\end{Problem}
+
+\begin{Theorem}{Hdiv-trace-surjective}
+  The trace theorem is optimal in the sense that
+  $\gamma_n\colon \Hdiv(\domain) \to H^{-1/2}(\d\domain)$ is
+  surjective.
+\end{Theorem}
+
+\begin{proof}
+  Let $\mu \in H^{-1/2}(\d\domain)$. We have to show that there exists
+  $v\in \Hdiv(\domain)$ such that
+  \begin{gather*}
+    v\cdot\n = \mu \quad\text{on } \d\domain
+    \qquad\text{and}\qquad
+    \norm{v}_{\Hdiv(\domain)} \le \norm{\mu}_{H^{-1/2}(\d\domain)}.
+  \end{gather*}
+
+  We know that the problem
+  \begin{xalignat*}2
+    -\Delta \phi + \phi &= 0 &\text{in }&\domain, \\
+    \d_n \phi &= \mu &\text{on }&\d\domain,
+  \end{xalignat*}
+  has a unique solution $\phi\in H^1(\domain)$ with
+  \begin{gather*}
+    \norm{\phi}_{H^1(\domain)}^2 = \forme(\mu,\phi)_{\d\domain}
+    \le \norm{\mu}_{H^{-1/2}(\d\domain)}\norm{\phi}_{H^1(\domain)}.
+  \end{gather*}
+  The first equation then implies $\Delta\phi\in L^2(\domain)$ and
+  thus $v=\nabla \phi\in \Hdiv(\domain)$. Since from this equation
+  there even holds $\div v=\phi$, we obtain
+  \begin{gather*}
+    \norm{v}_{\Hdiv(\domain)} \le \norm{\mu}_{H^{-1/2}(\d\domain)}.
+  \end{gather*}
+\end{proof}
+
+\begin{Theorem}{Hdiv-trace-kernel}
+  There holds
+  \begin{gather}
+    \ker{\gamma_n} = \Hdiv_0(\domain).
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  The inclusion $\Hdiv_0(\domain) \subset \ker{\gamma_n}$ follows
+  immediately from the definition and continuity of $\gamma_n$. For
+  the opposite inclusion, we have to show that the traces of functions
+  in $C^\infty_{00}(\domain)$ are dense in $\ker{\gamma_n}$. We do
+  this by using, that a subspace $W$ is dense in a space $V$ if and
+  only if all linear functionals vanishing on $W$ also vanish on
+  $V$. Choose $u\in\ker{\gamma_n}$ and use the \putindex{Riesz
+    representation theorem} to associate with it
+  $L\in \ker{\gamma_n}^*$ by
+  \begin{gather*}
+    L(v) = \scal(u,v)_{\Hdiv} \qquad\forall v\in \ker{\gamma_n}.
+  \end{gather*}
+  Assume now that $L(\phi) = 0$ for all $\phi\in
+  C^\infty_{00}(\domain;\R^d)$. This implies by
+  \begin{gather*}
+    0 = L(\phi) = \form(u,\phi)_{L^2} + \form(\div u, \div \phi),
+  \end{gather*}
+  that $u=\nabla \div u$ in distributional sense, and by taking limits
+  of $\phi$ in $H^1$ that $\div u\in H^1(\domain)$. Hence, Green's
+  formula yields
+  \begin{gather*}
+    L(v) = \form(\nabla\div u,v)+\form(\div u,\div v)
+    = \forme(v\cdot\n,\div u)_{\d\domain} = 0
+    \qquad\forall v\in \ker{\gamma_n}.
+  \end{gather*}
+  Thus, $L$ vanishes on all elements of $\ker{\gamma_n}$ and the
+  theorem is proven.
+\end{proof}
+
+\begin{example}
+  The trace theorem involves the space $H^{-1/2}(\d\domain)$, which
+  requires a short discussion. On one dimensional boundaries, elements
+  in $H^{1/2}(\d\domain)$ have continuous representatives. The
+  situation in three dimensions is similar, where no jumps across a
+  line, for instance between two faces is allowed. Therefore,
+  functions in $H^{-1/2}(\d\domain)$ cannot be localized to parts of
+  the boundary, for instance the edge of a cell.
+
+  We give an example (modified from \cite[Section
+  2.5.1]{BoffiBrezziFortin13}) of this phenomenon.  On the disc
+  $\mathcal D$ around the origin of radius $e^{-1}$ consider the
+  function
+  \begin{gather*}
+    u(x,y) = \ln\Bigl(-\ln\bigl(\sqrt{x^2+y^2}\bigr)\Bigr).
+  \end{gather*}
+  There holds $u\in H^1_0(\mathcal D)$.\marginpar{Volunteers computing
+    the derivative?} Now, consider the domain $\domain$ consisting
+  only of the upper half circle:
+  \begin{align*}
+    \domain &= \bigl\{(x,y)\in \R^2 \big\vert
+              x^2+y^2<e^{-2} \text{ and } y>0 \bigr\}
+    \\
+    \d\domain &= [-e^{-1},e^{-1}]
+                \cup \bigl\{ (x,\sqrt{e^{-2}-x^2}) \big\vert
+                x\in (-e^{-1},e^{-1}) \bigr\}
+  \end{align*}
+  Thus, the trace of $u$ on the boundary is in
+  $H^{1/2}(\d\domain)$. We now define $\mu\in H^{-1/2}(\d\domain)$ as
+  the distributional derivative in tangential direction, say
+  counter-clockwise,
+  \begin{gather*}
+    \scal(\mu,\phi) = - \int_{\d\domain} u \d_{\tau} \phi
+    \qquad\forall \phi\in C^1(\d\domain).
+  \end{gather*}
+
+  Computation yields
+  \begin{gather*}
+    \mu(x) = \frac1{x\ln \abs{x}} \times
+    \begin{cases}
+      1 & x\in (-e^{-1},0) \\
+      -1& x\in (0,e^{-1}).
+    \end{cases}
+  \end{gather*}
+  Both integrals
+  \begin{gather*}
+    \int_{-e^{-1}}^0 \mu(x)\dx
+    \qquad
+    \int^{e^{-1}}_0 \mu(x)\dx,
+  \end{gather*}
+  are not bounded, such that on these parts of the boundary, $\mu$
+  cannot even be tested with a constant function.
+  Now, we consider the integral
+  \begin{gather*}
+    \forme(\mu,\phi) = \int_{-e^{-1}}^{e^{-1}} \ln(-\ln\abs x) \d_\tau \phi \dx.
+  \end{gather*}
+  If we split $\phi$ into an odd and an even part, the intgral with
+  the even part vanishes, since $\ln(-\ln\abs x)$ is even and the
+  derivative is odd. Therefore,
+  \begin{gather*}
+    \forme(\mu,\phi)
+    = \int_{-e^{-1}}^{e^{-1}}
+    \frac{\phi_{\text{odd}}(x)}{x\ln\abs x} \dx
+  \end{gather*}
+  Finally, we use the fact that $\phi_{\text{odd}}(0) = 0$ and that
+  it's growth is limited by its regularity. In order to be square
+  integrable, the groth of $\phi_{\text{odd}}$ must be limited by a
+  positive, fractional power,
+  \begin{gather*}
+    \abs{\phi_{\text{odd}}(x)} \le c \abs x^\alpha,
+    \qquad \alpha>0.
+  \end{gather*}
+  Then,
+  \begin{gather*}
+    \int_0^{e^{-1}} \frac{\abs{\phi_{\text{odd}}(x)}}{x\ln\abs x} \dx
+    \le \frac{x^{\alpha-1}}{\ln\abs x} \dx < \infty.
+  \end{gather*}
+\end{example}
+
+\begin{Theorem}{Hdiv-helmholtz}
+  Let $\domain$ be connected. Let
+  \begin{gather}
+    \label{eq:darcy:1}
+    V_0 = \bigl\{ v\in \Hdiv_0(\domain) \big\vert
+    \div v = 0 \bigr\}.
+  \end{gather}
+  Then,
+  \begin{gather}
+    L^2(\domain;\R^d) = V_0 \oplus \ortho V,
+  \end{gather}
+  and
+  \begin{gather}
+    \ortho V = \bigl\{ v = \nabla q \big\vert
+    q\in H^1(\domain) \bigr\}.
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  Let $X=\{ v= \nabla q \vert q\in H^1(\domain)\}$. we have to show
+  $\ortho V = X$. Observe that $X$ is closed in $L^2$ since $H^1$ is
+  complete. We show that $V_0 = \ortho X$ and thus
+  \begin{gather*}
+    \ortho {V_0} = \ortho{(\ortho{V_0})} = \overline X = X.
+  \end{gather*}
+  First, let $u\in V_0$. Then, Green's formula reduces to
+  \begin{gather*}
+    \form(u,\nabla q) = 0 \qquad\forall q\in H^1(\domain).
+  \end{gather*}
+  Hence, $V_0\subset \ortho X$. Let now conversely
+  $u\in L^2(\domain;\R^d)$ such that the previous identity
+  holds. Choosing $q\in C^\infty_{00}(\domain)$ yields $\div u=0$,
+  which in turn means $u\in\Hdiv(\domain)$. Therefore, we can use
+  Green's formula to obtain $u\cdot\n=0$ on $\d\domain$. This together
+  implies $u\in V_0$, proving $\ortho X \subset V_0$.
+\end{proof}
+
+\subsection{Well-posedness of the dual mixed formulation}
+
+\begin{intro}
+  In order to apply the theorey from
+  Chapter~\ref{sec:mixed-wellposedness}, we have to define the
+  abstract bilinear forms $a(.,.)$ and $b(.,.)$. We read from the dual
+  mixed formulation
+  \begin{align*}
+    a(u,v) &= \form(K^{-1}u,v) \\
+    b(v,q) &= \form(\div v,q).
+  \end{align*}
+\end{intro}
+
+
+\begin{Problem}{mixed-inhomogeneous-bc}
+  In both the primal and the dual mixed formulation, we ignored
+  inhomogeneous essential boundary conditions. Show that the usual
+  lifting method applies. Determine the modified equations and the
+  spaces needed for the liftings.
+\end{Problem}
+
+
+\begin{Lemma}{darcy-reduced-wellposed}
+  Let $V=\Hdiv(\domain)$ and $Q=L^2(\domain)$ with their norms. Let
+  \begin{gather}
+    \label{eq:darcy:12}
+    V_0 = \ker{B} = \bigl\{v\in V\big\vert
+    \form(\div v,q) =0 \;\forall q\in Q\bigr\}.
+  \end{gather}
+  Assume there exist constants $\ellipa$ and $\norm a$ such that
+  \begin{gather}
+    \label{eq:darcy:13}
+    \ellipa \abs{\xi}^2
+    \le \xi^T K^{-1} \xi \le \norm a \abs{\xi}^2
+    \qquad\forall \xi\in\R^d.
+  \end{gather}
+  Then, there holds
+  \begin{xalignat}2
+    \label{eq:darcy:14}
+    a(u,v) & \le \norm a \norm{u}_V \norm{v}_V
+    & \forall u,v&\in V\\
+    \label{eq:darcy:15}
+    a(u,u) & \ge \ellipa \norm{u}_V^2
+    & \forall u &\in \ker B.
+  \end{xalignat}
+\end{Lemma}
+
+\begin{remark}
+  Differing from the Stokes problem, ellipticity of $a(.,.)$ cannot be
+  extended to the whole space $V$. This is going to be the major
+  difference between this chapter and the previous.
+\end{remark}
+
+\begin{Lemma}{darcy-infsup}
+  Let $V=\Hdiv(\domain)$ and $Q=L^2(\domain)$ with their norms.  Then,
+  the inf-sup condition
+  \begin{gather}
+    \inf_{q\in Q} \sup_{v\in V} \frac{b(v,q)}{\norm{v}_V\norm{q}_Q}
+    \ge \beta
+  \end{gather}
+  holds with a constant $\beta$ depending on the domain.
+\end{Lemma}
+
+\begin{proof}
+  We can use the construction leading to
+  \blockref{Corollary}{stokes-iso}. In fact, since the norm of $\Hdiv$
+  is weaker than the one of $H^1$, the same function $v$ can be chosen
+  in the Stokes inf-sup condition~\eqref{eq:stokes:1}, yielding a
+  constant $\beta$ not worse than for Stokes.
+\end{proof}
+
+Combining these lemmas, we obtain
+
+\begin{Theorem}{darcy-well-posed}
+  Under the assumptions on \blockref{Lemma}{darcy-reduced-wellposed},
+  the \putindex{dual mixed formulation} is well-posed.
+\end{Theorem}
+
+\section{Discretization of dual mixed problems}
+
+\subsection{Conforming subspaces of $\Hdiv(\domain)$}
+
+\begin{intro}
+  Our goal in this section is the derivation of general criteria
+  applying to the approximation of $\Hdiv(\domain)$ by piecewise
+  polynomial functions. This affects in particular continuity
+  conditions and the properties of $\ker{B_h}$.
+  
+  As be before, we will assume that all families of meshes $\mesh_h$
+  for $h\to 0$ are shape-regular. We will also assume that meshes are
+  regular, unless otherwise stated.
+\end{intro}
+
+\begin{Lemma}{normal-continuity}
+  Let $\mesh_h$ be a subdivision of the domain $\domain$. Let the
+  space $V_h$ be cell-wise polynomial. We have $V_h \subset
+  \Hdiv(\domain)$ if and only if on each interior face $\face$
+  between two cells $\cell_1$ and $\cell_2$ holds
+  \begin{gather}
+    v_1 \cdot \n_1 + v_2 \cdot\n_2 = 0.
+  \end{gather}
+  Here, $v_1$ and $v_2$ are the traces of the functions on $\face$
+  from each cell.
+\end{Lemma}
+
+\begin{proof}
+  Since $V_h$ is by definition finite dimensional, all norms are
+  bounded. It remains to show that the distributional divergence is
+  in $L^2(\domain)$, that is, all its contributions which are Borel
+  measures of faces vanish. To this end, let $\phi\in
+  C^\infty_{00}(\domain)$ be a test function such that its support
+  does not have a nonempty intersection with any face except
+  $\face$. Then, we have by Green's formula for $u\in V_h$
+  \begin{gather*}
+    \form(\div u,\phi) = -\form(u,\nabla \phi)
+    + \forme(v_1 \cdot \n_1 + v_2 \cdot\n_2, \phi)_F
+  \end{gather*}
+  We have $\div u \in L^2(\domain)$ if and only if the face term
+  vanishes.
+\end{proof}
+
+\begin{remark}
+  The corresponding condition for $H^1$-conforming finite elements is
+  continuity of the function. This implies in particular continuity at
+  vertices.
+
+  The continuity of the normal component over faces does not imply
+  continuity at vertices, since it is not transferred in tangential
+  direction.
+
+  As a consequence of this remark, part of the construction of
+  $\Hdiv$-conforming finite element spaces consists of defining a
+  polynomial trace space on each face, such that continuity of normal
+  traces can be established by this space.
+\end{remark}
+
+\begin{intro}
+  We would like to continue defining shape functions on reference
+  cells. But, when mapping from a reference cell $\refcell$ to
+  the actual mesh cell $\cell$, we have to preserve the information
+  whether a vector field is normal or tangential to a face. To this
+  end, we recapitulate the basic notation and properties of the
+  transformation of scalar fields and then addthe definition for
+  vector fields in $\Hdiv(\domain)$.
+\end{intro}
+
+\begin{Notation}{recap-reference-transform}
+  Let $\refcell$ be a reference cell, either the reference
+  simplex spanned by $\{0,e_1,\dots,e_d\}$ or the reference hypercube
+  $[-1,1]^d$. Then, a mesh cell $\cell\in\mesh_h$ is defined as the
+  image of $\widehat \cell$ under a mapping $\Phi$ (we suppress the
+  index $\cell$ and understand that $\Phi$ is different for every
+  cell). We define the Jacobi matrix, the Jacobi determinant, and the
+  face Jacobian
+  \begin{gather}
+    \mathrm D\Phi(\widehat x) = \Bigl(\d_j\Phi_i\Bigr),
+    \qquad
+    \mathrm J(\widehat x) = \det \mathrm D\Phi,
+    \qquad
+    \mathrm J_n(\widehat x) = J
+    \abs{\mathrm D\Phi^{-T} \widehat\n},    
+  \end{gather}
+
+ The basic relations are for $\widehat x\in\widehat \cell$ and
+  shape functions $\widehat p$:
+  \begin{gather}
+    x = \Phi(\widehat x),
+    \qquad p(x) = \widehat p(\widehat x)
+    \qquad \nabla p(x) = \mathrm D\Phi^{-T}
+    \bigl[\widehat\nabla\widehat p(\widehat x)\bigr].
+  \end{gather}
+  Integrals transform as
+  \begin{xalignat*}2
+    \int_\cell p \dx &= \int_{\refcell} \widehat p J \dxref
+    &
+    \int_{\d\cell} p \ds &= \int_{\d\refcell} \widehat p J_n \dsref
+  \end{xalignat*}
+\end{Notation}
+
+\begin{Definition}{Piola-transform}
+  The \define{Piola transform} or \putindex{contravariant}
+    transformation of a vector field under the mapping
+  $\Phi\colon\refcell\to\cell$ is the mapping
+  \begin{gather}
+    v(x) = \tfrac1{\mathrm J} \mathrm D\Phi \widehat v(\widehat x)
+  \end{gather}
+  There holds
+  \begin{gather}
+    \nabla v(x) = \tfrac1{\mathrm J} \mathrm D\Phi
+    \bigl[\widehat\nabla \widehat v(\widehat x)\bigr] \mathrm D\Phi^{-1},
+    \qquad
+    \div v(x) = \tfrac1{\mathrm J} \widehat\nabla\!\cdot\!
+    \widehat v(\widehat x).
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{Piola-transform-integrals}
+  Let $q$ be a scalar function and $v$ be a \putindex{contravariant}
+  vector field mapped by the \putindex{Piola transform}. Then, cell
+  and surface integrals are transformed according to the rules
+  \begin{gather}
+    \begin{split}
+      \int_{\cell} v \cdot \nabla q \dx
+      &= \int_{\refcell} \widehat v \cdot \widehat \nabla \widehat q \dxref,
+      \\
+      \int_{\cell} q \div v \dx
+      &= \int_{\refcell} \widehat q \widehat \nabla\!\cdot\! \widehat v \dxref,
+      \\
+      \int_{\d\cell} q v\cdot\n \ds
+      &= \int_{\d\refcell} \widehat q \widehat v\cdot\widehat \n \dsref.
+    \end{split}
+  \end{gather}
+\end{Lemma}
+
+\begin{Problem}{Piola-transform-integrals}
+  Verify \blockref{Lemma}{Piola-transform-integrals}.
+\end{Problem}
+
+\begin{remark}
+  The last equation of the previous lemma indicates, that the
+  \putindex{Piola transform} preserves normal components of a vector
+  field. Thus, it can be used to define shape functions for normal
+  continuity on a reference cell.
+\end{remark}
+
+\begin{intro}
+  In \blockref{Lemma}{darcy-reduced-wellposed}, we saw that the
+  bilinear form $a(.,.)$ is elliptic only on the kernel of
+  $B$. Indeed, for the simplest case with $K\equiv 1$, we conclude
+  that if the uniform estimate for $v_h\in \ker{B_h}$
+  \begin{gather*}
+    \norm{v_h}^2_{L^2}
+    \ge \ellipa \norm{v_h}^2_{\Hdiv}
+    = \ellipa \bigl(\norm{v_h}^2_{L^2} + \norm{\div v_h}^2_{L^2}\bigr),
+  \end{gather*}
+  necessary for quasi-bestapproximation requires a constant $c$
+  independent of $h$ such that
+  \begin{gather*}
+    \norm{\div v_h}^2_{L^2} \le c \norm{v_h}^2_{L^2}
+    \qquad\forall v_h\in\ker{B_h}.
+  \end{gather*}
+  The inverse estimate is insufficient by two powers of $h$, such that
+  this is actually a hard condition. Therefore, we focus on
+  methods where
+  \begin{gather}
+    \label{eq:darcy:16}
+    \ker{B_h} \subset \ker B.
+  \end{gather}
+\end{intro}
+
+\begin{remark}
+  A particularly elegant way to achieve~\eqref{eq:darcy:16} is the
+  choice
+  \begin{gather}
+    \div V_h = Q_h.
+  \end{gather}
+  We will indeed focus on methods with this property.
+\end{remark}
+
+
+
+\subsection{Finite elements on simplices}
+
+
+\subsection{Finite elements on hypercubes}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
