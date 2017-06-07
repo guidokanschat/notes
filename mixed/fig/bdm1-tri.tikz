@@ -1,0 +1,24 @@
+\begin{tikzpicture}[thick]
+  \path[use as bounding box] (-.3,-.4) -- (2.3,-.4) -- (2.3,2.) -- (-.3,2.) -- cycle;
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (2,0);
+  \coordinate (AB) at ($(A)!0.5!(B)$);
+  \coordinate (C) at ($(AB)!2*sin(60)!90:(B)$);
+  \coordinate (AAB) at ($(A)!0.33!(B)$);
+  \coordinate (ABB) at ($(A)!0.67!(B)$);
+  \coordinate (AAC) at ($(A)!0.33!(C)$);
+  \coordinate (ACC) at ($(A)!0.67!(C)$);
+  \coordinate (BBC) at ($(B)!0.33!(C)$);
+  \coordinate (BCC) at ($(B)!0.67!(C)$);
+  \coordinate (center) at ($(AB)!.333!(C)$);
+
+  \draw (A) -- (B) -- (C) -- cycle;
+
+  \draw[velo] (AAB) -- ($(AAB)!4mm!90:(A)$);
+  \draw[velo] (ABB) -- ($(ABB)!4mm!90:(A)$);
+  \draw[velo] (AAC) -- ($(AAC)!4mm!90:(C)$);
+  \draw[velo] (ACC) -- ($(ACC)!4mm!90:(C)$);
+  \draw[velo] (BBC) -- ($(BBC)!4mm!90:(B)$);
+  \draw[velo] (BCC) -- ($(BCC)!4mm!90:(B)$);
+
+\end{tikzpicture}

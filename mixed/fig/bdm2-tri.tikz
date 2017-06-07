@@ -1,0 +1,26 @@
+\begin{tikzpicture}[thick]
+  \path[use as bounding box] (-.3,-.4) -- (2.3,-.4) -- (2.3,2.) -- (-.3,2.) -- cycle;
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (2,0);
+  \coordinate (AB) at ($(A)!0.5!(B)$);
+  \coordinate (C) at ($(AB)!2*sin(60)!90:(B)$);
+  \coordinate (AC) at ($(A)!0.5!(C)$);
+  \coordinate (BC) at ($(B)!0.5!(C)$);
+  \coordinate (center) at ($(AB)!.333!(C)$);
+
+  \draw (A) -- (B) -- (C) -- cycle;
+
+  \foreach \i in {0.25,0.5,0.75}
+  {
+    \coordinate (PAB) at ($(A)!\i!(B)$);
+    \draw[velo] (PAB) -- ($(PAB)!4mm!90:(A)$);
+    \coordinate (PAC) at ($(A)!\i!(C)$);
+    \draw[velo] (PAC) -- ($(PAC)!4mm!90:(C)$);
+    \coordinate (PBC) at ($(B)!\i!(C)$);
+    \draw[velo] (PBC) -- ($(PBC)!4mm!90:(B)$);
+  }
+
+  \draw[shape veloxy] (center) circle (3pt);
+  
+  \draw[color=red,thick,dashed] (center) circle (9pt);
+\end{tikzpicture}
