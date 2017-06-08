@@ -1,17 +1,27 @@
 \documentclass{article}
 \usepackage{tikz,tikzscale}
-\usetikzlibrary{calc}
 \usetikzlibrary{math}
-\usetikzlibrary{arrows.meta}
-\input{./tikzsettings}
 
+\tikzset{pics/tripile/.style args={#1}{
+    code={
+      \coordinate (top) at (0,#1);
+      \foreach \i in{0,...,#1}
+      \foreach \j in{0,...,\i}
+      {
+        \tikzmath{
+          \y = .3*(2/3*#1-\i)*cos(30);
+          \x = .3*(\i/2-\j);
+        }
+        \draw (\x,\y) circle (3pt);
+      }
+    }
+}}
 
 \begin{document}
-
-\begin{tikzpicture}
-  \pic at (0,0) {tripile=2/shape veloxy};
-  \pic at (4,0) {tripile=3/shape pressure};
-\end{tikzpicture}
+\thispagestyle{empty}
+\includegraphics[width=.2\textwidth]{test.tikz}
+\includegraphics[width=.3\textwidth]{test.tikz}
+\includegraphics[width=.4\textwidth]{test.tikz}
 
 \end{document}
 

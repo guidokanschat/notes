@@ -613,7 +613,8 @@ write down our second weak fromulation of the mixed diffusion problem:
   constant $\beta$ not worse than for Stokes.
 \end{proof}
 
-Combining these lemmas, we obtain
+Combining these lemmas yields the assumptions of
+\blockref{Theorem}{infsup-mixed2}. Thus, we have proven:
 
 \begin{Theorem}{darcy-well-posed}
   Under the assumptions on \blockref{Lemma}{darcy-reduced-wellposed},
@@ -796,16 +797,203 @@ Combining these lemmas, we obtain
   A particularly elegant way to achieve~\eqref{eq:darcy:16} is the
   choice
   \begin{gather}
+    \label{eq:darcy:17}
     \div V_h = Q_h.
   \end{gather}
   We will indeed focus on methods with this property.
 \end{remark}
 
-
-
 \subsection{Finite elements on simplices}
 
+\begin{Definition}{rt-simplex}
+  The \define{Raviart-Thomas element} of degree $k \ge 0$ on simplices
+  consists of the polynomial space
+  \begin{gather}
+    \label{eq:darcy:18}
+    RT_k = P_k^d + xP_k.
+  \end{gather}
+  Its \putindex{node functionals} are
+  \begin{xalignat}3
+    \label{eq:darcy:19}
+    \nodal_{1,i,j}(v) &= \int_{\face_i} v\cdot\n \,q_j\ds
+    & q_j&\in \P_k(\face_i)
+    & \face_i &\subset \d\cell, \\
+    \label{eq:darcy:20}
+    \nodal_{2,i}(v) &= \int_\cell v\cdot\nabla q_i \dx
+    & q_i &\in \P_k(\cell).
+  \end{xalignat}
+\end{Definition}
 
+\begin{remark}
+  In equation~\eqref{eq:darcy:19}, the $\face_i$ are all faces of the
+  simplex, that is, three edges in two dimensions and four triangular
+  faces in three dimensions.
+  
+  If the simplex $\cell$ is obtained by affine transformation from the
+  reference simplex $\refcell$, the definitions of the space $RT_k$
+  directly on the cell $\cell$ and by mapping from $\refcell$
+  coincide. Therefore, we can use arguments by mapping or without at
+  our convenience.
+
+  For $k=0$ there are no nodal values of type $\nodal_{2,i}$ since all
+  gradients of functions in $\P_0$ are zero.
+
+  The unisolvence will be shown in
+  \blockref{Lemma}{rt-simplex-unisolvence}. But first, we have to look
+  at some important properties.
+\end{remark}
+
+\begin{Example}{rt-simplex}
+  The first members of the Raviart-Thomas family on triangles are
+  \begin{center}
+    \begin{tabular}{c@{\hspace{.2\textwidth}}c}
+      \includegraphics[width=.3\textwidth]{./fig/rt0-tri.tikz}
+      &
+      \includegraphics[width=.3\textwidth]{./fig/p0-p.tikz}
+      \\[5mm]
+      \includegraphics[width=.3\textwidth]{./fig/rt1-tri.tikz}
+      &
+      \includegraphics[width=.3\textwidth]{./fig/p1-p.tikz}
+    \end{tabular}
+  \end{center}
+\end{Example}
+
+\begin{Lemma}{rt-simplex-1}
+  For any simplex $\cell\in\R^d$ we have for
+  any $v\in RT_k$ and any $\face\subset\d\cell$
+  \begin{gather}
+    \label{eq:darcy:21}
+    \begin{split}
+      \div v &\in \P_k(\cell), \\
+      v\cdot\n_{|\face} &\in \P_k(\face).
+    \end{split}
+  \end{gather}
+  The divergence operator is surjective from $RT_k$ to
+  $\P_k$, hence
+  \begin{gather}
+    \label{eq:darcy:22}
+    \div RT_k = \P_k.
+  \end{gather}
+  For the divergence free functions holds
+  \begin{gather}
+    \label{eq:darcy:24}
+    RT_{k,0} = \bigl\{v\in RT_k \big\vert
+    \div  v=0\bigr\} \subset \P_k^d.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  We write an arbitrary element $v\in RT_k$ as $v=v_0+x p_k$ where
+  $v_0\in \P_k^d$ and $p_k\in \P_k$. Clearly, $\div v_0 \in
+  \P_{k-1}$. On the other hand,
+  \begin{gather*}
+    \div (xp_k) = \div x p_k + x\nabla p_k = d p_k + x q,
+  \end{gather*}
+  where $q\in \P_{k-1}^d$. Therefore, $\div(xp_k) \in \P_k$ and so is
+  $\div v$.
+
+  For a given face $\face$, choose $x_0\in\face$. Every other point
+  $x\in \F$ can be represented as $x=x_0+ \tau$, where $\tau$ is a
+  vector tangential to $\face$. Therfore, using the same splitting of
+  $v$ as above
+  \begin{gather*}
+    v\cdot\n = v_0\cdot\n + p_k (x\cdot\n)
+    = v_0\cdot\n + p_k (x_0\cdot\n + \tau\cdot\n).
+  \end{gather*}
+  The last term vanishes by definition of $\tau$ and $\n$ and the two
+  other terms are both in $\P_k$.
+
+  Finally, we show surjectivity of the divergence operator. We show
+  indeed that the divergence is surjective from
+  $\tilde V = (x-x_c)\P_k$ to $\P_k$, where $x_c$ is the center of
+  $\cell$. Note that $x_c\P_k\in \P_k^d$ such that
+  $\tilde V\subset RT_k$. Furthermore, $\tilde V$ and $\P_k$ have the
+  same dimension. Therefore, it is sufficient to show that the
+  divergence is injective. For simplicity, we assume $x_c=0$. Then,
+  for any $p\in \P_k$
+  \begin{align*}
+    \int_\cell \div (xp)p \dx
+    &= d \int_\cell p^2\dx + \int_\cell x \cdot\nabla p p\dx
+    \\
+    &= d \int_\cell p^2 + \frac12 \int_\cell x \cdot\nabla(p^2)\dx
+    \\
+    &= \frac d2 \int_\cell p^2 + \frac12 \int_{\d\cell} (x\cdot\n) p^2\ds.
+  \end{align*}
+  Thus, $\div(xp) = 0$ implies $p=0$ and thus $xp=0$, which proves the
+  injectivity. Using the same idea, we see that $\div v=0$ for
+  $v=v_0+xp$ implies $xp=0$ and thus $v=v_0\in\P_k^d$.
+\end{proof}
+
+\begin{Lemma}{rt-simplex-dimension}
+  There holds
+  \begin{gather}
+    \label{eq:darcy:23}
+    \dim RT_k =
+    \begin{cases}
+      (k+1)(k+3) & d=2,
+      \\
+      \tfrac12 (k+1)(k+2)(k+4) & d=3.
+    \end{cases}
+  \end{gather}
+  For general dimension $d$, there holds
+  \begin{gather}
+    \dim RT_k = (d+1)\dim\P_k - \dim \P_{k-1}.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  First, we observe that
+  \begin{gather*}
+    RT_k = \P_k^d \oplus x\breve\P_k,
+  \end{gather*}
+  where $\breve \P_k$ is the space of \putindex{homogeneous
+    polynomials} of degree $k$, that is, those strictly of degree
+  $k$. There also holds
+  \begin{gather*}
+    \P_{k} = \P_{k-1} \oplus \breve \P_k.
+  \end{gather*}
+  Hence,
+  \begin{gather*}
+    \dim RT_k = d \dim \P_k + \dim\breve\P_k = d \dim \P_k + \dim \P_k
+    - \dim \P_{k-1},
+  \end{gather*}
+  which proves the general formula. Using
+  \begin{gather}
+    \dim\P_k =
+    \begin{cases}
+      \frac{(k+1)(k+2)}{2} & d=2,\\
+      \frac{(k+1)(k+2)(k+3)}{6} & d=3,
+    \end{cases}
+  \end{gather}
+  which proves the special cases.
+\end{proof}
+
+\begin{Lemma}{rt-simplex-unisolvence}
+  The Raviart-Thomas element with the nodal values in
+  \blockref{Definition}{rt-simplex} is unisolvent.
+\end{Lemma}
+
+\begin{proof}
+  As usual, the proof consists of two parts: first, we prove that the
+  number of node functionals equals the dimension of $RT_k$. To this
+  end, we observe that
+  \begin{gather*}
+    \dim \P_k(\R^d) = \frac1{d!} \frac{(k+d)!}{k!}
+%    = \frac{k+d}d \frac1{(d-1)!} \frac{(k+d-1)!}{k!}
+    = \frac{k+d}d \dim \P_k(\R^{d-1}).
+  \end{gather*}
+  The number of node functionals is
+  \begin{align*}
+    N &= (d+1) \dim \P_k(\R^{d-1}) + \dim \P_k(\R^d) - 1
+    \\
+    &= \frac{(d+1)(k+d-1)!}{(d-1)!k!}
+      + \frac{(k+d)!}{d! k!} - 1\\
+    &= \frac{(d^2-1)(k+d-1)!+(k+d)! - d!k!}{d!k!}
+    \\
+    &= \frac{(d^2-1+k+d)(k+d-1)!-d!k!}{d!k!}
+  \end{align*}
+
+\end{proof}
 \subsection{Finite elements on hypercubes}
 
 %%% Local Variables:
