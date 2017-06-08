@@ -1,3 +1,17 @@
 \tikzset{shape veloxy/.style={color=black,draw,fill=red,thick}}
 \tikzset{shape pressure/.style={color=black,draw,fill=cyan,thick}}
 \tikzset{velo/.style={double=red,double distance=3pt,arrows={-Stealth[open,fill=red,length=13pt]}}}
+\tikzset{pics/tripile/.style args={#1/#2}{%
+    code={%
+      \coordinate (top) at (0,#1);
+      \foreach \i in{0,...,#1}
+      \foreach \j in{0,...,\i}
+      {
+        \tikzmath{
+          \y = .3*(2/3*#1-\i)*cos(30);
+          \x = .3*(\i/2-\j);
+        }
+        \draw[#2] (\x,\y) circle (3pt);
+      }
+    }
+}}
