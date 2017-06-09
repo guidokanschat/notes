@@ -819,8 +819,8 @@ Combining these lemmas yields the assumptions of
     & q_j&\in \P_k(\face_i)
     & \face_i &\subset \d\cell, \\
     \label{eq:darcy:20}
-    \nodal_{2,i}(v) &= \int_\cell v\cdot\nabla q_i \dx
-    & q_i &\in \P_k(\cell).
+    \nodal_{2,i}(v) &= \int_\cell v\cdot w_i \dx
+    & w_i &\in \P_{k-1}^2(\cell).
   \end{xalignat}
 \end{Definition}
 
@@ -937,7 +937,8 @@ Combining these lemmas yields the assumptions of
   \end{gather}
   For general dimension $d$, there holds
   \begin{gather}
-    \dim RT_k = (d+1)\dim\P_k - \dim \P_{k-1}.
+    \dim RT_k = (d+1)\dim\P_k - \dim \P_{k-1}
+    = \frac{((d+1)(k+d)-k)(k+d-1)!}{d!k!}.
   \end{gather}
 \end{Lemma}
 
@@ -984,13 +985,13 @@ Combining these lemmas yields the assumptions of
   \end{gather*}
   The number of node functionals is
   \begin{align*}
-    N &= (d+1) \dim \P_k(\R^{d-1}) + \dim \P_k(\R^d) - 1
+    N &= (d+1) \dim \P_k(\R^{d-1}) + d \dim \P_{k-1}(\R^d)
     \\
     &= \frac{(d+1)(k+d-1)!}{(d-1)!k!}
-      + \frac{(k+d)!}{d! k!} - 1\\
-    &= \frac{(d^2-1)(k+d-1)!+(k+d)! - d!k!}{d!k!}
+      + d\frac{(k+d-1)!}{d! k!}\\
+    &= \frac{d(d+1)(k+d-1)!+d(k+d-1)!}{d!k!}
     \\
-    &= \frac{(d^2-1+k+d)(k+d-1)!-d!k!}{d!k!}
+    &= \frac{(d^2+2d)(k+d-1)!}{d!k!}
   \end{align*}
 
 \end{proof}
