@@ -861,13 +861,12 @@ Combining these lemmas yields the assumptions of
 \begin{Lemma}{rt-simplex-1}
   For any simplex $\cell\in\R^d$ we have for
   any $v\in RT_k$ and any $\face\subset\d\cell$
-  \begin{gather}
+  \begin{align}
     \label{eq:darcy:21}
-    \begin{split}
-      \div v &\in \P_k(\cell), \\
-      v\cdot\n_{|\face} &\in \P_k(\face).
-    \end{split}
-  \end{gather}
+    \div v &\in \P_k(\cell), \\
+    \label{eq:darcy:26}
+    v\cdot\n_{|\face} &\in \P_k(\face).
+  \end{align}
   The divergence operator is surjective from $RT_k$ to
   $\P_k$, hence
   \begin{gather}
@@ -925,7 +924,17 @@ Combining these lemmas yields the assumptions of
 \end{proof}
 
 \begin{Lemma}{rt-simplex-dimension}
-  There holds
+  There for the simplicial Raviart-Thomas element in $\R^d$ there
+  holds
+  \begin{gather}
+    \label{eq:darcy:25}
+    \begin{split}
+      \dim RT_k &= (d+1)\dim\P_k - \dim \P_{k-1}
+      \\
+      &= (d^2+kd+d)\frac{(k+d-1)!}{d!k!}.      
+    \end{split}
+  \end{gather}
+  In particular,
   \begin{gather}
     \label{eq:darcy:23}
     \dim RT_k =
@@ -934,11 +943,6 @@ Combining these lemmas yields the assumptions of
       \\
       \tfrac12 (k+1)(k+2)(k+4) & d=3.
     \end{cases}
-  \end{gather}
-  For general dimension $d$, there holds
-  \begin{gather}
-    \dim RT_k = (d+1)\dim\P_k - \dim \P_{k-1}
-    = \frac{((d+1)(k+d)-k)(k+d-1)!}{d!k!}.
   \end{gather}
 \end{Lemma}
 
@@ -960,13 +964,15 @@ Combining these lemmas yields the assumptions of
   \end{gather*}
   which proves the general formula. Using
   \begin{gather}
-    \dim\P_k =
+    \dim\P_k
+    =\frac1{d!} \frac{(k+d)!}{k!}
+    =
     \begin{cases}
       \frac{(k+1)(k+2)}{2} & d=2,\\
       \frac{(k+1)(k+2)(k+3)}{6} & d=3,
     \end{cases}
   \end{gather}
-  which proves the special cases.
+  proves the explicit formulas.
 \end{proof}
 
 \begin{Lemma}{rt-simplex-unisolvence}
@@ -987,14 +993,70 @@ Combining these lemmas yields the assumptions of
   \begin{align*}
     N &= (d+1) \dim \P_k(\R^{d-1}) + d \dim \P_{k-1}(\R^d)
     \\
-    &= \frac{(d+1)(k+d-1)!}{(d-1)!k!}
-      + d\frac{(k+d-1)!}{d! k!}\\
-    &= \frac{d(d+1)(k+d-1)!+d(k+d-1)!}{d!k!}
-    \\
-    &= \frac{(d^2+2d)(k+d-1)!}{d!k!}
+    &= (d+1)\frac{(k+d-1)!}{(d-1)!k!}
+      + d\frac{(k+d-1)!}{d! (k-1)!}\\
+    &= (d^2+d+kd)\frac{(k+d-1)!}{d!k!}
   \end{align*}
+  Thus, the number of node functionals is equal to the dimension of
+  $RT_k$. Therefore, every elemtent in $RT_k$ is uniquely determined
+  by the node functionals if and only if for $v\in RT_k$
+  \begin{gather*}
+    \left\{
+      \begin{array}{r@{\,}ll}
+        \nodal_{1,i,j}(v) &=0 &\forall i,j
+        \\
+        \nodal_{2,i}(v) &=0 &\forall i
+      \end{array}
+      \right\}
+      \quad\Longrightarrow\quad
+      v=0.
+  \end{gather*}
+  To this end, we first observe that due to~\eqref{eq:darcy:26} the
+  node functionals $\nodal_{1,i,j}$ for $j=1,\dots,\dim \P_k(\face_i)$
+ uniquely determine $v$ on each face $\face_i$. Therefore,
+ \begin{gather*}
+   \bigl\{\nodal_{1,i,j}(v) =0 \quad\forall i,j\bigr\}
+   \quad\Longrightarrow\quad
+   v\in \Hdiv_0(\cell).
+ \end{gather*}
+ Next, we test~\eqref{eq:darcy:20} with $w=\nabla q$ and $q\in
+ \P_k$ arbitrary. After integration by parts, this implies $v\in
+ RT_{k,0} \cap \Hdiv_0(\cell) \subset \P_k^d$.
 
+ For the remaining part of the proof, we need a result which will be
+ presented later in full generality. At this point, we only mention
+ that in two dimensions, the space $V_0$ of divergence free functions
+ in $L^2(\cell)$ has the representation
+ \begin{gather*}
+   V_0 = \left\{
+     \begin{pmatrix}
+       \d_2 \phi \\ -\d_1 \phi
+     \end{pmatrix}
+     \bigg\vert \quad \phi\in H^1(\cell) \right\}.
+ \end{gather*}
+
+ We also notice that $v\cdot n = \d_{\tau} \phi$, where $\tau$ is the
+ tangential vector with the domein $\cell$ on the right. Thus,
+ $v\in \Hdiv_0(\cell)$ implies $\phi$ is constant on the
+ boundary. Since moreover we only use derivatives of $\phi$, we can
+ choose $\phi \in H^1_0(\cell)$. Finally, since $v\in RT_{k,0}$, we
+ have $\phi\in\P_{k+1}$. Any function $\phi$ with these properties can
+ be expressed by the cubic bubble function as
+ \begin{gather*}
+   \phi = b_\cell \psi \qquad\psi\in \P_{k-2}.
+ \end{gather*}
+We conclude the proof with
+\begin{gather*}
+  0 = \int_\cell v\cdot w \dx = \int_\cell
+  \begin{pmatrix}
+    \d_w\phi\\-d_1\phi
+  \end{pmatrix}\cdot w\dx
+  = \int_\cell b_\cell \psi (\d_2 w - \d_1 w)\dx.
+\end{gather*}
+Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
 \end{proof}
+
+
 \subsection{Finite elements on hypercubes}
 
 %%% Local Variables:
