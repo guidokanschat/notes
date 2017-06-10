@@ -3,12 +3,14 @@
   \coordinate (B) at (2,0);
   \coordinate (AB) at ($(A)!0.5!(B)$);
   \coordinate (C) at ($(AB)!2*sin(60)!90:(B)$);
-  \coordinate (AC) at ($(A)!0.5!(C)$);
-  \coordinate (BC) at ($(B)!0.5!(C)$);
-  \coordinate (center) at ($(AB)!.333!(C)$);
 
   \draw (A) -- (B) -- (C) -- cycle;
 
-  \foreach \point in {A,B,C,AB,AC,BC}
-    \draw [shape veloxy] (\point) circle (3pt);
+  \pic at (0,0) [transform shape] {pfem=2/veloxy};
 \end{tikzpicture}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "all"
+%%% End:

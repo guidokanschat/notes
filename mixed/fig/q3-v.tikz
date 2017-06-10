@@ -5,7 +5,11 @@
   \coordinate (D) at (2,2);
   \draw (A) -- (B) -- (D) -- (C) -- cycle;
 
-  \foreach \x in {0,0.33,0.67,1}
-    \foreach \y in {0,0.33,0.67,1}
-      \draw [shape veloxy] (2*\x,2*\y) circle (3pt);
+  \pic at (0,0) [transform shape] {qfem=3/veloxy};
 \end{tikzpicture}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "all"
+%%% End:

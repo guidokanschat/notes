@@ -13,3 +13,9 @@
   \draw[velo] (AC) -- ($(AC)!4mm!90:(C)$);
   \draw[velo] (BC) -- ($(BC)!4mm!90:(B)$);
 \end{tikzpicture}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "all"
+%%% End:

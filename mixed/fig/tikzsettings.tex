@@ -1,6 +1,16 @@
-\tikzset{shape veloxy/.style={color=black,draw,fill=red,thick}}
-\tikzset{shape pressure/.style={color=black,draw,fill=cyan,thick}}
-\tikzset{velo/.style={double=red,double distance=3pt,arrows={-Stealth[open,fill=red,length=13pt]}}}
+\tikzset{veloxy/.style={color=black,draw,fill=red,thick,%
+    shape=star,star points=4,star point ratio=2.2,
+    inner sep=1.3pt,transform shape}}
+\tikzset{pressure/.style={color=black,draw,fill=cyan,thick,%
+    shape=circle,inner sep=2pt,transform shape}}
+\tikzset{velo/.style={transform shape,double=red,arrows={-Stealth[open,fill=red]}}}
+
+
+%% Macros for drawing degrees of freedom for different shapes/elements.
+%% Arguments are always:
+%%   #1: polynomial degree
+%%   #2: node settings
+
 \tikzset{pics/tripile/.style args={#1/#2}{%
     code={%
       \coordinate (top) at (0,#1);
@@ -11,7 +21,43 @@
           \y = .3*(2/3*#1-\i)*cos(30);
           \x = .3*(\i/2-\j);
         }
-        \draw[#2] (\x,\y) circle (3pt);
+        \node[#2] at (\x,\y) {};
       }
     }
 }}
+
+\tikzset{pics/pfem/.style args={#1/#2}{%
+    code={%
+      \tikzmath{ \ytop=2*cos(30); }
+      \coordinate (top) at (0,\ytop);
+
+      \foreach \i in{0,...,#1}
+      \foreach \j in{0,...,\i}
+      {
+        \tikzmath{
+          \y = \ytop-\ytop*\i/#1;
+          \x = 2*(\i/2-\j)/#1+1;
+        }
+        \node[#2] at (\x,\y) {};
+      }
+    }
+}}
+
+\tikzset{pics/qfem/.style args={#1/#2}{%
+    code={%
+      \foreach \i in{0,...,#1}
+      \foreach \j in{0,...,#1}
+      {
+        \tikzmath{
+          \y = 2-2*\i/#1;
+          \x = 2-2*\j/#1;
+        }
+        \node[#2] at (\x,\y) {};
+      }
+    }
+}}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "all"
+%%% End:

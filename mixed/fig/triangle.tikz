@@ -9,3 +9,9 @@
 
   \draw (A) -- (B) -- (C) -- cycle;
 \end{tikzpicture}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "all"
+%%% End:

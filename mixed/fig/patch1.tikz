@@ -17,7 +17,13 @@
   \draw (AC) -- (BD);
 
   \foreach \point in {c1,c2,c3,c4}
-    \draw [shape pressure] (\point) circle (3pt);
+  \node [pressure] at (\point) {};
 
-  \draw [shape veloxy] (center) circle (3pt);
+  \node [veloxy] at (center) {};
 \end{tikzpicture}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "all"
+%%% End:

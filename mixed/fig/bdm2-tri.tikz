@@ -20,7 +20,13 @@
     \draw[velo] (PBC) -- ($(PBC)!4mm!90:(B)$);
   }
 
-  \draw[shape veloxy] (center) circle (3pt);
+  \node [veloxy] at (center) {};
   
   \draw[color=red,thick,dashed] (center) circle (9pt);
 \end{tikzpicture}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "all"
+%%% End:

@@ -3,13 +3,14 @@
   \coordinate (B) at (2,0);
   \coordinate (C) at (0,2);
   \coordinate (D) at (2,2);
-  \coordinate (AB) at ($(A)!0.5!(B)$);
-  \coordinate (AC) at ($(A)!0.5!(C)$);
-  \coordinate (BD) at ($(B)!0.5!(D)$);
-  \coordinate (CD) at ($(C)!0.5!(D)$);
-  \coordinate (center) at ($(A)!0.5!(D)$);
+
   \draw (A) -- (B) -- (D) -- (C) -- cycle;
 
-  \foreach \point in {A,B,C,D}
-    \draw [shape pressure] (\point) circle (3pt);
+  \pic at (0,0) [transform shape] {qfem=1/pressure};
 \end{tikzpicture}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "all"
+%%% End:

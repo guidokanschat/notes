@@ -22,3 +22,10 @@
   \draw[velo] (BCC) -- ($(BCC)!4mm!90:(B)$);
 
 \end{tikzpicture}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "all"
+%%% End:

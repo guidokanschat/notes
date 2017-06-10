@@ -18,3 +18,9 @@
   \draw[color=red] (6,1) -- (7,1);
   \draw[color=red] (7,.5) -- (8,.5);
 \end{tikzpicture}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "all"
+%%% End:

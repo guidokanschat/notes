@@ -6,5 +6,11 @@
   \coordinate (center) at ($(A)!0.5!(D)$);
   \draw (A) -- (B) -- (D) -- (C) -- cycle;
 
-  \draw [shape pressure] (center) circle (3pt);
+  \node [pressure] at (center) {};
 \end{tikzpicture}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "all"
+%%% End:

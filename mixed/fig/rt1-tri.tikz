@@ -21,5 +21,11 @@
   \draw[velo] (BBC) -- ($(BBC)!4mm!90:(B)$);
   \draw[velo] (BCC) -- ($(BCC)!4mm!90:(B)$);
 
-  \draw[shape veloxy] (center) circle (3pt);
+  \node [veloxy] at (center) {};
 \end{tikzpicture}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "all"
+%%% End:
