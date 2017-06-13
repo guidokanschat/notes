@@ -4,7 +4,7 @@
 \ProvidesPackage{mathsim}[2013/08/01 Mathematical Methods of Simulation]
 
 \RequirePackage{amsthm,amsfonts,amssymb,mathrsfs,stmaryrd}
-\RequirePackage{amsmath,amstext,mathtools}
+\RequirePackage{amsmath,amstext,amscd,mathtools}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{makeidx}
@@ -186,6 +186,8 @@
 
 % Operators
 \def\deformed#1{\widehat{#1}}
+\def\curl{\nabla\!\times\!}
+\def\vcurl{\nabla\!\times\!}
 \def\div{\nabla\!\cdot\!}
 \def\strain#1{\epsilon(#1)}
 \def\supp{\operatorname{supp}}

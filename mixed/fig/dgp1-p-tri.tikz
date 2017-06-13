@@ -1,0 +1,17 @@
+\begin{tikzpicture}[thick]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (2,0);
+  \coordinate (AB) at ($(A)!0.5!(B)$);
+  \coordinate (C) at ($(AB)!2*sin(60)!90:(B)$);
+  \coordinate (center) at ($(AB)!.333!(C)$);
+
+  \draw (A) -- (B) -- (C) -- cycle;
+
+  \pic at (center) [transform shape] {tripile=1/pressure};
+\end{tikzpicture}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "all"
+%%% End:

@@ -426,84 +426,84 @@ write down our second weak fromulation of the mixed diffusion problem:
   theorem is proven.
 \end{proof}
 
-\begin{example}
-  The trace theorem involves the space $H^{-1/2}(\d\domain)$, which
-  requires a short discussion. On one dimensional boundaries, elements
-  in $H^{1/2}(\d\domain)$ have continuous representatives. The
-  situation in three dimensions is similar, where no jumps across a
-  line, for instance between two faces is allowed. Therefore,
-  functions in $H^{-1/2}(\d\domain)$ cannot be localized to parts of
-  the boundary, for instance the edge of a cell.
+% \begin{example}
+%   The trace theorem involves the space $H^{-1/2}(\d\domain)$, which
+%   requires a short discussion. On one dimensional boundaries, elements
+%   in $H^{1/2}(\d\domain)$ have continuous representatives. The
+%   situation in three dimensions is similar, where no jumps across a
+%   line, for instance between two faces is allowed. Therefore,
+%   functions in $H^{-1/2}(\d\domain)$ cannot be localized to parts of
+%   the boundary, for instance the edge of a cell.
 
-  We give an example (modified from \cite[Section
-  2.5.1]{BoffiBrezziFortin13}) of this phenomenon.  On the disc
-  $\mathcal D$ around the origin of radius $e^{-1}$ consider the
-  function
-  \begin{gather*}
-    u(x,y) = \ln\Bigl(-\ln\bigl(\sqrt{x^2+y^2}\bigr)\Bigr).
-  \end{gather*}
-  There holds $u\in H^1_0(\mathcal D)$.\marginpar{Volunteers computing
-    the derivative?} Now, consider the domain $\domain$ consisting
-  only of the upper half circle:
-  \begin{align*}
-    \domain &= \bigl\{(x,y)\in \R^2 \big\vert
-              x^2+y^2<e^{-2} \text{ and } y>0 \bigr\}
-    \\
-    \d\domain &= [-e^{-1},e^{-1}]
-                \cup \bigl\{ (x,\sqrt{e^{-2}-x^2}) \big\vert
-                x\in (-e^{-1},e^{-1}) \bigr\}
-  \end{align*}
-  Thus, the trace of $u$ on the boundary is in
-  $H^{1/2}(\d\domain)$. We now define $\mu\in H^{-1/2}(\d\domain)$ as
-  the distributional derivative in tangential direction, say
-  counter-clockwise,
-  \begin{gather*}
-    \scal(\mu,\phi) = - \int_{\d\domain} u \d_{\tau} \phi
-    \qquad\forall \phi\in C^1(\d\domain).
-  \end{gather*}
+%   We give an example (modified from \cite[Section
+%   2.5.1]{BoffiBrezziFortin13}) of this phenomenon.  On the disc
+%   $\mathcal D$ around the origin of radius $e^{-1}$ consider the
+%   function
+%   \begin{gather*}
+%     u(x,y) = \ln\Bigl(-\ln\bigl(\sqrt{x^2+y^2}\bigr)\Bigr).
+%   \end{gather*}
+%   There holds $u\in H^1_0(\mathcal D)$.\marginpar{Volunteers computing
+%     the derivative?} Now, consider the domain $\domain$ consisting
+%   only of the upper half circle:
+%   \begin{align*}
+%     \domain &= \bigl\{(x,y)\in \R^2 \big\vert
+%               x^2+y^2<e^{-2} \text{ and } y>0 \bigr\}
+%     \\
+%     \d\domain &= [-e^{-1},e^{-1}]
+%                 \cup \bigl\{ (x,\sqrt{e^{-2}-x^2}) \big\vert
+%                 x\in (-e^{-1},e^{-1}) \bigr\}
+%   \end{align*}
+%   Thus, the trace of $u$ on the boundary is in
+%   $H^{1/2}(\d\domain)$. We now define $\mu\in H^{-1/2}(\d\domain)$ as
+%   the distributional derivative in tangential direction, say
+%   counter-clockwise,
+%   \begin{gather*}
+%     \scal(\mu,\phi) = - \int_{\d\domain} u \d_{\tau} \phi
+%     \qquad\forall \phi\in C^1(\d\domain).
+%   \end{gather*}
 
-  Computation yields
-  \begin{gather*}
-    \mu(x) = \frac1{x\ln \abs{x}} \times
-    \begin{cases}
-      1 & x\in (-e^{-1},0) \\
-      -1& x\in (0,e^{-1}).
-    \end{cases}
-  \end{gather*}
-  Both integrals
-  \begin{gather*}
-    \int_{-e^{-1}}^0 \mu(x)\dx
-    \qquad
-    \int^{e^{-1}}_0 \mu(x)\dx,
-  \end{gather*}
-  are not bounded, such that on these parts of the boundary, $\mu$
-  cannot even be tested with a constant function.
-  Now, we consider the integral
-  \begin{gather*}
-    \forme(\mu,\phi) = \int_{-e^{-1}}^{e^{-1}} \ln(-\ln\abs x) \d_\tau \phi \dx.
-  \end{gather*}
-  If we split $\phi$ into an odd and an even part, the intgral with
-  the even part vanishes, since $\ln(-\ln\abs x)$ is even and the
-  derivative is odd. Therefore,
-  \begin{gather*}
-    \forme(\mu,\phi)
-    = \int_{-e^{-1}}^{e^{-1}}
-    \frac{\phi_{\text{odd}}(x)}{x\ln\abs x} \dx
-  \end{gather*}
-  Finally, we use the fact that $\phi_{\text{odd}}(0) = 0$ and that
-  it's growth is limited by its regularity. In order to be square
-  integrable, the groth of $\phi_{\text{odd}}$ must be limited by a
-  positive, fractional power,
-  \begin{gather*}
-    \abs{\phi_{\text{odd}}(x)} \le c \abs x^\alpha,
-    \qquad \alpha>0.
-  \end{gather*}
-  Then,
-  \begin{gather*}
-    \int_0^{e^{-1}} \frac{\abs{\phi_{\text{odd}}(x)}}{x\ln\abs x} \dx
-    \le \frac{x^{\alpha-1}}{\ln\abs x} \dx < \infty.
-  \end{gather*}
-\end{example}
+%   Computation yields
+%   \begin{gather*}
+%     \mu(x) = \frac1{x\ln \abs{x}} \times
+%     \begin{cases}
+%       1 & x\in (-e^{-1},0) \\
+%       -1& x\in (0,e^{-1}).
+%     \end{cases}
+%   \end{gather*}
+%   Both integrals
+%   \begin{gather*}
+%     \int_{-e^{-1}}^0 \mu(x)\dx
+%     \qquad
+%     \int^{e^{-1}}_0 \mu(x)\dx,
+%   \end{gather*}
+%   are not bounded, such that on these parts of the boundary, $\mu$
+%   cannot even be tested with a constant function.
+%   Now, we consider the integral
+%   \begin{gather*}
+%     \forme(\mu,\phi) = \int_{-e^{-1}}^{e^{-1}} \ln(-\ln\abs x) \d_\tau \phi \dx.
+%   \end{gather*}
+%   If we split $\phi$ into an odd and an even part, the intgral with
+%   the even part vanishes, since $\ln(-\ln\abs x)$ is even and the
+%   derivative is odd. Therefore,
+%   \begin{gather*}
+%     \forme(\mu,\phi)
+%     = \int_{-e^{-1}}^{e^{-1}}
+%     \frac{\phi_{\text{odd}}(x)}{x\ln\abs x} \dx
+%   \end{gather*}
+%   Finally, we use the fact that $\phi_{\text{odd}}(0) = 0$ and that
+%   it's growth is limited by its regularity. In order to be square
+%   integrable, the groth of $\phi_{\text{odd}}$ must be limited by a
+%   positive, fractional power,
+%   \begin{gather*}
+%     \abs{\phi_{\text{odd}}(x)} \le c \abs x^\alpha,
+%     \qquad \alpha>0.
+%   \end{gather*}
+%   Then,
+%   \begin{gather*}
+%     \int_0^{e^{-1}} \frac{\abs{\phi_{\text{odd}}(x)}}{x\ln\abs x} \dx
+%     \le \frac{x^{\alpha-1}}{\ln\abs x} \dx < \infty.
+%   \end{gather*}
+% \end{example}
 
 \begin{Theorem}{Hdiv-helmholtz}
   Let $\domain$ be connected. Let
@@ -679,7 +679,46 @@ Combining these lemmas yields the assumptions of
   traces can be established by this space.
 \end{remark}
 
+\begin{intro}
+  In \blockref{Lemma}{darcy-reduced-wellposed}, we saw that the
+  bilinear form $a(.,.)$ is elliptic only on the kernel of
+  $B$. Indeed, for the simplest case with $K\equiv 1$, we conclude
+  that if the uniform estimate for $v_h\in \ker{B_h}$
+  \begin{gather*}
+    \norm{v_h}^2_{L^2}
+    \ge \ellipa \norm{v_h}^2_{\Hdiv}
+    = \ellipa \bigl(\norm{v_h}^2_{L^2} + \norm{\div v_h}^2_{L^2}\bigr),
+  \end{gather*}
+  necessary for quasi-bestapproximation requires a constant $c$
+  independent of $h$ such that
+  \begin{gather*}
+    \norm{\div v_h}^2_{L^2} \le c \norm{v_h}^2_{L^2}
+    \qquad\forall v_h\in\ker{B_h}.
+  \end{gather*}
+  The inverse estimate is insufficient by two powers of $h$, such that
+  this is actually a hard condition. Therefore, we focus on
+  methods where
+  \begin{gather}
+    \label{eq:darcy:16}
+    \ker{B_h} \subset \ker B.
+  \end{gather}
+\end{intro}
+
+\begin{remark}
+  A particularly elegant way to achieve~\eqref{eq:darcy:16} is the
+  choice
+  \begin{gather}
+    \label{eq:darcy:17}
+    \div V_h = Q_h.
+  \end{gather}
+  We will indeed focus on methods with this property.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Finite elements on simplices}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{intro}
   Simplicial elements based on the polynomial spaces $\P_k$ of
@@ -692,7 +731,7 @@ Combining these lemmas yields the assumptions of
   consists of the polynomial space
   \begin{gather}
     \label{eq:darcy:18}
-    RT_k = P_k^d + xP_k.
+    RT_k = \P_k^d + x\P_k.
   \end{gather}
   Its \putindex{node functionals} are
   \begin{xalignat}3
@@ -735,7 +774,7 @@ Combining these lemmas yields the assumptions of
       \\[5mm]
       \includegraphics[width=.3\textwidth]{./fig/rt1-tri.tikz}
       &
-      \includegraphics[width=.3\textwidth]{./fig/p1-p.tikz}
+      \includegraphics[width=.3\textwidth]{./fig/dgp1-p-tri.tikz}
     \end{tabular}
   \end{center}
 \end{Example}
@@ -866,11 +905,12 @@ Combining these lemmas yields the assumptions of
   As usual, the proof consists of two parts: first, we prove that the
   number of node functionals equals the dimension of $RT_k$. To this
   end, we observe that
-  \begin{gather*}
+  \begin{gather}
+    \label{eq:darcy:32}
     \dim \P_k(\R^d) = \frac1{d!} \frac{(k+d)!}{k!}
 %    = \frac{k+d}d \frac1{(d-1)!} \frac{(k+d-1)!}{k!}
     = \frac{k+d}d \dim \P_k(\R^{d-1}).
-  \end{gather*}
+  \end{gather}
   The number of node functionals is
   \begin{align*}
     N &= (d+1) \dim \P_k(\R^{d-1}) + d \dim \P_{k-1}(\R^d)
@@ -909,13 +949,15 @@ Combining these lemmas yields the assumptions of
  presented later in full generality. At this point, we only mention
  that in two dimensions, the space $V_0$ of divergence free functions
  in $L^2(\cell)$ has the representation
- \begin{gather*}
-   V_0 = \left\{
-     \begin{pmatrix}
-       \d_2 \phi \\ -\d_1 \phi
-     \end{pmatrix}
-     \bigg\vert \quad \phi\in H^1(\cell) \right\}.
- \end{gather*}
+ \begin{gather}
+   \label{eq:darcy:34}
+   V_0 = \left\{ \vcurl \phi
+     \big\vert \; \phi\in H^1(\cell) \right\},
+   \qquad
+   \vcurl \phi = \begin{pmatrix}
+     \d_2 \phi \\ -\d_1 \phi
+   \end{pmatrix}
+ \end{gather}
 
  We also notice that $v\cdot n = \d_{\tau} \phi$, where $\tau$ is the
  tangential vector with the domein $\cell$ on the right. Thus,
@@ -930,16 +972,286 @@ Combining these lemmas yields the assumptions of
 We conclude the proof with
 \begin{gather*}
   0 = \int_\cell v\cdot w \dx = \int_\cell
-  \begin{pmatrix}
-    \d_w\phi\\-d_1\phi
-  \end{pmatrix}\cdot w\dx
+  \curl\phi \cdot w\dx
   = \int_\cell b_\cell \psi (\d_2 w - \d_1 w)\dx.
 \end{gather*}
 Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
 \end{proof}
 
+\begin{Definition}{bdm-simplex}
+  The \define{BDM element} (Brezzi-Douglas-Marini) of degree $k \ge 1$
+  on simplices consists of the polynomial space
+  \begin{gather}
+    \label{eq:darcy:27}
+    BDM_k = \P_k^d.
+  \end{gather}
+  Its \putindex{node functionals} are
+  \begin{xalignat}3
+    \label{eq:darcy:28}
+    \nodal_{1,i,j}(v) &= \int_{\face_i} v\cdot\n \,q_j\ds
+    & q_j&\in \P_k(\face_i)
+    & \face_i &\subset \d\cell,
+    \\
+    \label{eq:darcy:29}
+    \nodal_{2,i}(v) &= \int_\cell v\cdot \nabla q_i \dx
+    & q_i &\in \P_{k-1}(\cell).
+    \\
+    \label{eq:darcy:30}
+    \nodal_{3,i}(v) &= \int_\cell v\cdot w_i \dx
+    & w_i &\in V_{k,0}(\cell),
+  \end{xalignat}
+  where
+  \begin{gather}
+    \label{eq:darcy:31}
+    V_{k,0}(\cell) = \bigl\{
+    v\in \P_k^d(\cell)\cap \Hdiv_0(\cell) \big\vert
+    \;\div v=0 \bigr\}.
+  \end{gather}
+\end{Definition}
 
+\begin{Example}{bdm-simplex}
+  The first members of the BDM family on triangles are
+  \begin{center}
+    \begin{tabular}{c@{\hspace{.2\textwidth}}c}
+      \includegraphics[width=.3\textwidth]{./fig/bdm1-tri.tikz}
+      &
+      \includegraphics[width=.3\textwidth]{./fig/p0-p.tikz}
+      \\[5mm]
+      \includegraphics[width=.3\textwidth]{./fig/bdm2-tri.tikz}
+      &
+      \includegraphics[width=.3\textwidth]{./fig/dgp1-p-tri.tikz}
+    \end{tabular}
+  \end{center}
+\end{Example}
+
+\begin{Lemma}{rt-simplex-unisolvence}
+  The BDM element with the nodal values in
+  \blockref{Definition}{bdm-simplex} is unisolvent.
+\end{Lemma}
+
+\begin{proof}
+  % Again, we begin by counting the shape functions, which,
+  % using~\eqref{eq:darcy:32} yields
+  % \begin{gather}
+  %   \label{eq:darcy:33}
+  %   \dim BDM_k(\cell) = d\dim \P_k(\R^d)
+  %   = \frac1{(d-1)!} \frac{(k+d)!}{k!}.
+  % \end{gather}
+  Let $v\in BDM_k(\cell)$.
+  First, we note that $\div BDM_k \subset \P_{k-1}$. Therefore,
+  setting the
+  node functionals in~\eqref{eq:darcy:28} and~\eqref{eq:darcy:29} to
+  zero implies $v\in V_{0,k}$. But then, the remaining node
+  functionals are an inner product on $V_{0,k}$ and thus $v=0$.
+\end{proof}
+
+\begin{remark}
+  What is missing here is a characterization of the space
+  $V_{0,k}$. Thus, we cannot really implement the method
+  yet. Furthermore, we cannot verify that the node functionals form a
+  dual basis for $BDM_k(\cell)$. The answer to these questions will be
+  given in Chapter~\ref{cha:derham}.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Stability by commuting diagrams}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{intro}
+  Again, we show stability by constructing a \putindex{Fortin
+    projection}. To this end, we show that the nodal interpolation of
+  the Raviart-Thomas and BDM families indeed commute with the
+  divergence operator. We first show that this holds for smooth
+  functions and then discuss the extension to functions in
+  $\Hdiv(\domain)$.
+\end{intro}
+
+\begin{Definition}{canonical-interpolation}
+  Let a finite element be defined by its shape function space
+  $\mathcal P_\cell$ and the \putindex{node functionals} $\nodal_i$
+  for $i=1,\dots,n$ where $n=\dim\mathcal P_\cell$. Let $\{\phi_j\}$
+  be the basis of $\mathcal P_\cell$ such that
+  \begin{gather*}
+    \nodal_i(\phi_j) = \delta_{ij}
+    \qquad i,j=1,\dots,n.
+  \end{gather*}
+  Then, the operator $I_h\colon C^\infty(\cell)\to \mathcal P_\cell$
+  such that for any $f\in C^\infty(\cell)$ there holds
+  \begin{gather}
+    \nodal_i I_h(f) = \nodal_i(f)
+    \qquad
+    i=1,\dots,n,
+  \end{gather}
+  is called the \define{canonical interpolation} operator. The
+  definition applies to vector valued elements replacing
+  $C^\infty(\cell)$ by $C^\infty(\cell;\R^d)$.
+\end{Definition}
+
+\begin{remark}
+  For a vector polynomial space $\mathcal V_\cell$, we define its
+  divergence space
+  \begin{gather*}
+    \mathcal P_\cell = \div \mathcal V_\cell.
+  \end{gather*}
+  From \blockref{Lemma}{rt-simplex-1}, we obtain
+  \begin{gather}
+    \label{eq:darcy:37}
+    \div RT_k = \P_k.
+  \end{gather}
+  For the BDM family, it is easy to verify
+  \begin{gather*}
+    \div BDM_k = \P_{k-1}.
+  \end{gather*}
+\end{remark}
+
+\begin{Lemma}{commuting-diagram-hdiv}
+  Let $I_h\colon C^\infty(\cell;\R^d)\to \mathcal V_\cell$ be the
+  canonical interpolation onto the space $\mathcal V_\cell$, which is
+  either $RT_k(\cell)$ or $BDM_{k+1}(\cell)$. Let $\mathcal P_\cell = \div
+  \mathcal V_\cell = \P_k$ and $\Pi_h\colon C^\infty(\cell)\to \mathcal
+  P_\cell$ be the $L^2$-projection onto $\mathcal P_\cell$. Then, the
+  diagram
+  \begin{gather}
+    \label{eq:darcy:35}
+    \begin{CD}
+      C^\infty(\cell;\R^d) @>\div>> C^\infty(\cell) \\
+      @V{I_h}VV @VV{\Pi_h}V\\
+      \mathcal V_\cell @>\div>> \mathcal P_\cell
+    \end{CD}
+  \end{gather}
+  commutes, that is, for any $v\in C^\infty(\cell;\R^d)$, there holds
+  \begin{gather}
+    \label{eq:darcy:36}
+    \div (I_h v) = \Pi_h(\div v).
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  Let $v\in C^\infty(\cell;\R^d)$ and $q\in C^\infty(\domain)$ be
+  chosen arbitrarily. Then,
+  \begin{gather*}
+    \int_\cell q(\div (I_h v) - \div v)\dx
+    = \int_\cell(v-I_h v) \cdot \nabla q\dx
+    - \int_{\d\cell} (v-I_h v)\cdot\n q \ds
+  \end{gather*}
+  Let now $q\in \mathcal P_\cell$ chosen as
+  \begin{gather*}
+    q = \Pi_h (\div (I_h v) - \div v).
+  \end{gather*}
+  Then, tha left hand side of the equation above becomes
+  $\norm{\div(I_h v) - \Pi_h(\div v)}_\cell^2$. The first integral on
+  the right vanishes by testing~\eqref{eq:darcy:20} with
+  $\nabla q$ and by testing~\eqref{eq:darcy:29} with $q$,
+  respectively.
+  The same holds for the second integral using the node values in
+  equations~\eqref{eq:darcy:19} and~\eqref{eq:darcy:28},
+  respectively. Thus, we have proven $\div (I_h v) = \Pi_h(\div v)$.
+\end{proof}
+
+\begin{remark}
+  The next natural step is the extension of $I_h$ to
+  $\Hdiv(\domain)$. Then, $I_h$ would be our Fortin
+  projection. Unfortunately, this is not possible, as the following
+  example shows. Meanwhile, we note that the operator $I_h$ is
+  well-defined on the space $\tilde V=\Hdiv(\domain) \cap H^s(\domain;\R^d)$
+  any for $s>0$. Thus, if the domain allows for an inf-sup condition
+  of the form
+  \begin{gather*}
+    \inf_{q\in Q}\sup_{v\in \tilde V} \frac{(\div
+      v,q)}{\norm{v}_{\tilde V}\norm{q}_Q} \ge \beta > 0,
+  \end{gather*}
+  then we are done here. The case of minimal regularity will require
+  us to extend the ideas of the Clément interpolant to commuting
+  interpolation operators, which will be done in
+  Chapter~\ref{cha:derham}.
+\end{remark}
+
+\begin{example}
+  The trace theorem involves the space $H^{-1/2}(\d\domain)$, which
+  requires a short discussion. On one dimensional boundaries, elements
+  in $H^{1/2}(\d\domain)$ have continuous representatives. The
+  situation in three dimensions is similar, where no jumps across a
+  line, for instance between two faces is allowed. Therefore,
+  functions in $H^{-1/2}(\d\domain)$ cannot be localized to parts of
+  the boundary, for instance the edge of a cell.
+
+  We give an example (modified from \cite[Section
+  2.5.1]{BoffiBrezziFortin13}) of this phenomenon.  On the disc
+  $\mathcal D$ around the origin of radius $e^{-1}$ consider the
+  function
+  \begin{gather*}
+    u(x,y) = \ln\Bigl(-\ln\bigl(\sqrt{x^2+y^2}\bigr)\Bigr).
+  \end{gather*}
+  There holds $u\in H^1_0(\mathcal D)$.\marginpar{Volunteers computing
+    the derivative?} Now, consider the domain $\domain$ consisting
+  only of the upper half circle:
+  \begin{align*}
+    \domain &= \bigl\{(x,y)\in \R^2 \big\vert
+              x^2+y^2<e^{-2} \text{ and } y>0 \bigr\}
+    \\
+    \d\domain &= [-e^{-1},e^{-1}]
+                \cup \bigl\{ (x,\sqrt{e^{-2}-x^2}) \big\vert
+                x\in (-e^{-1},e^{-1}) \bigr\}
+  \end{align*}
+  Thus, the trace of $u$ on the boundary is in
+  $H^{1/2}(\d\domain)$. We now define $\mu\in H^{-1/2}(\d\domain)$ as
+  the distributional derivative in tangential direction, say
+  counter-clockwise,
+  \begin{gather*}
+    \scal(\mu,\phi) = - \int_{\d\domain} u \d_{\tau} \phi
+    \qquad\forall \phi\in C^1(\d\domain).
+  \end{gather*}
+
+  Computation yields
+  \begin{gather*}
+    \mu(x) = \frac1{x\ln \abs{x}} \times
+    \begin{cases}
+      1 & x\in (-e^{-1},0) \\
+      -1& x\in (0,e^{-1}).
+    \end{cases}
+  \end{gather*}
+  Both integrals
+  \begin{gather*}
+    \int_{-e^{-1}}^0 \mu(x)\dx
+    \qquad
+    \int^{e^{-1}}_0 \mu(x)\dx,
+  \end{gather*}
+  are not bounded, such that on these parts of the boundary, $\mu$
+  cannot even be tested with a constant function.
+  Now, we consider the integral
+  \begin{gather*}
+    \forme(\mu,\phi) = \int_{-e^{-1}}^{e^{-1}} \ln(-\ln\abs x) \d_\tau \phi \dx.
+  \end{gather*}
+  If we split $\phi$ into an odd and an even part, the intgral with
+  the even part vanishes, since $\ln(-\ln\abs x)$ is even and the
+  derivative is odd. Therefore,
+  \begin{gather*}
+    \forme(\mu,\phi)
+    = \int_{-e^{-1}}^{e^{-1}}
+    \frac{\phi_{\text{odd}}(x)}{x\ln\abs x} \dx
+  \end{gather*}
+  Finally, we use the fact that $\phi_{\text{odd}}(0) = 0$ and that
+  it's growth is limited by its regularity. In order to be square
+  integrable, the growth of $\phi_{\text{odd}}$ must be limited by a
+  positive, fractional power,
+  \begin{gather*}
+    \abs{\phi_{\text{odd}}(x)} \le c \abs x^\alpha,
+    \qquad \alpha>0.
+  \end{gather*}
+  Then,
+  \begin{gather*}
+    \int_0^{e^{-1}} \frac{\abs{\phi_{\text{odd}}(x)}}{x\ln\abs x} \dx
+    \le \frac{x^{\alpha-1}}{\ln\abs x} \dx < \infty.
+  \end{gather*}
+\end{example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Finite elements on quadrilaterals and hexahedra}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{intro}
   Shape functions for quadrilaterals and hexahedra can only be defined
@@ -1030,40 +1342,70 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   continuity on a reference cell.
 \end{remark}
 
-\begin{intro}
-  In \blockref{Lemma}{darcy-reduced-wellposed}, we saw that the
-  bilinear form $a(.,.)$ is elliptic only on the kernel of
-  $B$. Indeed, for the simplest case with $K\equiv 1$, we conclude
-  that if the uniform estimate for $v_h\in \ker{B_h}$
-  \begin{gather*}
-    \norm{v_h}^2_{L^2}
-    \ge \ellipa \norm{v_h}^2_{\Hdiv}
-    = \ellipa \bigl(\norm{v_h}^2_{L^2} + \norm{\div v_h}^2_{L^2}\bigr),
-  \end{gather*}
-  necessary for quasi-bestapproximation requires a constant $c$
-  independent of $h$ such that
-  \begin{gather*}
-    \norm{\div v_h}^2_{L^2} \le c \norm{v_h}^2_{L^2}
-    \qquad\forall v_h\in\ker{B_h}.
-  \end{gather*}
-  The inverse estimate is insufficient by two powers of $h$, such that
-  this is actually a hard condition. Therefore, we focus on
-  methods where
+\begin{Definition}{rt-quad}
+  The \define{Raviart-Thomas element} of degree $k \ge 0$ on the
+  reference cell $\refcell = [-1,1]^d$
+  consists of the polynomial space
   \begin{gather}
-    \label{eq:darcy:16}
-    \ker{B_h} \subset \ker B.
+    \label{eq:darcy:38}
+    RT_{[k]}(\refcell) = \Q_k^d(\refcell) + x\Q_k(\refcell).
   \end{gather}
-\end{intro}
+  Its \putindex{node functionals} are
+  \begin{xalignat}2
+    \label{eq:darcy:19}
+    \nodal_{1,i,j}(v) &= \int_{\face_i} v\cdot\n \,q_j\ds
+    & q_j&\in \Q_k(\face_i)
+    \qquad\face_i \subset \d\refcell, \\
+    \label{eq:darcy:20}
+    \nodal_{2,i}(v) &= \int_{\refcell} v\cdot w_i \dx
+    & w_i &\in \Q_{k-1,k\ldots k}\times\cdots\times\Q_{k\ldots k,k-1}.
+  \end{xalignat}
+\end{Definition}
 
-\begin{remark}
-  A particularly elegant way to achieve~\eqref{eq:darcy:16} is the
-  choice
+\begin{Notation}{tensor-product-polynomials}
+  The space of \putindex{tensor product polynomials} $\Q_k$ in $d$ space
+  dimensions is
   \begin{gather}
-    \label{eq:darcy:17}
-    \div V_h = Q_h.
+    \label{eq:darcy:39}
+    \begin{split}
+    \Q_k(\R^d) &= \underbrace{\P_k(\R) \otimes \dots\otimes \P_k(\R)
+    }_{d\text{ factors}},
+    \\
+    q(x_1,\dots,x_d) &= \prod_{i=1}^d p_i(x_i)
+    \qquad p_i\in \P_k(\R).    
+    \end{split}
   \end{gather}
-  We will indeed focus on methods with this property.
-\end{remark}
+  Similarly, we define \putindex{anisotropic tensor product} polynomials
+  \begin{gather}
+    \label{eq:darcy:40}
+    \begin{split}
+    \Q_{k1,\dots,k_d}(\R^d)
+    &= \underbrace{\P_{k_1}(\R) \otimes \dots\otimes \P_{k_d}(\R)
+    }_{d\text{ factors}},
+    \\
+    q(x_1,\dots,x_d) &= \prod_{i=1}^d p_i(x_i)
+    \qquad p_i\in \P_{k_i}(\R).    
+    \end{split}
+  \end{gather}
+\end{Notation}
+
+\begin{Lemma}{rt-quad-1}
+  There holds
+  \begin{gather}
+    \dim RT_{[k]} = d(k+1)^{d-1}(k+2),
+  \end{gather}
+  and
+  \begin{gather}
+    \label{eq:darcy:41}
+    \div RT_{[k]} = \Q_k.
+  \end{gather}
+  Furthermore, for each $\face \subset\widehat\cell$ and each
+  $v\in RT_{[k]}(\refcell)$there holds
+  \begin{gather}
+    \label{eq:darcy:42}
+    v\cdot \n|_{\face} \in \Q_k.
+  \end{gather}
+\end{Lemma}
 
 
 %%% Local Variables:
