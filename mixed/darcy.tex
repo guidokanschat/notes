@@ -123,9 +123,9 @@
     \end{matrix}
   \end{gather}
   It turns out, we have two immediate options: first, we can integrate
-  the first equation by parts, having all derivatives on $u$. On the
-  other hand, we can integrate by parts in the second equation,
-  leaving all derivatives on $p$ on $p$ and $q$. In the second case,
+  the first equation by parts, having all derivatives on $u$ and $v$.
+  On the other hand, we can integrate by parts in the second equation,
+  leaving all derivatives on $p$ and $q$. In the second case,
   we obtain the equation
   \begin{gather*}
     -\int_\domain u\cdot\nabla q\dx + \int_{\d\domain} u\cdot\n q \ds
@@ -157,8 +157,8 @@
   \begin{gather}
     \label{eq:darcy:9}
     \begin{split}
-      V_h &= L^2(\domain;\R^d), \\
-      Q_h &= H^1_{\Gamma_D}(\domain) = \bigl\{
+      V &= L^2(\domain;\R^d), \\
+      Q &= H^1_{\Gamma_D}(\domain) = \bigl\{
       q\in H^1(\domain) \big| \;q_{|\Gamma_D} = 0
       \bigr\}.
     \end{split}
@@ -188,7 +188,7 @@
   Now we return to the first alternative, namely integrating by parts
   in the first equation of~\eqref{eq:darcy:7}:
   \begin{gather*}
-    \int_\domain K^{-1} u \cdot v \dx - \int_\domain p \div v\dx 
+    \int_\domain K^{-1} u \cdot v \dx - \int_\domain p \div v\dx
     + \int_{\d\domain} v\cdot \n p\ds = 0.
   \end{gather*}
   Ensuing is a formulation multiplying and integrating the divergences
@@ -246,10 +246,10 @@ write down our second weak fromulation of the mixed diffusion problem:
   The spaces are
   \begin{gather}
     \label{eq:darcy:11}
-    V_h = \Hdiv_{\Gamma_N}(\domain),
+    V = \Hdiv_{\Gamma_N}(\domain),
     \qquad
-    Q_h = L^2(\domain).
-  \end{gather}  
+    Q = L^2(\domain).
+  \end{gather}
 \end{Definition}
 
 \subsection{Properties of $\Hdiv(\domain)$}
@@ -354,6 +354,22 @@ write down our second weak fromulation of the mixed diffusion problem:
     \form(\nabla p,\nabla q) = -\form(\Delta p,q) + \forme(\d_n
     p,q)_{\d\domain} \quad\forall q\in H^1(\domain).
   \end{gather*}
+\begin{solution}
+Since $p, q \in H^1(\domain)$ we can perform integration by parts to obtain
+\begin{align*}
+ (\Delta p,q)=-(\nabla p,\nabla q)+\forme(\d_n p, q)_{\d\domain}.
+\end{align*}
+Now, we can use the continuity of the trace operator as follows
+\begin{align*}
+ \norm{\d_n p}_{-1/2,\d\domain}
+ &=\sup_{q\in H^{1/2}(\domain)\setminus\{0\}}\frac{\langle\d_n p,q\rangle_{\d\domain}}{\norm{q}_{H^{1/2}(\d\domain)}}\\
+ &\leq
+  \sup_{q\in H^{1/2}(\domain)\setminus\{0\}}\frac{\norm{\nabla p}_0 \norm{\nabla q}_0 +\norm{\Delta p}_0\norm{q}_0}
+  {\norm{q}_{1/2,\d\domain}}\\
+  &\leq C (\norm{\nabla p}_0+\norm{\Delta p}_0).
+\end{align*}
+Therefore, $\d_n p\in H^{-1/2}(\d\domain)$.
+\end{solution}
 \end{Problem}
 
 \begin{Theorem}{Hdiv-trace-surjective}
@@ -561,6 +577,67 @@ write down our second weak fromulation of the mixed diffusion problem:
   inhomogeneous essential boundary conditions. Show that the usual
   lifting method applies. Determine the modified equations and the
   spaces needed for the liftings.
+\begin{solution}
+The inhomogeneous problem reads in strong form:\\
+\begin{align*}
+K^{-1} {\mathbf u} + \nabla p &= 0 && \textrm{ in } \Omega,\\
+-{\textrm{div}}\ {\mathbf u} &= -f && \textrm{ in } \Omega,\\
+p &= p^D && \textrm{ on } \Gamma_D, \\
+u\cdot n &=  u^N \cdot n && \textrm{ on } \Gamma_N.
+\end{align*}
+
+The corresponding primal weak form is then given as: \\
+Find $(u,q)\in V\times Q=L^2(\domain)\times H_{\Gamma_D}^1(\domain)$ such that
+\begin{align*}
+A(\{{\mathbf u},p\},\{{\mathbf v},q\}) &= F(\{{\mathbf v},q\}), \\
+A(\{{\mathbf u},p\},\{{\mathbf v},q\}) &= ({\mathbf v}, K^{-1}{\mathbf u})_\Omega +({\mathbf v}, \nabla p)_\Omega + (\nabla q,{\mathbf u})_\Omega \\
+F(\{{\mathbf v},q\}) &= (q, {\mathbf u}^N\cdot {\mathbf n})_{\Gamma_N} - (f,q)_\Omega.
+\end{align*}
+Treating the Dirichlet boundary condition $p = p^D$ strongly requires us to
+split into $p=p_{hom} + p_{inhom}$ where $p_{inhom}$ fulfills the inhomogeneous
+boundary conditions. Provided $g\in H^{1/2}(\Omega)$ the trace operator acts
+as a lifting operator here to construct $p_{inhom}$.
+For $p_{hom}$ we then have to solve
+\begin{align*}
+A(\{{\mathbf u},p_{hom}\},\{{\mathbf v},q\}) &= F(\{{\mathbf v},q\}), \\
+A(\{{\mathbf u},p_{hom}\},\{{\mathbf v},q\})
+  &= ({\mathbf v}, K^{-1}{\mathbf u})_\Omega +({\mathbf v}, \nabla p_{hom})_\Omega
+     + (\nabla q,{\mathbf u})_\Omega \\
+F(\{{\mathbf v},q\})
+  &= (q, {\mathbf u}^N\cdot {\mathbf n})_{\Gamma_N}-
+     ({\mathbf v}, \nabla p_{inhom})_\Omega - (f,q)_\Omega.
+\end{align*}
+
+There doesn't exist a continuous trace operator
+\begin{align*}
+ \Vert Tf \Vert_{L^2(\partial \Omega)}\le C \Vert f \Vert_{L^2(\Omega)}
+\end{align*}
+in $L^2(\Omega)$.
+
+
+The corresponding dual weak form is then given as: \\
+Find $(u,q)\in V\times Q=H^\textrm{div}(\domain)\times L^2(\domain)$ such that
+\begin{align*}
+A(\{{\mathbf u},p\},\{{\mathbf v},q\}) &= F(\{{\mathbf v},q\}), \\
+A(\{{\mathbf u},p\},\{{\mathbf v},q\}) &=
+  ({\mathbf v}, K^{-1}{\mathbf u})_\Omega - ({\textrm{div}}\ {\mathbf v}, p)_\Omega
+  - (q,{\textrm{div}}\ {\mathbf u})_\Omega \\
+F(\{{\mathbf v},q\}) &= -(p^D,{\mathbf v}\cdot {\mathbf n})_{\partial\Omega} -(f,q)_\Omega
+\end{align*}
+where $V_0$ and $Q_0$ are the homogeneous spaces corresponding to $V$ and $Q$.
+Here, we are enforcing $u\cdot n = u^N \cdot n$ strongly. Again, the trace opreator can be used
+for the lifting and the equations for the homogeneous part read
+\begin{align*}
+A(\{{\mathbf u}_{hom},\},\{{\mathbf v},q\}) &= F(\{{\mathbf v},q\}), \\
+A(\{{\mathbf u}_{hom},p\},\{{\mathbf v},q\})
+  &= ({\mathbf v}, K^{-1}{\mathbf u}_{hom})_\Omega
+  - ({\textrm{div}}\ {\mathbf v}, p)_\Omega - (q,{\textrm{div}}\ {\mathbf u}_{hom})_\Omega \\
+F(\{{\mathbf v},q\})
+  &= -(p^D,{\mathbf v}\cdot {\mathbf n})_{\partial\Omega}
+     -({\mathbf v}, K^{-1}{\mathbf u}_{inhom})_\Omega\\
+     &\quad+ (q,{\textrm{div}}\ {\mathbf u}_{inhom})_\Omega - (f,q)_\Omega
+\end{align*}
+\end{solution}
 \end{Problem}
 
 
@@ -630,7 +707,7 @@ Combining these lemmas yields the assumptions of
   applying to the approximation of $\Hdiv(\domain)$ by piecewise
   polynomial functions. This affects in particular continuity
   conditions and the properties of $\ker{B_h}$.
-  
+
   As be before, we will assume that all families of meshes $\mesh_h$
   for $h\to 0$ are shape-regular. We will also assume that meshes are
   regular, unless otherwise stated.
@@ -683,7 +760,7 @@ Combining these lemmas yields the assumptions of
   In \blockref{Lemma}{darcy-reduced-wellposed}, we saw that the
   bilinear form $a(.,.)$ is elliptic only on the kernel of
   $B$. Indeed, for the simplest case with $K\equiv 1$, we conclude
-  that if the uniform estimate for $v_h\in \ker{B_h}$
+  that the uniform estimate for $v_h\in \ker{B_h}$
   \begin{gather*}
     \norm{v_h}^2_{L^2}
     \ge \ellipa \norm{v_h}^2_{\Hdiv}
@@ -741,7 +818,7 @@ Combining these lemmas yields the assumptions of
     & \face_i &\subset \d\cell, \\
     \label{eq:darcy:20}
     \nodal_{2,i}(v) &= \int_\cell v\cdot w_i \dx
-    & w_i &\in \P_{k-1}^2(\cell).
+    & w_i &\in \P_{k-1}^d(\cell).
   \end{xalignat}
 \end{Definition}
 
@@ -749,7 +826,7 @@ Combining these lemmas yields the assumptions of
   In equation~\eqref{eq:darcy:19}, the $\face_i$ are all faces of the
   simplex, that is, three edges in two dimensions and four triangular
   faces in three dimensions.
-  
+
   If the simplex $\cell$ is obtained by affine transformation from the
   reference simplex $\refcell$, the definitions of the space $RT_k$
   directly on the cell $\cell$ and by mapping from $\refcell$
@@ -852,7 +929,7 @@ Combining these lemmas yields the assumptions of
     \begin{split}
       \dim RT_k &= (d+1)\dim\P_k - \dim \P_{k-1}
       \\
-      &= (d^2+kd+d)\frac{(k+d-1)!}{d!k!}.      
+      &= (d^2+kd+d)\frac{(k+d-1)!}{d!k!}.
     \end{split}
   \end{gather}
   In particular,
@@ -960,7 +1037,7 @@ Combining these lemmas yields the assumptions of
  \end{gather}
 
  We also notice that $v\cdot n = \d_{\tau} \phi$, where $\tau$ is the
- tangential vector with the domein $\cell$ on the right. Thus,
+ tangential vector with the domain $\cell$ on the right. Thus,
  $v\in \Hdiv_0(\cell)$ implies $\phi$ is constant on the
  boundary. Since moreover we only use derivatives of $\phi$, we can
  choose $\phi \in H^1_0(\cell)$. Finally, since $v\in RT_{k,0}$, we
@@ -1140,7 +1217,7 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   \begin{gather*}
     q = \Pi_h (\div (I_h v) - \div v).
   \end{gather*}
-  Then, tha left hand side of the equation above becomes
+  Then, the left hand side of the equation above becomes
   $\norm{\div(I_h v) - \Pi_h(\div v)}_\cell^2$. The first integral on
   the right vanishes by testing~\eqref{eq:darcy:20} with
   $\nabla q$ and by testing~\eqref{eq:darcy:29} with $q$,
@@ -1156,7 +1233,7 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   projection. Unfortunately, this is not possible, as the following
   example shows. Meanwhile, we note that the operator $I_h$ is
   well-defined on the space $\tilde V=\Hdiv(\domain) \cap H^s(\domain;\R^d)$
-  any for $s>0$. Thus, if the domain allows for an inf-sup condition
+  for any $s>0$. Thus, if the domain allows for an inf-sup condition
   of the form
   \begin{gather*}
     \inf_{q\in Q}\sup_{v\in \tilde V} \frac{(\div
@@ -1190,7 +1267,7 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
     \domain &= \bigl\{(x,y)\in \R^2 \big\vert
               x^2+y^2<e^{-2} \text{ and } y>0 \bigr\}
     \\
-    \d\domain &= [-e^{-1},e^{-1}]
+    \d\domain &= [-e^{-1},e^{-1}] \times \{0\}
                 \cup \bigl\{ (x,\sqrt{e^{-2}-x^2}) \big\vert
                 x\in (-e^{-1},e^{-1}) \bigr\}
   \end{align*}
@@ -1223,7 +1300,7 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   \begin{gather*}
     \forme(\mu,\phi) = \int_{-e^{-1}}^{e^{-1}} \ln(-\ln\abs x) \d_\tau \phi \dx.
   \end{gather*}
-  If we split $\phi$ into an odd and an even part, the intgral with
+  If we split $\phi$ into an odd and an even part, the integral with
   the even part vanishes, since $\ln(-\ln\abs x)$ is even and the
   derivative is odd. Therefore,
   \begin{gather*}
@@ -1258,7 +1335,7 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   $\refcell$ to the actual mesh cell $\cell$, we have to preserve the
   information whether a vector field is normal or tangential to a
   face. To this end, we recapitulate the basic notation and properties
-  of the transformation of scalar fields and then addthe definition
+  of the transformation of scalar fields and then add the definition
   for vector fields in $\Hdiv(\domain)$.
 \end{intro}
 
@@ -1276,7 +1353,7 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
     \mathrm J(\widehat x) = \det \mathrm D\Phi,
     \qquad
     \mathrm J_n(\widehat x) = J
-    \abs{\mathrm D\Phi^{-T} \widehat\n},    
+    \abs{\mathrm D\Phi^{-T} \widehat\n},
   \end{gather}
 
  The basic relations are for $\widehat x\in\widehat \cell$ and
@@ -1291,7 +1368,7 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   \begin{xalignat*}2
     \int_\cell p \dx &= \int_{\refcell} \widehat p J \dxref
     &
-    \int_{\d\cell} p \ds &= \int_{\d\refcell} \widehat p J_n \dsref
+    \int_{\d\cell} p \ds &= \int_{\d\refcell} \widehat p J_n \dsref.
   \end{xalignat*}
 \end{Notation}
 
@@ -1332,6 +1409,48 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
 
 \begin{Problem}{Piola-transform-integrals}
   Verify \blockref{Lemma}{Piola-transform-integrals}.
+\begin{solution}
+  We use the definitions
+  \begin{align*}
+    p(x) &= \widehat p(\widehat x),&
+    \nabla p(x) &= \mathrm D\Phi^{-T}
+    \bigl[\widehat\nabla\widehat p(\widehat x)\bigr], \\
+    v(x) &= \tfrac1{\mathrm J} \mathrm D\Phi \widehat v(\widehat x), &
+    \nabla v(x) &= \tfrac1{\mathrm J} \mathrm D\Phi
+    \bigl[\widehat\nabla \widehat v(\widehat x)\bigr] \mathrm D\Phi^{-1}, &
+    \div v(x) &= \tfrac1{\mathrm J} \widehat\nabla \cdot
+    \widehat v(\widehat x).
+  \end{align*}
+For the first claim we compute
+  \begin{align*}
+    \int_{\cell} v \cdot \nabla q \dx
+    &= \int_{\refcell}
+       \tfrac1{\mathrm J} \mathrm D\Phi \widehat v(\widehat x) \cdot
+       \mathrm D\Phi^{-T}\bigl[\widehat\nabla\widehat q(\widehat x)\bigr]
+       J \dxref
+    = \int_{\refcell} \widehat v \cdot \widehat \nabla \widehat q \dxref.
+  \end{align*}
+  For the second we get
+  \begin{align*}
+    \int_{\cell} q \div v \dx
+    &= \int_{\refcell}
+       \widehat q(\widehat x)
+       \tfrac1{\mathrm J} \widehat\nabla \cdot \widehat v(\widehat x)
+       J \dxref
+    = \int_{\refcell} \widehat q \widehat \nabla\!\cdot\! \widehat v \dxref,
+  \end{align*}
+  Finally, the last equality holds due to
+  \begin{align*}
+    \int_{\d\cell} q v\cdot\n \ds
+    &= \int_{\cell} \nabla \cdot(q v) \dx
+    = \int_{\cell} v\cdot \nabla q + q\nabla \cdot v \dx \\
+    &= \int_{\refcell} \widehat v\cdot \widehat \nabla \widehat q
+                      + \widehat q \widehat \nabla \cdot \widehat v \dxref
+    = \int_{\refcell}\widehat \nabla \cdot(\widehat q \widehat v) \dxref
+    = \int_{\d\refcell} \widehat q \widehat v\cdot\widehat \n \dsref.
+  \end{align*}
+
+\end{solution}
 \end{Problem}
 
 \begin{remark}
@@ -1351,11 +1470,11 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   \end{gather}
   Its \putindex{node functionals} are
   \begin{xalignat}2
-    \label{eq:darcy:19}
+    %\label{eq:darcy:19}
     \nodal_{1,i,j}(v) &= \int_{\face_i} v\cdot\n \,q_j\ds
     & q_j&\in \Q_k(\face_i)
     \qquad\face_i \subset \d\refcell, \\
-    \label{eq:darcy:20}
+    %\label{eq:darcy:20}
     \nodal_{2,i}(v) &= \int_{\refcell} v\cdot w_i \dx
     & w_i &\in \Q_{k-1,k\ldots k}\times\cdots\times\Q_{k\ldots k,k-1}.
   \end{xalignat}
@@ -1371,7 +1490,7 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
     }_{d\text{ factors}},
     \\
     q(x_1,\dots,x_d) &= \prod_{i=1}^d p_i(x_i)
-    \qquad p_i\in \P_k(\R).    
+    \qquad p_i\in \P_k(\R).
     \end{split}
   \end{gather}
   Similarly, we define \putindex{anisotropic tensor product} polynomials
@@ -1383,7 +1502,7 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
     }_{d\text{ factors}},
     \\
     q(x_1,\dots,x_d) &= \prod_{i=1}^d p_i(x_i)
-    \qquad p_i\in \P_{k_i}(\R).    
+    \qquad p_i\in \P_{k_i}(\R).
     \end{split}
   \end{gather}
 \end{Notation}
