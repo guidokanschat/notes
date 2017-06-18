@@ -45,6 +45,33 @@
   \field{year}{2002}
 \endentry
 
+\entry{AdamsFournier03}{book}{}
+  \name{author}{2}{}{%
+    {{}%
+     {Adams}{A.}%
+     {R.~A.}{R.~A.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Fournier}{F.}%
+     {J.~J.~F.}{J.~J.~F.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Academic Press}%
+  }
+  \strng{namehash}{ARAFJJF1}
+  \strng{fullhash}{ARAFJJF1}
+  \field{labelalpha}{AF03}
+  \field{sortinit}{A}
+  \field{edition}{2nd edition}
+  \field{series}{Pure and Applied Mathematics}
+  \field{title}{Sobolev Spaces}
+  \field{volume}{140}
+  \field{year}{2003}
+\endentry
+
 \entry{ArnoldFalkWinther06acta}{article}{}
   \name{author}{3}{}{%
     {{}%
