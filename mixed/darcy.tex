@@ -1561,6 +1561,38 @@ For the first claim we compute
   The proof of this lemma is exactly the same as the one of \blockref{Lemma}{rt-simplex-1}.
 \end{proof}
 
+\begin{Example}{rt-simplex}
+  The first members of the Raviart-Thomas family on triangles are
+  \begin{center}
+    \begin{tabular}{c@{\hspace{.05\textwidth}}c@{\hspace{.05\textwidth}}c}
+      \includegraphics[width=.28\textwidth]{./fig/rt0-quad.tikz}
+      &
+      \includegraphics[width=.28\textwidth]{./fig/rt1-quad.tikz}
+      &
+      \includegraphics[width=.28\textwidth]{./fig/rt2-quad.tikz}
+      \\[5mm]
+      \includegraphics[width=.28\textwidth]{./fig/q0-p.tikz}
+      &
+      \includegraphics[width=.28\textwidth]{./fig/dgq1-p.tikz}
+      &
+      \includegraphics[width=.28\textwidth]{./fig/dgq2-p.tikz}
+    \end{tabular}
+  \end{center}
+\end{Example}
+
+The construction principle of the Raviart-Thomas element on simplices
+as well as on rectangles and cubes can be seen as adding vector
+polynomials to the velocity space until its divergence is equal to
+$\P_k$ or $\Q_k$. The principle of the BDM elements is the opposite:
+Starting from the polynomial spaces for triangles, we add divergence
+free shape functions until we achieve continuity of the normal
+component over all edges.
+
+\begin{Definition}{bdm-quad}
+  
+\end{Definition}
+
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
