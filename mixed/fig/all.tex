@@ -5,34 +5,50 @@
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{shapes.geometric}
 \input{./tikzsettings}
+
+\newcommand{\showtikz}[2]{\begin{minipage}{#1\textwidth}
+    \begin{center}
+      \includegraphics[width=\textwidth]{./#2.tikz}
+      \\
+      #2
+    \end{center}
+  \end{minipage}
+}
+
 \begin{document}
+
 \includegraphics[width=.24\textwidth]{./triangle.tikz}
 \includegraphics[width=.24\textwidth]{./rectangle.tikz}
 \includegraphics[width=.24\textwidth]{./p-mini-v.tikz}
 \includegraphics[width=.24\textwidth]{./q-mini-v.tikz}
 
-\includegraphics[width=.24\textwidth]{./p0-p.tikz}
-\includegraphics[width=.24\textwidth]{./p1-p.tikz}
-\includegraphics[width=.24\textwidth]{./p2-p.tikz}
-\includegraphics[width=.24\textwidth]{./p3-p.tikz}
+\showtikz{.24}{p0-p}
+\showtikz{.24}{p1-p}
+\showtikz{.24}{p2-p}
+\showtikz{.24}{p3-p}
 
-\includegraphics[width=.24\textwidth]{./p2-v.tikz}
-\includegraphics[width=.24\textwidth]{./p3-v.tikz}
+\showtikz{.24}{p2-v}
+\showtikz{.24}{p3-v}
 
-\includegraphics[width=.24\textwidth]{./q0-p.tikz}
-\includegraphics[width=.24\textwidth]{./q1-p.tikz}
-\includegraphics[width=.24\textwidth]{./q2-p.tikz}
+\showtikz{.24}{q0-p}
+\showtikz{.24}{q1-p}
+\showtikz{.24}{q2-p}
 
-\includegraphics[width=.24\textwidth]{./q2-v.tikz}
-\includegraphics[width=.24\textwidth]{./q-p1-p.tikz}
-\includegraphics[width=.24\textwidth]{./q3-v.tikz}
-\includegraphics[width=.24\textwidth]{./q-p2-p.tikz}
+\showtikz{.24}{q2-v}
+\showtikz{.24}{q-p1-p}
+\showtikz{.24}{q3-v}
+\showtikz{.24}{q-p2-p}
 
-\includegraphics[width=.24\textwidth]{./bdm1-tri.tikz}
-\includegraphics[width=.24\textwidth]{./bdm2-tri.tikz}
-\includegraphics[width=.24\textwidth]{./rt0-tri.tikz}
-\includegraphics[width=.24\textwidth]{./rt1-tri.tikz}
+\showtikz{.24}{bdm1-tri}
+\showtikz{.24}{bdm2-tri}
+\showtikz{.24}{dgp1-p-tri}
+\showtikz{.24}{dgp2-p-tri}
 
+\showtikz{.24}{rt0-tri}
+\showtikz{.24}{rt1-tri}
+\showtikz{.24}{rt2-tri}
+
+\showtikz{.24}{rt0-quad}
 
 \includegraphics[width=.4\textwidth]{./patch1.tikz}
 \includegraphics[width=.4\textwidth]{./patch2.tikz}
@@ -47,9 +63,9 @@
 \includegraphics[width=.3\textwidth]{./q-p2-p.tikz}
 \includegraphics[width=.4\textwidth]{./q-p2-p.tikz}
 
-\includegraphics[width=.2\textwidth]{./bdm2-tri.tikz}
-\includegraphics[width=.3\textwidth]{./bdm2-tri.tikz}
-\includegraphics[width=.4\textwidth]{./bdm2-tri.tikz}
+\fbox{\includegraphics[width=.2\textwidth]{./rt5-tri.tikz}}
+\fbox{\includegraphics[width=.3\textwidth]{./rt5-tri.tikz}}
+\fbox{\includegraphics[width=.4\textwidth]{./rt5-tri.tikz}}
 
 \end{document}
 

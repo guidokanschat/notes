@@ -34,6 +34,7 @@ print.pdf: *.tex
 	pdflatex print
 	pdfcrop print.pdf
 
+slides.pdf: main.pdf
 problems.pdf: main.pdf
 solutions.pdf: main.pdf
 

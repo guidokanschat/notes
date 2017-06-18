@@ -4,17 +4,11 @@
   \coordinate (B) at (2,0);
   \coordinate (AB) at ($(A)!0.5!(B)$);
   \coordinate (C) at ($(AB)!2*sin(60)!90:(B)$);
-  \coordinate (AAB) at ($(A)!0.33!(B)$);
-  \coordinate (ABB) at ($(A)!0.67!(B)$);
-  \coordinate (AAC) at ($(A)!0.33!(C)$);
-  \coordinate (ACC) at ($(A)!0.67!(C)$);
-  \coordinate (BBC) at ($(B)!0.33!(C)$);
-  \coordinate (BCC) at ($(B)!0.67!(C)$);
   \coordinate (center) at ($(AB)!.333!(C)$);
 
   \draw (A) -- (B) -- (C) -- cycle;
 
-  \pic at (0,0) [transform shape] {pfem=3/veloxy};
+  \pic at (center) [transform shape] {tripile=2/pressure};
 \end{tikzpicture}
 
 

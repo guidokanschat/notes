@@ -1,9 +1,26 @@
+\tikzset{velox/.style={color=black,draw,fill=red,thick,%
+    shape=diamond,aspect=.4,
+    inner sep=1.3pt,transform shape}}
 \tikzset{veloxy/.style={color=black,draw,fill=red,thick,%
     shape=star,star points=4,star point ratio=2.2,
     inner sep=1.3pt,transform shape}}
 \tikzset{pressure/.style={color=black,draw,fill=cyan,thick,%
     shape=circle,inner sep=2pt,transform shape}}
 \tikzset{velo/.style={transform shape,double=red,arrows={-Stealth[open,fill=red]}}}
+
+%% Macros for drawing degrees of freedom for different shapes/elements.
+%% Arguments are always:
+%%   #1: Starting point
+%%   #2: End point
+%%   #3: polynomial degree
+%%   #4: node settings
+
+\tikzset{pics/edgenormal/.style args={#1/#2/#3/#4}{%
+    code={%
+      \draw #1 -- #2
+      node foreach \x [evaluate=\x as \xval] in {1,...,#3} [#4,sloped,pos=\xval/(#3+1)] {};
+      }
+}}
 
 
 %% Macros for drawing degrees of freedom for different shapes/elements.
@@ -25,6 +42,7 @@
       }
     }
 }}
+
 
 \tikzset{pics/pfem/.style args={#1/#2}{%
     code={%

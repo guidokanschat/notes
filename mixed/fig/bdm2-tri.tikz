@@ -1,5 +1,5 @@
 \begin{tikzpicture}[thick]
-  \path[use as bounding box] (-.3,-.4) -- (2.3,-.4) -- (2.3,2.) -- (-.3,2.) -- cycle;
+  \path[use as bounding box] (-.1,-.12) -- (2.1,-.12) -- (2.1,1.8) -- (-.1,1.8) -- cycle;
   \coordinate (A) at (0,0);
   \coordinate (B) at (2,0);
   \coordinate (AB) at ($(A)!0.5!(B)$);
@@ -10,15 +10,9 @@
 
   \draw (A) -- (B) -- (C) -- cycle;
 
-  \foreach \i in {0.25,0.5,0.75}
-  {
-    \coordinate (PAB) at ($(A)!\i!(B)$);
-    \draw[velo] (PAB) -- ($(PAB)!4mm!90:(A)$);
-    \coordinate (PAC) at ($(A)!\i!(C)$);
-    \draw[velo] (PAC) -- ($(PAC)!4mm!90:(C)$);
-    \coordinate (PBC) at ($(B)!\i!(C)$);
-    \draw[velo] (PBC) -- ($(PBC)!4mm!90:(B)$);
-  }
+  \pic at (0,0) [transform shape] {edgenormal=(A)/(B)/3/velox};
+  \pic at (0,0) [transform shape] {edgenormal=(B)/(C)/3/velox};
+  \pic at (0,0) [transform shape] {edgenormal=(C)/(A)/3/velox};
 
   \node [veloxy] at (center) {};
   

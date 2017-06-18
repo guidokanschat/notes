@@ -1,4 +1,5 @@
 \begin{tikzpicture}[thick]
+  \path[use as bounding box] (-.12,-.12) -- (2.12,-.12) -- (2.12,2.12) -- (-.12,2.12) -- cycle;
   \coordinate (A) at (0,0);
   \coordinate (B) at (2,0);
   \coordinate (C) at (0,2);

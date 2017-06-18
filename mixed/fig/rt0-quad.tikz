@@ -4,9 +4,14 @@
   \coordinate (B) at (2,0);
   \coordinate (C) at (0,2);
   \coordinate (D) at (2,2);
+
   \draw (A) -- (B) -- (D) -- (C) -- cycle;
 
-  \pic at (0,0) [transform shape] {qfem=2/veloxy};
+  \pic at (0,0) [transform shape] {edgenormal=(A)/(B)/1/velox};
+  \pic at (0,0) [transform shape] {edgenormal=(B)/(D)/1/velox};
+  \pic at (0,0) [transform shape] {edgenormal=(D)/(C)/1/velox};
+  \pic at (0,0) [transform shape] {edgenormal=(C)/(A)/1/velox};
+
 \end{tikzpicture}
 
 

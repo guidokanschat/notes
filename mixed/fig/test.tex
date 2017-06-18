@@ -2,27 +2,32 @@
 \usepackage{tikz,tikzscale}
 \usetikzlibrary{math}
 
-\tikzset{pics/tripile/.style args={#1}{
+\tikzset{pics/tpic/.style args={#1}{
     code={
-      \coordinate (top) at (0,#1);
-      \foreach \i in{0,...,#1}
-      \foreach \j in{0,...,\i}
-      {
-        \tikzmath{
-          \y = .3*(2/3*#1-\i)*cos(30);
-          \x = .3*(\i/2-\j);
-        }
-        \draw (\x,\y) circle (3pt);
+      \draw (0,0) -- (5,5)
+      node foreach \x in {1,...,#1} [circle,draw,pos=\x/(#1+1)] {\x};
       }
     }
-}}
+}
 
 \begin{document}
 \thispagestyle{empty}
-\includegraphics[width=.2\textwidth]{test.tikz}
-\includegraphics[width=.3\textwidth]{test.tikz}
-\includegraphics[width=.4\textwidth]{test.tikz}
 
+\begin{tikzpicture}
+  \draw (0,0) node[circle,draw] {} -- (5,0)
+  node[circle,draw,pos=0.5] {};
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \draw (0,0) -- (5,0)
+  node foreach \x in {1,...,4} [circle,draw,pos=\x/5] {\x};
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \pic at (0,0) {tpic=5};
+  \pic at (0,1) {tpic=2};
+  \pic at (0,2) {tpic=1};
+\end{tikzpicture}
 \end{document}
 
 %%% Local Variables:

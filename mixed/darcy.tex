@@ -1,5 +1,5 @@
 
-\section{Modelling diffusion problems}
+\section{Modeling diffusion problems}
 
 \begin{intro}
   Diffusion problems arise when a balance law, for instance for mass
@@ -21,10 +21,10 @@
   \end{enumerate}
   In formulas, we have
   \begin{gather*}
-    \tfrac{d}{dt} m = \int_V g\dx - \oint_{\d V} J\cdot \n \ds,
+    \tfrac{d}{d t} m = \int_V g\dx - \oint_{\d V} J\cdot \n \ds,
   \end{gather*}
   also known as \define{Reynolds transport theorem}. Here, $J$ is the
-  \define{flux}. The exact form of the flux will be modelled later.
+  \define{flux}. The exact form of the flux will be modeled later.
   The formula above is somewhat unwieldy, since it combines volume and
   surface integrals. Therefore, we apply the \putindex{Gauss theorem}
   to obtain
@@ -119,7 +119,7 @@
       &=& 0 \\
       \displaystyle\int_\domain \div u q\dx
       &&&=&
-      \displaystyle\int_\domain fq\dx.
+      \displaystyle\int_\domain f q\dx.
     \end{matrix}
   \end{gather}
   It turns out, we have two immediate options: first, we can integrate
@@ -129,7 +129,7 @@
   we obtain the equation
   \begin{gather*}
     -\int_\domain u\cdot\nabla q\dx + \int_{\d\domain} u\cdot\n q \ds
-    = \int_\domain fq\dx.
+    = \int_\domain f q\dx.
   \end{gather*}
   Applying the boundary condition, we first follow the recipe of
   elliptic partial differential equations and implement $p=p^D$ as an
@@ -227,7 +227,7 @@
 
 Using the space $\Hdiv$ and for the moment the assumption, that
 $\Hdiv_0$ and $\Hdiv_\Gamma$ serve to set boundary conditions, we can
-write down our second weak fromulation of the mixed diffusion problem:
+write down our second weak formulation of the mixed diffusion problem:
 
 \begin{Definition}{dual-mixed}
   The \define{dual mixed formulation} of the mixed diffusion
@@ -561,7 +561,7 @@ Therefore, $\d_n p\in H^{-1/2}(\d\domain)$.
 \subsection{Well-posedness of the dual mixed formulation}
 
 \begin{intro}
-  In order to apply the theorey from
+  In order to apply the theory from
   Chapter~\ref{sec:mixed-wellposedness}, we have to define the
   abstract bilinear forms $a(.,.)$ and $b(.,.)$. We read from the dual
   mixed formulation
@@ -610,7 +610,7 @@ F(\{{\mathbf v},q\})
 
 There doesn't exist a continuous trace operator
 \begin{align*}
- \Vert Tf \Vert_{L^2(\partial \Omega)}\le C \Vert f \Vert_{L^2(\Omega)}
+ \Vert T f \Vert_{L^2(\partial \Omega)}\le C \Vert f \Vert_{L^2(\Omega)}
 \end{align*}
 in $L^2(\Omega)$.
 
@@ -625,7 +625,7 @@ A(\{{\mathbf u},p\},\{{\mathbf v},q\}) &=
 F(\{{\mathbf v},q\}) &= -(p^D,{\mathbf v}\cdot {\mathbf n})_{\partial\Omega} -(f,q)_\Omega
 \end{align*}
 where $V_0$ and $Q_0$ are the homogeneous spaces corresponding to $V$ and $Q$.
-Here, we are enforcing $u\cdot n = u^N \cdot n$ strongly. Again, the trace opreator can be used
+Here, we are enforcing $u\cdot n = u^N \cdot n$ strongly. Again, the trace operator can be used
 for the lifting and the equations for the homogeneous part read
 \begin{align*}
 A(\{{\mathbf u}_{hom},\},\{{\mathbf v},q\}) &= F(\{{\mathbf v},q\}), \\
@@ -844,14 +844,18 @@ Combining these lemmas yields the assumptions of
 \begin{Example}{rt-simplex}
   The first members of the Raviart-Thomas family on triangles are
   \begin{center}
-    \begin{tabular}{c@{\hspace{.2\textwidth}}c}
-      \includegraphics[width=.3\textwidth]{./fig/rt0-tri.tikz}
+    \begin{tabular}{c@{\hspace{.05\textwidth}}c@{\hspace{.05\textwidth}}c}
+      \includegraphics[width=.28\textwidth]{./fig/rt0-tri.tikz}
       &
-      \includegraphics[width=.3\textwidth]{./fig/p0-p.tikz}
+      \includegraphics[width=.28\textwidth]{./fig/rt1-tri.tikz}
+      &
+      \includegraphics[width=.28\textwidth]{./fig/rt2-tri.tikz}
       \\[5mm]
-      \includegraphics[width=.3\textwidth]{./fig/rt1-tri.tikz}
+      \includegraphics[width=.28\textwidth]{./fig/p0-p.tikz}
       &
-      \includegraphics[width=.3\textwidth]{./fig/dgp1-p-tri.tikz}
+      \includegraphics[width=.28\textwidth]{./fig/dgp1-p-tri.tikz}
+      &
+      \includegraphics[width=.28\textwidth]{./fig/dgp2-p-tri.tikz}
     \end{tabular}
   \end{center}
 \end{Example}
@@ -884,14 +888,14 @@ Combining these lemmas yields the assumptions of
   $v_0\in \P_k^d$ and $p_k\in \P_k$. Clearly, $\div v_0 \in
   \P_{k-1}$. On the other hand,
   \begin{gather*}
-    \div (xp_k) = \div x p_k + x\nabla p_k = d p_k + x q,
+    \div (x p_k) = \div x p_k + x\nabla p_k = d p_k + x q,
   \end{gather*}
-  where $q\in \P_{k-1}^d$. Therefore, $\div(xp_k) \in \P_k$ and so is
+  where $q\in \P_{k-1}^d$. Therefore, $\div(x p_k) \in \P_k$ and so is
   $\div v$.
 
   For a given face $\face$, choose $x_0\in\face$. Every other point
   $x\in \F$ can be represented as $x=x_0+ \tau$, where $\tau$ is a
-  vector tangential to $\face$. Therfore, using the same splitting of
+  vector tangential to $\face$. Therefore, using the same splitting of
   $v$ as above
   \begin{gather*}
     v\cdot\n = v_0\cdot\n + p_k (x\cdot\n)
@@ -909,16 +913,16 @@ Combining these lemmas yields the assumptions of
   divergence is injective. For simplicity, we assume $x_c=0$. Then,
   for any $p\in \P_k$
   \begin{align*}
-    \int_\cell \div (xp)p \dx
+    \int_\cell \div (x p)p \dx
     &= d \int_\cell p^2\dx + \int_\cell x \cdot\nabla p p\dx
     \\
     &= d \int_\cell p^2 + \frac12 \int_\cell x \cdot\nabla(p^2)\dx
     \\
     &= \frac d2 \int_\cell p^2 + \frac12 \int_{\d\cell} (x\cdot\n) p^2\ds.
   \end{align*}
-  Thus, $\div(xp) = 0$ implies $p=0$ and thus $xp=0$, which proves the
+  Thus, $\div(x p) = 0$ implies $p=0$ and thus $x p=0$, which proves the
   injectivity. Using the same idea, we see that $\div v=0$ for
-  $v=v_0+xp$ implies $xp=0$ and thus $v=v_0\in\P_k^d$.
+  $v=v_0+x p$ implies $x p=0$ and thus $v=v_0\in\P_k^d$.
 \end{proof}
 
 \begin{Lemma}{rt-simplex-dimension}
@@ -929,7 +933,7 @@ Combining these lemmas yields the assumptions of
     \begin{split}
       \dim RT_k &= (d+1)\dim\P_k - \dim \P_{k-1}
       \\
-      &= (d^2+kd+d)\frac{(k+d-1)!}{d!k!}.
+      &= (d^2+k d+d)\frac{(k+d-1)!}{d!k!}.
     \end{split}
   \end{gather}
   In particular,
@@ -994,10 +998,10 @@ Combining these lemmas yields the assumptions of
     \\
     &= (d+1)\frac{(k+d-1)!}{(d-1)!k!}
       + d\frac{(k+d-1)!}{d! (k-1)!}\\
-    &= (d^2+d+kd)\frac{(k+d-1)!}{d!k!}
+    &= (d^2+d+k d)\frac{(k+d-1)!}{d!k!}
   \end{align*}
   Thus, the number of node functionals is equal to the dimension of
-  $RT_k$. Therefore, every elemtent in $RT_k$ is uniquely determined
+  $RT_k$. Therefore, every element in $RT_k$ is uniquely determined
   by the node functionals if and only if for $v\in RT_k$
   \begin{gather*}
     \left\{
@@ -1092,9 +1096,9 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
     \begin{tabular}{c@{\hspace{.2\textwidth}}c}
       \includegraphics[width=.3\textwidth]{./fig/bdm1-tri.tikz}
       &
-      \includegraphics[width=.3\textwidth]{./fig/p0-p.tikz}
-      \\[5mm]
       \includegraphics[width=.3\textwidth]{./fig/bdm2-tri.tikz}
+      \\[5mm]
+      \includegraphics[width=.3\textwidth]{./fig/p0-p.tikz}
       &
       \includegraphics[width=.3\textwidth]{./fig/dgp1-p-tri.tikz}
     \end{tabular}
@@ -1155,11 +1159,9 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
     \qquad i,j=1,\dots,n.
   \end{gather*}
   Then, the operator $I_h\colon C^\infty(\cell)\to \mathcal P_\cell$
-  such that for any $f\in C^\infty(\cell)$ there holds
+  defined for any $f\in C^\infty(\cell)$ by
   \begin{gather}
-    \nodal_i I_h(f) = \nodal_i(f)
-    \qquad
-    i=1,\dots,n,
+    I_h(f) = \sum_{i=1}^n \nodal_i(f) \phi_i,
   \end{gather}
   is called the \define{canonical interpolation} operator. The
   definition applies to vector valued elements replacing
@@ -1323,6 +1325,35 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   \end{gather*}
 \end{example}
 
+\begin{intro}
+  Very much like the construction of Clément for $H^1(\domain)$, we
+  define interpolation operators stable on $\Hdiv(\domain)$ by
+  replacing the face integrals by volume integrals. We only have to
+  make sure we do not destroy conformity with $\Hdiv(\domain)$, in
+  particular continuity of normal components. But, this can be
+  achieved by integrating over both cells adjacent to a face and using
+  this integral for interpolation.
+\end{intro}
+
+\begin{Definition}{hdiv-clement}
+  An $\Hdiv$-stable interpolation operator is obtained from
+  \blockref{Definition}{canonical-interpolation} of the
+  \putindex{canonical interpolation}
+  \begin{enumerate}
+  \item by choosing the standard degrees of freedom for every cell
+    integral as in~\eqref{eq:darcy:20}, ~\eqref{eq:darcy:29},
+    and~\eqref{eq:darcy:30}, and
+  \item by replacing every face integral as in~\eqref{eq:darcy:19}
+    and~\eqref{eq:darcy:28} by integrals of the form
+    \begin{gather}
+      \int_{\face} f\cdot\n \,q \ds
+      \to
+      \int_{\domain_\face} f\cdot \n \,q \dx,
+    \end{gather}
+    where $\domain_\face$ consists of the cells sharing $\face$.
+  \end{enumerate}
+\end{Definition}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Finite elements on quadrilaterals and hexahedra}
@@ -1460,26 +1491,6 @@ For the first claim we compute
   continuity on a reference cell.
 \end{remark}
 
-\begin{Definition}{rt-quad}
-  The \define{Raviart-Thomas element} of degree $k \ge 0$ on the
-  reference cell $\refcell = [-1,1]^d$
-  consists of the polynomial space
-  \begin{gather}
-    \label{eq:darcy:38}
-    RT_{[k]}(\refcell) = \Q_k^d(\refcell) + x\Q_k(\refcell).
-  \end{gather}
-  Its \putindex{node functionals} are
-  \begin{xalignat}2
-    %\label{eq:darcy:19}
-    \nodal_{1,i,j}(v) &= \int_{\face_i} v\cdot\n \,q_j\ds
-    & q_j&\in \Q_k(\face_i)
-    \qquad\face_i \subset \d\refcell, \\
-    %\label{eq:darcy:20}
-    \nodal_{2,i}(v) &= \int_{\refcell} v\cdot w_i \dx
-    & w_i &\in \Q_{k-1,k\ldots k}\times\cdots\times\Q_{k\ldots k,k-1}.
-  \end{xalignat}
-\end{Definition}
-
 \begin{Notation}{tensor-product-polynomials}
   The space of \putindex{tensor product polynomials} $\Q_k$ in $d$ space
   dimensions is
@@ -1507,6 +1518,26 @@ For the first claim we compute
   \end{gather}
 \end{Notation}
 
+\begin{Definition}{rt-quad}
+  The \define{Raviart-Thomas element} of degree $k \ge 0$ on the
+  reference cell $\refcell = [-1,1]^d$
+  consists of the polynomial space
+  \begin{gather}
+    \label{eq:darcy:38}
+    RT_{[k]}(\refcell) = \Q_k^d(\refcell) + x\Q_k(\refcell).
+  \end{gather}
+  Its \putindex{node functionals} are
+  \begin{xalignat}2
+    %\label{eq:darcy:19}
+    \nodal_{1,i,j}(v) &= \int_{\face_i} v\cdot\n \,q_j\ds
+    & q_j&\in \Q_k(\face_i)
+    \qquad\face_i \subset \d\refcell, \\
+    %\label{eq:darcy:20}
+    \nodal_{2,i}(v) &= \int_{\refcell} v\cdot w_i \dx
+    & w_i &\in \Q_{k-1,k\ldots k}\times\cdots\times\Q_{k\ldots k,k-1}.
+  \end{xalignat}
+\end{Definition}
+
 \begin{Lemma}{rt-quad-1}
   There holds
   \begin{gather}
@@ -1525,6 +1556,9 @@ For the first claim we compute
   \end{gather}
 \end{Lemma}
 
+\begin{proof}
+  The proof of this lemma is exactly the same as the one of \blockref{Lemma}{rt-simplex-1}.
+\end{proof}
 
 %%% Local Variables:
 %%% mode: latex

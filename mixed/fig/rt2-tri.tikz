@@ -14,11 +14,11 @@
 
   \draw (A) -- (B) -- (C) -- cycle;
 
-  \pic at (0,0) [transform shape] {edgenormal=(A)/(B)/2/velox};
-  \pic at (0,0) [transform shape] {edgenormal=(B)/(C)/2/velox};
-  \pic at (0,0) [transform shape] {edgenormal=(C)/(A)/2/velox};
+  \pic at (0,0) [transform shape] {edgenormal=(A)/(B)/3/velox};
+  \pic at (0,0) [transform shape] {edgenormal=(B)/(C)/3/velox};
+  \pic at (0,0) [transform shape] {edgenormal=(C)/(A)/3/velox};
 
-  \node [veloxy] at (center) {};
+  \pic at (center) [transform shape] {tripile=1/veloxy};
 \end{tikzpicture}
 
 
