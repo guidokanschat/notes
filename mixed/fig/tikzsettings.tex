@@ -1,6 +1,9 @@
 \tikzset{velox/.style={color=black,draw,fill=red,thick,%
     shape=diamond,aspect=.4,
     inner sep=1.3pt,transform shape}}
+\tikzset{veloy/.style={color=black,draw,fill=red,thick,%
+    shape=diamond,aspect=2.5,
+    inner sep=1.3pt,transform shape}}
 \tikzset{veloxy/.style={color=black,draw,fill=red,thick,%
     shape=star,star points=4,star point ratio=2.2,
     inner sep=1.3pt,transform shape}}
@@ -43,6 +46,20 @@
     }
 }}
 
+\tikzset{pics/tensor/.style args={#1/#2/#3}{%
+    code={%
+      \coordinate (top) at (0,#1);
+      \foreach \i in{0,...,#1}
+      \foreach \j in{0,...,#2}
+      {
+        \tikzmath{
+          \y = 2*(\i+1)/(#1+2);
+          \x = 2*(\j+1)/(#2+2);
+        }
+        \node[#3] at (\x,\y) {};
+      }
+    }
+}}
 
 \tikzset{pics/pfem/.style args={#1/#2}{%
     code={%
