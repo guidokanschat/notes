@@ -1355,6 +1355,40 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   \end{enumerate}
 \end{Definition}
 
+Summarizing the results from this section and applying the general
+theory, in particular \blockref{Corollary}{galerkin-mixed-u-kerb} and
+\blockref{Theorem}{galerkin-mixed-p}, we obtain
+
+\begin{Theorem}{darcy-quasi-best}
+  Let $V_h\subset V\subset \Hdiv(\domain)$ and $Q_h\subset Q$ be
+  chosen such that an $\Hdiv$-stable commuting interpolation operator
+  exists. Then, the solutions $(u,p) \in V\times Q$ and
+  $(u_h,p_h) \in V_h\times Q_h$ admit the \putindex{quasi-optimality}
+  estimates
+  \begin{align}
+    \norm{u-u_h}_{\Hdiv} & \le c_1 \inf_{v\in V_h} \norm{u-v_h}_{\Hdiv} \\
+    \norm{p-p_h}_{L^2} & \le c_2 \inf_{v\in V_h} \norm{u-v_h}_{\Hdiv}
+                         + c_3 \inf_{q\in Q_h} \norm{p-q_h}_{L^2}.
+  \end{align}
+\end{Theorem}
+
+\begin{Corollary}{darcy-convergence}
+  The elements $RT_k$ and $BDM_{k+1}$ with their matching pressure
+  space $\P_k$ admit the error estimates
+  \begin{align}
+    \norm{u-u_h}_{L^2} &\le c h^{k+1} \snorm{u}_{H^{k+1,\text{div}}} \\
+    \norm{\div u-\div u_h}_{L^2} &\le c h^{k+1} \snorm{u}_{H^{k+1,\text{div}}} \\
+    \norm{u-u_h}_{L^2} &\le c h^{k+1}
+                         \bigl(\snorm{u}_{H^{k+1,\text{div}}}
+    + \snorm{p}_{H^{k+1}} \bigr),
+  \end{align}
+  where
+  \begin{gather}
+    \snorm{u}_{H^{k+1,\text{div}}}^2 = \snorm{u}_{H^{k+1}}^2
+    + \snorm{\div u}_{H^{k+1}}^2.
+  \end{gather}
+\end{Corollary}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Finite elements on quadrilaterals and hexahedra}
@@ -1561,8 +1595,8 @@ For the first claim we compute
   The proof of this lemma is exactly the same as the one of \blockref{Lemma}{rt-simplex-1}.
 \end{proof}
 
-\begin{Example}{rt-simplex}
-  The first members of the Raviart-Thomas family on triangles are
+\begin{Example}{rt-quad}
+  The first members of the Raviart-Thomas family on quadrilaterals are
   \begin{center}
     \begin{tabular}{c@{\hspace{.05\textwidth}}c@{\hspace{.05\textwidth}}c}
       \includegraphics[width=.28\textwidth]{./fig/rt0-quad.tikz}
@@ -1586,11 +1620,110 @@ polynomials to the velocity space until its divergence is equal to
 $\P_k$ or $\Q_k$. The principle of the BDM elements is the opposite:
 Starting from the polynomial spaces for triangles, we add divergence
 free shape functions until we achieve continuity of the normal
-component over all edges.
+component over all edges. We give their definitions on squares and
+cubes.
 
 \begin{Definition}{bdm-quad}
-  
+  The \putindex{BDM element} of degree $k\ge 1$ on the reference cell
+  $\refcell = [-1,1]^2$ consists of the polynomial space
+  \begin{gather}
+    BDM_{[k]} = \P_k^2 \oplus
+    \operatorname{span}\bigl\{\curl(x^{k+1}y),\curl(x y^{k+1}\bigr\}.
+  \end{gather}
+  Its \putindex{node functionals} are
+  \begin{xalignat}2
+    %\label{eq:darcy:19}
+    \nodal_{1,i,j}(v) &= \int_{\face_i} v\cdot\n \,q_j\ds
+    & q_j&\in \P_k(\face_i)
+    \qquad\face_i \subset \d\refcell, \\
+    %\label{eq:darcy:20}
+    \nodal_{2,i}(v) &= \int_{\refcell} v\cdot w_i \dx
+    & w_i &\in \P_{k-2}^2.
+  \end{xalignat}
 \end{Definition}
+
+\begin{Example}{bdm-quad}
+  The first members of the Brezzi-Douglas-Marini family on
+  quadrilaterals are
+  \begin{center}
+    \begin{tabular}{c@{\hspace{.05\textwidth}}c@{\hspace{.05\textwidth}}c}
+      \includegraphics[width=.28\textwidth]{./fig/bdm1-quad.tikz}
+      &
+      \includegraphics[width=.28\textwidth]{./fig/bdm2-quad.tikz}
+      &
+      \includegraphics[width=.28\textwidth]{./fig/bdm3-quad.tikz}
+      \\[5mm]
+      \includegraphics[width=.28\textwidth]{./fig/q0-p.tikz}
+      &
+      \includegraphics[width=.28\textwidth]{./fig/q-p1-p.tikz}
+      &
+      \includegraphics[width=.28\textwidth]{./fig/q-p2-p.tikz}
+    \end{tabular}
+  \end{center}
+\end{Example}
+
+\begin{Lemma}{bdm-quad}
+  The dimension of the space $BDM_{[k]}$ is
+  \begin{gather}
+    \dim BDM_{[k]} = (k+1)(k+2)+2.
+  \end{gather}
+  The element in \blockref{Definition}{bdm-quad} is unisolvent.
+\end{Lemma}
+
+\begin{Problem}{bdm-quad}
+  Prove \blockref{Lemma}{bdm-quad}.
+\end{Problem}
+
+\begin{Corollary}{darcy-convergence-affine}
+  Let the mesh be such that each cell is obtained by affine
+  transformation from the reference cell $\refcell$. Then,
+  \blockref{Theorem}{darcy-quasi-best} applies and we obtain
+  quasi-bestapproximation.
+\end{Corollary}
+
+\begin{remark}
+  If the mapping of the cells is not affine, we do not have
+  \begin{gather*}
+    \div V_h = Q_h.
+  \end{gather*}
+  Indeed, on each cell, we have
+  \begin{gather}
+    \div V_h = \tfrac1{J} Q_h,
+  \end{gather}
+  where the \putindex{Jacobi determinant} $J$ is not constant. As a
+  consequence, \blockref{Lemma}{commuting-diagram-hdiv} about the
+  commuting diagram property does not apply directly anymore and
+  indeed, approximation may suffer~\cite{ArnoldBoffiFalk02}.
+\end{remark}
+
+\begin{remark}
+  Degrees of freedom in this section have been written as moments with
+  respect to polynomials in $\P_k$ or $\Q_k$, which is natural in this
+  context and allows for an easy proof of the commutating diagram
+  property of the \putindex{Fortin projection}. On the other hand,
+  degrees of freedom based on point interpolation are sometimes more
+  natural for the implementation.
+
+  In one dimension, for instance for the integration over edges, we
+  realize that
+  \begin{gather*}
+    \nodal_{1,i,j} (v) = \int_{\face} v\cdot\n \,q_j \ds
+    = \sum_{\ell=1}^{k+1} \omega_\ell v(x_\ell)\cdot\n\,q(x_\ell),
+  \end{gather*}
+  for any Gauss-Legendre or Gauss-Lobatto quadrature rule on
+  $\face$. What was left unspecified in the definition of the element
+  was the choice of a basis $\{q_j\}$ for $\P_k$. From the point of
+  view of moments, it is natural to choose Legendre polynomials as a
+  basis. But, we can also choose the basis which is orthogonal with
+  respect to the quadrature rule, which is up to the weights a
+  Lagrange basis. Thus, we can transform the moment degrees of freedom
+  back to interpolating degrees of freedom easily.
+  
+  This construction extends automaitcally to tensor product space
+  $\Q_k$. For polynomials space $\P_k$, suitable quadrature sets on
+  triangles and quadrilaterals must be constructed.
+\end{remark}
+
 
 
 %%% Local Variables:

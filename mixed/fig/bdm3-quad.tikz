@@ -1,0 +1,23 @@
+\begin{tikzpicture}[thick]
+  \path[use as bounding box] (-.12,-.12) -- (2.12,-.12) -- (2.12,2.12) -- (-.12,2.12) -- cycle;
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (2,0);
+  \coordinate (C) at (0,2);
+  \coordinate (D) at (2,2);
+  \coordinate (center) at ($(A)!0.5!(D)$);
+
+  \draw (A) -- (B) -- (D) -- (C) -- cycle;
+
+  \pic at (0,0) [transform shape] {edgenormal=(A)/(B)/4/velox};
+  \pic at (0,0) [transform shape] {edgenormal=(B)/(D)/4/velox};
+  \pic at (0,0) [transform shape] {edgenormal=(D)/(C)/4/velox};
+  \pic at (0,0) [transform shape] {edgenormal=(C)/(A)/4/velox};
+
+  \pic at (center) [transform shape] {tripile=1/veloxy};
+\end{tikzpicture}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "all"
+%%% End:
