@@ -845,17 +845,17 @@ Combining these lemmas yields the assumptions of
   The first members of the Raviart-Thomas family on triangles are
   \begin{center}
     \begin{tabular}{c@{\hspace{.05\textwidth}}c@{\hspace{.05\textwidth}}c}
-      \includegraphics[width=.28\textwidth]{./fig/rt0-tri.tikz}
+      \includegraphics[width=.25\textwidth]{./fig/rt0-tri.tikz}
       &
-      \includegraphics[width=.28\textwidth]{./fig/rt1-tri.tikz}
+      \includegraphics[width=.25\textwidth]{./fig/rt1-tri.tikz}
       &
-      \includegraphics[width=.28\textwidth]{./fig/rt2-tri.tikz}
+      \includegraphics[width=.25\textwidth]{./fig/rt2-tri.tikz}
       \\[5mm]
-      \includegraphics[width=.28\textwidth]{./fig/p0-p.tikz}
+      \includegraphics[width=.25\textwidth]{./fig/p0-p.tikz}
       &
-      \includegraphics[width=.28\textwidth]{./fig/dgp1-p-tri.tikz}
+      \includegraphics[width=.25\textwidth]{./fig/dgp1-p-tri.tikz}
       &
-      \includegraphics[width=.28\textwidth]{./fig/dgp2-p-tri.tikz}
+      \includegraphics[width=.25\textwidth]{./fig/dgp2-p-tri.tikz}
     \end{tabular}
   \end{center}
 \end{Example}
@@ -1094,13 +1094,13 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   The first members of the BDM family on triangles are
   \begin{center}
     \begin{tabular}{c@{\hspace{.2\textwidth}}c}
-      \includegraphics[width=.3\textwidth]{./fig/bdm1-tri.tikz}
+      \includegraphics[width=.25\textwidth]{./fig/bdm1-tri.tikz}
       &
-      \includegraphics[width=.3\textwidth]{./fig/bdm2-tri.tikz}
+      \includegraphics[width=.25\textwidth]{./fig/bdm2-tri.tikz}
       \\[5mm]
-      \includegraphics[width=.3\textwidth]{./fig/p0-p.tikz}
+      \includegraphics[width=.25\textwidth]{./fig/p0-p.tikz}
       &
-      \includegraphics[width=.3\textwidth]{./fig/dgp1-p-tri.tikz}
+      \includegraphics[width=.25\textwidth]{./fig/dgp1-p-tri.tikz}
     \end{tabular}
   \end{center}
 \end{Example}
@@ -1416,10 +1416,10 @@ theory, in particular \blockref{Corollary}{galerkin-mixed-u-kerb} and
   \begin{gather}
     \mathrm D\Phi(\widehat x) = \Bigl(\d_j\Phi_i\Bigr),
     \qquad
-    \mathrm J(\widehat x) = \det \mathrm D\Phi,
+    \mathrm J(\widehat x) = \det \mathrm D\Phi(\widehat x),
     \qquad
     \mathrm J_n(\widehat x) = J
-    \abs{\mathrm D\Phi^{-T} \widehat\n},
+    \abs{\mathrm D\Phi^{-T}(\widehat x) \widehat\n},
   \end{gather}
 
  The basic relations are for $\widehat x\in\widehat \cell$ and
@@ -1427,8 +1427,8 @@ theory, in particular \blockref{Corollary}{galerkin-mixed-u-kerb} and
   \begin{gather}
     x = \Phi(\widehat x),
     \qquad p(x) = \widehat p(\widehat x)
-    \qquad \nabla p(x) = \mathrm D\Phi^{-T}
-    \bigl[\widehat\nabla\widehat p(\widehat x)\bigr].
+    \qquad \nabla p(x) = \mathrm D\Phi^{-T}(\widehat x)
+    \widehat\nabla\widehat p(\widehat x).
   \end{gather}
   Integrals transform as
   \begin{xalignat*}2
@@ -1443,7 +1443,7 @@ theory, in particular \blockref{Corollary}{galerkin-mixed-u-kerb} and
     transformation of a vector field under the mapping
   $\Phi\colon\refcell\to\cell$ is the mapping
   \begin{gather}
-    v(x) = \tfrac1{\mathrm J} \mathrm D\Phi \widehat v(\widehat x)
+    v(x) = \tfrac1{\mathrm J} \mathrm D\Phi \widehat v(\widehat x).
   \end{gather}
   There holds
   \begin{gather}
@@ -1599,17 +1599,17 @@ For the first claim we compute
   The first members of the Raviart-Thomas family on quadrilaterals are
   \begin{center}
     \begin{tabular}{c@{\hspace{.05\textwidth}}c@{\hspace{.05\textwidth}}c}
-      \includegraphics[width=.28\textwidth]{./fig/rt0-quad.tikz}
+      \includegraphics[width=.22\textwidth]{./fig/rt0-quad.tikz}
       &
-      \includegraphics[width=.28\textwidth]{./fig/rt1-quad.tikz}
+      \includegraphics[width=.22\textwidth]{./fig/rt1-quad.tikz}
       &
-      \includegraphics[width=.28\textwidth]{./fig/rt2-quad.tikz}
+      \includegraphics[width=.22\textwidth]{./fig/rt2-quad.tikz}
       \\[5mm]
-      \includegraphics[width=.28\textwidth]{./fig/q0-p.tikz}
+      \includegraphics[width=.22\textwidth]{./fig/q0-p.tikz}
       &
-      \includegraphics[width=.28\textwidth]{./fig/dgq1-p.tikz}
+      \includegraphics[width=.22\textwidth]{./fig/dgq1-p.tikz}
       &
-      \includegraphics[width=.28\textwidth]{./fig/dgq2-p.tikz}
+      \includegraphics[width=.22\textwidth]{./fig/dgq2-p.tikz}
     \end{tabular}
   \end{center}
 \end{Example}
@@ -1647,17 +1647,17 @@ cubes.
   quadrilaterals are
   \begin{center}
     \begin{tabular}{c@{\hspace{.05\textwidth}}c@{\hspace{.05\textwidth}}c}
-      \includegraphics[width=.28\textwidth]{./fig/bdm1-quad.tikz}
+      \includegraphics[width=.22\textwidth]{./fig/bdm1-quad.tikz}
       &
-      \includegraphics[width=.28\textwidth]{./fig/bdm2-quad.tikz}
+      \includegraphics[width=.22\textwidth]{./fig/bdm2-quad.tikz}
       &
-      \includegraphics[width=.28\textwidth]{./fig/bdm3-quad.tikz}
+      \includegraphics[width=.22\textwidth]{./fig/bdm3-quad.tikz}
       \\[5mm]
-      \includegraphics[width=.28\textwidth]{./fig/q0-p.tikz}
+      \includegraphics[width=.22\textwidth]{./fig/q0-p.tikz}
       &
-      \includegraphics[width=.28\textwidth]{./fig/q-p1-p.tikz}
+      \includegraphics[width=.22\textwidth]{./fig/q-p1-p.tikz}
       &
-      \includegraphics[width=.28\textwidth]{./fig/q-p2-p.tikz}
+      \includegraphics[width=.22\textwidth]{./fig/q-p2-p.tikz}
     \end{tabular}
   \end{center}
 \end{Example}
