@@ -1287,7 +1287,8 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
     \mu(x) = \frac1{x\ln \abs{x}} \times
     \begin{cases}
       1 & x\in (-e^{-1},0) \\
-      -1& x\in (0,e^{-1}).
+      -1& x\in (0,e^{-1})\\
+       0& x\not\in (-e^{-1},e^{-1}).
     \end{cases}
   \end{gather*}
   Both integrals
@@ -1378,7 +1379,7 @@ theory, in particular \blockref{Corollary}{galerkin-mixed-u-kerb} and
   \begin{align}
     \norm{u-u_h}_{L^2} &\le c h^{k+1} \snorm{u}_{H^{k+1,\text{div}}} \\
     \norm{\div u-\div u_h}_{L^2} &\le c h^{k+1} \snorm{u}_{H^{k+1,\text{div}}} \\
-    \norm{u-u_h}_{L^2} &\le c h^{k+1}
+    \norm{p-p_h}_{L^2} &\le c h^{k+1}
                          \bigl(\snorm{u}_{H^{k+1,\text{div}}}
     + \snorm{p}_{H^{k+1}} \bigr),
   \end{align}
@@ -1754,7 +1755,7 @@ cubes.
   Lagrange basis. Thus, we can transform the moment degrees of freedom
   back to interpolating degrees of freedom easily.
   
-  This construction extends automaitcally to tensor product space
+  This construction extends automatically to tensor product space
   $\Q_k$. For polynomials space $\P_k$, suitable quadrature sets on
   triangles and quadrilaterals must be constructed.
 \end{remark}
