@@ -1693,8 +1693,43 @@ cubes.
   where the \putindex{Jacobi determinant} $J$ is not constant. As a
   consequence, \blockref{Lemma}{commuting-diagram-hdiv} about the
   commuting diagram property does not apply directly anymore and
-  indeed, approximation may suffer~\cite{ArnoldBoffiFalk02}.
+  indeed, approximation may
+  suffer~\cite{ArnoldBoffiFalk05}. In particular, it
+  is shown there that for the $RT_{[k]}$ on general
+  quadrilateral meshes, which do \emph{not} converge to affine meshes
+  as $h\to0$, there holds
+  \begin{align*}
+    \inf_{v_h\in V_h}\norm{u-v_h} &= \mathcal O(h^{k+1}), \\
+    \inf_{v_h\in V_h}\norm{\div u-\div v_h} &= \mathcal O(h^{k}).
+  \end{align*}
+  The optimal approximation of the divergence can be recovered by
+  enriching the space like the Arnold-Boffi-Falk element below.
 \end{remark}
+
+\begin{Definition}{abf-quad}
+  The \define{Arnold-Boffi-Falk element} of degree $k \ge 0$ on the
+  reference cell $\refcell = [-1,1]^2$
+  consists of the polynomial space
+  \begin{gather}
+    \label{eq:darcy:38}
+    ABF_k(\refcell) = \Q_{k+2,k}\times \Q_{k,k+2}
+  \end{gather}
+  Its \putindex{node functionals} are
+  \begin{xalignat}2
+    %\label{eq:darcy:19}
+    \nodal_{1,i,j}(v) &= \int_{\face_i} v\cdot\n \,q_j\ds
+    & q_j&\in \Q_k(\face_i)
+    \qquad\face_i \subset \d\refcell, \\
+    %\label{eq:darcy:20}
+    \nodal_{2,i}(v) &= \int_{\refcell} v\cdot w_i \dx
+    & w_i &\in \Q_{k-1,k}\times\cdots\times\Q_{k,k-1}, \\
+    \nodal_{3,x,i}(v) &= \int_{\refcell} \div v (x^iy^{k+1})
+    & i&=1,\dots,k,\\
+    \nodal_{3,y,i}(v) &= \int_{\refcell} \div v (x^{k+1}y^i)
+    & i&=1,\dots,k.
+  \end{xalignat}
+\end{Definition}
+
 
 \begin{remark}
   Degrees of freedom in this section have been written as moments with
