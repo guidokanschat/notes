@@ -1,16 +1,21 @@
-\section{Interior penalty methods}
-\label{sec:interior-penalty}
+
+% \begin{intro}
+%   In this section we extend the weakening of continuity, which we
+%   explored for boundary values in Section~\ref{sec:nitsches-method}
+%   using Nitsche's method to interior interfaces between mesh
+%   cells. While the methods obtained may look much more complicated,
+%   the mathematical analysis is completely analogue to that
+%   section. Thus, we can be fairly brief.
+% \end{intro}
 
 \begin{intro}
-  In this section we extend the weakening of continuity, which we
-  explored for boundary values in Section~\ref{sec:nitsches-method}
-  using Nitsche's method to interior interfaces between mesh
-  cells. While the methods obtained may look much more complicated,
-  the mathematical analysis is completely analogue to that
-  section. Thus, we can be fairly brief.
+  We review the basic definitions necessary to describe discontinuous
+  Galerkin (DG) methods. In particular, we need the sets of faces
+  $\F_h$ of a mesh, discontinuous piecewise polynomial spaces and
+  broken integrals.
 \end{intro}
 
-\begin{definition}
+\begin{Definition}{dg-faces}
   Let $\T_h$ be a mesh of $\Omega \subset \R^d$ consisting of mesh
   cells $T_i$. For every boundary facet $F\subset \partial T_i$, we
   assume\footnote{This assumption can indeed be relaxed} that either
@@ -19,17 +24,215 @@
   labeling this facet $F_{ij}$. The set of all facets $F_{ij}$ is the
   set of interior faces $\F_h^i$. The set of facets on the boundary is
   $\F_h^\partial$.
-\end{definition}
+\end{Definition}
 
-\begin{definition}
+\begin{Definition}{dg-spaces}
   The discontinuous finite element space on $\T_h$ is constructed by
   concatenation of all shape function spaces $P_T$ for $T\in \T_h$
   without additional continuity requirements:
   \begin{gather}
     V_h = \bigl\{v\in L^2(\Omega) \big|
-    v_{|T} \in P_T \;\forall T\in \T_h\bigr\}
+    v_{|T} \in P_T \;\forall T\in \T_h\bigr\}.
   \end{gather}
-\end{definition}
+\end{Definition}
+
+\begin{Definition}{broken-integrals}
+  For any set of cells $\mesh_h$ or faces $\faces_h$, we define the bilinear
+  forms
+  \begin{align}
+    \form(u,v)_{\mesh_h} &= \sum_{\cell\in\mesh_h} \form(u,v)_\cell, \\
+    \forme(u,v)_{\faces_h} &= \sum_{\face\in\faces_h} \forme(u,v)_\face. \\
+  \end{align}
+\end{Definition}
+
+\begin{intro}
+  We start out with the equation
+  \begin{gather*}
+    -\Delta u = f.
+  \end{gather*}
+  Integrating by parts on each mesh cell yields
+  \begin{gather*}
+    \form(-\Delta u,v )_\cell
+    = \form(\nabla u, \nabla v)_\cell - \forme(\d_n u, v)_{\d\cell} = \form(f,v)_T.
+  \end{gather*}
+  We realize that the choice of discontinuous finite element spaces
+  introduces a consistency term on the interfaces between cells and on
+  the boundary.
+
+  On interior faces, there is the issue that $u$ and
+  $\d_n u$ actually have two values on the interface, one from the
+  left cell and one from the right. Therefore, we have to consolidate
+  these two values into one. To this end, we introduce the concept of
+  a numerical flux, which constructs a single value out of these
+  two. Thus, we introduce on the interface $\face$ between two cells
+  $\cell^+$ and $\cell^-$
+  \begin{gather*}
+    \mathcal F(\nabla u) = \frac{\nabla u^+ + \nabla u^-}{2} = :
+    \mvl{\nabla u}.
+  \end{gather*}
+  
+  Using $\forme(\d_n u,v) = \forme(\nabla u,v\n)$ we change our point
+  of view and instead of integrating over the boundary $\d\cell$, we
+  integrate over a face $\face$ between two cells $\cell^+$ and
+  $\cell^-$. Adding up integrals from both sides, we obtain the term
+  \begin{gather*}
+    -\forme(\mvl{\nabla u},v^+\n^+ +v^-\n^-)_{\face}
+    = -2\forme(\mvl{\nabla u},\mvl{v\n})_{\face}.
+  \end{gather*}
+  On boundary faces, we simply get
+  \begin{gather*}
+    \forme(\d_\n u,v)_{\face}.
+  \end{gather*}
+  
+  Adding over all cells and faces, we obtain the equation
+  \begin{gather*}
+    \form(\nabla u,\nabla v)_{\T_h}
+    -2\forme(\mvl{\nabla u},\mvl{v\n})_{\F_h^i}
+    -\forme(\d_\n u,v)_{\F_h^\d} = \form(f,v)_{\domain}.
+  \end{gather*}
+
+  Following the idea of Nitsche, we symmetrize this term
+  to obtain
+  \begin{multline*}
+    \form(\nabla u,\nabla v)_{\T_h}
+    -2\forme(\mvl{\nabla u},\mvl{v\n})_{\F_h^i}
+    -2\forme(\mvl{u\n},\mvl{\nabla v})_{\F_h^i}
+    \\
+    -\forme(\d_\n u,v)_{\F_h^\d}
+    -\forme(u,\d_\n v)_{\F_h^\d}
+    = \form(f,v)_{\domain}
+    - \forme(u^o,\d_n v)_{\F_h^\d}.
+  \end{multline*}
+  Here the second term on the right was introduced for consistency.
+  Finally, it turns out that this method is not stable and nees
+  stabilization by a jumpt term. This will be done in
+  \blockref{Definition}{ip}. Before, we introduce the notation for
+  averaging and jump operators.
+\end{intro}
+
+\begin{Notation}{dg-operators}
+  Let $\face$ be a face between the cells $\cell^+$ and $\cell^-$. Let
+  $\n^+$ and $\n^-=-\n^+$ be the outer normal vectors of the cells at a
+  point $x\in \face$. For a function $u\in V_h$, the traces $u^+$ and
+  $u_-$ of $u$ on $\face$ taken from the cell $\cell^+$
+  and $\cell^-$ are defined as:
+  \begin{align*}
+    u^+(x) &= \lim_{\epsilon\searrow 0} u(x-\epsilon\n^+), \\
+    u^-(x) &= \lim_{\epsilon\searrow 0} u(x-\epsilon\n^-).
+  \end{align*}
+  We define the \define{averaging operator} $\mvl{.}$ and the
+  \define{jump operator} $\jmp{.}$ as
+  \begin{gather}
+    \label{eq:ip:1}
+    \mvl{u} = \frac{u^++u^-}{2},
+    \qquad
+    \jmp{u} = u^+-u^-.
+  \end{gather}
+  Not that the sign of the jump of $u$ depends on the choice of the
+  cells $\cell^+$ and $\cell^-$. It will only be used in quadratic
+  terms.
+\end{Notation}
+
+\begin{remark}
+  The jump can be denoted as the mean value of the product of a
+  function and the normal vector,
+  \begin{gather}
+    \jmp{u} = 2\mvl{u\n}\cdot\n^+ = -2\mvl{u\n}\cdot\n^-.
+  \end{gather}
+\end{remark}
+
+\begin{Definition}{ip}
+  The \define{interior penalty method}\footnote{Also known as
+    symmetric interior penalty (SIPG) or IP-DG.} uses the bilinear
+  form
+  \begin{multline}
+    \label{eq:ip:2}
+    a_h(u,v) = \form(\nabla u,\nabla v)_{\mesh_h}
+    + \forme(\ipp_h\jmp{u},\jmp{v})_{\faces_h^-}
+    + \forme(\ipp_h u,v)_{\faces_h^\d}
+    \\
+    -2\forme(\mvl{\nabla u},\mvl{v\n})_{\faces_h^i}
+    -2\forme(\mvl{u\n},\mvl{\nabla v})_{\faces_h^i}
+    \\
+    - \forme(\d_n u,v)_{\faces_h^\d}
+    - \forme(u,\d_n v)_{\faces_h^\d},
+  \end{multline}
+  and the linear form
+  \begin{gather}
+    \label{eq:ip:3}
+    f_h(v) = \form(f,v)_{\domain} - \forme(u^D,\d_n v)_{\faces_h^\d}
+    + \forme(\ipp_h u,v)_{\faces_h^\d},
+  \end{gather}
+  where $f$ is the right hand side of the equation and $u^D$ the
+  Dirichlet boundary value.
+\end{Definition}
+
+\begin{Definition}{ip-norm}
+  On the space $V_h$ we define the norm $\norm{.}_{1,h}$ by
+  \begin{gather}
+    \label{eq:ip:4}
+    \norm{v}_{1,h}^2 = \sum_{\cell\in\mesh_h} \norm{\nabla v}_\cell^2
+    + \sum_{\face\in\faces_h^i} \norm{\sigma_h\jmp{v}}_\face^2
+    + \sum_{\face\in\faces_h^\d} \norm{\sigma_hv}_\face^2.
+  \end{gather}
+\end{Definition}
+
+\begin{Problem}{ip-norm}
+  Prove that this is indeed a norm on $V_h$.
+\end{Problem}
+
+\begin{Lemma}{ip-stability}
+  Let $\T_h$ be shape-regular and chosen on each face $\face$ as
+  $\sigma_h = \sigma_0/h_\face$, where $h_T$ is the minimal diameter
+  of a cell adjacent to $\face$. Then, there is a $\sigma_0>0$ such
+  that there exists a constant $\ellipa>0$, such that independent of
+  $h$ there holds
+  \begin{gather}
+    \label{eq:ip:5}
+    a_h(u_h,u_h) \ge \ellipa \norm{u_h}_{1,h}^2 \quad \forall u_h\in V_h.
+  \end{gather}
+\end{Lemma}
+
+\begin{Problem}{ip-stability}
+  Prove \blockref{Lemma}{ip-stability}.
+\end{Problem}
+
+\begin{Lemma}{ip-consistence}
+  Let $f\in L^2(\domain)$ and let the boundary conditions admit that
+  for the solution to
+  \begin{xalignat*}2
+    -\Delta u &= f &\text{in }&\domain, \\
+    u &= u^D &\text{on }&\d\domain,
+  \end{xalignat*}
+  there holds $u\in H^{1+\epsilon}(\domain)$ for a positive
+  $\epsilon$. Then, the interior penalty method is consistent, that
+  is,
+  \begin{gather}
+    a_h(u,v_h) = f_h(v_h)\quad\forall v_h\in V_h.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  From $f\in L^2(\domain)$ we deduce that
+  $\nabla u\in \Hdiv(\domain)$. Thus, with the extra regularity, the
+  traces of $\d_n u$ on faces are well-defined abd coincide from both
+  sides. The remainder is integration by parts.
+\end{proof}
+
+\begin{Theorem}{ip-convergence}
+  For $k\ge 1$ let $\P_k\subset P_\cell$ and $u\in H^{s+1}(\domain)$ with
+  $1/2 \le s \le k$. Then, the interior penalty method admits the
+  error estimate
+  \begin{gather}
+    \norm{u-u_h}_{1,h} \le c h^s \snorm{u}_{s+1}.
+  \end{gather}
+  If furthermore hte boundary condition admits \putindex{elliptic
+    regularity},
+there holds
+  \begin{gather}
+    \norm{u-u_h}_{0} \le c h^{s+1} \snorm{u}_{s+1}.
+  \end{gather}
+\end{Theorem}
 
 %%% Local Variables:
 %%% mode: latex

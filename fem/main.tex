@@ -4,7 +4,6 @@
 %\usepackage{hyperref}
 \usepackage{tikz}
 \usetikzlibrary{svg.path}
-\usepackage[math]{iwona}
 \usepackage[backend=bibtexu,style=alphabetic]{biblatex}
 \addbibresource{all}
 
@@ -19,7 +18,12 @@
 \maketitle
 
 \chapter{Discontinuous Galerkin methods}
+\section{Nitsche's method}
+\label{sec:nitsches-method}
 \include{nitsche}
+
+\section{The interior penalty method}
+\label{sec:interior-penalty}
 \include{ip}
 \end{document}
 

@@ -1,7 +1,89 @@
 \begin{intro}
+  In the previous chapter, we studied discretizations with
+  $\div V_h = Q_h$ with two advantages. First, due to
+  \blockref{Corollary}{galerkin-mixed-u-kerb} the velocity error is
+  independent of the pressure. Second, the divergence converges faster
+  than the gradient. A natural question arising is whether we can do
+  something similar for the Stokes problem. There, the equation
+  \begin{gather*}
+    \form(\div v_h, q_h) = 0 \qquad\forall q_h\in Q_h,
+  \end{gather*}
+  would immediately imply $\div v_h=0$, that is, the discrete solution
+  is exactly divergence free.
   
+  The answer to this question is a current research topic. So far,
+  beginning with the element by Scott and Vogelius, several methods
+  have been proposed for special mesh geometry or macro meshes. The
+  difficulty is balancing the condition $\div V_h = Q_h$ with the
+  $H^1$-conformity of the velocity space. All the spaces in the
+  previous chapter were only $\Hdiv$-conforming with discontinuous
+  tangential components.
+  
+  A fairly simple solution to this question though can be obtained by
+  using discontinuous Galerkin methods. These were introduced to
+  obtain formulations \emph{consistent} with $H^1$ while not
+  \emph{conforming}. Thus, we can apply them directly to
+  Raviart-Thomas oder Brezzi-Douglas-Marini elements to obtain a
+  consistent method with divergence free solutions.
+
+  We begin this chapter by a quick review of the interior penalty
+  method before diving into divergence conforming methods.
 \end{intro}
 
+\input{../fem/ip}
+
+\begin{remark}
+  The extension of the interior penalty method to vector-valued
+  problems is obvious. Furthermore, since the method generates an
+  elliptic bilinear form on the discontinuous space $V_h$, this
+  ellipticity is inherited by any subspace of
+  $V_h\cap\Hdiv(\domain)$. Thus, we can write down the weak
+  formulation of a divergence conforming DG method for the Stokes
+  equations. In the following definition, we assume slip or no-slip
+  boundary conditions, that is, $v\cdot\n=0$ on the whole boundary.
+\end{remark}
+
+\begin{Definition}{hdiv-ip}
+  A divergence conforming DG method for the Stokes equations consists
+  of a discrete velocity space $V_h\subset \Hdiv_0(\domain)$ and a
+  pressure space $Q_h\subset L^2_0(\domain)$ such that
+  \begin{gather}
+    \label{eq:hdivdg:1}
+    \div V_h = Q_h.
+  \end{gather}
+  Using the interior penalty bilinear form $a_h(.,.)$, we search for
+  solutions $(u_h,p_h)\in V_h\times Q_h$ such that for all $(v,q)\in
+  V_h\times Q_h$ there holds
+  \begin{gather}
+    \label{eq:hdivdg:2}
+    a_h(u_h,v) +\form(\div v,p_h)+\form(\div u_h,q) = f(v).
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{dg-fortin}
+  The \putindex{canonical interpolation} operators of the
+  Brezzi-Douglas-Marini and Raviart-Thomas elements admit the bound
+  \begin{gather}
+    \label{eq:hdivdg:4}
+    \norm{v-I_h v}_{1,h} \le c \norm{v}_1
+  \end{gather}
+\end{Lemma}
+
+\begin{Lemma}{hdivdg-infsup}
+  The method in \blockref{Definition}{hdiv-ip}
+  admits the inf-sup condition
+  \begin{gather}
+    \label{eq:hdivdg:3}
+    \inf_{q_h\in Q_h} \sup_{v_h\in V_h}
+    \frac{\form(\div v_h,q_h)}{\norm{v_h}_{1,h}\norm{q_h}_0} \ge \beta,
+  \end{gather}
+  with a constant $\beta >0$ independent of $h$.
+\end{Lemma}
+
+% \begin{proof}
+%   First, we make use of the fact that $q_h\in Q_h \subset Q$ to deduce
+%   that 
+% \end{proof}
 
 %%% Local Variables: 
 %%% mode: latex
