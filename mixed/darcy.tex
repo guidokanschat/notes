@@ -168,7 +168,7 @@
 \begin{remark}
   Since the first equation is tested with the test function $v$ itself
   in all terms, we can eliminate this equation and there holds
-  $u= K\nabla P$ in $L^2(\domain;\R^d)$. Entering this into the second
+  $u= K\nabla p$ in $L^2(\domain;\R^d)$. Entering this into the second
   equation, we obtain the well-known \putindex{primal formulation}
   \begin{gather*}
     \form(K \nabla p,\nabla q) = \form(f,q)
@@ -735,17 +735,19 @@ Combining these lemmas yields the assumptions of
   $\face$. Then, we have by Green's formula for $u\in V_h$
   \begin{gather*}
     \form(\div u,\phi) = -\form(u,\nabla \phi)
-    + \forme(v_1 \cdot \n_1 + v_2 \cdot\n_2, \phi)_F
+    + \forme(u_1 \cdot \n_1 + u_2 \cdot\n_2, \phi)_F
   \end{gather*}
   We have $\div u \in L^2(\domain)$ if and only if the face term
   vanishes.
 \end{proof}
 
-\begin{remark}
-  The corresponding condition for $H^1$-conforming finite elements is
-  continuity of the function. This implies in particular continuity at
+\begin{Problem}{h1-continuity}
+  Show that the corresponding condition for $H^1$-conforming finite elements
+  is continuity of the function. In particular, this implies continuity at
   vertices.
+\end{Problem}
 
+\begin{remark}
   The continuity of the normal component over faces does not imply
   continuity at vertices, since it is not transferred in tangential
   direction.
@@ -1663,16 +1665,12 @@ cubes.
   \end{center}
 \end{Example}
 
-\begin{Lemma}{bdm-quad}
+\begin{Problem}{bdm-quad}
   The dimension of the space $BDM_{[k]}$ is
   \begin{gather}
     \dim BDM_{[k]} = (k+1)(k+2)+2.
   \end{gather}
   The element in \blockref{Definition}{bdm-quad} is unisolvent.
-\end{Lemma}
-
-\begin{Problem}{bdm-quad}
-  Prove \blockref{Lemma}{bdm-quad}.
 \end{Problem}
 
 \begin{Corollary}{darcy-convergence-affine}
