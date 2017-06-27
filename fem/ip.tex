@@ -104,8 +104,8 @@
     - \forme(u^o,\d_n v)_{\F_h^\d}.
   \end{multline*}
   Here the second term on the right was introduced for consistency.
-  Finally, it turns out that this method is not stable and nees
-  stabilization by a jumpt term. This will be done in
+  Finally, it turns out that this method is not stable and needs
+  stabilization by a jump term. This will be done in
   \blockref{Definition}{ip}. Before, we introduce the notation for
   averaging and jump operators.
 \end{intro}
@@ -172,8 +172,8 @@
   \begin{gather}
     \label{eq:ip:4}
     \norm{v}_{1,h}^2 = \sum_{\cell\in\mesh_h} \norm{\nabla v}_\cell^2
-    + \sum_{\face\in\faces_h^i} \norm{\sigma_h\jmp{v}}_\face^2
-    + \sum_{\face\in\faces_h^\d} \norm{\sigma_hv}_\face^2.
+    + \sum_{\face\in\faces_h^i} \norm{\sqrt{\ipp_h}\jmp{v}}_\face^2
+    + \sum_{\face\in\faces_h^\d} \norm{\sqrt{\ipp_h}v}_\face^2.
   \end{gather}
 \end{Definition}
 
@@ -215,7 +215,7 @@
 \begin{proof}
   From $f\in L^2(\domain)$ we deduce that
   $\nabla u\in \Hdiv(\domain)$. Thus, with the extra regularity, the
-  traces of $\d_n u$ on faces are well-defined abd coincide from both
+  traces of $\d_n u$ on faces are well-defined and coincide from both
   sides. The remainder is integration by parts.
 \end{proof}
 
@@ -226,7 +226,7 @@
   \begin{gather}
     \norm{u-u_h}_{1,h} \le c h^s \snorm{u}_{s+1}.
   \end{gather}
-  If furthermore hte boundary condition admits \putindex{elliptic
+  If furthermore the boundary condition admits \putindex{elliptic
     regularity},
 there holds
   \begin{gather}

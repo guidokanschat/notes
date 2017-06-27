@@ -1,3 +1,4 @@
+\section{Definition and standard error estimates}
 \begin{intro}
   In the previous chapter, we studied discretizations with
   $\div V_h = Q_h$ with two advantages. First, due to
@@ -23,7 +24,7 @@
   using discontinuous Galerkin methods. These were introduced to
   obtain formulations \emph{consistent} with $H^1$ while not
   \emph{conforming}. Thus, we can apply them directly to
-  Raviart-Thomas oder Brezzi-Douglas-Marini elements to obtain a
+  Raviart-Thomas and Brezzi-Douglas-Marini elements to obtain a
   consistent method with divergence free solutions.
 
   We begin this chapter by a quick review of the interior penalty
@@ -60,17 +61,65 @@
   \end{gather}
 \end{Definition}
 
+\begin{remark}
+  Due to the fact that $V_h\not\subset V$, we have introduced the  norm
+  $\norm{.}_{1,h}$ on $V_h$. In particular, the norm $\norm{.}_1$ is
+  not defined for all elements of $V_h$. Therefore, we need a
+  modification of Fortin's lemma (\blockref{Lemma}{fortin}), where the
+  norm on the left hand side of the stability
+  estimate~\eqref{eq:galerkin:16} uses the discrete norm, namely,
+  \begin{gather*}
+    \norm{\Pi_{V_h}v}_{V_h} \le c \norm{v}_V,
+  \end{gather*}
+\end{remark}
+
 \begin{Lemma}{dg-fortin}
-  The \putindex{canonical interpolation} operators of the
+  Let $\{\mesh_h\}$ be a shape-regular sequence of meshes. Then, the
+  \putindex{canonical interpolation} operators of the
   Brezzi-Douglas-Marini and Raviart-Thomas elements admit the bound
   \begin{gather}
     \label{eq:hdivdg:4}
-    \norm{v-I_h v}_{1,h} \le c \norm{v}_1
+    \norm{I_h v}_{1,h} \le c \snorm{v}_1
   \end{gather}
 \end{Lemma}
 
-\begin{Lemma}{hdivdg-infsup}
-  The method in \blockref{Definition}{hdiv-ip}
+\begin{proof}
+  First, we note that all degrees of freedom are defined as cell or
+  face integrals with smooth weight functions. Thus, they are bounded
+  on $H^1$. Thus, since the local polynomial spaces are finite
+  dimensional, there holds on the reference cell $\refcell$ and its
+  faces $\refface$:
+  \begin{align*}
+    \norm{I_{\refcell} v}_{1;\refcell} &\le c \snorm{v}_{1;\refcell},
+    \\
+    \norm{I_{\refcell} v}_{0;\refface} &\le c \snorm{v}_{1;\refcell}.   
+  \end{align*}
+  On shape regular meshes, we have the scaling property
+  \begin{align*}
+    \snorm{f}_{m;\cell} &\simeq h_\cell^{\frac{d}{2}-m},
+    \\
+    \snorm{f}_{m;\face} &\simeq h_\face^{\frac{d-1}{2}-m},
+  \end{align*}
+  such that for a face $\face$ of cell $\cell$
+  \begin{align*}
+    \norm{I_{\cell} v}_{1;\cell} & \le c \snorm{v}_{1;\cell},
+    \\
+    \norm{I_{\cell} v}_{0;\refface} &\le c h^{\frac12} \snorm{v}_{1;\cell}.
+  \end{align*}
+  We conclude
+  \begin{gather*}
+    \norm{I_h v}_{1,h}^2 \le \sum_{\cell\in\mesh_h}
+    \biggl[\norm{I_{\cell} v}_{1;\cell}^2
+    + 4 \sum_{\face\subset\d\cell}
+    \norm*{\tfrac{\ipp_0}{h_F} I_{\cell} v}_{0;\face}^2
+    \biggr] \le c \snorm{v}_{1}^2.
+  \end{gather*}
+\end{proof}
+
+\begin{Corollary}{hdivdg-infsup}
+  Assume that the inf-sup condition~\eqref{eq:stokes:1} in
+  \blockref{Theorem}{stokes-infsup} holds.
+  Then, the method in \blockref{Definition}{hdiv-ip}
   admits the inf-sup condition
   \begin{gather}
     \label{eq:hdivdg:3}
@@ -78,12 +127,154 @@
     \frac{\form(\div v_h,q_h)}{\norm{v_h}_{1,h}\norm{q_h}_0} \ge \beta,
   \end{gather}
   with a constant $\beta >0$ independent of $h$.
-\end{Lemma}
+\end{Corollary}
 
-% \begin{proof}
-%   First, we make use of the fact that $q_h\in Q_h \subset Q$ to deduce
-%   that 
-% \end{proof}
+\begin{proof}
+  First, we make use of the fact that $q_h\in Q_h \subset Q$ to deduce
+  from \blockref{Theorem}{stokes-infsup} the there is a function $w\in
+  V$ with $\div v=q_h$ and $\norm{v}_1 \le \norm{q_h}_0$. To this
+  function, we apply the \putindex{Fortin operator} to define $v_h =
+  I_h v$. By the preceding lemma, we have
+  \begin{gather*}
+    \norm{v_h}_{1,h} \le c \norm{v}_1 \le \norm{q_h}_0,
+  \end{gather*}
+  which proves the inf-sup condition.
+\end{proof}
+
+\begin{Theorem}{hdivdg-convergence}
+  Assume that $(u,p)\in V_h\times Q_h$ is the solution to the
+  divergence conforming DG method in \blockref{Definition}{hdiv-ip} and
+  that the continuous Stokes problem is well-posed as in
+  \blockref{Theorem}{stokes-infsup}. Then, for the Raviart-Thomas
+  pairs $RT_k/\P_k$ and $RT_{[k]}/\Q_k$ with $k\ge 1$ and
+  $u$ sufficiently smooth there holds
+  \begin{align}
+    \label{eq:hdivdg:5}
+    \norm{u-u_h}_{1,h} &\le h^k \snorm{u}_{k+1}, \\
+    \label{eq:hdivdg:7}
+    \norm{p-p_h}_{0} &\le h^k \bigl(\snorm{u}_{k+1} + \snorm{p}_{k}\bigr).
+  \end{align}
+  Furthermore,
+  \begin{gather}
+    \label{eq:hdivdg:6}
+    \div u_h = 0.
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  The proof follows the lines of the abstract theory of
+  \blockref{Theorem}{galerkin-mixed-u-kerbh} and
+  \blockref{Theorem}{galerkin-mixed-p}. But since the setting with
+  $V_h\not\subset V$ exceeds the assumptions of the abstract theory,
+  we adapt the proofs instead of using the results.
+
+  Due to consistency of the method, we have
+  \begin{gather*}
+    a_h(u-u_h, v_h) + \form(\div v_h, p-p_h)
+    + \form(\div u-\div u_h, q_h) = 0.
+  \end{gather*}
+  Testing with $v_h=0$ and using $\div V_h = Q_h$ immediately yields
+  $\div u_h = \div u = 0$, or
+  \begin{gather*}
+    \ker{B_h} \subset \ker B.
+  \end{gather*}
+  In order to use the ellipticity of $a_h(.,.)$, we insert
+  arbitrary functions $w_h \in \ker{B_h}$ and $r_h\in Q_h$. Choosing
+  $q_h = 0$ yields the error equation
+  \begin{gather}
+    \label{eq:hdivdg:8}
+    a_h(u_h-w_h, v_h) + \form(\div v_h, p_h-r_h)
+    = a_h(u-w_h, v_h) + \form(\div v_h, p-r_h).
+  \end{gather}
+  Testing with $v_h=u_h-w_h$ and employing $\div v_h=0$, we obtain
+  \begin{gather*}
+    \ellipa \norm{u_h-w_h}_{1,h}^2
+    \le a_h(u_h-w_h,u_h-w_h)
+    = a_h(u-w_h,u_h-w_h).
+  \end{gather*}
+  Now, we use the canonical interpolation $w_h = I_h u$ to obtain
+  \begin{gather*}
+    \ellipa \norm{u_h-w_h}_{1,h}^2
+    \le \frac\ellipa2 \norm{u_h-w_h}_{1,h}^2
+    + \frac{c}{2\ellipa} h^{2k} \snorm{u}_{k+1}^2.
+  \end{gather*}
+
+  Finally, we use the inf-sup condition to find a test function
+  $v_h\in V_h$ such that $\div v_h = p_h-r_h$ and $\beta \norm{v_h}_{1,h}
+  \le \norm{p_h-r_h}$. Then, the error equation~\eqref{eq:hdivdg:8}
+  yields
+  \begin{multline*}
+    \norm{p_h-r_h}
+    = \frac{\form(\div v_h,p_h-r_h)}{\norm{p_h-r_h}}
+    \\
+    = \frac{a_h(u-u_h, v_h) + \form(\div v_h, p-r_h)}
+    {\norm{p_h-r_h}}
+    \le \tfrac{\norm{a_h}}\beta \norm{u-u_h}_{1,h}
+    + \norm{p-r_h}_0
+    .
+  \end{multline*}
+  Using the previously proven error estimate for $u_h$ and the
+  $L^2$-projection $r_h = \Pi_h p$ yields the result.
+\end{proof}
+
+\section{Error estimates by duality}
+
+\begin{intro}
+  So far, we have only considered estimates in the so called
+  \putindex{energy norm}, that is, a norm such that $a_h(.,.)$ is
+  bounded and elliptic\footnote{We use the term energy norm loosely
+    here. Strictly speaking, the energy norm would be
+    $\norm{v}_A = \sqrt{a_h(v,v)}$.}.
+
+  In the context of elliptic equations, we have seen the duality
+  argument of Aubin and Nitsche, which allows us to obtain optimal
+  estimates in weaker norms, for instance in $L^2$.
+
+  A particular difficulty here is the fact, that we have to test the
+  dual solution with the error \emph{and} exploit some kind of
+  Galerkin orthogonality.
+\end{intro}
+
+\begin{Definition}{dual-stokes}
+  The \putindex{dual problem} to the Stokes problem in weak for
+  consists of finding $(u^*,p^*)\in V_h\times Q_h$ such that for all
+  $v\in V$ and $q\in Q$ there holds
+  \begin{multline}
+    \label{eq:hdivdg:9}
+    \form(\nabla v,\nabla u^*) + \form(\div u^*,q) + \form(\div v,p^*)
+    \\
+    = \form(\psi,v).
+  \end{multline}
+\end{Definition}
+
+\begin{Assumption}{stokes-regularity}
+  The dual Stokes problem admits the elliptic regularity estimate
+  \begin{gather}
+    \label{eq:hdivdg:10}
+    \norm{u^*}_{2} \le c \norm{f}_0.
+  \end{gather}
+\end{Assumption}
+
+\begin{remark}
+  Like for scalar elliptic equations, the elliptic regularity
+  assumption holds for domains with smooth boundary or with piecewise
+  smooth boundary where every corner is convex.
+\end{remark}
+
+\begin{Definition}{hdivdg-residual-operators}
+  For the solutions $(u,p)\in V\times Q$ and $(u^*,p^*)\in V\times Q$
+  of the primal and dual Stokes problem, respectively, we define the
+  residual operators
+  \begin{align}
+    \operatorname{Res}(u,p;v) &= a_h(u,v)+\form(\div v,p) - \form(f,v),
+    \\
+    \operatorname{Res}^*(v;u^*,p^*)
+                              &= a_h(v,u^*)+\form(\div v,p^*) -
+                                \form(\psi,v),
+  \end{align}
+  for $v\in V+V_h$.
+\end{Definition}
+
 
 %%% Local Variables: 
 %%% mode: latex
