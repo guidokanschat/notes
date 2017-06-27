@@ -745,6 +745,17 @@ Combining these lemmas yields the assumptions of
   Show that the corresponding condition for $H^1$-conforming finite elements
   is continuity of the function. In particular, this implies continuity at
   vertices.
+\begin{solution}
+  Let $\phi\in (C^\infty_{00}(\domain))^d$ be a test function such that its support
+  does not have a nonempty intersection with any face except
+  $\face$. Then, we have by Green's formula for $u\in V_h$
+  \begin{gather*}
+    \form(\nabla u,\phi) = -\form(u,\nabla \cdot \phi)
+    + \forme(u_1 - u_2,n_1 \cdot \phi)_F
+  \end{gather*}
+  and thus require $\forme(u_1 - u_2, \phi)_F = 0$ for all $\phi\in C^\infty_{00}(\domain)$.
+  This implies $u_1=u_2$ and in particular continuity at the vertices.
+\end{solution}
 \end{Problem}
 
 \begin{remark}
@@ -1671,6 +1682,41 @@ cubes.
     \dim BDM_{[k]} = (k+1)(k+2)+2.
   \end{gather}
   The element in \blockref{Definition}{bdm-quad} is unisolvent.
+\begin{solution}
+ The dimension of the space is by definition
+ \begin{align*}
+    \dim BDM_{[k]} = d\binom{k+d}{d}+2=2\frac{(k+2)(k+1)}{2}+2=(k+1)(k+2)+2.
+ \end{align*}
+ The number of functionals is
+ \begin{align*}
+  2^d \binom{k+d-1}{d-1}+d \binom{k+d-2}{d} &= 4 \frac{k+1}{1}+2\frac{k(k-1)}{2}
+  = 4k+4+k^2-k+4\\
+  &= k^2-3k+4 = (k+2)(k+1)+2.
+ \end{align*}
+ Now we only have to check the unisolvence, i.e.
+ \begin{align*}
+p\in BDM_{[k]}, \nodal_* (p) = 0 \Rightarrow p \equiv 0.
+\end{align*}
+ An arbitrary element $p\in BDM_{[k]}$ can be written as
+ \begin{align*}
+  p_1 (x,y) &= a x^{k+1} +b (k+1) x y^k+ q_{k,1}(x,y) \\
+  p_2 (x,y) &= -a (k+1) y x^k-b y^{k+1}+ q_{k,2}(x,y)
+ \end{align*}
+ where $q_{k,1},q_{k,2}\in \mathbb{P}_k$. Now consider the evaluation of the first component for $x=\pm1$:
+ \begin{align*}
+  p_1 (\pm1,y) &= a (\pm1)^{k+1} \pm b (k+1) y^k+ q_{k,1}(\pm1,y)\in \mathbb{P}_k(e_i)
+ \end{align*}
+ and the first condition requires $p_1 (\pm1,y)\equiv 0$ which implies $\pm b(k+1)+c_{0,k}=0$ and hence $b=0$.
+ Similarly, evaluating the second component for $y=\pm1$ gives
+ \begin{align*}
+  p_2 (x,\pm1) &= \pm a (k+1) x^k+ q_{k,2}(x,\pm1)\in \mathbb{P}_k(e_i)
+ \end{align*}
+ and the first condition requires $p_3 (x,\pm1)\equiv 0$ which implies $\pm a(k+1)+c_{k,0}=0$ and hence $a=0$.
+ In combination, the first condition requires $p_1,p_2\in \mathbb{P}_k$. Furthermore, the first component vanishes
+ at $x=\pm1$ and the second component at $y=\pm1$ implying $p_1=(1-x^2) \hat{p}_1, p_2=(1-y^2) \hat{p}_2$
+ where $\hat{p}_1, \hat{p}_2 \in \mathbb{P}_{k-2}$. Thus, the second condition implies $p_1, p_2\equiv 0$.
+\end{solution}
+
 \end{Problem}
 
 \begin{Corollary}{darcy-convergence-affine}
@@ -1752,7 +1798,7 @@ cubes.
   respect to the quadrature rule, which is up to the weights a
   Lagrange basis. Thus, we can transform the moment degrees of freedom
   back to interpolating degrees of freedom easily.
-  
+
   This construction extends automatically to tensor product space
   $\Q_k$. For polynomials space $\P_k$, suitable quadrature sets on
   triangles and quadrilaterals must be constructed.

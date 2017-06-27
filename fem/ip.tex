@@ -70,7 +70,7 @@
     \mathcal F(\nabla u) = \frac{\nabla u^+ + \nabla u^-}{2} = :
     \mvl{\nabla u}.
   \end{gather*}
-  
+
   Using $\forme(\d_n u,v) = \forme(\nabla u,v\n)$ we change our point
   of view and instead of integrating over the boundary $\d\cell$, we
   integrate over a face $\face$ between two cells $\cell^+$ and
@@ -83,7 +83,7 @@
   \begin{gather*}
     \forme(\d_\n u,v)_{\face}.
   \end{gather*}
-  
+
   Adding over all cells and faces, we obtain the equation
   \begin{gather*}
     \form(\nabla u,\nabla v)_{\T_h}
@@ -179,6 +179,41 @@
 
 \begin{Problem}{ip-norm}
   Prove that the norm defined in (\ref{eq:ip:4}) is indeed a norm on $V_h$.
+\begin{solution}
+\begin{align*}
+  0=\norm{v}_{1,h}^2 &= \sum_{\cell\in\mesh_h} \norm{\nabla v}_\cell^2
+    + \sum_{\face\in\faces_h^i} \norm{\sigma_h\jmp{v}}_\face^2
+    + \sum_{\face\in\faces_h^\d} \norm{\sigma_hv}_\face^2
+\end{align*}
+implies first of all $v|_T \equiv const.$ for all $T \in \mathbb{T}_h$.
+Furthermore, $\norm{\sigma_h\jmp{v}}_\face^2=0$ implies $v \equiv const.$
+and the last condition gives $v \equiv 0$.
+
+ We use the trace inequality
+ \begin{align*}
+  \norm{v}_{0,\partial T}^2
+  \lesssim \left( h_T^{-1} \norm{v}_{0,T}^2+\norm{v}_{0,T}\norm{\nabla v}_{0,T}\right)
+  \quad \forall v \in H^1(T).
+ \end{align*}
+ Then, we can estimate
+ \begin{align*}
+  &\sum_{\face\in\faces_h^i} \norm{\sigma_h\jmp{v}}_\face^2 + \sum_{\face\in\faces_h^\d} \norm{\sigma_hv}_\face^2\\
+  &\lesssim \min_{F\in F_h^i\cup F_h^\partial} \sigma_{h,F} \sum_{T \in \mathbb{T}_h}\norm{v}_{0,\partial T}^2 \\
+  &\lesssim \min_{F\in F_h^i\cup F_h^\partial} \sigma_{h,F} \sum_{T \in \mathbb{T}_h}\left( h_T^{-1}
+  \norm{v}_{0,T}^2+\norm{v}_{0,T}\norm{\nabla v}_{0,T}\right)\\
+  &\lesssim \min_{F\in F_h^i\cup F_h^\partial} \sigma_{h,F} \sum_{T \in \mathbb{T}_h}\left( h_T^{-1}
+  \norm{v}_{0,T}^2+h_T\norm{\nabla v}_{0,T}\right)
+ \end{align*}
+ and thus
+ \begin{align*}
+    \norm{v}_{1,h}^2 &= \sum_{\cell\in\mesh_h} \norm{\nabla v}_\cell^2
+    + \sum_{\face\in\faces_h^i} \norm{\sigma_h\jmp{v}}_\face^2
+    + \sum_{\face\in\faces_h^\d} \norm{\sigma_hv}_\face^2\\
+    &\lesssim \min_{F\in F_h^i\cup F_h^\partial} \sigma_{h,F}
+      \sum_{T \in \mathbb{T}_h}\left( h_T^{-1} \norm{v}_{0,T}^2+\norm{\nabla v}_{0,T}\right)\\
+  &\lesssim \norm{v}_1^2
+  \end{align*}
+\end{solution}
 \end{Problem}
 
 \begin{Lemma}{ip-stability}
@@ -195,6 +230,51 @@
 
 \begin{Problem}{ip-stability}
   Prove \blockref{Lemma}{ip-stability}.
+\begin{solution}
+We first note the estimate
+\begin{align*}
+ (\boldsymbol{n}\cdot\nabla v_h)_e^2
+ &\leq C (h_K^{-1}\norm{\nabla v_h}_{0,K}^2+\norm{\nabla v_h}_{0,K}\norm{\nabla^2 v_h}_{0,K}) \\
+ &\leq C \left(\frac{1}{h_K}+\frac{p_K^2}{h_K}\right) \norm{\nabla v_h}_{0,K}^2\\
+ &\leq C \frac{p_K^2}{h_K} \norm{\nabla v_h}_{0,K}^2
+ = C\frac{\sigma_h}{\delta} \norm{\nabla v_h}_{0,K}^2
+\end{align*}
+
+Testing the bilinear form symmetrically, we obtain
+\begin{align*}
+ a_h(u_h,u_h) &= \norm{\nabla u_h}_0^2
+    + \ipp_h\norm{\jmp{u_h}}_{\faces_h^i}
+    + \ipp_h\norm{u_h}_{\faces_h^\d}
+    \\
+    &-4\forme(\mvl{\nabla u_h},\mvl{u_h\n})_{\faces_h^i}
+    -2 \forme(\d_n u_h,u_h)_{\faces_h^\d}.
+\end{align*}
+and the last two terms can be estimated by
+\begin{align*}
+ \forme(\mvl{\nabla u_h},\mvl{u_h\n})_{\faces_h^i} &=\forme(n^+\cdot\nabla u_h^+-n^-\cdot\nabla u_h^-, u_h^+-u_h^-)\\
+ &\leq \frac{\epsilon}{2}\norm{n^+\{\{\nabla u_h\}\}}_0^2+\frac{1}{2\epsilon}\norm{[[u_h]]}_0^2\\
+ &\leq C\frac{\sigma_h\epsilon}{2\delta}\norm{\nabla u_h}_{0,K}^2+\frac{1}{2\epsilon}\norm{[[u_h]]}_0^2
+\end{align*}
+and therefore
+\begin{align*}
+ a_h(u_h,u_h) -\gamma \norm{u_h}_{1,h}^2&\geq \norm{\nabla u_h}_0^2 \left(1-\gamma-C\frac{\sigma_h\epsilon}{2\delta}\right)\\&\quad
+    + \ipp_h\norm{\jmp{u_h}}_{\faces_h^i}\left(1-\gamma-\frac{1}{2\epsilon\sigma_h}\right).
+\end{align*}
+
+Hence, we have to choose $\epsilon, \delta>0$ such that
+\begin{align*}
+ 1-\gamma-C\frac{\sigma_h\epsilon}{2\delta}>0 \\
+ 1-\gamma-\frac{1}{2\epsilon\sigma_h}>0 .
+\end{align*}
+This is possible for all $\gamma\in(0,1)$ and in fact we get the lower limits
+\begin{align*}
+\epsilon&>\frac{1}{2(1-\gamma)\sigma_h}\\
+ \delta&>C \frac{\sigma_h \epsilon}{2(1-\gamma)}.
+\end{align*}
+
+
+\end{solution}
+
 \end{Problem}
 
 \begin{Lemma}{ip-consistence}
