@@ -233,7 +233,10 @@
 
   A particular difficulty here is the fact, that we have to test the
   dual solution with the error \emph{and} exploit some kind of
-  Galerkin orthogonality.
+  Galerkin orthogonality. Thus, we cannot use consistency as before
+  and will introduce residual operators later. The analysis here is a
+  simplified version of the corresponding results
+  in~\cite{GiraultKanschatRiviere14}.
 \end{intro}
 
 \begin{Definition}{dual-stokes}
@@ -276,6 +279,56 @@
   for $v\in V+V_h$.
 \end{Definition}
 
+% From Girault/Kanschat/Riviere
+
+\begin{Lemma}{hdivdg-residual-1}
+  Let $(u,p)\in V\times Q$ be the solution to the Stokes problem with
+  right hand side $f\in L^2(\domain;\R^d)$. Assume $u\in
+  H^s(\domain;\R^d)$ and $p\in H^{s-1}(\domain)$ with $s>3/2$. Then,
+  we have for $v\in V+V_h$:
+  \begin{gather}
+    \label{eq:hdivdg:11}
+    \form(f,v) = \form(\nabla u,\nabla v)_{\mesh_h}
+    -\forme(\nabla u,\mvl{v\otimes n})_{\faces_h^i}
+    -\forme(\d_n u,v)_{\faces_h^\d}
+    + \form(\div v,p).
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  We set out from the strong form of the Stokes equations and
+  integrate by parts.
+  \begin{align*}
+    \form(f,v) &= \form(-\Delta u + \nabla p, v)
+    \\
+    &= \form(\nabla u,\nabla v)_{\mesh_h}
+      - \sum_{\cell\in\mesh_h} \forme(\d_n u,v)_{\d\cell}
+      - \form(\div v,p)
+      .
+  \end{align*}
+  Under the regularity assumptions of the lemma, all of these
+  integrals make sense at least as duality pairings. In particular,
+  $\d_n u\in L^2(\d\cell)$, and thus we can split $\d\cell$ into
+  individual faces. Therefore,
+  \begin{gather*}
+    \sum_{\cell\in\mesh_h} \forme(\d_n u,v)_{\d\cell}
+    = \forme(\nabla u,\mvl{v\otimes n})_{\faces_h^i}
+    +\forme(\d_n u,v)_{\faces_h^\d}.
+  \end{gather*}
+  The proof concludes by collecting the results.
+\end{proof}
+
+\begin{Corollary}{hdivdg-residual-2}
+  The residual operators can be expressed as
+  \begin{align}
+    \label{eq:hdivdg:12}
+    \operatorname{Res}(u,p;v)
+    &= a_h(u,v)
+      - \form(\nabla u,\nabla v)_{\mesh_h}
+      + \forme(\nabla u,\mvl{v\otimes n})_{\faces_h^i}
+      +\forme(\d_n u,v)_{\faces_h^\d}.
+  \end{align}
+\end{Corollary}
 
 %%% Local Variables: 
 %%% mode: latex

@@ -1,0 +1,98 @@
+\begin{intro}
+  The interior penalty method introduced so far is $V_h$-elliptic and
+  consistent, but it is not bounded on $H^1(\domain)$. This was a
+  reason, why we could not use standard techniques for the proof of
+  the convergence result and afther applying consistency had to
+  estimate each term separately.
+
+  In this section, we will introduce a reformulation of the interior
+  penalty method, which is equivalent to the original method on $V_h$,
+  but is also bounded in $H^1(\domain)$. As an unpleasant side effect,
+  it turns out that this method is inconsistent, and we have to
+  estimate the consistency error.
+  
+  The main technique applied here is the use of lifting operators,
+  such that the traces of derivatives on faces can be replaced by
+  volume terms. Note that the lifting operators, while very useful for
+  the analysis of the method, are not actually used in the
+  implementation of the interior penalty method.
+\end{intro}
+
+\begin{Definition}{dg-lifting}
+  Define the auxiliary space 
+  \begin{gather}
+    \label{eq:ip-lifting:1}
+    \Sigma_h = \bigl\{ \tau\in L^2(\domain;\R^d) \big\vert
+    \,\forall \cell\in \mesh_h \tau_{|\cell} \in \Sigma_T \bigr\},
+  \end{gather}
+  where $\nabla V_T \subset \Sigma_T$. Then, we define the \define{lifting
+    operator} 
+  \begin{gather}
+    \label{eq:ip-lifting:2}
+    \lifting\colon V+V_h \to \Sigma_h
+  \end{gather}
+  by
+  \begin{gather}
+    \label{eq:ip-lifting:3}
+    \form(\lifting v,\tau)_{\mesh_h}
+    = 2\forme(\mvl{\tau},\mvl{v\n})_{\faces_h^i}
+    + \forme(\tau\cdot\n,v)_{\faces_h^\d}.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{ip-lifting-bounded}
+  The lifting operator is a bounded operator from $L^2(\faces_h)$ to
+  $\Sigma_h$, such that
+  \begin{gather}
+    \label{eq:ip-lifting:4}
+    \norm{\lifting v}_{L^2(\domain)}
+    \le c \norm{\jmp{v}}_{\faces_h^i} + \norm{v}_{\faces_h^\d}.
+  \end{gather}
+  In particular, it is bounded on $H^1(\domain)$.
+\end{Lemma}
+
+\begin{Definition}{ip-lifting}
+  The \define{interior penalty method} with lifting operators uses the
+  bilinear form
+  \begin{multline}
+    \label{eq:ip-lifting:5}
+    a_h(u,v) = \form(\nabla u,\nabla v)_{\mesh_h}
+    - \form(\lifting u, \nabla v)_{\mesh_h}
+    - \form(\nabla u, \lifting v)_{\mesh_h}
+    \\
+    + \forme(\ipp_h\jmp{u},\jmp{v})_{\faces_h^-}
+    + \forme(\ipp_h u,v)_{\faces_h^\d}
+    .
+  \end{multline}
+  and the linear form~\eqref{eq:ip:3} of the original interior penalty
+  method. Its residual operator is
+  \begin{gather}
+    \label{eq:ip-lifting:7}
+    \Res(u,v) = a_h(u,v) - \form(f,v).
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{ip-equivalence}
+  The interior penalty method in flux form (\blockref{Definition}{ip})
+  and in lifting form (\blockref{Definition}{ip}) coincide on the
+  discrete space $V_h$ if $\Sigma_h$ is chosen such that $\nabla V_h
+  \subset \Sigma_h$.
+\end{Lemma}
+
+\begin{proof}
+  Since $\nabla V_h \subset \Sigma_h$, $\nabla u_h$ and $\nabla v_h$
+  are valid test functions in the definition~\eqref{eq:ip-lifting:3}
+  of the lifting operator, and  the equality
+  \begin{gather*}
+    \form(\lifting{u_h},\nabla v_h)_{\mesh_h}
+    = 2\forme(\mvl{u_h\n},\mvl{\nabla v_h})_{\faces_h^i}
+    + \forme(u_h,\d_n v_h)_{\faces_h^\d}.
+  \end{gather*}
+\end{proof}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
