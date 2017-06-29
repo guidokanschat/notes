@@ -32,6 +32,8 @@
 
 \section{The interior penalty method}
 \input{../fem/ip}
+\subsection{Bounded formulation in $H^1$}
+\input{../fem/ip-lifting}
 
 \section{Divergence conforming IP}
 \begin{remark}
@@ -243,12 +245,11 @@
   The \putindex{dual problem} to the Stokes problem in weak for
   consists of finding $(u^*,p^*)\in V_h\times Q_h$ such that for all
   $v\in V$ and $q\in Q$ there holds
-  \begin{multline}
+  \begin{gather}
     \label{eq:hdivdg:9}
     \form(\nabla v,\nabla u^*) + \form(\div u^*,q) + \form(\div v,p^*)
-    \\
     = \form(\psi,v).
-  \end{multline}
+  \end{gather}
 \end{Definition}
 
 \begin{Assumption}{stokes-regularity}
@@ -320,15 +321,42 @@
 
 \begin{Corollary}{hdivdg-residual-2}
   The residual operators can be expressed as
-  \begin{align}
+  \begin{gather}
     \label{eq:hdivdg:12}
+    \begin{split}
     \operatorname{Res}(u,p;v)
     &= a_h(u,v)
       - \form(\nabla u,\nabla v)_{\mesh_h}
+      \\
+      &\qquad
       + \forme(\nabla u,\mvl{v\otimes n})_{\faces_h^i}
       +\forme(\d_n u,v)_{\faces_h^\d}.
-  \end{align}
+      \\
+    \operatorname{Res}^*(u^*,p^*;v)
+    &= a_h(v,u^*)
+      - \form(\nabla u,\nabla v)_{\mesh_h}
+      \\
+      &\qquad
+      + \forme(\nabla u,\mvl{v\otimes n})_{\faces_h^i}
+      +\forme(\d_n u,v)_{\faces_h^\d}.      
+    \end{split}
+  \end{gather}
+  In particular, the residual operators do not depend on the pressure
+  solutions.
 \end{Corollary}
+
+\begin{Theorem}{hdivdg-l2}
+  Let the assumptions of \blockref{Theorem}{hdivdg-convergence}
+  and \blockref{Assumption}{stokes-regularity} hold. Then,
+  \begin{gather}
+    \norm{u-u_h}_0 \le c h^{k+1} \snorm{u}_{k+1}.
+  \end{gather}
+\end{Theorem}
+
+\begin{Problem}{hdivdg-l2}
+  Adapt the proof of \blockref{Theorem}{ip-lifting-l2} to prove
+  \blockref{Theorem}{hdivdg-l2}.
+\end{Problem}
 
 %%% Local Variables: 
 %%% mode: latex

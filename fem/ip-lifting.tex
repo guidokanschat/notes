@@ -46,10 +46,18 @@
   \begin{gather}
     \label{eq:ip-lifting:4}
     \norm{\lifting v}_{L^2(\domain)}
-    \le c \norm{\jmp{v}}_{\faces_h^i} + \norm{v}_{\faces_h^\d}.
+    \le c \norm*{\tfrac1{\sqrt{h}}\jmp{v}}_{\faces_h^i}
+    + \norm*{\tfrac1{\sqrt{h}} v}_{\faces_h^\d}.
   \end{gather}
   In particular, it is bounded on $H^1(\domain)$.
 \end{Lemma}
+
+\begin{proof}
+  It is clear, that the operator is bounded on $L^2(\faces_h)$, since
+  its definition involves face integrals weighted with polynomial
+  functions. The dependence on the mesh size is due to the standard
+  scaling argument.
+\end{proof}
 
 \begin{Definition}{ip-lifting}
   The \define{interior penalty method} with lifting operators uses the
@@ -96,7 +104,7 @@
   \begin{gather}
     a(u,v) = f(v),
     \qquad
-    a(v,u^* = \psi(v),
+    a(v,u^*) = \psi(v),
     \qquad
     \forall v\in V,
   \end{gather}

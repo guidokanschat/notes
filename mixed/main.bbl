@@ -151,22 +151,22 @@
      {}{}%
      {}{}}%
     {{}%
-     {Brezzi}{B.}%
-     {F.}{F.}%
+     {Fortin}{F.}%
+     {M.}{M.}%
      {}{}%
      {}{}}%
     {{}%
-     {Fortin}{F.}%
-     {M.}{M.}%
+     {Brezzi}{B.}%
+     {F.}{F.}%
      {}{}%
      {}{}}%
   }
   \list{publisher}{1}{%
     {Springer}%
   }
-  \strng{namehash}{BDBFFM1}
-  \strng{fullhash}{BDBFFM1}
-  \field{labelalpha}{BBF13}
+  \strng{namehash}{BDFMBF1}
+  \strng{fullhash}{BDFMBF1}
+  \field{labelalpha}{BFB13}
   \field{sortinit}{B}
   \field{series}{Springer series in computational mathematics}
   \field{title}{Mixed finite element methods and applications}
@@ -287,6 +287,40 @@
   \field{title}{Theory and practice of finite elements}
   \field{volume}{159}
   \field{year}{2004}
+\endentry
+
+\entry{GiraultKanschatRiviere14}{article}{}
+  \name{author}{3}{}{%
+    {{}%
+     {Girault}{G.}%
+     {V.}{V.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Kanschat}{K.}%
+     {G.}{G.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Rivière}{R.}%
+     {B.}{B.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{GVKGRB1}
+  \strng{fullhash}{GVKGRB1}
+  \field{labelalpha}{GKR14}
+  \field{sortinit}{G}
+  \verb{doi}
+  \verb 10.1515/jnma-2014-0005
+  \endverb
+  \field{number}{2}
+  \field{pages}{109\bibrangedash 142}
+  \field{title}{Error analysis for a monolithic discretization of coupled
+  {D}arcy and {S}tokes problems}
+  \field{volume}{22}
+  \field{journaltitle}{J. Numer. Math.}
+  \field{year}{2014}
 \endentry
 
 \entry{GiraultRaviart86}{book}{}

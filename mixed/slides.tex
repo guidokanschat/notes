@@ -19,8 +19,9 @@
 \renewcommand{\define}[1]{\textbf{#1}}
 
 \begin{document}
-\frame{\tableofcontents}
+\frame{\tableofcontents[hideallsubsections]}
 \section{From elliptic to mixed problems}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
 \frame {\input {blocks/Notation-vector-diff-operators.tex}}
 \frame {\input {blocks/Definition-strain-tensor.tex}}
 \frame {\input {blocks/Definition-hooke.tex}}
@@ -70,6 +71,7 @@
 \frame {\input {blocks/Corollary-stokes-lagrange.tex}}
 
 \section{Conditions for well-posedness}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
 \frame {\input {blocks/Problem-unbounded-inverse.tex}}
 \frame {\input {blocks/Problem-lax-milgram-not-applicable.tex}}
 \frame {\input {blocks/Theorem-la-invertible.tex}}
@@ -116,6 +118,7 @@
 \frame {\input {blocks/Corollary-stabilized-mixed-convergence.tex}}
 
 \section{Stokes equations}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
 
 \frame {\input {blocks/Lemma-stokes-a-elliptic.tex}}
 \frame {\input {blocks/Lemma-stokes-helmholtz.tex}
@@ -267,6 +270,8 @@
 \frame {\input {blocks/Corollary-stabilized-mixed-convergence.tex}}
 
 \section{Mixed formulation of elliptic problems}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+
 \frame {\input {blocks/Definition-primal-mixed.tex}}
 \frame {\input {blocks/Definition-hdiv.tex}}
 \frame {\input {blocks/Definition-dual-mixed.tex}}
@@ -315,18 +320,36 @@
 \frame {\input {blocks/Definition-abf-quad.tex}}
 
 \section{Divergence conforming DG}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
 
-\frame {\input {blocks/Definition-dg-faces.tex}}
-\frame {\input {blocks/Definition-dg-spaces.tex}}
+\subsection{The interior penalty method}
+\frame {\input {blocks/Definition-dg-faces.tex}
+  \input {blocks/Definition-dg-spaces.tex}}
 \frame {\input {blocks/Definition-broken-integrals.tex}}
 \frame {\input {blocks/Notation-dg-operators.tex}}
 \frame {\input {blocks/Definition-ip.tex}}
-\frame {\input {blocks/Definition-ip-norm.tex}}
-\frame {\input {blocks/Problem-ip-norm.tex}}
-\frame {\input {blocks/Lemma-ip-stability.tex}}
-\frame {\input {blocks/Problem-ip-stability.tex}}
+\frame {\input {blocks/Definition-ip-norm.tex}
+  \input {blocks/Problem-ip-norm.tex}}
+\frame {\input {blocks/Lemma-ip-stability.tex}
+  \input {blocks/Problem-ip-stability.tex}}
 \frame {\input {blocks/Lemma-ip-consistence.tex}}
-\frame {\input {blocks/Theorem-ip-convergence.tex}}
+%\frame {\input {blocks/Theorem-ip-convergence.tex}}
+
+\subsection{Formulation with lifting operators}
+
+\frame {\input {blocks/Definition-dg-lifting.tex}
+  \input {blocks/Lemma-ip-lifting-bounded.tex}}
+\frame {\input {blocks/Definition-ip-lifting.tex}
+  \input {blocks/Lemma-ip-equivalence.tex}}
+\frame {\input {blocks/Definition-ip-residual.tex}}
+\frame {\input {blocks/Lemma-ip-lifting-strang.tex}}
+\frame {\input {blocks/Lemma-ip-lifting-residual-2.tex}}
+\frame {\input {blocks/Lemma-ip-lifting-residual-1.tex}}
+\frame {\input {blocks/Theorem-ip-lifting-h1.tex}}
+\frame {\input {blocks/Theorem-ip-lifting-l2.tex}}
+
+\subsection{Divergence conforming IP}
+
 \frame {\input {blocks/Definition-hdiv-ip.tex}}
 \frame {\input {blocks/Lemma-dg-fortin.tex}}
 \frame {\input {blocks/Lemma-hdivdg-infsup.tex}}
@@ -334,9 +357,14 @@
 
 \subsection{Duality}
 
-\frame {\input {blocks/Definition-dual-stokes.tex}}
-\frame {\input {blocks/Assumption-stokes-regularity.tex}}
+\frame {\input {blocks/Definition-dual-stokes.tex}
+  \input {blocks/Assumption-stokes-regularity.tex}}
 \frame {\input {blocks/Definition-hdivdg-residual-operators.tex}}
+\frame {\input {blocks/Lemma-hdivdg-residual-1.tex}
+  \input {blocks/Corollary-hdivdg-residual-2.tex}}
+\frame {\input {blocks/Theorem-hdivdg-l2.tex}
+  \input {blocks/Problem-hdivdg-l2.tex}}
+
 
 \end{document}
 
