@@ -23,7 +23,7 @@
   \begin{gather}
     \label{eq:ip-lifting:1}
     \Sigma_h = \bigl\{ \tau\in L^2(\domain;\R^d) \big\vert
-    \,\forall \cell\in \mesh_h \tau_{|\cell} \in \Sigma_T \bigr\},
+    \,\forall \cell\in \mesh_h: \tau_{|\cell} \in \Sigma_T \bigr\},
   \end{gather}
   where $\nabla V_T \subset \Sigma_T$. Then, we define the \define{lifting
     operator} 
@@ -90,7 +90,245 @@
   \end{gather*}
 \end{proof}
 
+\begin{Definition}{ip-residual}
+  Let $V\subset H^1(\domain)$ and let $u,u^*\in V$ solve the primal
+  and dual problems
+  \begin{gather}
+    a(u,v) = f(v),
+    \qquad
+    a(v,u^* = \psi(v),
+    \qquad
+    \forall v\in V,
+  \end{gather}
+  with a bouunded, $V$-elliptic bilinear form $a(.,.)$. For a discrete
+  bilinear form $a_h(.,.)$ defined on $V+V_h$, we define the primal
+  and dual \define{residual operator}s
+  \begin{gather}
+    \label{eq:ip-lifting:8}
+    \begin{split}
+      \Res(u,v) &= a_h(u,v) - f(v), \\
+      \Res^*(u^*,v) &= a_h(v,u^*) - \psi(v).
+    \end{split}
+  \end{gather}
+\end{Definition}
 
+% This IS Strang's second lemma!
+\begin{Lemma}{ip-lifting-strang}
+  Let $a_h(.,.)$ be a bounded bilinear form on $V+V_h$ and elliptic on
+  $V_h$ with norm $\norm{.}_{V_h}$ and constant $\ellipa$. Then, the error
+  $u-u_h$ admits the estimate
+  \begin{gather}
+    \label{eq:ip-lifting:9}
+    \norm{u-u_h}_{V_h} \le \frac1{\ellipa}
+    \norm{\Res(u,.)}_{V_h^*}
+    + \left(1+\frac{\norm{a_h}}{\ellipa}\right)
+    \inf_{w_h\in V_h}\norm{u-w_h}
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  First, by the definition of the residual, we have the error equation
+  \begin{gather}
+    a_h(u-u_h, v_h) = \Res(u,v_h),\qquad\forall v_h\in V_h.
+  \end{gather}
+  Inserting $w_h-w_h$ for an arbitrary element $w_h\in V_h$, we obtain
+  \begin{gather*}
+    a_h(w_h-u_h, v_h) = \Res(u,v_h) - a_h(u-w_h, v_h),\qquad\forall v_h\in V_h.
+  \end{gather*}
+  Using $v_h = w_h-u_h$ and ellipticity, we obtain
+  \begin{align*}
+    \ellipa \norm{w_h-u_h}_{V_h}^2
+    &\le a_h(w_h-u_h,w_h-u_h)\\
+    & = \Res(u,w_h-u_h) - a_h(u-w_h, w_h-u_h)\\
+    & \le \bigl(\norm{\Res(u,.)}_{V_h^*} + \norm{a_h} \norm{u-w_h}_{V_h}\bigr)
+      \norm{w_h-u_h}_{V_h}.
+  \end{align*}
+  Hence, by triangle inequality
+  \begin{gather*}
+    \norm{u-u_h}_{V_h} \le \frac1{\ellipa} \norm{\Res(u,.)}_{V_h^*}
+    + \left(1+\frac{\norm{a_h}}{\ellipa}\right)
+    \inf_{w_h\in V_h}\norm{u-w_h}_{V_h}
+  \end{gather*}
+\end{proof}
+
+% From Girault/Kanschat/Riviere
+
+\begin{Lemma}{ip-lifting-residual-1}
+  Let $(u,p)\in V\times Q$ be the solution to the Poisson equation
+  with right hand side $f\in L^2(\domain)$. Assume $u\in H^s(\domain)$
+  with $s>3/2$. Then, we have for $v\in V+V_h$:
+  \begin{gather}
+    \label{eq:hdivdg:11}
+    \form(f,v) = \form(\nabla u,\nabla v)_{\mesh_h}
+    - 2\forme(\nabla u,\mvl{v\otimes n})_{\faces_h^i}
+    -\forme(\d_n u,v)_{\faces_h^\d}.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  We set out from the strong form of the Poisson equation and
+  integrate by parts.
+  \begin{gather*}
+    \form(f,v) = \form(-\Delta u, v)
+    = \form(\nabla u,\nabla v)_{\mesh_h}
+    - \sum_{\cell\in\mesh_h} \forme(\d_n u,v)_{\d\cell}
+    .
+  \end{gather*}
+  Under the regularity assumptions of the lemma, all of these
+  integrals make sense at least as duality pairings. In particular,
+  $\d_n u\in L^2(\d\cell)$, and thus we can split $\d\cell$ into
+  individual faces. Therefore,
+  \begin{gather*}
+    \sum_{\cell\in\mesh_h} \forme(\d_n u,v)_{\d\cell}
+    = 2\forme(\nabla u,\mvl{v\otimes n})_{\faces_h^i}
+    + \forme(\d_n u,v)_{\faces_h^\d}.
+  \end{gather*}
+  The proof concludes by collecting the results.
+\end{proof}
+
+\begin{Lemma}{ip-lifting-residual-2}
+  Let $k\ge 1$ and let $V_h$ such that $\P_{k-1} \subset \Sigma_T$. Then, if
+  $u\in H^{k+1}(\domain)$ and $v\in V+V_h$, there holds
+  \begin{gather}
+    \label{eq:ip-lifting:10}
+    \begin{split}
+    \abs{\Res(u,v)}
+    &\le c h^{k} \snorm{u}_{k+1}
+    \bigl(
+    \norm{\sqrt{\ipp_h}\jmp{v}}_{\faces_h^i}
+    +
+    \norm{\sqrt{\ipp_h}v}_{\faces_h^\d}\bigr)
+    \\
+    &\le c h^{k} \snorm{u}_{k+1} \norm{v}_{1,h}.
+    \end{split}
+  \end{gather}
+  % Furthermore, for $v_h\in V_h$, there holds
+  % \begin{gather}
+  %   \label{eq:ip-lifting:11}
+  %   \Res(u,v_h) = 0.
+  % \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  First, we observe that by the regularity assumption, $\jmp{u} = 0$
+  and thus, $\lifting u=0$. Hence,
+  \begin{gather*}
+    a_h(u,v) = \form(\nabla u, \nabla v)_{\mesh_h}
+    - \form(\nabla u,\lifting v)_{\mesh_h}.
+  \end{gather*}
+  By \blockref{Lemma}{ip-lifting-residual-1} and regularity of $u$,
+  \begin{align*}
+    \Res(u,v)
+    &= 2\forme(\nabla u,\mvl{v\n})_{\faces_h^i}
+      + \forme(\d_n u,v)_{\faces_h^\d}
+      - \form(\nabla u,\lifting v)_{\mesh_h}
+    \\
+    &= 2\forme(\mvl{\nabla u},\mvl{v\n})_{\faces_h^i}
+      + \forme(\d_n u,v)_{\faces_h^\d}
+      - \form(\nabla u,\lifting v)_{\mesh_h}
+    \\
+    &= 2\forme(\mvl{\nabla u},\mvl{v\n})_{\faces_h^i}
+      + \forme(\d_n u,v)_{\faces_h^\d}
+      - \form(\Pi_{\Sigma_h} \nabla u,\lifting v)_{\mesh_h},
+  \end{align*}
+  where $\Pi_{\Sigma_h}$ is the $L^2$-projection. Now, we can apply
+  the definition of the lifting term to obtain
+  \begin{multline*}
+    \Res(u,v) = 2\forme(\tfrac1{\ipp_h}\mvl{\nabla u -
+      \Pi_{\Sigma_h}\nabla u}, \ipp_h\mvl{v\n})_{\faces_h^i}
+    \\
+    + \forme(\tfrac1{\ipp_h} (\nabla u -\Pi_{\Sigma_h} \nabla
+    u)\cdot\n, \ipp_h v)_{\faces_h^\d}.
+  \end{multline*}
+  Application of standard approximation and trace estimates yields the
+  result observing that $\ipp_h = \ipp_0/h$.
+\end{proof}
+
+\begin{Theorem}{ip-lifting-h1}
+  Let $k\ge 1$ and $V_h$ such that $\P_k \subset V_\cell$. Let
+  $u\in H^{k+1}(\domain)$ be the solution to the continuous Poisson
+  problem. Let $a_h(.,.)$ be the interior penalty method with lifting
+  operators such that $\nabla V_h\subset\Sigma_h$. Then, there holds
+  \begin{gather}
+    \norm{u-u_h}_{1,h} \le c h^{k} \snorm{u}_{k+1}.
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  Application of \blockref{Lemma}{ip-lifting-strang},
+  \blockref{Lemma}{ip-lifting-residual-2}, and standard interpolation
+  results.
+\end{proof}
+
+\begin{Theorem}{ip-lifting-l2}
+  Let the assumptions of \blockref{Theorem}{ip-lifting-h1} hold and in
+  addition assume that the problem
+  \begin{gather*}
+    a(v,u^*) = \psi(v),\qquad\forall v\in V,
+  \end{gather*}
+  admits the \putindex{elliptic regularity} estimate
+  \begin{gather}
+    \label{eq:ip-lifting:12}
+    \norm{u^*}_{H^2(\domain)} \le c \norm{\psi}_{L^2(\domain)}.
+  \end{gather}
+  Then, there holds
+  \begin{gather}
+    \label{eq:ip-lifting:13}
+    \norm{u-u_h}_{L^2(\domain)} \le c h^{k+1} \snorm{u}_{H^{k+1}(\domain)}.
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  The proof uses the duality argument by Aubin and Nitsche, which sets
+  out solving the auxiliary problem
+  \begin{gather*}
+    a(v,u^*) = \form(u-u_h,v),\qquad\forall v\in V.
+  \end{gather*}
+  Using the definition of the dual residual, we obtain the equation
+  \begin{gather*}
+    \form(u-u_h, v) = a_h(v,u^*) - \Res^*(u^*,v),\qquad\forall v\in V+V_h.
+  \end{gather*}
+  Testing with $v=u-u_h$ yields
+  \begin{gather*}
+    \norm{u-u_h}^2 = a_h(u-u_h,u^*) - \Res^*(u^*,u-u^*).
+  \end{gather*}
+  Additionally, we us the error equation
+  \begin{gather*}
+    a_h(u-u_h, v_h) = \Res(u,v_h),
+  \end{gather*}
+  tested with $v_h = I_h u^*$, to obtain
+  \begin{multline*}
+    \norm{u-u_h}^2 = a_h(u-u_h, u^*-I_h u^*) - \Res^*(u^*,u-u_h)
+    + \Res(u,I_h u^*).
+  \end{multline*}
+  Using the regularity of $u^*$, the first term on the right
+  admits the estimate
+  \begin{gather*}
+    \abs{a_h(u-u_h, u^*-I_h u^*)}
+    \le \norm{u-u_h}_{1,h}\norm{u^*-I_hu^*}_{1,h}
+    \le c h \norm{u-u_h}_{1,h}.
+  \end{gather*}
+  For the second term, we use \blockref{Lemma}{ip-lifting-residual-2}
+  to obtain
+  \begin{gather*}
+    \abs{\Res^*(u^*,u-u_h)} \le c h \snorm{u^*}_2 \norm{u-u_h}_{1,h}.
+  \end{gather*}
+  Finally, using $\jmp{u^*} = 0$, the same lemma yields
+  \begin{align*}
+    \abs{\Res(u, I_h u^*)}
+    &\le c h \snorm{u}_2
+      \bigl(\norm{\sqrt{\ipp_h}\jmp{I_h u^*}}_{\faces_h^i}
+      + \norm{\sqrt{\ipp_h}I_h u^*}_{\faces_h^\d}\bigr)
+    \\
+    & = c h \snorm{u}_2
+      \bigl(\norm{\sqrt{\ipp_h}\jmp{u^*-I_h u^*}}_{\faces_h^i}
+      + \norm{\sqrt{\ipp_h}(u^*-I_h u^*)}_{\faces_h^\d}\bigr)
+    \\
+    & \le c h \snorm{u}_2 h^k \snorm{u^*}_{k+1}
+  \end{align*}
+  Using the energy estimate in \blockref{Theorem}{ip-lifting-h1} we
+  can conclude the prove.
+\end{proof}
 
 %%% Local Variables:
 %%% mode: latex

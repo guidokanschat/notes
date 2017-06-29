@@ -177,10 +177,10 @@
 \DeclarePairedDelimiterX\@Scal[2]{\langle\!\langle}{\rangle\!\rangle}{#1,#2}
 \DeclarePairedDelimiterX\@form[2]{(}{)}{#1,#2}
 \DeclarePairedDelimiterX\@forme[2]{\langle}{\rangle}{#1,#2}
-\def\scal(#1,#2){\@scal{#1}{#2}}
-\def\Scal(#1,#2){\@Scal{#1}{#2}}
-\def\form(#1,#2){\@form{#1}{#2}}
-\def\forme(#1,#2){\@forme{#1}{#2}}
+\def\scal(#1,#2){\@scal*{#1}{#2}}
+\def\Scal(#1,#2){\@Scal*{#1}{#2}}
+\def\form(#1,#2){\@form*{#1}{#2}}
+\def\forme(#1,#2){\@forme*{#1}{#2}}
 \def\mixedform(#1,#2,#3,#4){\@form*%
   {\begin{pmatrix}#1\\#2\end{pmatrix}}%
   {\begin{pmatrix}#3\\#4\end{pmatrix}}}
