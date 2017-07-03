@@ -13,6 +13,7 @@ blocks
 *.ilg
 *.ind
 *-blx.bib
+*.bcf
 *.run.xml
 main-blx.bib
 comment.cut
