@@ -77,7 +77,7 @@
   \end{gather}
 \end{intro}
 
-\begin{Notation}
+\begin{Notation}{curl}
   With $\curl u$ we describe the curl of a vector field $u$, which in
   three dimensions is defined as
   \begin{gather}
@@ -87,6 +87,11 @@
     \end{pmatrix}
   \end{gather}
 \end{Notation}
+
+\begin{remark}
+  A polular error in the literature consists of the following
+  argument: since $\div E = 0$, there also holds $\nabla \div E = 0$.
+\end{remark}
 
 \section{The de Rham complex of Hilbert spaces}
 
@@ -98,7 +103,7 @@
     \qquad \div\curl E=0.
   \end{gather}
   As a consequence, for $\phi\in H^1(\domain)$ we not only have
-  $\nabla \phi\in L^2(domain;\R^3)$, we also have
+  $\nabla \phi\in L^2(\domain;\R^3)$, we also have
   $\curl\nabla\phi=0\in L^2(\domain;\R^3)$. This gives rise to the sequence
   \begin{gather}
     \R
@@ -135,10 +140,68 @@
       @>{\nabla}>> \Hcurl(\domain)
       @>{\curl}>> \Hdiv(\domain)
       @>{\div}>> L^2(\domain)
+      @>>> 0,
+    \end{CD}
+  \end{gather}
+  such that $d\colon H\Lambda^k(\domain) \to H\Lambda^{k+1}(\domain)$ and
+  \begin{gather}
+    d^2 = d\circ d = 0.
+  \end{gather}
+\end{Notation}
+
+\begin{remark}
+  The spaces $H\Lambda^k(\domain)$ are Hilbert spaces with values in
+  the spaces of alternating $k$-forms on $\R^d$. From linear algebra,
+  we know that all alternating $k$-forms are zero if $k$ exceeds the
+  dimension of the vector space.  Therefore, the sequence above is
+  only valid in three dimensions, and it must be shorter by one member
+  in two dimensions. Changing our view back to differential operators,
+  we realize that there are two relevant sequences in two
+  dimensions. In the following diagram, the sequence on top can be
+  used to formulate Maxwell problems in $\Hcurl$ in two dimensions,
+  while the sequence on the bottom relates to the mixed form of the
+  Laplacian.
+
+  We introduce the sequences in two dimensions and afterwards will
+  focus our arguments on the more general case of three dimensions
+  again. Specialization to two dimensions are straight forward.
+\end{remark}
+
+\begin{Notation}{hlambda-2d}
+  In two dimensions, we consider the de Rham sequences
+  \begin{gather}\minCDarrowwidth20pt
+    \begin{CD}
+      \R
+      @>{\subset}>> H^1(\domain)
+      @>{\nabla}>> \Hcurl(\domain)
+      @>{\curl}>> L^2(\domain)
       @>>> 0
+      \\
+      @.
+      @A{\cong}AA
+      @A{\cong}AA
+      @A{\cong}AA
+      \\
+      \R
+      @>{d}>> H\Lambda^0(\domain)
+      @>{d}>> H\Lambda^1(\domain)
+      @>{d}>> H\Lambda^2(\domain)
+      @>>> 0
+      \\
+      @.
+      @V{\cong}VV
+      @V{\cong}VV
+      @V{\cong}VV
+      \\
+      \R
+      @>{\subset}>> H^1(\domain)
+      @>{\curl}>> \Hdiv(\domain)
+      @>{\div}>> L^2(\domain)
+      @>>> 0,
     \end{CD}
   \end{gather}
 \end{Notation}
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "main"
