@@ -73,21 +73,60 @@
   \end{gather}
   We can even go further and study the stationary limit
   \begin{gather}
+    \label{eq:derham:1}
     \curl\curl E=0 \qquad \div E=0.
   \end{gather}
+  This is the equation we are concerned with most, since its solution
+  theory also provides insight into the other forms.
 \end{intro}
 
 \begin{Notation}{curl}
   With $\curl u$ we describe the curl of a vector field $u$, which in
   three dimensions is defined as
   \begin{gather}
+    \label{eq:derham:2}
     \curl u =
     \begin{pmatrix}
-      ???
+      \d_2u_3-\d_3u_2\\\d_3u_1-\d_1u_3\\\d_1u_2-\d_2u_1.
     \end{pmatrix}
+  \end{gather}
+  In two dimension, we distinguish between the vector curl of a scalar
+  function and the scalar curl of a vector function
+  \begin{gather}
+    \curl u = \d_1u_2-\d_2u_1,
+    \qquad
+    \curl \phi =
+    \begin{pmatrix}
+      \d_2 \phi \\ -\d_1\phi
+    \end{pmatrix}.
   \end{gather}
 \end{Notation}
 
+\begin{remark}
+  The scalar curl of a two-dimensional vector field is equal to the
+  third component of the extension of this vector field by zero into
+  $\R^3$, in formulas,
+  \begin{gather*}
+    \curl
+    \begin{pmatrix}
+      u_1\\u_2
+    \end{pmatrix}
+    =
+    \curl
+    \begin{pmatrix}
+      u_1\\u_2\\0
+    \end{pmatrix}_3.
+  \end{gather*}
+  Similarly, the vector curl of a scalar function $\phi$ in two dimensions
+  consistes of the first two components of the curl of a three
+  dimensional function in the last component of t he vector,
+  \begin{gather*}
+    \curl \phi = \curl
+    \begin{pmatrix}
+      0\\0\\\phi
+    \end{pmatrix}_{1,2}.
+  \end{gather*}
+\end{remark}
 \begin{remark}
   A polular error in the literature consists of the following
   argument: since $\div E = 0$, there also holds $\nabla \div E =
@@ -95,8 +134,113 @@
   \begin{gather*}
     \Delta u = \nabla\div u - \curl\curl u,
   \end{gather*}
-  and avoid the $\div-\curl$-problem alltogether.
+  and avoid the div-curl-problem alltogether. Unfortunately, this is
+  only true, if solutions of~\eqref{eq:derham:1} are in
+  $H^1(\domain;\R^d)$, which is not true, depending on the boundary
+  conditions.
 \end{remark}
+
+\begin{Lemma}{curl-green}
+  For vector fields $u,v\in C^1(\overline{\domain})$, there holds
+  \begin{gather}
+    \label{eq:derham:3}
+    \int_{\domain} \curl u\cdot v\dx = \int_{\domain} u\cdot\curl v\dx
+    + \int_{\d\domain} (n\times u) \cdot v \ds.
+  \end{gather}
+\end{Lemma}
+
+
+\begin{Definition}{Maxwell-boundary}
+  The Maxwell equation~\eqref{eq:derham:1} is complemented with the
+  following boundary conditions:
+  \begin{itemize}
+  \item Perfectly conducting:
+    \begin{gather}
+      \n\cdot u = 0.
+    \end{gather}
+    \item Natural:
+      \begin{gather}
+        n\times \curl u = 0.
+      \end{gather}
+    \item Impedance:
+      \begin{gather}
+        n\times \curl u - \alpha  (\n\times u) \times \n = 0.
+      \end{gather}
+  \end{itemize}
+\end{Definition}
+
+
+\begin{Definition}{curl-traces}
+  For $u\in C^1(\overline\domain)$, we define the trace operators
+  \begin{gather}
+    \label{eq:derham:4}
+    \begin{split}
+      \gamma_{\tau} &= \n\times u_{|\d\domain}, \\
+      \gamma_{T} &= \n\times u_{|\d\domain} \times \n.\\
+    \end{split}
+  \end{gather}
+  The second of these is the tangential component of $u$ on the
+  boundary. Furthermore, we introduce the space $\Hcurl_0$ as the
+  completion of the space of differentiable functions with compact
+  support under the norm of $\Hcurl$
+  \begin{gather}
+    \Hcurl_0 = \overline{C^\infty_{00}(\domain;\R^d)}^{\Hcurl}.
+  \end{gather}
+\end{Definition}
+
+
+\begin{Theorem}{curl-traces}
+  The trace operator $\gamma_\tau$ can be extended to a continuous,
+  surjective operator
+  \begin{gather*}
+    \gamma_\tau \colon \Hcurl(\domain) \to Y(\d\domain),
+  \end{gather*}
+  where
+  \begin{gather}
+    \label{eq:derham:5}
+    \begin{split}
+      Y(\d\domain) &= \bigl\{
+      u\in H^{-1/2}_\tau(\d\domain) \big\vert
+      \;\nu\cdot(\curl u) \in H^{-1/2}(\d\domain) \bigr\},\\
+      H^{-1/2}_\tau(\d\domain) &= \bigl\{
+      u\in H^{-1/2}(\d\domain;\R^d) \big\vert 
+      u\cdot\n=0 \text{ a.e.}\bigr\}.
+    \end{split}
+  \end{gather}
+  Furthermore, the trace operator $\gamma_T$ can be extended to a
+  continuous operator
+  \begin{gather*}
+    \gamma_T \colon \Hcurl(\domain) \to Y(\d\domain)^*.
+  \end{gather*}
+\end{Theorem}
+
+
+\begin{intro}
+  The trace theorem indicates, that $\Hcurl_0(\domain)$ is the correct
+  space to solve the problem with perfectly conducting boundary
+  condition on the whole boundary. It remains now to deal with the
+  divergence constraint. First, we note, that the divergence operator
+  is not well-defined on $\Hcurl$, and that the subspace of $\Hcurl$
+  with divergence in $L^2$ is $H^1$, which must be avoided. Therefore,
+  we have to resort to a dual formulation of this constraint, which
+  leads to the following weak form of the perfectly conducting Maxwell
+  problem.
+\end{intro}
+
+\begin{Definition}{Maxwell-mixed-0}
+  The Maxwell problem for perfectly conducting boundary conditions in
+  weak form reads: find $(u,p)\in V\times Q$, where
+  $V=\Hcurl_0(\domain)$ and $Q=H^1_0(\domain)$ such that there holds
+    \begin{gather}
+      \label{eq:derham:6}
+    \begin{aligned}
+      \form(\curl u, \curl v) &+ \form(v,\nabla p) &=&\form(f,v)
+      &\forall v&\in V\\
+      \form(u,\nabla q) & &=&0
+      &\forall q&\in Q.\\      
+    \end{aligned}
+  \end{gather}
+\end{Definition}
 
 \section{The de Rham complex of Hilbert spaces}
 
