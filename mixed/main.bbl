@@ -51,6 +51,39 @@
       \field{pages}{909\bibrangedash 922}
       \range{pages}{14}
     \endentry
+    \entry{ArnoldBoffiFalk05}{article}{}
+      \name{author}{3}{}{%
+        {{hash=1aa33e9ad2ae0cd49c0a8ea9b0776d35}{%
+           family={Arnold},
+           family_i={A\bibinitperiod},
+           given={D.\bibnamedelimi N.},
+           given_i={D\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+        {{hash=00b973532085159941732a25bbfb2a7a}{%
+           family={Boffi},
+           family_i={B\bibinitperiod},
+           given={D.},
+           given_i={D\bibinitperiod}}}%
+        {{hash=0972113e7ecb0944fc699f886d8a7fa9}{%
+           family={Falk},
+           family_i={F\bibinitperiod},
+           given={R.\bibnamedelimi S.},
+           given_i={R\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \strng{namehash}{aa644f808a63f4f8145d92f68cfd2f7d}
+      \strng{fullhash}{aa644f808a63f4f8145d92f68cfd2f7d}
+      \field{labelalpha}{ABF05}
+      \field{sortinit}{A}
+      \field{sortinithash}{b685c7856330eaee22789815b49de9bb}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{SIAM J. Numer. Anal.}
+      \field{number}{6}
+      \field{title}{Quadrilateral ${H}(div)$ finite elements}
+      \field{volume}{42}
+      \field{year}{2005}
+      \field{pages}{2429\bibrangedash 2451}
+      \range{pages}{23}
+    \endentry
     \entry{AdamsFournier03}{book}{}
       \name{author}{2}{}{%
         {{hash=47d7d907fce9dfd3b2c252182d24ac03}{%
@@ -375,6 +408,27 @@
       \field{title}{Finite element approximations of the {N}avier-{S}tokes equations}
       \field{year}{1986}
     \endentry
+    \entry{Monk03}{book}{}
+      \name{author}{1}{}{%
+        {{hash=058f68af508e522d3b373e04f0c5dd1d}{%
+           family={Monk},
+           family_i={M\bibinitperiod},
+           given={P.},
+           given_i={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Oxford}%
+      }
+      \strng{namehash}{058f68af508e522d3b373e04f0c5dd1d}
+      \strng{fullhash}{058f68af508e522d3b373e04f0c5dd1d}
+      \field{labelalpha}{Mon03}
+      \field{sortinit}{M}
+      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Finite Element Methods for {M}axwell's Equations}
+      \field{year}{2003}
+    \endentry
     \entry{StenbergSuri96}{article}{}
       \name{author}{2}{}{%
         {{hash=1ebe8c02d75a83cab722ef98e3e41fcd}{%
@@ -480,7 +534,6 @@
       \field{year}{1980}
     \endentry
   \endsortlist
-  \missing{ArnoldBoffiFalk05}
 \endrefsection
 \endinput
 
