@@ -276,22 +276,23 @@ theorem on $\Hdiv$.
 \begin{remark}
   Since the polynomial space $\P_r$ is the direct sum
   \begin{gather*}
-    \P_r = \oplus_{s=0}^r \breve\P_s,
+    \P_r = \bigoplus_{s=0}^r \breve\P_s,
   \end{gather*}
   the homogeneous polynomial complex above can be extended to a
   general polynomial complex in a straightforward way.
 \end{remark}
 
 \begin{Definition}{Koszul-complex}
-  The \define{Koszul complex} is a polynomial complex of the form
+  The homogeneous \define{Koszul complex} is a polynomial complex of
+  the form
   \begin{gather}\minCDarrowwidth15pt
     \label{eq:derham:12}
     \begin{CD}
       0
-      @<<< \P_r\Lambda^0
-      @<{\kappa_1}<< \P_{r-1}\Lambda^1
-      @<{\kappa_2}<< \P_{r-2}\Lambda^2
-      @<{\kappa_3}<< \P_{r-3}\Lambda^3
+      @<<< \breve \P_r\Lambda^0
+      @<{\kappa_1}<< \breve \P_{r-1}\Lambda^1
+      @<{\kappa_2}<< \breve \P_{r-2}\Lambda^2
+      @<{\kappa_3}<< \breve \P_{r-3}\Lambda^3
       @<<< 0
     \end{CD}.
   \end{gather}
@@ -433,7 +434,7 @@ usual differential $d$.
   \begin{gather}
     \label{eq:derham:17}
     \breve \P_r\Lambda^k = \kappa \breve\P_{r-1}\Lambda^{k+1}
-    \oplus d\breve\P_{k+1}\Lambda^{k-1}.
+    \oplus d\breve\P_{r+1}\Lambda^{k-1}.
   \end{gather}
 \end{Theorem}
 
@@ -445,7 +446,207 @@ usual differential $d$.
     \omega = \frac1{r+k} (d\kappa\omega+\kappa d\omega)
     = \frac1{r+k} \kappa d\omega =: \kappa\eta
   \end{gather*}
-  with $\eta \in \breve\P_{r-1}\Lambda^{k+1}$.
+  with $\eta \in \breve\P_{r-1}\Lambda^{k+1}$. Thus,
+  $\omega\in \range{\kappa_{k-1}}$. Again, the proof for the de Rham
+  complex is obtained by replacing $\kappa$ by $d$.
+
+  In order to see that $\breve \P_r\Lambda^k$ is the sum of the two
+  spaces, we let for arbitrary $\omega\in \breve \P_r\Lambda^k$
+  \begin{gather*}
+    \eta = \frac1{r+k} d\omega \in \breve\P_{r-1}\Lambda^{k+1},
+    \qquad
+    \mu = \frac1{r+k} \kappa\omega \in \breve\P_{k+1}\Lambda^{k-1}.
+  \end{gather*}
+  By equation~\eqref{eq:derham:15}, we have
+  $\omega = \kappa\eta + d\mu$. It remains to show that the
+  intersection of the spaces is zero. Therefore, let $\omega$ be
+  chosen from the intersection. Then, $\omega = \kappa\eta = d \mu$
+  and
+  \begin{gather*}
+    (r+k)\omega = d\kappa \omega + \kappa d \omega
+    = d \kappa^2 \eta + \kappa d^2 \mu = 0.
+  \end{gather*}
+\end{proof}
+
+\begin{Corollary}{pk-complexes}
+  \blockref{Theorem}{polynomial-exact} holds as well for the
+  polynomial complexes
+  \begin{gather}\minCDarrowwidth15pt
+    \begin{CD}
+      0
+      @>>> \P_r\Lambda^0
+      @>{d}>> \P_{r-1}\Lambda^1
+      @>{d}>> \P_{r-2}\Lambda^2
+      @>{d}>> \P_{r-3}\Lambda^3
+      @>>> 0
+    \end{CD},
+  \end{gather}
+  and
+  \begin{gather}\minCDarrowwidth15pt
+    \begin{CD}
+      \R
+      @<<< \P_r\Lambda^0
+      @<{\kappa}<< \P_{r-1}\Lambda^1
+      @<{\kappa}<< \P_{r-2}\Lambda^2
+      @<{\kappa}<< \P_{r-3}\Lambda^3
+      @<<< 0
+    \end{CD}.
+  \end{gather}
+\end{Corollary}
+
+\begin{proof}
+  This is due to the fact that the polynomial spaces $\P_r$ are the
+  direct sums of homogeneous polynomial space $\breve\P_s$.
+\end{proof}
+
+\begin{Definition}{pk-plus}
+  The polynomial space of $k$-forms $\P_r^+\Lambda^k$ is defined as
+  \begin{gather}
+    \P_r^+\Lambda^k = \P_r\Lambda^k \oplus \kappa \P_r\Lambda^{k+1}.
+  \end{gather}
+  It is also referred to as $\P_{r+1}^-\Lambda^k$. Furthermore,
+  \begin{gather*}
+    \P_r^+\Lambda^0 = \P_{r+1}\Lambda^0,
+    \qquad
+    \P_r^+\Lambda^d = \P_r\Lambda^d.
+  \end{gather*}
+\end{Definition}
+
+\begin{remark}
+  We have used the construction principle
+  \begin{gather*}
+    \P_r\Lambda^k = \P_{r-1}\Lambda^k \oplus \breve \P_r\Lambda^k.
+  \end{gather*}
+  Using its decomposition, we obtain
+  \begin{gather*}
+    \P_r\Lambda^k =
+    \bigoplus_{s=1}^{r-1}\kappa \breve\P_{s-1}\Lambda^{k+1}
+    \bigoplus_{s=1}^{r-1} d\breve\P_{s+1}\Lambda^{k-1}
+    \oplus \kappa \breve\P_{r-1}\Lambda^{k+1}
+    \oplus d\breve\P_{r+1}\Lambda^{k-1}.
+  \end{gather*}
+  If we leave out the last factor, we get the new space
+  $\P_{r-1}^+\Lambda^k$.
+\end{remark}
+
+\begin{Lemma}{pk-plus-d}
+  If $\omega\in \P_r^+\Lambda^k$ and $d\omega=0$, then
+  $\omega\in\P_r\Lambda^k$.
+\end{Lemma}
+
+\begin{proof}
+  Let $\omega = \omega_1 + \kappa\eta$ with $\omega_1\in\P_r\Lambda^k$
+  and $\eta\in \breve\P_r\Lambda^{k+1}$. Then,
+  $d\omega_1\in\P_{r-1}\Lambda^{k+1}$ and
+  $d\kappa\eta\in \breve\P_r\Lambda^{k+1}$. Therefore,
+  $d\omega_1 = d\kappa\eta = 0$. By
+  \blockref{Lemma}{d-kappa-injective}, $\kappa\eta=0$, such that
+  $\omega=\omega_1$.
+\end{proof}
+
+% AFW 2006 Lemma 3.8
+\begin{Lemma}{pr-pr-plus}
+  For $r\ge 1$ and $0\le k < d$ there holds
+  \begin{gather}
+    d\P_{r}^+\Lambda^k \subset d\P_{r+1}\Lambda^k
+    \subset \P_r\Lambda^{k+1}
+    \subset \P_{r-1}^+\Lambda^{k+1}.
+  \end{gather}
+  The following four mappings $d$ have the same kernel:
+  \begin{gather}
+    \begin{aligned}
+      d\colon \P_r\Lambda_k &\to \P_{r-1}\Lambda^{k+1}
+      &
+      d\colon \P_r^+\Lambda_k &\to \P_{r}\Lambda^{k+1}
+      \\
+      d\colon \P_r\Lambda_k &\to \P_{r-1}^+\Lambda^{k+1}
+      &
+      d\colon \P_r^+\Lambda_k &\to \P_{r}^+\Lambda^{k+1}
+    \end{aligned}
+  \end{gather}
+  The following four mappings $d$ have the same range:
+  \begin{gather}
+    \begin{aligned}
+      d\colon \P_r\Lambda_k &\to \P_{r-1}\Lambda^{k+1}
+      &
+      d\colon \P_{r-1}^+\Lambda_k &\to \P_{r-1}\Lambda^{k+1}
+      \\
+      d\colon \P_r\Lambda_k &\to \P_{r-1}^+\Lambda^{k+1}
+      &
+      d\colon \P_{r-1}^+\Lambda_k &\to \P_{r-1}^+\Lambda^{k+1}
+    \end{aligned}
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  The first statement follows from the inclusions of $\P_r$ and
+  $\P_r^+$. The horizontal equality of the second statement follows
+  from \blockref{Lemma}{k-plus-d}. The vertical identities from the
+  decomposition~\eqref{eq:derham:17}. For the last set of identities,
+  we observe that by construction
+  \begin{gather*}
+    \P_r\Lambda^k = \P_{r-1}^+\Lambda^k \oplus d \P_{r+1}\Lambda^{k-1}.
+  \end{gather*}
+  Thus, $d\P_r\Lambda^k = d\P_{r-1}^+\Lambda^k\subset \P_{r-1}\Lambda^{k+1}$.
+\end{proof}
+
+\begin{Theorem}{dimension-pr-lambda}
+  Let $r\ge 0$ and $1\le k \le d$. Then,
+  \begin{gather}
+    \begin{split}
+      \dim \kappa \breve P_r\Lambda^k(\R^d)
+      & = \dim d \breve P_{r+1}\Lambda^{k-1}(\R^d)
+      \\
+      &= \binom{d+r}{d-k}\binom{r+k-1}{k-1}.
+    \end{split}
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  First, we prove the equality of the two dimensions by applying $\kappa$
+  to equation~\eqref{eq:derham:17}, yielding
+  \begin{gather*}
+    \kappa \breve P_r\Lambda^k(\R^d)
+    = \kappa d \breve P_{r+1}\Lambda^{k-1}(\R^d).
+  \end{gather*}
+  By \blockref{Lemma}{d-kappa-injective}, the two spaces are
+  isomorphic and the equality holds.
+
+  The dimension formula is proven first for $r=0$ and $k\ge 1$. The
+  Koszul operator is injective on $\P_0\Lambda^K(\R^d)$ since the
+  first factor in equation~\eqref{eq:derham:17} vanishes. It is
+  also injective on $\breve P_r\Lambda^d(\R^d)$ for $r\ge 0$.
+
+  For all other combinations of $r$ and $k$ it is proven by induction
+  over $k$. For $k=d$,
+  \begin{gather*}
+    \dim \breve\P_r\Lambda^d(\R^d) = \dim\breve\P_r(\R^d)
+    = \binom{d+r-1}{d-1}.
+  \end{gather*}
+  For $k<d$, we assume the formula proven for $k+1$. We have
+% Move this to an earlier point or an appendix
+  \begin{gather*}
+    \breve P_r\Lambda^k(\R^d) = \binom{d+r-1}{d-1}\binom{d}{k}.
+  \end{gather*}
+  Now, the dimension formula
+  \begin{gather*}
+    \dim \range \phi = \dim V - \dim ker \phi,
+  \end{gather*}
+  yields
+  \begin{gather*}
+    \dim\kappa\breve \P_r\Lambda^k(\R^d) =
+    \dim\breve \P_r\Lambda^k(\R^d)
+    - \dim\kappa\breve \P_{r-1}\Lambda^{k+1}(\R^d),
+  \end{gather*}
+  where we have used the exactness of the Koszul complex.
+  Using the induction hypothesis yields by the binomial identity
+  \begin{multline*}
+    \dim\kappa\breve \P_r\Lambda^k(\R^d) =
+    \binom{d+r-1}{d-1}\binom{d}{k}
+    - \binom{d+r-1}{d-k-1}\binom{r+k-1}{k}
+    \\
+    = \binom{d+r}{d-k}\binom{r+k-1}{k-1}
+  \end{multline*}
 \end{proof}
 
 \subsection{The complex of tensor products}
