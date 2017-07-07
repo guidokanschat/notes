@@ -64,7 +64,7 @@
   \end{gather}
   such that $d=d_k\colon H\Lambda^k(\domain) \to H\Lambda^{k+1}(\domain)$ and
   \begin{gather}
-    d^2 = d\circ d = 0.
+    d^2 = d\circ d = d_{k+1} \circ d_k = 0.
   \end{gather}
 \end{Notation}
 
@@ -169,6 +169,12 @@
   boundary conditions.
 \end{Lemma}
 
+
+
+\begin{Example}{not-simply-connected}
+  
+\end{Example}
+
 \subsection{A polynomial complex}
 
 \begin{intro}
@@ -178,6 +184,34 @@
   there is a general principle behind this concept and it can be
   extended to the curl and gradient operators.
 \end{intro}
+
+\begin{Notation}{pk-complex}
+  The homogeneous polynomial spaces $\breve\P_k$ form the cochain complex
+  \begin{gather}\minCDarrowwidth20pt
+    \begin{CD}
+      \R
+      @>{d}>> \breve\P_k\Lambda^0_0(\domain)
+      @>{d}>> \breve\P_{k-1}\Lambda^1_0(\domain)
+      @>{d}>> \breve\P_{k-2}\Lambda^2_0(\domain)
+      @>{d}>> \breve\P_{k-3}\Lambda^3_0(\domain)
+      @>>> 0
+      \\
+      @.
+      @V{\cong}VV
+      @V{\cong}VV
+      @V{\cong}VV
+      @V{\cong}VV
+      \\
+      \R
+      @>{\subset}>> \breve\P_k
+      @>{\nabla}>> \breve\P_{k-1}^3
+      @>{\curl}>> \breve\P_{k-2}^3
+      @>{\div}>> \breve\P_{k-3}
+      @>>> 0,
+    \end{CD}
+  \end{gather}
+  and $d_{k+1}\circ d_k = 0$.
+\end{Notation}
 
 
 
