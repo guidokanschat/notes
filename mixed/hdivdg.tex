@@ -356,6 +356,66 @@
 \begin{Problem}{hdivdg-l2}
   Adapt the proof of \blockref{Theorem}{ip-lifting-l2} to prove
   \blockref{Theorem}{hdivdg-l2}.
+\begin{solution}
+   We again consider the auxiliary problem
+  \begin{gather*}
+    a(v,u^*) +(\nabla\cdot v, p^*)= \form(u-u_h,v),\qquad\forall v\in V.
+  \end{gather*}
+  Using the definition of the dual residual, we obtain the equation
+  \begin{gather*}
+    \form(u-u_h, v) = a_h(v,u^*) +(\nabla\cdot v, p^*)- \Res^*(u^*,p^*;v),\qquad\forall v\in V+V_h.
+  \end{gather*}
+  Testing with $v=u-u_h$ yields
+  \begin{gather*}
+    \norm{u-u_h}^2 = a_h(u-u_h,u^*) +(\nabla\cdot (u-u_h), p^*)- \Res^*(u^*, p^*;u-u^*).
+  \end{gather*}
+  Additionally, we us the error equation
+  \begin{gather*}
+    a_h(u-u_h, v_h)+(\nabla\cdot v_h, p-p_h) = \Res(u,p;v_h),
+  \end{gather*}
+  tested with $v_h = I_h u^*$, to obtain
+  \begin{align*}
+    \norm{u-u_h}^2 &= a_h(u-u_h,u^*-I_h u^*) +(\nabla\cdot (u-u_h), p^*-q_h)\\
+    &\quad- \Res^*(u^*, p^*;u-u^*)
+    -\underbrace{(\nabla\cdot I_h u^*, p-p_h)}_{0} + \Res(u,p;I_h u^*).    
+  \end{align*}
+  Using the regularity of $u^*$, the first term on the right
+  admits the estimate
+  \begin{gather*}
+    \abs{a_h(u-u_h, u^*-I_h u^*)}
+    \le \norm{u-u_h}_{1,h}\norm{u^*-I_hu^*}_{1,h}
+    \le c h \norm{u-u_h}_{1,h}.
+  \end{gather*}
+  as before.
+  
+  For the second term consider $q_h=\Pi_{Q_h} p^*$
+  \begin{align*}
+   (\nabla\cdot (u-u_h), p^*-\Pi_{Q_h} p^*)\leq \norm{\nabla \cdot  (u-u_h)} \norm{p^*-\Pi_{Q_h} p^*}=0
+  \end{align*}
+  
+  For the third term we use \blockref{Lemma}{ip-lifting-residual-2}
+  to obtain
+  \begin{gather*}
+    \abs{\Res^*(u^*,u-u_h)} \le c h \snorm{u^*}_2 \norm{u-u_h}_{1,h}.
+  \end{gather*}
+  Finally, using $\jmp{u^*} = 0$, the same lemma yields
+  \begin{align*}
+    \abs{\Res(u, I_h u^*)}
+    &\le c h \snorm{u}_2
+      \bigl(\norm{\sqrt{\ipp_h}\jmp{I_h u^*}}_{\faces_h^i}
+      + \norm{\sqrt{\ipp_h}I_h u^*}_{\faces_h^\d}\bigr)
+    \\
+    & = c h \snorm{u}_2
+      \bigl(\norm{\sqrt{\ipp_h}\jmp{u^*-I_h u^*}}_{\faces_h^i}
+      + \norm{\sqrt{\ipp_h}(u^*-I_h u^*)}_{\faces_h^\d}\bigr)
+    \\
+    & \le c h \snorm{u}_2 h^k \snorm{u^*}_{k+1}
+  \end{align*}
+  This is exactly the same proof we used before.
+  Using the energy estimate in \blockref{Theorem}{ip-lifting-h1} we
+  can conclude the prove.
+\end{solution}
+
 \end{Problem}
 
 %%% Local Variables: 
