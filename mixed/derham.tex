@@ -18,6 +18,7 @@
   We now know three differential operators, $\nabla$, $\curl$, and
   $\div$ with the interesting property
   \begin{gather}
+    \label{eq:derham:10}
     \curl\nabla \phi = 0
     \qquad \div\curl E=0.
   \end{gather}
@@ -25,6 +26,7 @@
   $\nabla \phi\in L^2(\domain;\R^3)$, we also have
   $\curl\nabla\phi=0\in L^2(\domain;\R^3)$. This gives rise to the sequence
   \begin{gather}
+    \label{eq:derham:11}
     \R
     \overset{\subset}{\longrightarrow} H^1(\domain)
     \overset{\nabla}{\longrightarrow} \Hcurl(\domain)
@@ -40,6 +42,7 @@
   The notation of exterior calculus of differential forms allows us to
   write this sequence elegantly as
   \begin{gather}\minCDarrowwidth20pt
+    \label{eq:derham:9}
     \begin{CD}
       \R
       @>{d}>> H\Lambda^0(\domain)
@@ -89,6 +92,7 @@
 \begin{Notation}{hlambda-2d}
   In two dimensions, we consider the de Rham sequences
   \begin{gather}\minCDarrowwidth20pt
+    \label{eq:derham:8}
     \begin{CD}
       \R
       @>{\subset}>> H^1(\domain)
@@ -128,11 +132,16 @@
   \end{gather}
 \end{Notation}
 
+The value of this notation lies in the following theorem by de Rham,
+which describes the relation between the elements of the sequence. It
+is cited here without proof.
+
 \begin{Theorem}{de-rham}
   Assume the domain $\domain$ is Lipschitz.  If $\domain$ is simply
-  conntected, the sequences in equations~\eqref{} and~\eqref{} are
-  exact, that is, there holds
+  conntected, the sequences in equations~\eqref{eq:derham:9}
+  and~\eqref{eq:derham:9} are exact, that is, there holds
   \begin{gather}
+    \label{eq:derham:7}
     \ker {d_{k+1}} = \range{d_k}.
   \end{gather}
   If it is not simply connected, the codimension of $\range{d_k}$ in
@@ -140,11 +149,20 @@
   $\range{d_k}$ is closed in $H\Lambda^{k+1}(\domain)$.
 \end{Theorem}
 
+So far, we have not considered boundary conditions. The next lemma,
+which is again stated without proof, indicates that the properties of
+the de Rham complex are inherited, if the appropriate boundary
+conditions are applied to each space, namely, function values in
+$H^1$, tangential traces in $\Hcurl$, and normal traces in
+$\Hdiv$. The last restriction from $L^2$ to $L^2_0$ is not a boundary
+condition, but it is the compatibility condition implied by the Gauss
+theorem on $\Hdiv$.
+
 \begin{Lemma}{hlambda-0}
   The bounded Hilbert cochain complex
   \begin{gather}\minCDarrowwidth20pt
     \begin{CD}
-      \R
+      0
       @>{d}>> H\Lambda^0_0(\domain)
       @>{d}>> H\Lambda^1_0(\domain)
       @>{d}>> H\Lambda^2_0(\domain)
@@ -157,8 +175,8 @@
       @V{\cong}VV
       @V{\cong}VV
       \\
-      \R
-      @>{\subset}>> H^1_0(\domain)
+      0
+      @>>> H^1_0(\domain)
       @>{\nabla}>> \Hcurl_0(\domain)
       @>{\curl}>> \Hdiv_0(\domain)
       @>{\div}>> L^2_0(\domain)
@@ -169,11 +187,53 @@
   boundary conditions.
 \end{Lemma}
 
-
-
-\begin{Example}{not-simply-connected}
+% \begin{Example}{not-simply-connected}
   
-\end{Example}
+% \end{Example}
+
+\begin{remark}
+  The complex does not start with $\R$ on the left, but with zero,
+  since the constant functions are not members of $H^1_0(\domain)$.
+
+  On the other hand, we could have replaced the right end of the
+  complex by
+  \begin{gather*}
+    L^2(\domain) \xrightarrow{\frac1{\abs{\domain}}\int} \R,
+  \end{gather*}
+  where the arror is the mean value operator.
+\end{remark}
+
+\begin{Theorem}{div-curl-well-posed}
+  The Maxwell problem in \blockref{Definition}{Maxwell-mixed-0} is
+  well posed.
+\end{Theorem}
+
+\begin{proof}
+  We have to show the inf-sup condition and the ellipticity of the
+  curl-curl bilinear form. Let us introduce
+  \begin{gather*}
+    a(u,v) = \form(\curl u, \curl v),
+    \qquad
+    b(v,q) = \form(v,\nabla q).
+  \end{gather*}
+  From the fact that the de Rham complex starts with zero, we obtain
+  that the kernel of the gradient is zero. Thus, for any $q\in
+  H^1_0(\domain)$, we have $v = \nabla q \neq 0$ and
+  $\norm{v}_{\Hcurl} = \norm{v}_{L^2} \le \norm{q}_{H^1}$. Thus, the
+  inf-sup condition holds.
+
+  We show now that $a(.,.)$ is elliptic on $\ker B$. From the
+  definition of $b(.,.)$, we deduce that
+  $\ker B \perp \nabla H^1_0(\domain) = \ker A$. Thus, $A$ is an
+  isomorphism between $\ker B$ and its dual, and consequently
+  elliptic.
+\end{proof}
+
+\begin{Problem}{darcy-derham}
+  Prove well-posedness for the Darcy problem using the de Rham complex
+  for proving \blockref{Lemma}{darcy-reduced-wellposed} and
+  \blockref{Lemma}{darcy-infsup}.
+\end{Problem}
 
 \subsection{A polynomial complex}
 
@@ -187,14 +247,14 @@
 
 \begin{Notation}{pk-complex}
   The homogeneous polynomial spaces $\breve\P_k$ form the cochain complex
-  \begin{gather}\minCDarrowwidth20pt
+  \begin{gather}\minCDarrowwidth15pt
     \begin{CD}
       \R
-      @>{d}>> \breve\P_k\Lambda^0_0(\domain)
-      @>{d}>> \breve\P_{k-1}\Lambda^1_0(\domain)
-      @>{d}>> \breve\P_{k-2}\Lambda^2_0(\domain)
-      @>{d}>> \breve\P_{k-3}\Lambda^3_0(\domain)
-      @>>> 0
+      @>{d}>> \breve\P_r\Lambda^0
+      @>{d}>> \breve\P_{r-1}\Lambda^1
+      @>{d}>> \breve\P_{r-2}\Lambda^2
+      @>{d}>> \breve\P_{r-3}\Lambda^3
+      @>{d}>> 0
       \\
       @.
       @V{\cong}VV
@@ -203,17 +263,190 @@
       @V{\cong}VV
       \\
       \R
-      @>{\subset}>> \breve\P_k
-      @>{\nabla}>> \breve\P_{k-1}^3
-      @>{\curl}>> \breve\P_{k-2}^3
-      @>{\div}>> \breve\P_{k-3}
+      @>{\subset}>> \breve\P_r
+      @>{\nabla}>> \breve\P_{r-1}^3
+      @>{\curl}>> \breve\P_{r-2}^3
+      @>{\div}>> \breve\P_{r-3}
       @>>> 0,
     \end{CD}
   \end{gather}
   and $d_{k+1}\circ d_k = 0$.
 \end{Notation}
 
+\begin{remark}
+  Since the polynomial space $\P_r$ is the direct sum
+  \begin{gather*}
+    \P_r = \oplus_{s=0}^r \breve\P_s,
+  \end{gather*}
+  the homogeneous polynomial complex above can be extended to a
+  general polynomial complex in a straightforward way.
+\end{remark}
 
+\begin{Definition}{Koszul-complex}
+  The \define{Koszul complex} is a polynomial complex of the form
+  \begin{gather}\minCDarrowwidth15pt
+    \label{eq:derham:12}
+    \begin{CD}
+      0
+      @<<< \P_r\Lambda^0
+      @<{\kappa_1}<< \P_{r-1}\Lambda^1
+      @<{\kappa_2}<< \P_{r-2}\Lambda^2
+      @<{\kappa_3}<< \P_{r-3}\Lambda^3
+      @<<< 0
+    \end{CD}.
+  \end{gather}
+  The \define{Koszul differential} is defined such that
+  \begin{gather}
+    \label{eq:derham:13}
+    \begin{aligned}
+      \kappa_1\omega &= x\cdot\omega & \omega&\in \P_s\Lambda^1,\\
+      \kappa_2\omega &= -x\times\omega & \omega&\in \P_s\Lambda^2,\\
+      \kappa_3\omega &= x\omega & \omega&\in \P_s\Lambda^3,
+    \end{aligned}
+  \end{gather}
+  and there holds
+  \begin{gather}
+    \label{eq:derham:14}
+    \kappa\circ\kappa = \kappa_{k+1}\circ\kappa_k = 0.
+  \end{gather}
+\end{Definition}
+
+Note that the ``Koszul differential'' increases the polynomial order
+and lowers the order of the form, thus acts in the opposite way of the
+usual differential $d$.
+
+\begin{Lemma}{kd-plus-dk}
+  For $\omega\in \breve \P_r\Lambda^k$ there holds
+  \begin{gather}
+    \label{eq:derham:15}
+    \bigl(d\kappa+\kappa d\bigr)\omega = (r+k) \omega.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  Since we are not using differential form technology, we prove this
+  for each $k$ directly. For $k=0$, we have $\kappa\omega = 0$, thus
+  we have to show
+  \begin{gather*}
+    \kappa d\omega = r\omega.
+  \end{gather*}
+  Due to linearity of $\kappa$ and $d$, it suffices to prove the
+  result for $\omega = p=x_1^ax_2^bx_3^c$. We note that $dp/d_{x_1} =
+  a/x_1 p$ and $d(x_1 p)/d_{x_1} = (a+1) p$ and analogue for the other
+  coordinates.
+  \begin{gather*}
+    \kappa_1 d_0\omega = x\cdot \nabla p = x\cdot
+    \begin{pmatrix}
+      a/x_1\\b/x_2\\c/x_3
+    \end{pmatrix}p
+    = (a+b+c)p.
+  \end{gather*}
+  The second easy case is $k=3$ such that $d\omega = 0$. Let again
+  $\omega = p$ to obtain
+  \begin{gather*}
+    d_2\kappa_3 \omega = \div(xp) = \div
+    \begin{pmatrix}
+      x_1 p \\x_2 p \\x_3 p
+    \end{pmatrix}
+    = (a+1+b+1+c+1) p = (r+3) \omega.
+  \end{gather*}
+  For the two vector valued cases, we note that it suffices to prove
+  the result for $\omega = (p,0,0)^T$ and to note that the results for
+  nonzero second and third component follow suite. Thus, for $k=1$
+  \begin{multline*}
+    \nabla (x\cdot \omega) - x\times \curl \omega
+    = \nabla(x_1 p) - x\times
+    \begin{pmatrix}
+      0\\c/x_3 \\ -b/x_2
+    \end{pmatrix}p
+    \\
+    =
+    \begin{pmatrix}
+      a+1 \\ bx_1/x_2\\ cx_1/x_3
+    \end{pmatrix}p
+    +
+    \begin{pmatrix}
+      b+c \\ -bx_1/x_2\\cx_1/x_3
+    \end{pmatrix}p
+    =
+    \begin{pmatrix}
+      a+b+c+1 \\0\\0
+    \end{pmatrix}p
+    = (r+1)\omega.
+  \end{multline*}
+  Finally, for $k=2$
+  \begin{multline*}
+    \curl(-x\times \omega) + x \div \omega
+    = \curl
+    \begin{pmatrix}
+      0 \\ -x_3 \\ x_2
+    \end{pmatrix}p
+    +
+    \begin{pmatrix}
+      x_1 a/x_1\\x_2 a/x_1\\x_3 a/x_1\\
+    \end{pmatrix}p
+    \\=
+    \begin{pmatrix}
+      b+1+c+1\\-ax_2/x_1 \\ -a x_3/x_1
+    \end{pmatrix}p
+    +
+    \begin{pmatrix}
+      a\\ax_2/x_1\\ax_3/x_1
+    \end{pmatrix}p
+    =
+    \begin{pmatrix}
+      a+b+c+2\\0\\0
+    \end{pmatrix}p
+    = (r+2)\omega.
+  \end{multline*}
+\end{proof}
+
+\begin{Lemma}{d-kappa-injective}
+  The restriction of operator $d$ to $\range \kappa$ is injective and
+  vice versa, or equivalently for any polynomial form
+  $\omega\in \breve \P_r\Lambda^k$ there holds
+  \begin{gather}
+    \label{eq:derham:16}
+    \begin{aligned}
+      d\kappa\omega &= 0 &\Longrightarrow&& \kappa\omega &= 0,\\
+      \kappa d\omega &= 0 &\Longrightarrow&& d\omega &= 0.
+    \end{aligned}
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  If $r=k=0$, then $\kappa\omega = d\omega = 0$, such that the lemma
+  holds trivially. For $r+k\neq 0$, we apply $\kappa$ to
+  equation~\eqref{eq:derham:15} to obtain
+  \begin{gather*}
+    \kappa\omega = \frac1{r+k}
+    \bigl(\kappa d\kappa\omega + \kappa^2d\omega\bigr)
+    = \frac1{r+k}\kappa d\kappa\omega.
+  \end{gather*}
+  Thus, we have proven $d\kappa\omega=0$ implies $\kappa\omega=0$. The
+  second implication is proven by applying $d$ to~\eqref{eq:derham:15}.
+\end{proof}
+
+\begin{Theorem}{polynomial-exact}
+  The polynomial de Rham complex and the Koszul complex are exact for
+  $r>3$. Furthermore for $r+k>0$, there holds
+  \begin{gather}
+    \label{eq:derham:17}
+    \breve \P_r\Lambda^k = \kappa \breve\P_{r-1}\Lambda^{k+1}
+    \oplus d\breve\P_{k+1}\Lambda^{k-1}.
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  We already know $\range{\kappa_{k-1}} \subset \ker{\kappa_k}$. Thus,
+  it remains to show the opposite inclusion. Let therefore $\omega\in
+  \breve \P_r\Lambda^k$ such that $\kappa\omega=0$. Then,
+  \begin{gather*}
+    \omega = \frac1{r+k} (d\kappa\omega+\kappa d\omega)
+    = \frac1{r+k} \kappa d\omega =: \kappa\eta
+  \end{gather*}
+  with $\eta \in \breve\P_{r-1}\Lambda^{k+1}$.
+\end{proof}
 
 \subsection{The complex of tensor products}
 
