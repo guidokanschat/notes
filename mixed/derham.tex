@@ -138,7 +138,7 @@ is cited here without proof.
 
 \begin{Theorem}{de-rham}
   Assume the domain $\domain$ is Lipschitz.  If $\domain$ is simply
-  conntected, the sequences in equations~\eqref{eq:derham:9}
+  connected, the sequences in equations~\eqref{eq:derham:9}
   and~\eqref{eq:derham:9} are exact, that is, there holds
   \begin{gather}
     \label{eq:derham:7}
@@ -235,7 +235,7 @@ theorem on $\Hdiv$.
   \blockref{Lemma}{darcy-infsup}.
 \end{Problem}
 
-\subsection{A polynomial complex}
+\section{Polynomial complexes for simplicial meshes}
 
 \begin{intro}
   We have already seen that adding $x\P_k$ to the space $\P_k^d$, we
@@ -281,6 +281,8 @@ theorem on $\Hdiv$.
   the homogeneous polynomial complex above can be extended to a
   general polynomial complex in a straightforward way.
 \end{remark}
+
+\subsection{The Koszul complex}
 
 \begin{Definition}{Koszul-complex}
   The homogeneous \define{Koszul complex} is a polynomial complex of
@@ -649,7 +651,358 @@ usual differential $d$.
   \end{multline*}
 \end{proof}
 
-\subsection{The complex of tensor products}
+
+
+
+\subsection{Degrees of freedom and bases for simplicial meshes}
+
+\begin{intro}
+  After having studied the properties of the de Rham complex and the
+  Koszul complex of polynomial spaces, we continue like with standard
+  finite elements and define a basis of shape functions and sets of
+  degrees of freedom dual to this basis. Note that the following
+  definition subsumes the definitions of conforming finite elements
+  for $H^1$, $\Hcurl$ and $\Hdiv$ in a single statement.
+\end{intro}
+
+\begin{Definition}{mesh-pk}
+  Given a space of polynomial forms
+  $\P_r\Lambda^k=\P_r\Lambda^k(\R^d)$, we define the space of finite
+  element polynomial forms on a mesh $\mesh_h$ covering the domain
+  $\domain\subset\R^d$ as
+  \begin{gather}
+    \P_r\Lambda^k(\mesh) = \bigl\{
+    \omega \in H\Lambda^k \big|
+    \;\forall \cell\in\T\colon \omega_{|\cell} \in \P_r\Lambda^k
+    \bigr\}.
+  \end{gather}
+\end{Definition}
+
+\begin{intro}
+  The degrees of freedom have to be designed such that they guarantee
+  the necessary continuity between cells. To this end, we have to
+  study the traces of polynomial forms on the boundaries (called
+  subsimplices below) of the simplex $\cell$. Then, we can start
+  decomposing degrees of freedom and node values such that they can be
+  allocated to these subsimplices.
+\end{intro}
+
+\subsubsection{Geometric structure of simplices}
+
+\begin{Definition}{spanned-simplex}
+  Let $x_0,\dots,x_k$ for $k\le d$ be a set of $k+1$ points in
+  $\R^d$. Then, we call the set of convex combinations of these points
+  the $k$-simplex $f$ spanned by $\{x_0,\dots,x_k\}$.
+\end{Definition}
+
+
+\begin{Definition}{subsimplices}
+  Let $\cell$ be the simplex in $\R^d$ spanned by the points
+  $x_0,\dots,x_d$. Then, every ascending subset
+  $\sigma \subset \{0,\dots,d\}$ of length $k+1$ defines a
+  $k$-dimensional \define{subsimplex} of $\cell$ denoted as $f_\sigma$.
+
+  The set of all subsimplices of $\cell$, including $\cell$ itself is
+  called $\Delta(\cell)$. The set of all $k$-dimensional subsimplices
+  is $\Delta_k(\cell)$.
+\end{Definition}
+
+\begin{example}
+  A $d$-dimensional simplex $\cell$ has $\binom{d+1}{k+1}$
+  subsimplices of dimension $k$.
+
+  The one-dimensional simplex $[x_0,x_1]$ has two subsimplices of
+  dimension zero, namely the two points $x_0$ and $x_1$.
+
+  The triangle spanned by the points $x_0, x_1, x_3$ has three
+  one-dimensional subsimplices (edges) and three zero-dimensional
+  subsimplices (vertices).
+
+  The tetrahedron spanned by the points $x_0,\dots,x_3$ has
+  \begin{itemize}
+  \item 4 triangular faces,
+  \item 6 edges,
+  \item 4 vertices.
+  \end{itemize}
+\end{example}
+
+\subsubsection{Geometric decomposition of $\P_r(\cell)$}
+
+\begin{remark}
+  For a simplex $\cell\subset\R^d$, the barycentric coordinates are
+  the uniquely determined linear interpolating polynomials such that
+  \begin{gather*}
+    \lambda_i(x_j) = \delta_{ij}.
+  \end{gather*}
+  Then,
+  \begin{gather*}
+    \cell = \biggl\{ x = \sum_{i=0}^d\lambda_i\bigg\vert
+    \lambda_i \ge 0,\quad\sum_{i=0}^d\lambda_i = 1\biggr\}.
+  \end{gather*}
+
+  Let $f=f_\sigma$ be the $k$-dimensional subsimplex spanned by the
+  points $x_{\sigma_0},\dots,x_{\sigma_k}$. Then, the linear
+  polynomials $\lambda_{\sigma_1},\dots,\lambda_{\sigma_k}$ form a set
+  of barycentric coordinates for $f_\sigma$, that is,
+  \begin{gather}
+    \begin{split}
+      f_\sigma &= \bigl\{x\in\cell \big\vert
+      \lambda_j=0 \text{ for } j\not\in\sigma\bigr\}.
+      \\
+      &= \biggl\{ x = \sum_{i\in\sigma}\lambda_i\bigg\vert
+    \lambda_i \ge 0,\quad\sum_{i\in\sigma}\lambda_i = 1\biggr\}.
+    \end{split}
+  \end{gather}
+\end{remark}
+
+\begin{remark}
+  When we introduced barycentric coordinates in order to define
+  standard shape functions on simplices, we generated a basis for
+  $\P_r(\R^d)$ by selecting polynomials of the $\lambda_i$. Closer
+  inspection reveals that these polynomials were
+  homogeneous. Therefore, we defined an isomorphism
+  \begin{gather}
+    \breve \P_k(\R^{d+1}) \equiv \P_k(\R^d),
+  \end{gather}
+  which reads: for every $p\in \P_k(\R^d)$ there is
+  $q\in\breve\P_k(\R^{d+1})$ such that
+  \begin{gather*}
+    p(x_1,\dots,x_d) = q(\lambda_0,\dots,\lambda_d).
+  \end{gather*}
+% Argue why isomorphism: count?
+\end{remark}
+
+\begin{Definition}{pr-f}
+  For each subsimplex $f_\sigma$ of $\cell$ with
+  $\sigma = \sigma_0,\dots,\sigma_k$, the space
+  $\P_r(f_\sigma) \equiv \breve\P_r(\R^{k+1})$ is defined as
+  \begin{gather}
+    \P_r(f_\sigma) = \bigl\{
+    q(\lambda_{\sigma_0},\dots,\lambda_{\sigma_k})\big\vert
+    q\in\breve \P_r(\R^{k+1})\bigr\}.
+  \end{gather}
+  The \putindex{bubble function} associated with $f_\sigma$ is
+  \begin{gather}
+    b_{f\sigma} = \lambda_{\sigma_0}\cdots\lambda_{\sigma_k}.
+  \end{gather}
+  The \define{extension operator} $E_{f_\sigma\to\cell}$ is defined as
+  \begin{gather}
+    \begin{split}
+      E_{f_\sigma\to\cell}\colon \P_r(f_\sigma) &\to \P_r(\R^d),\\
+      p &\mapsto q(\lambda_{\sigma_0},\dots,\lambda_{\sigma_k}),
+    \end{split}
+  \end{gather}
+  where $q$ is chosen as in the definition of $\P_r(f_\sigma)$.
+\end{Definition}
+
+\begin{Lemma}{subsimplex-polynomials}
+  Every function in $\P_r(f)$ vanishes on every subsimplex $g$ which
+  is disjoint from $f$.
+
+  The bubble function $b_f$ vanishes on every subsimplex not containing $f$.
+\end{Lemma}
+
+\begin{Problem}{subsimplex-polynomials}
+  Show: $\P_r(f_\sigma)$ is isomorphic to $\P_r(\R^k)$. Prove
+  \blockref{Lemma}{subsimplex-polynomials}.
+\end{Problem}
+
+\begin{Example}{h1-moment-dofs}
+  \begin{center}
+    \includegraphics[width=.3\textwidth]{fig/p1-p}
+    \includegraphics[width=.3\textwidth]{fig/p2-p}
+    \includegraphics[width=.3\textwidth]{fig/p3-p}
+  \end{center}
+  Unisolvent interpolation conditions for $\P_r(\cell)$
+  \begin{xalignat*}3
+    u(f) &= 0 &&& \dim f &= 0\\
+    \form(u,q)_f &= 0 & q&\in \P_{r-2}(f) & \dim f &= 1 \\
+    \form(u,q)_f &= 0 & q&\in \P_{r-3}(f) & \dim f &= 2 \\
+    &\vdots && \vdots && \vdots
+  \end{xalignat*}
+\end{Example}
+
+We are now generalizing and formalizing this example in order to
+derive a geometric decomposition of $\P_r(\cell)$ and its dual.
+
+\begin{Definition}{v-of-f}
+  For every $f\in\Delta(\cell)$%
+  %with $\sigma=\{\sigma_0,\dots,\sigma_k\}$
+  , we define
+  $V(f) \subset \P_r(\cell)$  for $\dim f>0$ as
+  \begin{gather}
+    V(f) = \bigl\{ p = E_{f\to\cell} b_f q \big\vert
+    \;q \in \P_{r-\dim f -1}(f) \bigr\},
+  \end{gather}
+  and for $\dim f=0$
+  \begin{gather}
+    V(f) = \bigl\{ \lambda_i^r \big\vert
+    \;f = \{x_i\}\bigr\}.
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{w-of-f}
+  For every $f\in\Delta(\cell)$, we define
+  $W(f) \subset \P_r(\cell)^*$ for $\dim f>0$ as
+  \begin{gather}
+    W(f) = \bigl\{\phi(p) = \form(p,q)_f\big\vert
+    \;q\in\P_{r-\dim f-1}(f) \bigr\},
+  \end{gather}
+  and for $\dim f=0$
+  \begin{gather}
+    W(f) = \bigl\{\phi(p)= p(x_i) \big|
+    \;f=\{x_i\}
+    \bigr\}.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{pr-geometric}
+  There holds
+  \begin{gather}
+    \P_r(\cell) = \bigoplus_{f\in\Delta(\cell)}V(f),
+    \qquad
+    \P_r(\cell)^* = \bigoplus_{f\in\Delta(\cell)}W(f).
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  We begin to show that
+  \begin{gather*}
+    \P_r(\cell) = \bigoplus_{f\in\Delta(\cell)}V(f).
+  \end{gather*}
+  First, we note that for any $f\in\Delta(\cell)$ every function in $V(f)$
+  is also in $\P_r(\cell)$.  For $\dim f=0$, that is, $f=\{x_i\}$ for some
+  vertex $x_i$, the only homogeneous polynomial of order $r$ is $\lambda_i^r$.
+
+  For $\dim f > 0$ we have by the first statement of
+  \blockref{Lemma}{subsimplex-polynomials}, that the spaces $V(f)$
+  where $f$ is a vertex are disjoint. By the second statement of the
+  same lemma, the spaces $V(f)$ for all $f$ with equal dimension are
+  disjoint. Therefore, the sum
+  \begin{gather*}
+    V_d(\cell) = \sum_{k=0}^{d-1} \sum_{f\in \Delta_k(\cell)} V(f),
+  \end{gather*}
+  is direct. But, $V(\cell) \cap V_d(\cell) = \{0\}$, since all elements in
+  $V(\cell)$ contain a bubble function factor. Therefore,
+  \begin{gather*}
+    \bigoplus_{f\in\Delta(\cell)}V(f) \subset \P_r(\cell).
+  \end{gather*}
+  We conclude by showing that dimensions on both sides are equal.
+  On the right, we use
+  \begin{gather*}
+    \dim \P_r(\R^d) = \binom{r+d}{r} = \frac{(r+d)!}{d!r!}
+  \end{gather*}
+  On the left, we have
+  \begin{multline*}
+    \dim \bigoplus_{f\in\Delta(\cell)}V(f) =
+    \sum_{k=0}^{d} \binom{d+1}{k+1} \binom{r+k}{k}
+    \\
+    = \frac{(d+1)!}{r!}
+    \sum_{k=0}^{d} \frac{1}{(k+1)!(d-k)!} \frac{(r+k)!}{k!}.
+  \end{multline*}
+
+% Finish this!
+
+  It remains to show the decomposition for $\P_r(\cell)^*$. To this
+  end, we first notice that for any $f\in\Delta(\cell)$ there holds
+  $\dim W(f) = \dim V(f)$ by their definition. Furthermore, for
+  $p\in V(f)$ there holds
+  \begin{gather*}
+    \Bigl(\phi(p) = 0 \quad\forall \phi\in W(f)\Bigr)
+    \quad\Rightarrow\quad
+    p=0.
+  \end{gather*}
+  Thus, for $p\in \P_r(\cell)$ there holds
+  \begin{gather*}
+    \Bigl(\phi(p) = 0 \quad\forall \phi\in \sum W(f)\Bigr)
+    \quad\Rightarrow\quad
+    p=0.
+  \end{gather*}
+  Consequently,
+  \begin{gather*}
+    \P_r(\cell)^* = \sum W(f).
+  \end{gather*}
+  since we have already proven that
+  \begin{gather*}
+    \dim \P_r(\cell)^* = \sum \dim W(f),
+  \end{gather*}
+  the sum on the right must be direct.
+\end{proof}
+
+\subsubsection{Results for $\P_r\Lambda^k$ and $\P_r^+\Lambda^k$ and applications}
+
+For polynomial differential forms on simplices, we cite the main
+results without proof and then discuss their application to $\Hdiv$
+and $\Hcurl$.
+
+\begin{Theorem}{decomp-pr-plus}
+  Let $k,r\ge 1$. Then, $\P_r^+(\cell)$ admits a geometric decomposition
+  \begin{gather}
+    \P_r^+(\cell) = \bigoplus_{f\in\Delta(\cell)} V(f),
+    \qquad
+    \P_r^+(\cell)^* = \bigoplus_{f\in\Delta(\cell)} W(f),
+  \end{gather}
+  where
+  \begin{align}
+    V(f) \equiv
+    \begin{cases}
+      0 & \dim f < k\\
+      \P_{r+k-\dim f} \Lambda^{\dim f-k}(f) &\text{else}\\
+      0 & \dim f > r+k.
+    \end{cases}
+    \\
+    W(f) \equiv
+    \begin{cases}
+      0 & \dim f < k\\
+      \P_{r+k-\dim f} \Lambda^{\dim f-k}(f) &\text{else}\\
+      0 & \dim f > r+k.
+    \end{cases}
+  \end{align}
+\end{Theorem}
+
+% \begin{Example}{rt-complex-decomp}
+%   \begin{gather}
+%     \begin{array}{c|ccc}
+%       \dim f & H^1 & \Hcurl & \Hdiv \\\hline
+%       3 & \P_{r-4}\Lambda^3 & \P_{r-2}\Lambda^2 & \P_{r-1}\Lambda^1 \\
+%       2 & \P_{r-3}\Lambda^2 & \P_{r-1}\Lambda^1 & \P_{r}\Lambda^0 \\
+%       1 & \P_{r-2}\Lambda^1 & \P_{r}\Lambda^0 & \\
+%       0 & \R & &
+%     \end{array}
+%   \end{gather}
+% \end{Example}
+
+\begin{Theorem}{decomp-pr}
+  Let $k,r\ge 1$. Then, $\P_r(\cell)$ admits a geometric decomposition
+  \begin{gather}
+    \P_r(\cell) = \bigoplus_{f\in\Delta(\cell)} V(f),
+  \end{gather}
+  where
+  \begin{gather}
+    V(f) \equiv
+    \begin{cases}
+      0 & \dim f < k\\
+      \P_{r+k-\dim f-1}^+ \Lambda^{\dim f-k}(f) &\text{else}\\
+      0 & \dim f \ge r+k.
+    \end{cases}
+  \end{gather}
+\end{Theorem}
+
+% \begin{Example}{rt-complex-decomp}
+%   \begin{gather}
+%     \begin{array}{c|ccc}
+%       \dim f & H^1 & \Hcurl & \Hdiv \\\hline
+%       3 & \P_{r-4}\Lambda^3 & \P_{r-2}\Lambda^2 & \P_{r-1}^+\Lambda^1 \\
+%       2 & \P_{r-3}\Lambda^2 & \P_{r-1}\Lambda^1 & \P_{r}\Lambda^0 \\
+%       1 & \P_{r-2}\Lambda^1 & \P_{r}\Lambda^0 & \\
+%       0 & \R & &
+%     \end{array}
+%   \end{gather}
+% \end{Example}
+
+
+
+\section{The complex of tensor products}
 
 %%% Local Variables: 
 %%% mode: latex
