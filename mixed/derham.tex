@@ -139,7 +139,7 @@ is cited here without proof.
 \begin{Theorem}{de-rham}
   Assume the domain $\domain$ is Lipschitz.  If $\domain$ is simply
   connected, the sequences in equations~\eqref{eq:derham:9}
-  and~\eqref{eq:derham:9} are exact, that is, there holds
+  and~\eqref{eq:derham:8} are exact, that is, there holds
   \begin{gather}
     \label{eq:derham:7}
     \ker {d_{k+1}} = \range{d_k}.
@@ -188,7 +188,7 @@ theorem on $\Hdiv$.
 \end{Lemma}
 
 % \begin{Example}{not-simply-connected}
-  
+
 % \end{Example}
 
 \begin{remark}
@@ -218,7 +218,7 @@ theorem on $\Hdiv$.
   \end{gather*}
   From the fact that the de Rham complex starts with zero, we obtain
   that the kernel of the gradient is zero. Thus, for any $q\in
-  H^1_0(\domain)$, we have $v = \nabla q \neq 0$ and
+  H^1_0(\domain)\setminus\{0\}$, we have $v = \nabla q \neq 0$ and
   $\norm{v}_{\Hcurl} = \norm{v}_{L^2} \le \norm{q}_{H^1}$. Thus, the
   inf-sup condition holds.
 
@@ -233,6 +233,28 @@ theorem on $\Hdiv$.
   Prove well-posedness for the Darcy problem using the de Rham complex
   for proving \blockref{Lemma}{darcy-reduced-wellposed} and
   \blockref{Lemma}{darcy-infsup}.
+\begin{solution}
+From the last step
+ \begin{gather}\minCDarrowwidth20pt
+    \begin{CD}
+      \Hdiv_0(\domain)
+      @>{\div}>> L^2_0(\domain)
+      @>>> 0,
+    \end{CD}
+  \end{gather}
+we deduce $L_0^2(\Omega)=\range{\nabla\cdot}$. In particular, this means
+that for all $q\in L_0^2(\Omega)$ there exists $v\in H_0^{\text{div}}$ such that
+$\nabla \cdot v=q$.
+Hence, it holds the estimate
+\begin{align*}
+\inf_{q\in Q}\sup_{v\in V}\frac{(\nabla \cdot v, q)}{\norm{q}_Q\norm{v}_V}
+  \geq \inf_{q\in Q} \frac{\norm{q}_0}{\norm{v}_{H^{\text{div}}}}.
+\end{align*}
+where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
+\begin{align*}
+  \norm{u}_{H^{\text{div}}}=\norm{u}_0 \quad \forall u\in \ker B.
+\end{align*}
+\end{solution}
 \end{Problem}
 
 \section{Polynomial complexes for simplicial meshes}
@@ -552,7 +574,7 @@ usual differential $d$.
   \begin{gather}
     d\P_{r}^+\Lambda^k \subset d\P_{r+1}\Lambda^k
     \subset \P_r\Lambda^{k+1}
-    \subset \P_{r-1}^+\Lambda^{k+1}.
+    \subset \P_r^+\Lambda^{k+1}.
   \end{gather}
   The following four mappings $d$ have the same kernel:
   \begin{gather}
@@ -583,7 +605,7 @@ usual differential $d$.
 \begin{proof}
   The first statement follows from the inclusions of $\P_r$ and
   $\P_r^+$. The horizontal equality of the second statement follows
-  from \blockref{Lemma}{k-plus-d}. The vertical identities from the
+  from \blockref{Lemma}{pk-plus-d}. The vertical identities from the
   decomposition~\eqref{eq:derham:17}. For the last set of identities,
   we observe that by construction
   \begin{gather*}
@@ -805,6 +827,36 @@ usual differential $d$.
 \begin{Problem}{subsimplex-polynomials}
   Show: $\P_r(f_\sigma)$ is isomorphic to $\P_r(\R^k)$. Prove
   \blockref{Lemma}{subsimplex-polynomials}.
+\begin{solution}
+  Since $\P_r(f_\sigma)$ is isomorphic to $\breve\P_r(\R^{k+1})$ and
+  $\P_r(f_\sigma)$ is a vector space
+  all we have to do is to show that the dimensions are equal.
+  In fact, $\dim \P_r(\R^k) = \binom{r+k}{k}$
+  (show by distributiung separators) and
+  $\dim \breve\P_r(\R^k) = \binom{r+k-1}{k-1}$.
+  Thus, $\dim \breve\P_r(\R^{k+1}) = \binom{r+k}{k} = \dim \P_r(\R^k)$
+  and the two spaces are isomorphic.
+
+  Let $g$ be a subsimplex that is disjoint from $f$.
+  \begin{align*}
+      f_\sigma &= \bigl\{x\in\cell \big\vert
+      \lambda_j=0 \text{ for } j\not\in\sigma\bigr\}.
+      \\
+      &= \biggl\{ x = \sum_{i\in\sigma}\lambda_i\bigg\vert
+    \lambda_i \ge 0,\quad\sum_{i\in\sigma}\lambda_i = 1\biggr\}.
+  \end{align*}
+  Then $\sigma_f$ and $\sigma_g$ are disjoint and in particular
+  $\lambda_i = 0$ for all $i\in \sigma_f$ in the decomposition
+  $g \ni x = \sum_i \lambda_i(x)$. Thus, $p\in \P_r(f)$
+  is identified by $q(\lambda_{\sigma_0},\dots,\lambda_{\sigma_k})$
+  which vanishes for all $x \in g$.
+
+  Let $g$ be a subsimplex not containing $f$. Then, $\sigma_f\setminus \sigma_g$ is non-empty.
+  In the decomposition $g\ni x = \sum_i\lambda_i$ such that $\lambda_i \ge 0,\quad\sum_i\lambda_i = 1$ at most
+  the $\lambda_i$ ($i\in\sigma_f$) for $i\in\sigma_f\cap\sigma_g$ are non-zero. Due to to our assumption
+  $\sigma_f\cap\sigma_g$ is a proper subset of $\sigma_f$ and hence there exist for each $x \in f\cap g$
+  a $i \in \sigma_f$ such that $\lambda_i=0$. This implies $b_{f_\sigma}\equiv 0$ on $g$.
+\end{solution}
 \end{Problem}
 
 \begin{Example}{h1-moment-dofs}
@@ -1042,7 +1094,7 @@ and $\Hcurl$.
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
-%%% End: 
+%%% End:
