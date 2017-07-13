@@ -938,9 +938,9 @@ and $\Hcurl$.
 \begin{Theorem}{decomp-pr-plus}
   Let $k,r\ge 1$. Then, $\P_r^+(\cell)$ admits a geometric decomposition
   \begin{gather}
-    \P_r^+(\cell) = \bigoplus_{f\in\Delta(\cell)} V(f),
+    \P_r^+\Lambda^k(\cell) = \bigoplus_{f\in\Delta(\cell)} V(f),
     \qquad
-    \P_r^+(\cell)^* = \bigoplus_{f\in\Delta(\cell)} W(f),
+    \P_r^+\Lambda^k(\cell)^* = \bigoplus_{f\in\Delta(\cell)} W(f),
   \end{gather}
   where
   \begin{align}
@@ -960,22 +960,31 @@ and $\Hcurl$.
   \end{align}
 \end{Theorem}
 
-% \begin{Example}{rt-complex-decomp}
-%   \begin{gather}
-%     \begin{array}{c|ccc}
-%       \dim f & H^1 & \Hcurl & \Hdiv \\\hline
-%       3 & \P_{r-4}\Lambda^3 & \P_{r-2}\Lambda^2 & \P_{r-1}\Lambda^1 \\
-%       2 & \P_{r-3}\Lambda^2 & \P_{r-1}\Lambda^1 & \P_{r}\Lambda^0 \\
-%       1 & \P_{r-2}\Lambda^1 & \P_{r}\Lambda^0 & \\
-%       0 & \R & &
-%     \end{array}
-%   \end{gather}
-% \end{Example}
+\begin{Example}{rt-complex-decomp}
+  \begin{gather}
+    \begin{array}{c|cccccc}
+      \dim f
+      & \P_r^+\Lambda^0 & \P_{r+1}
+      & \P_r^+\Lambda^1 & N^{1e}_r
+      & \P_r^+\Lambda^2 & RT_r \\\hline
+      3 & \P_{r-3}\Lambda^3 & \P_{r-3} & \P_{r-2}\Lambda^2 & BDM_{r-2} & \P_{r-1}\Lambda^1 & N^{2e}_{r-1} \\
+      2 & \P_{r-2}\Lambda^2 & \P_{r-2} & \P_{r-1}\Lambda^1 & BDM_{r-1} & \P_{r}\Lambda^0 & \P_r\\
+      1 & \P_{r-1}\Lambda^1 & \P_{r-1} & \P_{r}\Lambda^0   & \P_r  & -- & -- \\
+      0 & \R & \R & -- & -- & --& --
+    \end{array}
+  \end{gather}
+  Geometric decomposition of $\P_r^+\Lambda^k$ and their spaces of degrees of freedom.
+  \begin{itemize}
+  \item [$N^{1e}$] ($\Hcurl$) Nedelec 1st family edge element
+  \item [$RT$] ($\Hdiv$) Raviart-Thomas (also Nedelec 1st face in 3D)
+  \item [$N^{2e}$] ($\Hcurl$) Nedelec 2nd family edge element
+  \end{itemize}
+\end{Example}
 
 \begin{Theorem}{decomp-pr}
   Let $k,r\ge 1$. Then, $\P_r(\cell)$ admits a geometric decomposition
   \begin{gather}
-    \P_r(\cell) = \bigoplus_{f\in\Delta(\cell)} V(f),
+    \P_r\Lambda^k(\cell) = \bigoplus_{f\in\Delta(\cell)} V(f),
   \end{gather}
   where
   \begin{gather}
@@ -988,21 +997,50 @@ and $\Hcurl$.
   \end{gather}
 \end{Theorem}
 
-% \begin{Example}{rt-complex-decomp}
-%   \begin{gather}
-%     \begin{array}{c|ccc}
-%       \dim f & H^1 & \Hcurl & \Hdiv \\\hline
-%       3 & \P_{r-4}\Lambda^3 & \P_{r-2}\Lambda^2 & \P_{r-1}^+\Lambda^1 \\
-%       2 & \P_{r-3}\Lambda^2 & \P_{r-1}\Lambda^1 & \P_{r}\Lambda^0 \\
-%       1 & \P_{r-2}\Lambda^1 & \P_{r}\Lambda^0 & \\
-%       0 & \R & &
-%     \end{array}
-%   \end{gather}
-% \end{Example}
+\begin{Example}{rt-complex-decomp}
+  \begin{gather}
+    \begin{array}{c|cccc}
+      \dim f
+      & \P_r\Lambda^1 & N^{2e}_r
+      & \P_r\Lambda^2 & BDM_r \\\hline
+      3 & \P_{r-3}^+\Lambda^2 & RT_{r-2} & \P_{r-1}^+\Lambda^1 & N^{1e}_{r-1} \\
+      2 & \P_{r-2}^+\Lambda^1 & RT_{r-1} & \P_{r}^+\Lambda^0 & \P_r \\
+      1 & \P_{r-1}^+\Lambda^0 & \P_r & --& --
+%      0 & \R & \R & -- & --
+    \end{array}
+  \end{gather}
+  Geometric decomposition of $\P_r\Lambda^k$ and their spaces of degrees of freedom.
+  \begin{itemize}
+  \item [$N^{2e}$] ($\Hcurl$) Nedelec 2nd family edge element
+  \item [$BDM$] ($\Hdiv$) Brezzi-Douglas-Marini (also Nedelec 2nd face in 3D)
+  \item [$N^{1e}$] ($\Hcurl$) Nedelec 1st family edge element
+  \end{itemize}
+\end{Example}
 
 
 
-\section{The complex of tensor products}
+\section{The complex of tensor product polynomials}
+
+\begin{Lemma}{qr-complex}
+  Tensor product polynomials form the sequence
+  \begin{gather*}
+    \R
+    \overset{\subset}{\longrightarrow} \Q_r
+    \overset{\nabla}{\longrightarrow}
+    \begin{pvector}
+      \Q_{r,r+1,r+1}\\\Q_{r+1,r,r+1}\\\Q_{r+1,r+1,r}
+    \end{pvector}
+    \overset{\curl}{\longrightarrow}
+    \begin{pvector}
+      \Q_{r+1,r,r}\\\Q_{r,r+1,r}\\\Q_{r,r,r+1}
+    \end{pvector}
+    \overset{\div}{\longrightarrow}
+    \Q_r
+    \longrightarrow 0,    
+  \end{gather*}
+\end{Lemma}
+
+
 
 %%% Local Variables: 
 %%% mode: latex
