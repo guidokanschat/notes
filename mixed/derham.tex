@@ -1074,23 +1074,201 @@ and $\Hcurl$.
 \section{The complex of tensor product polynomials}
 
 \begin{Lemma}{qr-complex}
-  Tensor product polynomials form the sequence
+  Tensor product polynomials form the exact sequence
   \begin{gather*}
     \R
     \overset{\subset}{\longrightarrow} \Q_r
     \overset{\nabla}{\longrightarrow}
-    \begin{pvector}
+    \begin{pmatrix}
       \Q_{r,r+1,r+1}\\\Q_{r+1,r,r+1}\\\Q_{r+1,r+1,r}
-    \end{pvector}
+    \end{pmatrix}
     \overset{\curl}{\longrightarrow}
-    \begin{pvector}
+    \begin{pmatrix}
       \Q_{r+1,r,r}\\\Q_{r,r+1,r}\\\Q_{r,r,r+1}
-    \end{pvector}
+    \end{pmatrix}
     \overset{\div}{\longrightarrow}
     \Q_r
     \longrightarrow 0,    
   \end{gather*}
 \end{Lemma}
+
+\begin{proof}
+  First, we show that the differential operators map into the right
+  spaces. Let $q\in\Q_{r+1}$ such that
+  $q(x) = q_1(x_1) q_2(x_2)q_3(x_3)$ with $q_i\in\Q_{r+1}$. Then
+  \begin{gather*}
+    \nabla q =
+    \begin{pmatrix}
+      q_1'q_2q_3\\q_1q_2'q_3\\q_1q_2q_3'
+    \end{pmatrix}
+    \in
+    \begin{pmatrix}
+      \Q_{r,r+1,r+1}\\\Q_{r+1,r,r+1}\\\Q_{r+1,r+1,r}
+    \end{pmatrix}.
+  \end{gather*}
+  Similarly, we can compute this directly for $\curl$ and
+  $\div$. Since polynomials are differentiable, we have $d^2=0$. It
+  remains to show that the sequence is exact, which we will prove at
+  the example of $\Hcurl$. Let $u\in \ker{\curl}$,
+  \begin{gather*}
+    u=
+    \begin{pmatrix}
+      \phi_1\phi_2\phi_3\\
+      \psi_1\psi_2\psi_3\\
+      \pi_1\pi_2\pi_3
+    \end{pmatrix},
+    \qquad
+    0 = \curl u =
+    \begin{pmatrix}
+      \pi_1\pi_2'\pi_3 - \psi_1\psi_2\psi_3'\\
+      \phi_1\phi_2\phi_3' - \pi_1'\pi_2\pi_3\\
+      \psi_1'\psi_2\psi_3 - \phi_1\phi_2'\phi_3
+    \end{pmatrix},
+  \end{gather*}
+  where each polynomial with index $i$ only depends on
+  $x_i$. Furthermore, $\phi_1,\psi_2,\pi_3\in\P_r$ and all other in
+  $\P_{r+1}$.  From the continuous de Rham complex, we know that there
+  is a function $p$ such that $u=\nabla p$. It remains to show that
+  $p\in\Q_{r+1}$. There holds
+  \begin{gather*}
+    \d_1 p = \phi_1\phi_2\phi_3.
+  \end{gather*}
+  Thus, we make the ansatz
+  \begin{gather*}
+    p = \Phi_1\phi_2\phi_3,
+  \end{gather*}
+  where $\Phi_1\in\P_{r+1}$ is the antiderivative of $\phi_1$. Thus,
+  $p\in\Q_{r+1}$ It remains to show that this ansatz is consistent
+  with the other two derivatives, thus,
+  \begin{gather*}
+    p = \Phi_1\phi_2\phi_3 = \psi_1\Psi_2\psi_3 = \pi_1\pi_2\Pi_3.
+  \end{gather*}
+  Integrating the first component of $\curl u$ with respect to $x_2$
+  and $x_3$, we obtain
+  \begin{gather*}
+    \pi_1\pi_2\Pi_3 = \psi_1\Psi_2\psi_3.
+  \end{gather*}
+  Doing the same with the second component, we see indeed that the
+  function $p$ is consistently defined and thus $u=\nabla p$.
+\end{proof}
+
+\begin{Definition}{pr-complex-1d}
+  The one-dimensional de Rham complex on the interval $I = [\xi_0,\xi_1]$ and
+  its polynomial subcomplex are
+  \begin{gather}
+    \begin{CD}
+    \R
+    @>{\subset}>>
+    H^1(I) = H\Lambda^0(I)
+    @>{\tfrac{d}{dx}}>>
+    L^2(I) = H\Lambda^1(I)
+    @>>> 0
+    \\
+    @.
+    @A{\subset}AA
+    @A{\subset}AA
+    \\
+    \R
+    @>{\subset}>>
+    \P_{r+1} = \P_{r+1}\Lambda^0
+    @>{\tfrac{d}{dx}}>>
+    \P_r = \P_r\Lambda^1
+    @>>> 0
+    \end{CD}
+  \end{gather}
+  The degrees of freedom for $\P_{r+1}\Lambda^0$ are
+  \begin{gather}
+    \begin{matrix}
+    \nodal_{0,0}(p) = p(\chi_0),\\
+    \nodal_{0,1}(p) = p(\chi_1),
+    \end{matrix}\qquad
+    \nodal_{1.q}(p) = \int_{I} p q \dx,\quad\forall q\in\P_{r-1}.
+  \end{gather}
+  The degrees of freedom for $\P_{r}\Lambda^1$ are
+  \begin{gather}
+    \nodal_{1,q}(p) = \int_{I} p q \dx,\quad\forall q\in\P_{r}.
+  \end{gather}
+\end{Definition}
+
+\begin{remark}
+  The degrees of freedom for $\P_{r+1}\Lambda^0$ are chosen such that
+  the finite element function on a subdivision of $I$ is continuous,
+  thus ih $H^1$. For $\P_{r}\Lambda^1$, we do not require continuity
+  and thus only need interior degrees of freedom.
+\end{remark}
+
+\begin{Definition}{tensor-dofs}
+  Let
+  \begin{gather}
+    \nodal_{0,0} p = p(chi_0),\qquad \nodal_{0,1} p = p(\chi_1), \qquad
+    \nodal_{1,i} = \int_I p q_i\dx,
+  \end{gather}
+  be the degrees of freedom of a one-dimensional element where the
+  $q_i$ are a basis for $\P_{r-1}$ and $\P_r$ in case of
+  $\P_{r+1}\Lambda^0$ and $\P_{r}\Lambda^1$, respectively. Then, the
+  tensor product of these degrees of freedom applied to the function
+  $p(x_1,x_2) = p_1(x_1)p_2(x_2)$ is defined as
+  \begin{gather}
+    \begin{split}
+      \nodal_{0,i}\otimes\nodal_{0,j}(p) &= p_1(\chi_i) p_2(\chi_j),\\
+      \nodal_{0,i}\otimes\nodal_{1,j}(p) &= \int_I p_1(\chi_i)  p_2(x)q_j(x)\dx,\\
+      \nodal_{1,i}\otimes\nodal_{0,j}(p) &= \int_I p_1(x)q_j(x) p_2(\chi_j) \dx,\\
+      \nodal_{1,i}\otimes\nodal_{1,j}(p) &= \iint_I p_1(x_1)
+      p_2(x_2) \dx_1\dx_2.
+    \end{split}
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{2d-tensor-rt-nedelec}
+  For the two elements
+  \begin{gather}
+    RT_r =
+    \begin{pmatrix}
+      \P_{r+1}\Lambda^0 \otimes \P_{r}\Lambda^1\\
+      \P_{r}\Lambda^1 \otimes \P_{r+1}\Lambda^0
+    \end{pmatrix},
+    \qquad
+    N^{1e}_r =
+    \begin{pmatrix}
+      \P_{r}\Lambda^1 \otimes \P_{r+1}\Lambda^0\\
+      \P_{r+1}\Lambda^0 \otimes \P_{r}\Lambda^1      
+    \end{pmatrix},
+  \end{gather}
+  the tensorized degrees of freedom uniquely determine the normal and
+  tangential components, respectively, on the face of a square.
+
+  Both elements with their tensor degrees of freedom are unisolvent.
+\end{Lemma}
+
+\begin{proof}
+  The elements are unisolvent by the following argument: Let
+  $\{\phi_i\}$ and $\{\psi_j\}$ be the basis dual to the degrees of
+  freedom of $\P_{r+1}\Lambda^0$ or $\P_r \Lambda^1$,
+  respectively. Then, (renumbering the degrees of freedom)
+  \begin{gather*}
+    \nodal_k\otimes\nodal_l(\phi_i\otimes\psi_j) = \delta_{ik}\delta_{jl}.
+  \end{gather*}
+  Thus, the mapping between tensorized degrees of freedom and
+  tensorized basis functions is one-to-one.
+
+  For the Raviart-Thomas element $RT_r$, the normal component is
+  $\P_r\Lambda^1$. Take for instance the face $x_1 = \chi_0$. Then,
+  the degrees of freedom associated to this face are
+  \begin{gather*}
+    \nodal_{0,0} \otimes \nodal{1,q} p
+    = \int_I p_1(\chi_1) p_2(x_2) q(x_2) \dx_2
+    \quad\forall q\in \P_r.
+  \end{gather*}
+  Since the trace of $p$ on this face is $p_2 \in \P_r$, this
+  polynomial is uniquely determined by the degree of freedom.
+
+  The argument for the Nedelec edge element $N^{1e}_r$ follows by
+  exchanging tangential and normal component.
+\end{proof}
+
+\begin{remark}
+  The construction extends to the three-dimensional products.
+\end{remark}
 
 
 
