@@ -244,11 +244,11 @@ From the last step
   \end{gather}
 we deduce $L_0^2(\Omega)=\range{\nabla\cdot}$. In particular, this means
 that for all $q\in L_0^2(\Omega)$ there exists $v\in H_0^{\text{div}}$ such that
-$\nabla \cdot v=q$.
+$\nabla \cdot v=q$ and $\norm{v}_{H^{\text{div}}}\leq C \norm{q}_0$.
 Hence, it holds the estimate
 \begin{align*}
 \inf_{q\in Q}\sup_{v\in V}\frac{(\nabla \cdot v, q)}{\norm{q}_Q\norm{v}_V}
-  \geq \inf_{q\in Q} \frac{\norm{q}_0}{\norm{v}_{H^{\text{div}}}}.
+  \geq \inf_{q\in Q} \frac{\norm{q}_0}{\norm{v}_{H^{\text{div}}}}\geq C.
 \end{align*}
 where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
 \begin{align*}
