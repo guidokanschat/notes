@@ -34,7 +34,36 @@
   \end{gather}
 \end{intro}
 
-\section{Hilbert spaces and their duals}
+\section{Banach and Hilbert spaces}
+
+\begin{Notation}{field-k}
+  This section deals with real and complex vector spaces. Therefore,
+  if nothing else is noted, the field $\mathbb K$ may be $\R$ or $\C$.
+\end{Notation}
+
+\begin{Definition}{functional}
+  Let $V$ be a vector space. A \define{functional} on $V$ is a mapping
+  $\phi\colon V\to \mathbb K$. A functional is called \define{linear}, if
+  there holds
+  \begin{gather}
+    \phi(\alpha v+w) = \alpha \phi(v)+\phi(w),
+    \qquad\forall \alpha\in \mathbb K, \;v,w\in V.
+  \end{gather}
+  A functional $\phi\colon V\to \R^+_0$ is called \define{sublinear}, if
+  \begin{gather}
+    \begin{aligned}
+      \phi(\alpha v) &= \abs{\alpha}\phi(v)
+      & \forall\alpha&\in\mathbb K,\;v\in V,\\
+      \phi(v+w) &\le \phi(v)+\phi(w)
+      & \forall v,w&\in V.
+    \end{aligned}
+  \end{gather}
+  A functional $\phi\colon V\to \R^+_0$ is called \define{definite}, if
+  \begin{gather}
+    \phi(v)=0 \quad \Rightarrow v=0 \qquad\forall v\in V.
+  \end{gather}
+  A \define{norm} on $V$ is a definite, sublinear functional on $V$.
+\end{Definition}
 
 \begin{Definition}{inner-product}
   Let $V$ be a vector space over $\mathbb K$ with $\mathbb K = \mathbb
@@ -52,17 +81,69 @@
   immediately by symmetry.
 \end{Definition}
 
-\begin{Definition}{hilbert-space}
-  A vector space $V$ equipped with an inner product $\scal(.,.)$ and a
-  norm defined by
+\begin{Lemma}{bcs-inequality}
+  For every inner product there holds the
+  \define{Bunyakovsky-Cauchy-Schwarz inequality}
+  \begin{gather}
+    \scal(v,w) \le \sqrt{\scal(v,v)} \sqrt{\scal(w,w)}.
+  \end{gather}
+\end{Lemma}
+
+\begin{Lemma}{inner-product-norm}
+  Every inner product defines a norm by
+  \begin{gather}
+    \norm{v} = \sqrt{\scal(v,v)}.
+  \end{gather}
+\end{Lemma}
+
+\begin{Definition}{complete}
+  A space $V$ with is \define{complete} with respect to a norm, if all
+  \putindex{Cauchy sequence}s with elements in $V$ have their limit in
+  $V$. A subspace $W\subset V$ is \define{closed} if it is complete.
+
+  The \define{completion} of a space $V$ with respect to a norm
+  consists of the space $V$ and the limits of all Cauchy sequences in
+  $V$.
+  
+  We denote the completion of a space $V$ by
+  \begin{gather}
+    \overline{V} = \overline{V}^{\norm{\cdot}_V}.
+  \end{gather}
+\end{Definition}
+
+\begin{remark}
+  The definition of completeness in \blockref{Definition}{complete} is
+  intuitive, but mathematically vague, since the limit of a Cauchy
+  sequence is defined by the completion process itself. The way out is
+  the definition of the limit of a Cauchy sequence as an equivalence
+  class of the sequences themselves. We call two Cauchy sequences
+  $\{v_n\}$ and $\{w_n\}$ equivalent, if
   \begin{gather*}
-    \norm{v} = \sqrt{\scal(v,v)}
+    \norm{v_n-w_n} \to 0
+    \quad\text{as}\quad
+    n\to \infty.
   \end{gather*}
+  If the limits of both sequences exist, we know that this condition
+  is equivalent to both limits being equal. If they don't, they are
+  defined by these equivalence classes in a way consistent with the
+  standard notion of limits .
+\end{remark}
+
+\begin{Definition}{Banach-space}
+  A \define{normed vector space} is a vector space $V$ with a norm
+  $\norm\cdot$. We may also write $\norm{\cdot}_V$ to highlight the
+  connection.
+
+  A vector space $V$ which is complete with respect to its norm is
+  called a \define{Banach space}.
+\end{Definition}
+
+\begin{Definition}{hilbert-space}  
+  A vector space $V$ equipped with an inner product $\scal(.,.)$ and its
+  norm
   is called an \define{inner product space}
   or \define{pre-Hilbert space}. A \define{Hilbert space} is
-  a pre-Hilbert space which is also \putindex{complete}, that is,
-  every \putindex{Cauchy sequence} with elements in the space has a
-  limit in the space.
+  a pre-Hilbert space which is also \putindex{complete}.
 \end{Definition}
 
 \begin{example}
@@ -135,7 +216,12 @@
   result of a numerical calculation is in a finite set. When we look
   at convergence for $n\to\infty$ or $h\to 0$, we are usually studying
   sequences with countable index sets. Therefore, vectors in
-  nonseparable spaces cannot be approximaetd reliably.
+  nonseparable spaces cannot be approximated reliably.
+
+  Apart from this remark, it is a goal of these notes to develop a
+  framework for applied mathematics without recourse to the axiom of
+  choice. Separable spaces allow us for instance to construct bases
+  instead of deducing their existence indirectly.
 \end{remark}
 
 \begin{Definition}{schauder-basis}
@@ -163,6 +249,8 @@
   leading to a \define{Hamel basis}. While these seem to be more
   immediate extensions of bases on finite dimensional spaces, we will
   not have good use for them here.
+
+  We will use the concept of orthogonality below to 
 \end{remark}
 
 \begin{notation}
@@ -170,49 +258,6 @@
   countable set. The elements of a sequence are numbered by indices
   and the index set is $\mathbb N$ or a subset thereof.
 \end{notation}
-
-\begin{Definition}{linear-operator}
-  Let $V,W$ be two vector spaces. A \define{linear mapping} or
-  \define{linear operator} $L\colon V\to W$ is a mapping such that
-  \begin{gather*}
-    L(\alpha u+\beta v) = \alpha L(u) + \beta L(v),
-  \end{gather*}
-  for all $\alpha,\beta\in\mathbb K$ and for all $u,v\in V$ such that
-  $L(u)$ and $L(v)$ are defined.
-\end{Definition}
-
-\begin{remark}
-  The last subclause of the previous definition seems to be nonsense,
-  and in a way, it is. Nevertheless, we will see later that it is
-  actually a good idea to allow for linear operators, which are
-  well-defined only on a subset of $V$.
-\end{remark}
-
-\begin{Definition}{bounded-operator}
-  A linear operator $L\colon V\to W$ is called \define{bounded} on $V$
-  if there exists a constant $c$ such that
-  \begin{gather}
-    \norm{L v}_W \le c \norm{v}_V
-    \quad\forall v\in V.
-  \end{gather}
-  We define the operator norm $\norm{L}$ as
-  \begin{gather}
-    \norm L = \sup_{v\in V} \frac{\norm{L v}_W}{\norm{v}_V}.
-  \end{gather}
-\end{Definition}
-
-
-\begin{Definition}{dual-space}
-  A linear functional on a vector space $V$ is a linear mapping from
-  $V$ to $\mathbb K$.
-
-  The \define{dual space} $V^*$ of a vector space $V$, also called the
-  \define{normed dual}, is the space of all bounded linear functionals
-  on $V$ equipped with the norm
-  \begin{gather}
-    \norm{\phi}_{V^*} = \sup_{v\in V} \frac{\phi(v)}{\norm{v}_V}.
-  \end{gather}
-\end{Definition}
 
 \subsection{Orthogonality}
 
@@ -229,44 +274,34 @@
   finite to countable sets.
 \end{Definition}
 
-\begin{Definition}{polar-orthogonal}
+\begin{Definition}{orthogonal-complement}
   Let $W\subset V$ be a subspace of a Hilbert space $V$. We define its
-  \define{polar space} $W^0\subset V^*$ and its
-  \define{orthogonal complement} $W^\perp\subset V$ by
+  \define{orthogonal complement} $\ortho W\subset V$ by
   \begin{gather}
     \label{eq:infsup:7}
-    \begin{split}
-    W^0 &= \bigl\{f\in V^* \big| \scal(f,w)_{V^*\times V} = 0
-    \;\forall\,w\in W\bigr\},
-    \\
-    W^\perp &= \bigl\{v\in V \big| \scal(v,w)_{V} = 0
+    \ortho W = \bigl\{v\in V \big| \scal(v,w)_{V} = 0
     \;\forall\,w\in W\bigr\}.
-    \end{split}
   \end{gather}
 \end{Definition}
 
 \begin{Lemma}{orthogonal-closed}
-  The polar space $W^0$ and the orthogonal complement $W^\perp$ of a
-  subspace $W\subset V$ are both closed.
+  The the orthogonal complement $\ortho W$ of a subspace $W\subset V$
+  is closed.
 \end{Lemma}
 
 \begin{proof}
-  Consider the mapping
-  \begin{align*}
-    \Phi_w\colon V^* &\to \R,\\
-    v&\mapsto \scal(v,w)_{V^*\times V}.
-  \end{align*}
-  For any $w$, the kernel of $\phi$ is closed as
-  the pre-image of a closed set. $W^0$ is closed since it is the
-  intersection of these kernels for all $w\in W$.
-
-  The inner product is continuous on $V\times V$. Therefore, the
-  mapping
+  By the \putindex{Bunyakovsky-Cauchy-Schwarz inequality}, the inner
+  product is continuous on $V\times V$. Therefore, the mapping
   \begin{align*}
     \phi_w\colon V &\to \R,\\
     v&\mapsto \scal(v,w),
   \end{align*}
-  is continuous. The argument continues as above.
+  is continuous. For any $w\in W$, the kernel of $\phi_w$ is closed as
+  the pre-image of the closed set $\{0\}$. Since
+  \begin{gather*}
+    \ortho W = \bigcap_{w\in W} \ker{\phi_w},
+  \end{gather*}
+  it is closed as the intersection of closed sets.
 \end{proof}
 
 \begin{Theorem}{orthogonal-complement}
@@ -346,9 +381,9 @@
   which requires $\scal(u,\tilde w) = 0$.
 \end{proof}
 
-\begin{Corollary}{dual-density}
+\begin{Corollary}{ortho-density}
   A subspace $W$ of a Hilbert space $V$ is dense in $V$ if and only if
-  every linear functional vanishing on $W$ also vanishes on $V$.
+  $\ortho W = \{0\}$.
 \end{Corollary}
 
 \begin{proof}
@@ -358,13 +393,17 @@
   $v\not\in \overline W$. By
   \blockref{Theorem}{orthogonal-complement}, there are unique elements
   $w\in W$ and $u\in \ortho W$, such that $v=w+u$. In particular,
-  $u\neq 0$. Now, let $\phi = \scal(u,.) \in V^*$. Then, there holds
-  \begin{align*}
-    \phi(u) &= \norm{u}_V^2 \neq 0 \\
-    \phi(w) &= 0 \quad\forall w\in W.
-  \end{align*}
-  Thus, from the fact that $W$ is not dense follows the existence of a
-  linear functional which vanishes on $W$, but not on $V$.
+  $u\neq 0$.
+  \begin{todo}
+    Make this a lemma about  the fact that on the polar space!!
+    Now, let $\phi = \scal(u,.) \in V^*$. Then, there holds
+    \begin{align*}
+      \phi(u) &= \norm{u}_V^2 \neq 0 \\
+      \phi(w) &= 0 \quad\forall w\in W.
+    \end{align*}
+    Thus, from the fact that $W$ is not dense follows the existence of a
+    linear functional which vanishes on $W$, but not on $V$.
+  \end{todo}
 \end{proof}
 
 \begin{Lemma}{gram-schmidt}
@@ -429,6 +468,51 @@
   compatible with vector operations. But Hilbert spaces have
   additional structure by their norms and their completeness.
 \end{intro}
+
+\section{Linear operators and the dual space}
+
+\begin{Definition}{linear-operator}
+  Let $V,W$ be two vector spaces. A \define{linear mapping} or
+  \define{linear operator} $L\colon V\to W$ is a mapping such that
+  \begin{gather*}
+    L(\alpha u+\beta v) = \alpha L(u) + \beta L(v),
+  \end{gather*}
+  for all $\alpha,\beta\in\mathbb K$ and for all $u,v\in V$ such that
+  $L(u)$ and $L(v)$ are defined.
+\end{Definition}
+
+\begin{remark}
+  The last subclause of the previous definition seems to be nonsense,
+  and in a way, it is. Nevertheless, we will see later that it is
+  actually a good idea to allow for linear operators, which are
+  well-defined only on a subset of $V$.
+\end{remark}
+
+\begin{Definition}{bounded-operator}
+  A linear operator $L\colon V\to W$ is called \define{bounded} on $V$
+  if there exists a constant $c$ such that
+  \begin{gather}
+    \norm{L v}_W \le c \norm{v}_V
+    \quad\forall v\in V.
+  \end{gather}
+  We define the operator norm $\norm{L}$ as
+  \begin{gather}
+    \norm L = \sup_{v\in V} \frac{\norm{L v}_W}{\norm{v}_V}.
+  \end{gather}
+\end{Definition}
+
+
+\begin{Definition}{dual-space}
+  A linear functional on a vector space $V$ is a linear mapping from
+  $V$ to $\mathbb K$.
+
+  The \define{dual space} $V^*$ of a vector space $V$, also called the
+  \define{normed dual}, is the space of all bounded linear functionals
+  on $V$ equipped with the norm
+  \begin{gather}
+    \norm{\phi}_{V^*} = \sup_{v\in V} \frac{\phi(v)}{\norm{v}_V}.
+  \end{gather}
+\end{Definition}
 
 \begin{todo}
   Operators are well defined on a basis

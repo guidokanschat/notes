@@ -8,8 +8,8 @@
 \externaldocument{main}
 
 \makeatletter
-\def\BT@with[#1]#2(#3){\begin{block}{#3 \capitalizewords{#2} (#1)}}
-\def\BT@without#1(#2){\begin{block}{#2 \capitalizewords{#1}}}
+\def\blocktheorem#1#2(#3){\begin{block}{#3 \capitalizewords{#1}%
+      \def\tmp{#2}\ifx\tmp\empty{}\else (#2)\fi}}
 \def\endblocktheorem{\end{block}}
 \makeatother
 \def\mylabel#1{}
@@ -404,7 +404,14 @@
 \frame {\input {blocks/Definition-w-of-f.tex}}
 \frame {\input {blocks/Lemma-pr-geometric.tex}}
 \frame {\input {blocks/Theorem-decomp-pr-plus.tex}}
+\frame {\input {blocks/Example-rt-complex-decomp.tex}}
 \frame {\input {blocks/Theorem-decomp-pr.tex}}
+\frame {\input {blocks/Example-bdm-complex-decomp.tex}}
+\frame {\input {blocks/Lemma-qr-complex.tex}}
+\frame {\input {blocks/Definition-pr-complex-1d.tex}}
+\frame {\input {blocks/Definition-tensor-dofs.tex}}
+\frame {\input {blocks/Lemma-2d-tensor-rt-nedelec.tex}}
+
 
 \end{document}
 

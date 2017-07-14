@@ -66,11 +66,10 @@
     \stepcounter{blockcount}%
     \refstepcounter{theorem}%
     \label{#1:##1}
-%    \expandafter\edef\csname#1label\endcsname{\caselower[v]{#1}}
     \immediate\write\block@list{\unexpanded{\frame{\input{blocks/#1-##1.tex}}}}
     \def\CommentCutFile{blocks/#1-##1.tex}
     \SetUpCutFile
-    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}}(\thetheorem)%\unexpanded{\label}{#1:##1}
+    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}{}}(\thetheorem)
       }
       \ProcessComment{#1}}
     \CommentEndDef{#1}}
@@ -81,11 +80,9 @@
 % Theorem and related environments
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\blockref}[2]{#1~\ref{#1:#2}}
-\def\BT@without#1(#2){\begin{tcolorbox}
-    \textbf{#2 \capitalizewords{#1}:}}
-\def\BT@with[#1]#2(#3){\begin{tcolorbox}
-    \textbf{#3 \capitalizewords{#2} (#1):}}
-\def\blocktheorem{\@ifnextchar[{\BT@with}{\BT@without}}%
+\def\blocktheorem#1#2(#3){\begin{tcolorbox}
+    \textbf{#3 \capitalizewords{#1}%
+      \def\tmp{#2}\ifx\tmp\empty{}\else (#2)\fi:}}
 \def\endblocktheorem{\end{tcolorbox}}
 \commenttheorem{Definition}
 \commenttheorem{Theorem}
