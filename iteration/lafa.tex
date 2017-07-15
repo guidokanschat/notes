@@ -259,6 +259,32 @@
   and the index set is $\mathbb N$ or a subset thereof.
 \end{notation}
 
+\begin{Theorem}{Banach-basis}
+  Every separable Banach space has an at most countable Schauder basis.
+\end{Theorem}
+
+\begin{proof}
+  See e.g.~\cite{Yosida80}. The proof is constructive and uses the
+  Gram--Schmidt procedure. First, let $M$ be a countable dense subset
+  of $V$, which exists due to the separability assumption. Now choose
+  any numbering of $M$ and $v_1$ the first nonzero element in
+  $M$. For $i=2,\dots,\infty$ choose with $v_1,\dots,v_{i-1}$ given
+  $v_i$ as the next vector in $M$ which is not in the subspace spanned
+  by $v_1,\dots,v_{i-1}$. This procedure generates an at most
+  countable sequence $\{v_i\}$ of linearly independent vectors. It
+  will only stop, if $V$ is finite dimensional, and we have that every
+  element in $M$ can be written as a finite linear combination of
+  vectors $v_i$.
+  
+  The sequence $\{v_i\}$ is a Schauder basis for $V$. In fact, given a
+  vector $v\in V$ we have to show that for every $\epsilon$, there is
+  a finite linear combination $s_n = \sum_{i=1}^n \alpha_i v_i$ such
+  that $\norm{v-s_n} < \epsilon$. Let by separability $w_\epsilon$ in
+  $M$ be such that $\norm{v-w_\epsilon} < \epsilon$. Since
+  $w_\epsilon in M$, there is $n$ such that $s_n = w_\epsilon$.
+\end{proof}
+
+
 \subsection{Orthogonality}
 
 \begin{Definition}{orthogonal}
@@ -406,9 +432,25 @@
   \end{todo}
 \end{proof}
 
+\begin{Definition}{ortho-projection}
+  Let $W$ be a closed subspace of the Hilbert space $V$ and $\ortho W$
+  be its orthogonal complement. Then, the
+  \define{orthogonal projection} operators
+  \begin{gather}
+    \begin{split}
+      \Pi_W &\colon V\to W\\
+      \Pi_{\ortho W} &\colon V\to \ortho W\\
+    \end{split}
+  \end{gather}
+  are defined by the unique decomposition
+  \begin{gather}
+    v = \Pi_W v + \Pi_{\ortho W} v.
+  \end{gather}
+\end{Definition}
+
 \begin{Lemma}{gram-schmidt}
   \index{Gram--Schmidt} For every linearly independent sequence of
-  vectors $\{v_i\}$ there is an up to scaling unique orthogonal set
+  vectors $\{v_i\}$ there is an up to scaling unique orthonormal set
   $\{x_i\}$ with the property that
   \begin{gather*}
     \forall n\in \mathbb N:\quad
@@ -418,39 +460,41 @@
   \end{gather*}
 \end{Lemma}
 
-\begin{todo}
-  \begin{proof}
-    
-  \end{proof}
-\end{todo}
+\begin{proof}
+  The proof uses induction over the length of the sequence.  Beginning
+  with $v_1$, choose $x_1 = v_1$, which is nonzero by the assumption
+  of linear independence.
 
-\begin{Theorem}{separable-basis}
-  Every separable Hilbert space has an at most countable orthonormal basis.
+  Assume now that the lemma holds for the elements $v_1,\dots,v_k$, such that
+  \begin{gather*}
+    V_k = \spann{v_1,\dots,v_k} = \spann{x_1,\dots,x_k}.
+  \end{gather*}
+  Again, by linear independence, $v_{k+1}$ is not in $V_k$ and $V_k$
+  is closed since it is finite dimensional. Hence, we can choose
+  \begin{gather*}
+    \tilde x_{k+1} = \Pi_{\ortho V_k} v_{k+1},
+    \qquad \frac{\tilde x_k}{\norm{\tilde x_k}}.
+  \end{gather*}
+\end{proof}
+
+  
+\begin{Theorem}{Hilbert-basis}
+  Every separable Hilbert space has an at most countable, orthonormal basis.
 \end{Theorem}
 
-\begin{proof}
-  See e.g.~\cite{Yosida80}. The proof is constructive and uses the
-  Gram--Schmidt procedure. First, let $M$ be a countable dense subset
-  of $V$, which exists due to the separability assumption. Now choose
-  any numbering of $M$ and $v_1$ the first nonzero element in
-  $M$. For $i=2,\dots,\infty$ choose with $v_1,\dots,v_{i-1}$ given
-  $v_i$ as the next vector in $M$ which is not in the subspace spanned
-  by $v_1,\dots,v_{i-1}$. This procedure generates an at most
-  countable sequence $\{v_i\}$ of linearly independent vectors. It
-  will only stop, if $V$ is finite dimensional, and we have that every
-  element in $M$ can be written as a finite linear combination of
-  vectors $v_i$.
-  
-  The sequence $\{v_i\}$ is a Schauder basis for $V$. In fact, given a
-  vector $v\in V$ we have to show that for every $\epsilon$, there is
-  a finite linear combination $s_n = \sum_{i=1}^n \alpha_i v_i$ such
-  that $\norm{v-s_n} < \epsilon$. Let by separability $w_\epsilon$ in $M$
-  be such that $\norm{v-w_\epsilon} < \epsilon$ and choose $s_n =
-  w_\epsilon$.
-  
-  Finally, by the Gram--Schmidt procedure, we can construct an
-  orthonormal set $\{x_i\}$ from the linearly independent set $\{v_i\}$.
-\end{proof}
+\begin{Theorem}{Hilbert-basis-completion}
+  Let $W$ be a closed subspace of a separable Hilbert space $V$ and
+  $\{x_k\}$ be an orthonormal basis for $W$. Then, this basis can be
+completed to be a basis of $V$.
+\end{Theorem}
+
+\begin{Problem}{Schauder-basis-completion}
+  \begin{enumerate}
+  \item Prove \blockref{Theorem}{Hilbert-basis-completion}.
+  \item Prove \blockref{Theorem}{Hilbert-basis-completion}. Take into account
+  that $W$ is not assumed finite dimensional.
+  \end{enumerate}
+\end{Problem}
 
 \begin{example}
   In the Hilbert spaces $\R^n$, $\mathbb C^n$, $\ell^2(\R)$, and

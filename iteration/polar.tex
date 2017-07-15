@@ -1,0 +1,28 @@
+\begin{Definition}{polar-space}
+  Let $W\subset V$ be a subspace of a Hilbert space $V$. We define its
+  \define{polar space} $W^0\subset V^*$ by
+  \begin{gather}
+    \begin{split}
+      \polar{W} &= \bigl\{f\in V^* \big| \scal(f,w)_{V^*\times V} = 0
+      \;\forall\,w\in W\bigr\},
+    \end{split}
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{polar-closed}
+  The polar space $\polar W$ of a subspace $W\subset V$ are both
+  closed.  The the orthogonal complement $\ortho W$ of a subspace
+  $W\subset V$ is closed.
+\end{Lemma}
+
+\begin{proof}
+  Consider the mapping
+  \begin{align*}
+    \Phi_w\colon V^* &\to \R,\\
+    v&\mapsto \scal(v,w)_{V^*\times V}.
+  \end{align*}
+  For any $w$, the kernel of $\phi$ is closed as
+  the pre-image of a closed set. $W^0$ is closed since it is the
+  intersection of these kernels for all $w\in W$.
+\end{proof}
+

@@ -72,6 +72,16 @@
     \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}{}}(\thetheorem)
       }
       \ProcessComment{#1}}
+  \expandafter\def\csname#1*\endcsname##1##2{\endgroup%  \message{Processing '#1 ##1'.}%
+    \stepcounter{blockcount}%
+    \refstepcounter{theorem}%
+    \label{#1:##1}
+    \immediate\write\block@list{\unexpanded{\frame{\input{blocks/#1-##1.tex}}}}
+    \def\CommentCutFile{blocks/#1-##1.tex}
+    \SetUpCutFile
+    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}{##2}}(\thetheorem)
+      }
+      \ProcessComment{#1}}
     \CommentEndDef{#1}}
 
 \parindent0pt
@@ -164,6 +174,7 @@
 \def\Alt{\operatorname{Alt}}
 \def\ker#1{\operatorname{ker}\left(#1\right)}
 \def\range#1{\operatorname{im}(#1)}
+\def\spann#1{\operatorname{span}\left\{#1\right\}}
 \def\polar#1{#1^0}
 \def\ortho#1{#1^\perp}
 \def\Hcurl{H^{\text{curl}}}
