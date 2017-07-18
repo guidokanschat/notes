@@ -175,6 +175,14 @@
   quadratically.
 \end{example}
 
+\begin{Problem}{l2-Cauchy}
+  Show that the sequence of sequences defined by
+  \begin{gather*}
+    v_n = \left\{1,\tfrac12,\dots,\tfrac1n,0,\dots,0\right\},
+  \end{gather*}
+  is a Cauchy sequence in $\ell^2$.
+\end{Problem}
+
 \begin{example}
   On the space of continuous functions on the interval
   $[-\pi/2,\pi/2]$ define the inner product
@@ -513,24 +521,15 @@ completed to be a basis of $V$.
   additional structure by their norms and their completeness.
 \end{intro}
 
-\section{Linear operators and the dual space}
-
 \begin{Definition}{linear-operator}
   Let $V,W$ be two vector spaces. A \define{linear mapping} or
   \define{linear operator} $L\colon V\to W$ is a mapping such that
   \begin{gather*}
     L(\alpha u+\beta v) = \alpha L(u) + \beta L(v),
   \end{gather*}
-  for all $\alpha,\beta\in\mathbb K$ and for all $u,v\in V$ such that
-  $L(u)$ and $L(v)$ are defined.
+  for all $\alpha,\beta\in\mathbb K$ and for all $u,v\in V$.
+%  such that  $L(u)$ and $L(v)$ are defined.
 \end{Definition}
-
-\begin{remark}
-  The last subclause of the previous definition seems to be nonsense,
-  and in a way, it is. Nevertheless, we will see later that it is
-  actually a good idea to allow for linear operators, which are
-  well-defined only on a subset of $V$.
-\end{remark}
 
 \begin{Definition}{bounded-operator}
   A linear operator $L\colon V\to W$ is called \define{bounded} on $V$
@@ -545,21 +544,23 @@ completed to be a basis of $V$.
   \end{gather}
 \end{Definition}
 
+\begin{remark}
+  Every linear mapping of a finite dimensional space is continuous,
+  even \putindex{Lipschitz continuous}. This follows easily from the
+  matrix representation. The fact that a linear mapping can be
+  unbounded is a new property of infinite dimensional spaces.
+\end{remark}
 
-\begin{Definition}{dual-space}
-  A linear functional on a vector space $V$ is a linear mapping from
-  $V$ to $\mathbb K$.
-
-  The \define{dual space} $V^*$ of a vector space $V$, also called the
-  \define{normed dual}, is the space of all bounded linear functionals
-  on $V$ equipped with the norm
-  \begin{gather}
-    \norm{\phi}_{V^*} = \sup_{v\in V} \frac{\phi(v)}{\norm{v}_V}.
-  \end{gather}
-\end{Definition}
+\begin{Theorem}{continuous-operator}
+  A linear operator $L\colon V\to W$ is continuous on $V$ if and only
+  if it is bounded. It is continuous everywhere if it is continuous in
+  a single point.
+\end{Theorem}
 
 \begin{todo}
-  Operators are well defined on a basis
+  \begin{proof}
+    
+  \end{proof}
 \end{todo}
 
 \begin{example}
@@ -571,32 +572,23 @@ completed to be a basis of $V$.
     \end{pmatrix}
     \mapsto \phi(v) =
     \begin{pmatrix}
-      x_1 \\ 2x_2 \\ \vdots \\ kx_k \\ \vdots
+      x_1 \\ 4x_2 \\ \vdots \\ k^2x_k \\ \vdots
     \end{pmatrix}.
   \end{gather*}
   Clearly, $\phi$ is linear. But if we consider the sequence of
-  vectors $v_n = \{\delta_{nk}\}$, we see that $v_n \mapsto n v_n$ and
+  vectors $v_n = \{\delta_{nk}\}$, we see that $v_n \mapsto n^2 v_n$ and
   thus, while the sequence is bounded in $\ell^2(\R)$, its image is
   not.
   
-  Moreover, take now the sequence of vectors
+  Moreover, take now the sequence of sequences
   \begin{gather*}
-    v_n = \sum_{k=1}^n \frac1k
-    \quad \mapsto \quad \phi(v_n) = \sum_{k=1}^n 1.
+    v_n = \left\{1,\tfrac12,\dots,\tfrac1n,0,\dots,0\right\}
+    \quad \mapsto \quad \phi(v_n) = \{1,2,\dots,n,0,\dots,0\}.
   \end{gather*}
   The sequence $v_n$ converges to a limit $v \in \ell^2(\R)$, while
   the sequence $\phi(v_n)$ diverges. While $\phi(v_n)$ is defined for
-  all $v_n$, it is not for the limit $v$.
+  all $v_n$, it is not bounded for the limit $v$.
 \end{example}
-
-\begin{Definition}{bounded-operator}
-  A linear operator $\phi: V\to W$ is \textbf{bounded}\defindex{bounded
-  linear operator}, if there is a constant
-  $C > 0$ such that
-  \begin{gather*}
-    \forall v\in V: \norm{\phi(v)}_W \le C \norm{v\vphantom{()}}_V.
-  \end{gather*}
-\end{Definition}
 
 \begin{remark}
   By virtue of completeness of the space, whenever a linear operator
@@ -617,6 +609,20 @@ completed to be a basis of $V$.
     \phi(v) \in W \bigr\}.
   \end{gather*}
   Here, $\phi(v) \in W$ implies that $\phi(v)$ is also well defined.
+\end{Definition}
+
+\section{The dual space}
+
+\begin{Definition}{dual-space}
+  A linear functional on a vector space $V$ is a linear mapping from
+  $V$ to $\mathbb K$.
+
+  The \define{dual space} $V^*$ of a vector space $V$, also called the
+  \define{normed dual}, is the space of all bounded linear functionals
+  on $V$ equipped with the norm
+  \begin{gather}
+    \norm{\phi}_{V^*} = \sup_{v\in V} \frac{\phi(v)}{\norm{v}_V}.
+  \end{gather}
 \end{Definition}
 
 
