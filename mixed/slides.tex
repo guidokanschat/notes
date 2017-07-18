@@ -1,5 +1,6 @@
 \documentclass[ignorenonframetext,notheorems,aspectratio=1610]{beamer}
 \usetheme[compress]{Madrid}
+\useoutertheme{infolines}
 \usecolortheme{iwr}
 \usepackage{../mathsim}
 \input{./fig/tikzsettings}
@@ -17,7 +18,6 @@
 %\renewcommand{\label}[1]{}
 \renewcommand{\eqref}[1]{(\ref{#1})}
 \renewcommand{\define}[1]{\textbf{#1}}
-
 \begin{document}
 \frame{\tableofcontents[hideallsubsections]}
 \section{From elliptic to mixed problems}
@@ -374,6 +374,7 @@
 \frame {\input {blocks/Definition-Maxwell-mixed-0.tex}}
 
 \section{The de Rham complex}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
 
 \frame {\input {blocks/Notation-hlambda.tex}}
 \frame {\input {blocks/Notation-hlambda-2d.tex}}
@@ -381,27 +382,33 @@
 \frame {\input {blocks/Theorem-de-rham.tex}}
 \frame {\input {blocks/Lemma-hlambda-0.tex}}
 
-\frame {\input {blocks/Theorem-div-curl-well-posed.tex}}
-\frame {\input {blocks/Problem-darcy-derham.tex}}
+\frame {\input {blocks/Theorem-div-curl-well-posed.tex}
+  \input {blocks/Problem-darcy-derham.tex}}
+
+\subsection{Polynomial complexes for simplicial meshes}
+
 \frame {\input {blocks/Notation-pk-complex.tex}}
 \frame {\input {blocks/Definition-Koszul-complex.tex}}
-\frame {\input {blocks/Lemma-kd-plus-dk.tex}}
-\frame {\input {blocks/Lemma-d-kappa-injective.tex}}
-\frame {\input {blocks/Theorem-polynomial-exact.tex}}
-\frame {\input {blocks/Corollary-pk-complexes.tex}}
+\frame {\input {blocks/Lemma-kd-plus-dk.tex}
+  \input {blocks/Lemma-d-kappa-injective.tex}}
+\frame {\input {blocks/Theorem-polynomial-exact.tex}
+  \input {blocks/Corollary-pk-complexes.tex}}
 \frame {\input {blocks/Definition-pk-plus.tex}}
 \frame {\input {blocks/Lemma-pk-plus-d.tex}}
 \frame {\input {blocks/Lemma-pr-pr-plus.tex}}
 \frame {\input {blocks/Theorem-dimension-pr-lambda.tex}}
-\frame {\input {blocks/Definition-mesh-pk.tex}}
-\frame {\input {blocks/Definition-spanned-simplex.tex}}
-\frame {\input {blocks/Definition-subsimplices.tex}}
+
+\subsection{Degrees of freedom and bases for simplicial meshes}
+
+\frame {\input {blocks/Definition-mesh-pk.tex}
+  \input {blocks/Definition-spanned-simplex.tex}
+  \input {blocks/Definition-subsimplices.tex}}
 \frame {\input {blocks/Definition-pr-f.tex}}
-\frame {\input {blocks/Lemma-subsimplex-polynomials.tex}}
-\frame {\input {blocks/Problem-subsimplex-polynomials.tex}}
+\frame {\input {blocks/Lemma-subsimplex-polynomials.tex}
+  \input {blocks/Problem-subsimplex-polynomials.tex}}
 \frame {\input {blocks/Example-h1-moment-dofs.tex}}
-\frame {\input {blocks/Definition-v-of-f.tex}}
-\frame {\input {blocks/Definition-w-of-f.tex}}
+\frame {\input {blocks/Definition-v-of-f.tex}
+  \input {blocks/Definition-w-of-f.tex}}
 \frame {\input {blocks/Lemma-pr-geometric.tex}}
 \frame {\input {blocks/Theorem-decomp-pr-plus.tex}}
 \frame {\input {blocks/Example-rt-complex-decomp.tex}}
