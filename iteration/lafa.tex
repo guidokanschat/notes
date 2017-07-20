@@ -51,22 +51,33 @@
     \qquad\forall \alpha\in \mathbb K, \;v,w\in V.
   \end{gather}
   A functional $\phi\colon V\to \R^+_0$ is called \define{sublinear}, if
-  \begin{gather}
-    \label{eq:lafa:4}
-    \begin{aligned}
+  \begin{subequations}
+    \label{eq:lafa:4}    
+    \begin{xalignat}2
+      \label{eq:lafa:16}
       \phi(\alpha v) &= \abs{\alpha}\phi(v)
-      & \forall\alpha&\in\mathbb K,\;v\in V,\\
+      && \forall\alpha\in\mathbb K,\;v\in V,\\
+      \label{eq:lafa:17}
       \phi(v+w) &\le \phi(v)+\phi(w)
-      & \forall v,w&\in V.
-    \end{aligned}
-  \end{gather}
+      && \forall v,w\in V.
+    \end{xalignat}
+  \end{subequations}
   A functional $\phi\colon V\to \R^+_0$ is called \define{definite}, if
   \begin{gather}
     \label{eq:lafa:5}
     \phi(v)=0 \quad \Rightarrow v=0 \qquad\forall v\in V.
   \end{gather}
-  A \define{norm} on $V$ is a definite, sublinear functional on $V$.
+  A \define{norm} $\norm\cdot$ on $V$ is a definite, sublinear functional on $V$.
 \end{Definition}
+
+\begin{remark}
+  The properties of sublinear functionals in
+  equation~\eqref{eq:lafa:4} are called
+  \define{homogeneity}~\eqref{eq:lafa:16} and
+  \define{subadditivity}~\eqref{eq:lafa:17}. The
+  inequality~\eqref{eq:lafa:17} is also known as \define{triangle
+    inequality}.
+\end{remark}
 
 \begin{Definition}{inner-product}
   Let $V$ be a vector space over $\mathbb K$ with $\mathbb K = \mathbb
@@ -84,15 +95,14 @@
   immediately by symmetry.
 \end{Definition}
 
-\begin{Lemma}{bcs-inequality}
-  For every inner product there holds the
-  \define{Bunyakovsky-Cauchy-Schwarz inequality}
+\begin{Theorem*}{bcs-inequality}{Bunyakovsky-Cauchy-Schwarz inequality}
+  For every \putindex{inner product} there holds the inequality
   \begin{gather}
     \label{eq:lafa:6}
     \scal(v,w) \le \sqrt{\scal(v,v)} \sqrt{\scal(w,w)}.
   \end{gather}
   Equality holds if and only if $v$ and $w$ are collinear.
-\end{Lemma}
+\end{Theorem*}
 
 \begin{Lemma}{inner-product-norm}
   Every inner product defines a norm by
@@ -101,6 +111,32 @@
     \norm{v} = \sqrt{\scal(v,v)}.
   \end{gather}
 \end{Lemma}
+
+\begin{proof}
+  Definiteness and homogeneity follow from the properties of the inner
+  product. It remains to show the triangle inequality
+  \begin{gather*}
+    \norm{u+v} \le \norm{u}+\norm{v}.
+  \end{gather*}
+\end{proof}
+
+\begin{Lemma}{orthogonal-equations}
+  For two vectors $u,v$ in an \putindex{inner product} space holds the
+  \putindex{Pythagoras} theorem
+  \begin{gather}
+    \label{eq:lafa:14}
+    \scal(u,v) = 0,
+    \quad\Rightarrow\quad
+    \norm{u+v}^2 = \norm u^2 +\norm v^2.
+  \end{gather}
+  Furthermore, there holds the \putindex{parallelogram identity}
+  \begin{gather}
+    \label{eq:lafa:15}
+    \norm{u+v}^2 + \norm{u-v}^2 = 2\norm{u^2}+2\norm{v}^2.
+  \end{gather}
+\end{Lemma}
+
+
 
 \begin{Definition}{complete}
   A space $V$ with is \define{complete} with respect to a norm, if all
@@ -299,12 +335,15 @@
   $w_\epsilon in M$, there is $n$ such that $s_n = w_\epsilon$.
 \end{proof}
 
-
-\subsection{Orthogonality}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Orthogonality}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{Definition}{orthogonal}
   Let $V$ be an inner product space over a field $\mathbb K$. Two
-  vectors $x,y\in V$ are called orthogonal if $\scal(x,y) = 0$. We
+  vectors $x,y\in V$ are called \define{orthogonal} if $\scal(x,y) = 0$. We
   write $x\perp y$. Let $W$ be a subspace of $V$. Then, a vector $v$
   is orthogonal to $W$, if it is orthogonal to every vector in $W$.
 
@@ -559,7 +598,8 @@ completed to be a basis of $V$.
   Every linear mapping of a finite dimensional space is continuous,
   even \putindex{Lipschitz continuous}. This follows easily from the
   matrix representation. The fact that a linear mapping can be
-  unbounded is a new property of infinite dimensional spaces.
+  unbounded is a new property of infinite dimensional spaces, which
+  will be discussed in §\ref{???}.
 \end{remark}
 
 \begin{Theorem}{continuous-operator}
@@ -574,54 +614,6 @@ completed to be a basis of $V$.
   \end{proof}
 \end{todo}
 
-\begin{example}
-  Let $\phi:\ell^2(\R)\to\ell^2(\R)$ be such that
-  \begin{gather*}
-    v =
-    \begin{pmatrix}
-      x_1 \\ x_2 \\ \vdots \\ x_k \\ \vdots
-    \end{pmatrix}
-    \mapsto \phi(v) =
-    \begin{pmatrix}
-      x_1 \\ 4x_2 \\ \vdots \\ k^2x_k \\ \vdots
-    \end{pmatrix}.
-  \end{gather*}
-  Clearly, $\phi$ is linear. But if we consider the sequence of
-  vectors $v_n = \{\delta_{nk}\}$, we see that $v_n \mapsto n^2 v_n$ and
-  thus, while the sequence is bounded in $\ell^2(\R)$, its image is
-  not.
-  
-  Moreover, take now the sequence of sequences
-  \begin{gather*}
-    v_n = \left\{1,\tfrac12,\dots,\tfrac1n,0,\dots,0\right\}
-    \quad \mapsto \quad \phi(v_n) = \{1,2,\dots,n,0,\dots,0\}.
-  \end{gather*}
-  The sequence $v_n$ converges to a limit $v \in \ell^2(\R)$, while
-  the sequence $\phi(v_n)$ diverges. While $\phi(v_n)$ is defined for
-  all $v_n$, it is not bounded for the limit $v$.
-\end{example}
-
-\begin{remark}
-  By virtue of completeness of the space, whenever a linear operator
-  is not bounded, it must be undefined for some vectors. We could
-  exclude such operators from our considerations, but we would
-  severely limit the theory we want to develop. Instead, we will
-  accept the fact, that we have to extend the notion of a linear
-  mapping $\phi: V\to W$ to a linear operator $\phi: V\to W$, which
-  may not be defined on all of $V$. The following definition fixes
-  this problem somewhat.
-\end{remark}
-
-\begin{Definition}{operator-domain}
-  Let $\phi: V\to W$ be a linear operator. Then, the \define{domain}
-  of $\phi$ is
-  \begin{gather*}
-    \mathcal D(\phi) = \bigl\{ v\in V \big|
-    \phi(v) \in W \bigr\}.
-  \end{gather*}
-  Here, $\phi(v) \in W$ implies that $\phi(v)$ is also well defined.
-\end{Definition}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The dual space}
@@ -629,8 +621,8 @@ completed to be a basis of $V$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{Definition}{dual-space}
-  A linear functional on a vector space $V$ is a linear mapping from
-  $V$ to $\mathbb K$.
+  A \define{linear functional} on a vector space $V$ is a
+  \putindex{linear mapping} from $V$ to $\mathbb K$.
 
   The \define{dual space} $V^*$ of a vector space $V$, also called the
   \define{normed dual}, is the space of all bounded linear functionals
@@ -651,7 +643,7 @@ completed to be a basis of $V$.
   spaces.
 \end{intro}
 
-\begin{Theorem}{Riesz-representation}
+\begin{Theorem*}{Riesz-representation}{Riesz representation theorem}
   Let $V$ be a Hilbert space. Then, $V$ is isometrically isomorphic to
   $V^*$. In particular, there is an isomorphism
   \begin{gather}
@@ -670,7 +662,7 @@ completed to be a basis of $V$.
     \end{split}
   \end{gather}
   We refer to $\varrho$ as \define{Riesz isomorphism}.
-\end{Theorem}
+\end{Theorem*}
 
 % from Yosida III.6
 \begin{proof}
@@ -730,6 +722,11 @@ completed to be a basis of $V$.
   \end{gather*}
   Hence, the two terms are equal and $\varrho$ is surjective.
 \end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Unbounded linear operators}
+\input{unbounded-op}
 
 %%% Local Variables: 
 %%% mode: latex

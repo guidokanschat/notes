@@ -62,6 +62,9 @@
   \csarg\def{After#1Comment}{%
     \immediate\write\CommentStream{\unexpanded{\end{blocktheorem}}}%
   \CloseAndInputCutFile}%
+  \csarg\def{After#1*Comment}{%
+    \immediate\write\CommentStream{\unexpanded{\end{blocktheorem}}}%
+  \CloseAndInputCutFile}%
   \expandafter\def\csname#1\endcsname##1{\endgroup%  \message{Processing '#1 ##1'.}%
     \stepcounter{blockcount}%
     \refstepcounter{theorem}%
@@ -75,14 +78,16 @@
   \expandafter\def\csname#1*\endcsname##1##2{\endgroup%  \message{Processing '#1 ##1'.}%
     \stepcounter{blockcount}%
     \refstepcounter{theorem}%
-    \label{#1:##1}
+    \label{#1:##1}%
+    \index{##2}
     \immediate\write\block@list{\unexpanded{\frame{\input{blocks/#1-##1.tex}}}}
     \def\CommentCutFile{blocks/#1-##1.tex}
     \SetUpCutFile
     \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}{##2}}(\thetheorem)
       }
-      \ProcessComment{#1}}
-    \CommentEndDef{#1}}
+     \ProcessComment{#1*}}
+    \CommentEndDef{#1}
+    \CommentEndDef{#1*}}
 
 \parindent0pt
 \parskip2ex plus 1ex minus 1ex

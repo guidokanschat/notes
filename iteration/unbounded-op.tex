@@ -1,0 +1,55 @@
+
+\begin{example}
+  Let $\phi:\ell^2(\R)\to\ell^2(\R)$ be such that
+  \begin{gather*}
+    v =
+    \begin{pmatrix}
+      x_1 \\ x_2 \\ \vdots \\ x_k \\ \vdots
+    \end{pmatrix}
+    \mapsto \phi(v) =
+    \begin{pmatrix}
+      x_1 \\ 4x_2 \\ \vdots \\ k^2x_k \\ \vdots
+    \end{pmatrix}.
+  \end{gather*}
+  Clearly, $\phi$ is linear. But if we consider the sequence of
+  vectors $v_n = \{\delta_{nk}\}$, we see that $v_n \mapsto n^2 v_n$ and
+  thus, while the sequence is bounded in $\ell^2(\R)$, its image is
+  not.
+  
+  Moreover, take now the sequence of sequences
+  \begin{gather*}
+    v_n = \left\{1,\tfrac12,\dots,\tfrac1n,0,\dots,0\right\}
+    \quad \mapsto \quad \phi(v_n) = \{1,2,\dots,n,0,\dots,0\}.
+  \end{gather*}
+  The sequence $v_n$ converges to a limit $v \in \ell^2(\R)$, while
+  the sequence $\phi(v_n)$ diverges. While $\phi(v_n)$ is defined for
+  all $v_n$, it is not bounded for the limit $v$.
+\end{example}
+
+\begin{remark}
+  By virtue of completeness of the space, whenever a linear operator
+  is not bounded, it must be undefined for some vectors. We could
+  exclude such operators from our considerations, but we would
+  severely limit the theory we want to develop. Instead, we will
+  accept the fact, that we have to extend the notion of a linear
+  mapping $\phi: V\to W$ to a linear operator $\phi: V\to W$, which
+  may not be defined on all of $V$. The following definition fixes
+  this problem somewhat.
+\end{remark}
+
+\begin{Definition}{operator-domain}
+  Let $\phi: V\to W$ be a linear operator. Then, the \define{domain}
+  of $\phi$ is
+  \begin{gather*}
+    \mathcal D(\phi) = \bigl\{ v\in V \big|
+    \phi(v) \in W \bigr\}.
+  \end{gather*}
+  Here, $\phi(v) \in W$ implies that $\phi(v)$ is also well defined.
+\end{Definition}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
