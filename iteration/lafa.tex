@@ -118,6 +118,16 @@
   \begin{gather*}
     \norm{u+v} \le \norm{u}+\norm{v}.
   \end{gather*}
+  Squaring the left hand side yields with the
+  Bunyakovsky-Cauchy-Schwarz inequality
+  \begin{multline*}
+    \norm{u+v}^2
+    = \scal(u+v,u+v)
+    = \norm{u}^2 + 2 \scal(u,v) + \norm{v}^2
+    \\
+    \le \norm{u}^2 + 2 \norm u \norm v + \norm{v}^2
+    = \bigl(\norm u + \norm v\bigr)^2.
+  \end{multline*}
 \end{proof}
 
 \begin{Lemma}{orthogonal-equations}
@@ -301,7 +311,8 @@
   immediate extensions of bases on finite dimensional spaces, we will
   not have good use for them here.
 
-  We will use the concept of orthogonality below to 
+  We will use the concept of orthogonality below to establish a
+  general existence result for Schauder bases in Hilbert spaces.
 \end{remark}
 
 \begin{notation}
@@ -309,31 +320,6 @@
   countable set. The elements of a sequence are numbered by indices
   and the index set is $\mathbb N$ or a subset thereof.
 \end{notation}
-
-\begin{Theorem}{Banach-basis}
-  Every separable Banach space has an at most countable Schauder basis.
-\end{Theorem}
-
-\begin{proof}
-  See e.g.~\cite{Yosida80}. The proof is constructive and uses the
-  Gram--Schmidt procedure. First, let $M$ be a countable dense subset
-  of $V$, which exists due to the separability assumption. Now choose
-  any numbering of $M$ and $v_1$ the first nonzero element in
-  $M$. For $i=2,\dots,\infty$ choose with $v_1,\dots,v_{i-1}$ given
-  $v_i$ as the next vector in $M$ which is not in the subspace spanned
-  by $v_1,\dots,v_{i-1}$. This procedure generates an at most
-  countable sequence $\{v_i\}$ of linearly independent vectors. It
-  will only stop, if $V$ is finite dimensional, and we have that every
-  element in $M$ can be written as a finite linear combination of
-  vectors $v_i$.
-  
-  The sequence $\{v_i\}$ is a Schauder basis for $V$. In fact, given a
-  vector $v\in V$ we have to show that for every $\epsilon$, there is
-  a finite linear combination $s_n = \sum_{i=1}^n \alpha_i v_i$ such
-  that $\norm{v-s_n} < \epsilon$. Let by separability $w_\epsilon$ in
-  $M$ be such that $\norm{v-w_\epsilon} < \epsilon$. Since
-  $w_\epsilon in M$, there is $n$ such that $s_n = w_\epsilon$.
-\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -504,8 +490,8 @@
   \end{gather}
 \end{Definition}
 
-\begin{Lemma}{gram-schmidt}
-  \index{Gram--Schmidt} For every linearly independent sequence of
+\begin{Lemma*}{gram-schmidt}{Gram--Schmidt}
+  For every linearly independent sequence of
   vectors $\{v_i\}$ there is an up to scaling unique orthonormal set
   $\{x_i\}$ with the property that
   \begin{gather*}
@@ -514,7 +500,7 @@
     =
     \operatorname*{span}_{i=1,\dots,n} \{v_i\}.
   \end{gather*}
-\end{Lemma}
+\end{Lemma*}
 
 \begin{proof}
   The proof uses induction over the length of the sequence.  Beginning
@@ -535,8 +521,33 @@
 
   
 \begin{Theorem}{Hilbert-basis}
-  Every separable Hilbert space has an at most countable, orthonormal basis.
+  Every separable Hilbert space has an at most countable, orthonormal
+  Schauder basis.
 \end{Theorem}
+
+% See e.g.~\cite{Yosida80}.
+\begin{proof}
+  First, let $M$ be a countable dense subset
+  of $V$, which exists due to the separability assumption. Now choose
+  any numbering of $M$ and $v_1$ the first nonzero element in
+  $M$. For $i=2,\dots,\infty$ choose with $v_1,\dots,v_{i-1}$ given
+  $v_i$ as the next vector in $M$ which is not in the subspace spanned
+  by $v_1,\dots,v_{i-1}$. This procedure generates an at most
+  countable sequence $\{v_i\}$ of linearly independent vectors. It
+  will only stop, if $V$ is finite dimensional, and we have that every
+  element in $M$ can be written as a finite linear combination of
+  vectors $v_i$.
+  
+  The sequence $\{v_i\}$ is a Schauder basis for $V$. In fact, given a
+  vector $v\in V$ we have to show that for every $\epsilon$, there is
+  a finite linear combination $s_n = \sum_{i=1}^n \alpha_i v_i$ such
+  that $\norm{v-s_n} < \epsilon$. Let by separability $w_\epsilon$ in
+  $M$ be such that $\norm{v-w_\epsilon} < \epsilon$. Since
+  $w_\epsilon in M$, there is $n$ such that $s_n = w_\epsilon$.
+
+  Finally, we use the Gram--Schmidt procedure to orthogonalize the
+  sequence.
+\end{proof}
 
 \begin{Theorem}{Hilbert-basis-completion}
   Let $W$ be a closed subspace of a separable Hilbert space $V$ and
@@ -545,11 +556,8 @@ completed to be a basis of $V$.
 \end{Theorem}
 
 \begin{Problem}{Schauder-basis-completion}
-  \begin{enumerate}
-  \item Prove \blockref{Theorem}{Hilbert-basis-completion}.
-  \item Prove \blockref{Theorem}{Hilbert-basis-completion}. Take into account
+  Prove \blockref{Theorem}{Hilbert-basis-completion}. Take into account
   that $W$ is not assumed finite dimensional.
-  \end{enumerate}
 \end{Problem}
 
 \begin{example}
@@ -558,6 +566,49 @@ completed to be a basis of $V$.
   basis vectors $x_i$ with entries $x_{i,j} = \delta_{ij}$.
 \end{example}
 
+\begin{Lemma*}{Bessel-inequality}{Bessel inequality}
+  Let $\{x_i\}$ be an orthonormal basis of the Hilbert space $V$. For
+  $v\in V$, define the \define{Fourier coefficient}s
+  \begin{gather}
+    \label{eq:lafa:18}
+    \alpha_i = \scal(v,x_i), \qquad i=1,\dots
+  \end{gather}
+  Then,
+  \begin{gather}
+    \sum_{i=1}^\infty \abs{\alpha_i}^2 \le \norm{v}_V^2.
+  \end{gather}
+\end{Lemma*}
+
+\begin{proof}
+  For $n\in \mathbb N$, we have
+  \begin{align*}
+    \norm*{v-\sum_{i=1}^n \alpha_i x_i}^2
+    &= \scal(v-\sum \alpha_i x_i,v-\sum \alpha_i x_i) \\
+    &= \norm{v}^2 -\scal(v,\sum \alpha_i x_i)
+      -\scal(\sum \alpha_i x_i, v) + \sum \abs{\alpha_i}^2\\
+    &= \norm{v}^2 - \sum \abs{\alpha_i}^2.
+  \end{align*}
+  Since the left hand side is nonnegative, the Bessel inequality holds.
+\end{proof}
+
+\begin{Lemma*}{Parseval-identity}{Parseval identity}
+  Under the same assumptions as in \blockref{Lemma}{Bessel-inequality}
+  the sequence
+  \begin{gather*}
+    f_n = \sum_{i=1}^n \alpha_i x_i
+  \end{gather*}
+  converges to $f$ in $V$ and there holds
+  \begin{gather}
+    \label{eq:lafa:19}
+    \norm{f}^2 = \sum_{i=1}^\infty \abs{\alpha_i}^2.
+  \end{gather}
+\end{Lemma*}
+
+\begin{todo}
+\begin{proof}
+    
+\end{proof}
+\end{todo}
 \section{Linear operators}
 
 \begin{intro}
