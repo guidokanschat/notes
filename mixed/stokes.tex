@@ -219,10 +219,11 @@
 \end{intro}
 
 \begin{example}
+  \label{ex:p1-p1}
   We begin with a one-dimensional example. Piecewise linear velocity
-  and piecewise linear pressure. Both continuous. Then, $\div v_h$ is
+  and piecewise linear pressure ($P_1-P_1$). Both continuous. Then, $\div v_h$ is
   piecewise constant. Consequently, a pressure function which has zero
-  mean value on each cell is in the kernel of $B_h$.
+  mean value on each cell is in the kernel of $B_h^T$.
   \begin{figure}[tp]
     \centering
     \includegraphics[width=.6\textwidth]{./fig/p1-p1-1d.tikz}
@@ -560,9 +561,10 @@ where $c\not=0$.
   We assume of all families of meshes that they are shape regular and
   locally quasi-uniform, such that with
   \blockref{Assumption}{h1-stable-interpolation} there holds
+  for $m=0,1$
   \begin{gather}
     \label{eq:stokes:15}
-    \snorm{v-I_h v}_{m,\cell} \le c h_\cell \snorm{v}_{1,\domain_\cell},
+    \snorm{v-I_h v}_{m,\cell} \le c h_\cell^{1-m} \snorm{v}_{1,\domain_\cell},
   \end{gather}
   where $\Omega_\cell$ is the union of all cells with nonempty
   intersection with $\cell$.
@@ -844,7 +846,8 @@ where $c\not=0$.
 \begin{intro}
   The reasoning behind the MINI element can be applied easily to
   pressure spaces of higher order. Take for instance the pair
-  $P_k-P_k$. There holds $\div v_h \in \P_{k-1}$ on each cell,
+  $P_k-P_k$, generalized from Example~\ref{ex:p1-p1}.
+  There holds $\div v_h \in \P_{k-1}$ on each cell,
   and the term
   \begin{gather*}
     \int_\cell \div v_h q_h\dx
@@ -875,7 +878,7 @@ where $c\not=0$.
   \begin{gather}
     \label{eq:stokes:25}
     B_\cell(\nabla Q_h) = \bigl\{ v\in L^2(\cell) \big\vert
-    \;\exists q_h\in Q_h \colon v = b_T q_{h|\cell}\bigr\}.
+    \;\exists q_h\in Q_h \colon v = b_T \nabla q_{h|\cell}\bigr\}.
   \end{gather}
 \end{Definition}
 
@@ -885,7 +888,7 @@ where $c\not=0$.
   \blockref{Assumption}{h1-stable-interpolation}, such that $Q_h\subset
   C^0(\domain)$, piecewise differentiable, and such that
   \begin{gather}
-    B_h(b_\cell \nabla Q_h)^d \subset V_h.
+    B_h(b_\cell \nabla Q_h) \subset V_h.
   \end{gather}
   Then, the pair $V_h\times Q_h$ is inf-sup stable.
 \end{Theorem}
@@ -919,7 +922,7 @@ where $c\not=0$.
 \begin{Corollary}{pk-bubble}
   Let $Q_h\subset Q$ be continuous and cell-wise differentiable. If
   \begin{gather*}
-    H^1_h(\P_1)^d\oplus B_h(b_\cell\nabla Q_h)^d \subset V_h \subset V,
+    H^1_h(\P_1)^d\oplus B_h(b_\cell\nabla Q_h) \subset V_h \subset V,
   \end{gather*}
   then the pair $V_h\times Q_h$ is inf-sup stable. The same holds on
   quadrilateral and hexahedral meshes replacing $\P_1$ by $\Q_1$.
@@ -1020,7 +1023,7 @@ where $c\not=0$.
   estimate
   \begin{gather*}
     \norm{u-u_h}_1 + \norm{p-p_h}_0
-    \le c \bigl(h^2\snorm{u}_2 + h \snorm{p}_1\bigr).
+    \le c \bigl(h^2\snorm{u}_3 + h \snorm{p}_1\bigr).
   \end{gather*}
 \end{Theorem}
 
@@ -1032,7 +1035,8 @@ where $c\not=0$.
 \begin{remark}
   Let us review the construction principles behind the \putindex{MINI
     element} and the $P_2-P_0$ element. The uncontrolled pressure
-  modes in $\ker B_h^T$ of the $P_1-P_1$ element were those pressures
+  modes in $\ker B_h^T$ of the $P_1-P_1$ element in
+  Example~\ref{ex:p1-p1} were those pressures
   with alternating signs at neighboring vertices, such that the mean
   value of $p_h$ is zero on each cell. Therefore, $p_h$ is orthogonal
   to the constant derivatives of the linear velocity space. Thus, we
@@ -1776,7 +1780,7 @@ where $c\not=0$.
   there holds
   \begin{gather}
     \norm{u-u_h}_1 + \norm{p-p_h}_0
-    \le c h^2\bigl(\snorm{u}_{k+1} + \snorm{p}_k\bigr).
+    \le c h^k\bigl(\snorm{u}_{k+1} + \snorm{p}_k\bigr).
   \end{gather}
 \end{Theorem}
 

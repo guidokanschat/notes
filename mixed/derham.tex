@@ -664,13 +664,25 @@ usual differential $d$.
   \end{gather*}
   where we have used the exactness of the Koszul complex.
   Using the induction hypothesis yields by the binomial identity
-  \begin{multline*}
-    \dim\kappa\breve \P_r\Lambda^k(\R^d) =
-    \binom{d+r-1}{d-1}\binom{d}{k}
-    - \binom{d+r-1}{d-k-1}\binom{r+k-1}{k}
+% Olkhovskiy
+  \begin{align*}
+    \dim\kappa\breve \P_r\Lambda^k(\R^d) 
+    &= \binom{d+r-1}{d-1}\binom{d}{k} - \binom{d+r-1}{d-k-1}\binom{r+k-1}{k}
     \\
-    = \binom{d+r}{d-k}\binom{r+k-1}{k-1}
-  \end{multline*}
+    &= \frac{(d+r-1)!{\color{green}d!}}{{\color{green}(d-1)!}{\color{purple}r!}k!{\color{blue}(d-k)!}}
+      - \frac{(d+r-1)!{\color{red}(r+k-1)!}}{{\color{blue}(d-k-1)!}
+      {\color{red}(r+k)!}k!{\color{purple}(r-1)!}}
+    \\
+    &=
+      \frac{(d+r-1)!{\color{green}d}{\color{red}(r+k)}-{\color{blue}(d-k)}(d+r-1)!{\color{purple}r}}
+      {{\color{purple}r!}k!{\color{blue}(d-k)!}{\color{red}(r+k)}}
+    \\
+    &= \frac{(d+r-1)!\bigl(d(r+k)-(d-k)r\bigr)}{r!k!(d-k)!(r+k)}
+    \\
+    &= \frac{(d+r)!}{r!(k-1)!(d-k)!(r+k)}
+    \\
+    &= \binom{d+r}{d-k}\binom{r+k-1}{k-1}.
+  \end{align*}
 \end{proof}
 
 \subsection{Degrees of freedom and bases for simplicial meshes}
@@ -792,7 +804,7 @@ usual differential $d$.
 \end{remark}
 
 \begin{Definition}{pr-f}
-  For each subsimplex $f_\sigma$ of $\cell$ with
+  For each $k$-dimensional subsimplex $f_\sigma$ of $\cell$ with
   $\sigma = \sigma_0,\dots,\sigma_k$, the space
   $\P_r(f_\sigma) \equiv \breve\P_r(\R^{k+1})$ is defined as
   \begin{gather}
@@ -808,7 +820,7 @@ usual differential $d$.
   \begin{gather}
     \begin{split}
       E_{f_\sigma\to\cell}\colon \P_r(f_\sigma) &\to \P_r(\R^d),\\
-      p &\mapsto q(\lambda_{\sigma_0},\dots,\lambda_{\sigma_k}),
+      p(\lambda_0,\dots,\lambda_d) &= q(\lambda_{\sigma_0},\dots,\lambda_{\sigma_k}),
     \end{split}
   \end{gather}
   where $q$ is chosen as in the definition of $\P_r(f_\sigma)$.

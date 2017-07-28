@@ -133,7 +133,7 @@ The question of well-posedness in finite dimensions can be answered by:
   \begin{enumerate}
   \item all its (possibly complex) eigenvalues are nonzero,
   \item all its singular values are nonzero,
-  \item for each $v\in\R^n$ holds $Av\neq 0$.
+  \item for each nonzero $v\in\R^n$ holds $Av\neq 0$.
   \end{enumerate}
 \end{Theorem}
 
@@ -433,7 +433,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
     \Phi_w\colon V^* &\to \R,\\
     v&\mapsto \scal(v,w)_{V^*\times V}.
   \end{align*}
-  For any $w$, the kernel of $\phi$ is closed as
+  For any $w$, the kernel of $\Phi$ is closed as
   the pre-image of a closed set. $\polar{W}$ is closed since it is the
   intersection of these kernels for all $w\in W$.
 
@@ -680,7 +680,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   In order to prove equivalence of the second and third statement, we
   use \blockref{Lemma}{polar-orthogonal-hilbert} to isometrically
   identify $(\ortho{\ker A})^*$ with $\polar{\ker A}$. Thus, $A$ is an
-  isomorphism from $\ortho{\ker A}$ onto $W$ if and only if $A^T$ is an
+  isomorphism from $\ortho{\ker A}$ onto $W^*$ if and only if $A^T$ is an
   isomorphism from $W$ onto $(\ortho{\ker A})^* = \polar{\ker A}$. and
   \begin{gather*}
     \norm{A}_{W^*\to \ortho{\ker A}} = \norm{A^T}_{\polar{\ker A}\to W}.
@@ -709,7 +709,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \end{Corollary}
 
 \begin{remark}
-  \blockref{Theorem}{infsup-well-equivalence} exhibits an asymmetry
+  \blockref{Corollary}{infsup-well-posedness1} exhibits an asymmetry
   between the left and right argument. In particular, we obtain a
   unique solution only for the adjoint operator $A^T$, which is
   exactly what we need, when we compute say a pressure from the

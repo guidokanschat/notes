@@ -25,8 +25,9 @@
     \Sigma_h = \bigl\{ \tau\in L^2(\domain;\R^d) \big\vert
     \,\forall \cell\in \mesh_h: \tau_{|\cell} \in \Sigma_T \bigr\},
   \end{gather}
-  where $\nabla V_T \subset \Sigma_T$. Then, we define the \define{lifting
-    operator} 
+  where $\Sigma_T$ is a (possibly mapped) polynomial space chosen such that
+  $\nabla V_T \subset \Sigma_T$. Then, we define the \define{lifting
+    operator}
   \begin{gather}
     \label{eq:ip-lifting:2}
     \lifting\colon V+V_h \to \Sigma_h
@@ -162,13 +163,13 @@
 % From Girault/Kanschat/Riviere
 
 \begin{Lemma}{ip-lifting-residual-1}
-  Let $(u,p)\in V\times Q$ be the solution to the Poisson equation
+  Let $u\in V$ be the solution to the Poisson equation
   with right hand side $f\in L^2(\domain)$. Assume $u\in H^s(\domain)$
   with $s>3/2$. Then, we have for $v\in V+V_h$:
   \begin{gather}
     \label{eq:hdivdg:11}
     \form(f,v) = \form(\nabla u,\nabla v)_{\mesh_h}
-    - 2\forme(\nabla u,\mvl{v\otimes n})_{\faces_h^i}
+    - 2\forme(\nabla u,\mvl{v \n})_{\faces_h^i}
     -\forme(\d_n u,v)_{\faces_h^\d}.
   \end{gather}
 \end{Lemma}
