@@ -1,0 +1,69 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\bh}{\boldsymbol{h}}
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\bu}{\boldsymbol{u}}
+\newcommand{\bv}{\boldsymbol{v}}
+\newcommand{\bomega}{\boldsymbol{\omega}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+\title{Finite Element Methods for Flow Simulations\\ - Exercise Sheet 1 -}
+\author{Daniel Arndt}
+\date{}
+ 
+\maketitle
+
+\begin{exercise}{1}
+Let $\bu \in [C^2(\Omega)]^d$ be the velocity field of a flow in the domain $\Omega \subset \mathbb{R}^d$.
+\begin{enumerate} 
+ \item Show that for all points $\bx \in \Omega$ and all displacements $\bh \in \mathbb{R}^d$ 
+       with $\bx + \bh \in \Omega$ the following formula is valid
+       \begin{align}
+       \label{eqn:linearization}
+         \bu(\bx + \bh) = \bu(\bx) + \mathbb{D} \cdot \bh + \bomega \times \bh + \mathcal{O}(|\bh|^2).        
+       \end{align}
+       Here $\bomega := \nabla \times \bu$ denotes the vorticity of the flow and 
+       $\mathbb{D}(\bu) := \frac12 (\nabla \bu + (\nabla \bu)^T)$ is the deformation tensor.\\
+       Hint: Apply Taylor's theorem.
+ \item Apply formula (\ref{eqn:linearization}) to give a physical interpretation of the movement of a flow 
+       from point $\bx$ to point $\bx + \bh$.
+ \item Calculate $\mathbb{D}$ and $\bomega$ for the cases of a shear flow with $\bu = (y,x,0)^T$ and a rotational flow with
+$\bu = (-y,x,0)^T$.
+\end{enumerate} 
+\end{exercise}
+
+\begin{exercise}{2}
+Prove the following identities for sufficiently smooth scalar functions $p: \Omega \to \mathbb{R}$, vector-valued functions
+$\boldsymbol{u}: \Omega \to \mathbb{R}^d$ and symmetric tensors $\mathbb{T} : \Omega \to \mathbb{R}^{d\times d}$:
+\begin{enumerate}
+ \item $\nabla \cdot (p\bu) = \nabla p \cdot \bu + p \nabla \cdot \bu$
+ \item $\nabla \cdot (\mathbb{T} \cdot \bu) = (\nabla \cdot \mathbb{T}) \cdot \bu + \mathbb{T} : \mathbb{D}(\bu)$
+ \item $\nabla \cdot (\bu \otimes \bv) = (\nabla \cdot \bu) \bv + (\bu \cdot \nabla)\bv$.
+\end{enumerate}
+\end{exercise} 
+
+\end{document}
