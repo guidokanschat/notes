@@ -1,0 +1,101 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\bh}{\boldsymbol{h}}
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\bu}{\boldsymbol{u}}
+\newcommand{\bv}{\boldsymbol{v}}
+\newcommand{\bomega}{\boldsymbol{\omega}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+\title{Finite Element Methods for Flow Simulations\\ - Exercise Sheet 2 -}
+\author{Daniel Arndt}
+\date{}
+ 
+\maketitle
+
+% \begin{exercise}{3}
+% Consider for $\Omega \subset \mathbb{R}^2$ the incompressible Navier-Stokes equations
+% \begin{align*}
+% -\nu \Delta \bv + (\bv \cdot \nabla)\bv + \nabla p &= 0 \text{ in } \Omega , \\
+% \nabla \cdot \bv &= 0 \text{ in } \Omega.
+% \end{align*}
+% Show that the following fields are exact solutions
+% \begin{enumerate}
+%  \item \hfill
+%     $\bv(x_1, x_2) := \begin{pmatrix}1 - e^{\lambda x_1} \cos 2\pi x_2 \\ \frac{\lambda}{2\pi}e^{\lambda x_1} \sin 2\pi x_2\end{pmatrix}$\hfill
+%       $p := p_0 - \frac{1}{2} e^{2\lambda x_1}$ \hfill~\\
+%      in $\Omega = (-\frac{1}{2}, 2) \times (-\frac{1}{2}, \frac{3}{2})$ with $\lambda=\frac{\operatorname{Re}}{2}-\sqrt{\frac{\operatorname{Re}^2}{4}+4\pi^2}$
+%      and Reynolds number $\operatorname{Re}=\frac{1}{\nu}$,
+% \item \hfill
+%    $\bv(x_1, x_2)  := \begin{pmatrix}\alpha x_2 (H - x_2 )\\ 0\end{pmatrix}$ \hfill $p := \nu \alpha (L - 2x_1)$ \hfill ~\\ 
+%  in $\Omega = (0, L) \times (0, H)$ with $\alpha = \frac{4}{H^2}$. Show in particular that $(\bv \cdot \nabla)\bv = 0$ is valid.
+% \end{enumerate}
+% \end{exercise}
+
+\begin{exercise}{3}~\\
+Consider the incompressible Euler equations
+\begin{align*}
+ \rho \partial_t \bv + \rho \bv \cdot \nabla \bv +\nabla p &= \rho \boldsymbol{f}\\
+ \nabla \cdot \bv  &= 0.
+\end{align*}
+\begin{enumerate}
+\item Derive for the vorticity $\bomega := \nabla \times \bv$ the following equation:
+ \begin{align*}
+ \partial_t \bomega + \bv \cdot \nabla \bomega = \bomega \cdot \nabla \bv + \nabla \times \boldsymbol{f}.
+\end{align*}
+How can one simplify this (vorticity-transport) equation in the two-dimenisonal case?
+\item Show for the case $\nabla \cdot \bv = 0$ the identity $2\nu \nabla \cdot \mathbb{D}(\bv) = \nu\Delta \bv$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}{4}
+Let $X$ be a Hilbert space over $\mathbb{R}$ with the dual space $X^*$. Moreover, let $a(\cdot,\cdot): X \to X$ be a bounded
+and $X$-elliptic bilinear form, i.e., the following estimates are valid:
+\begin{enumerate}
+\item $\exists K > 0 : |a(u, v)| \leq K \|u\|_X \|v\|_X \qquad \forall u,v \in X$
+\item $ \exists \gamma > 0 : a(v, v) \geq \gamma \|v\|_X^2 \qquad \forall v \in X.$
+\end{enumerate}
+Finally, let $f : X \to \mathbb{R}$ be a bounded linear form.\\
+The existence and uniqueness theorem by Lax-Milgram says that there exists one and only one solution
+of the variational problem
+\begin{center}Find $u \in X : a(u, v) = f (v)\qquad \forall v \in X.$ \end{center}
+Transform this problem to the equivalent fixed point problem
+\begin{center}Find $u \in X : u = T_\rho (u) := u - \rho(RAu - Rf )$ where $\rho > 0$. \end{center}
+Here $R :X^* \to X$ denotes the linear, bijective and isometric Riesz operator in the Riesz
+representation theorem.\\
+Prove this result in the following steps:
+\begin{enumerate}
+\item Show that the operator $T_\rho$ is self-mapping, i.e. $T_\rho : X \to X$, and contractive on $X$ for appropriately
+chosen parameter $\rho$.
+\item Conclude the desired assertion from the fixed-point theorem by S. Banach and provide an a priori
+estimate for the solution $u$.
+\end{enumerate}
+Hint: The Riesz representation theorem reads as follows: On a Hilbert $X$ space over $\mathbb{R}$ there exists for
+each functional $f\in X^*$ a uniquely defined element $u \in X$ such that $f(v) = \langle f, v \rangle = (u, v)$ for all $v \in V$.
+The Riesz operator $R: X^* \to X$ mit $R : f \mapsto u$ is linear, bijective and isometric.
+\end{exercise}
+\end{document}
