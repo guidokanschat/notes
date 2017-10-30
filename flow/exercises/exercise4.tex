@@ -1,0 +1,74 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\bh}{\boldsymbol{h}}
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\bu}{\boldsymbol{u}}
+\newcommand{\bv}{\boldsymbol{v}}
+\newcommand{\bomega}{\boldsymbol{\omega}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\setlength\parindent{0pt}
+ 
+\begin{document}
+ 
+\title{Finite Element Methods for Flow Simulations\\ - Exercise Sheet 4 -}
+\author{Daniel Arndt}
+\date{}
+ 
+\maketitle
+
+\begin{exercise}{7}
+Consider a stationary, incompressible ($\nabla \cdot \bv = 0$) and inviscid flow field $\bv$, i.e. $\nu = 0$. 
+Moreover, suppose that the external source term $\boldsymbol{f}$ is a potential, 
+i.e. there exists a function $\phi$ such that $\boldsymbol{f} = -\nabla \phi$, 
+and define the expression $B = \frac12 \bv^2 + \phi + \rho p$.
+\begin{enumerate}
+ \item Show the Bernoulli theorem: $B$ is constant along streamlines, i.e. $(\bv \cdot \nabla)B = 0$.
+ \item What changes if the flow field is additionally irrotational, i.e. $\nabla \times \bv = \boldsymbol{0}$?
+\end{enumerate}
+Hint: Start from the stationary Euler model $(\bv \cdot \nabla)\bv + \rho \nabla p = \boldsymbol{f}$ and show the identity
+\begin{align*}
+(\bv \cdot \nabla)\bv = \nabla( |\bv|^2) - \bv \times (\nabla \times \bv).
+\end{align*}
+
+\end{exercise}
+
+\begin{exercise}{8}
+Consider the Stokes problem in $\Omega \subset \mathbb{R}^d§$ with mixed boundary conditions on $\partial \Omega = \Gamma_D \cup \Gamma_N$ with
+$\Gamma_D \cap \Gamma_N = \emptyset$ and $\operatorname{meas}_{d-1} \Gamma_D > 0$:
+\begin{align*}
+&\hfill &                  -\nu \Delta \bu + \nabla p &= \boldsymbol{f} &&\text{ in } \Omega,&\hfill\\
+&\hfill &                            \nabla \cdot \bu &= 0              &&\text{ in } \Omega,&\hfill\\
+&\hfill &                                         \bu &= \boldsymbol{0} &&\text{ on } \Gamma_D,&\hfill\\
+&\hfill & (\nu \nabla \bu - p I) \cdot \boldsymbol{n} &= 0              &&\text{ on } \Gamma_N.&\hfill
+\end{align*}
+\begin{enumerate}
+\item Derive a weak formulation of the above problem in appropriate function spaces.
+\item Explain why the variational formulation admits one and only one (generalized) solution. Why is
+the pressure already uniquely defined?
+\end{enumerate}
+\end{exercise}
+\end{document}
