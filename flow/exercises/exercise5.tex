@@ -1,0 +1,76 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\bh}{\boldsymbol{h}}
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\bu}{\boldsymbol{u}}
+\newcommand{\bv}{\boldsymbol{v}}
+\newcommand{\bomega}{\boldsymbol{\omega}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\setlength\parindent{0pt}
+ 
+\begin{document}
+ 
+\title{Finite Element Methods for Flow Simulations\\ - Exercise Sheet 5 -}
+\author{Daniel Arndt}
+\date{}
+ 
+\maketitle
+
+\begin{exercise}{9}
+Consider the following penalty formulation of the Stokes problem:
+\begin{align*}
+\hfill&&-\Delta \bu_\epsilon + \nabla p_\epsilon &= \boldsymbol{f} &&\text{ in } \Omega, &&\hfill\\
+\hfill&&\nabla \cdot \bu_\epsilon + \epsilon p_\epsilon &= 0       &&\text{ in } \Omega, &&\hfill\\
+\hfill&&\bu_\epsilon &= \boldsymbol{0} &&\text{ on } \partial\Omega && \hfill
+ \end{align*}
+ \begin{enumerate}
+\item Write the corresponding variational formulation. How and why can the pressure $p_\epsilon$ be eliminated ?
+\item Formulate the FEM problem for the penalty form. Prove an a priori estimate of the form
+\begin{align*}
+\|\nabla \bu^h_\epsilon\|_{L^2 (\Omega)} + \|p^h_\epsilon\|_{L^2(\Omega)} 
+\leq C(\epsilon)(\|\nabla \bu\|_{L^2(\Omega)} +\|p\|_{L^2(\Omega)}).
+\end{align*}
+\end{enumerate}
+
+
+\end{exercise}
+
+\begin{exercise}{10}
+Prove the following variant of the Gronwall Lemma:\\
+Let 
+\begin{itemize}
+ \item $\beta \in \mathbb{R}$,
+ \item $\psi \in C^1([0, T ]; \mathbb{R})$ and 
+ \item $f \in C([0, T ]; \mathbb{R})$ 
+\end{itemize}
+such that 
+$\psi' \leq \beta \psi + f$. Then there holds for all $t \in [0, T ]$ that
+\begin{align*}
+\psi(t) \leq e^{\beta t}\psi(0) + \int_0^t e^{\beta(t-\tau )}f (\tau )\, \mathrm{d}\tau.
+\end{align*}
+\end{exercise}
+\end{document}
