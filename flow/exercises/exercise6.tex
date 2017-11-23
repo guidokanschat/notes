@@ -1,0 +1,72 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\bh}{\boldsymbol{h}}
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\bu}{\boldsymbol{u}}
+\newcommand{\bv}{\boldsymbol{v}}
+\newcommand{\bomega}{\boldsymbol{\omega}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\setlength\parindent{0pt}
+ 
+\begin{document}
+ 
+\title{Finite Element Methods for Flow Simulations\\ - Exercise Sheet 6 -}
+\author{Daniel Arndt}
+\date{}
+ 
+\maketitle
+
+\begin{exercise}{11}
+Consider the (abstract) linear evolution problem
+\begin{align*}
+ \frac{d}{dt}((u(t),v)_H+a(u(t),v)&=\langle f(t),v \rangle_{(X^*,X)} \quad \forall v\in X, t\in (0,T) \\
+ u(0) &= u_0.
+\end{align*}
+where $a\colon X\times X \to \mathbb{R}$ is a
+\begin{itemize}
+ \item bounded, i.e. $\exists M>0\colon |a(u,v)|\leq M\|u\|_X\|v\|_X \quad \forall u,v\in X$, and 
+ \item $X$-elliptic, i.e. $\exists \gamma>0\colon |a(u,u)|\geq \gamma\|u\|_X^2 \quad \forall u\in X$,
+\end{itemize}
+bilinear form. Moreover, assume $f\in L^2(0,T;X^*)$ and $u_0 \in H$ where the spaces $X$, $H$ and $X^*$
+form a Gelfand triple (with inclusion constant $C_I$).
+Under these assumptions, any solution $u\in W^{1,2}(0,T;X)$ to the linear evolution problem satisfies
+\begin{enumerate}
+ \item $\begin{aligned}\|u\|_{C(0,T;H)}\leq \|u_0\|_H \exp\left(-\frac{\gamma}{2 C_I^2} T\right)+\frac{1}{\sqrt{\gamma}}\|f\|_{L^2(0,T;X^*)}\end{aligned}$
+ \item $\begin{aligned}\|u\|_{L^2(0,T;X)}\leq \frac{1}{\sqrt{\gamma}}\|u_0\|_H+\frac{1}{\gamma}\|f\|_{L^2(0,T;X^*)}\end{aligned}$
+ \item $\begin{aligned}\|u'\|_{L^2(0,T;X^*)}\leq \frac{\sqrt{2}M}{\sqrt{\gamma}}\|u_0\|_H+\frac{\sqrt{2}}{\gamma}\sqrt{\gamma^2+M^2}\|f\|_{L^2(0,T;X^*)}\end{aligned}$
+\end{enumerate}
+Hint: For (i) and (ii) show the inequality
+\begin{align*}
+ \frac{d}{dt}\|u(t)\|_H^2 \leq -\gamma \|u(t)\|_X^2+\frac{1}{\gamma} \|f(t)\|_X^2
+\end{align*}
+and apply the Gronwall lemma. For (iii) show the inequality
+\begin{align*}
+ \|u'(t)\|_{X^*}\leq\|f(t)\|_{X^*}+M\|u(t)\|_X
+\end{align*}
+and apply (ii).
+\end{exercise}
+\end{document}
