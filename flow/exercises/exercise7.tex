@@ -1,0 +1,79 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\bh}{\boldsymbol{h}}
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\bu}{\boldsymbol{u}}
+\newcommand{\bv}{\boldsymbol{v}}
+\newcommand{\bomega}{\boldsymbol{\omega}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\setlength\parindent{0pt}
+ 
+\begin{document}
+ 
+\title{Finite Element Methods for Flow Simulations\\ - Exercise Sheet 7 -}
+\author{Daniel Arndt}
+\date{}
+ 
+\maketitle
+
+\begin{exercise}{12}
+The FEM-semidiscretized time-dependent Stokes problem is discretized in time using the BDF1-scheme
+leading for $i=0,\dots, n$ to
+\begin{align*}
+\frac{1}{\tau_i}\left(\bu_h^{i+1}-\bu_h^i,\bv_h\right)_\Omega 
++ \nu \left(\nabla \bu_h^{i+1},\nabla \bv_h\right)_\Omega
+- \left(p_h^{i+1}, \nabla \cdot \bv_h\right)_\Omega  
+& = \left(\boldsymbol{f}^{i+1}, \bv_h\right)_\Omega &&\forall \bv_h \in X_h, \\
+\left(q_h,\nabla\cdot \bu_h^{i+1}\right)_\Omega & = 0 &&\forall q_h \in Q h,
+\end{align*}
+where $(\cdot, \cdot)_\Omega$ denotes the inner product in $L^2 (\Omega)$ and $\tau_i := t_{i+1} - t_i$.
+\begin{enumerate}
+ \item 
+Show for arbitrary $h>0$ the unconditional stability estimate
+\begin{align*}
+\|\bu_h^n\|_{L^2 (\Omega)}^2
++\sum_{i=0}^{n-1}\left(\nu\tau_i \|\nabla \bu_h^{i+1}\|_{L^2 (\Omega)}^2+\|\bu_h^{i+1}-\bu_h^i\|_{L^2 (\Omega)}^2\right)
+\leq \|\bu_h^0\|_{L^2 (\Omega)}^2+\frac{C_F}{\nu}\sum_{i=0}^{n-1}\tau_i \|\boldsymbol{f}^{i+1}\|_{L^2 (\Omega)}^2
+\end{align*}
+with the Friedrichs constant $C_F$ from $\|v\|_{L^2 (\Omega} \leq C_F \|\nabla \bv\|_{L^2 (\Omega)}$.\\
+Hint: Apply symmetric testing and realize that you end up with a telescoping series after summaztion with respect to the time steps.
+\item Derive an error equation of the fully discretized scheme for the time-dependent Stokes problem
+using the Stokes projection as defined in Section 7.1 of the script.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}{13}
+Let $\tau > 0$ be fixed and assume that the vector-valued function $\bu \colon (0, T ) \mapsto X = [W^{1,2}(\Omega)]^d$ is smooth enough in time. Prove the following consistency errors for the approximation of the time derivative:
+\begin{align*}
+\left\|\bu'(t + \tau) - \frac{\bu(t+\tau)-\bu(t)}{\tau}\right\|_{L^2 (\Omega)}^2
+&\leq \tau \|\bu^(2)\|_{L^2 (t,t+\tau ;L^2 (\Omega))}^2 \\
+\left\|\bu'(t + \frac{\tau}{2}) - \frac{\bu(t+\tau)-\bu(t)}{\tau}\right\|_{L^2 (\Omega)}^2
+&\leq \frac{\tau^3}{1280} \|\bu^(3)\|_{L^2 (t,t+\tau ;L^2 (\Omega))}^2.
+\end{align*}
+Hint: Apply Taylor expansion with integral remainder for $\bu(t)$ and $\bu(t + \tau)$ at $\bu(t + \frac{1}{2}\tau)$.
+\end{exercise}
+\end{document}
