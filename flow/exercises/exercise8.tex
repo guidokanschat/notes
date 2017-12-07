@@ -1,0 +1,96 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\bh}{\boldsymbol{h}}
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\bu}{\boldsymbol{u}}
+\newcommand{\bv}{\boldsymbol{v}}
+\newcommand{\bw}{\boldsymbol{w}}
+\newcommand{\bomega}{\boldsymbol{\omega}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\setlength\parindent{0pt}
+ 
+\begin{document}
+ 
+\title{Finite Element Methods for Flow Simulations\\ - Exercise Sheet 8 -}
+\author{Daniel Arndt}
+\date{}
+\maketitle
+
+\begin{exercise}{14}
+Let $p, q, r \in [1, \infty]$ with $\frac{1}{p}+\frac{1}{q}+\frac{1}{r}=1$ and $\Omega\subset\mathbb{R}^d$.
+\begin{enumerate}
+\item Show for $u,v,w\colon\Omega\to\mathbb{R}$
+\begin{align*}
+\left|\int_\Omega u v w \, dx\right|\leq \|u\|_{L^p(\Omega)}\|v\|_{L^q(\Omega)}\|w\|_{L^r(\Omega)}.
+\end{align*}
+
+\item Consider the convection term of the Navier-Stokes problem in the weak form
+\begin{align*}
+t(\bu, \bv, \bw) = \int_\Omega (\bu \cdot \nabla)\bv \cdot \bw \,dx.
+\end{align*}
+and show
+\begin{align*}
+|t(\bu, \bv, \bw)| \leq \|\bu\|_{L^p(\Omega)}\|\nabla \bv\|_{L^q(\Omega)} \|\bw\|_{L^r(\Omega)}.
+\end{align*}
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}{15}
+Exercise 30:
+Using the notation of the Sec. 7 of the lecture script, the projection step of pressure-correction methods
+for time-dependent incompressible flow problems reads:
+Given ũ +1 , find u n+1 \in H̃ := {v \in [L 2 (\Omega)] d : div v = 0, v \cdot n = 0 on ∂\Omega} and φ n+1 \in W 1,2 (\Omega) ∩ L 2 ∗ (\Omega)
+such that
+u n+1 + \nablaφ n+1 = ũ n+1 ;
+div u n+1 = 0.
+(i) Show that this projection step corresponds to a Poisson problem for φ n+1 with appropriate source
+term and boundary conditions.
+(ii) Why is this problem uniquely solvable ?
+\end{exercise}
+
+\begin{exercise}{16}
+Exercise 26:
+Consider the variational formulation of the Oseen problems: Find (u, p) \in X × Q := [H 0 1 (\Omega)] d × L 2 ∗ (\Omega)
+such that
+a Os (u, v) + b(p, v) = (f , v) ∀v \in X
+b(q, u) = 0
+∀q \in Q
+(1)
+(2)
+with
+1
+a Os (u, v) := ν(\nablau, \nablav) + ((b \cdot \nabla)u, v) + ( (div b)u, v),
+b(q, v) := −(q, div v).
+2
+Let P : X → X be the mapping which relates the vector field b to the solution u = P (b) of the Oseen
+problem. Show that this mapping P is uniformly bounded, i.e. for u = T (b) there holds independently
+of b resp. \nablab the estimate
+kuk X \leq C(ν, \Omega, kf k X ∗ ) < \infty.
+Argue why the fixed point u ∗ = P (u ∗ ) of the mapping P : X → X is the solution of the stationary
+incompressible Navier-Stokes problem, i.e. of (1)-(2) with b = u.
+\end{exercise}
+\end{document}
