@@ -1,0 +1,101 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\bh}{\boldsymbol{h}}
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\bu}{\boldsymbol{u}}
+\newcommand{\bv}{\boldsymbol{v}}
+\newcommand{\bw}{\boldsymbol{w}}
+\newcommand{\bomega}{\boldsymbol{\omega}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\setlength\parindent{0pt}
+ 
+\begin{document}
+ 
+\title{Finite Element Methods for Flow Simulations\\ - Exercise Sheet 9 -}
+\author{Daniel Arndt}
+\date{}
+\maketitle
+
+\begin{exercise}{17}
+Consider the method of simple iteration for the stationary, incompressible Navier-Stokes problem: 
+For a starting value $\bu^{(0)} \in X$ compute the sequence $(\bu^{(i)}, p^{(i)}) \in X \times Q, i \in \mathbb{N}$ satisfying
+\begin{align*}
+\nu (\nabla \bu^{(i)} , \nabla \bv) + ((\bu^{(i-1)} \cdot \nabla )\bu^{(i)} , \bv) - (p^{(i)} , \nabla  \cdot \bv) &= (\boldsymbol{f} , \bv) &&\forall \bv \in X\\
+(q, \nabla  \cdot \bu^{(i)}) &= 0
+&&\forall q \in Q.
+\end{align*}
+Prove the convergence of the method in the uniqueness case
+\begin{align*}
+ \sup_{\bu,\bv,\bw\in X}\frac{((\bu \cdot \nabla )\bv, \bw)_\Omega}{\|\bu\|_X \|\bv\|_X \|\bw\|_X}
+\nu^{-2} \|\boldsymbol{f}\|_{X^*} < 1
+\end{align*}
+Is it possible to extend the result to the Galerkin method with inf-sup stable pairs $X_h \times Q_h$?
+\end{exercise}
+
+\begin{exercise}{18}~
+\begin{enumerate}
+\item Prove for $a, b \in \mathbb{R}^+$ and $p, q \in [1, \infty)$ with $\frac{1}{p}+\frac{1}{q}=1$ and $\varepsilon>0$ Young's inequality
+\begin{align*}
+ab \leq \frac{\varepsilon}{p}a^p+\frac{\varepsilon^{-q/p}}{q}b^q
+\end{align*}
+\item For the uniqueness proof of the time-dependent incompressible Navier-Stokes problem
+\begin{align*}
+ (\partial_t \bu, \bv) + \nu (\nabla \bu, \nabla \bv) + ((\bu \cdot \nabla )\bu, \bv) - (p, \nabla  \cdot \bv) &= (\boldsymbol{f} , \bv) &&\forall v \in X := [H_0^1 (\Omega)]]^d \\
+(q, \nabla  \cdot \bu) &= 0 &&\forall q \in Q := L^2_* (\Omega).
+\end{align*}
+set $\bw = \bu_1 -\bu_2$ where $\bu_1 , \bu_2$ are solutions of the problem. Apply Young's inequality to derive from the estimate
+\begin{align*}
+\frac{1}{2}\frac{d}{dt}\|\bw\|_{[L^2(\Omega)]^d}^2 + \nu  \|\nabla \bw\|_{[L^2(\Omega)]^d}^2 \leq (-(\bw \cdot \nabla )\bu 2 , \bw)
+\end{align*}
+and the Gronwall Lemma that $\bw = 0$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}{19}
+Let $X := [W_0^{1,2}(\Omega)]^d , Q = L^2_* (\Omega)$ and $X_h \times Q_h \subset X \times Q$ appropriate finite element subspaces. 
+For the semidiscretization of the constrained time-dependent incompressible Navier-Stokes problem, consider the basis
+$\{\boldsymbol{\varphi}_1 , \dots, \boldsymbol{\varphi}_m \}$ with $m = m(h)$ of $X_h \cap V$ where $V := \{\bv \in X := [W_0^{1,2}(\Omega)]^d : b(q, \bv) = 0 ~ \forall q \in Q\}$
+and the ansatz 
+\begin{align*}
+  \bu_h (t) = \sum_{j=1}^{m(h)} u_j (t)\boldsymbol{\varphi}_j.
+\end{align*}
+This leads to the following system of ordinary differential equations
+\begin{align*}
+\boldsymbol{M}\frac{d\bu_h(t)}{dt}+ \nu \boldsymbol{A}\bu_h (t) + \boldsymbol{C}(\bu_h (t))\bu(t) = \boldsymbol{F}
+\end{align*}
+for all $t \in (0, T)$ where
+\begin{align*}
+(\boldsymbol{M})_{ij} &:= (\boldsymbol{\varphi}_i , \boldsymbol{\varphi}_j ),&
+(\boldsymbol{A})_{ij} &:= a(\boldsymbol{\varphi}_j , \boldsymbol{\varphi}_i ),&
+(\boldsymbol{C}(\bw))_{ij} &:= \sum_{k=1}^{m(h)} w_k c(\boldsymbol{\varphi}_k ; \boldsymbol{\varphi}_j , \boldsymbol{\varphi}_i ),\\
+\bw(t) &= \sum_{k=1}^{m(h)}w_k (t)\boldsymbol{\varphi}_k , & F_i (t) &:= (\boldsymbol{f} (t), \varphi_i)_H.
+\end{align*}
+Show that the theorem of Picard-Lindelöf is applicable to show the unique solvability of the semidiscrete
+system. \\
+\emph{Hint:} Show in particular Lipschitz-continuity for the convective term $\boldsymbol{C}(\bu_h (t))\bu(t)$.
+\end{exercise}
+\end{document}
