@@ -1,0 +1,79 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1.4in]{geometry}
+
+\setlength{\parindent}{0pt}
+\begin{document}
+
+\section*{\centering List of relevant topics for the oral examination on ``Finite Element Methods for Flow Simulations''}
+
+\textit{Part A} will be mandatory as starting point for the
+examination. For the main part, the candidate can select \textit{Part B} or \textit{Part C}. Here is an overview:
+\begin{itemize}
+\item The short \textit{Part A} of the examination will focus on the modeling of flows, covers Section 1-2, and serves
+as starting point.
+\item \textit{Part B} will be concerned with the analysis and numerics of linear flow problems. It covers
+Section 3-9 of the script.
+\item The remaining \textit{Part C} will be devoted to the analysis and numerics of nonlinear flow and covers
+Section 10-13 of the script.
+\end{itemize}
+
+\textbf{Part A:} \textit{Modeling of flows and basis equations of fluid dynamics}
+\begin{itemize}
+\item \textbf{Section 1:} \textit{Modeling of flows}\\
+Lagrangian and Eulerian representation. Velocity. Transport theorem (no proof). Conservation of
+mass and of momentum (no proofs). Role of constitutive laws.
+\item \textbf{Section 2:} \textit{Basic equations of fluid dynamics}\\
+Incompressible Navier-Stokes, Euler and Stokes models. Typical boundary conditions for Navier-Stokes model. 
+Role of non-dimensionalization.
+\end{itemize}
+
+\textbf{Part B:} Analysis and numerics of linear(ized) flow problems
+\begin{itemize}
+\item \textbf{Section 3:} \textit{Theory and FEM for scalar problems}\\
+Rotation-free incompressible flows. Pressure Poisson model. Well-posedness of diffusion model
+with Dirichlet resp. Neumann boundary conditions (result, sketch of proof). Well-posedness of
+Ritz-Galerkin approximation (result, sketch of proof). Error estimates for FEM (results).
+\item \textbf{Section 4:} \textit{Theory of stationary Stokes problem}\\
+Variational form of mixed and constrained problems. Well-posedness of Stokes problem (result
+and sketch of proof, but without derivation of inf-sup condition). Generalization to saddle point
+problems (result).
+\item \textbf{Section 5:} \textit{Conforming FEM for stationary Stokes problem}\\
+Galerkin problem. Necessary solvability condition. Well-posedness and error estimates (results,
+sketch of proof for velocity error). FE pairs with discrete inf-sup condition.
+\item \textbf{Section 6:} \textit{Time-dependent Stokes problem}\\
+Basics of vector-valued functions. Main theorem of linear evolution problems (a-priori estimates,
+well-posedness result, rough sketch of proof). Application to linear transient mixed problems, e.g.
+to Stokes problem.
+\item \textbf{Section 7:} \textit{Discretization of time-dependent Stokes problem}\\
+Spatial semidiscretization of linear transient mixed problems. (Generalized) Stokes projector. 
+Velocity error estimates (result, sketch of proof). Fully-coupled temporal discretization (backward
+Euler). Problem of Uzawa approach. Helmholtz decomposition. Idea of velocity-pressure splitting.
+\item \textbf{Section 8:} \textit{Generalized Oseen problem}\\
+Motivation of Oseen problem. Variational formulation and role of convective term. Well-posedness
+of constrained problem. FE-discretization with inf-sup stable FE-pairs. Velocity error estimates
+(sketch of proof). Div-div stabilization.
+\item \textbf{Section 9:} \textit{Time-dependent Oseen problem}\\
+Variational formulation of continuous problem as mixed and constrained problems. Well-posedness
+(result and sketch of proof). Semidiscretization in space. Error estimates for velocity (result, sketch
+of proof with modified Stokes projector).
+\end{itemize}
+
+\textbf{Part C:} Analysis and numerics of nonlinear flow problems
+\begin{itemize}
+\item \textbf{Section 10:} \textit{Stationary incompressible Navier-Stokes problem}\\
+Variational formulation of continuous problem as mixed and constrained nonlinear problems.
+Solvability of continuous problem (result and sketch of proof via sequence of Galerkin problems
+and Brouwer’s fixed point theorem). Uniqueness in small data case (result and sketch of proof).
+\item \textbf{Section 11:} \textit{Numerical solution of stationary incompressible Navier-Stokes problem}\\
+Galerkin approximation. A-priori estimate (result and proof). Idea of Petrov-Galerkin methods.
+Solution techniques for nonlinear algebraic problems.
+\item \textbf{Section 12:} \textit{Theory of time-dependent incompressible Navier-Stokes problem}\\
+Evolution formulation of continuous problem. Solvability of constraint evolution problem (result
+and sketch of proof via Galerkin approximation). Uniqueness (results and open problems).
+\item \textbf{Section 13:} \textit{Numerical solution of transient incompressible Navier-Stokes problem}\\
+Spatial semidiscretization. Existence and a-priori estimates of semidiscrete solutions (result and
+sketch of proof). Convergence of semidiscrete solutions: Stokes projection. Idea of estimate of
+discretization error. Temporal discretization with $\Theta$-scheme.
+\end{itemize}
+\end{document}
