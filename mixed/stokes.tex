@@ -8,13 +8,13 @@
   \begin{gather*}
     a(u,v) = \form(\strain u,\strain v)
   \end{gather*}
-  for the original Stokes problem in \blockref{Definition}{stokes-eq1}
+  for the original Stokes problem in \slideref{Definition}{stokes-eq1}
   and
   \begin{gather*}
     a(u,v) = \form(\nabla u,\nabla v)
   \end{gather*}
   for the simplified \putindex{Stokes equations} in
-  \blockref{Definition}{stokes-eq2}. From the standard theory for the
+  \slideref{Definition}{stokes-eq2}. From the standard theory for the
   Laplacian, we know that the second one is $V$-elliptic on
   $V=H^1_0(\domain;\R^d)$. For the first one, we conclude this by using a
   \putindex{Korn inequality}. Therefore, we can already conclude a
@@ -39,10 +39,10 @@
   of all rigid body movements.
 
   Note that we have established already in
-  \blockref{Lemma}{divergence-compatibility} that the condition
+  \slideref{Lemma}{divergence-compatibility} that the condition
   $V=H^1_0(\domain, \R^d)$ implies the reduction of the pressure to
   the space $Q = L^2_0(\domain)$ from
-  \blockref{Notation}{pressure-constant}.
+  \slideref{Notation}{pressure-constant}.
 \end{remark}
 
 \begin{intro}
@@ -80,7 +80,7 @@
   definition of zero in $L^2(\domain)$. Finally, since the kernel is
   the pre-image of a closed set under a continuous map, it is
   closed. The existence of the decomposition follows from
-  \blockref{Theorem}{orthogonal-complement}.
+  \slideref{Theorem}{orthogonal-complement}.
 \end{proof}
 
 \begin{Lemma}{stokes-grad}
@@ -186,7 +186,7 @@
 \end{Theorem}
 
 \begin{Corollary}{stokes-convergence2}
-  Under the assumptions of \blockref{Theorem}{stokes-convergence},
+  Under the assumptions of \slideref{Theorem}{stokes-convergence},
   let there be in addition interpolation operators $I_{V_h}$ and
   $I_{Q_h}$ such that
   \begin{gather}
@@ -484,7 +484,7 @@ where $c\not=0$.
 \begin{intro}
   We will show now that the MINI element is indeed inf-sup stable. To
   this end, we construct the \putindex{Fortin projection} according to
-  \blockref{Lemma}{fortin}. Since the construction of such a
+  \slideref{Lemma}{fortin}. Since the construction of such a
   projection operator turns out a bit complicated, we first introduce
   a construction principle, which will help us in our further
   analysis. The idea of this principle is separating the interpolation
@@ -560,7 +560,7 @@ where $c\not=0$.
 \begin{Assumption}{locally-quasi-uniform}
   We assume of all families of meshes that they are shape regular and
   locally quasi-uniform, such that with
-  \blockref{Assumption}{h1-stable-interpolation} there holds
+  \slideref{Assumption}{h1-stable-interpolation} there holds
   for $m=0,1$
   \begin{gather}
     \label{eq:stokes:15}
@@ -571,7 +571,7 @@ where $c\not=0$.
 \end{Assumption}
 
 \begin{Theorem}{mini-stability}
-  Under \blockref{Assumption}{locally-quasi-uniform},
+  Under \slideref{Assumption}{locally-quasi-uniform},
   the MINI element is inf-sup stable.
 \end{Theorem}
 
@@ -735,7 +735,7 @@ where $c\not=0$.
 \end{remark}
 
 \begin{remark}
-  The method introduced in \blockref{Lemma}{mini-stabilized} is an
+  The method introduced in \slideref{Lemma}{mini-stabilized} is an
   example for a \define{stabilized method}, here in particular
   \define{pressure stabilization}. Such methods were particularly
   popular in the early decades of finite element computation, since
@@ -885,7 +885,7 @@ where $c\not=0$.
 \begin{Theorem}{higher-order-bubble}
   Assume that the pair $V_h\times Q_h$ is chosen such that there is
   an $H^1$-stable interpolation operator according to
-  \blockref{Assumption}{h1-stable-interpolation}, such that $Q_h\subset
+  \slideref{Assumption}{h1-stable-interpolation}, such that $Q_h\subset
   C^0(\domain)$, piecewise differentiable, and such that
   \begin{gather}
     B_h(b_\cell \nabla Q_h) \subset V_h.
@@ -895,7 +895,7 @@ where $c\not=0$.
 
 \begin{proof}
   We construct the \putindex{Fortin projection} by
-  \blockref{Lemma}{fortin-construction-1} choosing $\Pi_1$ as the
+  \slideref{Lemma}{fortin-construction-1} choosing $\Pi_1$ as the
   $H^1$-stable interpolation operator. The operator $\Pi_2$ is
   constructed cell-wise such that $\Pi_2\colon H^1(\cell) \to
   B_\cell(\nabla Q_h)$ fulfills
@@ -964,9 +964,9 @@ where $c\not=0$.
 \begin{proof}
   We again prove stability by constructing a \putindex{Fortin
     projection} using the two step algorithm of
-  \blockref{Lemma}{fortin-construction-1}. Again, we choose for
+  \slideref{Lemma}{fortin-construction-1}. Again, we choose for
   $\Pi_1$ an $H^1$-stable interpolation according to
-  \blockref{Assumption}{h1-stable-interpolation}. It remains therefore
+  \slideref{Assumption}{h1-stable-interpolation}. It remains therefore
   to construct $\Pi_2$. First, since $q_{h|\cell}$ is constant on
   each cell $\cell\in\mesh_h$, we can apply the Gauss theorem to the
   divergence condition to obtain
@@ -997,7 +997,7 @@ where $c\not=0$.
     \le c \bigl(h_\cell^{-1} \norm{v}_{0,\cell} + \snorm{v}_{1,\cell}\bigr).
   \end{gather*}
   Entering $v=u-\Pi_1 u$ and the estimates~\eqref{eq:stokes:15} of
-  \blockref{Assumption}{locally-quasi-uniform}, we obtain
+  \slideref{Assumption}{locally-quasi-uniform}, we obtain
   \begin{gather*}
     \norm{\Pi_2 (\identity-\Pi_1)u}_1^2
     = \sum_{\cell\in\mesh_h}\norm{\Pi_2
@@ -1019,7 +1019,7 @@ where $c\not=0$.
   Let $(u,p)\in V\times Q$ be a solution to the Stokes problem and let
   the pair $(u_h,p_h) \in V_h\times Q_h$ be the approximation on a
   mesh $\mesh_h$ of mesh size $h$ with the $P_2-P_0$ element of
-  \blockref{Definition}{p2-p0-element}. Then, we have the error
+  \slideref{Definition}{p2-p0-element}. Then, we have the error
   estimate
   \begin{gather*}
     \norm{u-u_h}_1 + \norm{p-p_h}_0
@@ -1118,7 +1118,7 @@ where $c\not=0$.
     \le c \bigl(h_\cell^{-1} \norm{v}_{0,\cell} + \snorm{v}_{1,\cell}\bigr).
   \end{align*}
   Entering $v=u-\Pi_1 u$ and the estimates~\eqref{eq:stokes:15} of
-  \blockref{Assumption}{locally-quasi-uniform}, we obtain
+  \slideref{Assumption}{locally-quasi-uniform}, we obtain
   \begin{align*}
     \norm{\Pi_2 (\identity-\Pi_1)u}_1^2
     = \sum_{\cell\in\mesh_h}\norm{\Pi_2
@@ -1244,7 +1244,7 @@ where $c\not=0$.
 \end{proof}
 
 \begin{intro}
-  Studying the proof of \blockref{Lemma}{p2-p0-stability} in more
+  Studying the proof of \slideref{Lemma}{p2-p0-stability} in more
   detail, we can find a much more general result with much weaker
   assumptions. Indeed, we only need to be able to have a single degree
   of freedom on each edge or face which allows to adjust the average
@@ -1254,7 +1254,7 @@ where $c\not=0$.
 \begin{Theorem}{discontinuous-pressure-normal-velocity}
   Let $Q_h\subset Q$ and let $V_h \subset V$ be such that there is an
   $H^1$-stable interpolation according to
-  \blockref{Assumption}{h1-stable-interpolation}. Furthermore, let
+  \slideref{Assumption}{h1-stable-interpolation}. Furthermore, let
   there be a degree of freedom on each edge (face in 3D) controlling
   the average normal derivative of $u\in V_h$ on this face. Finally,
   let $V_h$ contain the bubble space for $\nabla Q_h$,
@@ -1266,7 +1266,7 @@ where $c\not=0$.
 
 \begin{proof}
   With the assumptions made, it is sufficient to construct the
-  operator $\Pi_1$ in \blockref{Lemma}{bubble-discontinuous}. Then, we
+  operator $\Pi_1$ in \slideref{Lemma}{bubble-discontinuous}. Then, we
   can apply this lemma and the result is proven. Going back
   to~\eqref{eq:stokes:23}, we see that the interpolation condition
   ~\eqref{eq:stokes:22} is more than needed.
@@ -1359,7 +1359,7 @@ where $c\not=0$.
     \end{aligned}
   \end{gather}
   are the dual basis for the basis described in
-  \blockref{Definition}{moment-basis-1d}.
+  \slideref{Definition}{moment-basis-1d}.
 \end{Lemma}
 
 \begin{proof}
@@ -1497,8 +1497,8 @@ where $c\not=0$.
   The stable elements of the previous section featured discontinuous
   pressure spaces. Therefore, it was natural to split the analysis
   into cell-wise constant pressure and higher order. This is the basic
-  technique behind \blockref{Lemma}{bubble-discontinuous} and
-  \blockref{Theorem}{discontinuous-pressure-normal-velocity}. Here,
+  technique behind \slideref{Lemma}{bubble-discontinuous} and
+  \slideref{Theorem}{discontinuous-pressure-normal-velocity}. Here,
   the pressure is continuous, such that a cell-wise analysis is not
   feasible anymore. The solution is looking at patches, so called
   macro elements. The analysis is due to~\cite{Stenberg90} and
@@ -1662,7 +1662,7 @@ where $c\not=0$.
 \end{Lemma}
 
 \begin{Problem}{macro-local}
-  Prove \blockref{Lemma}{macro-local}. Furthermore, prove that under
+  Prove \slideref{Lemma}{macro-local}. Furthermore, prove that under
   the assumption that there is a finite set of reference macro
   elements $\widehat M_i$, such that all macro elements in a family
   are equivalent to one of them, the estimate holds with a uniform
@@ -1699,7 +1699,7 @@ where $c\not=0$.
 \begin{Lemma}{verfuerth1}
   Assume that there is an $H^1$-stable interpolation operator $I_h :
   V\to V_h$
-  according to \blockref{Assumption}{locally-quasi-uniform}. Then,
+  according to \slideref{Assumption}{locally-quasi-uniform}. Then,
   there are positive constants $c_1$ and $c_2$ independent of $h$ such
   that for any $q_h\in Q_h$ there holds
   \begin{gather}
@@ -1741,7 +1741,7 @@ where $c\not=0$.
 \end{proof}
 
 \begin{Lemma}{verfuerth2}
-  Let the assumptions of \blockref{Lemma}{verfuerth1} hold, and assume
+  Let the assumptions of \slideref{Lemma}{verfuerth1} hold, and assume
   that there is a constant $\tilde \beta$ such that
   \begin{gather*}
     \sup_{v\in V_h} \frac{\form(\div v,q)}{\norm{v}_{1}}
@@ -1790,8 +1790,8 @@ where $c\not=0$.
   $\ker{B_M^T}$ contains only the constant functions. We do this
   at the example of the lowest order elements on quadrilaterals and
   triangles in the lemmas below. Both kinds of patches can be used to
-  cover the whole mesh, such that we can use \blockref{Lemma}{macro1}
-  and \blockref{Lemma}{verfuerth2} to prove the inf-sup condition.
+  cover the whole mesh, such that we can use \slideref{Lemma}{macro1}
+  and \slideref{Lemma}{verfuerth2} to prove the inf-sup condition.
 
   A general proof for higher order elements can be found
   in~\cite{StenbergSuri96}.
@@ -1961,7 +1961,7 @@ where $c\not=0$.
   If we discretize the mixed formulation of almost incompressible
   elasticity with any of the stable Stokes pairs of the preceding
   sections, we can apply
-  \blockref{Corollary}{stabilized-mixed-convergence} to obtain optimal
+  \slideref{Corollary}{stabilized-mixed-convergence} to obtain optimal
   error estimates. Nevertheless, our problem with almost
   incompressible elasticity was not the approximation of the pressure
   (which was introduced artificially anyway), but locking. So, how
@@ -1976,7 +1976,7 @@ where $c\not=0$.
   Note though, that there might be more subtle locking effects, where
   the approximation is reduced but not destroyed.
 
-  In view of \blockref{Theorem}{galerkin-mixed-u-kerbh}, locking means
+  In view of \slideref{Theorem}{galerkin-mixed-u-kerbh}, locking means
   that $V_h^g$ is too small or even the zero space, and therefore the
   quasi best-approximation result of this theorem is useless, since
   \begin{gather*}
@@ -1985,7 +1985,7 @@ where $c\not=0$.
   \end{gather*}
   
   The additional assumption of the inf-sup condition
-  in\blockref{Theorem}{galerkin-mixed-p} on the other hand guarantees
+  in\slideref{Theorem}{galerkin-mixed-p} on the other hand guarantees
   that an approximation of the kernel is possible, and thus, locking
   becomes impossible.
 \end{intro}
@@ -2034,8 +2034,8 @@ where $c\not=0$.
   \end{gather*}
   This is the Stokes problem augmented by a positive definite bilinear
   form $c(.,.)$, such that
-  \blockref{Theorem}{mixed-stabilized-well-posed} and
-  \blockref{Corollary}{stabilized-mixed-convergence} apply.
+  \slideref{Theorem}{mixed-stabilized-well-posed} and
+  \slideref{Corollary}{stabilized-mixed-convergence} apply.
 \end{proof}
 
 \begin{remark}

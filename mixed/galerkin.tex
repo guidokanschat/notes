@@ -117,7 +117,7 @@
 
 \begin{Corollary}{galerkin-mixed-u-kerb}
   If in addition to the assumptions of
-  \blockref{Theorem}{galerkin-mixed-u-kerbh} there holds
+  \slideref{Theorem}{galerkin-mixed-u-kerbh} there holds
   \begin{gather}
     \label{eq:galerkin:6}
     \ker{B_h}\subset \ker B,
@@ -137,7 +137,7 @@
 
 \begin{Theorem}{galerkin-mixed-p}
   Assume in addition the assumptions of
-  \blockref{Theorem}{galerkin-mixed-u-kerbh} that there are constants
+  \slideref{Theorem}{galerkin-mixed-u-kerbh} that there are constants
   $\beta_h$, possibly depending on the parameter $h$, such that
   \begin{gather}
     \label{eq:galerkin:10}
@@ -162,7 +162,7 @@
 \end{Theorem}
 
 \begin{proof}
-  Applying \blockref{Theorem}{infsup-mixed2} to the discrete
+  Applying \slideref{Theorem}{infsup-mixed2} to the discrete
   problem~\eqref{eq:galerkin:3}, we conclude that there is a unique
   solution $(u_h,p_h)\in V_h\times Q_h$. Let us begin estimating the
   error by establishing the bound
@@ -173,7 +173,7 @@
     \inf_{v_h\in V_h} \norm{u-v_h}_V.
   \end{gather}
   By the third condition in
-  \blockref{Theorem}{infsup-well-equivalence}, there is a unique
+  \slideref{Theorem}{infsup-well-equivalence}, there is a unique
   $z_h\in \ortho{\ker{B_h}}$ such that
   \begin{gather*}
     B_h z_h = B_h(u-v_h),\qquad \forall v_h\in V_h,
@@ -196,7 +196,7 @@
   \end{gather*}
   Since $v_h \in V_h$ was chosen arbitrarily, we have
   proven~\eqref{eq:galerkin:12} and thus by
-  \blockref{Theorem}{galerkin-mixed-u-kerbh} the estimate for
+  \slideref{Theorem}{galerkin-mixed-u-kerbh} the estimate for
   $\norm{u-u_h}_V$ with
   \begin{gather}
     c_h^{(1)} = \left(1+\frac{\norm b}{\beta_h}\right)
@@ -246,7 +246,7 @@
     \qquad
     \inf_{q_h\in Q_h}\norm{p-q_h}_V = \mathcal O(h^k).
   \end{gather*}
-  Then, the estimates in \blockref{Theorem}{galerkin-mixed-p}
+  Then, the estimates in \slideref{Theorem}{galerkin-mixed-p}
   are asymptotically optimal if and only if there are
   constants $\tilde \gamma>0$ and $\tilde \beta>0$ independent of
   $h$ such that
@@ -256,7 +256,7 @@
   \end{gather}
   independent of $h$.
 \begin{solution}
-  The estimates in \blockref{Theorem}{galerkin-mixed-p} state
+  The estimates in \slideref{Theorem}{galerkin-mixed-p} state
   \begin{align*}
     \norm{u-u_h}_V &\le c_h^{(1)} \inf_{v_h\in V_h^g}\norm{u-v_h}_V
 	      + c_h^{(2)} \inf_{q_h\in Q_h}\norm{p-q_h}_Q \\
@@ -354,7 +354,7 @@
   Conversely, we assume the existence of a uniform, discrete inf-sup
   constant $\tilde\beta>0$. Then, for any $v\in V$ let
   $g(.) = b(v,.) \in Q_h^*$. By
-  \blockref{Theorem}{infsup-well-equivalence}, there is a unique
+  \slideref{Theorem}{infsup-well-equivalence}, there is a unique
   element $\Pi_{V_h} v \in \ortho{\ker{B_h}}$ such that
   \begin{gather*}
     b(\Pi_{V_h}v,q_h) = b(v, q_h),\qquad\forall q_h\in Q_h

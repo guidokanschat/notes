@@ -684,17 +684,17 @@ F(\{{\mathbf v},q\})
 
 \begin{proof}
   We can use the construction leading to
-  \blockref{Corollary}{stokes-iso}. In fact, since the norm of $\Hdiv$
+  \slideref{Corollary}{stokes-iso}. In fact, since the norm of $\Hdiv$
   is weaker than the one of $H^1$, the same function $v$ can be chosen
   in the Stokes inf-sup condition~\eqref{eq:stokes:1}, yielding a
   constant $\beta$ not worse than for Stokes.
 \end{proof}
 
 Combining these lemmas yields the assumptions of
-\blockref{Theorem}{infsup-mixed2}. Thus, we have proven:
+\slideref{Theorem}{infsup-mixed2}. Thus, we have proven:
 
 \begin{Theorem}{darcy-well-posed}
-  Under the assumptions on \blockref{Lemma}{darcy-reduced-wellposed},
+  Under the assumptions on \slideref{Lemma}{darcy-reduced-wellposed},
   the \putindex{dual mixed formulation} is well-posed.
 \end{Theorem}
 
@@ -770,7 +770,7 @@ Combining these lemmas yields the assumptions of
 \end{remark}
 
 \begin{intro}
-  In \blockref{Lemma}{darcy-reduced-wellposed}, we saw that the
+  In \slideref{Lemma}{darcy-reduced-wellposed}, we saw that the
   bilinear form $a(.,.)$ is elliptic only on the kernel of
   $B$. Indeed, for the simplest case with $K\equiv 1$, we conclude
   that the uniform estimate for $v_h\in \ker{B_h}$
@@ -852,7 +852,7 @@ Combining these lemmas yields the assumptions of
   gradients of functions in $\P_0$ are zero.
 
   The unisolvence will be shown in
-  \blockref{Lemma}{rt-simplex-unisolvence}. But first, we have to look
+  \slideref{Lemma}{rt-simplex-unisolvence}. But first, we have to look
   at some important properties.
 \end{remark}
 
@@ -994,7 +994,7 @@ Combining these lemmas yields the assumptions of
 
 \begin{Lemma}{rt-simplex-unisolvence}
   The Raviart-Thomas element with the nodal values in
-  \blockref{Definition}{rt-simplex} is unisolvent.
+  \slideref{Definition}{rt-simplex} is unisolvent.
 \end{Lemma}
 
 \begin{proof}
@@ -1122,7 +1122,7 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
 
 \begin{Lemma}{bdm-simplex-unisolvence}
   The BDM element with the nodal values in
-  \blockref{Definition}{bdm-simplex} is unisolvent.
+  \slideref{Definition}{bdm-simplex} is unisolvent.
 \end{Lemma}
 
 \begin{proof}
@@ -1189,7 +1189,7 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   \begin{gather*}
     \mathcal P_\cell = \div \mathcal V_\cell.
   \end{gather*}
-  From \blockref{Lemma}{rt-simplex-1}, we obtain
+  From \slideref{Lemma}{rt-simplex-1}, we obtain
   \begin{gather}
     \label{eq:darcy:37}
     \div RT_k = \P_k.
@@ -1353,7 +1353,7 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
 
 \begin{Definition}{hdiv-clement}
   An $\Hdiv$-stable interpolation operator is obtained from
-  \blockref{Definition}{canonical-interpolation} of the
+  \slideref{Definition}{canonical-interpolation} of the
   \putindex{canonical interpolation}
   \begin{enumerate}
   \item by choosing the standard degrees of freedom for every cell
@@ -1372,8 +1372,8 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
 \end{Definition}
 
 Summarizing the results from this section and applying the general
-theory, in particular \blockref{Corollary}{galerkin-mixed-u-kerb} and
-\blockref{Theorem}{galerkin-mixed-p}, we obtain
+theory, in particular \slideref{Corollary}{galerkin-mixed-u-kerb} and
+\slideref{Theorem}{galerkin-mixed-p}, we obtain
 
 \begin{Theorem}{darcy-quasi-best}
   Let $V_h\subset V\subset \Hdiv(\domain)$ and $Q_h\subset Q$ be
@@ -1490,7 +1490,7 @@ theory, in particular \blockref{Corollary}{galerkin-mixed-u-kerb} and
 \end{Lemma}
 
 \begin{Problem}{Piola-transform-integrals}
-  Verify \blockref{Lemma}{Piola-transform-integrals}.
+  Verify \slideref{Lemma}{Piola-transform-integrals}.
 \begin{solution}
   We use the definitions
   \begin{align*}
@@ -1608,7 +1608,7 @@ For the first claim we compute
 \end{Lemma}
 
 \begin{proof}
-  The proof of this lemma is exactly the same as the one of \blockref{Lemma}{rt-simplex-1}.
+  The proof of this lemma is exactly the same as the one of \slideref{Lemma}{rt-simplex-1}.
 \end{proof}
 
 \begin{Example}{rt-quad}
@@ -1683,11 +1683,11 @@ cubes.
   \begin{gather}
     \dim BDM_{[k]} = (k+1)(k+2)+2.
   \end{gather}
-  The element in \blockref{Definition}{bdm-quad} is unisolvent.  
+  The element in \slideref{Definition}{bdm-quad} is unisolvent.  
 \end{Lemma}
 
 \begin{Problem}{bdm-quad}
-  Prove \blockref{Lemma}{bdm-quad}.
+  Prove \slideref{Lemma}{bdm-quad}.
 \begin{solution}
  The dimension of the space is by definition
  \begin{align*}
@@ -1728,7 +1728,7 @@ p\in BDM_{[k]}, \nodal_* (p) = 0 \Rightarrow p \equiv 0.
 \begin{Corollary}{darcy-convergence-affine}
   Let the mesh be such that each cell is obtained by affine
   transformation from the reference cell $\refcell$. Then,
-  \blockref{Theorem}{darcy-quasi-best} applies and we obtain
+  \slideref{Theorem}{darcy-quasi-best} applies and we obtain
   quasi-bestapproximation.
 \end{Corollary}
 
@@ -1742,7 +1742,7 @@ p\in BDM_{[k]}, \nodal_* (p) = 0 \Rightarrow p \equiv 0.
     \div V_h = \tfrac1{J} Q_h,
   \end{gather}
   where the \putindex{Jacobi determinant} $J$ is not constant. As a
-  consequence, \blockref{Lemma}{commuting-diagram-hdiv} about the
+  consequence, \slideref{Lemma}{commuting-diagram-hdiv} about the
   commuting diagram property does not apply directly anymore and
   indeed, approximation may
   suffer~\cite{ArnoldBoffiFalk05}. In particular, it

@@ -1,7 +1,7 @@
 \begin{intro}
   In the previous chapter, we studied discretizations with
   $\div V_h = Q_h$ with two advantages. First, due to
-  \blockref{Corollary}{galerkin-mixed-u-kerb} the velocity error is
+  \slideref{Corollary}{galerkin-mixed-u-kerb} the velocity error is
   independent of the pressure. Second, the divergence converges faster
   than the gradient. A natural question arising is whether we can do
   something similar for the Stokes problem. There, the equation
@@ -68,7 +68,7 @@
   Due to the fact that $V_h\not\subset V$, we have introduced the  norm
   $\norm{.}_{1,h}$ on $V_h$. In particular, the norm $\norm{.}_1$ is
   not defined for all elements of $V_h$. Therefore, we need a
-  modification of Fortin's lemma (\blockref{Lemma}{fortin}), where the
+  modification of Fortin's lemma (\slideref{Lemma}{fortin}), where the
   norm on the left hand side of the stability
   estimate~\eqref{eq:galerkin:16} uses the discrete norm, namely,
   \begin{gather*}
@@ -121,8 +121,8 @@
 
 \begin{Corollary}{hdivdg-infsup}
   Assume that the inf-sup condition~\eqref{eq:stokes:1} in
-  \blockref{Theorem}{stokes-infsup} holds.
-  Then, the method in \blockref{Definition}{hdiv-ip}
+  \slideref{Theorem}{stokes-infsup} holds.
+  Then, the method in \slideref{Definition}{hdiv-ip}
   admits the inf-sup condition
   \begin{gather}
     \label{eq:hdivdg:3}
@@ -134,7 +134,7 @@
 
 \begin{proof}
   First, we make use of the fact that $q_h\in Q_h \subset Q$ to deduce
-  from \blockref{Theorem}{stokes-infsup} the there is a function $w\in
+  from \slideref{Theorem}{stokes-infsup} the there is a function $w\in
   V$ with $\div v=q_h$ and $\norm{v}_1 \le \norm{q_h}_0$. To this
   function, we apply the \putindex{Fortin operator} to define $v_h =
   I_h v$. By the preceding lemma, we have
@@ -146,9 +146,9 @@
 
 \begin{Theorem}{hdivdg-convergence}
   Assume that $(u_h,p_h)\in V_h\times Q_h$ is the solution to the
-  divergence conforming DG method in \blockref{Definition}{hdiv-ip} and
+  divergence conforming DG method in \slideref{Definition}{hdiv-ip} and
   that the continuous Stokes problem is well-posed as in
-  \blockref{Theorem}{stokes-infsup}. Then, for the Raviart-Thomas
+  \slideref{Theorem}{stokes-infsup}. Then, for the Raviart-Thomas
   pairs $RT_k/\P_k$ and $RT_{[k]}/\Q_k$ with $k\ge 1$ and
   $u$ sufficiently smooth there holds
   \begin{align}
@@ -166,8 +166,8 @@
 
 \begin{proof}
   The proof follows the lines of the abstract theory of
-  \blockref{Theorem}{galerkin-mixed-u-kerbh} and
-  \blockref{Theorem}{galerkin-mixed-p}. But since the setting with
+  \slideref{Theorem}{galerkin-mixed-u-kerbh} and
+  \slideref{Theorem}{galerkin-mixed-p}. But since the setting with
   $V_h\not\subset V$ exceeds the assumptions of the abstract theory,
   we adapt the proofs instead of using the results.
 
@@ -346,16 +346,16 @@
 \end{Corollary}
 
 \begin{Theorem}{hdivdg-l2}
-  Let the assumptions of \blockref{Theorem}{hdivdg-convergence}
-  and \blockref{Assumption}{stokes-regularity} hold. Then,
+  Let the assumptions of \slideref{Theorem}{hdivdg-convergence}
+  and \slideref{Assumption}{stokes-regularity} hold. Then,
   \begin{gather}
     \norm{u-u_h}_0 \le c h^{k+1} \snorm{u}_{k+1}.
   \end{gather}
 \end{Theorem}
 
 \begin{Problem}{hdivdg-l2}
-  Adapt the proof of \blockref{Theorem}{ip-lifting-l2} to prove
-  \blockref{Theorem}{hdivdg-l2}.
+  Adapt the proof of \slideref{Theorem}{ip-lifting-l2} to prove
+  \slideref{Theorem}{hdivdg-l2}.
 \begin{solution}
    We again consider the auxiliary problem
   \begin{gather*}
@@ -393,7 +393,7 @@
    (\nabla\cdot (u-u_h), p^*-\Pi_{Q_h} p^*)\leq \norm{\nabla \cdot  (u-u_h)} \norm{p^*-\Pi_{Q_h} p^*}=0
   \end{align*}
   
-  For the third term we use \blockref{Lemma}{ip-lifting-residual-2}
+  For the third term we use \slideref{Lemma}{ip-lifting-residual-2}
   to obtain
   \begin{gather*}
     \abs{\Res^*(u^*,u-u_h)} \le c h \snorm{u^*}_2 \norm{u-u_h}_{1,h}.
@@ -412,7 +412,7 @@
     & \le c h \snorm{u}_2 h^k \snorm{u^*}_{k+1}
   \end{align*}
   This is exactly the same proof we used before.
-  Using the energy estimate in \blockref{Theorem}{ip-lifting-h1} we
+  Using the energy estimate in \slideref{Theorem}{ip-lifting-h1} we
   can conclude the prove.
 \end{solution}
 

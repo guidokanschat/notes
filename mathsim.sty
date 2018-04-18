@@ -3,6 +3,7 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
 \ProvidesPackage{mathsim}[2013/08/01 Mathematical Methods of Simulation]
 
+\RequirePackage[fileprefix=blocks/]{slidetheorem}
 \RequirePackage{amsthm,amsfonts,amssymb,mathrsfs,stmaryrd}
 \RequirePackage{amsmath,amstext,amscd,mathtools}
 \RequirePackage[utf8]{inputenc}
@@ -44,85 +45,28 @@
 % Counters and their representation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ifdefined\thechapter\renewcommand{\thesection}{\thechapter.\arabic{section}}\fi
-\newcounter{blockcount}
-\setcounter{blockcount}{100}
-\newcounter{theorem}
-\numberwithin{theorem}{section}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Outputting blocks for beamer file
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newwrite\block@list
-\immediate\openout\block@list=\jobname.frm
-
-\renewcommand\ThisComment[1]{%
-  \immediate\write\CommentStream{\unexpanded{#1}}%
-}
-
-\long\def\commenttheorem#1{%
-  \csarg\def{After#1Comment}{%
-    \immediate\write\CommentStream{\unexpanded{\end{blocktheorem}}}%
-  \CloseAndInputCutFile}%
-  \csarg\def{After#1*Comment}{%
-    \immediate\write\CommentStream{\unexpanded{\end{blocktheorem}}}%
-  \CloseAndInputCutFile}%
-  \expandafter\def\csname#1\endcsname##1{\endgroup%  \message{Processing '#1 ##1'.}%
-    \stepcounter{blockcount}%
-    \refstepcounter{theorem}%
-    \label{#1:##1}
-    \immediate\write\block@list{\unexpanded{\frame{\input{blocks/#1-##1.tex}}}}
-    \def\CommentCutFile{blocks/#1-##1.tex}
-    \SetUpCutFile
-    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}{}}(\thetheorem)
-      }
-      \ProcessComment{#1}}
-  \expandafter\def\csname#1*\endcsname##1##2{\endgroup%  \message{Processing '#1 ##1'.}%
-    \stepcounter{blockcount}%
-    \refstepcounter{theorem}%
-    \label{#1:##1}%
-    \index{##2}
-    \immediate\write\block@list{\unexpanded{\frame{\input{blocks/#1-##1.tex}}}}
-    \def\CommentCutFile{blocks/#1-##1.tex}
-    \SetUpCutFile
-    \immediate\write\CommentStream{\unexpanded{\begin{blocktheorem}{#1}{##2}}(\thetheorem)
-      }
-     \ProcessComment{#1*}}
-    \CommentEndDef{#1}
-    \CommentEndDef{#1*}}
-
+\numberwithin{slidetheorem}{section}
 \parindent0pt
 \parskip2ex plus 1ex minus 1ex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Theorem and related environments
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\blockref}[2]{#1~\ref{#1:#2}}
-\def\blocktheorem#1#2(#3){\begin{tcolorbox}
-    \textbf{#3 \capitalizewords{#1}%
-      \def\tmp{#2}\ifx\tmp\empty{}\else (#2)\fi:}}
-\def\endblocktheorem{\end{tcolorbox}}
-\commenttheorem{Definition}
-\commenttheorem{Theorem}
-\commenttheorem{Lemma}
-\commenttheorem{Corollary}
-\commenttheorem{Assumption}
-\commenttheorem{Example}
-\commenttheorem{Notation}
-\commenttheorem{Problem}
 %\newtheorem{theorem}{\iflanguage{german}{Satz}{}\iflanguage{english}{Theorem}{}}[chapter]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[slidetheorem]{Lemma}
+\newtheorem{corollary}[slidetheorem]{Corollary}
 \theoremstyle{definition}
-\newtheorem{assumption}[theorem]{Assumption}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{algorithm}[theorem]{\iflanguage{german}{Algorithmus}{}\iflanguage{english}{Algorithm}{}}
-\newtheorem{example}[theorem]{\iflanguage{german}{Beispiel}{}\iflanguage{english}{Example}{}}
+\newtheorem{assumption}[slidetheorem]{Assumption}
+\newtheorem{definition}[slidetheorem]{Definition}
+\newtheorem{algorithm}[slidetheorem]{\iflanguage{german}{Algorithmus}{}\iflanguage{english}{Algorithm}{}}
+\newtheorem{example}[slidetheorem]{\iflanguage{german}{Beispiel}{}\iflanguage{english}{Example}{}}
 %\theoremstyle{remark}
-\newtheorem{intro}[theorem]{%\iflanguage{german}{Einleitung}{}\iflanguage{english}{Introduction}
+\newtheorem{intro}[slidetheorem]{%\iflanguage{german}{Einleitung}{}\iflanguage{english}{Introduction}
 }{}
-\newtheorem{notation}[theorem]{Notation}
-\newtheorem{remark}[theorem]{\iflanguage{german}{Bemerkung}{}\iflanguage{english}{Remark}{}}
-\newtheorem{notes}[theorem]{\iflanguage{german}{Anmerkung}{}\iflanguage{english}{Note}{}}
-\newtheorem{review}[theorem]{\iflanguage{german}{Zusammenfassung}{}\iflanguage{english}{Review}{}}
-\newtheorem{problem}[theorem]{\iflanguage{german}{Aufgabe}{}\iflanguage{english}{Problem}{}}
+\newtheorem{notation}[slidetheorem]{Notation}
+\newtheorem{remark}[slidetheorem]{\iflanguage{german}{Bemerkung}{}\iflanguage{english}{Remark}{}}
+\newtheorem{notes}[slidetheorem]{\iflanguage{german}{Anmerkung}{}\iflanguage{english}{Note}{}}
+\newtheorem{review}[slidetheorem]{\iflanguage{german}{Zusammenfassung}{}\iflanguage{english}{Review}{}}
+\newtheorem{problem}[slidetheorem]{\iflanguage{german}{Aufgabe}{}\iflanguage{english}{Problem}{}}
 
 % Definitions for index
 \def\defindex#1{\index{#1|textbf}}

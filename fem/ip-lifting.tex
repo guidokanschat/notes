@@ -82,8 +82,8 @@
 \end{Definition}
 
 \begin{Lemma}{ip-equivalence}
-  The interior penalty method in flux form (\blockref{Definition}{ip})
-  and in lifting form (\blockref{Definition}{ip}) coincide on the
+  The interior penalty method in flux form (\slideref{Definition}{ip})
+  and in lifting form (\slideref{Definition}{ip}) coincide on the
   discrete space $V_h$ if $\Sigma_h$ is chosen such that $\nabla V_h
   \subset \Sigma_h$.
 \end{Lemma}
@@ -225,7 +225,7 @@
     a_h(u,v) = \form(\nabla u, \nabla v)_{\mesh_h}
     - \form(\nabla u,\lifting v)_{\mesh_h}.
   \end{gather*}
-  By \blockref{Lemma}{ip-lifting-residual-1} and regularity of $u$,
+  By \slideref{Lemma}{ip-lifting-residual-1} and regularity of $u$,
   \begin{align*}
     \Res(u,v)
     &= 2\forme(\nabla u,\mvl{v\n})_{\faces_h^i}
@@ -264,13 +264,13 @@
 \end{Theorem}
 
 \begin{proof}
-  Application of \blockref{Lemma}{ip-lifting-strang},
-  \blockref{Lemma}{ip-lifting-residual-2}, and standard interpolation
+  Application of \slideref{Lemma}{ip-lifting-strang},
+  \slideref{Lemma}{ip-lifting-residual-2}, and standard interpolation
   results.
 \end{proof}
 
 \begin{Theorem}{ip-lifting-l2}
-  Let the assumptions of \blockref{Theorem}{ip-lifting-h1} hold and in
+  Let the assumptions of \slideref{Theorem}{ip-lifting-h1} hold and in
   addition assume that the problem
   \begin{gather*}
     a(v,u^*) = \psi(v),\qquad\forall v\in V,
@@ -317,7 +317,7 @@
     \le \norm{u-u_h}_{1,h}\norm{u^*-I_hu^*}_{1,h}
     \le c h \norm{u-u_h}_{1,h}.
   \end{gather*}
-  For the second term, we use \blockref{Lemma}{ip-lifting-residual-2}
+  For the second term, we use \slideref{Lemma}{ip-lifting-residual-2}
   to obtain
   \begin{gather*}
     \abs{\Res^*(u^*,u-u_h)} \le c h \snorm{u^*}_2 \norm{u-u_h}_{1,h}.
@@ -335,7 +335,7 @@
     \\
     & \le c h \snorm{u}_2 h^k \snorm{u^*}_{k+1}
   \end{align*}
-  Using the energy estimate in \blockref{Theorem}{ip-lifting-h1} we
+  Using the energy estimate in \slideref{Theorem}{ip-lifting-h1} we
   can conclude the prove.
 \end{proof}
 

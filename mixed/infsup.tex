@@ -211,7 +211,7 @@ The question of well-posedness in finite dimensions can be answered by:
 
 \begin{proof}
   We note that $\dim \range A = \dim \range{A^T}$. Thus, by
-  \blockref{Lemma}{ker-coker-rn} the dimensions of domain and range of
+  \slideref{Lemma}{ker-coker-rn} the dimensions of domain and range of
   each of the restricted operators are equal, say $\dim \range A =
   r$. The singular value decomposition of the operators is
   \begin{gather*}
@@ -393,7 +393,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   cokernel $\ortho{\ker A}$. The arguments there have a natural
   extension to infinite dimensional Hilbert spaces, which we will
   derive in this section. We already saw in
-  \blockref{Problem}{unbounded-inverse} that we may run into trouble
+  \slideref{Problem}{unbounded-inverse} that we may run into trouble
   if the range of $A$ is not closed. On the other hand, it turns out
   that most notions of linear algebra related to orthogonality can be
   maintained in Hilbert spaces if closed subspaces are considered.
@@ -673,12 +673,12 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   from $W$ onto $\polar{\ker A}$. Equation~\eqref{eq:infsup:12} implies that
   $A^T\colon W \to \range{A^T}$ is an isomorphism and its inverse is
   bounded by $1/\ellipa$ (multiply both sides by $A^{-1}$). Using
-  \blockref{Lemma}{closed-infsup}, we obtain that $\range{A^T}$ is
+  \slideref{Lemma}{closed-infsup}, we obtain that $\range{A^T}$ is
   closed in $V^*$ and the \putindex{closed range theorem} settles the
   issue.
 
   In order to prove equivalence of the second and third statement, we
-  use \blockref{Lemma}{polar-orthogonal-hilbert} to isometrically
+  use \slideref{Lemma}{polar-orthogonal-hilbert} to isometrically
   identify $(\ortho{\ker A})^*$ with $\polar{\ker A}$. Thus, $A$ is an
   isomorphism from $\ortho{\ker A}$ onto $W^*$ if and only if $A^T$ is an
   isomorphism from $W$ onto $(\ortho{\ker A})^* = \polar{\ker A}$. and
@@ -709,7 +709,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \end{Corollary}
 
 \begin{remark}
-  \blockref{Corollary}{infsup-well-posedness1} exhibits an asymmetry
+  \slideref{Corollary}{infsup-well-posedness1} exhibits an asymmetry
   between the left and right argument. In particular, we obtain a
   unique solution only for the adjoint operator $A^T$, which is
   exactly what we need, when we compute say a pressure from the
@@ -749,8 +749,8 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \end{Theorem}
 
 \begin{remark}
-  If we compare \blockref{Theorem}{infsup-well-posedness2} with
-  \blockref{Corollary}{infsup-well-posedness1}, we see that the only
+  If we compare \slideref{Theorem}{infsup-well-posedness2} with
+  \slideref{Corollary}{infsup-well-posedness1}, we see that the only
   difference lies in the fact that the second inf-sup condition
   ensures surjectivity of $A$ by injectivity of $A^T$. In some cases
   it may be difficult to prove both inf-sup conditions. Then, it is
@@ -761,7 +761,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
     \frac{a(v,w)}{\norm{v}_V\norm{w}_W} > 0,
   \end{gather*}
   thus, injectivity of $A^T$. Although we verify less than the
-  assumptions of \blockref{Theorem}{infsup-well-posedness2}, the
+  assumptions of \slideref{Theorem}{infsup-well-posedness2}, the
   closed range theorem saves us from the additional work. We further
   note that this notion is symmetric between $A$ and $A^T$, that is,
   it is sufficient to prove inf-sup for either operator and
@@ -819,7 +819,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \end{Theorem}
 
 \begin{proof}
-  Straight application of \blockref{Theorem}{infsup-well-posedness2}.
+  Straight application of \slideref{Theorem}{infsup-well-posedness2}.
 \end{proof}
 
 \begin{Theorem}{infsup-mixed2}
@@ -853,7 +853,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   \begin{gather}
     b(v,p) = f(v) - a(u,v), \qquad\forall v\in V.
   \end{gather}
-  Applying \blockref{Corollary}{infsup-well-posedness1} to the
+  Applying \slideref{Corollary}{infsup-well-posedness1} to the
   bilinear form $b(.,.)$, we deduce that this equation has a unique
   solution $p\in Q$ if and only if $f(v)-a(u,v) \in \ker B^0$, which
   is the reduced problem.
@@ -880,7 +880,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \end{remark}
 
 \begin{Problem}{inhomogeneous-continuity}
-  Show that \blockref{Theorem}{infsup-mixed2} can be extended to the
+  Show that \slideref{Theorem}{infsup-mixed2} can be extended to the
   case with right hand side $f(v)+g(q)$ with $g\in Q^*$.
 
 \begin{solution}
@@ -891,7 +891,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   where $b(v,p)$ fulfills a inf-sup condition.
 
   \begin{enumerate}
-  \item Due to \blockref{Theorem}{infsup-well-equivalence}, the
+  \item Due to \slideref{Theorem}{infsup-well-equivalence}, the
     operator $B: V\to Q^*$ is surjective and thus, there exists
     $u_g\in V$ such that
     \begin{gather*}
@@ -906,7 +906,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   \item Due to $a(u_g,v) \leq \norm{a}\norm{u_g}_V\norm{v}_V$,
     the right-hand side $f(\cdot)-a(u_g,\cdot)$ is in $V^*$
     and we are in the setting of
-    \blockref{Theorem}{infsup-mixed2}.
+    \slideref{Theorem}{infsup-mixed2}.
   \end{enumerate}
 \end{solution}
 \end{Problem}
@@ -931,7 +931,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
     b(v,q) \le \norm b \norm{v}_V \norm{q}_Q.
   \end{gather}
   With these forms, we associate bounded operators $A$, $B$, and $B^T$
-  according to \blockref{Definition}{saddle-point-operators}. With
+  according to \slideref{Definition}{saddle-point-operators}. With
   $b(.,.)$ we associate the spaces
   \begin{gather}
     \begin{split}
@@ -985,7 +985,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \end{intro}
 
 \begin{Assumption}{mixed-elliptic-stabilized}
-  In addition to \blockref{Assumption}{mixed-elliptic}, let $c(.,.)$
+  In addition to \slideref{Assumption}{mixed-elliptic}, let $c(.,.)$
   be positive semi-definite and elliptic on $\ker{B^T}$,
   \begin{gather}
     c(q,q) \ge u\quad\forall q\in Q,
@@ -1003,7 +1003,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \end{remark}
 
 \begin{Theorem}{mixed-stabilized-well-posed}
-  Let \blockref{Assumption}{mixed-elliptic-stabilized} hold and
+  Let \slideref{Assumption}{mixed-elliptic-stabilized} hold and
   let $a(.,.)$ and $c(.,)$ be symmetric. In addition, let there be
   $\beta>0$ such that
   \begin{gather}
@@ -1141,8 +1141,8 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \end{proof}
 
 \begin{intro}
-  The extension of \blockref{Theorem}{galerkin-mixed-p} to the
-  saddle-point problem of \blockref{Definition}{saddle-point-abstract}
+  The extension of \slideref{Theorem}{galerkin-mixed-p} to the
+  saddle-point problem of \slideref{Definition}{saddle-point-abstract}
   with bilinear form $c(.,.)$ is even more cumbersome than this
   theorem. Nevertheless, the use of residual operators as a technique
   to structure the proof of convergence is instructive and may come
@@ -1165,7 +1165,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \end{Definition}
 
 \begin{Corollary}{mixed-residual-bounded}
-  Under \blockref{Assumption}{mixed-elliptic-stabilized}, we have
+  Under \slideref{Assumption}{mixed-elliptic-stabilized}, we have
   \begin{gather}
     \begin{split}
       \abs{R_f(v_h)}
@@ -1181,7 +1181,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 
 \begin{Lemma}{stabilized-mixed-approximation}
   Let the assumptions of
-  \blockref{Theorem}{mixed-stabilized-well-posed} hold. Then, there
+  \slideref{Theorem}{mixed-stabilized-well-posed} hold. Then, there
   are constants $c_1$ to $c_4$ independent of the solutions $u$, $p$,
   $u_h$, and $p_h$ and the discretization parameter $h$, such that for
   any $v_h\in V_h$ and $q_h\in Q_h$
@@ -1200,7 +1200,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \begin{proof}
   The proof is lengthy and follows the lines of the proof of
   well-posedness for
-  \blockref{Theorem}{mixed-stabilized-well-posed}. It is obtained by
+  \slideref{Theorem}{mixed-stabilized-well-posed}. It is obtained by
   considering the components $u_h^0-v_h^0$ and $u_h^\perp-v_h^\perp$
   as well as $p_h^0-q_h^0$ and $p_h^\perp-q_h^\perp$ separately.
 \end{proof}
@@ -1217,7 +1217,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 
 \begin{Corollary}{stabilized-mixed-convergence}
     Let the assumptions of
-  \blockref{Theorem}{mixed-stabilized-well-posed} hold. Then, there
+  \slideref{Theorem}{mixed-stabilized-well-posed} hold. Then, there
   are constants $c_1$ to $c_4$ independent of the solutions $u$, $p$,
   $u_h$, and $p_h$ and the discretization parameter $h$, such that
   \begin{gather}
@@ -1240,9 +1240,9 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
     \norm{u-u_h} &\le \norm{u-v_h} + \norm{v_h-u_h} \\
     \norm{p-p_h} &\le \norm{p-q_h} + \norm{q_h-p_h}.
   \end{align*}
-  Then, we employ \blockref{Lemma}{stabilized-mixed-approximation} on
+  Then, we employ \slideref{Lemma}{stabilized-mixed-approximation} on
   the terms on the right and use the estimate of
-  \blockref{Corollary}{mixed-residual-bounded}.
+  \slideref{Corollary}{mixed-residual-bounded}.
 \end{proof}
 
 %%% Local Variables: 
