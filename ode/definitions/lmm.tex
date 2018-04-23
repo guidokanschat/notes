@@ -1,0 +1,26 @@
+\begin{Definition}{lmm}
+  \index{Multistep method}
+  \index{LMM|see{linear multistep method}}
+  A \define{linear multistep method} (LMM) with $\lmms$ steps is a
+  method of form
+  \begin{gather}
+    \label{eq:lmm:4}
+    \sum_{r=0}^{\lmms} \alpha_{\lmms-r} y_{k-r}
+    = h \sum_{r=0}^{\lmms}\beta_{\lmms-r} f_{k-r},
+  \end{gather}
+  where $f_k = f(t_k, y_k)$ and $t_k = t_0+hk$. There are
+  explicit ($\beta_\lmms = 0$) and implicit ($\beta_\lmms \neq 0$)
+  methods.  For these methods, we define the first and second 
+	\define{generating polynomials}
+  \begin{xalignat}{2}
+    \label{eq:lmm:5}
+    \rho(x) &= \sum_{r=0}^{\lmms} \alpha_{\lmms-r} x^{s-r}= \sum_{r=0}^{\lmms} \alpha_{r} x^{r}
+    &
+    \sigma(x) &= \sum_{r=0}^{\lmms} \beta_{r} x^{r}.
+  \end{xalignat}
+\end{Definition}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

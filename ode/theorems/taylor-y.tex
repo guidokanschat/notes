@@ -1,0 +1,33 @@
+\begin{Lemma}{taylor-y}
+The Taylor expansion of $y_1$ with respect to $h$ is
+  \begin{gather}
+    \label{eq:taylor-y:1}
+    \begin{split}
+      &(y_1)_n = (u_0)_n
+      \\& + h \sum_{j=1}^s b_i f_n
+      \\& + \frac{h^2}2 \sum_{\lambda} \left[2\sum_{i} b_i c_i
+        \partial_{\lambda} f_n f_\lambda\right]
+      \\& + \frac{h^3}6 \sum_{\lambda,\mu} \left[
+        3\sum_{i} b_i c_i^2
+        \partial_{\lambda\mu} f_n f_\lambda f_\mu
+        + 6 \sum_{i,j} b_i a_{ij} c_j
+        \partial_{\lambda} f_n \partial_\mu f_\lambda f_\mu
+      \right]
+      \\& + \frac{h^4}{24} \sum_{\lambda,\mu,\nu} \left[
+        6 \sum_{i} b_i c_i^3
+        \partial_{\lambda\mu\nu} f_n f_\lambda f_\mu f_\nu
+      + 3 \sum_{i,j} b_i c_i a_{ij} c_j\partial_{\lambda\mu} f_n \partial_{m}f_\lambda f_\mu f_\nu
+        \right.
+      \\&\hphantom{+\frac{h^4}{24} \sum_{\lambda,\mu,\nu}} \left.
+      + 2 \sum_{i,j} b_i a_{ij} c_j^2\partial_{\lambda}f_n \partial_{\mu\nu} f_\lambda f_\mu f_\nu
+      + \sum_{i,j,k} b_i a_{ij} a_{jk} c_k \partial_{\lambda}f_n \partial_{\mu} f_\lambda \partial_{\nu}
+      f_\mu f_\nu
+      \right].
+    \end{split}
+  \end{gather}
+\end{Lemma}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End: 

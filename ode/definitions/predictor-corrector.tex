@@ -1,0 +1,18 @@
+\begin{Definition}{predictor-corrector}
+  Assume a pair of time stepping schemes, one explicit, one implicit,
+  \begin{align*}
+    \hat y_{k} &= \hat \Phi(y_{k-1}) \\
+    y_k &= \Phi(y_{k-1},y_{k}),
+  \end{align*}
+  we can use $\hat y_k$ as initial value for the Newton iteration for
+  $y_k$. In an extreme case, we let
+  \begin{gather*}
+    y_k = \Phi(y_{k-1},\hat y_{k}),
+  \end{gather*}
+  without any further iteration.
+\end{Definition}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

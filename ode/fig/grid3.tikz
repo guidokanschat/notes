@@ -1,0 +1,33 @@
+{\scriptsize
+\begin{tikzpicture}
+  \draw (0.25,0) node {};
+  \draw (1,0) node {};
+  \foreach \x in {0.25,0.5,0.75}
+  {
+    \draw (\x,.25) -- (\x,0.5);
+    \draw[style=dotted] (\x,0.5) -- (\x,0.75);
+  }
+  \foreach \y in {0.25,0.5,0.75}
+  {
+    \draw (.25,\y) -- (0.5,\y);
+    \draw[style=dotted] (0.5,\y) -- (0.75,\y);
+  }
+  \foreach \x in {0.25,0.5,0.75}
+  {
+    \foreach \y in {0.25,0.5,0.75}
+    {
+      \draw (\x,\y) node {$\bullet$};
+    }
+  }
+\draw (.25,.25) node[anchor=north west] {$0$};
+\draw (.5,.25) node[anchor=north west] {$1$};
+\draw (.75,.25) node[anchor=north west] {$\begin{matrix}n\!\!-\!\!1\\-1\end{matrix}$};
+
+\draw (.25,.5) node[anchor=north west] {$n\!\!-\!\!1$};
+\draw (.5,.5) node[anchor=north west] {$\begin{matrix}n\!\!-\!\!1\\+\!1\end{matrix}$};
+\draw (.75,.5) node[anchor=north west] {$\begin{matrix}2\![n\!\!-\!\!1]\\-\!1\end{matrix}$};
+
+\draw (.25,.75) node[anchor=north west] {$[n\!\!-\!\!1]^2$};
+\draw (.5,.75) node[anchor=north west] {$\begin{matrix}[n\!\!-\!\!1]^2\\+\!1\end{matrix}$};
+}
+\end{tikzpicture}

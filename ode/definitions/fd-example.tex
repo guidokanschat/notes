@@ -1,0 +1,28 @@
+\begin{Example}{fd-example}
+  Using the 3-point stencil and central difference, we obtain from the
+  BVP
+\begin{gather*}
+  -u''(x)+\beta(x)u'(x) + \gamma(x)u(x) = f(x),
+  \qquad u(a) = u(b) = 0,
+\end{gather*}
+the discrete system of equations
+\begin{xalignat}{2}
+  \label{eq:fd-example:1}
+  y_0&=0&&\\
+  \frac{2 y_k - y_{k-1} - y_{k+1}}{h^2}
+  + \beta_k \frac{y_{k+1} - y_{k-1}}{2h}
+  + \gamma_k y_k &= f_k
+  & k&=1,\dots,n-1\\
+  y_n&=0,&&
+\end{xalignat}
+or short
+\begin{gather}
+  \label{eq:fd-example:2}
+  \widetilde L_h y = f
+\end{gather}
+\end{Example}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

@@ -1,0 +1,17 @@
+\begin{Example}{rk4-continuous}
+  For the classical Runge-Kutta method with 4 stages a continuous
+  interpolation with $\rks^* = \rks$ is defined by the coefficients
+  \begin{equation*}
+    \begin{split}
+      \rkb_1(\theta) & = \theta - \frac32 \theta^2 + \frac23 \theta^3 \\
+      \rkb_2(\theta) & = \rkb_3(\theta) = \theta^2 - \frac23 \theta^3 \\
+      \rkb_4(\theta) & = - \frac12 \theta^2 + \frac23 \theta^3. \\
+    \end{split}
+  \end{equation*}
+  The error of this method is $y(\theta) - u(\theta) = O(h^3)$.
+\end{Example}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End: 

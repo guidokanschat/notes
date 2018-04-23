@@ -1,0 +1,28 @@
+\begin{Theorem}{bvp-stability-2}
+  Let $f(t,u)$ and $g(t,u)$ be continuous in $t$ and continuously
+  differentiable in $u$. Then, the variation of the value $u(t)$ of
+  the solution $u$ of the boundary value problem
+  \begin{gather*}
+    u'=f(t,u),\qquad r\bigl(u(a), u(b)\bigr)=0,
+  \end{gather*}
+  with respect to perturbations $f+g$ is
+  \begin{gather}
+    \label{eq:bvp-stability-2:1}
+    \frac{\partial}{\partial g} u(t)
+    = \int_{a}^b G(t,s) g\bigl(s,u(s)\bigr)\,d s,
+  \end{gather}
+  where
+  \begin{gather}
+    \label{eq:bvp-stability-2:2}
+    G(t,s) =
+    \begin{cases}
+      -E(t)^{-1} \rwaa \fundamental(a;s) & a \le s \le t \\
+      \phantom{-}E(t)^{-1} \rwab \fundamental(b;s) & t < s \le b
+    \end{cases}.
+  \end{gather}
+\end{Theorem}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

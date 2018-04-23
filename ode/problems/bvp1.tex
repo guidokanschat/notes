@@ -1,0 +1,57 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+Consider the differential equation
+\begin{gather*}
+  u'' = k^2 u,
+\end{gather*}
+with the two linearly independent solutions $e^{k(t-t_0)}$ and $e^{-k(t-t_0)}$.
+\begin{enumerate}
+\item Transform this equation into a first order system for the vector
+  $(u,v)^T$ and determine the fundamental matrix at $t$ for an initial
+  value $t_0$.
+\item On the interval $[a,b]$ consider the boundary value problem
+  $u(a) = g_a$ and $u(b)$ for this equation. Rewrite this boundary
+  value problem for the first order system in the form
+  \begin{gather*}
+    B_a
+    \begin{pmatrix}
+      u(a) \\ v(a)      
+    \end{pmatrix}
+ + B_b 
+    \begin{pmatrix}
+      u(b) \\ v(b)      
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      g_a\\g_b
+    \end{pmatrix},
+  \end{gather*}
+  and determine $B_a$ and $B_b$
+\item Use Corollary 5.3.13 to determine whether this system has a
+  unique solution for $a=-1$, $b=1$, and $g_a = g_b = \cosh k$. If so,
+  determine this solution.
+\item Use Theorems 5.3.10 and 5.3.11 to determine the maximal
+  sensitivity on the interval $[a,b]$ of the solution $u(t)$ with
+  respect to small perturbations of the boundary values $g_a$ and
+  $g_b$ and with respect to perturbations of the
+  right hand side of the form $g(t,u(t))$. Make suitable assumptions
+  on $g$.
+\item Compute the sensitivities of the initial value problem with
+  $u(a)$ and $v(a)$ as computed above with respect to perturbations of
+  the initial values and the right hand side according to Theorems
+  5.2.6 and 5.2.8.
+\item Compare the results for initial and boundary value problems and
+  their behavior for $k\to\infty$.
+\item Perform two steps of the single shooting method for this
+  boundary value problem.
+\end{enumerate}
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

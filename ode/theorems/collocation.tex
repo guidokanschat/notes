@@ -1,0 +1,22 @@
+\begin{Lemma}{collocation}
+% HKW p. 212
+  A $\rks$-stage collocation method with the points $\rkc_1$
+  to $\rkc_\rks$ defines a Runge-Kutta method of
+  definition~\ref{definition:rk} with the coefficients $\rkc_i$ and
+  \begin{gather}
+  \label{eq:implicit:kolkoef}
+    \rka_{ij} =  \int_0^{\rkc_i} L_j(t)\, \diffd t,
+    \qquad
+    \rkb_i =\int_0^1 L_j(t)\, \diffd t.
+  \end{gather}
+  Here is $L_j(t)$ Lagrange's interpolation polynomial to point $\rkc_j$
+  and to the point set $\{\rkc_1,\dots,\rkc_\rks\}$:
+  \begin{gather*}
+    L_j(t) = \prod_{\substack{k=1\\k\neq j}}^\rks \frac{t-\rkc_k}{\rkc_j-\rkc_k}.
+  \end{gather*}
+\end{Lemma}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End: 

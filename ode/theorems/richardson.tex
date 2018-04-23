@@ -1,0 +1,25 @@
+\begin{Theorem}{richardson}
+  Let $y_2 = y(t_2)$ be the result of a Runge-Kutta method of order
+  $p$ after 2 steps with step size $h$ and let
+  $\hat y_2 = \hat y(t_2)$ be the result after one step of step size
+  $2h$. Then, the error admits the estimate
+  \begin{gather}
+    \label{eq:explicit:10}
+    u_2 - y_2 = \frac{y_2 - \hat y_2}{2^p - 1} + O(h^{p+2})
+  \end{gather}
+  Moreover, we obtain an approximation
+  \begin{gather}
+    \label{eq:explicit:20}
+    \tilde{y_2} = y_2 + \frac{y_2 - \hat y_2}{2^p - 1}  ,
+  \end{gather}
+  such that
+  \begin{gather}
+    \label{eq:richardson:1}
+    u(t_2) - \tilde{y_2} = O(h^{p+2}).
+  \end{gather}
+\end{Theorem}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

@@ -1,0 +1,32 @@
+\begin{Definition}{truncation-error}
+  Let $u$ be a solution of the differential equation $u' = f(t,u)$
+  on the interval $I_n = [t_{n-1}, t_{n}]$. Then, the \define{local
+    error} of a discrete method $F$ is the difference between the
+  solution $u_n$ of the differential equation at $t_n$ and the result
+  of one time step~\eqref{eq:explicit:8} with this method with exact
+  initial value:
+  \begin{gather}
+    \label{eq:explicit:6a}
+    \eta_{n} = \eta_n(u) = u_{n} - \bigl[
+    u_{n-1} + h_n \verfahren_{h_n}(t_{n-1}, u_{n-1})
+    \bigr].
+  \end{gather}
+  The \define{truncation error} is the quotient of the local error and $h_n$:
+  \begin{gather}
+    \label{eq:explicit:6}
+    \tau_{n} = \tau_n(u) = \frac{u_{n} - u_{n-1}}{h_n} - \verfahren_{h_n}(t_{n-1}, u_{n-1}).
+  \end{gather}
+  \defindex{order!of consistency}
+  The one-step method $F_h(t,y)$ is \define{consistent} of \textbf{order} $p$ with
+  the ODE, if there is a constant $c$ independent of $h$ such that for
+  $h\to 0$:
+  \begin{gather}
+    \label{eq:explicit:3}
+    \max\limits_n \abs{\tau_n} \le c h^p
+  \end{gather}
+\end{Definition}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

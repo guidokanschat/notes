@@ -1,0 +1,40 @@
+\begin{Definition*}{simplifying-conditions}{Simplifying order conditions}
+% HNW p. 208
+  \index{order condition (IRK)}
+  Define the conditions
+  \begin{subequations}
+    \label{eq:implicit:order}
+    \begin{xalignat}{3}
+      \label{eq:implicit:8}
+      B(\xi):&&
+      \sum_{i=1}^s \rkb_i \rkc_i^{q-1} &= \frac1{q}
+      &&
+      \begin{array}{r@{\,}l}
+        q&=1,\ldots,\xi
+      \end{array}
+      \\
+      \label{eq:implicit:9}
+      C(\xi):&& \sum_{j=1}^s \rka_{ij} \rkc_j^{q-1} &= \frac{\rkc_i^{q}}{q}
+      &&
+      \begin{array}{r@{\,}l}
+        q&=1,\ldots,\xi\\
+        i&=1,\dots,\rks
+      \end{array}
+      \\
+      \label{eq:implicit:11}
+      D(\xi):&&
+      \sum_{i=1}^s \rkb_i \rka_{ij} \rkc_i^{q-1} &=
+      \frac{\rkb_j}{q}(1-\rkc_j^{q})
+      &&
+      \begin{array}{r@{\,}l}
+        q&=1,\ldots,\xi\\
+        j&=1,\dots,\rks
+      \end{array}
+    \end{xalignat}
+  \end{subequations}
+\end{Definition*}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End: 

@@ -1,0 +1,23 @@
+\begin{Definition}{newton}
+  The \define{Newton method} for finding the root of the nonlinear
+  equation $f(x) = 0$ reads: given an initial value $x^{(0)}$, compute
+  iterates $x^{(k)}$, $k=1,2,\ldots$ by the rule
+  \begin{gather}
+    \label{eq:newton-def:1}
+    \begin{split}
+      J &= \nabla f\left(x^{(k)}\right),
+      \\
+       J d^{(k)} &= f(x^{(k)}),
+      \\
+      x^{(k+1)} &= x^{(k)} - d^{(k)}.
+    \end{split}
+  \end{gather}
+  We denote by the term \define{quasi-Newton method} any modification
+  of this scheme employing an approximation $\widetilde J$ of the
+  Jacobian $J$.
+\end{Definition}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

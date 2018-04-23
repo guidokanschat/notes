@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+  \draw[thick]
+  (0,0) node [anchor = north east] {$(a,a)$}
+  --
+  (1,0) node [anchor = north west] {$(b,a)$}
+  --
+  (1,1) node [anchor = south west] {$(b,b)$}
+  --
+  (0,1) node [anchor = south east] {$(a,b)$}
+  --
+  (0,0);
+\end{tikzpicture}

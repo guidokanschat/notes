@@ -1,0 +1,27 @@
+\begin{Definition}{multiple-shooting}
+  Choose a partitioning of the interval $[a,b]$ such that
+  \begin{gather*}
+    a=t_0<t_1<t_2<\dots<t_m=b.
+  \end{gather*}
+  On each subinterval $I_k = [t_{k-1}, t_k]$, $k=1,\ldots,m$ define
+  the IVP
+  \begin{gather*}
+    u_k' = f(t, u_k), \qquad u_k\bigl(t_{k-1}\bigr) = v_k,
+  \end{gather*}
+  The \define{multiple shooting method} consists of finding vectors
+  $v_1,\dots, v_m$, such that
+  \begin{xalignat*}{2}
+    v_{k+1}&= u_{k}\bigl(t_{k}\bigr)& k&=1,\dots,m-1,\\
+    r(v_1, u_m(b)) &= 0.
+  \end{xalignat*}
+  The function
+  \begin{gather*}
+    u(t) = u_k(t) \qquad\text{for } t\in I_k
+  \end{gather*}
+  is continuous, solves the ODE, and obeys the boundary conditions.
+\end{Definition}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

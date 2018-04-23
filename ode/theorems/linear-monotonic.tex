@@ -1,0 +1,14 @@
+\begin{Lemma}{linear-monotonic}
+  The linear differential equation $u'=Au$ with $u(t)\in \C^d$ and a
+  diagonalizable matrix function $A(t) \in \C^{d\times d}$ admits the
+  one-sided Lipschitz condition~\eqref{eq:impl:Lipschitz} with the
+  constant
+  $\nu = \max_{\substack{i=1,\dots,d\\t\in \R}} \Re(\lambda_i)$.
+  Accordingly, this ODE is monotonic if and only if for all
+  eigenvalues $\lambda_i$ of $A(t)$ there holds
+  \begin{gather}
+    \label{eq:implicit:10}
+    \Re (\lambda_i) \le 0.
+  \end{gather}
+  This is the vector-valued form of example~\ref{ex:linear-model}. 
+\end{Lemma}

@@ -1,0 +1,21 @@
+\begin{Theorem}{bvp-stability-1}
+  \index{conditioning!BVP}
+  Let the assumptions of Lemma~\ref{lemma:bvp-derivative} hold and let
+  $u(t)$ be the solution of the BVP~\eqref{eq:rwa:1} with
+  \begin{gather*}
+    u(a) = g_a\quad \text{and} \quad u(b) = g_b.
+  \end{gather*}
+  Then, there holds
+  \begin{gather}
+    \label{eq:rwa:20}
+    \frac{\partial u(t)}{\partial g_a} = E^{-1}(t) \rwaa,
+    \qquad
+    \frac{\partial u(t)}{\partial g_b} = E^{-1}(t) \rwab.
+  \end{gather}
+  In particular, the conditioning with respect to changes of size
+  $\epsilon$ in the boundary conditions $g_a$ and $g_b$ is
+  \begin{gather}
+    \delta u(t) \le \epsilon
+    \max\bigl\{\norm{E^{-1}(t) \rwaa}, \norm{E^{-1}(t)\rwab}\bigr\}.
+  \end{gather}
+\end{Theorem}

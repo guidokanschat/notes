@@ -1,0 +1,23 @@
+\begin{Theorem*}{newton-kantorovich}{Newton-Kantorovich}
+  Let $f: \R^d \to \R^d$ be differentiable with
+  \begin{xalignat}2
+    \label{eq:newton-kantorovich:1}
+    \norm{\nabla f(x) - \nabla f(y)}
+    & \le L \norm{x-y} & x,y&\in \R^d,
+    \\
+    \label{eq:newton-kantorovich:2}
+    \norm{\left(\nabla f\left(x^{(0)}\right)\right)^{-1}} &\le M.
+  \end{xalignat}
+  Then, if
+  \begin{gather}
+    \label{eq:newton-kantorovich:3}
+    \beta_0 := LM \norm{f\left(x^{(0)}\right)} \le \frac12,
+  \end{gather}
+  the Newton method converges to a root of $f(x)$. If furthermore
+  $\beta_0 < 1/2$, this convergence is quadratic.
+\end{Theorem*}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

@@ -1,0 +1,24 @@
+\begin{Definition}{lipschitz-one-sided}
+  \defindex{Lipschitz condition!one-sided}
+  The function $f(t,y)$ satisfies on its domain $D \subset
+  \R \times \C^d$ a \define{one-sided Lipschitz condition} if 
+  the inequality
+  \begin{gather}
+    \label{eq:impl:Lipschitz}
+    \Re \scal({f(t,y) - f(t,x)},y-x) \le \nu \abs{y-x}^2
+  \end{gather}
+  holds with a constant $\nu$ for all $(t,x),(t,y)\in D$. 
+  Moreover such a function is called
+  \textbf{monotonic} \defindex{monotonic function} if $\nu=0$, thus 
+  \begin{gather}
+    \label{eq:impl:monoton}
+    \Re \scal({f(t,y) - f(t,x)},y-x) \le 0.
+  \end{gather}
+  An ODE $u'=f(u)$ is called monotonic if its right hand side $F$ is
+  monotonic.
+\end{Definition}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

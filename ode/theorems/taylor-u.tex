@@ -1,0 +1,30 @@
+\begin{Lemma}{taylor-u}
+  The Taylor expansion of a single component of $u_1 = u(h)$ with
+  respect to $h$ is
+  \begin{gather}
+    \label{eq:taylor-u:1}
+    \begin{split}
+      (u_1)_n &= (u_0)_n
+      \\& + h f_n
+      \\& + \frac{h^2}2 \sum_\lambda \partial_{\lambda} f_n f_\lambda
+      \\& + \frac{h^3}6 \sum_{\lambda,\mu} \bigl[\partial_{\lambda\mu} f_n f_\lambda f_\mu
+      + \partial_{\lambda}f_n \partial_{\mu}f_\lambda f_\mu\bigr]
+      \\& + \frac{h^4}{24} \sum_{\lambda,\mu,\nu}
+      \bigl[\partial_{\lambda\mu\nu} f_n f_\lambda f_\mu f_\nu
+      + 3\partial_{\lambda\mu} f_n \partial_{m}f_\lambda f_\mu f_\nu
+      % \\&+ \partial_{\lambda\mu} f_n \partial_{\nu}f_\mu f_\lambda f_\nu
+      % \\&+ \partial_{\lambda\nu} f_n \partial_{\mu}f_\lambda f_\mu f_\nu
+      \\&\hphantom{+\frac{h^4}{24} \sum_{\lambda,\mu,\nu}}
+      + \partial_{\lambda}f_n \partial_{\mu\nu} f_\lambda f_\mu f_\nu
+      + \partial_{\lambda}f_n \partial_{\mu} f_\lambda \partial_{\nu} f_\mu f_\nu
+      \\&+\dots
+    \end{split}
+  \end{gather}
+  where we have omitted the arguments $f = f(u(t_0))$ and all sums are
+  taken from 1 to $d$.
+\end{Lemma}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End: 

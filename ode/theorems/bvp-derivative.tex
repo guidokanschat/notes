@@ -1,0 +1,24 @@
+\begin{Lemma}{bvp-derivative}
+  Let be $f(t,u)$ continuous in $t$ and continuously differentiable in
+  $u$.  Let additionally $r(x,y)$ be continuously differentiable and
+  set
+  \begin{gather}
+    \label{eq:rwa:9}
+    \rwaa = \left.\frac{\partial r(x,y)}{\partial
+        x}\right|_{x=u(a),y=u(b)},
+    \qquad
+    \rwab = \left.\frac{\partial r(x,y)}{\partial
+        y}\right|_{x=u(a),y=u(b)}.
+  \end{gather}
+  Let $u(t)$ be a continuously differentiable solution of the
+  BVP~\eqref{eq:rwa:1}.  Then the derivative of the boundary condition
+  $r(u(a),u(b))$ with respect to the function value $u(t)$ inside the
+  interval $[a,b]$ is
+  \begin{gather}
+    \label{eq:rwa:12}
+    E(t)
+    := \frac{\partial r\bigl(u(a),u(b)\bigr)}{\partial u(t)}
+    = \rwaa \fundamental(a;t) + \rwab \fundamental(b;t),
+  \end{gather}
+  where $\fundamental(t;t_0)$ is the fundamental matrix.
+\end{Lemma}

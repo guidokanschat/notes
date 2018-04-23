@@ -1,0 +1,17 @@
+\begin{Theorem*}{convergence-one-step}{Convergence of one-step methods}
+  Let the one-step method $F(.,.)$ be consistent of order $p$ and
+  discretely stable, that is, $F(.,.)$ is Lipschitz continuous in its
+  second argument. Let $f(t,u)\in C^{p}$. Furthermore, let be
+  $y_0 = u_0$. Then the method converges with order $p$ and there
+  holds for $h = \max h_n$
+  \begin{equation}
+    \label{eq:convergence-onestep:1}
+    \abs{u_n - y_n} \le c e^{L(t_n-t_0)} h^p,
+  \end{equation}
+  where the constant $c$ is independent of $h$.
+\end{Theorem*}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage[a3paper]{geometry}
+\usepackage[utf8]{inputenc}
+%\usepackage[paperwidth=40cm,paperheight=40cmin]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{mindmap}
+\pagestyle{empty}
+\begin{document}
+\sffamily
+\begin{tikzpicture}[mindmap,grow cyclic,concept color=black!30,level 1/.append style={level distance=6cm}]
+  \node [concept] {Numerical\\ Analysis\\ of ODE}
+  child[sibling angle = 45, level distance = 7cm] {node [concept] {Continuous IVP}
+    child[concept color=green!70] {node [concept] {Local existence}}
+    child[concept color=green!70] {node [concept] {Global existence}}    
+    child[concept color=purple!70] {node [concept] {Asymptotic
+        behavior $t\to\infty$}
+      child {node [concept] {Stiff problems}}
+      child {node [concept] {Monotonic equations}}
+      child {node [concept] {One-sided Lipschitz condition}}
+}
+    child[concept color=red!60] {node [concept] {Stability}
+      child[concept color=red!60] {node [concept] {Grönwall inequality}}
+    }
+    child[concept color=yellow!80] {node [concept] {Differential stability}}
+    child[concept color=cyan!80] {node [concept] {Linear systems}}
+  }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  child[sibling angle = 45, level distance = 7cm] {node [concept] {Continuous BVP}
+    child[sibling angle = 45, concept color=yellow!80] {node [concept] {Local uniqueness}}
+    child[sibling angle = 45,concept color=yellow!80] {node [concept] {Stability}}
+    child[sibling angle = 45,concept color=cyan!80] {node [concept] {Existence (linear)}}
+  }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  child[sibling angle = 45] {node [concept] {Explicit one-step methods}
+    child[sibling angle = 45] {node [concept] {Convergence}
+      child {node [concept, concept color=blue!40] {\hspace*{0pt}Consistency}}
+      child {node [concept, concept color=red!50] {Stability}}
+    }
+    child[sibling angle = 45, concept color=blue!40] {node [concept] {Local error estimation}
+    child[sibling angle = 45] {node [concept] {\hspace*{0pt}Extrapolation}}
+    child[sibling angle = 45] {node [concept] {\hspace*{0pt}Embedded methods}}
+    }
+    child[sibling angle = 45] {node [concept] {Runge-Kutta methods}
+      child {node [concept] {Butcher tableau}}
+    }
+  }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  child[sibling angle = 45] {node [concept] {Implicit one-step methods}
+    child[concept color=purple!70] {node [concept] {B-Stability}}
+    child[concept color=red!60] {node [concept] {Existence of solutions}
+      child[concept color=yellow!80] {node [concept] {Solution methods}}
+    }
+    child[concept color=purple!70] {node [concept] {Stability region}
+      child {node [concept] {A-Stability}}
+    }
+    child[concept color=purple!70] {node [concept] {L-Stability}}
+  }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  child[sibling angle = 45, level distance = 7cm] {node [concept] {Multi-step methods}
+      child[sibling angle = 45, concept color=red!60] {node [concept] {Stability}}
+      child[sibling angle = 45, concept color=cyan!80] {node [concept] {Difference equations}}
+      child[sibling angle = 45, concept color=purple!70] {node [concept] {Stiff problems}}
+      child[sibling angle = 45] {node [concept] {Starting procedure}}
+    }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  child[sibling angle = 45, concept color=yellow!80] {node [concept] {Shooting methods}
+    child {node [concept] {Single shooting}}
+    child {node [concept] {Multiple shooting}}
+  }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  child[sibling angle = 45] {node [concept] {Finite differences}
+    child[sibling angle = 45,concept color=red!60] {node [concept] {Stability}}
+    child[sibling angle = 45] {node [concept] {Difference operators}}
+    child[sibling angle = 45,concept color=red!60] {node [concept] {Maximum principle}}
+    child[sibling angle = 45,concept color=green!60] {node [concept] {M-matrices}}
+  }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  child[sibling angle = 45, concept color=yellow!80] {node [concept] {Nonlinear solvers}
+    child {node [concept] {Newton}
+      child {node [concept] {Local convergence}}
+      child {node [concept] {Step-size control}}
+    }
+    child {node [concept] {Descent methods}
+      child {node [concept] {Line search}}
+      child {node [concept] {\hspace*{0pt}``Convergence''}}
+    }
+  };
+\end{tikzpicture}
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

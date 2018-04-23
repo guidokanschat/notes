@@ -1,0 +1,391 @@
+\documentclass[ignorenonframetext,notheorems,aspectratio=1610]{beamer}
+\usetheme[compress]{Madrid}
+\usecolortheme{iwr}
+\usepackage{tikz,tikzscale}
+\usetikzlibrary{snakes}
+\usepackage{mathsim}
+\usepackage{xr}
+\externaldocument{awa}
+\externaldocument{explicit}
+\externaldocument{implicit}
+\externaldocument{lmm}
+\externaldocument{rwa}
+\externaldocument{newton}
+\externaldocument{fd}
+\externaldocument{appendix}
+\usepackage{mfirstuc}
+\usepackage{mathtools}  
+\mathtoolsset{showonlyrefs}
+
+\makeatletter
+\def\TH@with[#1]#2#3{\begin{block}{\capitalisewords{#2} \ref{#2:#3} (#1)}}
+\def\TH@without#1#2{\begin{block}{\capitalisewords{#1} \ref{#1:#2}}}
+\def\TH{\@ifnextchar[{\TH@with}{\TH@without}}%
+\def\endTH{\end{block}}
+\makeatother
+\def\footnote#1{}
+
+% Definitions for Runge-Kutta-Koefficients
+\def\rks{s}  % Number of steps
+\def\rka{a}  % Coefficient matrix
+\def\rkb{b}  % Quadrature weights
+\def\rkc{c}  % Quadrature points
+\def\rkg{g}  % Intermediate points
+
+\def\lmms{s}
+
+% Definitions for boundary value problems
+\def\rwaa{B_a}
+\def\rwab{B_b}
+
+\title{\textbf{Numerical Analysis \\of\\
+    Ordinary Differential Equations}}
+\author{Guido Kanschat}
+\date{\today}
+\begin{document}
+\frame{\maketitle}
+\frame{\frametitle{Overview}\tableofcontents[hideallsubsections]}
+\section{Initial Value Problems and their Properties}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+\subsection{Modeling with ordinary differential equations}
+\subsection{Introduction to initial value problems}
+
+\frame{\input{definitions/explicit-ode}}
+\frame{\input{theorems/first-order}}
+\frame{\input{definitions/local-solution}}
+\frame{\input{theorems/volterra}}
+\frame{\input{theorems/peano-existence}}
+\frame{\input{theorems/peano-continuation}}
+
+\subsection{Linear differential equations
+  and Grönwall's inequality}
+
+\frame{\input{definitions/linear-ode}}
+\frame{\input{definitions/integrating-factor}
+\input{theorems/linear-representation}}
+\frame{\input{theorems/gronwall}}
+
+\subsection{Well-posedness of the IVP}
+
+\frame{\input{definitions/hadamard}}
+\frame{\input{theorems/stability}}
+\frame{\input{theorems/picard-lindelof}}
+
+\section{Explicit One-Step Methods and Convergence}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+\subsection{Introduction}
+
+\frame{\input{definitions/one-step}}
+\frame{\input{theorems/euler-linear-1}}
+
+\subsection{Error analysis}
+\begin{frame}
+  \frametitle{Error decomposition}
+  \centering
+  \includegraphics[width=.49\textwidth]{fig/forward-error.tikz}
+  \includegraphics[width=.49\textwidth]{fig/backward-error.tikz}
+\end{frame}
+
+\frame{\input{definitions/truncation-error}}
+\frame{\input{theorems/gronwall-discrete}}
+\frame{\input{theorems/stability-discrete}}
+\frame{\input{theorems/convergence-onestep}}
+
+\subsection{Runge-Kutta methods}
+
+\frame{\input{definitions/erk}}
+\frame{\input{definitions/butcher-tableau-erk}}
+\frame{\input{definitions/rk2}}
+\frame{\input{definitions/rk4}}
+\frame{\input{theorems/rk-order-3-4}}
+\frame{\input{theorems/taylor-u}}
+\frame{\input{theorems/taylor-y}}
+\begin{frame}
+  \begin{block}{Butcher barriers}
+    \input{tables/butcher-barriers}
+  \end{block}
+\end{frame}
+
+\subsection{Estimate of the truncation error and time step control}
+
+\frame{\input{theorems/richardson}}
+\frame{\input{definitions/embedded-butcher}}
+\frame{\input{definitions/dormand-prince-45}}
+\subsection{Continuous Runge-Kutta methods}
+
+\frame{\input{definitions/rk4-continuous}}
+\frame{\input{definitions/dormand-prince-45-continuous}}
+
+
+\section{Implicit One-Step Methods and Long-Time Stability}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+
+\subsection{Monotonic initial value problem}
+\frame{\input{definitions/lipschitz-one-sided}}
+\frame{\input{theorems/stability-monotonic}}
+\frame{\input{theorems/linear-monotonic}}
+\frame{\input{definitions/stiff}}
+\subsection{A- and B-stability}
+\frame{\input{definitions/stability-function}}
+\begin{frame}
+  \frametitle{Stability regions of the implicit and explicit Euler
+    methods}
+  \begin{center}
+    \includegraphics[width=.47\textwidth]{fig/stability-euler}
+    \includegraphics[width=.47\textwidth]{fig/stability-euler2}
+  \end{center}
+\end{frame}
+\frame{\input{definitions/a-stability}
+  \input{theorems/a-stability}}
+\frame{\input{definitions/b-stability}
+  \input{theorems/b-stability}}
+
+\subsection{General Runge-Kutta methods}
+\frame{\input{definitions/rk}}
+\frame{\input{theorems/stability-rk}}
+\frame{\input{theorems/stability-examples-rk}}
+\begin{frame}
+  \frametitle{Stability domains of ERK}
+  \begin{tabular}{ccc}
+    \includegraphics[width=.3\textwidth]{fig/stability-RK2}
+    &
+    \includegraphics[width=.3\textwidth]{fig/stability-RK4}
+    &
+    \includegraphics[width=.3\textwidth]{fig/stability-DOPRI5}
+    \\
+    mod. Euler & RK4 & DOPRI5
+  \end{tabular}
+\end{frame}
+\frame{\input{definitions/theta}}
+\begin{frame}
+  \frametitle{Stability domains of the $\theta$-scheme}
+  \begin{center}
+    \begin{tabular}{cccc}
+      \includegraphics[width=.22\textwidth]{fig/stability-CR}
+      &
+      \includegraphics[width=.22\textwidth]{fig/stability-theta6}
+      &
+      \includegraphics[width=.22\textwidth]{fig/stability-theta7}
+      &
+      \includegraphics[width=.22\textwidth]{fig/stability-euler2}
+      \\
+      $\theta= 0.5$
+      & $\theta = 0.6$
+      & $\theta = 0.7$
+      & $\theta = 1.0$
+      \\
+      Crank-Nicolson &&& impl. Euler
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\frame{\input{theorems/existence-implicit-1}}
+\frame{\input{theorems/existence-implicit-2}}
+\frame{\input{theorems/existence-implicit-3}}
+\frame{\input{definitions/order-conditions}%}
+
+%\frame{
+\input{theorems/order-conditions}}
+
+\subsection{Methods based on quadrature}
+\frame{\input{definitions/gauss-quadrature}}
+\frame{\input{definitions/radau-lobatto-quadrature}}
+\frame{\input{theorems/gauss-quadrature}}
+\frame{\input{definitions/collocation}}
+\frame{\input{theorems/collocation}}
+\frame{\input{theorems/collocation-equivalence}}
+\frame{\input{theorems/collocation-order}}
+\frame{\input{theorems/collocation-continuous}}
+\begin{frame}
+  \input{definitions/gauss-collocation}
+  \begin{block}{2- and 3-point Gauß-Collocation}
+  \begin{minipage}[t]{.39\linewidth}
+    \input{tables/gauss2}
+  \end{minipage}
+  \begin{minipage}[t]{.55\linewidth}
+    \input{tables/gauss3}      
+  \end{minipage}
+  \end{block}
+\end{frame}
+\frame{\input{theorems/gauss-consistency}
+\input{theorems/gauss-stability}}
+
+\begin{frame}
+  \begin{block}{2- and 3-point Radau collocation methods}
+  \begin{minipage}[t]{.39\linewidth}
+    \input{tables/radau2}
+  \end{minipage}
+  \begin{minipage}[t]{.55\linewidth}
+    \input{tables/radau3}      
+  \end{minipage}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Stability regions of Radau-collocation methods}
+    \centering
+  \includegraphics[width=.3\textwidth]{fig/stability-radau1}
+  \hfill
+  \includegraphics[width=.3\textwidth]{fig/stability-radau2}
+  \hfill
+  \includegraphics[width=.3\textwidth]{fig/stability-radau3}
+\end{frame}
+
+\section{Linear Multi-Step Methods}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+
+\begin{frame}
+  \begin{block}{Adams-Moulton methods (implicit)}
+  \begin{gather*}
+    y_k = y_{k-1} + \sum_{r=0}^\lmms f_{k-r} \int_{t_{k-1}}^{t_k}
+    L_r(t) \dt,
+  \end{gather*}
+    \begin{center}
+      \includegraphics[width=.9\textwidth]{fig/adams-moulton.tikz}
+    \end{center}
+    \input{definitions/adams-moulton}    
+  \end{block}
+\end{frame}
+\begin{frame}
+  \begin{block}{Adams-Bashforth methods (explicit)}
+  \begin{gather*}
+    y_k = y_{k-1} + \sum_{r=1}^\lmms f_{k-r} \int_{t_{k-1}}^{t_k}
+    L_r(t) \dt.
+  \end{gather*}
+    \begin{center}
+      \includegraphics[width=.9\textwidth]{fig/adams-bashforth.tikz}
+    \end{center}
+    \input{definitions/adams-bashforth}
+  \end{block}
+\end{frame}
+\begin{frame}
+  \begin{block}{Backward Differencing Formulas}
+  \begin{gather*}
+    y'(t_k) = f(t_k, y_k) = \sum_{r=0}^\lmms y_{k-r} L'_{k-r}(t_k).
+  \end{gather*}
+    \input{definitions/bdf}
+  \end{block}
+\end{frame}
+
+\frame{\input{definitions/lmm}}
+\frame{\input{definitions/lmm-errors}}
+\frame{\input{definitions/lmm-consistency}
+\input{theorems/lmm-bramble-hilbert}}
+\frame{\input{definitions/difference-equation}}
+\frame{\input{theorems/difference-equation-solutions}
+\input{theorems/difference-equation-basis}}
+\frame{\input{theorems/root-test}}
+\frame{\input{definitions/lmm-stability}
+\input{theorems/lmm-stability}}
+\frame{\input{definitions/lmm-convergence}}
+\frame{\input{theorems/lmm-one-step}}
+\frame{\input{theorems/lmm-one-consistency}}
+\frame{\input{theorems/lmm-one-stability}}
+\frame{\input{theorems/lmm-convergence}}
+\frame{\input{definitions/aa-stability}}
+
+\frame{
+\begin{figure}[tp]
+  \centering
+  \includegraphics[width=.45\textwidth]{fig/stability-bdf.png}
+  \hfill
+  \includegraphics[width=.45\textwidth]{fig/stability-bdf-zoom.png}
+  \caption{Boundaries of stability regions of BDF1 to BDF6. Unstable
+    region right of the origin. Zoom on the right}
+  \label{fig:bdf-stability}
+\end{figure}
+}
+
+\section{Boundary Value Problems}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+
+\begin{frame}
+  \input{definitions/bvp}
+  \input{definitions/bvp-linear}
+\end{frame}
+
+\frame{\input{definitions/variational-equation}}
+\frame{\input{theorems/fundamental}}
+\frame{\input{theorems/derivative}}
+\frame{\input{theorems/derivative-f.tex}}
+
+\frame{\input{definitions/local-uniqueness}}
+\frame{\input{theorems/bvp-derivative}}
+\frame{\input{theorems/local-uniqueness}}
+\frame{\input{theorems/bvp-stability-1}}
+\frame{\input{theorems/bvp-stability-2}}
+\frame{\input{theorems/bvp-linear}}
+\frame{\input{definitions/single-shooting}}
+\frame{\input{algorithms/single-shooting}}
+\frame{\input{definitions/multiple-shooting}}
+\frame{\input{definitions/multiple-shooting-newton}}
+\frame{\input{definitions/multiple-shooting-multiple}}
+\frame{\input{definitions/bvp-parameter}}
+\frame{\input{definitions/multiple-shooting-parameter}}
+\section{Newton and quasi-Newton methods}
+\frame{\input{definitions/nonlinear}}
+\frame{\input{definitions/iteration-order}}
+\frame{\input{definitions/newton}}
+\frame{\input{theorems/newton-kantorovich}}
+\frame{\input{definitions/gradient-method}}
+\frame{\input{theorems/gradient-method}}
+\frame{\input{definitions/predictor-corrector}}
+\frame{\input{definitions/newton-line-search}}
+\frame{\input{theorems/downhill}}
+\frame{\input{definitions/newton-step-size}}
+
+\section{Finite Differences}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+
+\frame{\input{definitions/partitioning}}
+\frame{\input{definitions/bvp-second}}
+\frame{\input{definitions/difference-operators}}
+\frame{\input{definitions/fd-consistency}}
+\frame{\input{theorems/fd-consistency}}
+\frame{\input{definitions/fd}}
+\frame{\input{definitions/fd-example}}
+\frame{\input{definitions/fd-matrix}}
+\begin{frame}
+  \begin{block}{The reduced system}
+    \begin{gather*}
+      L_h y =
+    \begin{pmatrix}
+      \lambda_1 & \nu_1\\
+      \mu_2 & \lambda_2 & \nu_2 \\
+      & \ddots & \ddots & \ddots \\
+      &&\mu_{n-1}& \lambda_{n-1}
+    \end{pmatrix}
+    \begin{pmatrix}
+      y_1\\\vdots\\y_{n-1}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      f_1 \\\vdots\\f_{n-1}
+    \end{pmatrix} = f_h.
+  \end{gather*}
+  \end{block}
+\end{frame}
+\frame{\input{definitions/m-matrix}
+  \input{theorems/m-matrix-fd1}}
+\frame{\input{theorems/m-matrix-inverse}}
+\frame{\input{theorems/fd-stability}}
+\frame{\input{definitions/upwind}}
+\frame{\input{theorems/fd-convergence}}
+\frame{\input{definitions/square-domain}}
+\frame{\input{definitions/laplacian}}
+\frame{\input{definitions/dirichlet}}
+\frame{\input{theorems/mean-value}}
+\frame{\input{theorems/maximum}}
+\frame{\input{definitions/cartesian-grid}}
+\frame{\input{definitions/lexicographic}}
+\frame{\input{definitions/5-point-stencil}}
+\frame{\input{theorems/fd-matrix}}
+\frame{\input{theorems/fd2-consistency}}
+\frame{\input{theorems/fd2-maximum}}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

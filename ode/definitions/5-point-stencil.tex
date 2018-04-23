@@ -1,0 +1,22 @@
+\begin{Definition}{5-point-stencil}
+  The \define{5-point stencil} consists of the sum of a 3-point
+  stencil in $x$- and a 3-point stencil in $y$-direction. Its
+  graphical representation is
+  \begin{center}
+    \includegraphics[width=.25\textwidth]{fig/5-point-stencil.tikz}
+  \end{center}
+  For a generic row of the linear system, where the associated point is not
+  neighboring the boundary, this leads to
+  \begin{gather}
+    \label{eq:5-point-stencil:1}
+    \frac1{h^2}\bigl[4y_k - y_{k-1} - y_{k+1} - y_{k-(n-1)} -
+    y_{k+(n-1)}\bigr] = f_k
+  \end{gather}
+  If the point $k$ is next to the boundary, the corresponding entry
+  from the matrix must be omitted.
+\end{Definition}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

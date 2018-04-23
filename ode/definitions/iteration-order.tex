@@ -1,0 +1,21 @@
+\begin{Definition}{iteration-order}
+  An \putindex{iteration}
+  \begin{gather*}
+    x^{(k+1)} = G\left(x^{(k)}\right)
+  \end{gather*}
+  is said to be \textbf{convergent of order $p$}, if there holds for
+  $p\ge 1$:
+  \begin{gather*}
+    \norm{x^{(k+1)}-x^*} \le c \norm{x^{(k)}-x^*}^p,
+  \end{gather*}
+  and if for $p=1$ there holds $c<1$. For $p>1$, such a method
+  converges only locally, namely if $\norm{x^{(0)}-x^*}$ is
+  sufficiently small, for instance
+  \begin{gather*}
+    \norm{x^{(0)}-x^*}^{p-1} < \frac1c.
+  \end{gather*}
+\end{Definition}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

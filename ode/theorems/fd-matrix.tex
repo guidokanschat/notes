@@ -1,0 +1,29 @@
+\begin{Lemma}{fd-matrix}
+  The matrix obtained for the Laplacian on $\Omega = [0,1]^2$ by the
+  5-point stencil on a uniform Cartesian mesh of mesh spacing $h=1/n$
+  with lexicographic numbering has the structure
+  \begin{gather*}
+    L_h =
+    \begin{bmatrix}
+      D & -I \\
+      -I & D & -I \\
+      & \ddots & \ddots & \ddots \\
+      & & -I & D & -I \\
+      &&& -I & D
+    \end{bmatrix}
+    ,\qquad
+    D =
+    \begin{pmatrix}
+      4 & -1 \\
+      -1 & 4 & -1 \\
+      & \ddots & \ddots & \ddots \\
+      & & -1 & 4 & -1 \\
+      &&& -1 & 4
+    \end{pmatrix}
+  \end{gather*}
+\end{Lemma}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

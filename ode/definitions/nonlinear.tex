@@ -1,0 +1,24 @@
+\begin{Definition}{nonlinear}
+  We consider two formulations of nonlinear root finding problems
+  \begin{xalignat}{2}
+    \label{eq:nonlinear:1}
+    f(x) &= 0, & f:\R^d &\to \R^d \\
+    \intertext{and}
+    \label{eq:nonlinear:2}
+    x &= \operatorname{argmin} F(y)
+    & F: \R^d &\to \R.
+  \end{xalignat}
+  These two problems are equivalent by either choosing for instance
+  \begin{gather*}
+    f(x) = \nabla F(x)
+    \qquad\text{or}\qquad
+    F(x) = \abs{f(x)}.
+  \end{gather*}
+\end{Definition}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

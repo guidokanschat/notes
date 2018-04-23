@@ -1,0 +1,15 @@
+\begin{Definition}{fd-convergence}
+  A finite difference method is called convergent of order $p$, if
+  there holds for a constant $c$ independent of $h$
+  \begin{gather}
+    \label{eq:fd-convergence:1}
+    \max_{0\le k\le n}\abs{u_k - y_k} \le c h^p.
+  \end{gather}
+  It is consistent of order $p$, if applied to the vector
+  $u = (u_0,\dots,u_n)^T$
+\end{Definition}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

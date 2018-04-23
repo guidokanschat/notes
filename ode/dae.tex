@@ -1,0 +1,54 @@
+\chapter{Differential Algebraic Equation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Singular perturbed problems and differential algebraic 
+	equation of index 1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{example}[Van der Pol equation]
+  Given is the following equation:
+
+  \begin{equation}\begin{split}
+    \epsilon z'' + (z^2 - 1) z' + z & = 0 \\
+    z(0) & = z_0 \\
+  \end{split}\end{equation}
+
+	It is also called Van der Pol equation. If one now chooses $\epsilon$ 
+	very small, then one obtains a stiff IVP.
+
+  \begin{equation}
+    \epsilon z'' + (z^2 - 1) z' = \diffq[t] \underbrace{(\epsilon z' + (\frac{z^3}{3} - z))}_{=: y}
+  \end{equation}
+
+  \begin{equation}\begin{split}
+    \diffq[t] y & = -z \\
+    \epsilon \diffq[t] z & = y - (\frac{z^3}{3} - z) \\
+  \end{split}\end{equation}
+
+  \begin{equation}\begin{split}
+    y' & = f(y,z) \\
+    \epsilon z' & = g(y,z) \\
+  \end{split}\end{equation}
+
+	This is an example of a singular perturbed problem (SDP)
+
+  For $\epsilon = 0$ we receive:
+
+  \begin{equation}\begin{array}{lll}
+    y' & = f(y,z) & \leftarrow \text{ordinary differential equation (ODE)} \\
+    0 & = g(y,z) & \leftarrow \text{algebraic equation (AE)}\\ 
+  \end{array}\end{equation}
+
+	The upper system consists of an ordinary differential equation and an algebraic 
+	equation. Therefore one also calls this a differential algebraic equation
+	(DAE).
+\end{example}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "notes"
+%%% End: 

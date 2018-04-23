@@ -1,0 +1,38 @@
+\begin{Lemma}{lmm-one-step}
+  Every multistep method can be recast as a one-step method
+  \begin{gather}
+    \label{eq:lmm-one-step:1}
+    Y_{k} = (A\otimes I) Y_{k-1} + h \verfahren_h(t_{k-1}, Y_{k-1})
+  \end{gather}
+  where with $\alpha_r' = \alpha_r/\alpha_s$
+  \begin{gather}
+    \label{eq:lmm-one-step:2}
+    Y_k =
+    \begin{pmatrix}
+      y_k \\ \vdots \\ y_{k-s+1}
+    \end{pmatrix},
+    \quad
+    A =
+    \begin{pmatrix}
+      -\alpha_{\lmms-1}' & -\alpha_{\lmms-2}' & \cdots & -\alpha_{0}'\\
+      1 & 0 & \cdots & 0 \\
+      & \ddots & \cdots & 0 \\
+      & & 1 & 0
+    \end{pmatrix},
+  \end{gather}
+  and $\verfahren_h(t_k, Y_k) = (e_1\otimes I) \psi_h(t_{k-1}, Y_{k-1})$ with
+  $\beta_r' = \beta_r/\alpha_s$ and $\psi_h$ defined implicitly by
+  \begin{multline}
+    \label{eq:lmm-one-step:3}
+    \psi_h(t_{k-1}, Y_{k-1})
+    =\sum_{r=1}^{\lmms} \beta_{\lmms-r} f(t_{k-r},y_{k-r})
+    \\
+    + \beta_s' f\left(t_k, h\psi_h(t_{k-1}, Y_{k-1}) -
+      \sum_{r=1}^{\lmms} \alpha_{\lmms-r}' y_{k-r}\right).
+  \end{multline}
+\end{Lemma}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End: 

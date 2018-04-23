@@ -1,0 +1,35 @@
+\begin{Example}{fd-matrix}
+  The linear system obtained in Example~\ref{example:fd-example} has a
+  tridiagonal matrix $L_h$ and reads
+  \begin{gather}
+    \label{eq:fd-matrix:1}
+    \begin{pmatrix}
+      1 \\
+      \mu_1 & \lambda_1 & \nu_1 \\
+      & \ddots & \ddots & \ddots \\
+      &&\mu_{1-1} & \lambda_{n-1} & \nu_{n-1} \\
+      &&&&1
+    \end{pmatrix}
+    \begin{pmatrix}
+      y_0 \\y_1\\\vdots\\y_{n-1}\\y_n
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      0 \\ f_1 \\ \vdots \\f_{n-1} \\ 0
+    \end{pmatrix},
+  \end{gather}
+  where
+  \begin{gather*}
+    \lambda_k = \frac2{h^2} + \gamma_k
+    \qquad
+    \begin{aligned}
+    \mu_k &= -\frac1{h^2} - \frac{\beta_k}{2h} \\
+    \nu_k &= -\frac1{h^2} + \frac{\beta_k}{2h}      
+    \end{aligned}
+  \end{gather*}
+\end{Example}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End: 

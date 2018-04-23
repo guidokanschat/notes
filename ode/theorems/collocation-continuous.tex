@@ -1,0 +1,18 @@
+\begin{Theorem}{collocation-continuous}
+  \index{Runge-Kutta method!continuous} The collocation polynomial
+  $y(t)$, defined through an $\rks$-stage collocation method of the
+  form~\eqref{eq:implicit:13}, defines a continuous Runge-Kutta method
+  of order $s$. This means for the difference of the exact solution
+  $u(t)$ of the initial value problem and the collocation polynomial
+  $y(t)$ we get the estimate
+  \begin{gather}
+    \label{eq:implicit:15}
+    \abs{u(t)-y(t)} \le C h^{s+1}.
+  \end{gather}
+  Additionally we obtain for the derivatives of order $k\le s$ the
+	estimate
+  \begin{gather}
+    \label{eq:implicit:16}
+    \abs{u^{(k)}(t)-y^{(k)}(t)} \le C h^{s+1-k}.
+  \end{gather}
+\end{Theorem}

@@ -1,0 +1,55 @@
+\newslidetheorem{Algorithm}
+% Definitions for Runge-Kutta-Koefficients
+\def\rks{s}  % Number of steps
+\def\rka{a}  % Coefficient matrix
+\def\rkb{b}  % Quadrature weights
+\def\rkc{c}  % Quadrature points
+\def\rkg{g}  % Intermediate points
+% Rannacher:
+%\def\rka{b} \def\rkb{c} \def\rkc{a} \def\rks{r}
+
+% Definitions for LMM coefficients
+\def\lmms{s}
+
+% Definitions for boundary value problems
+\def\rwaa{B_a}
+\def\rwab{B_b}
+
+\begin{document}
+
+\maketitle
+
+\section*{Preface}
+%\input{../preface}
+
+%\todo{!!!}
+
+Special thanks go to Dr.~Daniel Arndt for contributing problems,
+solutions, and improving the notes at many points. Furthermore, I
+thank Vladislav Olkhovskiy and Saurabh Mehta for valuable corrections
+and additions.
+\thispagestyle{empty}
+\setcounter{page}{0}
+
+\tableofcontents
+
+\input{awa}
+\input{explicit}
+\input{implicit}
+\input{lmm}
+\input{rwa}
+\input{newton}
+\input{fd}
+\appendix
+\input{appendix}
+\input{postmatter}
+
+
+\printbibliography
+\printindex
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

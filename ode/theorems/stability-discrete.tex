@@ -1,0 +1,19 @@
+\begin{Theorem*}{stability-discrete}{Discrete stability}
+  If $F(t,y)$ is Lipschitz continuous in $y$ for any $t=t_k$, $k<n$,
+  with constant $L_h$, then the one-step method is \define{discretely
+    stable}, i.~e. for arbitrary sequences $(y_n)$ and $(z_n)$, there
+  holds: if $\eta_k(y)$ and $\eta_k(z)$ are both bounded independent
+  of the sequences $(y_n)$ and $(z_n)$, then
+  \begin{equation*}
+    \abs{y_n - z_n}
+    \le e^{L_h(t_n-t_0)} \left(
+      \abs{y_0 - z_0}
+      + \sum_{k=1}^n \abs{\eta_k(y) - \eta_k(z)}
+    \right)
+  \end{equation*}
+\end{Theorem*}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

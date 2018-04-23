@@ -1,0 +1,126 @@
+\chapter{Appendix}
+
+% \section{To the proof of the theorem of Peano}
+
+% \begin{definition}
+%   A function sequence $f^n$ is called \textbf{equicontinuous}, if it holds:
+%   \begin{gather*}
+%   \forall \,\epsilon > 0
+%   \;\exists \, \delta > 0
+%   \;\forall \, n \in \mathbb{N}
+%   \;\forall |y-x| < \delta 
+%   \quad:\quad |f^n(y)-f^n(x)| < \epsilon    
+%   \end{gather*}
+% \end{definition}
+
+% \begin{theorem}[Arzela-Ascoli]\label{theorem:arzelaascoli}
+%   Let be $f^h$ a equicontinuous, uniformly bounded sequence
+%   of functions. Then it exists a subsequence $f^{h_i}$ which converges to a 
+% 	uniformly continuous function $f$.
+% \end{theorem}
+
+% \begin{todo}
+% \begin{proof}
+%   Nachzulesen in ...? %%%%%%%%%%%%%%%%
+% \end{proof}
+% \end{todo}
+
+% \begin{proof}[Proof of the theorem of Peano]
+%   I) Choose a sequence $h \to 0$ and compute approximations $u^h(t)$ with  
+% 		Euler's method.
+
+%     The method is well-defined, 
+% 		if $(t_n,u_n^h) \in D \ \ \ \forall n$ with $|t_n-t_0| \le T$
+
+%     $|u_1^h - u_0| = |h f(t_0,u_0)| \le h M$
+
+%     $|u_n^h - u_0| = | \sum\limits_{k=0}^{n-1} h f(t_k,u_k^h) | 
+% 		\le M \underbrace{h n}_{= T} \le M T \le \beta$
+
+%   \noindent II) To show: $u^h(t)$ is uniformly bounded and 
+% 		equicontinuous.
+
+%     a) Since $u^h(t) \in D \Rightarrow |u^h(t)-u_0| \le \beta$
+
+%     b) For $\tau,t \in [t_{n-1},t_n]$ holds $|u^h(\tau)-u^h(t)| \le M |\tau-t|$
+
+%     \noindent $\Rightarrow$ The functions $u^h$ are equicontinuous and 
+% 		Lipschitz continuous with L-constant $M$.
+
+%     \noindent $\underset{Theorem~\ref{theorem:arzelaascoli} }{\Rightarrow}$ It exists
+% 		a sequence $u_i^h$ with $u_i^h \to u$ and $u$ is equicontinuous.
+
+%   \noindent III) The limit function $u$ solves Volterra's integral equation
+
+%     $u(t) = u_0 + \int\limits_{t_0}^t f(s,u(s))\ \mathrm{d}s$.
+
+%     \noindent To that: (The subsequence index will be omitted in the following)
+
+%     $u^h(t) = u_0 + \sum\limits_{j=0}^k h f(t_j,u_j^h) + (t-t_k) f(t_k,u_k^h)$,
+
+%     \noindent where $t_k$ is the highest point of Euler's method with $t_k < t$.
+
+%     $\begin{array}{lcl}
+%       u^h(t) = u_0 + \int\limits_{t_0}^t \Phi^h(s) \ \mathrm{d}s
+%         & \text{ with } & \Phi^h(t) = f(t_j,u_j^h) \text{ for } t \in [t_j,t_{j+1}]\\
+%       \Big\downarrow h \to 0 & \ & \Big\downarrow h \to 0 \\
+%       u(t) = u_0 + \int\limits_{t_0}^t \Phi(s) \ \mathrm{d}s
+%         & \text{ with } & \Phi(t) = f(t,u(t))\\
+%     \end{array}$
+
+%     \noindent Remains to show: $\Phi^h \to \Phi$ uniformly
+
+% 		This follows from the uniformly continuity of $f$ in $\overline{D}$ and 
+% 		the equicontinuity of $u^h \to u$.
+% \end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Properties of matrices}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{The matrix exponential}
+\label{sec:matrix-exponentials}
+
+\begin{definition}
+  The matrix exponential $e^A$ of a matrix $A\in \R^{d\times d}$ is defined
+  by its power series
+  \begin{gather}
+    \label{eq:appendix:1}
+    e^A = \sum_{k=0}^\infty \frac{A^k}{k!}.
+  \end{gather}
+\end{definition}
+
+\begin{lemma}
+  \label{lemma:appendix:exp-0}
+  The power series~\eqref{eq:appendix:1} converges for each matrix $A$.
+\end{lemma}
+\begin{proof}
+  
+\end{proof}
+
+\begin{lemma}[Properties of the matrix exponential function] 
+  \label{lemma:appendix:exp-1}
+	The following relations hold true:
+  \begin{xalignat}2
+    \label{eq:appendix:2}
+    e^0 &= \identity \\
+    \label{eq:appendix:3}
+    e^{\alpha A} e^{\beta A} &= e^{(\alpha+\beta) A}, &\forall
+    A\in\R^{d\times d}\; \forall \alpha,\beta\in \R,\\
+    \label{eq:appendix:4}
+    e^A e^{-A} &= \identity &\forall A\in\R^{d\times d}.
+  \end{xalignat}
+  Moreover, $e^A$ is invertible for arbitrary quadratic matrices $A$.
+\end{lemma}
+
+\section{The Banach fixed-point theorem}
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "notes"
+%%% End: 

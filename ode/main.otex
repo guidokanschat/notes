@@ -1,0 +1,90 @@
+\usepackage{mathsim}
+\usepackage{hyperref}
+%\usepackage[german]{varioref}
+\usepackage{csquotes}
+\usepackage{units}									%inculded
+\let\vref\ref
+\usepackage{tikz,tikzscale}
+\usetikzlibrary{snakes}
+\usepackage{tcolorbox}
+\usepackage{makeidx}
+\usepackage[backend=bibtexu,style=alphabetic]{biblatex}
+\addbibresource{all}
+\addbibresource{skript}
+\usepackage[notref,notcite]{showkeys}
+
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+\parindent0pt
+\parskip2ex plus 1ex minus 1ex
+
+\newtheorem{theorem}{\iflanguage{german}{Satz}{}\iflanguage{english}{Theorem}{}}[section]
+\newtheorem{lemma}[theorem]{\iflanguage{german}{Hilfssatz}{}\iflanguage{english}{Lemma}{}}
+\newtheorem{corollary}[theorem]{\iflanguage{german}{Korollar}{}\iflanguage{english}{Corollary}{}}
+\newtheorem{assumption}[theorem]{\iflanguage{german}{Annahme}{}\iflanguage{english}{Assumption}{}}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{algorithm}[theorem]{\iflanguage{german}{Algorithmus}{}\iflanguage{english}{Algorithm}{}}
+\theoremstyle{remark}
+\newtheorem{example}[theorem]{\iflanguage{german}{Beispiel}{}\iflanguage{english}{Example}{}}
+\newtheorem{intro}[theorem]{\iflanguage{german}{Einleitung}{}\iflanguage{english}{Introduction}{}}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{remark}[theorem]{\iflanguage{german}{Bemerkung}{}\iflanguage{english}{Remark}{}}
+\newtheorem{review}[theorem]{\iflanguage{german}{Zusammenfassung}{}\iflanguage{english}{Review}{}}
+
+% define a theorem environment taking as parameter:
+%  1. optional name of the theorem
+%  2. type (theorem, lemma, etc.)
+%  3. label
+\makeatletter
+\def\TH@with[#1]#2#3{\def\TH@type{#2}\begin{tcolorbox}\expandafter\csname #2\endcsname[#1]\label{#2:#3}}
+\def\TH@without#1#2{\def\TH@type{#1}\begin{tcolorbox}\expandafter\csname #1\endcsname\label{#1:#2}}
+\def\TH{\@ifnextchar[{\TH@with}{\TH@without}}%
+\def\endTH{\expandafter\csname end\TH@type\endcsname\end{tcolorbox}}
+\makeatother
+
+
+% Definitions for Runge-Kutta-Koefficients
+\def\rks{s}  % Number of steps
+\def\rka{a}  % Coefficient matrix
+\def\rkb{b}  % Quadrature weights
+\def\rkc{c}  % Quadrature points
+\def\rkg{g}  % Intermediate points
+% Rannacher:
+%\def\rka{b} \def\rkb{c} \def\rkc{a} \def\rks{r}
+
+% Definitions for LMM coefficients
+\def\lmms{s}
+
+% Definitions for boundary value problems
+\def\rwaa{B_a}
+\def\rwab{B_b}
+
+\title{\textbf{Numerical Analysis \\of\\
+    Ordinary Differential Equations}}
+\author{Prof.~Dr.~Guido Kanschat}
+\date{\today}
+\makeindex
+\input{includeonly}
+\begin{document}
+%
+\maketitle
+
+\tableofcontents
+
+\include{preface}
+\include{awa}
+\include{explicit}
+\include{implicit}
+\include{lmm}
+\include{rwa}
+\include{newton}
+\include{fd}
+\appendix
+\include{appendix}
+\include{postmatter}
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "notes"
+%%% End: 

@@ -1,0 +1,21 @@
+\begin{Theorem}{fd-stability}
+  Assume that~\eqref{eq:fd:3} holds.  Then, the matrix $L_h$ defined
+  in~\eqref{eq:fd-matrix:1} is invertible.
+
+  Let there furthermore be a constant $\delta < 2$ such that
+  \begin{gather}
+    \label{eq:fd:1}
+    \abs{\beta_k} \abs{b-a} - \gamma_k \abs{b-a}^2 \le \delta.
+  \end{gather}
+  Then. the inverse admits the estimate
+  \begin{gather}
+    \label{eq:fd:5}
+    \norm{L_h^{-1}}_\infty \le \frac{(b-a)^2}{8-4\delta}.
+  \end{gather}
+\end{Theorem}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

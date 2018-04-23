@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+  \draw (-1,0) node[shape=circle,draw] (L) {1};
+  \draw (0,-1) node[shape=circle,draw] (B) {1};
+  \draw (0,0) node[shape=circle,draw] (C) {-4};
+  \draw (1,0) node[shape=circle,draw] (R) {1};
+  \draw (0,1) node[shape=circle,draw] (T) {1};
+  \draw (L.east) -- (C.west);
+  \draw (C.east) -- (R.west);
+  \draw (T.south) -- (C.north);
+  \draw (C.south) -- (B.north);
+\end{tikzpicture}

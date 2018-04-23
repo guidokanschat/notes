@@ -1,0 +1,27 @@
+\begin{Example}{upwind}
+By changing the discretization of the first order term to an
+\define{upwind} finite difference method, we obtain an M-matrix
+independent of the relation of $\beta_k$ and $h$. To this end define
+\begin{gather}
+  \label{eq:fd:6}
+  \beta(x) D^\uparrow_h u(x) =
+  \begin{cases}
+    \beta(x) D^-_h u(x) &\text{if } \beta(x)>0 \\
+    \beta(x) D^+_h u(x) &\text{if } \beta(x)<0
+  \end{cases}.
+\end{gather}
+This changes the matrix $L_h$ to a matrix $L_h^\uparrow$ with entries
+\begin{gather}
+  \label{eq:fd:7}
+  \lambda_k = \frac{2}{h^2} + \frac{\abs{\beta_k}}{h} + \gamma_k
+  \qquad
+  \begin{aligned}
+    \mu_k &= -\frac1{h^2} - \frac{\max\{0,\beta_k\}}{h} \\
+    \mu_k &= -\frac1{h^2} + \frac{\min\{0,\beta_k\}}{h}
+  \end{aligned}
+\end{gather}
+As a consequence, the off-diagonal elements always remain non-positive
+and the diagonal elements remain positive only subject to a condition
+on $\gamma_k$. Thus, $L^\uparrow_h$ is an M-matrix independent of the
+values $\beta_k$. Nevertheless, the consistency order is reduced to one.
+\end{Example}

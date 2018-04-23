@@ -1,0 +1,19 @@
+\begin{Theorem}{stability-monotonic}
+  Let $u(t)$ and $v(t)$ be two solutions of the equation
+  \begin{gather*}
+    u'=f(t,u),  \qquad v'=f(t,v),
+  \end{gather*}
+  with initial values $u(t_0) = u_0$ and $v(t_0) = v_0$,
+  respectively. Let the function $f$ be continuous and let the
+  one-sided Lipschitz condition~\eqref{eq:impl:Lipschitz} hold. Then
+  we have for $t>t_0$:
+  \begin{gather}
+    \label{eq:implicit:3}
+    \abs{v(t)-u(t)} \le e^{\nu(t-t_0)} \abs{v(t_0) - u(t_0)}.    
+  \end{gather}
+\end{Theorem}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

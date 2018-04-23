@@ -1,0 +1,28 @@
+\begin{Definition}{stiff}{Stiff IVP}
+  \defindex{stiff initial value problem}
+  \defindex{initial value problem!stiff}
+  An initial value problem is called \define{stiff}, if it has
+	the following characteristic properties:
+  \begin{enumerate}
+  \item The right hand side of the ODE is \putindex{monotonic}, or at
+    least admits a one-sided Lipschitz condition with a small
+    parameter $\nu$.
+  \item The \putindex{time scales} on which the different solution
+    components are evolving differ a lot, or in mathematical terms,
+    the Lipschitz constant $L$ of the right hand side is greater than
+    $\nu$ by orders of magnitude.
+  \item The time scales which are of interest for the application 
+    are much longer than the fastest time scales of the equation. Again
+    in the language of our parameters: there is a constant $c$ of
+    moderate size, such that
+    \begin{gather}
+      \label{eq:implicit:7}
+      e^{LT} \le c e^{\nu T}.
+    \end{gather}
+  \end{enumerate}
+\end{Definition}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

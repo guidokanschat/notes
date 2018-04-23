@@ -1,0 +1,16 @@
+\begin{Definition}{radau-lobatto-quadrature}
+  The \define{Radau quadrature} formulas use one end point of the interval
+  $[0,1]$ and the roots of orthogonal polynomials of degree $n-1$ as
+  their abscissas. We distinguish left and right Radau quadrature
+  formulas, depending on which end is included. \define{Lobatto quadrature}
+  formulas use both end points and the roots of a polynomial of degree
+  $n-2$. In all three cases, the abscissas are the roots of the polynomials
+  \begin{xalignat}2
+    \text{Radau}&\text{ left}
+    & p_n(x) &= \frac{d^{n-1}}{dx^{n-1}}\bigl(x^n(x-1)^{n-1}\bigr), \\
+    \text{Radau}&\text{ right}
+    & p_n(x) &= \frac{d^{n-1}}{dx^{n-1}}\bigl(x^{n-1}(x-1)^{n}\bigr), \\
+    \text{Lobatto}&
+    & p_n(x) &= \frac{d^{n-2}}{dx^{n-2}}\bigl(x^{n-1}(x-1)^{n-1}\bigr).
+  \end{xalignat}
+\end{Definition}

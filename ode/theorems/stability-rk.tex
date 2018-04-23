@@ -1,0 +1,37 @@
+% HW2, p. 40
+\begin{Lemma}{stability-rk}
+  The \putindex{stability function} of an $s$-stage Runge-Kutta method with
+  coefficients
+  \begin{gather*}
+    A=
+    \begin{pmatrix}
+      \rka_{11} & \cdots & \rka_{1s}
+      \\ \vdots & & \vdots \\
+      \rka_{s1} & \cdots & \rka_{ss}
+    \end{pmatrix},
+    b =
+    \begin{pmatrix}
+      b_1 \\ \vdots \\ b_s
+    \end{pmatrix},
+  \end{gather*}
+  is given by the two expressions
+  \begin{gather}
+    \label{eq:stability-rk:1}
+    R(z) = 1+ z b^T \bigl(I-zA\bigr)^{-1}
+    \begin{pmatrix}
+      1\\\vdots\\1
+    \end{pmatrix}
+    = \frac{\operatorname{det}\left(I-zA+z
+        \begin{pmatrix}
+          b_1 & \cdots & b_s\\
+          \vdots & & \vdots \\
+          b_1 & \cdots & b_s
+        \end{pmatrix}\right)
+}{\operatorname{det}\bigl(I-zA\bigr)}
+  \end{gather}
+\end{Lemma}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

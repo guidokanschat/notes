@@ -1,0 +1,13 @@
+\begin{tikzpicture}[domain=0:2,thick]
+%axes
+\draw[->] (-0.2,.2) -- (2.2,.2) node[right] {$t$};
+\draw[->] (0,0) -- (0,.7);
+%\draw (1,-.05) -- (1,.05);
+%\draw (2,-.05) -- (2,.05);
+
+% solutions
+\draw[color=red] (0,.3) -- (1,.45) -- (2,.45+.225) node[right] {$y$};
+\draw[color=purple,style=dashed] (0,.3) -- (2,0.6) node[right] {$\hat y$};
+\draw[color=black] plot (\x,{0.3*exp(.5*\x)}) node[right] {$u$};
+
+\end{tikzpicture}

@@ -1,0 +1,606 @@
+\chapter{Boundary Value Problems}
+\label{chapter:rwa}
+\section{Introduction}
+\begin{intro}
+  This chapter deals with problems of a fundamentally different type
+  than the problems we examined in chapter~\ref{cha:awa} and which we
+  solved with previous numerical methods, namely boundary value
+  problems. Here, we have prescribed values at the beginning and at
+  the end of an interval of interest.
+
+  The representation we use here is based primarily
+  on~\cite{DeuflhardBornemann08} and~\cite{Rannacher12}.
+\end{intro}
+
+\input{definitions/bvp}
+\input{definitions/bvp-linear}
+
+\begin{remark}
+  Since boundary values are imposed at two different
+  points in time, the concept of local solutions from
+  definition~\ref{def:awa:local solution} is not applicable.
+  Thus, tricks as going forward from interval to interval, which is
+  for instance done with Euler's method in the proof of Péano's
+  theorem, are here not applicable.  For this reason nothing can be
+  concluded with the local properties of the right hand side $f$ at
+  the points $a$ and $b$. In fact, it is just possible in a few
+  special cases to conclude that a solution exists.
+\end{remark}
+
+\input{derivatives}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Theory of boundary value problems}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{remark}
+  The very general boundary condition (BC) \index{Boundary
+    condition}~\eqref{eq:rwa:3} usually has more simple forms. Often
+  it is a \textbf{linear} \putindex{linear boundary condition}
+   which we can note in the following form
+  \begin{gather}
+    \label{eq:rwa:4}
+    \rwaa u(a) + \rwab u(b) = g
+  \end{gather}
+  with $d\times d$ matrices $\rwaa$ and $\rwab$ as well as a vector $g\in
+  \R^d$. Another very common case is the one of 
+  \textbf{separated}
+  \index{boundary condition!separated}
+  \index{separated boundary condition}
+  boundary conditions, which has the form
+  \begin{xalignat}{2}
+    \label{eq:rwa:5}
+    r_a\bigl(u(a)\bigr) &= 0,
+    &
+    r_b\bigl(u(b)\bigr) &= 0,
+    \\\intertext{or}
+    \rwaa u(a) &= g_a,
+    &
+    \rwab u(b) &= g_b.
+  \end{xalignat}
+\end{remark}
+
+\begin{example}
+  Take the second order differential equation
+  \begin{gather*}
+    u''(t) = -2, \quad \forall t\in (0,1),
+  \end{gather*}
+  with boundary conditions
+  \begin{gather*}
+    u(0) = u(1) = 0.
+  \end{gather*}
+  We can deduce from the differential equation that the solution is a
+  parabola open to the bottom, and we verify easily that
+  \begin{gather*}
+    u(t) = t(1-t)
+  \end{gather*}
+  is a solution.
+\end{example}
+
+\begin{example}
+  Take the first order differential equation
+  \begin{gather*}
+    u'(t) = u(t), \quad \forall t\in (0,1),
+  \end{gather*}
+  with boundary values
+  \begin{gather*}
+    u(0) = u(1) = 1.
+  \end{gather*}
+  From the theory of the first chapter, we know that the initial value
+  problem with only the initial value at zero has the unique solution
+  $u(t) = e^t$. Thus, this BVP does not have a solution.
+
+  If we changed the condition at the right end of the interval to
+  $u(1) = e$, the problem is solvable, albeit we have to admit that
+  this solution seems somewhat accidental.
+\end{example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{remark}
+  As the examples show, a satisfying theory for the existence of
+  solutions will be difficult to obtain for any boundary values. For
+  instance, in the linear case it is obvious that neither $\rwaa$, nor
+  $\rwab$ may have full rank, because that would imply the unique
+  existence either of the IVP with $\rwaa u(a) = g_a$ or
+  $\rwab u(b) = g_b$, and thus no freedom to match the condition at
+  the other end.
+
+  As a consequence we now turn our attention to a ``restricted''
+  solution theory and wonder: assume a solution of the problem
+  exists. Which further conditions are necessary to obtain
+  well-posedness of the problem in terms of Hadamard
+  (definition~\vref{definition:hadamard}).
+
+  The key is the following definition which grants us the possibility
+  of the approximation of a solution, at least after a quantification
+  of the neighborhood.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\input{definitions/local-uniqueness}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{theorems/bvp-derivative}
+
+\begin{remark}
+  The definition of the matrices $\rwaa$ and $\rwab$ above is
+  consistent with the usage of the matrix $\rwaa$ and $\rwab$ in
+  equation~\eqref{eq:rwa:4}.
+\end{remark}
+
+\begin{proof}
+  We consider the auxiliary function $w_t(\tau;v)$ as solution of the
+  IVP with initial value $v$ in $t$:
+  \begin{gather*}
+    \frac{\partial}{\partial \tau} w_t(\tau;v)
+    = f\bigl(\tau,w_t(\tau;v)\bigr), \qquad w_t(t;v) = v.
+  \end{gather*}
+  Choosing $v=u(t)$, we have by uniqueness $w_t(a;v) = u(a)$ and
+  $u(b) = w_t(b;v)$. Our task of computing the derivative with respect
+  to $u(t)$ has thus become computing the derivative with respect to
+  $v$. The derivative of the boundary condition can therefore be
+  written as
+  \begin{align*}
+    \frac{\partial r\bigl(u(a),u(b)\bigr)}{\partial u(t)}
+    &=
+    \frac{\partial r\bigl(w_t(a;v),w_t(b;v)\bigr)}{\partial v}
+    \\
+    &= \rwaa \frac{\partial w_t(a;v)}{\partial v}
+    + \rwab \frac{\partial w_t(b;v)}{\partial v}
+    \\
+    &= \rwaa \fundamental(a;t) + \rwab \fundamental(b;t),
+  \end{align*}
+  where the last equality is due to Theorem~\ref{theorem:derivative}.
+\end{proof}
+
+\begin{remark}
+  In order to study local uniqueness of solutions and well-posedness
+  of BVP, we have to change our view on boundary conditions and
+  consider them as functions of solutions to the differential
+  equation. Thus, we will consider the function
+  \begin{gather*}
+    \rho(v) := r\bigl(v(a),v(b)\bigr),
+  \end{gather*}
+  mapping solutions of the differential equation to their boundary
+  values. $\rho$ is a continuous function, and, as the following
+  theorem shows, even differentiable.
+\end{remark}
+
+\input{theorems/local-uniqueness}
+
+\begin{proof}
+  First assume that $E(t)$ is regular for some $t$. Then we have for
+  $\tau \neq t$:
+  \begin{align*}
+    E(\tau) &= \rwaa \fundamental(a;\tau) + \rwab \fundamental(b;\tau)
+    \\
+    &= \rwaa \fundamental(a;t)\fundamental(t;\tau) + \rwab
+    \fundamental(b;t)\fundamental(t;\tau)
+    = E(t) \fundamental(t;\tau),
+  \end{align*}
+  where the first factor is regular by assumption, the second one as the
+  fundamental matrix of a linear ODE.
+
+  Now, we consider the matrix $E(t)=E_u(t)$ as a function of $u(t)$, which is
+  continuous by assumption. Therefore, if it is regular in $u(t)$, it
+  is regular in a neighborhood of $u(t)$ of some positive diameter
+  $\epsilon$. Let now $v$ be a second solution of the differential
+  equation with $\abs{u(t)-v(t)}<\epsilon$. Then,
+  \begin{gather*}
+    \rho(u)-\rho(v) = E_\phi(t) \bigl(u(t)-v(t)\bigr),
+  \end{gather*}
+  where $\phi(t)$ is between $u(t)$ and $v(t)$ and thus $E_\phi(t)$ is
+  regular. If both functions solve the BVP, then the left hand side is
+  zero, and thus $v(t)=u(t)$.
+\end{proof}
+
+Now that we established the local uniqueness of the solution,
+it yet remains to show the continuous dependency of data (stability).  
+Here we are in particular interested, in analogy to the 
+stability theorem, in the derivative
+of the solution at time $t$ after perturbations of values on the boundary. 
+For this purpose we have:
+
+\input{theorems/bvp-stability-1}
+
+\begin{proof}
+  We demonstrate the proof for the derivative with respect to the left
+  boundary value. The second equation can be proven the same way.
+  With the chain rule we obtain
+  \begin{gather*}
+    \frac{\partial u(t)}{\partial g_a}
+    = \frac{\partial u(t)}{\partial r(g_a,g_b)}
+    \frac{\partial r(g_a,g_b)}{\partial g_a}
+  \end{gather*}
+  The second derivative is~\eqref{eq:rwa:9} $\rwaa$. For the first one
+  we notice that $E(t)$ is the derivative of the inverse mapping of
+  $\rho(u)$. By application of the implicit function theorem, we
+  obtain the result.
+\end{proof}
+
+% \begin{example}
+%   Consider the second order boundary value problem
+%   \begin{gather*}
+%     u'' = k^2 u,
+%     \qquad u(a) = g_a, \quad u(b) = g_b.
+%   \end{gather*}
+%   We convert this into the system
+%   \begin{gather*}
+%     \frac{d}{dt}
+%     \begin{pmatrix}
+%       u_1 \\ u_2
+%     \end{pmatrix}
+%     =
+%     \begin{pmatrix}
+%       & k \\ k
+%     \end{pmatrix}
+%     \begin{pmatrix}
+%       u_1 \\ u_2
+%     \end{pmatrix}.
+%   \end{gather*}
+%   The fundamental matrix is
+%   \begin{gather}
+%     \label{eq:rwa:10}
+%     \fundamental(\tau;t) =
+%     \begin{pmatrix}
+%       e^{k(\tau-t)} & e^{k(t-\tau)} \\
+%       ke^{k(\tau-t)} & - ke^{k(t-\tau)}
+%     \end{pmatrix}.
+%   \end{gather}
+% \end{example}
+
+\input{theorems/bvp-stability-2}
+
+\begin{proof}
+  We begin by estimating the influence of perturbations of the right
+  hand side on the boundary values. Using the corresponding
+  Theorem~\ref{theorem:derivative-f} for IVP, where we swap the
+  meaning of $t$ and the interval boundaries, we obtain
+  \begin{align*}
+    \frac{\partial u(a)}{\partial g}
+    &= \int_t^a \fundamental(a;s) g\bigl(s,u(s)\bigr) \ds,
+    \\
+    \frac{\partial u(b)}{\partial g}
+    &= \int_t^b \fundamental(b;s) g\bigl(s,u(s)\bigr) \ds,
+  \end{align*}
+  By the chain rule and Lemma~\ref{lemma:bvp-derivative}
+  and Theorem~\ref{theorem:bvp-stability-1}, we get
+  \begin{gather*}
+    \frac{\partial r\bigl(u(a), u(b)\bigr)}{\partial g}
+    = \frac{\partial r\bigl(u(a), u(b)\bigr)}{\partial u(t)}
+    \frac{\partial u(t)}{\partial g}
+    = E(t)\frac{\partial u(t)}{\partial g}.
+  \end{gather*}
+Assembling everything, we obtain
+\begin{multline*}
+  \frac{\partial u(t)}{\partial g}
+  = E(t)^{-1} \frac{\partial r\bigl(u(a), u(b)\bigr)}{\partial g}
+  = E(t)^{-1} \left(
+    \rwaa \frac{\partial u(a)}{\partial g}
+    + \rwab \frac{\partial u(b)}{\partial g}\right)
+  \\
+  = E(t)^{-1} \left(
+    \rwaa \int_t^a \fundamental(a;s) g\bigl(s,u(s)\bigr) \ds
+    + \rwab \int_t^b \fundamental(b;s) g\bigl(s,u(s)\bigr) \ds
+    \right).
+  \end{multline*}
+\end{proof}
+
+\begin{remark}
+  Theorems~\ref{theorem:local-uniqueness}, \ref{theorem:bvp-stability-1}
+  and~\ref{theorem:bvp-stability-2} represent the verification of the
+  second and third Hadamard conditions\index{Hadamard conditions}.
+  Thus, even if the existence of a solution for the BVP is not always
+  guaranteed, solutions can be approximated under certain conditions.
+  
+  The case for linear boundary value problems is much simpler and we
+  have an existence an uniqueness result.
+\end{remark}
+
+\input{theorems/bvp-linear}
+
+\begin{proof}
+  By Theorem~\ref{lemma:bvp-derivative} and linearity of the BVP,
+  we deduce that the mapping $\rho$ from $u(t)$ to the boundary
+  condition is affine and can be written in the form
+  \begin{gather*}
+    r\bigl(u(a),u(b)\bigr) = E(t) u(t) + b(t),
+  \end{gather*}
+  where $b(t)$ is some vector in $\R^d$ or $\C^d$ independent of
+  $u$. Since everything in this equation exept $u(t)$ is given, the
+  unique solvability is equivalent to the invertibility of $E(t)$,
+  which by Theorem~\ref{theorem:local-uniqueness} is equivalent to
+  regularity of $E(a)$ .
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Shooting methods}
+\subsection{Single shooting method}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{example}
+  We illustrate the shooting method on a simple, scalar example
+  \begin{gather*}
+    u'' = -g, \quad u(0) = 0, \quad u(1) = 0.
+  \end{gather*}
+	What we can solve is the IVP
+  \begin{gather*}
+    u'' = -g, \quad u(0) = 0, \quad u'(0) = s.
+  \end{gather*}
+	The latter has a unique solution u(t;s) for each initial value
+  $s$. Now it is our task to find a $s^*$, such that
+  $u(1;s^*) = 0$. With other words, we search for a root of the function
+  \begin{gather*}  
+    F(s) = u(1;s).
+  \end{gather*}
+  This can be done with an arbitrary, convergent iteration method.
+  For an example with the Bisection method.  Of course the Newton
+  method would be a better choice but for that we need to calculate
+  the derivatives of $F$.  This can be achieved with
+  theorem~\ref{theorem:derivative} by calculating the
+  fundamental matrix $\fundam$.
+\end{example}
+
+\input{definitions/single-shooting}
+
+\begin{remark}
+  The task of the shooting method is solved normally with the help of
+  Newton's method, which searches for a root (with respect to $v$) of
+  the function
+  \begin{gather}
+    \label{eq:rwa:11}
+    F(s) = r\bigl(s, u(b;v)\bigr)
+  \end{gather}
+	For Newton's method we require the partial derivatives
+  \begin{gather*}
+    \frac\partial{\partial v^{(i)}} F(s) =
+    \partial_1 r\bigr(v,u(b;v)\bigr)
+    + \partial_2r\bigr(v,u(b;v)\bigr) \frac\partial{\partial v^{(i)}} u(b;v),
+  \end{gather*}
+  % For linear and separate boundary conditions this leads to a significantly 	
+  %       more readable form: 
+  % \begin{gather*}
+  %   \frac\partial{\partial u_0^{(i)}} F(s) = \rwaa s + \rwab
+  %   \frac\partial{\partial u_0^{(i)}} u(b;u_0)
+  % \end{gather*}
+  which involves the \putindex{fundamental matrix} $\fundamental(b;a)$
+  of derivatives of the solution at point $b$ with respect to the
+  initial values (see Lemma~\ref{lemma:bvp-derivative}).
+\end{remark}
+
+\input{algorithms/single-shooting}
+
+% \begin{corollary}
+%   For linear a BVP~\eqref{eq:rwa:6} the initial value $v$, such that
+%   $u(t;v)$ solves the BVP, is the solution of the linear system of
+%   equations
+%   \begin{gather}
+%     \label{eq:rwa:13}
+%     \bigl(\rwaa + \rwab\fundamental(b;a)\bigr) v = g - \rwab u(b;0).
+%   \end{gather}
+% \end{corollary}
+
+% \begin{proof}
+% 	For linear equations we know that the Newton's method converges in one step,
+% 	for arbitrary initial values.
+% 	We can use this to execute the upper algorithm with initial value
+% 	 $u_0^{(0)} = 0$.
+% 	Under application of $r(u(a),u(b)) = B_a u(a) + B_b u(b) -
+%   g$ we obtain the upper formula by inserting in~\eqref{eq:rwa:14}.
+% \end{proof}
+
+\begin{remark}
+  The IVP in this algorithm usually cannot be solved
+  analytically. Thus, we have to use what we learned in the previous
+  chapters to choose a time stepping scheme.
+
+  Newton's method is known to converge locally, not
+  globally. Therefore, a good initial value is needed for this
+  algorithm to converge. This is the more true, since the solution of
+  the IVP may grow much faster and may be less stable than that of the
+  BVP (see homework), and is only approximated. There are two ways out
+  of this problem: first, a Newton method should never be implemented
+  without any globalization strategy, which modifies the update to
+  increase the domain of convergence. The second part of the solution
+  consists in choosing a method which is more robust than single
+  shooting in the next section.
+\end{remark}
+
+\begin{remark}
+  Step 2 of the single shooting algorithm requires solving the
+  \putindex{variational equation} of our original ODE. If $f$
+  describes a complex nonlinear process, the computation and
+  implementation of its derivative may be a daunting and error prone
+  task. This can be avoided by three different algorithmical
+  tools. For each of them, we describe the main advantages and
+  disadvantages:
+  \begin{description}
+  \item[Automatic differentiation] Software like for instance
+    the module Sacado of the Trilinos package, has the standard rules
+    of differentiation (Leibniz, quotient, chain rules, derivatives of
+    polynomials and standard functions) built in. By implementing
+    $f(u)$ in a conforming way, the software can automatically
+    generate the code for its derivatives. Clearly, the advantage is
+    that there is no approximation involved in those derivatives and
+    thus equation and variational equation are always consistent. On
+    the other hand, derivatives, which are not simplified
+    analytically, can become fairly complex. Here, we rely on a good
+    implementation of the automatic differentiation as well as on the
+    optimizing capabilities of the compiler.
+  \item[Internal numerical differentiation] While using a time
+    stepping scheme for solving the IVP, for example a one-step
+    method, in each time step, we compute
+      \begin{gather*}
+        y^k = \Phi(y^{k-1})
+      \end{gather*}
+      as well as approximations
+      \begin{gather*}
+        \frac{\partial}{\partial y_i} y^k
+        \approx \frac{\Phi(y^{k-1}+\epsilon e_i) - \Phi(y^{k-1})}{\epsilon}
+      \end{gather*}
+with the same integration method $\Phi$ and the same step sizes $h_k$.       This approximation can also be replaced by more accurate
+      differentiation formulas. Such an implementation requires $d$
+      additional evaluations of $\Phi$ to compute the full gradient,
+      which is feasible only for moderately sized $d$. Furthermore,
+      the choice of $\epsilon$ is tricky, since the approximation is
+      inaccurate for large values and unstable for small.
+      Implementations of time stepping schemes which compute both $y$
+      and its derivatives are available in the optimization community
+      as well among reseach groups implementing filtering techniques
+      in stochastic methods.
+      
+    \item[External numerical diferentiation] Here we forget about the
+      variational equation altogether and approximate by difference
+      quotients the derivative of $u(b)$ with respect to changes in
+      the initial value directly:
+      \begin{gather*}
+        \frac{\partial}{\partial v_i} u(b)
+        \approx \frac{u(b;v+\epsilon e_i) - u(b;v)}{\epsilon}.
+      \end{gather*}
+In practice, $u(b;v+\epsilon e_i)$ and $u(b;v)$ are computed numerically by any integration method and in general using different step sizes.       The robust choice of $\epsilon$ is more critical here and the
+      search for a general algorithm to address this issue has
+      failed. Therefore, this method is only used rarely nowadays
+      (judgement from~\cite{DeuflhardBornemann08}).
+  \end{description}
+
+  A final remark on computing the Jacobian and its inverse: if an
+  iterative method is used to solve the linear system in each Newton
+  step, the complete matrix is not needed, but only the matrix applied
+  to a direction vector. This is something that can be used to
+  accelerate all methods described above by avoiding the computation
+  of unneeded values.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Multiple shooting method}
+\index{shooting method!multiple}
+
+\begin{example}
+ Take on the interval $[0,2]$ the (admittedly somewhat artificial) boundary value problem
+ \begin{gather*}
+   u' = u^2,\qquad u(2) = 1,
+ \end{gather*}
+ which has the bounded solution
+ \begin{gather*}
+   u(t) = \frac1{3-t}.
+ \end{gather*}
+ We might be tempted to start our shooting method with $v=1$ after
+ realizing that $v=0$ leads nowhere. But then, we get
+ \begin{gather*}
+   u^{(0)}(t) = \frac1{1-t},
+ \end{gather*}
+ which only exists on the interval $[0,1)$. Clearly, the single
+ shooting method is not suited to solve this otherwise harmless BVP.
+
+ This observation leads to the idea of applying the shooting method on
+ smaller subintervals and gluing those together.
+\end{example}
+
+\input{definitions/multiple-shooting}
+
+\begin{remark}
+  The numbering of intervals, vectors, and time partitioning has been
+  chosen to be consistent with the previous definitions in this
+  class. The governing entity is the subinterval $I_k = [t_{k-1},
+  t_k]$ with solutions $u_k$ and initial value $v_k$. As a result, the
+  initial values $v_k$ are imposed at $t_{k-1}$.
+
+  Other authors have used the time subdivisions $t_k$ as governing
+  entity, which leads to a shift of several of the indices. Whenever
+  reading or writing about multiple shooting methods, connections
+  between indices must be considered carefully, since every system
+  will exhibits inconsistencies at some points.
+\end{remark}
+
+\begin{remark}
+  The multiple shooting method is a typically nonlinear system of
+  equations of dimension $d\cdot m$, where $d$ is the dimension of the
+  ODE and $m$ the number of subintervals. Nevertheless, the
+  formulation and typically the implementation hides a much larger
+  number of unknowns involved in the discretization of the subdomain
+  solves. We will keep ignoring this inner discretization of the
+  intervals.
+\end{remark}
+
+\begin{remark}
+  In order to keep the implementation and presentation simpler, we
+  introduce an additional shooting vector $v_{m+1} = u_m(t_m)$. As a
+  result, the boundary condition in the shooting method simplifies the
+  last conditions to
+  \begin{gather}
+    \label{eq:rwa:15}
+      r\bigl(v_1, v_{m+1}\bigr) = 0.
+  \end{gather}
+  The advantage becomes obvious, when we compute derivatives for the
+  Newton method. With the new vector, we compute
+  \begin{gather*}
+    \frac{\partial r\bigl(v_1, v_{m+1}\bigr)}{\partial v_1}
+    = \rwaa, \qquad
+    \frac{\partial r\bigl(v_1, v_{m+1}\bigr)}{\partial v_{m+1}}
+    = \rwab.
+  \end{gather*}
+  Without, we have to compute
+  \begin{gather*}
+    \frac{\partial r\bigl(v_1, u_m(b)\bigr)}{\partial v_{m}}
+    = \rwab \fundamental(t_{m}; t_{m-1}).
+  \end{gather*}
+\end{remark}
+
+\input{definitions/multiple-shooting-newton}
+
+\begin{remark}
+  Whenever the shooting vectors $v = [v_1,\dots v_{m+1}]^T$ solve the
+  multiple shooting equations $F(v) = 0$, the solution $u(t)$ of the
+  multiple shooting method is also a solution of the original
+  BVP. This is a consequence of the continuity enforced by these
+  equations. Therefore, the existence of a solution to the original
+  BVP implies existence of a solution to the multiple shooting
+  problem.
+\end{remark}
+
+\begin{intro}
+  We close this section by discussing two important extensions to the
+  multiple shooting method. First, a system may have boundary values
+  in more than just the two end points of the einterval of
+  computation. In such a case, the additional points are included as
+  shooting nodes, such that the boundary conditions can be applied to
+  the shooting vectors $v_k$ instead of solutions of the initial value
+  problems on subintervals.
+
+  The second extension is to problems, where the equation itself has a
+  parameter which we try to determine by the shooting method. It turns
+  out that both extensions fit very well into concept of multiple
+  shooting and change the underlying Newton method only slightly.
+\end{intro}
+
+\input{definitions/multiple-shooting-multiple}
+\input{definitions/bvp-parameter}
+
+\begin{remark}
+  Every parameter dependent ODE can be transformed into a regular ODE
+  by introducing the ${d+q}$-dimensional vector $v=(u,p)$ solving the
+  ODE
+  \begin{gather*}
+    v' =
+    \begin{pmatrix}
+      f\bigl(t,u(t)\bigr)\\0
+    \end{pmatrix}.
+  \end{gather*}
+  Solving it in this form is nevertheless inefficient, since it
+  involves carrying a differentia lequation for $p$ through all
+  integrators. Instead, we can modify the shooting method in a way,
+  that we incorporate it directly.
+\end{remark}
+
+\input{definitions/multiple-shooting-parameter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "notes"
+%%% End: 

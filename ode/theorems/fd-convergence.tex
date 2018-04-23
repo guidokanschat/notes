@@ -1,0 +1,20 @@
+\begin{Theorem}{fd-convergence}
+  Let $I=(a,b)$ and $V$ according to
+  Definition~\ref{definition:bvp-second}. Let $u\in V \cap C^{p+2}(I)$
+  be the solution of the 2-point boundary value problem $Lu = f$. Let
+  $L_h$ be the matrix of a finite difference approximation $L_h y=f_h$
+  according to~\eqref{eq:fd:8}. Let this method be consistent of order
+  $p$ and stable in the sense that $\norm{L_h^{-1}}_\infty$ is bounded
+  independent of $h$.
+  
+  Then, the method is consistent of order $p$ and for any right hand
+  side $f$ there is a constant $c$ independent of $h$ such that
+  \begin{gather}
+    \label{eq:fd-convergence:1}
+    \max_{0\le k\le n}\abs{u_k - y_k} \le c h^p.
+  \end{gather}
+\end{Theorem}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End: 

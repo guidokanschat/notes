@@ -1,0 +1,18 @@
+\begin{Theorem}{existence-implicit-3}
+  Let be $f$ continuously differentiable and let it satisfy the 
+  one-sided Lipschitz condition with constant $\nu$. If the
+  Runge-Kutta matrix $A$ is invertible and if there is a vector
+  $(d_1,\dots,d_s)$ with positive entries, such that
+  \begin{gather}
+    \label{eq:implicit:cond}
+    h\nu < \frac{\scal(x,A^{-1}x)}{\sum\limits_{i=1}^s d_i x_i^2},
+    \quad\forall x\in \R^s,
+  \end{gather}
+  then the nonlinear system~\ref{eq:implicit:1a} has a solution
+  $(\rkg_1,...,\rkg_\rks)$.
+
+\end{Theorem}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End: 

@@ -1,0 +1,29 @@
+\begin{Example*}{rk4}{The classical Runge-Kutta method of 4th order}
+  \defindex{Runge-Kutta method!four-stage}
+  \begin{gather*}
+    \begin{aligned}
+      k_1 & = f(t_n, y_n) \\
+      k_2 & = f(t_n + \frac12 h_n, y_n + \frac12 h_n k_1) \\
+      k_3 & = f(t_n + \frac12 h_n, y_n + \frac12 h_n k_2) \\
+      k_4 & = f(t_n + h_n, y_n + h_n k_3) \\
+      y_{n+1} & = y_n + h_n ( \frac16 k_1 + \frac26 k_2 + \frac26 k_3 + \frac16 k_4 ) \\
+    \end{aligned}
+    \qquad
+    \begin{array}{c|cccc}
+      0 & \\
+      \frac12 & \frac12 \\
+      \frac12 & 0 & \frac12 \\
+      1 & 0 & 0 & 1 \\
+      \hline
+        & \frac16 & \frac26 & \frac26 & \frac16 \\
+    \end{array}
+  \end{gather*}
+  This formula is based on the Simpson rule as well, but it uses two
+  approximations for the value in the center point. It is of fourth
+  order.
+\end{Example*}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

@@ -1,0 +1,22 @@
+\begin{Lemma*}{gronwall-discrete}{Discrete Grönwall inequality}
+  \index{Grönwall's inequality} Let $(w_n)$, $(a_n)$ and $(b_n)$ be
+  non-negative sequences of real numbers. Let $b_n$ be monotonically
+  nondecreasing. Then, if
+  \begin{gather}
+    \label{eq:gronwall-discrete:1}
+    w_0 \le b_0
+    \quad\text{and}\quad
+    \forall n\ge 1 :\;
+    w_n \le \sum\limits_{k=0}^{n-1} a_k w_k + b_n,
+  \end{gather}
+  there holds
+  \begin{gather}
+    \label{eq:explicit:5}
+    w_n \le \exp \left(\sum\limits_{k=1}^{n-1} a_k\right) b_n.
+  \end{gather}
+\end{Lemma*}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

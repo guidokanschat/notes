@@ -1,0 +1,18 @@
+\begin{Example}{stability-examples-rk}
+  Stability functions of the modified Euler method, of the classical
+  Runge-Kutta method of order 4 and of the Dormand-Prince method of
+  order 5 are
+  \begin{align*}
+    R_2(z) &= 1 + z + \tfrac{z^2}2 \\
+    R_4(z) &= 1 + z + \tfrac{z^2}2 + \tfrac{z^3}{6} + \tfrac{z^4}{24}\\
+    R_5(z) &= 1 + z + \tfrac{z^2}2 + \tfrac{z^3}{6} + \tfrac{z^4}{24}
+             + \tfrac{z^5}{120} + \tfrac{z^6}{600}
+  \end{align*}
+  respectively. Their stability regions are shown in
+  Figure~\ref{fig:implicit:stability-explicit-rk}.
+\end{Example}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

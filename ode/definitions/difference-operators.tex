@@ -1,0 +1,22 @@
+\begin{Definition*}{difference-operators}{Finite differences}
+  In order to approximate first derivatives of a function $u$, we introduce
+  the operators
+  \begin{xalignat}{2}
+    \label{eq:difference-operators:1a}
+    &\text{Forward difference }& D^+_h u(x)&= \frac{u(x+h)-u(x)}h, \\
+    \label{eq:difference-operators:1b}
+    &\text{Backward difference }& D^-_h u(x)&= \frac{u(x)-u(x-h)}h, \\
+    \label{eq:difference-operators:1c}
+    &\text{Central difference }& D^c_h u(x)&= \frac{u(x+h)-u(x-h)}{2h}.
+  \end{xalignat}
+  For second derivatives we introduce the
+  \begin{xalignat}{2}
+    \label{eq:difference-operators:2}
+    &\text{3-point stencil }& D^2_h u(x)
+    &= \frac{u(x+h) - 2 u(x) + u(x-h)}{h^2}.
+  \end{xalignat}
+\end{Definition*}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

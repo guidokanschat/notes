@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+  \draw[thick] (0,0) -- (1,0) -- (1,1) -- (0,1) -- (0,0);
+  \foreach \x in {0.1,0.3,0.44,0.5,0.8}
+  \draw (\x,0) -- (\x,1);
+  \foreach \y in {0.2,0.4,0.5,0.7,0.9}
+  {
+    \draw (0,\y) -- (1,\y);
+  }
+  \foreach \x in {0.1,0.3,0.44,0.5,0.8}
+  {
+    \foreach \y in {0.2,0.4,0.5,0.7,0.9}
+    {
+      \draw (\x,\y) node {$\bullet$};
+    }
+  }
+\end{tikzpicture}

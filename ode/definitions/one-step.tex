@@ -1,0 +1,28 @@
+\begin{Definition*}{one-step}{Explicit one-step method}
+  \defindex{One-step method!explicit} An \textbf{explicit one-step
+    method} \defindex{Explicit one-step method} is a method which,
+  given $u_0$ at $t_0 = 0$ computes a sequence of approximations
+  $y_1\,\dots,y_n$ to the solution of an IVP in the time steps
+  $t_1,\dots,t_n$ using an update formula of the form\footnote{The adjective
+  `explicit' is here in contrast to `implicit'
+  one-step methods, where the increment function depends 
+	on $y_{k}$ and equation~\eqref{eq:explicit:8} must be solved
+        for $y_{k}$.}
+  \begin{gather}
+    \label{eq:explicit:8}
+    y_{k} = y_{k-1} + h_{k} \verfahren_{h_k}(t_{k-1},y_{k-1}).
+  \end{gather}
+  The function $\verfahren()_{h_k}$ is called \define{increment
+    function}.  We will often omit the index $h_k$ on
+  $\verfahren_{h_k}()$ because it is clear that the method is always
+  applied to time intervals.
+
+  The method is called \textbf{one-step method}
+  because the value $y_{k}$ explicitly depends only of the values
+  $y_{k-1}$ and $f(t_{k-1}, y_{k-1})$, not on previous values.
+\end{Definition*}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

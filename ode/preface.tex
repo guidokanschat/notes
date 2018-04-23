@@ -1,0 +1,56 @@
+%\chapter*{Vorbemerkungen}
+
+
+These notes are a short presentation of the material presented in my
+lecture. They follow the notes of R. Rannacher (Numerik 1 in German)
+as well as the books by Hairer, Nørsett, and
+Wanner~\cite{HairerNorsettWanner93} and Hairer and
+Wanner~\cite{HairerWanner10}. Furthermore, I used the book by
+Deuflhard and Hohmann~\cite{DeuflhardBornemann08}. Historical remarks
+are in part taken from the article by Butcher~\cite{Butcher96}.
+
+I am always thankful for hints and errata. But please verify that you
+have the latest version.
+
+My thanks go to David Stronczek and Markus Schubert for their help
+writing and translating these notes.
+
+\clearpage
+\section*{Index for shortcuts}
+\begin{tabular}{ll}
+  IVP & Initial value problem, s. definition~\ref{def:awa} on page~\pageref{def:awa}\\
+  BDF & Backward differencing formula, s. example~\ref{ex:lmm:3} on page~\pageref{ex:lmm:3}\\
+  ODE & Ordinary differential equation\\
+  DIRK & Diagonal implicit Runge-Kutta method\\
+  ERK & Explicit Runge-Kutta method\\
+  IRK & Implicit Runge-Kutta method\\
+  LMM & Linear multistep method, s. Definition~\ref{definition:lmm} on
+  page~\pageref{ex:lmm:1}\\
+  VIE & Volterra integral equation, s. Remark~\vref{remark:volterra}
+\end{tabular}
+
+\section*{Index for symbols}
+\begin{tabular}{lp{10cm}}
+  $\C$ & The set of complex numbers\\
+  $e_i$ & The unit vector of $\C^d$ in direction $d$\\
+  $\Re$ & Real part of a complex number\\
+  $\R$ & The set of real numbers\\
+  $\R^d$ & The $d$-dimensional vectorspace of the real $d$-tuple\\
+  $u$ & The exact solution of an ODE or IVP\\
+  $u_k$ & The exact solution at time step $t_k$\\
+  $y_k$ & The discrete solution at time step $t_k$\\
+  $\scal(x,y)$ & The Euclidean scalar product in the space $\R^d$ or
+  $\C^d$\\
+  $\abs{x}$ & The absolute value of a real number, the modulus of a
+  complex number, or the Euclidean norm in $\R^d$ or $\C^d$, depending
+  on its argument\\
+  $\norm{u}$ & A norm in a vector space (with exception of the special
+  cases covered by $\abs{x}$)
+\end{tabular}
+
+\cleardoublepage
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "notes"
+%%% End: 

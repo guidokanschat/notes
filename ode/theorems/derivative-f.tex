@@ -1,0 +1,16 @@
+\begin{Theorem}{derivative-f}
+  Let $f(t,u)$ and $g(t,u)$ be continuous in their first and
+  continuously differentiable in their second argument. Let $u$ be the
+  solution of the IVP $u'=f(u)$ with $u(t_0) = u_0$. Then, the Gâteaux
+  derivative of $u$ in $f$ with respect to a perturbation $g$ exists
+  and there holds
+  \begin{gather}
+    \label{eq:derivative-f:1}
+    \frac{\partial}{\partial g} u(t)
+    = \int_{t_0}^t \fundamental(t;s) g\bigl(s,u(s)\bigr)\,d s.
+  \end{gather}
+\end{Theorem}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

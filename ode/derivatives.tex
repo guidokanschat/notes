@@ -1,0 +1,196 @@
+\section{Derivatives of the solutions of IVP with respect to data}
+\subsection{Derivatives with respect to the initial values}
+\begin{intro}
+  In order to understand BVP, we have to introduce the notion of the
+  derivative of the solution to an IVP with respect to its initial
+  values. We will thus denote in these cases $u=u(t;v)$, where $t$ is
+  the usual ``time'' variable and $v$ the initial value, which now is
+  a variable as well. Thus, $u(t;v)$ is the solution to the IVP
+  \begin{gather}
+    \label{eq:derivatives:1}
+    \begin{split}
+      u'(t;v) = \tfrac{\partial}{\partial t} u(t;v) &= f\bigl(t,u(t;v)\bigr) \\
+      u(t_0;v) &= v.
+    \end{split}
+  \end{gather}
+  The purpose of this section is the study of the derivative
+  \begin{gather*}
+    \tfrac{\partial}{\partial v} u(t;v),
+  \end{gather*}
+  which is fundamentally different from $\partial/\partial t
+  u(t;v)$.
+  It can be obtained by solving the variational equation of the
+  original IVP, defined as follows.
+\end{intro}
+
+% \begin{remark}
+%   In terms of linear \putindex{perturbation theory} this section deals
+%   with the derivative of the solution $u(t)$ of the
+%   IVP~\eqref{eq:awa}, but not with respect to the argument $t$, but
+%   rather with respect to the initial values. That is why we will write
+%   the solution $u = u(t;s)$ of the IVP
+%   \begin{gather}
+%     \label{eq:derivatives:1}
+%     \begin{split}
+%       u'(t;s) = \tfrac{\partial}{\partial t} u(t;s) &= f\bigl(t,u(t;s)\bigr) \\
+%       u(t_0;s) &= s_0
+%     \end{split}
+%   \end{gather}
+%   with two arguments, the actual time variable $t$ and the initial value $s$.
+% \end{remark}
+
+\input{definitions/variational-equation}
+
+\begin{remark}
+  The fundamental matrix $\fundam$ can also be read column
+  by column.  Then each column is a vector-valued function
+  $\phi^{(i)}(t)$ and solves the IVP
+  \begin{gather*}
+    \begin{split}
+      \tfrac{d}{dt}\phi^{(i)}(t) &= \nabla_u
+      f\bigl(t,u(t)\bigr)\phi^{(i)}(t),
+      \\
+      \phi^{(i)}(t_0) &= e_i.
+    \end{split}
+  \end{gather*}
+\end{remark}
+
+\begin{remark}
+  The definition of the fundamental matrix here is consistent with the
+  one in Definition~\ref{definition:fundamental-system} for linear
+  equations. Namely, for $f(u) = Au$, we have $\nabla_u f(u) = A$.
+\end{remark}
+
+\input{theorems/fundamental}
+
+\begin{proof}
+  In order to prove the first equation, denote by $V(\tau;s)$ the
+  solution to the IVP
+  \begin{gather*}
+    V'(\tau;s) = \nabla_u f(\tau,u(\tau)) V(\tau;s),
+    \qquad V(s;s) = \fundamental(s;t).
+  \end{gather*}
+  Because of uniqueness, we must have
+  $V(\tau;s) = \fundamental(\tau;t)$ for any $\tau$ between $s$ and
+  $t$, in particular for $r=t$, such that $V(t;s) = \identity$. On the
+  other hand, by linearity, we have
+  $V(\tau;s) = \fundamental(\tau;s)\fundamental(s;t)$, and thus the
+  equation is proven by
+  \begin{gather*}
+    \identity = V(t;s) = \fundamental(t;s)\fundamental(s;t).
+  \end{gather*}
+
+  Now, assume without loss of generality that $s$ is between $r$ and
+  $t$. Indeed, if for instance $t$ is between $r$ and $s$, multiply
+  equation~\eqref{eq:derivatives:4} from the left by $U(s;t)$ and
+  prove the equation for
+  \begin{gather*}
+    U(s;t)U(t;r) = U(s;t)U(t;s)U(s;r) = U(s;r).
+  \end{gather*}
+  Take the auxiliary function $V(\tau;s)$ as defined above. By
+  uniqueness, it is equal to $U(\tau;t)$ for all $\tau$. But, on the
+  other hand, we have by linearity $V(\tau;s) = U(\tau;s)U(s;r)$, in
+  particular for $\tau=t$.
+
+  The statement follows from the definition as a solution of an IVP
+  and the fact that solutions of linear IVP are linear combinable.
+\end{proof}
+
+\input{theorems/derivative}
+
+\begin{proof}
+  We write the IVP in its full dependence on $v$ as
+  \begin{align*}
+    \frac{\partial u(t;v)}{\partial t} &= f\bigl(t,u(t;v)\bigr) \\
+    u(t_0;v) &= v.
+  \end{align*}
+  From the second equation, we immediately obtain
+  \begin{gather*}
+    \frac{\partial u(t_0;v)}{\partial v} = \identity.
+  \end{gather*}
+Assuming differentiability of $f$ with respect to $u$, the first
+equation yields
+\begin{gather*}
+  \frac{\partial}{\partial v}\frac{\partial u(t;v)}{\partial t}
+  = \frac{\partial f\bigl(t,u(t;v)\bigr)}{\partial v}
+  = \nabla_u f(t,u(t;v)) \frac{\partial u(t;v)}{\partial v}.
+\end{gather*}
+Thus, $\nicefrac{\partial}{\partial v} u$ solves the
+IVP~\eqref{eq:derivatives:1}. Since the solution exists and is unique,
+this derivative is well defined and thus, the function is differentiable.
+\end{proof}
+
+\subsection{Derivatives with respect to the right hand side function}
+\begin{intro}
+  We close this section by studying the differential dependence of the
+  solution $u(t)$ of an ODE at time $t$ on the function $f(t,u)$, that
+  is, the derivative of a value with respect to a function. In order
+  to keep things simple, we reduce this question to a regular
+  derivative of a function with respect to a real variable by using
+  the Gâteaux derivative. To this end, let $F(v)$ be a functional on
+  some function space, that is, a real valued function on this
+  space. Then, the Gâteaux derivative of $F$ at a point $v$ in
+  direction $w$ with $v$ and $w$ in this function space is defined as
+  \begin{gather}
+    \label{eq:derivatives:6}
+    \frac{\partial}{\partial w} F(v)
+    = \lim_{\epsilon\to 0} \frac{F(v+\epsilon w) - F(v)}{\epsilon}.
+  \end{gather}
+  Here, we have used the notation for directional derivatives in
+  $\R^n$, since this is indeed the character of the Gâteaux
+  derivative.
+
+  Back to differential equations, our task is now to compute the
+  derivative of $u(t)$ with respect to changes in $f$, denoted as
+  \begin{gather}
+    \label{eq:derivatives:7}
+    \frac{\partial}{\partial g} u(t)
+    = \lim_{\epsilon\to 0} \frac{u_\epsilon-u}{\epsilon}
+    = \left.\frac{d}{d\epsilon} u_\epsilon(t)\right|_{\epsilon=0},
+  \end{gather}
+  where $u$ and $u_\epsilon$ respectively solve the IVPs
+  \begin{xalignat*}{2}
+    u'&=f(t,u) & u(t_0)& = u_0 \\
+    u_\epsilon'&=f(t,u_\epsilon)+\epsilon g(t,u_\epsilon)
+    & u_\epsilon(t_0)& = u_0.
+  \end{xalignat*}
+  For this derivative, we have the following theorem.
+\end{intro}
+
+\input{theorems/derivative-f.tex}
+
+\begin{proof}
+  We set out by devising a differential equation for the Gâteaux
+  derivative $\mathcal U(t)$. The differential equation for $u$ yields
+  \begin{multline*}
+    \mathcal U(t) := \left.\frac{d}{d\epsilon} u_\epsilon(t)\right|_{\epsilon=0}
+    = \left.\frac{d}{d\epsilon}
+    \Bigl(f\bigl(t,u_\epsilon(t)\bigr)
+    + \epsilon g\bigl(t,u_\epsilon(t)\bigr)\Bigr) \right|_{\epsilon=0}
+  \\
+    = \left.\nabla_u f(t,u_\epsilon) \mathcal U(t)
+    + g\bigl(t,u_\epsilon(t)\bigr) \right|_{\epsilon=0}
+  \end{multline*}
+  Furthermore, we have
+  \begin{gather*}
+     \mathcal U(t_0) = \frac{d}{d\epsilon} u_\epsilon(t_0) = 0.
+  \end{gather*}
+
+  According to Lemma~\ref{lemma:linear-representation}, the solution
+  of this initial value problem can be represented with the
+  integrating factor $M(t)$ as
+  \begin{gather*}
+    \mathcal U(t) = M^{-1}(t) \int_{t_0}^t M(s) g\bigl(s,u(s)\bigr)
+    \,d s.
+  \end{gather*}
+  Noticing that $M(\tau)^{-1} = U(\tau;t_0)$, we obtain
+  \begin{gather*}
+    u(t) = \int_{t_0}^t \fundamental(t;s) g\bigl(s,u(s)\bigr) \,d s
+  \end{gather*}
+\end{proof}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "notes"
+%%% End: 

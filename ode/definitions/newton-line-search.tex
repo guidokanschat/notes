@@ -1,0 +1,22 @@
+\begin{Definition}{newton-line-search}
+  The \define{Newton method with line search}\index{line search} for
+  finding the root of the nonlinear equation $f(x) = 0$ reads: given
+  an initial value $x^{(0)}$, compute iterates $x^{(k)}$,
+  $k=1,2,\ldots$ by the rule
+  \begin{gather}
+    \label{eq:newton-line-search:1}
+    \begin{split}
+      J &= \nabla f\left(x^{(k)}\right),
+      \\
+       J d^{(k)} &= f(x^{(k)}),
+      \\
+      \alpha_k &= \operatorname*{argmin} f(x^{(k)} - \alpha d^{(k)})\\
+      x^{(k+1)} &= x^{(k)} - \alpha_k d^{(k)}.
+    \end{split}
+  \end{gather}
+\end{Definition}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

@@ -1,0 +1,304 @@
+\chapter{Newton and quasi-Newton methods}
+\label{chapter:Newton}
+
+\section{Basics of nonlinear iterations}
+\begin{intro}
+  The efficient solution of nonlinear problems is an important
+  ingredient to implicit timestepping schemes as well as shooting
+  methods. Without attempting completeness, we present some important
+  facts about iterative methods for this problem. We introduce the two
+  generic schemes, Newton and gradient methods, discuss their
+  respective pros and cons and combine their features in order to
+  obtain better methods.
+\end{intro}
+
+\input{definitions/nonlinear}
+\input{definitions/iteration-order}
+\input{definitions/newton}
+\input{theorems/newton-kantorovich}
+
+\begin{remark}
+  Instead of proving the Newton-Kantorovich theorem, we discuss its
+  main assumptions and features. First, we note that it does not
+  require that the initial value be close to a root, or even assumes
+  the existence of a root. The theorem is actually an existence proof.
+  
+  The Lipschitz condition on $\nabla f$ can be seen as the deviation
+  of $f$ from being linear. Indeed, if $f$ were linear, then $L=0$ and
+  provided $M\neq 0$ the method converges in a single step for any
+  initial value.
+
+  The larger the constant $M$, the smaller wone of the eigenvalues of
+  the Jacobian. Therefore, the function becomes flat in that
+  direction and the root finding problem becomes unstable.
+  
+  If we have convergence due to $\beta_0 \le 1/2$ (the proof shows
+  contraction) there holds $\beta_1 < 1/2$ and we have quadratic
+  convergence from the second step on.
+\end{remark}
+
+\input{definitions/gradient-method}
+\input{theorems/gradient-method}
+
+% \begin{proof}
+%   First, we observe that in any point $x$ with $\nabla F(x) \neq 0$,
+%   there exists $\epsilon > 0$ such that
+%   \begin{gather*}
+%     F(x) - F(x-\epsilon\nabla F(x))
+%     = \epsilon \abs{\nabla F(x)}^2 > 0.
+%   \end{gather*}
+%   Thus, $F(x-\epsilon\nabla F(x)) < F(x)$. We conclude, that for such
+%   $x$, the line search obtains a positive value of $\alpha$. Thus, the
+%   sequence of the gradient iteration is monotonically decreasing and
+%   stays within the set $K$.
+% \end{proof}
+
+\section{Initial values and globalization}
+
+\begin{intro}
+  The convergence of the Newton method is only local, and it is the
+  faster, the closer to the solution we start. Thus, finding good
+  initial guesses is an important task. Then, on the other hand we may
+  not have a good initial guess, as typically the case with shooting
+  methods. For such cases, we will present a method of extending the
+  domain of convergence of the method.
+\end{intro}
+
+\input{definitions/predictor-corrector}
+
+\begin{remark}
+  Predictor-corrector methods were developed strongly around
+  Adams-Moulton and Adams-Bashforth methods, since the implicit ones
+  have much smaller error constants. Given that these methods offer no
+  considerable advantages compared to Runge-Kutta methods, but
+  stability properties and implementation are weak points, We omit
+  their discussion.
+
+  A simple predictor for BDF methods can be obtained, since they are
+  based on an interpolating polynomial. Thus, we simply extrapolate
+  this polynomial to the next point in time.
+\end{remark}
+
+\begin{example}
+  While the predictor-corrector idea sounds reasonable, we have to be
+  careful with stiff problems, the original reason for using implicit
+  methods. Take again our favorite IVP
+  \begin{gather*}
+    u' = \lambda u,
+    \qquad u(0) = 1.
+  \end{gather*}
+  We apply the BDF(1) scheme, namely the implicit Euler method, with
+  step size 1. According to its stability
+  function~\eqref{eq:impl:stabil:impleuler}, we obtain
+  \begin{gather*}
+    y_1 = \frac1{1-\lambda}.
+  \end{gather*}
+  Accordingly, the interpolating polynomial is
+  \begin{gather*}
+    y(t) = (1-t) + \frac1{1-\lambda} t = 1 + \frac{\lambda}{1-\lambda}t.
+  \end{gather*}
+  For the mildly stiff problem $\lambda = -3$, we obtain
+  \begin{gather*}
+    y_1 = 0.25, \qquad y_2 = 0.0625,
+    \qquad \hat y_2 = y(2) = -0.5.
+  \end{gather*}
+  Thus, the extrapolated value is already a much worse initial value
+  for a Newton iteration than using the value from the previous time
+  step.
+  
+  While this example was particularly chosen to exhibit such failure,
+  it does show that extrapolation of stiff problems has its
+  pitfalls. Here, we end up with a time step restriction which is
+  comparable to the stability condition of the explicit method.
+\end{example}
+
+\begin{intro}
+  If we do not want to constrain our time step in order to accommodate
+  convergence of the Newton iteration, or if, like for single
+  shooting, a good initial guess is hard to obtain, we have to work on
+  circumventing the problem of local convergence. This can be obtained
+  by combining the properties of the Newton method with the gradient
+  method.
+\end{intro}
+
+\input{definitions/newton-line-search}
+\input{definitions/newton-step-size}
+
+\begin{remark}
+  The step size control algorithm can be implemented with very low
+  overhead. In fact, in each Newton step we only have to compute the
+  norm of the residual, which is typically needed for the stopping
+  criterion anyway. Additionla work is only needed, if the residual
+  grows. But this is the case, when the original method was likely to
+  fail.
+
+  The convergence proof does not guarantee that the values of $j$
+  remain bounded. Practically, this is irrelevant, since typically the
+  step size control only triggers within the first few steps, then the
+  quadratic convergence of the Newton method starts.
+\end{remark}
+
+\input{definitions/descent-methods}
+
+\begin{remark}
+  Obviously, the gradient is a descent method, where the direction $s$
+  is chosen parallel to $\nabla F(x^{(k)})$ and $\mu$ is chosen in an
+  optimal way. It is also called the method of \define{steepest
+    descent}.
+\end{remark}
+
+\begin{lemma}
+  The Newton method applied to the function $f(x)$ is a descent method
+  applied to the functional $F(x) = \abs{f(x)}^2$. The same holds for
+  the Newton method with line search or step size control.
+\end{lemma}
+
+\begin{proof}
+  By the product rule, there holds
+  \begin{gather*}
+    \nabla F(x) = 2 f^T(x) \nabla f(x).
+  \end{gather*}
+  The search direction of the Newton method is
+  \begin{gather*}
+    s = -\frac{d^{(k)}}{\abs{d^{(k)}}}
+    = \frac{\bigl(\nabla f(x^{(k)})\bigr)^{-1}f(x^{(k)}}{\abs{\dots}}
+  \end{gather*}
+  Thus, omitting the arguments $x^{(k)}$, we obtain
+  \begin{gather*}
+    \frac{\nabla F\, s}{\norm{\nabla F}}
+    = \frac{f^T \nabla f(x)\bigl(\nabla f\bigr)^{-1} f}%
+    {\norm{\bigl(\nabla f\bigr)^{-1} f}\,\norm{f^T \nabla f(x)}}
+    \ge \frac{\abs{f}^2}{\norm{\bigl(\nabla f\bigr)^{-1}}\;
+      \norm{f}^2 \norm{\nabla f(x)} }
+    = \frac1{\operatorname{cond}_2 (\nabla f(x))},
+  \end{gather*}
+  where we used the operator norm $\norm{.}$ of matrices with respect
+  tot the Euclidean norm of $\R^d$. $\operatorname{cond}_2(A)$ is the
+  spectral condition of $A$, namely
+  \begin{gather*}
+    \operatorname{cond}_2(A) = \norm{A} \, \norm{A^{-1}}.
+  \end{gather*}
+  We conclude, that $s\in \mathcal S_\gamma(\nabla F)$ for any
+  $\gamma$ with
+  \begin{gather*}
+    \gamma \le \frac1{\operatorname{cond}_2 (\nabla f(x))}.
+  \end{gather*}
+  The different variants of the Newton method are only distinguished by
+  a different choice of the scaling parameter $\mu$.
+\end{proof}
+
+\input{theorems/downhill}
+
+\section{Practical considerations}
+
+\begin{intro}
+  Quadratic convergence is an asymptotic statement, which for any
+  practical purpose can be replaced by ``fast'' convergence. Most of
+  the effort spent in a single Newton step consists of setting up the
+  Jacobian $J$ and solving the linear system in the second line
+  of~\eqref{eq:newton-def:1}. Therefore, we will consider techniques
+  here, which avoid some of this work. We will have to consider two
+  cases
+  \begin{enumerate}
+  \item Small systems with $d\lesssim 1000$. For such systems, a
+    direct method like $LU$- or $QR$-decomposition is advisable in
+    order to solve the linear system. To this end, we compute the
+    whole Jacobian and compute its decomposition, an effort of order
+    $d^3$ operations. Comparing to $d^2$ operations for applying the
+    inverse and order $d$ for all other tasks, this must be avoided as
+    much as possible.
+  \item Large systems, where the Jacobian is typically sparse (most of
+    its entries are zero). For such a system, the effort of order
+    $d^2$ for a full matrix vector multiplication is already not
+    affordable. Therefore, the linear problem is solved by an
+    iterative method and we will not have to compute the Jacobian at
+    all.
+  \end{enumerate}
+\end{intro}
+
+\begin{remark}
+  In order to save numerical effort constructing and inverting
+  Jacobians, the following strategies have been successful.
+  \begin{itemize}
+  \item Fix a threshold $0<\eta<1$, which will be used as a bound for
+    error reduction. In each Newton step, first compute the update
+    vector $\widehat d$ using the Jacobian $\widehat J$ of the
+    previous step. This yields the modified method
+    \begin{gather}
+      \label{eq:newton:1}
+      \begin{alignedat}2
+        &&J_k &= J_{k-1} \\
+        &&\widehat x &= x^{(k)} - J_{k}^{-1}f(x^{(k)})\\
+        \text{If }\abs{f(\widehat x)} &\le \eta
+          \abs{f(x^{(k)})} \quad& x^{(k+1)} &= \widehat x\\
+          \text{Else } J_k &= \bigl(\nabla f(x^{(k)}\bigr)^{-1}
+          \quad & x^{(k+1)} &=x^{(k)}- J_{k}^{-1}f(x^{(k)}). 
+      \end{alignedat}
+    \end{gather}
+    Thus, an old Jaconian an its inverse are used until convergence
+    rates deteriorate. This method is again a quasi-Newton method
+    which will not converge quadratically, but we can obtain linear
+    convergence at any rate $\eta$.
+  \item If Newton's method is used within a time stepping scheme, the
+    Jacobian of the last Newton step in the previous time step is
+    often a good approximation for the Jacobian of the first Newton
+    step in the new time step. This holds in particular for small tim
+    steps and constant extrapolation. Therefore, the previous method
+    should also be extended over the bounds of time steps.
+  \item An improvement of the method above can be achieved by so
+    called rank-1 updates. Given $x^{(k)}$ and $x^{(k-1)}$, compute
+    \begin{gather}
+      \label{eq:newton:2}
+      \begin{split}
+        p &= x^{(k)} - x^{(k-1)}\\
+        q &= f(x^{(k)}) - f(x^{(k-1)})\\
+        J_k &= J_{k-1} + \frac1{\abs{p}^2}
+        \left(q - J_{k-1} p\right)p^T
+      \end{split}
+    \end{gather}
+    The fact that the rank of $J_k - J_{k-1}$ is at most one can be
+    used to obtain a decomposition of $J_k$ in a cheap way from one
+    for $J_{k-1}$.
+  \end{itemize}
+\end{remark}
+
+\begin{remark}
+  For problems leading to large, sparse Jacobians, typically space
+  discretizations of partial differential equations, computing
+  inverses of $LU$-decompositions is infeasible. These matrices
+  typically only feature a few nonzero elements per row, while the
+  inverse and the $LU$-decomposition is fully populated, thus
+  increasing the amount of memory from $d$ to $d^2$.
+
+  Linear systems like this are often solved by iterative methods,
+  leasding for instance to so called Newton-Krylov methods. Iterative
+  methods approximate the solution of a linear system
+  \begin{gather*}
+    J d = f
+  \end{gather*}
+  only using multiplications of a vector with the matrix $J$. On
+  the other hand, for any vector $v\in \R^d$, the term $Jv$ denotes
+  the directional derivative of $f$ in direction $J$. Thus, it can be
+  approximated easily by
+  \begin{gather*}
+    J v \approx \frac{f\left(x^{(k)}+\epsilon v\right) -
+      f\left(x^{(k)}\right)}{\epsilon}.
+  \end{gather*}
+  The term $f\left(x^{(k)}\right)$ must be calculated anyway as it is
+  the current Newton residual. Thus, each step of the iterative linear
+  solver requires one evaluation of the nonlinear function, and no
+  derivatives are computed.
+
+  The efficiency of such a method depends on the number of linear
+  iteration steps, which is determined by two factors: the gain in
+  accuracy and the contraction speed. It turns out, that typically
+  gaining two digits in accuracy is sufficient to ensure fast
+  convergence of the Newton iteration. The contraction number is a
+  more difficult issue and typically requires preconditioning, which
+  is problem dependent and as such must be discussed when needed.
+\end{remark}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "notes"
+%%% End:

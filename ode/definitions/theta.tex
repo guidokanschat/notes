@@ -1,0 +1,35 @@
+\begin{Definition}{theta-scheme}
+  The $\theta$-scheme is the one-step method, defined for $\theta\in
+  [0,1]$ by
+  \begin{gather}
+    \label{eq:theta:1}
+    y_1 = y_0 + h \bigl((1-\theta) f(y_0) + \theta f(y_1)\bigr).
+  \end{gather}
+  It is an RKM with the Butcher Tableau
+  \begin{gather}
+    \label{eq:theta:2}
+    \begin{array}{c|cc}
+      0 & 0 & 0 \\
+      1 & 1-\theta & \theta \\\hline
+      & 1-\theta & \theta
+    \end{array}.
+  \end{gather}
+  Three special cases are distinguished:
+  \begin{center}
+  \begin{tabular}{c|l}
+    $\theta=0$ & explicit Euler method\\
+    $\theta=1$ & implicit Euler method\\
+    $\theta=1/2$ & Crank-Nicolson method
+  \end{tabular}    
+  \end{center}
+
+  Furthermore, we define the variable $\theta$-scheme where $\theta$ is
+  of the form
+  \begin{gather*}
+    \theta = \frac12 + \gamma h.
+  \end{gather*}
+\end{Definition}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

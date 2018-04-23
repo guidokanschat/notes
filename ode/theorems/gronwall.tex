@@ -1,0 +1,20 @@
+\begin{Lemma*}{gronwall}{Grönwall}
+  Let be $w(t)$, $a(t)$ and $b(t)$ be nonnegative, integrable
+  functions, such that $a(t)w(t)$ is integrable. Furthermore, let
+  $b(t)$ be monotonically nondecreasing and let $w(t)$ satisfy the
+  integral inequality
+  \begin{gather}
+    \label{eq:awa:10}
+    w(t) \le b(t) + \int_{t_0}^t a(s)w(s)\ds,\qquad t\ge t_.
+  \end{gather}
+  Then, for almost all $t \ge t_0$ there holds:
+  \begin{gather}
+    \label{eq:awa:11}
+    w(t) \le b(t) \exp\left( \int_{t_0}^t  a(s) \ds\right).
+  \end{gather}
+\end{Lemma*}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

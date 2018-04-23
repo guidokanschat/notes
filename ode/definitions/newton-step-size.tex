@@ -1,0 +1,27 @@
+\begin{Definition}{newton-step-size}
+  The \define{Newton method with step size control} for finding the
+  root of the nonlinear equation $f(x) = 0$ reads: given an initial
+  value $x^{(0)}$, compute iterates $x^{(k)}$, $k=1,2,\ldots$ by the
+  rule
+  \begin{gather}
+    \label{eq:newton-step-size:1}
+    \begin{split}
+      J &= \nabla f\left(x^{(k)}\right),
+      \\
+      J d^{(k)} &= f(x^{(k)}),
+      \\
+      x^{(k+1)} &= x^{(k)} - 2^{-j} d^{(k)}.
+    \end{split}
+  \end{gather}
+  Here, $j$ is the smallest integer number, such that
+  \begin{gather}
+    \label{eq:newton-step-size:2}
+    f(x^{(k)} - 2^{-j} d^{(k)}) < f(x^{(k)}),
+  \end{gather}
+  for practical purposes.
+\end{Definition}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End:

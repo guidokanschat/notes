@@ -1,0 +1,22 @@
+\begin{Lemma}{lmm-one-consistency}
+  Let $u(t)$ be the exact solution of the IVP. For $k=s,\ldots$, we
+  define the vector $\widehat Y_{k}$ as the solution of a single step
+  \begin{gather*}
+    \widehat Y_{k} = (A\otimes I) U_{k-1} + h \verfahren_h(t_{k-1} U_{k-1}),
+  \end{gather*}
+  with correct initial values $U_{k-1} =
+  (u_{k-1},u_{k-2},\dots,u_{k-\lmms})^T$.
+  
+  If the multistep method is consistent of order $p$, and $f$ is
+  sufficiently smooth, then there exist constants $h_0>0$  and $M$
+  such that for $h\le h_0$ there holds
+  \begin{gather}
+    \label{eq:lmm-one-consistency:1}
+    \norm{Y_k-\widehat Y_h} \le M h^{p+1}.
+  \end{gather}
+\end{Lemma}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../notes"
+%%% End: 

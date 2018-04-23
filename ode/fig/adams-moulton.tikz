@@ -1,0 +1,14 @@
+\begin{tikzpicture}
+  \draw[snake=snake](7,0) -- (8,0);
+  \draw(5,0) -- (7,0);
+  % \draw(2,0) -- (3,0);
+  \draw[dotted](0,0)--(3,0);
+  \draw[dashed](3,0)--(5,0);
+  \draw(8,-.1) node[anchor=north]{$t_{k}$} --(8,.1);
+  \draw(7,-.1) node[anchor=north]{$t_{k-1}$} --(7,.1);
+  \draw(6,-.1) node[anchor=north]{$t_{k-2}$} --(6,.1);
+  \draw(5,-.1) node[anchor=north]{$t_{k-3}$} --(5,.1);
+  
+  \draw(3,-.1) node[anchor=north]{$t_{k-\lmms}$} --(3,.1);
+  % \draw(2,-.1) --(2,.1) node[anchor=south]{$t_{k-\lmms-1}$};
+\end{tikzpicture}
