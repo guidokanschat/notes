@@ -8,7 +8,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\begin{definition}[Ordinary differential equations]
+\begin{Definition*}{ode}{Ordinary differential equations}
   \defindex{differential equation!ordinary|see{ordinary differential equation}} \index{ODE|see{ordinary
       differential equation}} An \define{ordinary differential
     equation} (ODE) is an equation for a function $u(t)$, defined on
@@ -22,7 +22,7 @@
   a differential equation is the highest derivative which occurs.  If
   the dimension $d$ of the value range of $u$ is higher than one, we
   talk about systems of differential equations.
-\end{definition}
+\end{Definition*}
 
 \begin{remark}
   A differential equation, which is not ordinary, is called partial.
@@ -240,7 +240,7 @@ theory of ordinary differential equations.
     w(t) = u_0 + \int_{t_0}^t M(t) b(t),
   \end{gather*}
   where we use that $w(t_0) = u_0$.  According to
-  lemma~\ref{lemma:appendix:exp-1}, about the \putindex{matrix
+  lemma~\ref{Lemma:appendix:exp-1}, about the \putindex{matrix
     exponential}, $M(t)$ is invertible for all $t$.  With the
   definition of $w(t)$ we are therefore able to solve for $u(t)$,
   which results in the equation~\eqref{eq:awa:8}. The global
@@ -375,12 +375,11 @@ theory of ordinary differential equations.
 \end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{corollary}
-  \label{corollary:awa:unique-linear}
+\begin{Corollary}{awa:unique-linear}
   Let the functions $u(t)$ and $v(t)$ be two solutions of the linear
   differential equation~\eqref{eq:awa:5}. If both functions
   coincide in a point $t_0$ then they are identical.
-\end{corollary}
+\end{Corollary}
 
 \begin{proof}
 	The difference $w(t) = v(t) - u(t)$ solves the integral equation
@@ -398,7 +397,7 @@ theory of ordinary differential equations.
 
 \begin{corollary}
   The representation formula~\eqref{eq:awa:8} in
-  Lemma~\ref{lemma:linear-representation} defines the unique solution to the
+  Lemma~\ref{Lemma:linear-representation} defines the unique solution to the
   IVP~\eqref{eq:awa:4}. In particular, solutions of linear IVP are
   always defined on the whole real axis.
 \end{corollary}
@@ -427,7 +426,7 @@ theory of ordinary differential equations.
 \end{example}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{lemma}
+\begin{Lemma}{solution-space}
   \index{homogeneous}
   \index{ordinary differential equation!linear!homogeneous}
   The solutions of the homogeneous, linear differential equation
@@ -441,7 +440,7 @@ theory of ordinary differential equations.
   initial values $\phi^{(i)}(0) = \psi^{(i)}$ form a basis of the solution
   space. The vectors $\{\phi^{(i)}(t)\}$ are linear independent
   for all $t\in \R$.
-\end{lemma}
+\end{Lemma}
 
 
 \begin{proof}
@@ -483,14 +482,14 @@ theory of ordinary differential equations.
 
 \input{definitions/fundamental-system}
 
-\begin{corollary}
+\begin{Corollary}{fundamental-regular}
   The fundamental matrix is regular for all $t\in \R$ and solves the
   IVP
   \begin{align*}
     \fundam'(t) &= A(t)\fundam(t)\\
     \fundam (0) &= \identity.
   \end{align*}
-\end{corollary}
+\end{Corollary}
 
 \begin{proof}
   The initial value is part of the definition. On the other hand,
@@ -529,7 +528,7 @@ theory of ordinary differential equations.
   the solution.
 \end{example}
 
-\begin{definition}
+\begin{Definition}{Lipschitz-condition}
   The function $f(t,y)$ satisfies on its domain $D = I\times\Omega \subset
   \R \times \R^d$ an uniformly continuous \define{Lipschitz condition} if 
 	it is Lipschitz continuous with regard to $y$, i.e., it exists a 
@@ -541,7 +540,7 @@ theory of ordinary differential equations.
   \end{gather}
   It satisfies a local Lipschitz condition if the same holds true for all 
   compact subsets of $D$.
-\end{definition}
+\end{Definition}
 
 
 \begin{example}
@@ -762,5 +761,5 @@ theory of ordinary differential equations.
 
 %%% Local Variables: 
 %%% mode: latex
-%%% TeX-master: "notes"
+%%% TeX-master: "main"
 %%% End: 

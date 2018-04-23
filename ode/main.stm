@@ -1,3 +1,4 @@
+\frame {\input {\slidetheorem@fileprefix Definition-ode.tex}}
 \frame {\input {\slidetheorem@fileprefix Definition-explicit-ode.tex}}
 \frame {\input {\slidetheorem@fileprefix Lemma-first-order.tex}}
 \frame {\input {\slidetheorem@fileprefix Definition-ivp.tex}}
@@ -9,7 +10,10 @@
 \frame {\input {\slidetheorem@fileprefix Definition-integrating factor.tex}}
 \frame {\input {\slidetheorem@fileprefix Lemma-linear-representation.tex}}
 \frame {\input {\slidetheorem@fileprefix Lemma-gronwall.tex}}
+\frame {\input {\slidetheorem@fileprefix Corollary-awa:unique-linear.tex}}
+\frame {\input {\slidetheorem@fileprefix Lemma-solution-space.tex}}
 \frame {\input {\slidetheorem@fileprefix Definition-fundamental-system.tex}}
+\frame {\input {\slidetheorem@fileprefix Corollary-fundamental-regular.tex}}
 \frame {\input {\slidetheorem@fileprefix Definition-hadamard.tex}}
 \frame {\input {\slidetheorem@fileprefix Theorem-awa-stability.tex}}
 \frame {\input {\slidetheorem@fileprefix Theorem-picardlindelof.tex}}
