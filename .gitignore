@@ -3,7 +3,7 @@ blocks
 *~
 *.aux
 *.blg
-*.frm
+*.stm
 *.log
 *.toc
 *.out

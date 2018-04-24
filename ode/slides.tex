@@ -1,9 +1,9 @@
-\documentclass[ignorenonframetext,notheorems,aspectratio=1610]{beamer}
+\documentclass[USEnglish,ignorenonframetext,notheorems,aspectratio=1610]{beamer}
 \usetheme[compress]{Madrid}
 \usecolortheme{iwr}
 \usepackage{tikz,tikzscale}
 \usetikzlibrary{snakes}
-\usepackage{mathsim}
+\usepackage{../mathsim}
 \usepackage{xr}
 \externaldocument{awa}
 \externaldocument{explicit}
@@ -17,12 +17,6 @@
 \usepackage{mathtools}  
 \mathtoolsset{showonlyrefs}
 
-\makeatletter
-\def\TH@with[#1]#2#3{\begin{block}{\capitalisewords{#2} \ref{#2:#3} (#1)}}
-\def\TH@without#1#2{\begin{block}{\capitalisewords{#1} \ref{#1:#2}}}
-\def\TH{\@ifnextchar[{\TH@with}{\TH@without}}%
-\def\endTH{\end{block}}
-\makeatother
 \def\footnote#1{}
 
 % Definitions for Runge-Kutta-Koefficients
@@ -50,33 +44,42 @@
 \subsection{Modeling with ordinary differential equations}
 \subsection{Introduction to initial value problems}
 
-\frame{\input{definitions/explicit-ode}}
-\frame{\input{theorems/first-order}}
-\frame{\input{definitions/local-solution}}
-\frame{\input{theorems/volterra}}
-\frame{\input{theorems/peano-existence}}
-\frame{\input{theorems/peano-continuation}}
+\frame {\input {blocks/Definition-ode.tex}}
+\frame {\input {blocks/Definition-explicit-ode.tex}}
+\frame {\input {blocks/Lemma-first-order.tex}}
+\frame {\input {blocks/Definition-autonomization.tex}}
+\frame {\input {blocks/Definition-IVP.tex}}
+\frame {\input {blocks/Definition-local-solution.tex}}
+\frame {\input {blocks/Lemma-volterra.tex}}
+\frame {\input {blocks/Theorem-peano.tex}}
+\frame {\input {blocks/Theorem-peano-continuation.tex}}
 
 \subsection{Linear differential equations
   and Grönwall's inequality}
 
-\frame{\input{definitions/linear-ode}}
-\frame{\input{definitions/integrating-factor}
-\input{theorems/linear-representation}}
-\frame{\input{theorems/gronwall}}
+\frame {\input {blocks/Definition-linear-ode.tex}}
+\frame {\input {blocks/Definition-integrating factor.tex}
+  \input {blocks/Lemma-linear-representation.tex}}
+\frame {\input {blocks/Lemma-gronwall.tex}}
+\frame {\input {blocks/Corollary-awa:unique-linear.tex}}
+\frame {\input {blocks/Lemma-solution-space.tex}}
+\frame {\input {blocks/Definition-fundamental-system.tex}}
+\frame {\input {blocks/Corollary-fundamental-regular.tex}}
 
 \subsection{Well-posedness of the IVP}
 
-\frame{\input{definitions/hadamard}}
-\frame{\input{theorems/stability}}
-\frame{\input{theorems/picard-lindelof}}
+\frame {\input {blocks/Definition-hadamard.tex}}
+\frame {\input {blocks/Definition-Lipschitz-condition.tex}}
+\frame {\input {blocks/Theorem-awa-stability.tex}}
+\frame {\input {blocks/Theorem-picardlindelof.tex}}
 
 \section{Explicit One-Step Methods and Convergence}
 \frame{\tableofcontents[currentsection,hideothersubsections]}
 \subsection{Introduction}
 
-\frame{\input{definitions/one-step}}
-\frame{\input{theorems/euler-linear-1}}
+\frame {\input {blocks/Definition-partitioning.tex}}
+\frame {\input {blocks/Definition-one-step.tex}}
+\frame {\input {blocks/Theorem-example.tex}}
 
 \subsection{Error analysis}
 \begin{frame}
@@ -86,20 +89,21 @@
   \includegraphics[width=.49\textwidth]{fig/backward-error.tikz}
 \end{frame}
 
-\frame{\input{definitions/truncation-error}}
-\frame{\input{theorems/gronwall-discrete}}
-\frame{\input{theorems/stability-discrete}}
-\frame{\input{theorems/convergence-onestep}}
+\frame {\input {blocks/Definition-truncation-error.tex}}
+\frame {\input {blocks/Lemma-gronwall-discrete.tex}}
+\frame {\input {blocks/Theorem-stability-discrete.tex}}
+\frame {\input {blocks/Theorem-convergence-one-step.tex}}
 
 \subsection{Runge-Kutta methods}
 
-\frame{\input{definitions/erk}}
-\frame{\input{definitions/butcher-tableau-erk}}
-\frame{\input{definitions/rk2}}
-\frame{\input{definitions/rk4}}
-\frame{\input{theorems/rk-order-3-4}}
-\frame{\input{theorems/taylor-u}}
-\frame{\input{theorems/taylor-y}}
+\frame {\input {blocks/Definition-erk.tex}}
+\frame {\input {blocks/Definition-butcher-tableau-erk.tex}}
+\frame {\input {blocks/Example-rk2.tex}}
+\frame {\input {blocks/Lemma-T.tex}}
+\frame {\input {blocks/Lemma-rk-order-3-4.tex}}
+\frame {\input {blocks/Lemma-taylor-u.tex}}
+\frame {\input {blocks/Lemma-taylor-y.tex}}
+\frame {\input {blocks/Example-rk4.tex}}
 \begin{frame}
   \begin{block}{Butcher barriers}
     \input{tables/butcher-barriers}
@@ -108,25 +112,28 @@
 
 \subsection{Estimate of the truncation error and time step control}
 
-\frame{\input{theorems/richardson}}
-\frame{\input{definitions/embedded-butcher}}
-\frame{\input{definitions/dormand-prince-45}}
+\frame {\input {blocks/Theorem-richardson.tex}}
+\frame {\input {blocks/Definition-embedded-butcher.tex}}
+\frame {\input {blocks/Definition-dormand-prince-45.tex}}
 \subsection{Continuous Runge-Kutta methods}
 
-\frame{\input{definitions/rk4-continuous}}
-\frame{\input{definitions/dormand-prince-45-continuous}}
-
+\frame {\input {blocks/Example-rk4-continuous.tex}}
+\frame {\input {blocks/Example-dormand-prince-45-continuous.tex}}
 
 \section{Implicit One-Step Methods and Long-Time Stability}
 \frame{\tableofcontents[currentsection,hideothersubsections]}
 
 \subsection{Monotonic initial value problem}
-\frame{\input{definitions/lipschitz-one-sided}}
-\frame{\input{theorems/stability-monotonic}}
-\frame{\input{theorems/linear-monotonic}}
-\frame{\input{definitions/stiff}}
+
+\frame {\input {blocks/Definition-lipschitz-one-sided.tex}}
+\frame {\input {blocks/Theorem-stability-monotonic.tex}}
+\frame {\input {blocks/Lemma-linear-monotonic.tex}}
+\frame {\input {blocks/Definition-stiff.tex}}
+
 \subsection{A- and B-stability}
-\frame{\input{definitions/stability-function}}
+
+\frame {\input {blocks/Definition-stability-function.tex}}
+
 \begin{frame}
   \frametitle{Stability regions of the implicit and explicit Euler
     methods}
@@ -135,15 +142,20 @@
     \includegraphics[width=.47\textwidth]{fig/stability-euler2}
   \end{center}
 \end{frame}
-\frame{\input{definitions/a-stability}
-  \input{theorems/a-stability}}
-\frame{\input{definitions/b-stability}
-  \input{theorems/b-stability}}
+
+\frame {\input {blocks/Definition-a-stability.tex}
+  \input {blocks/Theorem-a-stability.tex}}
+\frame {\input {blocks/Theorem-implicit:a-stability-erk.tex}}
+\frame {\input {blocks/Definition-b-stability.tex}
+  \input {blocks/Theorem-b-stability.tex}}
+\frame {\input {blocks/Definition-l-stability.tex}}
 
 \subsection{General Runge-Kutta methods}
-\frame{\input{definitions/rk}}
-\frame{\input{theorems/stability-rk}}
-\frame{\input{theorems/stability-examples-rk}}
+
+\frame {\input {blocks/Definition-rk.tex}}
+\frame {\input {blocks/Lemma-stability-rk.tex}}
+\frame {\input {blocks/Example-stability-examples-rk.tex}}
+
 \begin{frame}
   \frametitle{Stability domains of ERK}
   \begin{tabular}{ccc}
@@ -156,7 +168,10 @@
     mod. Euler & RK4 & DOPRI5
   \end{tabular}
 \end{frame}
-\frame{\input{definitions/theta}}
+
+\frame {\input {blocks/Definition-theta-scheme.tex}}
+\frame {\input {blocks/Theorem-theta-a-stability.tex}}
+
 \begin{frame}
   \frametitle{Stability domains of the $\theta$-scheme}
   \begin{center}
@@ -179,25 +194,25 @@
   \end{center}
 \end{frame}
 
-\frame{\input{theorems/existence-implicit-1}}
-\frame{\input{theorems/existence-implicit-2}}
-\frame{\input{theorems/existence-implicit-3}}
-\frame{\input{definitions/order-conditions}%}
-
-%\frame{
-\input{theorems/order-conditions}}
+\frame {\input {blocks/Lemma-existence-implicit-1.tex}}
+\frame {\input {blocks/Lemma-existence-implicit-2.tex}}
+\frame {\input {blocks/Theorem-existence-implicit-3.tex}}
+\frame {\input {blocks/Definition-simplifying-conditions.tex}}
+\frame {\input {blocks/Theorem-order-conditions.tex}}
 
 \subsection{Methods based on quadrature}
-\frame{\input{definitions/gauss-quadrature}}
-\frame{\input{definitions/radau-lobatto-quadrature}}
-\frame{\input{theorems/gauss-quadrature}}
-\frame{\input{definitions/collocation}}
-\frame{\input{theorems/collocation}}
-\frame{\input{theorems/collocation-equivalence}}
-\frame{\input{theorems/collocation-order}}
-\frame{\input{theorems/collocation-continuous}}
+
+\frame {\input {blocks/Definition-gauss-quadrature.tex}}
+\frame {\input {blocks/Definition-radau-lobatto-quadrature.tex}}
+\frame {\input {blocks/Lemma-gauss-quadrature.tex}}
+\frame {\input {blocks/Definition-collocation.tex}}
+\frame {\input {blocks/Lemma-collocation.tex}}
+\frame {\input {blocks/Lemma-collocation-equivalence.tex}}
+\frame {\input {blocks/Theorem-collocation-order.tex}}
+\frame {\input {blocks/Theorem-collocation-continuous.tex}}
+\frame {\input {blocks/Definition-gauss-collocation.tex}}
+
 \begin{frame}
-  \input{definitions/gauss-collocation}
   \begin{block}{2- and 3-point Gauß-Collocation}
   \begin{minipage}[t]{.39\linewidth}
     \input{tables/gauss2}
@@ -207,8 +222,9 @@
   \end{minipage}
   \end{block}
 \end{frame}
-\frame{\input{theorems/gauss-consistency}
-\input{theorems/gauss-stability}}
+
+\frame {\input {blocks/Theorem-gauss-consistency.tex}
+  \input {blocks/Theorem-gauss-stability.tex}}
 
 \begin{frame}
   \begin{block}{2- and 3-point Radau collocation methods}
@@ -267,22 +283,26 @@
   \end{block}
 \end{frame}
 
-\frame{\input{definitions/lmm}}
-\frame{\input{definitions/lmm-errors}}
-\frame{\input{definitions/lmm-consistency}
-\input{theorems/lmm-bramble-hilbert}}
-\frame{\input{definitions/difference-equation}}
-\frame{\input{theorems/difference-equation-solutions}
-\input{theorems/difference-equation-basis}}
-\frame{\input{theorems/root-test}}
-\frame{\input{definitions/lmm-stability}
-\input{theorems/lmm-stability}}
-\frame{\input{definitions/lmm-convergence}}
-\frame{\input{theorems/lmm-one-step}}
-\frame{\input{theorems/lmm-one-consistency}}
-\frame{\input{theorems/lmm-one-stability}}
-\frame{\input{theorems/lmm-convergence}}
-\frame{\input{definitions/aa-stability}}
+\frame {\input {blocks/Definition-lmm.tex}}
+\frame {\input {blocks/Definition-lmm-errors.tex}}
+\frame {\input {blocks/Definition-lmm-consistency.tex}}
+\frame {\input {blocks/Lemma-lmm-bramble-hilbert.tex}}
+\frame {\input {blocks/Theorem-lmm-consistency.tex}}
+\frame {\input {blocks/Definition-difference-equation.tex}}
+\frame {\input {blocks/Lemma-lmm:1.tex}}
+\frame {\input {blocks/Lemma-difference-equation-solutions.tex}}
+\frame {\input {blocks/Theorem-difference-equation-basis.tex}}
+\frame {\input {blocks/Corollary-root-test.tex}}
+\frame {\input {blocks/Definition-lmm-stability.tex}}
+\frame {\input {blocks/Theorem-lmm-stability.tex}}
+\frame {\input {blocks/Theorem-BDF-stability.tex}}
+\frame {\input {blocks/Definition-lmm-convergence.tex}}
+\frame {\input {blocks/Lemma-lmm-one-step.tex}}
+\frame {\input {blocks/Lemma-lmm-one-consistency.tex}}
+\frame {\input {blocks/Lemma-lmm-one-stability.tex}}
+\frame {\input {blocks/Theorem-lmm-convergence.tex}}
+\frame {\input {blocks/Theorem-dahlquist2.tex}}
+\frame {\input {blocks/Definition-aa-stability.tex}}
 
 \frame{
 \begin{figure}[tp]
@@ -299,52 +319,51 @@
 \section{Boundary Value Problems}
 \frame{\tableofcontents[currentsection,hideothersubsections]}
 
-\begin{frame}
-  \input{definitions/bvp}
-  \input{definitions/bvp-linear}
-\end{frame}
+\frame {\input {blocks/Definition-bvp.tex}}
+\frame {\input {blocks/Definition-bvp-linear.tex}}
+\frame {\input {blocks/Definition-variational-equation.tex}}
+\frame {\input {blocks/Lemma-fundamental.tex}}
+\frame {\input {blocks/Theorem-derivative.tex}}
+\frame {\input {blocks/Theorem-derivative-f.tex}}
+\frame {\input {blocks/Definition-local-uniqueness.tex}}
+\frame {\input {blocks/Lemma-bvp-derivative.tex}}
+\frame {\input {blocks/Theorem-local-uniqueness.tex}}
+\frame {\input {blocks/Theorem-bvp-stability-1.tex}}
+\frame {\input {blocks/Theorem-bvp-stability-2.tex}}
+\frame {\input {blocks/Corollary-bvp-linear.tex}}
+\frame {\input {blocks/Definition-single-shooting.tex}}
+\frame {\input {blocks/Algorithm-single-shooting.tex}}
+\frame {\input {blocks/Definition-multiple-shooting.tex}}
+\frame {\input {blocks/Definition-multiple-shooting-newton.tex}}
+\frame {\input {blocks/Definition-multiple-shooting-multiple.tex}}
+\frame {\input {blocks/Definition-bvp-parameter.tex}}
+\frame {\input {blocks/Definition-multiple-shooting-parameter.tex}}
 
-\frame{\input{definitions/variational-equation}}
-\frame{\input{theorems/fundamental}}
-\frame{\input{theorems/derivative}}
-\frame{\input{theorems/derivative-f.tex}}
-
-\frame{\input{definitions/local-uniqueness}}
-\frame{\input{theorems/bvp-derivative}}
-\frame{\input{theorems/local-uniqueness}}
-\frame{\input{theorems/bvp-stability-1}}
-\frame{\input{theorems/bvp-stability-2}}
-\frame{\input{theorems/bvp-linear}}
-\frame{\input{definitions/single-shooting}}
-\frame{\input{algorithms/single-shooting}}
-\frame{\input{definitions/multiple-shooting}}
-\frame{\input{definitions/multiple-shooting-newton}}
-\frame{\input{definitions/multiple-shooting-multiple}}
-\frame{\input{definitions/bvp-parameter}}
-\frame{\input{definitions/multiple-shooting-parameter}}
 \section{Newton and quasi-Newton methods}
-\frame{\input{definitions/nonlinear}}
-\frame{\input{definitions/iteration-order}}
-\frame{\input{definitions/newton}}
-\frame{\input{theorems/newton-kantorovich}}
-\frame{\input{definitions/gradient-method}}
-\frame{\input{theorems/gradient-method}}
-\frame{\input{definitions/predictor-corrector}}
-\frame{\input{definitions/newton-line-search}}
-\frame{\input{theorems/downhill}}
-\frame{\input{definitions/newton-step-size}}
+
+\frame {\input {blocks/Definition-nonlinear.tex}}
+\frame {\input {blocks/Definition-iteration-order.tex}}
+\frame {\input {blocks/Definition-newton.tex}}
+\frame {\input {blocks/Theorem-newton-kantorovich.tex}}
+\frame {\input {blocks/Definition-gradient-method.tex}}
+\frame {\input {blocks/Theorem-gradient-method.tex}}
+\frame {\input {blocks/Definition-predictor-corrector.tex}}
+\frame {\input {blocks/Definition-newton-line-search.tex}}
+\frame {\input {blocks/Definition-newton-step-size.tex}}
+\frame {\input {blocks/Definition-descent-methods.tex}}
+\frame {\input {blocks/Lemma-downhill.tex}}
 
 \section{Finite Differences}
 \frame{\tableofcontents[currentsection,hideothersubsections]}
 
-\frame{\input{definitions/partitioning}}
-\frame{\input{definitions/bvp-second}}
-\frame{\input{definitions/difference-operators}}
-\frame{\input{definitions/fd-consistency}}
-\frame{\input{theorems/fd-consistency}}
-\frame{\input{definitions/fd}}
-\frame{\input{definitions/fd-example}}
-\frame{\input{definitions/fd-matrix}}
+\frame {\input {blocks/Definition-bvp-second.tex}}
+\frame {\input {blocks/Definition-difference-operators.tex}}
+\frame {\input {blocks/Definition-fd-consistency.tex}}
+\frame {\input {blocks/Lemma-fd-consistency.tex}}
+\frame {\input {blocks/Definition-fd.tex}}
+\frame {\input {blocks/Example-fd-example.tex}}
+\frame {\input {blocks/Example-fd-matrix.tex}}
+
 \begin{frame}
   \begin{block}{The reduced system}
     \begin{gather*}
@@ -365,23 +384,26 @@
   \end{gather*}
   \end{block}
 \end{frame}
-\frame{\input{definitions/m-matrix}
-  \input{theorems/m-matrix-fd1}}
-\frame{\input{theorems/m-matrix-inverse}}
-\frame{\input{theorems/fd-stability}}
-\frame{\input{definitions/upwind}}
-\frame{\input{theorems/fd-convergence}}
-\frame{\input{definitions/square-domain}}
-\frame{\input{definitions/laplacian}}
-\frame{\input{definitions/dirichlet}}
-\frame{\input{theorems/mean-value}}
-\frame{\input{theorems/maximum}}
-\frame{\input{definitions/cartesian-grid}}
-\frame{\input{definitions/lexicographic}}
-\frame{\input{definitions/5-point-stencil}}
-\frame{\input{theorems/fd-matrix}}
-\frame{\input{theorems/fd2-consistency}}
-\frame{\input{theorems/fd2-maximum}}
+
+\frame {\input {blocks/Definition-m-matrix.tex}}
+\frame {\input {blocks/Lemma-m-matrix-fd1.tex}}
+\frame {\input {blocks/Lemma-m-matrix-inverse.tex}}
+\frame {\input {blocks/Theorem-fd-stability.tex}}
+\frame {\input {blocks/Example-upwind.tex}}
+\frame {\input {blocks/Theorem-fd-convergence.tex}}
+\frame {\input {blocks/Example-square-domain.tex}}
+\frame {\input {blocks/Definition-laplace-equation.tex}}
+\frame {\input {blocks/Example-dirichlet.tex}}
+\frame {\input {blocks/Theorem-mean-value.tex}}
+\frame {\input {blocks/Theorem-maximum.tex}}
+\frame {\input {blocks/Definition-cartesian-grid.tex}}
+\frame {\input {blocks/Definition-lexicographic.tex}}
+\frame {\input {blocks/Definition-5-point-stencil.tex}}
+\frame {\input {blocks/Lemma-fd-matrix.tex}}
+\frame {\input {blocks/Theorem-5-point-m-matrix.tex}}
+\frame {\input {blocks/Lemma-fd2-consistency.tex}}
+\frame {\input {blocks/Theorem-fd2-convergence.tex}}
+\frame {\input {blocks/Theorem-fd2-maximum.tex}}
 
 \end{document}
 
