@@ -72,7 +72,7 @@
 
 \begin{remark}  
   Due to Grönwall's inequality and the stability
-  theorem~\ref{theorem:awa-stability}, the solution to the IVP above
+  theorem~\ref{Theorem:awa-stability}, the solution to the IVP above
   admits the estimate $|u(t)| \le e^{|\lambda|t} |u(0)|$.  This is
   seen easily by applying the comparison function $v(t) \equiv 0$.  As
   soon as $\lambda \neq 0$ has a non-positive real part, this estimate
@@ -106,7 +106,7 @@
     &\le 2 \nu \abs{v(t)-u(t)}^2 \\
     &= 2 \nu m(t).
   \end{align*}
-  According to Grönwall's inequality (lemma~\vref{lemma:gronwall})
+  According to Grönwall's inequality (lemma~\vref{Lemma:gronwall})
   we obtain for $t > t_0$:
   \begin{gather*}
     m(t) \le m(t_0) e^{2\nu(t-t_0)}.
@@ -403,8 +403,7 @@ Figure~\ref{fig:implicit:stability-euler}). %% anschauliches Bild?
   decoupled scalar problems, inside and across time steps. But for each of the scalar problems, the definition of A-stability implies boundedness of the solution, if $\Re(\lambda_\ell) \le 0$.
 \end{proof}
 
-\begin{Theorem}{explicit-a-stability}
-  \label{theorem:implicit:a-stability-erk}
+\begin{Theorem}{implicit:a-stability-erk}
   No explicit Runge-Kutta method is $A-stable$.
 \end{Theorem}
 
@@ -455,7 +454,7 @@ Figure~\ref{fig:implicit:stability-euler}). %% anschauliches Bild?
 \end{corollary}
 
 \begin{proof}
-  Due to Lemma~\ref{lemma:linear-monotonic}, such a linear IVP is
+  Due to Lemma~\ref{Lemma:linear-monotonic}, such a linear IVP is
   monotonic if and only if the eigenvalues of $A$ are in the right
   half-plane of $\C$. But then, the definition of B-stability implies
   $\abs{R(z)} \le 1$, and thus, the method is A-stable.
@@ -493,7 +492,7 @@ problem being solved.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{intro}
-  According to theorem~\ref{theorem:implicit:a-stability-erk}, ERK
+  According to theorem~\ref{Theorem:implicit:a-stability-erk}, ERK
   cannot be A- or B-stable. Thus, they are not suitable for long term
   integration of stiff IVP. The goal of this chapter is the study of
   methods not suffering from this limitation. The cure will be
@@ -627,12 +626,12 @@ While it was clear that the steps of an explicit Runge-Kutta method
 can always be executed, implicit methods require the solution of a
 possibly nonlinear system of equations. The solvability of such a
 system is not always clear. We will investigate several cases here:
-First, Lemma~\ref{lemma:existence-implicit-1} based on a Lipschitz
+First, Lemma~\ref{Lemma:existence-implicit-1} based on a Lipschitz
 condition on the right hand side. Since this result suffers from a
 severe step size constraint, we add
-Lemma~\ref{lemma:existence-implicit-2} for DIRK methods based on right
+Lemma~\ref{Lemma:existence-implicit-2} for DIRK methods based on right
 hand sides with a one-sided Lipschitz condition. Finally, we present
-Theorem~\ref{theorem:existence-implicit-3} for general Runge-Kutta
+Theorem~\ref{Theorem:existence-implicit-3} for general Runge-Kutta
 methods with one-sided Lipschitz condition.
 
 \input{theorems/existence-implicit-1}
@@ -817,7 +816,7 @@ methods with one-sided Lipschitz condition.
 
 
 % \begin{proof}
-%   Set $\delta = 0$ in $~\ref{theorem:implicit:perturb}$.
+%   Set $\delta = 0$ in $~\ref{Theorem:implicit:perturb}$.
 % \end{proof}
 % \end{todo}
 
@@ -924,7 +923,7 @@ methods with one-sided Lipschitz condition.
   The condition on $\pi$ implies that the quadrature rule is exact for
   polynomials of degree $s+r-1$, thus $B(s+r)$ holds.
   We have already shown in the proof of
-  Lemma~\ref{lemma:collocation-equivalence}, that $C(s)$
+  Lemma~\ref{Lemma:collocation-equivalence}, that $C(s)$
   holds. Therefore, it remains to show $D(r)$.
 
   First, we observe that first by $C(s)$ and then by $B(s+r)$ for
@@ -964,7 +963,7 @@ methods with one-sided Lipschitz condition.
   degree $\rks-1$ in the best case.  Otherwise it would be orthogonal
   to itself.  The transformed Legendre polynomial of degree $\rks$ on
   the interval $[0,1]$ satisfies this condition and
-  theorem~\ref{theorem:collocation-order} holds true with
+  theorem~\ref{Theorem:collocation-order} holds true with
   $r=s$. On the other hand $\pi(t)$ is not orthogonal on the
   constants. In this case the theorem holds true with $r=0$.
 \end{proof}
@@ -1003,7 +1002,7 @@ methods with one-sided Lipschitz condition.
 
 \begin{proof}
   Gauß quadrature is exact for polynomials of degree $2s-1$ and we
-  have that $\pi$ in Theorem~\ref{theorem:collocation-order} is of
+  have that $\pi$ in Theorem~\ref{Theorem:collocation-order} is of
   order $s$. Therefore, the same theorem concludes that the method is
   of order $2s$. The same proof applies to Radau- and Lobatto-
   quadrature rules with their reduced orders.
@@ -1019,7 +1018,7 @@ methods with one-sided Lipschitz condition.
   Let be $y(t)$ and $z(t)$ the collocation polynomials according
   to~\eqref{eq:implicit:13} with respect to initial values $y_0$ or
   $z_0$. Analogous to the proof of
-  theorem~\ref{theorem:stability-monotonic} we introduce the auxiliary
+  theorem~\ref{Theorem:stability-monotonic} we introduce the auxiliary
   function $m(t) = | z(t)-y(t)|^2$. In the collocation points
   $\xi_i = t_0 + \rkc_i h$, there holds
   \begin{multline}

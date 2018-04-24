@@ -101,19 +101,14 @@
   \end{gather}
 \end{example}
 
-
-\begin{definition}
+\begin{Definition}{autonomization}
   A differential equation of the form~\eqref{eq:awa:ode} is called
   \textbf{autonomous}, \defindex{autonomous differential equation} if
   the right hand side $f$ is not explicitly dependent on $t$, i.e.
   \begin{gather}
-    u'=F(u)
+    u'=F(u).
   \end{gather}
-\end{definition}
 
-
-\begin{definition}[Autonomization]
-  \label{definition:autonomization}
   Each differential equation can be transformed into an autonomous
   differential equation.  This is called
   \textbf{autonomization}. \defindex{autonomization}
@@ -128,7 +123,7 @@
   A method which provides the same solution for the autonomous
   differential equation as for the original IVP, is called
   \textbf{invariant under autonomization}.
-\end{definition}
+\end{Definition}
 
 
 Differential equations usually provide sets of solutions from which we
@@ -323,10 +318,10 @@ theory of ordinary differential equations.
   \begin{gather*}
     v'(t) = m(t) a(t) %\exp\left(-\int_{t_0}^t a(s) \ds\right)
     \left[
-      w(t) - \int_{t_0}^t a(s) \ds
+      w(t) - \int_{t_0}^t a(s) w(s) \ds
     \right].
   \end{gather*}
-  By assumption~\eqref{eq:awa:11}, the bracket on the right is bounded
+  By assumption~\eqref{eq:awa:10}, the bracket on the right is bounded
   by $b(t)$. Thus,
   \begin{gather*}
     v'(t) \le m(t) a(t) b(t) %\exp\left(-\int_{t_0}^t a(s) \ds\right),
@@ -340,7 +335,7 @@ theory of ordinary differential equations.
   \begin{gather*}
     \int_{t_0}^t a(s)w(s)\ds = \frac1{m(t)} % \exp\left(\int_{t_0}^t a(s) \ds\right)
     v(t)
-    \le \frac1{m(t)} \int_{t_0}^t m(s)a(s)b(s)
+    \le \frac1{m(t)} \int_{t_0}^t m(s)a(s)b(s) \ds
     % \exp\left( %\int_{t_0}^t a(r) \dr
     %   - \int_{t_0}^s a(r) \dr\right)\ds
   \end{gather*}
@@ -460,7 +455,7 @@ theory of ordinary differential equations.
   else let's say $w(0) = \sum \alpha_i \psi^{(i)}$, then
   $w(t) = \sum \alpha_i \phi^{(i)}(t)$ would be a linear combination
   because of uniqueness proven in
-  corollary~\ref{corollary:awa:unique-linear}.  Since $\{\psi^{(i)}\}$
+  corollary~\ref{Corollary:awa:unique-linear}.  Since $\{\psi^{(i)}\}$
   according to the assumtions is a basis of $\R^d$, such a $w(0)$
   cannot exist.  Hence it is shown that $\phi^{(i)}(t)$ is a basis of
   the solution space of dimension $d$.
@@ -472,7 +467,7 @@ theory of ordinary differential equations.
   \begin{gather*}
     \phi^{(d)}(t_1) = \sum_{i=1}^{d-1}\alpha_i\phi^{(i)}(t_1) =: w(t).
   \end{gather*}
-  Again according to corollary~\ref{corollary:awa:unique-linear} we
+  Again according to corollary~\ref{Corollary:awa:unique-linear} we
   have $\phi^{(d)} \equiv w$, moreover $\phi^{(d)}(0) = w(0)$ which
   again is a contradiction to the assumption $\psi^{(d)}$ is a linear
   combination of the other initial values.
@@ -669,7 +664,7 @@ theory of ordinary differential equations.
 \begin{remark}
   Currently our solution is restricted to $I = [t_0 - T, t_0 + T]$.
   Since $T$ is chosen in such a way in
-  equation~\ref{theorem:picardlindelof} that the graph of $u$ does not
+  equation~\ref{Theorem:picardlindelof} that the graph of $u$ does not
   leave the domain, this extension always ends on the boundary of
   $D$. One can now extend the solution by solving the next IVP
   $\left\{\begin{array}{l}
@@ -728,7 +723,7 @@ theory of ordinary differential equations.
 %     \item $D = \R \times \R$
 %   \end{enumerate}
 
-%   $\Rightarrow$ Due to the theorems of Peano~\eqref{satz:peano} and Picard-Lindelöf~\eqref{theorem:picardlindelof} it follows:
+%   $\Rightarrow$ Due to the theorems of Peano~\eqref{satz:peano} and Picard-Lindelöf~\eqref{Theorem:picardlindelof} it follows:
 %   $\exists! u : \R \to \R$
 % \end{example}
 

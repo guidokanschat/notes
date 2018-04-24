@@ -162,7 +162,7 @@ conclude that the Euler method is consistent of order 1.
   \end{gather*}
   These functions are bounded and piecewise continuous on any finite
   interval. Thus, they are integrable on $[0,n]$. Therefore, the
-  continuous Grönwall inequality of Lemma~\ref{lemma:gronwall} applies
+  continuous Grönwall inequality of Lemma~\ref{Lemma:gronwall} applies
   and proves the result.
 \end{proof}
 
@@ -191,7 +191,7 @@ conclude that the Euler method is consistent of order 1.
     + \sum_{k=1}^n L_h h_{k} \abs{y_k-z_k}.
   \end{gather*}
   The estimate now follows from the discrete Grönwall inequality in
-  Lemma~\ref{lemma:gronwall-discrete}.
+  Lemma~\ref{Lemma:gronwall-discrete}.
 \end{proof}
 
 \begin{corollary}
@@ -384,7 +384,7 @@ conclude that the Euler method is consistent of order 1.
   Computations become tedious very fast, in part due to the sum of
   partial derivatives of $f(t,u)$. This can be simplified by
   considering Runge-Kutta methods for the autonomized ODE (see
-  Definition~\ref{definition:autonomization})
+  Definition~\ref{Definition:autonomization})
   \begin{gather*}
     \begin{pmatrix} u' \\ t' \end{pmatrix} = 
     \begin{pmatrix} f(t,u) \\ 1 \end{pmatrix}.
@@ -493,9 +493,9 @@ conclude that the Euler method is consistent of order 1.
   \end{align*}
 \end{proof}
 
-\begin{proof}[Proof of Lemma~\ref{lemma:rk-order-3-4}]
+\begin{proof}[Proof of Lemma~\ref{Lemma:rk-order-3-4}]
   The proof utilizes Taylor expansion of $u_1$ and $y_1$ provided in
-  Lemmas~\ref{lemma:taylor-u} and~\ref{lemma:taylor-y},
+  Lemmas~\ref{Lemma:taylor-u} and~\ref{Lemma:taylor-y},
   respectively. Once we have computed these expansions, we compare
   coefficients in front of equal derivatives in order to get the result.
 \end{proof}
@@ -717,7 +717,7 @@ conclude that the Euler method is consistent of order 1.
 \begin{proof}
   For the proof we need a refined version of the local error estimates
   as well as the global error estimate in
-  Theorem~\eqref{theorem:convergence-one-step} which can be obtained by
+  Theorem~\eqref{Theorem:convergence-one-step} which can be obtained by
   adding one more step of Taylor expansion. Then, we get for the local
   error of a method of order $p$ estimates of the form
   \begin{gather}
@@ -878,7 +878,7 @@ quadrature weights $b_i$ differ.
 \begin{definition}
   \defindex{Runge-Kutta method!continuous}
   A continuous Runge-Kutta method is a method of the same type as in 
-  definition~\ref{definition:erk}, for which the coefficients $\rkb_i$ are replaced 
+  definition~\ref{Definition:erk}, for which the coefficients $\rkb_i$ are replaced 
 	by continuous functions $\rkb_i(\theta)$ on the interval $[0,1]$.
   For this reason the equation~\eqref{eq:explicit:1c} is augmented by
   \begin{equation}

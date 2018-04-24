@@ -232,7 +232,7 @@
 
 
 \begin{proof}
-  According to lemma~\ref{lemma:lmm-bramble-hilbert} it is sufficient
+  According to lemma~\ref{Lemma:lmm-bramble-hilbert} it is sufficient
   to show that ~\eqref{eq:lmm:12} is equivalent to $L_h \phi_q=0$ for
   polynomials of degree $q\le p$. Due to linearity of the method it
   however is sufficient to show this for a basis of the polynomial
@@ -273,11 +273,10 @@
 
 \input{definitions/difference-equation}
 
-\begin{lemma}
-  \label{lemma:lmm:1}
+\begin{Lemma}{lmm:1}
   The solutions of the equation~\eqref{eq:lmm:3} with $y_n\in \R$ or
   $y_n\in \C$ form a vector space of dimension $\lmms$. 
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   Since the equation~\eqref{eq:lmm:3} is linear and homogeneous, it is
@@ -318,7 +317,7 @@
   \begin{gather*}
     \lmms = \sum_{i=1}^\iota \nu_i.
   \end{gather*}
-  Moreover we know because of Lemma~\ref{lemma:lmm:1}, that $\lmms$ is
+  Moreover we know because of Lemma~\ref{Lemma:lmm:1}, that $\lmms$ is
   the dimension of the solution space. We show that the sequences
   $\{y^{(i,k)}_n\}$ are linear independent. This is clear for
   sequences of different index $i$. It is also clear for different roots,
@@ -327,7 +326,7 @@
   
   It remains to show that the sequences $\{y^{(i,k)}_n\}$ in fact are
   solutions of the difference equations.  For $k=0$ we have proven
-  this already in lemma~\ref{lemma:difference-equation-solutions}.  We proof the fact here for
+  this already in lemma~\ref{Lemma:difference-equation-solutions}.  We proof the fact here for
   $k=2$ and for a double zero $\xi_i$; the principle for higher order
   roots should be clear then.  Equation~\eqref{eq:lmm:3} applied to
   the sequence $\{n \xi_i^n\}$ results in
@@ -346,7 +345,7 @@
 \input{theorems/root-test}
 
 \begin{proof}
-  According to theorem~\ref{theorem:difference-equation-basis} we can write all solutions
+  According to theorem~\ref{Theorem:difference-equation-basis} we can write all solutions
   as linear combinations of the sequences $y^{(i,k)}$ in
   equation~\eqref{eq:lmm:6}. Therefore,
   \begin{enumerate}
@@ -393,7 +392,7 @@
   not contain $h$. Therefore we have to examine, if the solutions
   $y_n$ stay bounded for $n\to \infty$.  By resorting the summation we
   obtain a difference equation of the form~\eqref{eq:lmm:3}. Due to
-  corollary~\ref{corollary:root-test} it follows the statement of the theorem.
+  corollary~\ref{Corollary:root-test} it follows the statement of the theorem.
 \end{proof}
 
 \begin{corollary}
@@ -495,7 +494,7 @@
     \norm{G(Y_{k-1})-G(Z_{k-1})} \le (1+h L_h) \norm{Y_{k-1}-Z_{k-1}}.
   \end{gather}
   Thus, the local error $\eta_k = U_k - \widehat Y_k$ at step $k$, which by
-  Lemma~\ref{lemma:lmm-one-consistency} is bounded by $M h^{p+1}$, accumulates
+  Lemma~\ref{Lemma:lmm-one-consistency} is bounded by $M h^{p+1}$, accumulates
   until step $n$ at most to $h^{p+1}(1_h L_h)^{n-k}$.
 
   We have:
@@ -523,10 +522,10 @@ suitable way and
 \end{itemize}
 It is crucial that the method of the starting phase provides a suitable order 
 corresponding to the LMM of the run phase, recall Definition 
-\ref{definition:lmm-convergence}. Moreover, it should have analog properties to 
+\ref{Definition:lmm-convergence}. Moreover, it should have analog properties to 
 the LMM, like explicit/implicit or applicability to stiff problems. 
 % We now consider different starting procedures for an implicit LMM with 
-% convergence order $p$. According to Definition \ref{definition:lmm-convergence} 
+% convergence order $p$. According to Definition \ref{Definition:lmm-convergence} 
 % the starting values are required to have the same convergence order. 
 Possible choices for the starting phase include multistep methods with variable 
 order and one-step methods.  
@@ -557,7 +556,7 @@ Nevertheless, self starters are often used in practice.
 
 
 \begin{example}[Runge-Kutta starter]
-\label{example:RKstarter}
+\label{Example:RKstarter}
 One can use Runge-Kutta methods to start LMM. Since only a fixed
 number of starting steps are performed, the local order of the
 Runge-Kutta approximation is crucial.  For an implicit LMM with
@@ -568,7 +567,7 @@ Consider a 3-step BDF method. Thus, beside $y_0$, we need start values
 $y_1, y_2$ with errors less than $c_0 h^3$. They can be computed by RK methods 
 of consistency order $2$, for example by two steps of the 1-stage Gau\ss \ 
 collocation method with step size $h$ since it has consistency order $2s=2$, 
-see theorem \ref{theorem:gauss-consistency}.
+see theorem \ref{Theorem:gauss-consistency}.
 \end{example}
 
 
@@ -579,13 +578,13 @@ see theorem \ref{theorem:gauss-consistency}.
   evaluate the continuous approximation to obtain the required
   starting values.
 
-  In constrast to Example \ref{example:RKstarter} one could also use
+  In constrast to Example \ref{Example:RKstarter} one could also use
   the continuous polynomial approximation of Gau\ss \ collocation to
   start a 3-step BDF method. One step with step size $2h$ of a 2-stage
   Gau\ss \ collocation method would give a polynomial of degree $2$
   which is then evaluated in $t_1=t_0+h$ and $t_2=t_1+h$ to obtain
   $y_1, y_2$. According to Theorem
-  \ref{theorem:collocation-continuous} $y_1, y_2$ have the appropriate
+  \ref{Theorem:collocation-continuous} $y_1, y_2$ have the appropriate
   order.
 \end{example}
 
@@ -645,11 +644,11 @@ see theorem \ref{theorem:gauss-consistency}.
   Let $\{\xi_1(z),\dots,\xi_\lmms(z)\}$ be the set of roots of the
   stability polynomial $r_z(x)$ as functions of $z$.
   A point $z\in \C$ is in the stability region of a LMM, if these
-  roots satisfy the root test in corollary~\ref{corollary:root-test}.
+  roots satisfy the root test in corollary~\ref{Corollary:root-test}.
 \end{lemma}
 
 \begin{proof}
-  The proof is analog to theorem~\ref{theorem:lmm-stability}.
+  The proof is analog to theorem~\ref{Theorem:lmm-stability}.
 \end{proof}
 
 \begin{Theorem*}{dahlquist2}{2nd Dahlquist barrier}

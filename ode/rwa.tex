@@ -110,7 +110,7 @@
   solution theory and wonder: assume a solution of the problem
   exists. Which further conditions are necessary to obtain
   well-posedness of the problem in terms of Hadamard
-  (definition~\vref{definition:hadamard}).
+  (definition~\vref{Definition:hadamard}).
 
   The key is the following definition which grants us the possibility
   of the approximation of a solution, at least after a quantification
@@ -150,7 +150,7 @@
     \\
     &= \rwaa \fundamental(a;t) + \rwab \fundamental(b;t),
   \end{align*}
-  where the last equality is due to Theorem~\ref{theorem:derivative}.
+  where the last equality is due to Theorem~\ref{Theorem:derivative}.
 \end{proof}
 
 \begin{remark}
@@ -254,7 +254,7 @@ For this purpose we have:
 \begin{proof}
   We begin by estimating the influence of perturbations of the right
   hand side on the boundary values. Using the corresponding
-  Theorem~\ref{theorem:derivative-f} for IVP, where we swap the
+  Theorem~\ref{Theorem:derivative-f} for IVP, where we swap the
   meaning of $t$ and the interval boundaries, we obtain
   \begin{align*}
     \frac{\partial u(a)}{\partial g}
@@ -263,8 +263,8 @@ For this purpose we have:
     \frac{\partial u(b)}{\partial g}
     &= \int_t^b \fundamental(b;s) g\bigl(s,u(s)\bigr) \ds,
   \end{align*}
-  By the chain rule and Lemma~\ref{lemma:bvp-derivative}
-  and Theorem~\ref{theorem:bvp-stability-1}, we get
+  By the chain rule and Lemma~\ref{Lemma:bvp-derivative}
+  and Theorem~\ref{Theorem:bvp-stability-1}, we get
   \begin{gather*}
     \frac{\partial r\bigl(u(a), u(b)\bigr)}{\partial g}
     = \frac{\partial r\bigl(u(a), u(b)\bigr)}{\partial u(t)}
@@ -287,8 +287,8 @@ Assembling everything, we obtain
 \end{proof}
 
 \begin{remark}
-  Theorems~\ref{theorem:local-uniqueness}, \ref{theorem:bvp-stability-1}
-  and~\ref{theorem:bvp-stability-2} represent the verification of the
+  Theorems~\ref{Theorem:local-uniqueness}, \ref{Theorem:bvp-stability-1}
+  and~\ref{Theorem:bvp-stability-2} represent the verification of the
   second and third Hadamard conditions\index{Hadamard conditions}.
   Thus, even if the existence of a solution for the BVP is not always
   guaranteed, solutions can be approximated under certain conditions.
@@ -300,7 +300,7 @@ Assembling everything, we obtain
 \input{theorems/bvp-linear}
 
 \begin{proof}
-  By Theorem~\ref{lemma:bvp-derivative} and linearity of the BVP,
+  By Theorem~\ref{Lemma:bvp-derivative} and linearity of the BVP,
   we deduce that the mapping $\rho$ from $u(t)$ to the boundary
   condition is affine and can be written in the form
   \begin{gather*}
@@ -309,7 +309,7 @@ Assembling everything, we obtain
   where $b(t)$ is some vector in $\R^d$ or $\C^d$ independent of
   $u$. Since everything in this equation exept $u(t)$ is given, the
   unique solvability is equivalent to the invertibility of $E(t)$,
-  which by Theorem~\ref{theorem:local-uniqueness} is equivalent to
+  which by Theorem~\ref{Theorem:local-uniqueness} is equivalent to
   regularity of $E(a)$ .
 \end{proof}
 
@@ -340,7 +340,7 @@ Assembling everything, we obtain
   For an example with the Bisection method.  Of course the Newton
   method would be a better choice but for that we need to calculate
   the derivatives of $F$.  This can be achieved with
-  theorem~\ref{theorem:derivative} by calculating the
+  theorem~\ref{Theorem:derivative} by calculating the
   fundamental matrix $\fundam$.
 \end{example}
 
@@ -368,7 +368,7 @@ Assembling everything, we obtain
   % \end{gather*}
   which involves the \putindex{fundamental matrix} $\fundamental(b;a)$
   of derivatives of the solution at point $b$ with respect to the
-  initial values (see Lemma~\ref{lemma:bvp-derivative}).
+  initial values (see Lemma~\ref{Lemma:bvp-derivative}).
 \end{remark}
 
 \input{algorithms/single-shooting}
