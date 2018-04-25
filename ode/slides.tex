@@ -4,15 +4,16 @@
 \usepackage{tikz,tikzscale}
 \usetikzlibrary{snakes}
 \usepackage{../mathsim}
+\usepackage{times}
 \usepackage{xr}
-\externaldocument{awa}
-\externaldocument{explicit}
-\externaldocument{implicit}
-\externaldocument{lmm}
-\externaldocument{rwa}
-\externaldocument{newton}
-\externaldocument{fd}
-\externaldocument{appendix}
+% \externaldocument{awa}
+% \externaldocument{explicit}
+% \externaldocument{implicit}
+% \externaldocument{lmm}
+% \externaldocument{rwa}
+% \externaldocument{newton}
+% \externaldocument{fd}
+% \externaldocument{appendix}
 \usepackage{mfirstuc}
 \usepackage{mathtools}  
 \mathtoolsset{showonlyrefs}
@@ -79,7 +80,7 @@
 
 \frame {\input {blocks/Definition-partitioning.tex}}
 \frame {\input {blocks/Definition-one-step.tex}}
-\frame {\input {blocks/Theorem-example.tex}}
+\frame {\input {blocks/Example-euler-linear-1.tex}}
 
 \subsection{Error analysis}
 \begin{frame}
@@ -98,8 +99,8 @@
 
 \frame {\input {blocks/Definition-erk.tex}}
 \frame {\input {blocks/Definition-butcher-tableau-erk.tex}}
-\frame {\input {blocks/Example-rk2.tex}}
-\frame {\input {blocks/Lemma-T.tex}}
+\frame {\input {blocks/Example-rk2.tex}
+  \input {blocks/Lemma-Heun-consistency.tex}}
 \frame {\input {blocks/Lemma-rk-order-3-4.tex}}
 \frame {\input {blocks/Lemma-taylor-u.tex}}
 \frame {\input {blocks/Lemma-taylor-y.tex}}
