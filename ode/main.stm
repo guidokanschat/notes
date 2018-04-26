@@ -25,6 +25,7 @@
 \frame {\input {\slidetheorem@fileprefix Definition-truncation-error.tex}}
 \frame {\input {\slidetheorem@fileprefix Lemma-gronwall-discrete.tex}}
 \frame {\input {\slidetheorem@fileprefix Theorem-stability-discrete.tex}}
+\frame {\input {\slidetheorem@fileprefix Corollary-finite-precision.tex}}
 \frame {\input {\slidetheorem@fileprefix Theorem-convergence-one-step.tex}}
 \frame {\input {\slidetheorem@fileprefix Definition-erk.tex}}
 \frame {\input {\slidetheorem@fileprefix Definition-butcher-tableau-erk.tex}}

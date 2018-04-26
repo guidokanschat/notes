@@ -194,7 +194,7 @@ conclude that the Euler method is consistent of order 1.
   Lemma~\ref{Lemma:gronwall-discrete}.
 \end{proof}
 
-\begin{corollary}
+\begin{Corollary*}{finite-precision}{One-step methods with finite precision}
   Let the one-step method $\verfahren$ be run on a computer, yielding
   a sequence $(z_n)$, such that each time step is executed in finite
   precision arithmetic. Let $(y_n)$ be the mathematically correct
@@ -210,7 +210,7 @@ conclude that the Euler method is consistent of order 1.
   \begin{gather*}
     \abs{y_n-z_n} \le e^{L_h(t_n-t_0)} n \epsilon_m \max_k\abs{z_k}.
   \end{gather*}
-\end{corollary}
+\end{Corollary*}
 
 \input{theorems/convergence-onestep}
 
