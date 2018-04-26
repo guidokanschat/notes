@@ -37,6 +37,7 @@
 \frame {\input {\slidetheorem@fileprefix Lemma-taylor-u.tex}}
 \frame {\input {\slidetheorem@fileprefix Lemma-taylor-y.tex}}
 \frame {\input {\slidetheorem@fileprefix Example-rk4.tex}}
+\frame {\input {\slidetheorem@fileprefix Lemma-erk-Lipschitz.tex}}
 \frame {\input {\slidetheorem@fileprefix Theorem-richardson.tex}}
 \frame {\input {\slidetheorem@fileprefix Definition-embedded-butcher.tex}}
 \frame {\input {\slidetheorem@fileprefix Definition-dormand-prince-45.tex}}
