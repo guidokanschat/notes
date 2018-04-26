@@ -357,7 +357,7 @@ conclude that the Euler method is consistent of order 1.
   order. The proof for the Heun method is left as an exercise.
 \end{proof}
 
-\begin{example}
+\begin{Example}{rk3}
   \defindex{Runge-Kutta method!three-stage}
   The three stage Runge-Kutta method is
 
@@ -378,7 +378,7 @@ conclude that the Euler method is consistent of order 1.
     \end{array}
   \end{gather*}
   This method is obviously based on the Simpson rule.
-\end{example}
+\end{Example}
 
 \begin{remark}
   Computations become tedious very fast, in part due to the sum of
@@ -399,27 +399,74 @@ conclude that the Euler method is consistent of order 1.
       y_1 &= y_0 + \sum_{j=1}^s b_j h f(g_j).
     \end{split}
   \end{gather}
-  Observing the last component of the vector $u$, we see that this
-  method is equivalent to the original, if there holds
+\end{remark}
+
+\begin{Lemma}{erk-autonomization}
+  An ERK is invariant under autonomization (or in short,
+  \putindex{autonomizable}), if and only if
   \begin{gather}
     \label{eq:explicit:9}
     c_i = \sum_{j=1}^{i-1} a_{ij}, \quad i=1,\dots,s.
   \end{gather}
-  Thus, only methods obeying this condition are autonomizable.
-\end{remark}
+\end{Lemma}
+
+\begin{proof}
+  Observing the last component of the vector $u$ in the previous
+  remark and the method applied to it yields the condition.
+\end{proof}
 
 %HNW p. 145 and pp. 135/137
-\input{theorems/rk-order-3-4}
-\begin{remark}
-  Conditions~\eqref{eq:explicit:12}--~\eqref{eq:explicit:14}
-  and~\eqref{eq:explicit:16} are conditions that the quadrature with
-  support points $c_i$ and corresponding weights $b_i$ is exact for
-  polynomials of degrees two and three, respectively, such that this
-  quadrature rule is of one order higher.
+\begin{Lemma}{rk-order-3-4}
+  An autonomizable ERK with $s$ stages is consistent of third order, if
+  and only if the following conditions are met:
+  \begin{subequations}
+    \label{eq:explicit:11}
+    \begin{align}
+      \label{eq:explicit:12}
+      b_1 + \dots + b_s &= 1, \\
+      \label{eq:explicit:13}
+      b_1c_1 + \dots + b_s c_s &= 1/2, \\
+      \label{eq:explicit:14}
+      b_1c_1^2 + \dots + b_s c_s^2 &= 1/3, \\
+      \label{eq:explicit:15}
+      \sum\nolimits_{i,j} b_i a_{ij}c_j &= 1/6.
+    \end{align}
+    It is consistent of fourth order, if and only if additionally
+    \begin{align}
+    \label{eq:explicit:16}
+    b_1c_1^3 + \dots + b_s c_s^3 &= 1/4, \\
+    \label{eq:explicit:18}
+    \sum\nolimits_{i,j} b_i a_{ij} c_j^2 &= 1/12, \\
+    \label{eq:explicit:19}
+    \sum\nolimits_{i,j,k} b_i a_{ij} a_{jk} c_k &= 1/24,\\
+    \label{eq:explicit:17}
+    \sum\nolimits_{i,j} b_i c_i a_{ij} c_j &= 1/8.
+  \end{align}
+  \end{subequations}
+\end{Lemma}
 
-  Conditions~\eqref{eq:explicit:15} and~\eqref{eq:explicit:17} ensure,
-  that the approximation of the integrated function in the quadrature
-  points $c_i$ is sufficiently good.
+\begin{remark}
+  We can rephrase these conditions, such that an ERK is of order $k$ if
+  the quadrature with
+  support points $c_i$ and corresponding weights $b_i$ is exact for
+  polynomials of degree $k-1$:
+  \begin{gather*}
+    \sum_{i=1}^{s} b_i p(c_i) = \int_0^1 p(t)\dt,
+    \qquad \forall p\in \P_{k-1}.
+  \end{gather*}
+  Furthermore, for $k \ge 3$
+  \begin{gather*}
+    \sum_{ij} b_i a_{ij} p(c_j) = \int_0^1\int_0^t p(s)\ds\dt,
+    \qquad \forall p\in \P_{k-2}.
+  \end{gather*}
+  Additionally, for $k\ge 4$
+  \begin{xalignat*}2
+    \sum_{ijk} b_i a_{ij} a_{jk} p(c_k) &= \int_0^1\int_0^t\int_0^s p(r)\dr \ds \dt,
+    &&\forall p\in \P_{k-3},\\
+    \sum_{ij} b_i p(c_i) a_{ij} q(c_j)
+    &= \int_0^1 p(t) \int_0^t q(s) \ds\dt
+    &&\forall p\in \P_{k_1}, q\in\P_{k_2}, k_1+k_2 = k-2.
+  \end{xalignat*}
 \end{remark}
 
 \input{theorems/taylor-u}
@@ -443,7 +490,7 @@ conclude that the Euler method is consistent of order 1.
 \input{theorems/taylor-y}
 
 \begin{proof}
-  We begin with the observation
+  We begin with the observation that for an arbitrary function $\phi$ holds
   \begin{gather*}
      \frac{d^{q}}{d h^{q}}\bigl(h\phi(h)\bigr)\bigg|_{h=0}
      = \left[ h \frac{d^{q}}{d h^{q}} \phi(h) + q h'
