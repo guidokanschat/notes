@@ -485,6 +485,14 @@ conclude that the Euler method is consistent of order 1.
   \end{align*}
   After the concept is clear, we have to keep track of the vector
   indices and compute with brute force.
+  It may be worth noting, that in the 4th order term, we used the fact
+  that we can swap summation indices and get
+  \begin{gather*}
+    \sum_{\lambda,\mu,\nu} \partial_{\lambda\mu} f_n \partial_\nu f_\lambda f_\mu f_\nu
+    = \sum_{\lambda,\mu,\nu} \partial_{\lambda\mu} f_n \partial_\nu f_\mu f_\lambda f_\nu
+    = \sum_{\lambda,\mu,\nu} \partial_{\lambda\nu} f_n \partial_\mu f_\lambda f_\mu f_\nu
+    .
+  \end{gather*}
 \end{proof}
 
 \input{theorems/taylor-y}
