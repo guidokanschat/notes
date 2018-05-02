@@ -212,19 +212,36 @@ conclude that the Euler method is consistent of order 1.
   \end{gather*}
 \end{Corollary*}
 
-\input{theorems/convergence-onestep}
+\begin{Theorem*}{convergence-one-step}{Convergence of one-step methods}
+  Let the one-step method $F(.,.)$ be consistent of order $p$ and
+  discretely stable, that is, $F(.,.)$ is Lipschitz continuous in its
+  second argument. Let $f(t,u)\in C^{p}$. Furthermore, let be
+  $y_0 = u_0$. Let $h = \max h_n$ and let there be a positive number
+  $\gamma$ such that $\min h_n = \gamma h$. Then, the method converges
+  with order $p$ and there holds for
+  \begin{equation}
+    \label{eq:convergence-onestep:1}
+    \abs{u_n - y_n} \le c e^{L_h(t_n-t_0)} h^p,
+  \end{equation}
+  where the constant $c$ is independent of $h$.
+\end{Theorem*}
 
 \begin{proof}
   Again we use the discrete stability theorem: with the definition of
   the order of the method, we obtain
-  \begin{gather*}
+  \begin{gather}
+    \label{eq:convergence-onestep:2}
     \abs{\eta_k(u)-\eta_k(y)} = \abs{\eta_k(u)} \le c h^{p+1},
-  \end{gather*}
+  \end{gather}
   where $c$ depends on the derivatives of $u$ (and thus of $f$), but
-  not on $u_k-y_k$. Thus, we obtain
+  not on $u_k-y_k$. On the other hand, we have
+  \begin{gather*}
+    n \le \frac{t_n-t_0}{\min h_n} \le \frac{t_n-t_0}{\gamma h}.
+  \end{gather*}
+  Thus, we obtain by summing up~\eqref{eq:convergence-onestep:2} over all $n$
   \begin{gather*}
     \abs{u_n-y_n} \le e^{L_h(t_n-t_0)}\sum_{k=1}^n h_k^{p+1}
-    \le e^{L_h(t_n-t_0)} h^p.
+    \le c e^{L_h(t_n-t_0)} h^p.
   \end{gather*}
 \end{proof}
 
