@@ -150,13 +150,34 @@
 \frame {\input {blocks/Definition-a-stability.tex}
   \input {blocks/Theorem-a-stability.tex}}
 \frame {\input {blocks/Theorem-implicit:a-stability-erk.tex}}
-\frame {\input {blocks/Definition-b-stability.tex}
-  \input {blocks/Theorem-b-stability.tex}}
+\frame {\input {blocks/Definition-b-stability.tex}}
+\frame {\input {blocks/Theorem-b-stability.tex}
+  \input {blocks/Corollary-b-stable-a-stable.tex}}
 \frame {\input {blocks/Definition-l-stability.tex}}
 
 \subsection{General Runge-Kutta methods}
 
 \frame {\input {blocks/Definition-rk.tex}}
+\begin{frame}
+  \begin{block}{Two-stage SDIRK methods of order 3}
+    \begin{gather*}
+      \def\arraystretch{1.5}
+      \begin{array}{c|cc}
+        \frac12 - \frac{\sqrt{3}}{6} & \frac12 - \frac{\sqrt{3}}{6} & 0 \\
+        \frac12 + \frac{\sqrt{3}}{6} & \frac{\sqrt{3}}{3} & \frac12 - \frac{\sqrt{3}}{6} \\
+        \hline
+                                     & \frac12 & \frac12
+      \end{array}
+      \qquad
+      \begin{array}{c|cc}
+        \frac12 + \frac{\sqrt{3}}{6} & \frac12 + \frac{\sqrt{3}}{6} & 0 \\
+        \frac12 - \frac{\sqrt{3}}{6} & -\frac{\sqrt{3}}{3} & \frac12 + \frac{\sqrt{3}}{6} \\
+        \hline
+                                     & \frac12 & \frac12
+      \end{array}
+    \end{gather*}
+  \end{block}  
+\end{frame}
 \frame {\input {blocks/Lemma-stability-rk.tex}}
 \frame {\input {blocks/Example-stability-examples-rk.tex}}
 
