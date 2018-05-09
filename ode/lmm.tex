@@ -710,6 +710,58 @@ see theorem \ref{Theorem:gauss-consistency}.
     of order $k$.}
   \label{tab:bdf-stability}
 \end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Predictor-corrector schemes}
+\input{definitions/predictor-corrector}
+
+\begin{remark}
+  Predictor-corrector methods were developed strongly around
+  Adams-Moulton and Adams-Bashforth methods, since the implicit ones
+  have much smaller error constants. Given that these methods offer no
+  considerable advantages compared to Runge-Kutta methods, but
+  stability properties and implementation are weak points, We omit
+  their discussion.
+
+  A simple predictor for BDF methods can be obtained, since they are
+  based on an interpolating polynomial. Thus, we simply extrapolate
+  this polynomial to the next point in time.
+\end{remark}
+
+\begin{example}
+  While the predictor-corrector idea sounds reasonable, we have to be
+  careful with stiff problems, the original reason for using implicit
+  methods. Take again our favorite IVP
+  \begin{gather*}
+    u' = \lambda u,
+    \qquad u(0) = 1.
+  \end{gather*}
+  We apply the BDF(1) scheme, namely the implicit Euler method, with
+  step size 1. According to its stability
+  function~\eqref{eq:impl:stabil:impleuler}, we obtain
+  \begin{gather*}
+    y_1 = \frac1{1-\lambda}.
+  \end{gather*}
+  Accordingly, the interpolating polynomial is
+  \begin{gather*}
+    y(t) = (1-t) + \frac1{1-\lambda} t = 1 + \frac{\lambda}{1-\lambda}t.
+  \end{gather*}
+  For the mildly stiff problem $\lambda = -3$, we obtain
+  \begin{gather*}
+    y_1 = 0.25, \qquad y_2 = 0.0625,
+    \qquad \hat y_2 = y(2) = -0.5.
+  \end{gather*}
+  Thus, the extrapolated value is already a much worse initial value
+  for a Newton iteration than using the value from the previous time
+  step.
+  
+  While this example was particularly chosen to exhibit such failure,
+  it does show that extrapolation of stiff problems has its
+  pitfalls. Here, we end up with a time step restriction which is
+  comparable to the stability condition of the explicit method.
+\end{example}
+
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "notes"

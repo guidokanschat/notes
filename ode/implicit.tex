@@ -892,12 +892,12 @@ methods with one-sided Lipschitz condition.
   For the proof, we refer to~\cite[Ch. II, Theorem
   7.4]{HairerNorsettWanner93}. Here, we only observe, that
   \begin{gather*}
-    \int_0^1 x^{q-1} \dx = \frac1{q}, \qquad
-    \int_0^{c_i} x^{q-1} \dx = \frac{c_i q^{q}}{q}.
+    \int_0^1 t^{q-1} \dt = \frac1{q}, \qquad
+    \int_0^{c_i} t^{q-1} \dt = \frac{c_i^{q}}{q}.
   \end{gather*}
   If we now insert the function $x$ at the places $c_i$ into the
   quadrature formula with the quadrature weights $\rkb_i$, then we
-  obtain~\eqref{eq:implicit:8}. Similarly we get~\eqref{eq:implicit:9}, if we insert the value $x^{q}/q$ at
+  obtain~\eqref{eq:implicit:8}. Similarly we get~\eqref{eq:implicit:9}, if we insert the value $t^{q}/q$ at
   the places $c_i$ from the quadrature formula with weights
   $\rka_{ij}$ for $j=1,\dots,s$. In both cases we carry this out for
   all momomials until the desired degree is reached.  Due to linearity
@@ -1046,22 +1046,19 @@ methods with one-sided Lipschitz condition.
 
 \input{definitions/gauss-collocation}
 
-\begin{example}
-  The two- and three-stage Gauß-Collocation methods were described by
-  Hammer and Hollingsworth or\ Kuntzmann and Butcher. 
-	Their Butcher tables are (c.f.~\cite[Tables
-  7.3, 7.4]{HairerNorsettWanner93}):
-  \begin{table}[tp]
-    \begin{minipage}[t]{.49\linewidth}
-      \input{tables/gauss2}
-    \end{minipage}
-    \begin{minipage}[t]{.49\linewidth}
-      \input{tables/gauss3}      
-    \end{minipage}
-    \caption{Gauß-Collocation methods with two and three collocation points}
-    \label{tab:gauss-collokation-2-3}
-  \end{table}
-\end{example}
+\begin{Example*}{Gauss-collocation-2-3}{2- and 3-stage Gauss collocation methods}
+  \mbox{}
+  \begin{minipage}[t]{.4\linewidth}
+    \input{tables/gauss2}
+  \end{minipage}
+  \begin{minipage}[t]{.59\linewidth}
+    \input{tables/gauss3}      
+  \end{minipage}
+  % The two- and three-stage Gauß-Collocation methods were described by
+%  Hammer and Hollingsworth or\ Kuntzmann and Butcher. 
+	see~\cite[Tables
+  7.3, 7.4]{HairerNorsettWanner93}
+\end{Example*}
 
 \input{theorems/gauss-consistency}
 
@@ -1108,13 +1105,27 @@ methods with one-sided Lipschitz condition.
   which proves the statement about the stability domain.
 \end{proof}
 
+\begin{Example*}{Radau-right-2-3}{2- and 3-stage right Radau collocation methods}
+  \mbox{} 
+  \begin{minipage}[t]{.25\linewidth}
+    \input{tables/radau2}
+  \end{minipage}
+  \begin{minipage}[t]{.58\linewidth}
+    \input{tables/radau3}      
+  \end{minipage}
+\end{Example*}
+
 \begin{remark}
   The Radau-collocation methods with right end point of the interval
   $[0,1]$ included in the quadrature set are L-stable. The stability
   regions of the first three are shown in
-  Figure~\ref{fig:radau-collocation}. The corresponding Butcher
-  tableaus are in Table~\ref{tab:radau-collokation-2-3}.
+  Figure~\ref{fig:radau-collocation}.
+
+  Observe that the stability domains are growing with order of the
+  method. Also, observe that the computation of $y_1$ coincides with
+  that of $g_s$, such that we can save a few operations.
 \end{remark}
+
 \begin{figure}[tp]
   \centering
   \includegraphics[width=.3\textwidth]{fig/stability-radau1}
@@ -1128,21 +1139,7 @@ methods with one-sided Lipschitz condition.
     comparison with previous figures.}
   \label{fig:radau-collocation}
 \end{figure}
-Observe how not only the stability domains are growing with order of
-the method, but also that the computation of $y_1$ coincides with that
-of $g_s$, such that we can save a few operations.
-\begin{table}[tp]
-  \begin{minipage}[t]{.49\linewidth}
-    \input{tables/radau2}
-  \end{minipage}
-  \begin{minipage}[t]{.49\linewidth}
-    \input{tables/radau3}      
-  \end{minipage}
-  \caption{Right Radau-collocation methods with two
-    and three collocation points}
-  \label{tab:radau-collokation-2-3}
-\end{table}
-\endinput
+%\endinput
 \section{Considerations on implementation}
 
 \begin{intro}
@@ -1196,9 +1193,10 @@ of $g_s$, such that we can save a few operations.
   a possibly large Lipschitz constant.
 \end{remark}
 
-\begin{remark}
-  Each step of the Newton iteration requires the inversion of a 
-\end{remark}
+%\begin{remark}
+%  Each step of the Newton iteration requires the inversion of a 
+%\end{remark}
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "notes"

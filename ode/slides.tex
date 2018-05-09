@@ -236,32 +236,10 @@
 \frame {\input {blocks/Theorem-collocation-order.tex}}
 \frame {\input {blocks/Theorem-collocation-continuous.tex}}
 \frame {\input {blocks/Definition-gauss-collocation.tex}}
-
-\begin{frame}
-  \begin{block}{2- and 3-point Gauß-Collocation}
-  \begin{minipage}[t]{.39\linewidth}
-    \input{tables/gauss2}
-  \end{minipage}
-  \begin{minipage}[t]{.55\linewidth}
-    \input{tables/gauss3}      
-  \end{minipage}
-  \end{block}
-\end{frame}
-
+\frame {\input {blocks/Example-Gauss-collocation-2-3.tex}}
 \frame {\input {blocks/Theorem-gauss-consistency.tex}
   \input {blocks/Theorem-gauss-stability.tex}}
-
-\begin{frame}
-  \begin{block}{2- and 3-point Radau collocation methods}
-  \begin{minipage}[t]{.39\linewidth}
-    \input{tables/radau2}
-  \end{minipage}
-  \begin{minipage}[t]{.55\linewidth}
-    \input{tables/radau3}      
-  \end{minipage}
-  \end{block}
-\end{frame}
-
+\frame {\input {blocks/Example-Radau-right-2-3.tex}}
 \begin{frame}
   \frametitle{Stability regions of Radau-collocation methods}
     \centering
@@ -271,6 +249,22 @@
   \hfill
   \includegraphics[width=.3\textwidth]{fig/stability-radau3}
 \end{frame}
+
+\frame {\input {blocks/Theorem-DIRK-order-barrier.tex}}
+
+\section{Newton and quasi-Newton methods}
+
+\frame {\input {blocks/Definition-nonlinear.tex}}
+\frame {\input {blocks/Definition-iteration-order.tex}}
+\frame {\input {blocks/Definition-newton.tex}}
+\frame {\input {blocks/Theorem-newton-kantorovich.tex}}
+\frame {\input {blocks/Definition-gradient-method.tex}}
+\frame {\input {blocks/Theorem-gradient-method.tex}}
+\frame {\input {blocks/Definition-newton-line-search.tex}}
+\frame {\input {blocks/Definition-newton-step-size.tex}}
+\frame {\input {blocks/Definition-descent-methods.tex}}
+\frame {\input {blocks/Lemma-downhill.tex}}
+
 
 \section{Linear Multi-Step Methods}
 \frame{\tableofcontents[currentsection,hideothersubsections]}
@@ -341,6 +335,8 @@
 \end{figure}
 }
 
+\frame {\input {blocks/Definition-predictor-corrector.tex}}
+
 \section{Boundary Value Problems}
 \frame{\tableofcontents[currentsection,hideothersubsections]}
 
@@ -363,20 +359,6 @@
 \frame {\input {blocks/Definition-multiple-shooting-multiple.tex}}
 \frame {\input {blocks/Definition-bvp-parameter.tex}}
 \frame {\input {blocks/Definition-multiple-shooting-parameter.tex}}
-
-\section{Newton and quasi-Newton methods}
-
-\frame {\input {blocks/Definition-nonlinear.tex}}
-\frame {\input {blocks/Definition-iteration-order.tex}}
-\frame {\input {blocks/Definition-newton.tex}}
-\frame {\input {blocks/Theorem-newton-kantorovich.tex}}
-\frame {\input {blocks/Definition-gradient-method.tex}}
-\frame {\input {blocks/Theorem-gradient-method.tex}}
-\frame {\input {blocks/Definition-predictor-corrector.tex}}
-\frame {\input {blocks/Definition-newton-line-search.tex}}
-\frame {\input {blocks/Definition-newton-step-size.tex}}
-\frame {\input {blocks/Definition-descent-methods.tex}}
-\frame {\input {blocks/Lemma-downhill.tex}}
 
 \section{Finite Differences}
 \frame{\tableofcontents[currentsection,hideothersubsections]}
