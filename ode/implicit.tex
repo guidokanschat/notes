@@ -885,6 +885,7 @@ methods with one-sided Lipschitz condition.
 % \end{proof}
 % \end{todo}
 
+% See also Lemma IV 13.16 in HW10
 \input{definitions/order-conditions}
 \input{theorems/order-conditions}
 
@@ -918,22 +919,54 @@ methods with one-sided Lipschitz condition.
   formulas based on orthogonal polynomials.
 \end{intro}
 
-\input{definitions/gauss-quadrature}
-\input{definitions/radau-lobatto-quadrature}
-\input{theorems/gauss-quadrature}
+\begin{Definition}{gauss-quadrature}
+  Let $L_n(t)$ be the Legendre polynomial of degree $n$ on $[0,1]$, up
+  to scaling,
+  \begin{gather*}
+    L_n(t) = \frac{d^{n}}{dt^{n}}(t^2-1)^{n}.
+  \end{gather*}
+  A quadrature formula, which uses the $n$ roots of $L_n$ as its
+  quadrature points and the integrals of the Lagrange interpolating
+  polynomials as its weights is called \define{Gauß quadrature}, more
+  precisely, Gauß-Legendre quadrature.
+\end{Definition}
+
+\begin{Definition}{radau-lobatto-quadrature}
+  The \define{Radau quadrature} formulas use one end point of the interval
+  $[0,1]$ and the roots of orthogonal polynomials of degree $n-1$ as
+  their abscissas. We distinguish left and right Radau quadrature
+  formulas, depending on which end is included. \define{Lobatto quadrature}
+  formulas use both end points and the roots of a polynomial of degree
+  $n-2$. The polynomials are
+  \begin{xalignat}2
+    &\text{Radau left}
+    & p_n(t) &= \frac{d^{n-1}}{dt^{n-1}}\bigl(t^n(t-1)^{n-1}\bigr), \\
+    &\text{Radau right}
+    & p_n(t) &= \frac{d^{n-1}}{dt^{n-1}}\bigl(t^{n-1}(t-1)^{n}\bigr), \\
+    &\text{Lobatto}
+    & p_n(t) &= \frac{d^{n-2}}{dt^{n-2}}\bigl(t^{n-1}(t-1)^{n-1}\bigr).
+  \end{xalignat}
+\end{Definition}
+
+\begin{Lemma}{gauss-quadrature}
+  A Gauß quadrature formula with $n$ points is exact for polynomials
+  of degree $2n-1$. A Radau quadrature formula with $n$ points is
+  exact for polynomials of degree $2n-2$. A Lobatto quadrature formula
+  with $n$ points is exact for polynomials of degree $2n-3$. The
+  quadrature weights of these formulas are positive.
+\end{Lemma}
 
 \subsection{Collocation methods}
 \begin{intro}
   An alternative to solving IVP in individual points in time, is to
   develop methods, which first approximate the solution function
-  through a easier function. For example this could be a polynomial.
+  through a simpler function. For example this could be a polynomial.
   
   Polynomials are especially suitable for the computation with
-  computers.  On the other hand we know already that they cause
-  problems for instance by the interpolation of large intervals.
-  Therefore we apply them not on the entire interval but rather on
-  subintervals. The subintervals correspond obviously to our time
-  steps, which we used until now.
+  computers. They are not suited though for high-order interpolation
+  of large intervals.  Therefore, we apply them not on the entire
+  interval but rather on subintervals. The subintervals correspond
+  to the time steps, which we used until now.
 \end{intro}
 
 \input{definitions/collocation}
@@ -966,7 +999,7 @@ methods with one-sided Lipschitz condition.
 \begin{proof}
   Condition $C(s)$ from~\eqref{eq:implicit:9} results in
   $s^2$ interpolation conditions for $s^2$ coefficients $a_{ij}$.
-  Therefore this coefficients are defined uniquely. On the other
+  Therefore these coefficients are defined uniquely. On the other
   hand~\eqref{eq:implicit:9} yields for $q<s$:
   \begin{gather*}
     \sum_{j=1}^s \rka_{ij} \rkc_j^q = \frac{\rkc_i^{q+1}}{q+1} =
