@@ -137,7 +137,58 @@
   a different choice of the scaling parameter $\mu$.
 \end{proof}
 
-\input{theorems/downhill}
+\begin{Lemma}{downhill}
+  Let $F: \R^d \to \R$ be continuously differentiable. For a given
+  point $x$, assume $\nabla F = \nabla F(x) \neq 0$.  Then, there is a
+  constant $\lambda > 0$ such that for any
+  $s\in \mathcal S_\gamma(\nabla F(x))$ and any
+  $0 \le \mu \le \lambda$ there holds
+  \begin{gather}
+    \label{eq:downhill:1}
+    F(x-\mu s) \le F(x) - \frac{\gamma\mu}2 \abs{\nabla F(x)}.
+  \end{gather}
+  In particular, a positive scaling factor $\mu$ for the descent method can
+  always be found.
+\end{Lemma}
+
+% Stoer/Bulirsch I, 4. Auflage, p. 238
+\begin{proof}
+  First, define
+  \begin{gather*}
+    U_1(x) = \bigl\{ y\in \R^d \big\vert \abs{\nabla F(y)-\nabla F(x)}
+    \le \tfrac{\gamma}{2} \abs{\nabla F(x)}\bigr\}.
+  \end{gather*}
+  Since $\nabla F$ is continuous and $\nabla F(x) \neq 0$, this set is
+  a nonempty neighborhood of $x$.
+% Similarly, the set
+%  \begin{gather*}
+%    U_2(x) =
+%    \bigl\{ y\in \R^d \big\vert \mathcal S_\gamma(\nabla F(y)) \subseteq
+%    \mathcal S_{\nicefrac{\gamma}{2}}(\nabla F(x))\bigr\}
+%  \end{gather*}
+%  is a nonempty neighborhood of $x$.
+Choose now $\lambda$ such that
+  \begin{gather*}
+    B_{\lambda}(x) \subseteq U_1(x),% \cap U_2(x).
+  \end{gather*}
+  Hence, for any $\mu\in(0,\lambda)$ and
+  $s\in \mathcal S_\gamma(\nabla F(x))$, there holds by the mean value
+  theorem with $0<\theta<1$
+  \begin{multline*}
+    F(x)-F(x-\mu s) = \mu \nabla F(x-\theta\mu s)s \\
+    = \mu \Bigl(\bigl(\nabla F(x-\theta\mu s) - \nabla F(x)\bigr)
+    +\nabla F(x)\Bigr).
+  \end{multline*}
+  Using the definitions of $U_1(x)$ and $U_2(x)$, we obtain
+  \begin{align*}
+    F(x)-F(x-\mu s)
+    &\ge -\tfrac{\gamma\mu}{2}\abs{\nabla F(x)}
+      + \mu DF(x)s\\
+    &\ge -\tfrac{\gamma\mu}{2}\abs{\nabla F(x)}
+      + \mu\gamma\abs{\nabla F(x)}\\
+    &= \tfrac{\gamma\mu}{2}\abs{\nabla F(x)}.
+  \end{align*}
+\end{proof}
 
 \section{Practical considerations}
 
