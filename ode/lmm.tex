@@ -395,12 +395,12 @@
   corollary~\ref{Corollary:root-test} it follows the statement of the theorem.
 \end{proof}
 
-\begin{corollary}
-  The Adams-Bashforth and Adams-Moulton methods are stable.
-\end{corollary}
+\begin{Corollary}{adams-stability}
+  Adams-Bashforth and Adams-Moulton methods are stable.
+\end{Corollary}
 
 \begin{proof}
-  For all of this methods the first generating polynomial is $\rho(x)
+  For all of these methods the first generating polynomial is $\rho(x)
   = x^\lmms-x^{\lmms-1}$. It has the simple root $\xi_1 = 1$ and the
   $\lmms-1$-fold root 0.
 \end{proof}
@@ -609,21 +609,32 @@ see theorem \ref{Theorem:gauss-consistency}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{definition}
-  The stability polynomial of an LMM is defined like the one of a
-  one-step method by the application of the method to the ODE
-  $u'=\lambda u$. We obtain the difference equation
+\begin{Definition*}{lmm-stability-region}{A-stability of LMM}
+  \index{stability region!of a LMM}
+  The linear model difference equation
   \begin{gather}
     \label{eq:lmm:7}
-    \sum_{r=0}^{\lmms} \bigl(\alpha_{\lmms-r} - h\lambda \beta_{\lmms-r}) y_{n-r}.
+    \sum_{r=0}^{\lmms} \bigl(\alpha_{\lmms-r} - z \beta_{\lmms-r}) y_{n-r}.
   \end{gather}
-  We  insert $z=h\lambda$ and $y_n = x^n$ to obtain
+  is obtained by applying an LMM to the model equation
+  $u' = \lambda u$ and inserting $z=h\lambda$.
+
+  The \define{stability region} of an LMM is the set of points $z\in \C$,
+  for which all solution sequences $\{y_n\}$ of the equation~\eqref{eq:lmm:7}
+  stay bounded for $n\to\infty$. An LMM is called \define{A-stable}, if the 
+  stability region contains the left half-plane of $\C$.
+\end{Definition*}
+
+
+\begin{Definition}{lmm-stability-polynomial}
+  The stability polynomial of an LMM is obtained by inserting
+  $y_n = x^n$ into the linear model difference equation to obtain
   \begin{gather}
     \label{eq:lmm:8}
     r_z(x) = \sum_{r=0}^{\lmms} \bigl(\alpha_{\lmms-r} - z \beta_{\lmms-r})
     x^{\lmms-r}.
   \end{gather}
-\end{definition}
+\end{Definition}
 
 \begin{remark}
   Instead of the simple amplification function $r(z)$ of the one-step
@@ -632,20 +643,12 @@ see theorem \ref{Theorem:gauss-consistency}.
   the analysis of the method.
 \end{remark}
 
-\begin{definition}
-  \index{stability region!of a LMM}
-  The stability region of a LMM is the set of points $z\in \C$,
-  for which all solution sequences $\{y_n\}$ of the equation~\eqref{eq:lmm:7}
-  stay bounded for $n\to\infty$. A LMM is called A-stable, if the 
-  stability region contains the left half-plane of $\C$.
-\end{definition}
-
-\begin{lemma}
+\begin{Lemma}{lmm-stability}
   Let $\{\xi_1(z),\dots,\xi_\lmms(z)\}$ be the set of roots of the
   stability polynomial $r_z(x)$ as functions of $z$.
   A point $z\in \C$ is in the stability region of a LMM, if these
   roots satisfy the root test in corollary~\ref{Corollary:root-test}.
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   The proof is analog to theorem~\ref{Theorem:lmm-stability}.
@@ -713,7 +716,20 @@ see theorem \ref{Theorem:gauss-consistency}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Predictor-corrector schemes}
-\input{definitions/predictor-corrector}
+
+\begin{Definition*}{predictor-corrector}{Predictor-corrector methods}
+  Assume a pair of time stepping schemes, one explicit, one implicit,
+  \begin{align*}
+    \hat y_{k} &= \hat \verfahren_p(y_{k-1}) \\
+    y_k &= \verfahren_c(y_{k-1},y_{k}),
+  \end{align*}
+  we can use $\hat y_k$ as initial value for the Newton iteration for
+  $y_k$. In an extreme case, we let
+  \begin{gather*}
+    y_k = \verfahren_c(y_{k-1},\hat y_{k}),
+  \end{gather*}
+  without any further iteration.
+\end{Definition*}
 
 \begin{remark}
   Predictor-corrector methods were developed strongly around
