@@ -49,7 +49,7 @@
     \begin{pmatrix}
       u_0'(t) - u_1(t) \\
       u_1'(t) - u_2(t) \\
-      \cdots\\
+      \vdots\\
       u_{n-2}'(t) - u_{n-1}(t) \\
       F\bigl(t, u_0(t),u_1(t),\dots,u_{n-1}(t), u_{n-1}'(t)\bigr)
     \end{pmatrix}
@@ -62,11 +62,11 @@
   \begin{gather}
     \label{eq:awa:13a}
     \begin{pmatrix}
-      u_0'(t) - u_1(t) \\
-      u_1'(t) - u_2(t) \\
-      \cdots\\
-      u_{n-2}'(t) - u_{n-1}(t) \\
-      u_{n-1}'
+      u_0'(t) \\
+      u_1'(t) \\
+      \vdots\\
+      u_{n-2}'(t) \\
+      u_{n-1}' (t)
     \end{pmatrix}
     =
     \begin{pmatrix}
@@ -489,7 +489,7 @@ theory of ordinary differential equations.
 \begin{proof}
   The initial value is part of the definition. On the other hand,
   splitting the the matrix valued IVP into its column vectors, we
-  obtin the original IVP defining the solution space. Regularity
+  obtain the original IVP defining the solution space. Regularity
   follows from linear independence of solutions for any $t$.
 \end{proof}
 
@@ -633,21 +633,21 @@ theory of ordinary differential equations.
     & = \left| u_0 - u_0 + \int\limits_{0}^t (f(s,u(s)) - f(s,v(s))) \ds \right| \\
     & \le \int\limits_{0}^t \left| f\bigl(s,u(s)\bigr) - f\bigl((s,v(s)\bigr) \right| \ds \\
     & \le \int\limits_{0}^t L |u(s) - v(s)| \underbrace{e^{-2 L s} e^{2 L s}}_{= 1} \ds \\
-    & \le L |u-v|_e \int\limits_{0}^t e^{2 L s} \ds \\
-    & = L |u-v|_e \frac{e^{2 L t}}{2 L} \\
-    & \le \frac12 e^{2 L t}|u-v|_e.
+    & \le L \norm{u-v}_e \int\limits_{0}^t e^{2 L s} \ds \\
+    & = L \norm{u-v}_e \frac{e^{2 L t} - 1}{2 L} \\
+    & \le \frac12 e^{2 L t} \norm{u-v}_e.
   \end{align*}
 
   It follows   
   \begin{gather*}
-    e^{-2 L t}|F(u)(t) - F(v)(t)| \le \frac12 |u-v|_e,
+    e^{-2 L t}|F(u)(t) - F(v)(t)| \le \frac12 \norm{u-v}_e,
   \end{gather*}
   for all $t$ and we observe:
   \begin{gather*}
-    |F(u)(t) - F(v)(t)|_e \le \frac12 |u-v|_e.
+    |F(u)(t) - F(v)(t)|_e \le \frac12 \norm{u-v}_e.
   \end{gather*}
   Thus, we have shown that $F$ is a contraction on the space of the
-  continuous functions with the norm $|.|_e$.  Therefore, we can apply
+  continuous functions with the norm $\norm{.}_e$.  Therefore, we can apply
   the \putindex{Banach fixed-point theorem}, concluding that $F$ has
   exactly one fixed-point. This proves the theorem.
 \end{proof}
