@@ -23,6 +23,25 @@
   original IVP, defined as follows.
 \end{intro}
 
+\begin{Definition}{gateaux-derivative}
+  Let $F(v)$ be a function defined on some function space. Then, the Gâteaux
+  derivative of $F$ at a point $v$ in direction $w$ with $v$ and $w$
+  in this function space is defined as
+  \begin{gather}
+    \label{eq:derivatives:6}
+    \frac{\partial}{\partial w} F(v)
+    = \lim_{\epsilon\to 0} \frac{F(v+\epsilon w) - F(v)}{\epsilon},
+  \end{gather}
+  if this limit exists.
+  
+  Here, we have used the notation for directional derivatives in
+  $\R^n$, since this is indeed the character of the Gâteaux
+  derivative.
+  % Let $f$ be a function depending on another function $v$. Then, the
+  % \define{Gateaux derivative} of $f$ at $v$ in direction $w$ is
+  % defined as
+  
+\end{Definition}
 % \begin{remark}
 %   In terms of linear \putindex{perturbation theory} this section deals
 %   with the derivative of the solution $u(t)$ of the
@@ -127,19 +146,7 @@ this derivative is well defined and thus, the function is differentiable.
   is, the derivative of a value with respect to a function. In order
   to keep things simple, we reduce this question to a regular
   derivative of a function with respect to a real variable by using
-  the Gâteaux derivative. To this end, let $F(v)$ be a functional on
-  some function space, that is, a real valued function on this
-  space. Then, the Gâteaux derivative of $F$ at a point $v$ in
-  direction $w$ with $v$ and $w$ in this function space is defined as
-  \begin{gather}
-    \label{eq:derivatives:6}
-    \frac{\partial}{\partial w} F(v)
-    = \lim_{\epsilon\to 0} \frac{F(v+\epsilon w) - F(v)}{\epsilon}.
-  \end{gather}
-  Here, we have used the notation for directional derivatives in
-  $\R^n$, since this is indeed the character of the Gâteaux
-  derivative.
-
+  the Gâteaux derivative.
   Back to differential equations, our task is now to compute the
   derivative of $u(t)$ with respect to changes in $f$, denoted as
   \begin{gather}
