@@ -331,7 +331,7 @@ Assembling everything, we obtain
     u'' = -g, \quad u(0) = 0, \quad u'(0) = s.
   \end{gather*}
 	The latter has a unique solution u(t;s) for each initial value
-  $s$. Now it is our task to find a $s^*$, such that
+  $s$. Now it is our task to find a value $s^*$, such that
   $u(1;s^*) = 0$. With other words, we search for a root of the function
   \begin{gather*}  
     F(s) = u(1;s).
@@ -352,11 +352,11 @@ Assembling everything, we obtain
   the function
   \begin{gather}
     \label{eq:rwa:11}
-    F(s) = r\bigl(s, u(b;v)\bigr)
+    F(v) = r\bigl(v, u(b;v)\bigr)
   \end{gather}
 	For Newton's method we require the partial derivatives
   \begin{gather*}
-    \frac\partial{\partial v^{(i)}} F(s) =
+    \frac\partial{\partial v^{(i)}} F(v) =
     \partial_1 r\bigr(v,u(b;v)\bigr)
     + \partial_2r\bigr(v,u(b;v)\bigr) \frac\partial{\partial v^{(i)}} u(b;v),
   \end{gather*}
