@@ -176,12 +176,16 @@ fundamental matrix and thus, they coincide.
 
 \begin{proof}
   We set out by devising a differential equation for the Gâteaux
-  derivative $\mathcal U(t)$. The differential equation for $u$ yields
+  derivative $\mathcal U(t) := \left.\frac{d}{d\epsilon} u_\epsilon(t)\right|_{\epsilon=0}$. The differential equation for $u$ yields
   \begin{multline*}
-    \mathcal U(t) := \left.\frac{d}{d\epsilon} u_\epsilon(t)\right|_{\epsilon=0}
+    \mathcal U'(t) = \left( \left.\frac{d}{d\epsilon} u_\epsilon(t)\right|_{\epsilon=0} \right)' \\
+    = \left.\frac{d}{d\epsilon} u_\epsilon ' (t)\right|_{\epsilon=0} \\
     = \left.\frac{d}{d\epsilon}
     \Bigl(f\bigl(t,u_\epsilon(t)\bigr)
-    + \epsilon g\bigl(t,u_\epsilon(t)\bigr)\Bigr) \right|_{\epsilon=0}
+    + \epsilon g\bigl(t,u_\epsilon(t)\bigr)\Bigr) \right|_{\epsilon=0} \\
+    = \left.\nabla_u f(t,u_\epsilon) \frac{d}{d\epsilon} u_\epsilon(t)
+     + \epsilon \nabla_u g \bigl(u_\epsilon (t) \bigr) \frac{d}{d\epsilon} u_\epsilon(t) 
+    + g\bigl(t,u_\epsilon(t)\bigr) \right|_{\epsilon=0}
   \\
     = \left.\nabla_u f(t,u_\epsilon) \mathcal U(t)
     + g\bigl(t,u_\epsilon(t)\bigr) \right|_{\epsilon=0}
@@ -196,11 +200,11 @@ fundamental matrix and thus, they coincide.
   integrating factor $M(t)$ as
   \begin{gather*}
     \mathcal U(t) = M^{-1}(t) \int_{t_0}^t M(s) g\bigl(s,u(s)\bigr)
-    \,d s.
+    \, \ds.
   \end{gather*}
   Noticing that $M(\tau)^{-1} = fundamental(\tau;t_0)$, we obtain
   \begin{gather*}
-    u(t) = \int_{t_0}^t \fundamental(t;s) g\bigl(s,u(s)\bigr) \,d s
+    u(t) = \int_{t_0}^t \fundamental(t;s) g\bigl(s,u(s)\bigr) \, \ds
   \end{gather*}
 \end{proof}
 
