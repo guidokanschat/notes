@@ -3,7 +3,8 @@
 \begin{intro}
   In order to understand BVP, we have to introduce the notion of the
   derivative of the solution to an IVP with respect to its initial
-  values. We will thus denote in these cases $u=u(t;v)$, where $t$ is
+  values. Our interest lies in the change of $u$ if the initial value
+  is changed. We will thus denote in these cases $u=u(t;v)$, where $t$ is
   the usual ``time'' variable and $v$ the initial value, which now is
   a variable as well. Thus, $u(t;v)$ is the solution to the IVP
   \begin{gather}
@@ -17,7 +18,7 @@
   \begin{gather*}
     \tfrac{\partial}{\partial v} u(t;v),
   \end{gather*}
-  which is fundamentally different from $\partial/\partial t
+  which is fundamentally different from $\nicefrac{\partial}{\partial t}
   u(t;v)$.
   It can be obtained by solving the variational equation of the
   original IVP, defined as follows.
@@ -91,7 +92,7 @@
   \end{gather*}
   Because of uniqueness, we must have
   $V(\tau;s) = \fundamental(\tau;t)$ for any $\tau$ between $s$ and
-  $t$, in particular for $r=t$, such that $V(t;s) = \identity$. On the
+  $t$, in particular for $r=t$, such that $V(t;s) = \fundamental(t;t) = \identity$. On the
   other hand, by linearity, we have
   $V(\tau;s) = \fundamental(\tau;s)\fundamental(s;t)$, and thus the
   equation is proven by
@@ -101,14 +102,16 @@
 
   Now, assume without loss of generality that $s$ is between $r$ and
   $t$. Indeed, if for instance $t$ is between $r$ and $s$, multiply
-  equation~\eqref{eq:derivatives:4} from the left by $U(s;t)$ and
+  equation~\eqref{eq:derivatives:4} from the left by $\fundamental(s;t)$ and
   prove the equation for
   \begin{gather*}
-    U(s;t)U(t;r) = U(s;t)U(t;s)U(s;r) = U(s;r).
+    \fundamental(s;t)\fundamental(t;r)
+    = \fundamental(s;t)\fundamental(t;s)U(s;r)
+    = \fundamental(s;r).
   \end{gather*}
   Take the auxiliary function $V(\tau;s)$ as defined above. By
-  uniqueness, it is equal to $U(\tau;t)$ for all $\tau$. But, on the
-  other hand, we have by linearity $V(\tau;s) = U(\tau;s)U(s;r)$, in
+  uniqueness, it is equal to $\fundamental(\tau;t)$ for all $\tau$. But, on the
+  other hand, we have by linearity $V(\tau;s) = \fundamental(\tau;s)\fundamental(s;r)$, in
   particular for $\tau=t$.
 
   The statement follows from the definition as a solution of an IVP
@@ -134,9 +137,14 @@ equation yields
   = \frac{\partial f\bigl(t,u(t;v)\bigr)}{\partial v}
   = \nabla_u f(t,u(t;v)) \frac{\partial u(t;v)}{\partial v}.
 \end{gather*}
-Thus, $\nicefrac{\partial}{\partial v} u$ solves the
-IVP~\eqref{eq:derivatives:1}. Since the solution exists and is unique,
-this derivative is well defined and thus, the function is differentiable.
+Thus, $\tfrac{\partial}{\partial v} u$ solves the
+IVP~\eqref{eq:derivatives:1}
+\begin{gather*}
+  \left( \frac{\partial}{\partial v} u \right)'
+  = \nabla_u f(t,u(t;v)) \frac{\partial u(t;v)}{\partial v}.
+\end{gather*}
+$\tfrac{\partial}{\partial v} u$ solves the same IVP as the
+fundamental matrix and thus, they coincide.
 \end{proof}
 
 \subsection{Derivatives with respect to the right hand side function}
@@ -168,12 +176,16 @@ this derivative is well defined and thus, the function is differentiable.
 
 \begin{proof}
   We set out by devising a differential equation for the Gâteaux
-  derivative $\mathcal U(t)$. The differential equation for $u$ yields
+  derivative $\mathcal U(t) := \left.\frac{d}{d\epsilon} u_\epsilon(t)\right|_{\epsilon=0}$. The differential equation for $u$ yields
   \begin{multline*}
-    \mathcal U(t) := \left.\frac{d}{d\epsilon} u_\epsilon(t)\right|_{\epsilon=0}
+    \mathcal U'(t) = \left( \left.\frac{d}{d\epsilon} u_\epsilon(t)\right|_{\epsilon=0} \right)' \\
+    = \left.\frac{d}{d\epsilon} u_\epsilon ' (t)\right|_{\epsilon=0} \\
     = \left.\frac{d}{d\epsilon}
     \Bigl(f\bigl(t,u_\epsilon(t)\bigr)
-    + \epsilon g\bigl(t,u_\epsilon(t)\bigr)\Bigr) \right|_{\epsilon=0}
+    + \epsilon g\bigl(t,u_\epsilon(t)\bigr)\Bigr) \right|_{\epsilon=0} \\
+    = \left.\nabla_u f(t,u_\epsilon) \frac{d}{d\epsilon} u_\epsilon(t)
+     + \epsilon \nabla_u g \bigl(u_\epsilon (t) \bigr) \frac{d}{d\epsilon} u_\epsilon(t) 
+    + g\bigl(t,u_\epsilon(t)\bigr) \right|_{\epsilon=0}
   \\
     = \left.\nabla_u f(t,u_\epsilon) \mathcal U(t)
     + g\bigl(t,u_\epsilon(t)\bigr) \right|_{\epsilon=0}
@@ -188,11 +200,11 @@ this derivative is well defined and thus, the function is differentiable.
   integrating factor $M(t)$ as
   \begin{gather*}
     \mathcal U(t) = M^{-1}(t) \int_{t_0}^t M(s) g\bigl(s,u(s)\bigr)
-    \,d s.
+    \, \ds.
   \end{gather*}
-  Noticing that $M(\tau)^{-1} = U(\tau;t_0)$, we obtain
+  Noticing that $M(\tau)^{-1} = \fundamental(\tau;t_0)$, we obtain
   \begin{gather*}
-    u(t) = \int_{t_0}^t \fundamental(t;s) g\bigl(s,u(s)\bigr) \,d s
+    u(t) = \int_{t_0}^t \fundamental(t;s) g\bigl(s,u(s)\bigr) \, \ds
   \end{gather*}
 \end{proof}
 
