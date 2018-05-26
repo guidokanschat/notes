@@ -99,6 +99,9 @@
       u_2' + \omega u_1 &= f(t).
     \end{split}
   \end{gather}
+  From a numerical perspective, system ~\ref{eq:awa:18a} should be
+  chosen over ~ref{eq:awa:18} to avoid loss of significance or overflow,
+  i.e. if $|\omega| \ll 1$ or $|\omega| \gg 1$.
 \end{example}
 
 \begin{Definition}{autonomization}
@@ -539,7 +542,7 @@ theory of ordinary differential equations.
 
 
 \begin{example}
-  Let $f(t,u)\in C^1(\R \times\R^d $ and let all partial derivatives
+  Let $f(t,u)\in C^1(\R \times\R^d )$ and let all partial derivatives
   with respect to components of $u$ be bounded by
   \begin{gather*}
     \max_{\substack{t\in \R\\u\in \R^d\\1\le i,j \le d}}
