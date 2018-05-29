@@ -550,7 +550,39 @@ In practice, $u(b;v+\epsilon e_i)$ and $u(b;v)$ are computed numerically by any 
   \end{gather*}
 \end{remark}
 
-\input{definitions/multiple-shooting-newton}
+\begin{Definition}{multiple-shooting-newton}
+  A step of Newton's method for the multiple shooting system consists
+  of the update
+  \begin{gather}
+    \label{eq:multiple-shooting-newton:1}
+    v^{(n+1)} = v^{(n)} - \nabla F(v^{(n)})^{-1} F(v^{(n)}),
+  \end{gather}
+  where $v^{(n)} = [v^{(n)}_1,\dots,v^{(n)}_{m+1}]^T$,
+  \begin{gather}
+    \label{eq:multiple-shooting-newton:2}
+    F(v) =
+    \begin{bmatrix}
+      F_1(v_1, v_2)\\
+      \vdots\\
+      F_{m}(v_{m}, v_{m+1})\\
+      F_{m+1}(v_1,v_{m+1})
+    \end{bmatrix}
+    ,\quad
+    \nabla F(v) =
+    \begin{bmatrix}
+      G_1 & -\identity \\
+      &\ddots & \ddots \\
+      &&G_{m} & -\identity \\
+      \rwaa &&& \rwab
+    \end{bmatrix},
+  \end{gather}
+  and,
+  \begin{xalignat*}{2}
+    F_k(v_k,v_{k+1})&= u_k(t_{k}) - v_{k+1} & k&=1,\dots,m, \\
+    F_{m+1}(v_1, v_{m+1}) &= r\bigl(v_1, v_{m+1}\bigr),\\
+    G_k &= \fundamental(t_k;t_{k-1}) & k&=1,\dots,m.
+  \end{xalignat*}
+\end{Definition}
 
 \begin{remark}
   Whenever the shooting vectors $v = [v_1,\dots v_{m+1}]^T$ solve the
