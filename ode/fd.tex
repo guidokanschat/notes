@@ -1,6 +1,6 @@
-\chapter{Finite differences}
+\chapter{Second Order Boundary Value Problems}
 
-\section{Two-point boundary value problems}
+\section{2nd order two-point boundary value problems}
 
 \begin{intro}
   We have already seen, that boundary value problems have very
@@ -182,8 +182,8 @@
     L_h y =
     \begin{pmatrix}
       \lambda_1 & \nu_1\\
-      \mu_2 & \lambda_2 & \nu_2 \\
-      & \ddots & \ddots & \ddots \\
+      \mu_2 & \lambda_2 & \ddots \\
+      & \ddots & \ddots & \nu_{n-2} \\
       &&\mu_{n-1}& \lambda_{n-1}
     \end{pmatrix}
     \begin{pmatrix}
@@ -348,7 +348,7 @@
   methods in the next course.
 \end{remark}
 
-\section{Towards higher dimensions}
+\section{The Laplacian and harmonic functions}
 
 \begin{intro}
   The two-point boundary value problem has a natural extension to
@@ -360,10 +360,43 @@
   hand of examples.
 \end{intro}
 
-\input{definitions/square-domain}
-\input{definitions/laplacian}
-\input{definitions/dirichlet}
-\input{theorems/mean-value}
+\begin{Definition}{laplace-equation}
+  the \define{Laplacian} in two (three) space dimensions is the sum of
+  the second partial derivatives
+  \begin{gather}
+    \label{eq:fd:10}
+    \Delta u = \frac{\partial^2}{\partial x^2}u
+    + \frac{\partial^2}{\partial y^2}u
+    \left(+ \frac{\partial^2}{\partial z^2}u\right)
+    = \operatorname{div}(\nabla u)
+  \end{gather}
+  The \define{Laplace equation} is the partial differential equation
+  \begin{gather}
+    \label{eq:fd:11}
+    -\Delta u = 0.
+  \end{gather}
+  The \define{Poisson equation} is the partial differential equation
+  \begin{gather}
+    \label{eq:fd:9}
+    -\Delta u = f.
+  \end{gather}
+  Solutions to the Laplace equations are called \define{harmonic functions}.
+\end{Definition}
+
+\subsection{Properties of harmonic functions}
+
+\begin{Theorem*}{mean-value}{Mean-value formula for harmonic functions}
+  Let $u\in C^2(\Omega)$ be a solution to the Laplace equation. Then,
+  $u$ has the mean value property
+  \begin{gather}
+    \label{eq:mean-value:1}
+    u(\mathbf x) = \frac1{r^{d-1}\omega(d)}
+    \int_{\partial B_r(\mathbf x)} u(\mathbf y) \,ds,
+  \end{gather}
+  where $\partial B_r(\mathbf x) \subset \Omega$ is the sphere of
+  radius $r$ around $\mathbf x$ and $\omega(d)$ is the volume of the
+  unit sphere in $\R^d$.
+\end{Theorem*}
 
 \begin{proof}
   First, we rescale the problem to
@@ -454,6 +487,10 @@
   $u=v$.
 \end{proof}
 
+
+\section{Finite differences}
+\input{definitions/square-domain}
+\input{definitions/dirichlet}
 \input{definitions/cartesian-grid}
 \input{definitions/lexicographic}
 \input{definitions/5-point-stencil}
@@ -511,6 +548,24 @@
   neighboring indices $j$ of $k$, we have $y_j = y_k$. We conclude by
   following a path through the grid points.
 \end{proof}
+
+\subsection{Fundamental solution}
+
+\begin{Definition}
+  The function
+  \begin{gather}
+    \label{eq:fd:fundamental}
+    \Phi(x) =
+    \begin{cases}
+      -\tfrac{1}{2\pi} \log \abs{x} & d=2\\
+      \tfrac1{d(d-2)\omega_d} \frac1{\abs{x}^{d-2}} & d\ge 3,
+    \end{cases}
+  \end{gather}
+  for $x\in \R^d$ is the \define{fundamental solution} to the Laplace
+  equation. Here, $\omega_d$ is the volume of the unit ball in $\R^d$.
+\end{Definition}
+
+
 
 %%% Local Variables:
 %%% mode: latex
