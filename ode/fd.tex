@@ -223,13 +223,27 @@
 
 \input{definitions/m-matrix}
 
-\input{theorems/m-matrix-fd1}
+\begin{Lemma}{m-matrix-fd1}
+  The matrix $L_h$ defined above is an M-matrix provided that
+  \begin{gather}
+    \label{eq:fd:3}
+    \gamma_k \ge 0, % > -\frac2{h^2},
+    \qquad
+    \abs{\beta_k} < \frac2h.
+  \end{gather}
+\end{Lemma}
 
 \begin{proof}
   It is clear that these two conditions are sufficient for the first
-  M-matrix property. The prrof of poisitivity of the inverse is too
-  long for these notes.
+  M-matrix property. The proof of positivity of the inverse is based
+  on irreducible diagonal dominance, which is too long and too
+  specialized for these notes.
 \end{proof}
+
+\begin{remark}
+  The finite element method provides much more powerful to deduce
+  solvability and stability of the discrete problem.
+\end{remark}
 
 \input{theorems/m-matrix-inverse}
 
@@ -408,11 +422,12 @@
   Then, we notice that
   \begin{align*}
     \Phi'(r)
-    &= \frac1{\omega(d)} \int_{\partial B_1(0)} u(\mathbf x+r\mathbf z)\cdot \mathbf z \,ds\\
+    &= \frac1{\omega(d)} \int_{\partial B_1(0)}
+      \nabla u(\mathbf x+r\mathbf z)\cdot \mathbf z \,ds_z\\
     &= \frac1{r^{d-1}\omega(d)} \int_{\partial B_r(\mathbf x)}
-    u(\mathbf y)\cdot\frac{\mathbf y-\mathbf x}{r} \,ds\\
+      \nabla u(\mathbf y)\cdot\frac{\mathbf y-\mathbf x}{r} \,ds_y\\
     &= \frac1{r^{d-1}\omega(d)} \int_{\partial B_r(\mathbf x)}
-    \frac{\partial}{\partial \mathbf n} u(\mathbf y) \,ds\\
+    \frac{\partial}{\partial \mathbf n} u(\mathbf y) \,ds_y\\
     &= \frac1{r^{d-1}\omega(d)} \int_{B_r(\mathbf x)}
     \Delta u(\mathbf y)\,d\mathbf y = 0.
   \end{align*}
