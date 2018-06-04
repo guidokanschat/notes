@@ -69,7 +69,7 @@
   For one-step methods every step is \emph{per definitionem} similar.
   Therefore, it is sufficient to consider the first step only.  Hence,
   we will define and analyze methods by stating the dependence of
-  $y_1$ on $y_0$, which then can be transferred to the general step
+  $y_1$ on $y_0$ which then can be transferred to the general step
   from $y_{n-1}$ to $y_{n}$. The general one-step method above then
   reduces to
   \begin{gather*}
@@ -93,7 +93,7 @@
   consists of two parts at a given time $t_{k+1}$. First, an error on
   the interval $I_k$ due to replacing the differential equation by the
   discrete method. Second, we have to add the error which results from
-  the fact, that our initial value $y_k$ is already not exact due to
+  the fact that our initial value $y_k$ is already not exact due to
   previous errors. This situation is displayed in
   Figure~\ref{fig:forward-errors}. After one time step, a local error
   has appeared. In the second time step, we already start with an
@@ -127,12 +127,12 @@
   
   As a result the truncation error reduces to:
   
-  \begin{equation*}\begin{split}
+  \begin{align*}
     \tau_n & = \frac{u_n - u_{n-1}}{h_n} - F(h;t_{n-1},u(t_{n-1})) \\
     & = \frac{u_{n-1} + h_n f(t_{n-1},u_{n-1})
       + \frac12 h_n^2 u''(\zeta) - u_{n-1}}{h_n} - f(t_{n-1}; u_{n-1}) \\
     & = \frac12 h_n u''(\zeta)
-  \end{split}\end{equation*}
+  \end{align*}
 
 % For $u''(\zeta)$ however there holds:
 % \begin{equation*}
