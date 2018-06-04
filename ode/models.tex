@@ -77,13 +77,16 @@
 \begin{remark}
   The Lotka-Volterra-equations have periodic solutions. Even though
   none of these exist in closed form the sulotions can be simulated:
-  \begin{center}
-  \includegraphics[width=.48\textwidth]{fig/lotkavolterra}
-  \captionof{figure}{Plot of a solution to the Lotka-Volterra equation with
-  parameters $\alpha = \frac 23$, $\beta  = \frac 43$, $\delta = \gamma = 1$
-  and initial values $u(0) = 3$, $v(0) = 1$. Solved with a Runge-Kutta
-  method of order five and step size $h = 10^{-5}$ \label{fig:lotkavolterra}}
-  \end{center}
+  \begin{figure}[tp]
+    \begin{center}
+      \includegraphics[width=.6\textwidth]{fig/lotkavolterra}
+      \caption{Plot of a solution to the Lotka-Volterra equation with
+        parameters $\alpha = \frac 23$, $\beta  = \frac 43$, $\delta = \gamma = 1$
+        and initial values $u(0) = 3$, $v(0) = 1$. Solved with a Runge-Kutta
+        method of order five and step size $h = 10^{-5}$}
+    \end{center}
+    \label{fig:lotkavolterra}  
+  \end{figure}
   Lotka and Volterra became interested in this system as they had
   found that the amount of predatory fish caught had increased
   during World War I. During the war years there was a strong
