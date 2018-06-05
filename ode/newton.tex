@@ -78,7 +78,7 @@
   The step size control algorithm can be implemented with very low
   overhead. In fact, in each Newton step we only have to compute the
   norm of the residual, which is typically needed for the stopping
-  criterion anyway. Additionla work is only needed, if the residual
+  criterion anyway. Additional work is only needed if the residual
   grows. But this is the case, when the original method was likely to
   fail.
 
@@ -111,7 +111,7 @@
   The search direction of the Newton method is
   \begin{gather*}
     s = -\frac{d^{(k)}}{\abs{d^{(k)}}}
-    = \frac{\bigl(\nabla f(x^{(k)})\bigr)^{-1}f(x^{(k)}}{\abs{\dots}}
+    = \frac{\bigl(\nabla f(x^{(k)})\bigr)^{-1}f(x^{(k)})}{\abs{\dots}}
   \end{gather*}
   Thus, omitting the arguments $x^{(k)}$, we obtain
   \begin{gather*}
