@@ -28,13 +28,13 @@
   provided $M\neq 0$ the method converges in a single step for any
   initial value.
 
-  The larger the constant $M$, the smaller wone of the eigenvalues of
+  The larger the constant $M$, the smaller wone of the eigenvalues of % wone?
   the Jacobian. Therefore, the function becomes flat in that
   direction and the root finding problem becomes unstable.
   
   If we have convergence due to $\beta_0 \le 1/2$ (the proof shows
-  contraction) there holds $\beta_1 < 1/2$ and we have quadratic
-  convergence from the second step on.
+  contraction) there holds $\beta_1 := LM \left\| f\left(x^{(1)}\right)
+  \right\| < 1/2$ and we have quadratic convergence from the second step on.
 \end{remark}
 
 \input{definitions/gradient-method}
