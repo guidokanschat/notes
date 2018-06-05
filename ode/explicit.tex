@@ -801,7 +801,7 @@ conclude that the Euler method is consistent of order 1.
   propagation from basic Lipschitz continuity to
   \begin{gather}
     \label{eq:explicit:22}
-    e_{2;\text{acc}} = \left(I + h \frac{\partial f}{\partial y} +
+    e_{2;\text{acc}} = \left( \identity + h \frac{\partial f}{\partial y} +
       \mathcal O(h^2)\right) \bigl(u_1-y_1).
   \end{gather}
   The local error on the second interval is of the same structure
@@ -812,7 +812,7 @@ conclude that the Euler method is consistent of order 1.
   \begin{multline}
     \label{eq:explicit:25}
     u_2-y_2
-    = \underbrace{\bigl(I+\mathcal O(h)\bigr) C
+    = \underbrace{\bigl(\identity + \mathcal O(h)\bigr) C
       h^{p+1}}_{\text{local 2}}
     + \bigl(C+\mathcal O(h)\bigr) h^{p+1} + \mathcal
       O(h^{p+2})
@@ -884,7 +884,10 @@ quadrature weights $b_i$ differ.
   \end{gather}
   The methods for $y$ and $\hat y$ are consistent of order $p$ and
   $\hat p$, respectively. We let $\hat p < p$, for example
-  $\hat p = p-1$.
+  $\hat p = p-1$. 
+  
+  This can be achieved by e.g. using the same mathod twice and omitting
+  $\hat{b}_j$ for one $j \in \{1, \dots, s\}$.
 \end{definition}
 
 \input{definitions/embedded-butcher}
