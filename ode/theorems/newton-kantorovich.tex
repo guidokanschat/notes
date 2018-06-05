@@ -6,15 +6,15 @@
     & \le L \norm{x-y} & x,y&\in \R^d,
     \\
     \label{eq:newton-kantorovich:2}
-    \norm{\left(\nabla f\left(x^{(0)}\right)\right)^{-1}} &\le M.
+    \left\| \left(\nabla f\left(x^{(0)}\right)\right)^{-1} \right\| &\le M.
   \end{xalignat}
-  Then, if
+  If
   \begin{gather}
     \label{eq:newton-kantorovich:3}
-    \beta_0 := LM \norm{f\left(x^{(0)}\right)} \le \frac12,
+    \beta_0 := LM \left\| f\left(x^{(0)}\right) \right\| \le \frac12,
   \end{gather}
-  the Newton method converges to a root of $f(x)$. If furthermore
-  $\beta_0 < 1/2$, this convergence is quadratic.
+  the Newton method converges to a root of $f(x)$.For $\beta_0 < 1/2$,
+  this convergence is quadratic.
 \end{Theorem*}
 
 %%% Local Variables:
