@@ -117,7 +117,42 @@
 
 \section{The Banach fixed-point theorem}
 
+\begin{Theorem}{Banach fixed-point theorem}
+	Let $\Omega \subset \R$ be a closed set and $f \colon \Omega \to \Omega$
+	a contraction, i.e. there holds $|f(x) - f(y)| \le \gamma |x-y|$ for a
+	$\gamma \in (0,1)$.
 
+	Then there exists a unique $x^* \in \Omega$ such that $f(x^*) =x^*$.
+\end{Theorem}
+
+\begin{proof}
+	Let $x_0 \in \Omega$ and define $f(x_k) = x_{k+1}$. First, we prove
+	existence unsing the cauchy-criterion. Let $k, n \in \N_0$ and consider
+	\begin{gather*}
+	|x_k - x_{k+m} | = |f(x_{k-1}) - f(x_{k+m-1})| \le \gamma |x_{k-1} - x_{k+m-1})|.
+	\end{gather*}
+
+	Iteratively, we get
+	\begin{gather*}
+	|x_k - x_{k+m} | \le \gamma^k |x_0 - x_m|.
+	\end{gather*}
+
+	We now write $x_0 - x_m = x_0 - x_1 + x_1 - x_2 + \dots + x_{m-1} - x_m$.
+	The triangle-inequality yields the estimate
+	\begin{gather*}
+	\gamma^k |x_0 - x_m| \le \gamma^k |x_0 - x_1| + |x_1 - x_2| + \dots + |x_{m-1} - x_m|  \\
+	\le \gamma^k |x_0 - x_1| (1 + \gamma + \gamma ^2 + \dots + \gamma^m) \\
+	\le \frac{\gamma^k}{1-\gamma} |x_0 - x_1|.
+	\end{gather*}
+	As $k$ gets larger the estimate goes to zero.
+
+	Concerning uniqueness, let $x^*$ and $y^*$ be fixpoints.
+	\begin{gather*}
+	|x^* - y^*| = |f(x*) - f(y^*) | \le \gamma |x^* - y^*|
+	\end{gather*}
+	Since $\gamma \in (0,1)$ we immediately obtain $|x^* - y^*| = 0$. Using
+	that $|a| = 0$ if and only if $a=0$ yields $y^* = x^*$. This concludes the proof.
+\end{proof}
 
 
 %%% Local Variables: 
