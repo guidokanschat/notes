@@ -28,13 +28,13 @@
   provided $M\neq 0$ the method converges in a single step for any
   initial value.
 
-  The larger the constant $M$, the smaller wone of the eigenvalues of
+  The larger the constant $M$, the smaller wone of the eigenvalues of % wone?
   the Jacobian. Therefore, the function becomes flat in that
   direction and the root finding problem becomes unstable.
   
   If we have convergence due to $\beta_0 \le 1/2$ (the proof shows
-  contraction) there holds $\beta_1 < 1/2$ and we have quadratic
-  convergence from the second step on.
+  contraction) there holds $\beta_1 := LM \left\| f\left(x^{(1)}\right)
+  \right\| < 1/2$ and we have quadratic convergence from the second step on.
 \end{remark}
 
 \input{definitions/gradient-method}
@@ -78,7 +78,7 @@
   The step size control algorithm can be implemented with very low
   overhead. In fact, in each Newton step we only have to compute the
   norm of the residual, which is typically needed for the stopping
-  criterion anyway. Additionla work is only needed, if the residual
+  criterion anyway. Additional work is only needed if the residual
   grows. But this is the case, when the original method was likely to
   fail.
 
@@ -111,7 +111,7 @@
   The search direction of the Newton method is
   \begin{gather*}
     s = -\frac{d^{(k)}}{\abs{d^{(k)}}}
-    = \frac{\bigl(\nabla f(x^{(k)})\bigr)^{-1}f(x^{(k)}}{\abs{\dots}}
+    = \frac{\bigl(\nabla f(x^{(k)})\bigr)^{-1}f(x^{(k)})}{\abs{\dots}}
   \end{gather*}
   Thus, omitting the arguments $x^{(k)}$, we obtain
   \begin{gather*}
@@ -128,7 +128,7 @@
   \begin{gather*}
     \operatorname{cond}_2(A) = \norm{A} \, \norm{A^{-1}}.
   \end{gather*}
-  We conclude, that $s\in \mathcal S_\gamma(\nabla F)$ for any
+  With ~\ref{eq:descent-methods:1} we conclude that $s\in \mathcal S_\gamma(\nabla F)$ for any
   $\gamma$ with
   \begin{gather*}
     \gamma \le \frac1{\operatorname{cond}_2 (\nabla f(x))}.
@@ -221,7 +221,7 @@ Choose now $\lambda$ such that
   In order to save numerical effort constructing and inverting
   Jacobians, the following strategies have been successful.
   \begin{itemize}
-  \item Fix a threshold $0<\eta<1$, which will be used as a bound for
+  \item Fix a threshold $0<\eta<1$ which will be used as a bound for
     error reduction. In each Newton step, first compute the update
     vector $\widehat d$ using the Jacobian $\widehat J$ of the
     previous step. This yields the modified method
@@ -236,14 +236,14 @@ Choose now $\lambda$ such that
           \quad & x^{(k+1)} &=x^{(k)}- J_{k}^{-1}f(x^{(k)}). 
       \end{alignedat}
     \end{gather}
-    Thus, an old Jaconian an its inverse are used until convergence
+    Thus, an old Jacobian and its inverse are used until convergence
     rates deteriorate. This method is again a quasi-Newton method
-    which will not converge quadratically, but we can obtain linear
+    which will not converge quadratically. However, we can obtain linear
     convergence at any rate $\eta$.
   \item If Newton's method is used within a time stepping scheme, the
     Jacobian of the last Newton step in the previous time step is
     often a good approximation for the Jacobian of the first Newton
-    step in the new time step. This holds in particular for small tim
+    step in the new time step. This holds in particular for small time
     steps and constant extrapolation. Therefore, the previous method
     should also be extended over the bounds of time steps.
   \item An improvement of the method above can be achieved by so
@@ -272,7 +272,7 @@ Choose now $\lambda$ such that
   increasing the amount of memory from $d$ to $d^2$.
 
   Linear systems like this are often solved by iterative methods,
-  leasding for instance to so called Newton-Krylov methods. Iterative
+  leading for instance to so called Newton-Krylov methods. Iterative
   methods approximate the solution of a linear system
   \begin{gather*}
     J d = f
@@ -291,12 +291,12 @@ Choose now $\lambda$ such that
   derivatives are computed.
 
   The efficiency of such a method depends on the number of linear
-  iteration steps, which is determined by two factors: the gain in
-  accuracy and the contraction speed. It turns out, that typically
+  iteration steps which is determined by two factors: the gain in
+  accuracy and the contraction speed. It turns out that typically
   gaining two digits in accuracy is sufficient to ensure fast
   convergence of the Newton iteration. The contraction number is a
   more difficult issue and typically requires preconditioning, which
-  is problem dependent and as such must be discussed when needed.
+  is problem-dependent and as such must be discussed when needed.
 \end{remark}
 
 %%% Local Variables:

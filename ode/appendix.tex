@@ -117,7 +117,85 @@
 
 \section{The Banach fixed-point theorem}
 
+\begin{Theorem}{Banach fixed-point theorem}
+	Let $\Omega \subset \R$ be a closed set and $f \colon \Omega \to \Omega$
+	a contraction, i.e. there holds $|f(x) - f(y)| \le \gamma |x-y|$ for a
+	$\gamma \in (0,1)$.
 
+	Then there exists a unique $x^* \in \Omega$ such that $f(x^*) =x^*$.
+\end{Theorem}
+
+\begin{proof}
+	Let $x_0 \in \Omega$ and define $f(x_k) = x_{k+1}$. First, we prove
+	existence unsing the cauchy-criterion. Let $k, n \in \N_0$ and consider
+	\begin{gather*}
+	|x_k - x_{k+m} | = |f(x_{k-1}) - f(x_{k+m-1})| \le \gamma |x_{k-1} - x_{k+m-1})|.
+	\end{gather*}
+
+	Iteratively, we get
+	\begin{gather*}
+	|x_k - x_{k+m} | \le \gamma^k |x_0 - x_m|.
+	\end{gather*}
+
+	We now write $x_0 - x_m = x_0 - x_1 + x_1 - x_2 + \dots + x_{m-1} - x_m$.
+	The triangle-inequality yields the estimate
+	\begin{gather*}
+	\gamma^k |x_0 - x_m| \le \gamma^k |x_0 - x_1| + |x_1 - x_2| + \dots + |x_{m-1} - x_m|  \\
+	\le \gamma^k |x_0 - x_1| (1 + \gamma + \gamma ^2 + \dots + \gamma^m) \\
+	\le \frac{\gamma^k}{1-\gamma} |x_0 - x_1|.
+	\end{gather*}
+	As $k$ gets larger the estimate goes to zero.
+
+	Concerning uniqueness, let $x^*$ and $y^*$ be fixpoints.
+	\begin{gather*}
+	|x^* - y^*| = |f(x*) - f(y^*) | \le \gamma |x^* - y^*|
+	\end{gather*}
+	Since $\gamma \in (0,1)$ we immediately obtain $|x^* - y^*| = 0$. Using
+	that $|a| = 0$ if and only if $a=0$ yields $y^* = x^*$. This concludes the proof.
+\end{proof}
+
+\section{The implicit and explicit Euler-method}
+
+	The explicit resp. implicit Euler is given by the one-step method
+	\begin{align*}
+	&& y_1 = y_0 + h f(y_0) && \text{resp.} && y_1 = y_0 + h f(y_1) &&
+	\end{align*}
+	Clearly, the explicit Euler is rather easy to compute since all one
+	needs are $f$, $h$ and $y_0$. On the other hand, the implicit Euler
+	is more difficult since for calculating $y_1$ we need the value of $f$ at $y_1$.
+
+	Consider the following visualizations.
+	\begin{center}
+	\begin{minipage}[t]{0.42\textwidth}
+	\begin{tikzpicture}[domain=0:4]
+	\draw[->] (0,0) -- (4.5,0) node[anchor=north] {$t$};
+	\draw[->] (0,0) -- (0,4) node[anchor=east] {$y$};
+	\draw[dashed] (2,4) -- (2,-0.22) node[anchor=north] {$t_1$};
+	\draw  plot[id=exp] function{exp(0.35*x)} node[left] {$u$};
+	\draw[-{>[scale=2.0]}] plot[id=exp] function{0.35*x+1} node[right] {$u'(t_0)$};
+	\end{tikzpicture}
+
+	For the explicit Euler we take $u_0$ and $u'_0$. $y_1$, our approximated
+	solution for $u_1$, is chosen as the intersection point of $t_1$ and
+	$g(t) = y_0 + t \cdot u'(t_0)$.
+	\end{minipage}
+	\begin{minipage}[t]{0.1\textwidth}
+	\textcolor{white}{lalalala}
+	\end{minipage}
+	\begin{minipage}[t]{0.42\textwidth}
+	\begin{tikzpicture}[domain=0:4]
+	\draw[->] (0,0) -- (4.5,0) node[anchor=north] {$t$};
+	\draw[->] (0,0) -- (0,4) node[anchor=east] {$y$};
+	\draw[dashed] (2,4) -- (2,-0.22) node[anchor=north] {$t_1$};
+	\draw  plot[id=exp] function{exp(0.35*x)} node[left] {$u$};
+	\draw[{<[scale=3.0]}-] plot[id=exp] function{0.35*exp(.7)*x+1} node[right] {$u'(t_1)$};
+	\end{tikzpicture}
+
+	For implicit Euler we go backwards. On the $t_1$-axis we are looking
+	for an the affine function $g$ that fulfills $g(0) = u_0$ and $g'(t_1) = f(t_1)$.
+	Then we set $y_1 = g(t_1)$.
+	\end{minipage}
+	\end{center}
 
 
 %%% Local Variables: 

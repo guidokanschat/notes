@@ -167,7 +167,9 @@
   \end{multline*}
 	We now insert ~\ref{eq:lmm:9} which results in
   \begin{gather*}
-    (L_h u)(t_k) = \alpha_0 \left( y(t_k) - y_k \right) - h \beta_0 \left( f(t_k,y(t_k)) - f(t_k,y_k) \right).
+    (L_h u)(t_k) = \alpha_0 \left( y(t_k) - y_k \right) - h \beta_0 \left( f(t_k,y(t_k)) - f(t_k,y_k) \right)
+    \\
+    \left( y(t_k) - y_k \right) \left( \alpha_0 \identity - h \beta_0 \frac{f(t_k,y(t_k)) - f(t_k,y_k)}{y(t_k) - y_k} \right)
   \end{gather*}
   By application of the mean value theorem and 
   subsequent transformation we obtain the statement of the theorem.

@@ -1034,7 +1034,7 @@ methods with one-sided Lipschitz condition.
   Furthermore, since $B(s+r)$ we have for the same $p$ and $q$:
   \begin{gather*}
     \frac1q\sum_{j=1}^s\bigl(b_j c_j^{p-1} - b_j c_j^{p+q-1}\bigr)
-    = \frac1q\left(\frac1q - \frac1{p+q}\right)
+    = \frac1q\left(\frac1p - \frac1{p+q}\right)
     = \frac1{p(p+q)}.
   \end{gather*}
   Subtracting these two and integrating the last result yields
@@ -1070,10 +1070,24 @@ methods with one-sided Lipschitz condition.
 \input{theorems/collocation-continuous}
 
 \begin{proof}
-  We immediately obtain the statement for the derivatives through
-  the fact, that the polynomial $y'(t)$ interpolates the function $u'(t)$ 
-  in the points $\rkc_i$. We receive the error estimate for $y(t)$
-  by integration of the initial value. 
+  $y'$ is the interpolation polynomial of degree $s-1$ in the interpolation
+	points $c_1, \dots, c_s$. There holds
+	\begin{gather*}
+	\max_{t \in [t_0, t_1]} |y'(t) - u'(t)| \le c \max_{t \in [t_0, t_1]}
+		|u^{(s+1)} (t)| \cdot h^s.
+	\end{gather*}
+	We now write
+	\begin{gather*}
+	y(t) - u(t) = \int_0 ^t y'(\tau) - u'(\tau) \diffd \tau \le \int_0 ^t h^s
+		\cdot c \max_{t \in [t_0, t_1]} |u^{(s+1)} (t)| \diffd \tau = ch^s t
+		\le ch^{h+1}.
+	\end{gather*}
+	Since by taking the derivative one loses one order, we obtain
+	\begin{gather*}
+	\max_{t \in [t_0, t_1]} |y^{(k)}(t) - u^{(k)}(t)| \le ch^{s-k+1}
+		\max_{t \in [t_0, t_1]} |u^{(s+1)} (t)|.
+	\end{gather*}
+	Defining $C = c \max_{t \in [t_0, t_1]} |u^{(s+1)} (t)|$ yields the desired result.
 \end{proof}
 
 
