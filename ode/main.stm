@@ -161,4 +161,5 @@
 \frame {\input {\slidetheorem@fileprefix Lemma-fd2-consistency.tex}}
 \frame {\input {\slidetheorem@fileprefix Theorem-fd2-convergence.tex}}
 \frame {\input {\slidetheorem@fileprefix Theorem-fd2-maximum.tex}}
+\frame {\input {\slidetheorem@fileprefix Definition-evolution-equation.tex}}
 \frame {\input {\slidetheorem@fileprefix Definition-T.tex}}
