@@ -564,7 +564,38 @@
   following a path through the grid points.
 \end{proof}
 
-\subsection{Fundamental solution}
+\section{Evolution equations}
+
+After an excursion to second order differential equations depending on
+a spatial variable, we are now returning to problems depending on
+time. But this time, on time \emph{and} space. As for the
+nomenclature, we have encountered ordinary differential equations as
+equations or systems depending on a time variable only, then partial
+differential equations (PDE) with several, typically a spatial
+independent variables. While the problems considered here are covered
+by the definition of PDE, time and space are fundamentally different
+as long as we stay away from black holes, such that a distinction is
+reasonable. Therefore, we introduce the concept of
+
+\begin{Definition}{evolution-equation}
+  An equation of the form
+  \begin{gather}
+    \partial_t u(t,x) + F(t,u(t,x)) = 0,
+  \end{gather}
+  where $u(t,.)$ is in a function space $V$ on a domain $\Omega$, and
+  $F$ is a differential operator with respect to the spatial variables
+  $x$ only, is an \define{evolution equation} of first order (in
+  time).
+
+  An \define{initial boundary value problem} (\define{IBVP}) for this
+  evolution equation completes the differential equation by conditions
+  \begin{xalignat}2
+    u(0,x) &= u_0 & x&\in\Omega \\
+    u(t,x) &= g & x&\in\partial\Omega,\; t>0.
+  \end{xalignat}
+\end{Definition}
+
+\section{Fundamental solutions}
 
 \begin{Definition}
   The function
