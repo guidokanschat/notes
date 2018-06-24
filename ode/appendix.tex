@@ -198,6 +198,52 @@
 	\end{center}
 
 
+\section{Derivation of a BDF-scheme}
+
+	The BDF formulas use the approximations of the solution in the previous points 
+	$t_k -sh, \dots, t_k-h$ and the unkown value $y_k$ at $t_k$ which is to determine.
+	With the Lagrange polynomial given by $L_i (t) = \prod_{j=1, j \not=i} ^n \tfrac{t- t_i}{t_j-t_i}$ 
+	we let $y(t) = \sum_{j=1} ^s y_{k-j} L_{k-j}(t)$. Then, we will assume that $y$ 
+	solves the IVP in the point $t_k$ and obtain a linear system from which we 
+	derive the desired value $y_k$.\\
+
+	We now aim to derive the scheme for BDF(2). Let the points $t_k -2h,t_k -h$ and $t_k$ be given.
+
+	\begin{center}
+	\begin{tikzpicture}[scale=2, domain=-0.5:2.5]
+	\draw[->] (-.25,0) -- (2.25,0) node[pos=1.025] {$t$};
+	\draw[fill=black] (0,0) circle [radius=0.04] node[below] {$t_k - 2h$};
+	\draw[fill=black] (1,0) circle [radius=0.04] node[below] {$t_k - h$};
+	\draw[fill=black] (2,0) circle [radius=0.04] node[below] {$t_k$};
+	\end{tikzpicture}
+	\end{center}
+
+	For the Lagrange polynomials in the points $t_k$, $t_k -h$ resp. $t_k -2h$ we have
+	\begin{gather*}
+		L_0 (t) = \tfrac{t-(t_k-h)(t-t_k)}{2h^2}, \,
+		L_1 (t) = \tfrac{(t-t_k)(t-t_kj-2h)}{h^2} \, \text{resp.} \,
+		L_2 (t) =  \tfrac{(t-t_k+2h)(t-t_k+h)}{2h^2}.
+	\end{gather*}
+
+	As announced, we assume that the interpolation polynomial fulfilles the IVP in 
+	the point $t_k$, i.e. there holds $f_k := f(t_k, y(t_k)) = y'(t_k) = \sum_{j=1} ^s 
+		y_{k-j} L_{k-j} ' (t)$. The product rule and evaluation at $t=t_k$ yields
+
+	\begin{gather*}
+		L_0 '(t) = \tfrac{2t-2t_k+h}{2h^2} = \tfrac{1}{2h}, \,
+		L_1 '(t) = -\tfrac{2t -2t_k + 2h}{h^2} = -\tfrac{2}{h}  \, \text{and} \,
+		L_2 '(t) = \tfrac{2t-2t_k + 3h}{2h^2} = \tfrac{3}{2h}. 
+	\end{gather*}
+
+	Then, we obtain 
+	\begin{gather*}
+		f_k = \tfrac{1}{2h} y_{k-2} - \tfrac{2}{h}y_{k-1} + \tfrac{3}{2h} y_k.
+	\end{gather*}
+	Multiplication with $\tfrac{2}{3h}$ yields the scheme
+	\begin{gather*}
+		y_k - \tfrac{4}{3} y_{k-1} + 3y_{k-2} = \tfrac{2}{3h} f_k.
+	\end{gather*}
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "notes"
