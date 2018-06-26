@@ -304,13 +304,16 @@
     y^{(n)} =
     \begin{pmatrix}
       \frac1{(1+h)^n} \\
-      \frac1{(1+100h)^n},
+      \frac1{(1+100h)^n}
     \end{pmatrix}
   \end{gather*}
   which converges to zero for $n\to \infty$, independent of $h$. Thus,
   although the implicit Euler method requires in general the solution
   of a nonlinear system in each step, it allows for much larger time
   steps than the explicit Euler method,when applied to a stiff problem.
+  
+  For a visualization of the implicit and explicit Euler method see the
+  appendix.
 \end{example}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -422,11 +425,14 @@ Figure~\ref{fig:implicit:stability-euler}). %% anschauliches Bild?
   for all $h$.
 \end{Theorem}
 
-% \begin{remark}
-%   Der Begriff A-stabil wurde von Dahlquist bewusst neutral
-%   gewählt. Insbesondere steht also A-Stabilität
-%   \underline{\textbf{nicht}} für asymptotische Stabilität.
-% \end{remark}
+ \begin{remark}
+	The term of A-stability was deliberately chosen neutrally by Dahlquist
+	since he considered notions with a rather extravagant choice of words as outworn.
+	Note that A-stability does not stand for asymptotic stability. The notion
+	of B-stability which we will consider later on was introduced by John
+	Butcher. He not only managed to find the perfect moment to introduce this new notion,
+	but also to get his name once again into the realm of mathematics.
+ \end{remark}
 
 \begin{proof}
   Let $\{v_\ell\}_{\ell=1,\dots,d}$ be a basis of $\C^d$ consisting of
@@ -545,7 +551,7 @@ problem being solved.
   An A-stable one-step method is called \define{L-stable}, if for its
   \putindex{stability function} there holds
   \begin{gather}
-    \lim_{z\to\infty} \abs{R(z)} = 0.
+    \lim_{\Re (z) \to -\infty} \abs{R(z)} = 0.
   \end{gather}
   Some authors refer to L-stable methods as \define{strongly A-stable}.
 \end{Definition}
