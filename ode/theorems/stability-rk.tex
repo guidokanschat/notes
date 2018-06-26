@@ -17,17 +17,17 @@
   is given by the two expressions
   \begin{gather}
     \label{eq:stability-rk:1}
-    R(z) = 1+ z b^T \bigl(I-zA\bigr)^{-1}
+    R(z) = 1+ z b^T \bigl(\identity-zA\bigr)^{-1}
     \begin{pmatrix}
       1\\\vdots\\1
     \end{pmatrix}
-    = \frac{\operatorname{det}\left(I-zA+z
+    = \frac{\operatorname{det}\left(\identity-zA+z
         \begin{pmatrix}
           b_1 & \cdots & b_s\\
           \vdots & & \vdots \\
           b_1 & \cdots & b_s
         \end{pmatrix}\right)
-}{\operatorname{det}\bigl(I-zA\bigr)}
+}{\operatorname{det}\bigl(\identity-zA\bigr)}
   \end{gather}
 \end{Lemma}
 
