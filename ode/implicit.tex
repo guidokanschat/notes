@@ -610,17 +610,17 @@ problem being solved.
     g_i = y_0 + h \sum_{j=1}^s a_{ij}\lambda g_j, \quad i=1,\dots,s.
   \end{gather*}
   In matrix notation with $z=h\lambda$, we obtain
-  $(I-z A) g = (y_0,\dots,y_0)^T$, where $g$ is the vector
+  $(\identity-z A) g = (y_0,\dots,y_0)^T$, where $g$ is the vector
   $(g_1,\dots,g_s)^T$. Equally, we obtain
   \begin{align*}
     R(z) y_0 = y_1 &= y_0 + h \sum_{i=1}^s b_i \lambda g_i = y_0 + z
     b^T g\\
-    &= y_0 + z b^T(I-z A)^{-1}
+    &= y_0 + z b^T(\identity-z A)^{-1}
     \begin{pmatrix}
       y_0\\\vdots\\y_0
     \end{pmatrix}
     \\
-    &= \left(1+z b^T(I-z A)^{-1}
+    &= \left(1+z b^T(\identity-z A)^{-1}
       \begin{pmatrix}
         1\\\vdots\\1
       \end{pmatrix}
