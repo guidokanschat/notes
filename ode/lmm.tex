@@ -101,8 +101,8 @@
   interpolation polynomials outside of the interval which is spanned
   through the interpolation points, are not stable.  Therefore, we
   expect stability problems for the Adams-Bashforth and BDF
-  methods. Moreover we remember that Lagrange interpolation with
-  equidistant support points is unstable for a high
+  methods. Moreover, we remember that Lagrange interpolation with
+  equidistant support points is unstable for a high-degree
   polynomials. Therefore, we also expect that all methods above
   perform well only with moderate order.
 \end{remark}
@@ -126,7 +126,7 @@
   One-step methods were always denoted by describing how to compute
   $y_1$ from $y_0$. Here, the notation becomes more complicated, but
   sometimes we consider only $y_s$ computed from $y_0,\dots,y_{s-1}$
-  implying the same rues for $y_k$ computed from
+  implying the same rules for $y_k$ computed from
   $y_{k-\lmms},\dots,y_{k-1}$.
 \end{remark}
 \input{definitions/lmm-errors}
@@ -168,7 +168,7 @@
   \end{multline*}
 	We now insert ~\ref{eq:lmm:9} which results in
   \begin{gather*}
-    (L_h u)(t_k) = \alpha_0 \left( y(t_k) - y_k \right) - h \beta_0 \left( f(t_k,y(t_k)) - f(t_k,y_k) \right)
+    (L_h y)(t_k) = \alpha_0 \left( y(t_k) - y_k \right) - h \beta_0 \left( f(t_k,y(t_k)) - f(t_k,y_k) \right)
     \\
     \left( y(t_k) - y_k \right) \left( \alpha_0 \identity - h \beta_0 \frac{f(t_k,y(t_k)) - f(t_k,y_k)}{y(t_k) - y_k} \right)
   \end{gather*}
@@ -303,7 +303,7 @@
 \input{theorems/difference-equation-solutions}
 
 \begin{proof}
-  Inserting of the solution $y_n = \xi^n$ into the difference equation
+  Inserting the solution $y_n = \xi^n$ into the difference equation
   results in
   \begin{gather*}
     \sum_{r=0}^\lmms \alpha_{r} \xi^{n+r} = \xi^{n}
@@ -353,7 +353,7 @@
   equation~\eqref{eq:lmm:6}. Therefore,
   \begin{enumerate}
   \item all solutions to $|\xi_i|<1$ for $n\to\infty$ converge to zero
-  \item all solutions to $|\xi_i|>1$ for $n\to\infty$ converge to infinity
+  \item all solutions to $|\xi_i|>1$ for $n\to\infty$ divergence to infinity
   \item all solutions to $|\xi_i|=1$ for $n\to\infty$ stay bounded 
 	if and only if $\xi_i$ is simple.
   \end{enumerate}
