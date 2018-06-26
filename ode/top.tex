@@ -4,8 +4,10 @@
 \usepackage[backend=biber,style=alphabetic]{biblatex}
 \addbibresource{all.bib}
 \addbibresource{skript.bib}
-\usetikzlibrary{snakes}
-\usetikzlibrary{arrows.meta,calc,decorations.markings,math,arrows.meta} % Die brauche ich für die Visualisierung vom expliziten und impliziten Euler
+% \usepackage{tikz} % Missing?
+  \usetikzlibrary{snakes}       % veraltet, sollte durch decorations ersetzt werden
+  \usetikzlibrary{arrows.meta}  % Die brauche ich für die Visualisierung
+                              % vom expliziten und impliziten Euler im Appendix
 
 \title{\textbf{Numerical Analysis of\\ Ordinary Differential Equations}}
 \author{Guido Kanschat}
