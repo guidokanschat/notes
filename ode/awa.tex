@@ -222,7 +222,7 @@ theory of ordinary differential equations.
 \begin{proof}
   We consider the auxiliary function $w(t) = M(t) u(t)$ with the
   integrating factor $M(t)$ of the equation~\eqref{eq:awa:7}. Using the
-  chain rule, there holds
+  product rule, there holds
   \begin{gather}
     \label{eq:awa:19}
     w'(t) =  M(t) u'(t) + M'(t) u(t)
@@ -235,10 +235,10 @@ theory of ordinary differential equations.
   \end{gather*}
 	This can be integrated directly to obtain	
   \begin{gather*}
-    w(t) = u_0 + \int_{t_0}^t M(t) b(t),
+    w(t) = u_0 + \int_{t_0}^t M(s) b(s) \ds,
   \end{gather*}
   where we use that $w(t_0) = u_0$.  According to
-  lemma~\ref{Lemma:appendix:exp-1}, about the \putindex{matrix
+  lemma~\ref{Lemma:appendix:exp-1} about the \putindex{matrix
     exponential}, $M(t)$ is invertible for all $t$.  With the
   definition of $w(t)$ we are therefore able to solve for $u(t)$,
   which results in the equation~\eqref{eq:awa:8}. The global
@@ -616,7 +616,7 @@ theory of ordinary differential equations.
   $u^{(0)}:I\to\Omega$. From the boundedness of $f$, we obtain for
   $t-t_0 \le T$
   \begin{align*}
-    \abs{u^{(k+1)}(t)-u_0} = \abs{\int_{t_0}^t f(s,u^{(k)}(s))\ds} \le \int_{t_0}^t
+    \abs{u^{(k+1)}(t)-u_0} = \left|\int_{t_0}^t f(s,u^{(k)}(s))\ds \right| \le \int_{t_0}^t
     \abs{f(s,u^{(k)}(s))}\ds \le TM \le b.
   \end{align*}
   Thus, from $u^{(0)}:I\to\Omega$ follows $u^{(k)}:I\to\Omega$ for all
