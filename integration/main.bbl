@@ -1,0 +1,150 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{anyt/global//global/global}
+    \entry{AdamsFournier03}{book}{}
+      \name{author}{2}{}{%
+        {{hash=47d7d907fce9dfd3b2c252182d24ac03}{%
+           family={Adams},
+           familyi={A\bibinitperiod},
+           given={R.\bibnamedelimi A.},
+           giveni={R\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=620e4e6f688a7a6f4d4abe0af7c3595b}{%
+           family={Fournier},
+           familyi={F\bibinitperiod},
+           given={J.\bibnamedelimi J.\bibnamedelimi F.},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Academic Press}%
+      }
+      \strng{namehash}{b17de23d3f4a9d6c362088677937675e}
+      \strng{fullhash}{b17de23d3f4a9d6c362088677937675e}
+      \strng{bibnamehash}{b17de23d3f4a9d6c362088677937675e}
+      \strng{authorbibnamehash}{b17de23d3f4a9d6c362088677937675e}
+      \strng{authornamehash}{b17de23d3f4a9d6c362088677937675e}
+      \strng{authorfullhash}{b17de23d3f4a9d6c362088677937675e}
+      \field{labelalpha}{AF03}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2nd edition}
+      \field{series}{Pure and Applied Mathematics}
+      \field{title}{Sobolev Spaces}
+      \field{volume}{140}
+      \field{year}{2003}
+    \endentry
+    \entry{GilbargTrudinger98}{book}{}
+      \name{author}{2}{}{%
+        {{hash=a7930ba4830d3bd27d281c4bba9f3055}{%
+           family={Gilbarg},
+           familyi={G\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+        {{hash=0c461c8491abe0f3f3dfe8770fcc29a9}{%
+           family={Trudinger},
+           familyi={T\bibinitperiod},
+           given={N.\bibnamedelimi S.},
+           giveni={N\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{c982064816c5d7638dd9ff0a6fce6644}
+      \strng{fullhash}{c982064816c5d7638dd9ff0a6fce6644}
+      \strng{bibnamehash}{c982064816c5d7638dd9ff0a6fce6644}
+      \strng{authorbibnamehash}{c982064816c5d7638dd9ff0a6fce6644}
+      \strng{authornamehash}{c982064816c5d7638dd9ff0a6fce6644}
+      \strng{authorfullhash}{c982064816c5d7638dd9ff0a6fce6644}
+      \field{labelalpha}{GT98}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Elliptic Partial Differential Equations of Second Order}
+      \field{year}{1998}
+    \endentry
+    \entry{MeyersSerrin64}{article}{}
+      \name{author}{2}{}{%
+        {{hash=327fd38e8999eb1eef023e2becb9127c}{%
+           family={Meyers},
+           familyi={M\bibinitperiod},
+           given={Norman\bibnamedelima G.},
+           giveni={N\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=013dc640736ae541ed53321cf37faf1e}{%
+           family={Serrin},
+           familyi={S\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{6d87c953a2195860f6e21f92bad89483}
+      \strng{fullhash}{6d87c953a2195860f6e21f92bad89483}
+      \strng{bibnamehash}{6d87c953a2195860f6e21f92bad89483}
+      \strng{authorbibnamehash}{6d87c953a2195860f6e21f92bad89483}
+      \strng{authornamehash}{6d87c953a2195860f6e21f92bad89483}
+      \strng{authorfullhash}{6d87c953a2195860f6e21f92bad89483}
+      \field{labelalpha}{MS64}
+      \field{sortinit}{M}
+      \field{sortinithash}{cfd219b90152c06204fab207bc6c7cab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proc. Nat. Acad. Sci. U.S.A.}
+      \field{title}{{$H=W$}}
+      \field{volume}{51}
+      \field{year}{1964}
+      \field{pages}{1055\bibrangedash 1056}
+      \range{pages}{2}
+    \endentry
+    \entry{RieszNagy}{book}{}
+      \name{author}{2}{}{%
+        {{hash=c015204b2790e96e9437997952e2217c}{%
+           family={Riesz},
+           familyi={R\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod}}}%
+        {{hash=a6d3e4f0487ec77d5f468995e9d77e88}{%
+           family={Szökefalvi-Nagy},
+           familyi={S\bibinithyphendelim N\bibinitperiod},
+           given={B.},
+           giveni={B\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Dover}%
+      }
+      \strng{namehash}{31836219b58fd88c46b90e150e7ce54f}
+      \strng{fullhash}{31836219b58fd88c46b90e150e7ce54f}
+      \strng{bibnamehash}{31836219b58fd88c46b90e150e7ce54f}
+      \strng{authorbibnamehash}{31836219b58fd88c46b90e150e7ce54f}
+      \strng{authornamehash}{31836219b58fd88c46b90e150e7ce54f}
+      \strng{authorfullhash}{31836219b58fd88c46b90e150e7ce54f}
+      \field{labelalpha}{RS90}
+      \field{sortinit}{R}
+      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{reprint of the 1955 edition}
+      \field{title}{Functional Analysis}
+      \field{year}{1990}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
