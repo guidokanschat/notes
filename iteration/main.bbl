@@ -1,5 +1,5 @@
 % $ biblatex auxiliary file $
-% $ biblatex bbl format version 2.6 $
+% $ biblatex bbl format version 2.9 $
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
@@ -18,30 +18,34 @@
 
 
 \refsection{0}
-  \sortlist[entry]{anyt/global}
+  \datalist[entry]{anyt/global//global/global}
     \entry{ArnoldFalkWinther97Hdiv}{article}{}
       \name{author}{3}{}{%
         {{hash=630284ba6980b7b4409c8ea87efed7d8}{%
            family={Arnold},
-           family_i={A\bibinitperiod},
+           familyi={A\bibinitperiod},
            given={Douglas\bibnamedelima N.},
-           given_i={D\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+           giveni={D\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
         {{hash=a38deb813bc1b2c6bf97ded731061229}{%
            family={Falk},
-           family_i={F\bibinitperiod},
+           familyi={F\bibinitperiod},
            given={Richard\bibnamedelima S.},
-           given_i={R\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+           giveni={R\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
         {{hash=9f7380ee41e3ee42775f491daf26f44a}{%
            family={Winther},
-           family_i={W\bibinitperiod},
+           familyi={W\bibinitperiod},
            given={R.},
-           given_i={R\bibinitperiod}}}%
+           giveni={R\bibinitperiod}}}%
       }
       \strng{namehash}{badf0eab420c351d430a49e263052c67}
       \strng{fullhash}{badf0eab420c351d430a49e263052c67}
+      \strng{bibnamehash}{badf0eab420c351d430a49e263052c67}
+      \strng{authorbibnamehash}{badf0eab420c351d430a49e263052c67}
+      \strng{authornamehash}{badf0eab420c351d430a49e263052c67}
+      \strng{authorfullhash}{badf0eab420c351d430a49e263052c67}
       \field{labelalpha}{AFW97}
       \field{sortinit}{A}
-      \field{sortinithash}{b685c7856330eaee22789815b49de9bb}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{issn}{0025-5718}
@@ -60,25 +64,29 @@
       \name{author}{2}{}{%
         {{hash=69540326d1902ae6bd40ca0e866f964d}{%
            family={Braess},
-           family_i={B\bibinitperiod},
+           familyi={B\bibinitperiod},
            given={D.},
-           given_i={D\bibinitperiod}}}%
+           giveni={D\bibinitperiod}}}%
         {{hash=7a9a50b0523f9ad2c366ff6d6f151684}{%
            family={Hackbusch},
-           family_i={H\bibinitperiod},
+           familyi={H\bibinitperiod},
            given={W.},
-           given_i={W\bibinitperiod}}}%
+           giveni={W\bibinitperiod}}}%
       }
       \strng{namehash}{83e7f235a348af7d6bc1c622613c3924}
       \strng{fullhash}{83e7f235a348af7d6bc1c622613c3924}
+      \strng{bibnamehash}{83e7f235a348af7d6bc1c622613c3924}
+      \strng{authorbibnamehash}{83e7f235a348af7d6bc1c622613c3924}
+      \strng{authornamehash}{83e7f235a348af7d6bc1c622613c3924}
+      \strng{authorfullhash}{83e7f235a348af7d6bc1c622613c3924}
       \field{labelalpha}{BH83}
       \field{sortinit}{B}
-      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{SIAM J. Sci. Comput.}
       \field{number}{5}
-      \field{title}{A New Convergence Proof for the Multigrid Method Including the {V}-cycle}
+      \field{title}{A New Convergence Proof for the Multigrid Method Including the V-cycle}
       \field{volume}{20}
       \field{year}{1983}
       \field{pages}{967\bibrangedash 975}
@@ -88,18 +96,22 @@
       \name{author}{1}{}{%
         {{hash=c6c9a775a4be4b7cba50831d6ea9bd04}{%
            family={Bramble},
-           family_i={B\bibinitperiod},
+           familyi={B\bibinitperiod},
            given={J.\bibnamedelimi H.},
-           given_i={J\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+           giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
       }
       \list{publisher}{1}{%
         {Longman Scientific}%
       }
       \strng{namehash}{c6c9a775a4be4b7cba50831d6ea9bd04}
       \strng{fullhash}{c6c9a775a4be4b7cba50831d6ea9bd04}
+      \strng{bibnamehash}{c6c9a775a4be4b7cba50831d6ea9bd04}
+      \strng{authorbibnamehash}{c6c9a775a4be4b7cba50831d6ea9bd04}
+      \strng{authornamehash}{c6c9a775a4be4b7cba50831d6ea9bd04}
+      \strng{authorfullhash}{c6c9a775a4be4b7cba50831d6ea9bd04}
       \field{labelalpha}{Bra93}
       \field{sortinit}{B}
-      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{number}{294}
@@ -111,23 +123,27 @@
       \name{author}{2}{}{%
         {{hash=9bb472cd5d120f9ab5781b2970c37136}{%
            family={Brenner},
-           family_i={B\bibinitperiod},
+           familyi={B\bibinitperiod},
            given={S.\bibnamedelimi C.},
-           given_i={S\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+           giveni={S\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
         {{hash=5fdef0349e6571a767ff277820f9eed3}{%
            family={Scott},
-           family_i={S\bibinitperiod},
+           familyi={S\bibinitperiod},
            given={L.\bibnamedelimi R.},
-           given_i={L\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+           giveni={L\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
       }
       \list{publisher}{1}{%
         {Springer}%
       }
       \strng{namehash}{4ba853dd18a9976c6180cbf5868769f0}
       \strng{fullhash}{4ba853dd18a9976c6180cbf5868769f0}
+      \strng{bibnamehash}{4ba853dd18a9976c6180cbf5868769f0}
+      \strng{authorbibnamehash}{4ba853dd18a9976c6180cbf5868769f0}
+      \strng{authornamehash}{4ba853dd18a9976c6180cbf5868769f0}
+      \strng{authorfullhash}{4ba853dd18a9976c6180cbf5868769f0}
       \field{labelalpha}{BS02}
       \field{sortinit}{B}
-      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{edition}{2nd edition}
@@ -138,20 +154,24 @@
       \name{author}{2}{}{%
         {{hash=dc32eb86b7aedfbd76cba0ee1f092562}{%
            family={Dryja},
-           family_i={D\bibinitperiod},
+           familyi={D\bibinitperiod},
            given={M.},
-           given_i={M\bibinitperiod}}}%
+           giveni={M\bibinitperiod}}}%
         {{hash=74bae74cf5039921b808b094bec75240}{%
            family={Widlund},
-           family_i={W\bibinitperiod},
+           familyi={W\bibinitperiod},
            given={O.},
-           given_i={O\bibinitperiod}}}%
+           giveni={O\bibinitperiod}}}%
       }
       \strng{namehash}{5d97b687e0bd9a9a4dfecbf88634b95e}
       \strng{fullhash}{5d97b687e0bd9a9a4dfecbf88634b95e}
+      \strng{bibnamehash}{5d97b687e0bd9a9a4dfecbf88634b95e}
+      \strng{authorbibnamehash}{5d97b687e0bd9a9a4dfecbf88634b95e}
+      \strng{authornamehash}{5d97b687e0bd9a9a4dfecbf88634b95e}
+      \strng{authorfullhash}{5d97b687e0bd9a9a4dfecbf88634b95e}
       \field{labelalpha}{DW94}
       \field{sortinit}{D}
-      \field{sortinithash}{78f7c4753a2004675f316a80bdb31742}
+      \field{sortinithash}{2ef1bd9a78cc71eb74d7231c635177b8}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{SIAM J. Sci. Comput.}
@@ -165,20 +185,24 @@
       \name{author}{2}{}{%
         {{hash=aaa7ff2fb30071d46de7d7a5052d04f6}{%
            family={Griebel},
-           family_i={G\bibinitperiod},
+           familyi={G\bibinitperiod},
            given={M.},
-           given_i={M\bibinitperiod}}}%
+           giveni={M\bibinitperiod}}}%
         {{hash=cddd8ded77b510b77a26e6245e725f39}{%
            family={Oswald},
-           family_i={O\bibinitperiod},
+           familyi={O\bibinitperiod},
            given={P.},
-           given_i={P\bibinitperiod}}}%
+           giveni={P\bibinitperiod}}}%
       }
       \strng{namehash}{70555666da54f8d98de8dc41939b3211}
       \strng{fullhash}{70555666da54f8d98de8dc41939b3211}
+      \strng{bibnamehash}{70555666da54f8d98de8dc41939b3211}
+      \strng{authorbibnamehash}{70555666da54f8d98de8dc41939b3211}
+      \strng{authornamehash}{70555666da54f8d98de8dc41939b3211}
+      \strng{authorfullhash}{70555666da54f8d98de8dc41939b3211}
       \field{labelalpha}{GO95}
       \field{sortinit}{G}
-      \field{sortinithash}{1c854ef9177a91bf894e66485bdbd3ed}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Numer. Math.}
@@ -192,28 +216,32 @@
       \name{author}{3}{}{%
         {{hash=51dfb5f7ef102950a7ea69478c290beb}{%
            family={Grossmann},
-           family_i={G\bibinitperiod},
+           familyi={G\bibinitperiod},
            given={Ch.},
-           given_i={C\bibinitperiod}}}%
+           giveni={C\bibinitperiod}}}%
         {{hash=8270777f437444cc740567ae0b904078}{%
            family={Roos},
-           family_i={R\bibinitperiod},
+           familyi={R\bibinitperiod},
            given={H.-G.},
-           given_i={H\bibinithyphendelim G\bibinitperiod}}}%
+           giveni={H\bibinithyphendelim G\bibinitperiod}}}%
         {{hash=6caa8536e322eb5d0e3f42ef4e871b65}{%
            family={Stynes},
-           family_i={S\bibinitperiod},
+           familyi={S\bibinitperiod},
            given={M.},
-           given_i={M\bibinitperiod}}}%
+           giveni={M\bibinitperiod}}}%
       }
       \list{publisher}{1}{%
         {Springer}%
       }
       \strng{namehash}{1f36366adda169708881ad6fc87ecca3}
       \strng{fullhash}{1f36366adda169708881ad6fc87ecca3}
+      \strng{bibnamehash}{1f36366adda169708881ad6fc87ecca3}
+      \strng{authorbibnamehash}{1f36366adda169708881ad6fc87ecca3}
+      \strng{authornamehash}{1f36366adda169708881ad6fc87ecca3}
+      \strng{authorfullhash}{1f36366adda169708881ad6fc87ecca3}
       \field{labelalpha}{GRS07}
       \field{sortinit}{G}
-      \field{sortinithash}{1c854ef9177a91bf894e66485bdbd3ed}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{edition}{3rd edition}
@@ -224,18 +252,22 @@
       \name{author}{1}{}{%
         {{hash=3974b0a6a560215f0799dcae15c58473}{%
            family={Saad},
-           family_i={S\bibinitperiod},
+           familyi={S\bibinitperiod},
            given={Y.},
-           given_i={Y\bibinitperiod}}}%
+           giveni={Y\bibinitperiod}}}%
       }
       \list{publisher}{1}{%
         {Oxford University Press}%
       }
       \strng{namehash}{3974b0a6a560215f0799dcae15c58473}
       \strng{fullhash}{3974b0a6a560215f0799dcae15c58473}
+      \strng{bibnamehash}{3974b0a6a560215f0799dcae15c58473}
+      \strng{authorbibnamehash}{3974b0a6a560215f0799dcae15c58473}
+      \strng{authornamehash}{3974b0a6a560215f0799dcae15c58473}
+      \strng{authorfullhash}{3974b0a6a560215f0799dcae15c58473}
       \field{labelalpha}{Saa00}
       \field{sortinit}{S}
-      \field{sortinithash}{fd1e7c5ab79596b13dbbb67f8d70fb5a}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{edition}{2nd edition}
@@ -246,14 +278,14 @@
       \name{author}{2}{}{%
         {{hash=cbbe9d571fb8dd69131f3e245c69d010}{%
            family={Toselli},
-           family_i={T\bibinitperiod},
+           familyi={T\bibinitperiod},
            given={A.},
-           given_i={A\bibinitperiod}}}%
+           giveni={A\bibinitperiod}}}%
         {{hash=74bae74cf5039921b808b094bec75240}{%
            family={Widlund},
-           family_i={W\bibinitperiod},
+           familyi={W\bibinitperiod},
            given={O.},
-           given_i={O\bibinitperiod}}}%
+           giveni={O\bibinitperiod}}}%
       }
       \list{location}{1}{%
         {Berlin}%
@@ -263,9 +295,13 @@
       }
       \strng{namehash}{2bb0ac39ea9e73223f9dedd0b242b23a}
       \strng{fullhash}{2bb0ac39ea9e73223f9dedd0b242b23a}
+      \strng{bibnamehash}{2bb0ac39ea9e73223f9dedd0b242b23a}
+      \strng{authorbibnamehash}{2bb0ac39ea9e73223f9dedd0b242b23a}
+      \strng{authornamehash}{2bb0ac39ea9e73223f9dedd0b242b23a}
+      \strng{authorfullhash}{2bb0ac39ea9e73223f9dedd0b242b23a}
       \field{labelalpha}{TW05}
       \field{sortinit}{T}
-      \field{sortinithash}{423d138a005a533b47e6475e39378bf2}
+      \field{sortinithash}{6f7aff9db9dcfeb7f95fd5bbd2f78df9}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{series}{Springer Series in Computational Mathematics}
@@ -279,15 +315,19 @@
       \name{author}{1}{}{%
         {{hash=b43e2c07257361231f3162976ffef6de}{%
            family={Xu},
-           family_i={X\bibinitperiod},
+           familyi={X\bibinitperiod},
            given={J.},
-           given_i={J\bibinitperiod}}}%
+           giveni={J\bibinitperiod}}}%
       }
       \strng{namehash}{b43e2c07257361231f3162976ffef6de}
       \strng{fullhash}{b43e2c07257361231f3162976ffef6de}
+      \strng{bibnamehash}{b43e2c07257361231f3162976ffef6de}
+      \strng{authorbibnamehash}{b43e2c07257361231f3162976ffef6de}
+      \strng{authornamehash}{b43e2c07257361231f3162976ffef6de}
+      \strng{authorfullhash}{b43e2c07257361231f3162976ffef6de}
       \field{labelalpha}{Xu92}
       \field{sortinit}{X}
-      \field{sortinithash}{2999ebab86052e6d71b434385f8b4ed2}
+      \field{sortinithash}{b0b62a29ee4a21a0e618fed53a0313cc}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{SIAM Review}
@@ -298,7 +338,7 @@
       \field{pages}{581\bibrangedash 613}
       \range{pages}{33}
     \endentry
-  \endsortlist
+  \enddatalist
 \endrefsection
 \endinput
 
