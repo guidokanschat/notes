@@ -175,21 +175,21 @@ fundamental matrix and thus, they coincide.
 \input{theorems/derivative-f.tex}
 
 \begin{proof}
-  We set out by devising a differential equation for the Gâteaux
+   We set out by devising a differential equation for the Gâteaux
   derivative $\mathcal U(t) := \left.\frac{d}{d\epsilon} u_\epsilon(t)\right|_{\epsilon=0}$. The differential equation for $u$ yields
-  \begin{multline*}
-    \mathcal U'(t) = \left( \left.\frac{d}{d\epsilon} u_\epsilon(t)\right|_{\epsilon=0} \right)' \\
-    = \left.\frac{d}{d\epsilon} u_\epsilon ' (t)\right|_{\epsilon=0} \\
-    = \left.\frac{d}{d\epsilon}
+  \begin{align*}
+    \mathcal U'(t) =& \left( \left.\frac{d}{d\epsilon} u_\epsilon(t)\right|_{\epsilon=0} \right)' \\
+    =& \left.\frac{d}{d\epsilon} u_\epsilon ' (t)\right|_{\epsilon=0} \\
+    =& \left.\frac{d}{d\epsilon}
     \Bigl(f\bigl(t,u_\epsilon(t)\bigr)
     + \epsilon g\bigl(t,u_\epsilon(t)\bigr)\Bigr) \right|_{\epsilon=0} \\
-    = \left.\nabla_u f(t,u_\epsilon) \frac{d}{d\epsilon} u_\epsilon(t)
+    =& \left.\nabla_u f(t,u_\epsilon) \frac{d}{d\epsilon} u_\epsilon(t)
      + \epsilon \nabla_u g \bigl(u_\epsilon (t) \bigr) \frac{d}{d\epsilon} u_\epsilon(t) 
     + g\bigl(t,u_\epsilon(t)\bigr) \right|_{\epsilon=0}
   \\
-    = \left.\nabla_u f(t,u_\epsilon) \mathcal U(t)
+    =& \left.\nabla_u f(t,u_\epsilon) \mathcal U(t)
     + g\bigl(t,u_\epsilon(t)\bigr) \right|_{\epsilon=0}
-  \end{multline*}
+  \end{align*}
   Furthermore, we have
   \begin{gather*}
      \mathcal U(t_0) = \frac{d}{d\epsilon} u_\epsilon(t_0) = 0.
@@ -205,7 +205,7 @@ fundamental matrix and thus, they coincide.
   Noticing that $M(\tau)^{-1} = \fundamental(\tau;t_0)$, we obtain
   \begin{gather*}
     u(t) = \int_{t_0}^t \fundamental(t;s) g\bigl(s,u(s)\bigr) \, \ds
-  \end{gather*}
+\end{gather*}
 \end{proof}
 
 

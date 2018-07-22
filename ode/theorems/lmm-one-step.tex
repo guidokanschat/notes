@@ -2,7 +2,7 @@
   Every multistep method can be recast as a one-step method
   \begin{gather}
     \label{eq:lmm-one-step:1}
-    Y_{k} = (A\otimes I) Y_{k-1} + h \verfahren_h(t_{k-1}, Y_{k-1})
+    Y_{k} = (A \otimes \identity) Y_{k-1} + h \verfahren_h(t_{k-1}, Y_{k-1})
   \end{gather}
   where with $\alpha_r' = \alpha_r/\alpha_s$
   \begin{gather}
@@ -20,7 +20,7 @@
       & & 1 & 0
     \end{pmatrix},
   \end{gather}
-  and $\verfahren_h(t_k, Y_k) = (e_1\otimes I) \psi_h(t_{k-1}, Y_{k-1})$ with
+  and $\verfahren_h(t_k, Y_k) = (e_1 \otimes \identity) \psi_h(t_{k-1}, Y_{k-1})$ with
   $\beta_r' = \beta_r/\alpha_s$ and $\psi_h$ defined implicitly by
   \begin{multline}
     \label{eq:lmm-one-step:3}

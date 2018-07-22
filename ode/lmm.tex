@@ -92,6 +92,7 @@
   \end{gather*}
   This yields the following schemes:
   \input{definitions/bdf}
+  For an example on how to derive these schemes see the appendix.
 \end{example}
 
 \begin{remark}
@@ -100,8 +101,8 @@
   interpolation polynomials outside of the interval which is spanned
   through the interpolation points, are not stable.  Therefore, we
   expect stability problems for the Adams-Bashforth and BDF
-  methods. Moreover we remember that Lagrange interpolation with
-  equidistant support points is unstable for a high
+  methods. Moreover, we remember that Lagrange interpolation with
+  equidistant support points is unstable for a high-degree
   polynomials. Therefore, we also expect that all methods above
   perform well only with moderate order.
 \end{remark}
@@ -125,7 +126,7 @@
   One-step methods were always denoted by describing how to compute
   $y_1$ from $y_0$. Here, the notation becomes more complicated, but
   sometimes we consider only $y_s$ computed from $y_0,\dots,y_{s-1}$
-  implying the same rues for $y_k$ computed from
+  implying the same rules for $y_k$ computed from
   $y_{k-\lmms},\dots,y_{k-1}$.
 \end{remark}
 \input{definitions/lmm-errors}
@@ -167,7 +168,7 @@
   \end{multline*}
 	We now insert ~\ref{eq:lmm:9} which results in
   \begin{gather*}
-    (L_h u)(t_k) = \alpha_0 \left( y(t_k) - y_k \right) - h \beta_0 \left( f(t_k,y(t_k)) - f(t_k,y_k) \right)
+    (L_h y)(t_k) = \alpha_0 \left( y(t_k) - y_k \right) - h \beta_0 \left( f(t_k,y(t_k)) - f(t_k,y_k) \right)
     \\
     \left( y(t_k) - y_k \right) \left( \alpha_0 \identity - h \beta_0 \frac{f(t_k,y(t_k)) - f(t_k,y_k)}{y(t_k) - y_k} \right)
   \end{gather*}
@@ -302,7 +303,7 @@
 \input{theorems/difference-equation-solutions}
 
 \begin{proof}
-  Inserting of the solution $y_n = \xi^n$ into the difference equation
+  Inserting the solution $y_n = \xi^n$ into the difference equation
   results in
   \begin{gather*}
     \sum_{r=0}^\lmms \alpha_{r} \xi^{n+r} = \xi^{n}
@@ -352,7 +353,7 @@
   equation~\eqref{eq:lmm:6}. Therefore,
   \begin{enumerate}
   \item all solutions to $|\xi_i|<1$ for $n\to\infty$ converge to zero
-  \item all solutions to $|\xi_i|>1$ for $n\to\infty$ converge to infinity
+  \item all solutions to $|\xi_i|>1$ for $n\to\infty$ divergence to infinity
   \item all solutions to $|\xi_i|=1$ for $n\to\infty$ stay bounded 
 	if and only if $\xi_i$ is simple.
   \end{enumerate}
@@ -466,15 +467,15 @@
   Thus, the canonical form $J = T^{-1}AT$ has norm $\norm{J}_{\infty}
   \le 1$. If we define the norm
   \begin{gather*}
-    \norm{x} = \norm{(T^{-1}\otimes I)x}_\infty,
+    \norm{x} = \norm{(T^{-1}\otimes \identity)x}_\infty,
   \end{gather*}
   we obtain the result by
   \begin{multline*}
-    \norm{(A\otimes I)x}
-    = \norm{(T^{-1}\otimes I)(A\otimes I)x}_\infty
-    = \norm{(J\otimes I)(T^{-1}\otimes I)x}_\infty
+    \norm{(A\otimes \identity)x}
+    = \norm{(T^{-1}\otimes \identity)(A\otimes \identity)x}_\infty
+    = \norm{(J\otimes \identity)(T^{-1}\otimes \identity)x}_\infty
     \\
-    \le \norm{(T^{-1}\otimes I)x}_\infty
+    \le \norm{(T^{-1}\otimes \identity)x}_\infty
     = \norm{x}.
   \end{multline*}
 \end{proof}
@@ -485,7 +486,7 @@
   We reduce the proof to convergence of a one-step method with
   \begin{gather}
     \label{eq:lmm:18}
-    Y_k = G(Y_{k-1}) =  (A\otimes I) Y_{k-1} + h \verfahren_h(t_{k-1}, Y_{k-1}).
+    Y_k = G(Y_{k-1}) =  (A\otimes \identity) Y_{k-1} + h \verfahren_h(t_{k-1}, Y_{k-1}).
   \end{gather}
   Let $Y_{k-1}$ and $Z_{k-1}$ be two initial values for the interval $I_k$.
   By the previous lemma, we have in the norm defined there, for
@@ -616,7 +617,7 @@ see theorem \ref{Theorem:gauss-consistency}.
   The linear model difference equation
   \begin{gather}
     \label{eq:lmm:7}
-    \sum_{r=0}^{\lmms} \bigl(\alpha_{\lmms-r} - z \beta_{\lmms-r}) y_{n-r}.
+    \sum_{r=0}^{\lmms} \bigl(\alpha_{\lmms-r} - z \beta_{\lmms-r}) y_{n-r} = 0.
   \end{gather}
   is obtained by applying an LMM to the model equation
   $u' = \lambda u$ and inserting $z=h\lambda$.
@@ -760,7 +761,7 @@ see theorem \ref{Theorem:gauss-consistency}.
   \begin{gather*}
     y_1 = \frac1{1-\lambda}.
   \end{gather*}
-  Accordingly, the interpolating polynomial is
+  Hence, the interpolating polynomial is
   \begin{gather*}
     y(t) = (1-t) + \frac1{1-\lambda} t = 1 + \frac{\lambda}{1-\lambda}t.
   \end{gather*}

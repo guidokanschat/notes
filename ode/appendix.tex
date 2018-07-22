@@ -76,6 +76,64 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Comments on uniqueness of an IVP}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	For a first order differential equation Lipschitz continuity is only a
+	sufficient and not, as one might think, a necessary condition for
+	uniqueness of a first order differential equation. The following theorem
+	and proof show that it is indeed possible to have uniqueness of solution
+	without assuming Lipschitz continuity on the function.
+
+\begin{Theorem*}{nonnecessity}{Non-necessity of L-continuity}
+	Let $f$ be a continous function satisfying $f(x) > 0$ for all
+	$x \in \R$. Then, the solution to the IVP
+	\begin{subequations} \label{eq:myivp}
+		\begin{align}
+		  u'(t)&=f\bigl(t,u(t)\bigr) \\
+		  u(t_0)&=u_0
+		\end{align}
+	\end{subequations}
+	is globally unique for all $(t_0, u_0) \in \R^2$.
+\end{Theorem*}
+
+\begin{proof}
+	Assume two solutions $\varphi, \, \psi \colon I \to \R$ on an open
+	intervall $I$ with $t_0 \in I$. Then, there holds
+\begin{xalignat}{3}
+      && 1 = \frac{\varphi(t) '}{f(\varphi(t))} = \frac{\psi(t) '}{f(\psi(t))} 
+	  && \text{for all } t \in I. \label{eq:myivp2}
+\end{xalignat}
+	Define the function $F \colon \R \to \R$ through
+\begin{gather*}
+		F(x) = \int_{u_0} ^x \frac{\ds}{f(s)}.
+\end{gather*}
+	$F$ is continously differentiable since
+\begin{gather*}
+		\partial_x F(x) 
+		= \partial_x \left( \int_{u_0} ^x \frac{\ds}{f(s)} \right) 
+		= \frac{1}{f(x)}.
+\end{gather*}
+	Obviously, $F$ is also stricly increasing, hence injective on
+	$\R$: Take $x, \, y \in \R$ and assume without loss of generality
+	 that $x < y$. Then we have $F(x) < F(y)$ and thus $F(x) \neq F(y)$.
+	 Thus, $F$ is an injection.
+	
+	Also, for all $t \in I$ there holds
+\begin{gather*}
+		F(\varphi(t))
+		= \int_{u_0} ^t \frac{\varphi'(s)}{f(\varphi(s))} \ds
+		\overset{\ref{eq:myivp2}}{=} \int_{u_0} ^t \frac{\psi'(s)}{f(\psi(s))} \ds
+		= F(\psi(t)). 
+\end{gather*}
+	Thus, since $F$ is injective, we have $\varphi(t) = \psi(t)$ for all
+	$t \in I$. In conclusion, the IVP \ref{eq:myivp} has a unique solution.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Properties of matrices}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -115,15 +173,19 @@
   Moreover, $e^A$ is invertible for arbitrary quadratic matrices $A$.
 \end{lemma}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Banach fixed-point theorem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{Theorem}{Banach fixed-point theorem}
+\begin{Theorem*}{banach}{Banach fixed-point theorem}
 	Let $\Omega \subset \R$ be a closed set and $f \colon \Omega \to \Omega$
 	a contraction, i.e. there holds $|f(x) - f(y)| \le \gamma |x-y|$ for a
 	$\gamma \in (0,1)$.
 
 	Then there exists a unique $x^* \in \Omega$ such that $f(x^*) =x^*$.
-\end{Theorem}
+\end{Theorem*}
 
 \begin{proof}
 	Let $x_0 \in \Omega$ and define $f(x_k) = x_{k+1}$. First, we prove
@@ -154,7 +216,11 @@
 	that $|a| = 0$ if and only if $a=0$ yields $y^* = x^*$. This concludes the proof.
 \end{proof}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The implicit and explicit Euler-method}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	The explicit resp. implicit Euler is given by the one-step method
 	\begin{align*}
@@ -197,6 +263,55 @@
 	\end{minipage}
 	\end{center}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Derivation of a BDF-scheme}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	The BDF formulas use the approximations of the solution in the previous points 
+	$t_k -sh, \dots, t_k-h$ and the unkown value $y_k$ at $t_k$ which is to determine.
+	With the Lagrange polynomial given by $L_i (t) = \prod_{j=1, j \not=i} ^n \tfrac{t- t_i}{t_j-t_i}$ 
+	we let $y(t) = \sum_{j=1} ^s y_{k-j} L_{k-j}(t)$. Then, we will assume that $y$ 
+	solves the IVP in the point $t_k$ and obtain a linear system from which we 
+	derive the desired value $y_k$.\\
+
+	We now aim to derive the scheme for BDF(2). Let the points $t_k -2h,t_k -h$ and $t_k$ be given.
+
+	\begin{center}
+	\begin{tikzpicture}[scale=2, domain=-0.5:2.5]
+	\draw[->] (-.25,0) -- (2.25,0) node[pos=1.025] {$t$};
+	\draw[fill=black] (0,0) circle [radius=0.04] node[below] {$t_k - 2h$};
+	\draw[fill=black] (1,0) circle [radius=0.04] node[below] {$t_k - h$};
+	\draw[fill=black] (2,0) circle [radius=0.04] node[below] {$t_k$};
+	\end{tikzpicture}
+	\end{center}
+
+	For the Lagrange polynomials in the points $t_k$, $t_k -h$ resp. $t_k -2h$ we have
+	\begin{gather*}
+		L_0 (t) = \tfrac{t-(t_k-h)(t-t_k)}{2h^2}, \,
+		L_1 (t) = \tfrac{(t-t_k)(t-t_kj-2h)}{h^2} \, \text{resp.} \,
+		L_2 (t) =  \tfrac{(t-t_k+2h)(t-t_k+h)}{2h^2}.
+	\end{gather*}
+
+	As announced, we assume that the interpolation polynomial fulfilles the IVP in 
+	the point $t_k$, i.e. there holds $f_k := f(t_k, y(t_k)) = y'(t_k) = \sum_{j=1} ^s 
+		y_{k-j} L_{k-j} ' (t)$. The product rule and evaluation at $t=t_k$ yields
+
+	\begin{gather*}
+		L_0 '(t) = \tfrac{2t-2t_k+h}{2h^2} = \tfrac{1}{2h}, \,
+		L_1 '(t) = -\tfrac{2t -2t_k + 2h}{h^2} = -\tfrac{2}{h}  \, \text{and} \,
+		L_2 '(t) = \tfrac{2t-2t_k + 3h}{2h^2} = \tfrac{3}{2h}. 
+	\end{gather*}
+
+	Then, we obtain 
+	\begin{gather*}
+		f_k = \tfrac{1}{2h} y_{k-2} - \tfrac{2}{h}y_{k-1} + \tfrac{3}{2h} y_k.
+	\end{gather*}
+	Multiplication with $\tfrac{2}{3h}$ yields the scheme
+	\begin{gather*}
+		y_k - \tfrac{4}{3} y_{k-1} + 3y_{k-2} = \tfrac{2}{3h} f_k.
+	\end{gather*}
 
 %%% Local Variables: 
 %%% mode: latex

@@ -116,6 +116,8 @@
   \end{figure}
 \end{remark}
 
+\input{definitions/globalerror}
+
 \input{definitions/truncation-error}
 
 \begin{example}[Euler method]
@@ -215,10 +217,10 @@ conclude that the Euler method is consistent of order 1.
 \begin{Theorem*}{convergence-one-step}{Convergence of one-step methods}
   Let the one-step method $F(.,.)$ be consistent of order $p$ and
   discretely stable, that is, $F(.,.)$ is Lipschitz continuous in its
-  second argument. Let $f(t,u)\in C^{p}$. Furthermore, let be
+  second argument. Let $f(t,u)\in C^{p}$. Furthermore, let
   $y_0 = u_0$. Let $h = \max h_n$ and let there be a positive number
   $\gamma$ such that $\min h_n = \gamma h$. Then, the method converges
-  with order $p$ and there holds for
+  with order $p$ and there holds
   \begin{equation}
     \label{eq:convergence-onestep:1}
     \abs{u_n - y_n} \le c e^{L_h(t_n-t_0)} h^p,
@@ -406,7 +408,7 @@ conclude that the Euler method is consistent of order 1.
     \begin{pmatrix} u' \\ t' \end{pmatrix} = 
     \begin{pmatrix} f(t,u) \\ 1 \end{pmatrix}.
   \end{gather*}
-  Then,the Runge-Kutta method~\eqref{eq:explicit:1} simplifies to
+  Then, the Runge-Kutta method~\eqref{eq:explicit:1} simplifies to
   \begin{gather}
     \label{eq:explicit:7a}
     \begin{split}
@@ -598,7 +600,7 @@ conclude that the Euler method is consistent of order 1.
   previous semester, we have made use of this property to prove that
   the formula is of 4th order.
 
-  Equally we deduce from formula~\eqref{eq:explicit:1a} for $g_i$ that
+  Equally, we deduce from formula~\eqref{eq:explicit:1a} for $g_i$ that
   \begin{gather*}
     \sum_j a_{ij} f(g_j) \quad\text{approximates}\quad
     \frac1h\int_0^{c_i} f(u(h s)\ds.
@@ -640,7 +642,7 @@ conclude that the Euler method is consistent of order 1.
   a simple equation they may be better. For instance, there exists a
   five-stage method which solves the one dimensional IVP with order 5.
 
-  For $p = 10$ there is only known a method with $r = 17$ until now.
+  For $p = 10$ there is only known a method with $s = 17$ until now.
   It is possible that there exists a method that needs less stages,
   because currently no proof for a minimal number of stages is
   available.
@@ -668,18 +670,18 @@ conclude that the Euler method is consistent of order 1.
     d_1 &= 1
     \\
     d_2 &= \abs{x-y + h \rka_{21}
-          \Bigl(f\bigl(h\rkc_1,g_1(x)\bigr)
-          -f\bigl(\rkc_1,g_1(x)\bigr)
+          \Bigl(f\bigl(h\rkc_2,g_1(x)\bigr)
+          -f\bigl(\rkc_2,g_1(x)\bigr)
           \Bigr)}/\abs{x-y}
     \\ &\le (1+ha_{21}L)
          = (1+h\rkc_{1}L)
     \\
     d_3 & \le \Bigl(1+
           h L\bigl(\rka_{31}+\rka_{32}(1+ha_{21}L)\bigr)\Bigr)
-    \\ &\le \bigl(1+h L c_2(1+h c_1L)\bigr)
+    \\ &\le \bigl(1+h L c_3(1+h c_2L)\bigr)
     \\
     d_4 & \le \Bigl(1+
-          h L c_3\bigl(1+h L c_2(1+h L c_1)\bigr)\Bigr)
+          h L c_4\bigl(1+h L c_3(1+h L c_2)\bigr)\Bigr)
     \\
     d_s & \le
           \Bigl(1+ h L c_s\bigl(
@@ -743,7 +745,7 @@ conclude that the Euler method is consistent of order 1.
   \item Compute
     \begin{gather}
       \label{eq:explicit:30}
-      h_{\text{opt}} = h \left(\frac{\epsilon}{y_k - \hat
+      h_{\text{opt}} = h_k \left(\frac{\epsilon}{y_k - \hat
           y_k}\right)^{\frac1{p+1}}.
     \end{gather}
   \item If $h_{\text{opt}} < h_k$ the time step is rejected: let
