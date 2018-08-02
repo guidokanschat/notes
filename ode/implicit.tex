@@ -304,13 +304,16 @@
     y^{(n)} =
     \begin{pmatrix}
       \frac1{(1+h)^n} \\
-      \frac1{(1+100h)^n},
+      \frac1{(1+100h)^n}
     \end{pmatrix}
   \end{gather*}
   which converges to zero for $n\to \infty$, independent of $h$. Thus,
   although the implicit Euler method requires in general the solution
   of a nonlinear system in each step, it allows for much larger time
   steps than the explicit Euler method,when applied to a stiff problem.
+  
+  For a visualization of the implicit and explicit Euler method see the
+  appendix.
 \end{example}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -422,11 +425,10 @@ Figure~\ref{fig:implicit:stability-euler}). %% anschauliches Bild?
   for all $h$.
 \end{Theorem}
 
-% \begin{remark}
-%   Der Begriff A-stabil wurde von Dahlquist bewusst neutral
-%   gewählt. Insbesondere steht also A-Stabilität
-%   \underline{\textbf{nicht}} für asymptotische Stabilität.
-% \end{remark}
+ \begin{remark}
+  The notion of A-stability was deliberately chosen neutrally by Dahlquist.
+  In particaluar, note that A-stability does not stand for asymptotic stability.
+ \end{remark}
 
 \begin{proof}
   Let $\{v_\ell\}_{\ell=1,\dots,d}$ be a basis of $\C^d$ consisting of
@@ -472,7 +474,7 @@ Figure~\ref{fig:implicit:stability-euler}). %% anschauliches Bild?
   With $g_1 = y_0$ and $z=h\lambda$ one has
   \begin{align*}
     g_2 &= y_0+ \rka_{21} z y_0 = (1+\rka_{21}z) y_0\\
-    g_3 &= y_0 +  \rka_{32} z g_1 =  y_0 +  \rka_{32} z (1+\rka_{21} z) y_0 =
+    g_3 &= y_0 +  \rka_{32} z g_2 =  y_0 +  \rka_{32} z (1+\rka_{21} z) y_0 =
     (1+\rka_{32} z(1+\rka_{21} z)) y_0.
   \end{align*}
 	Therefore one shows easily per induction that $k_j$ results as
@@ -545,7 +547,7 @@ problem being solved.
   An A-stable one-step method is called \define{L-stable}, if for its
   \putindex{stability function} there holds
   \begin{gather}
-    \lim_{z\to\infty} \abs{R(z)} = 0.
+    \lim_{\Re (z) \to -\infty} \abs{R(z)} = 0.
   \end{gather}
   Some authors refer to L-stable methods as \define{strongly A-stable}.
 \end{Definition}
@@ -610,17 +612,17 @@ problem being solved.
     g_i = y_0 + h \sum_{j=1}^s a_{ij}\lambda g_j, \quad i=1,\dots,s.
   \end{gather*}
   In matrix notation with $z=h\lambda$, we obtain
-  $(I-z A) g = (y_0,\dots,y_0)^T$, where $g$ is the vector
+  $(\identity-z A) g = (y_0,\dots,y_0)^T$, where $g$ is the vector
   $(g_1,\dots,g_s)^T$. Equally, we obtain
   \begin{align*}
     R(z) y_0 = y_1 &= y_0 + h \sum_{i=1}^s b_i \lambda g_i = y_0 + z
     b^T g\\
-    &= y_0 + z b^T(I-z A)^{-1}
+    &= y_0 + z b^T(\identity-z A)^{-1}
     \begin{pmatrix}
       y_0\\\vdots\\y_0
     \end{pmatrix}
     \\
-    &= \left(1+z b^T(I-z A)^{-1}
+    &= \left(1+z b^T(\identity-z A)^{-1}
       \begin{pmatrix}
         1\\\vdots\\1
       \end{pmatrix}
@@ -668,7 +670,7 @@ problem being solved.
 
 \begin{proof}
   Left as a homework question. Additionally, we show stability regions
-  for different $\theta$ in Figure
+  for different $\theta$ in figure ~\ref{fig:implicit:theta}.
   \begin{figure}[tp]
     \centering
     \includegraphics[width=.45\textwidth]{fig/stability-CR}
@@ -1046,7 +1048,7 @@ methods with one-sided Lipschitz condition.
   \end{gather*}
   This holds for $p=1,\dots,s-1$ and thus amounts to a homogeneous,
   linear system in the variables $\xi_i$. Thus, $\xi_i=0$ and the
-  theorem holds.  \marginpar{Oops!}
+  theorem holds. % \marginpar{Oops!}
 %%% Todo!
 \end{proof}
 
