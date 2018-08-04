@@ -146,16 +146,38 @@
   by its power series
   \begin{gather}
     \label{eq:appendix:1}
-    e^A = \sum_{k=0}^\infty \frac{A^k}{k!}.
+    e^A = \lim_{m \to \infty} \sum_{k=0}^m \frac{A^k}{k!}.
   \end{gather}
 \end{definition}
 
 \begin{lemma}
   \label{lemma:appendix:exp-0}
-  The power series~\eqref{eq:appendix:1} converges for each matrix $A$.
+  The power series~\eqref{eq:appendix:1} converges for each matrix $A$. It is
+  therefore valid to write
+  \begin{gather}
+    \label{eq:appendix:1.5}
+    e^A = \lim_{m \to \infty} \sum_{k=0}^m \frac{A^k}{k!}
+		= \sum_{k=0}^\infty \frac{A^k}{k!}.
+  \end{gather}
 \end{lemma}
+
 \begin{proof}
-  
+  Chose $\| \cdot \|$ a submultiplicative matrix norm on $\R^d$. We want to
+  show that the sequence of partial sums $(S_n)_{n \in \N_0}$ with $S_n$
+  given as $\lim_{m \to \infty} \sum_{k=n} ^m \frac{A^k}{k!}$ converges to
+  $S := e^A = \lim_{m \to \infty} \sum_{k=0} ^m \frac{A^k}{k!}$. Consider
+  therefore
+  \begin{gather}
+    \|S - S_n\| = \left\| \lim_{m \to \infty} \sum_{k=n+1}^m \frac{A^k}{k!} \right\|
+		= \lim_{m \to \infty} \left\| \sum_{k=n+1}^m \frac{A^k}{k!} \right\|.
+  \end{gather}
+  Using the triangle-inequality and the fact that $\| \cdot \|$ is submultiplicative
+  yields
+  \begin{gather}
+  	\lim_{m \to \infty} \sum_{k=n+1}^m \left\| \frac{A^k}{k!} \right\|
+		\le \lim_{m \to \infty} \sum_{k=n+1}^m \frac{1}{k!} \|A \|^k.
+  \end{gather}
+  Considering the limit $n \to \infty$ concludes the proof.
 \end{proof}
 
 \begin{lemma}[Properties of the matrix exponential function] 
@@ -166,12 +188,119 @@
     e^0 &= \identity \\
     \label{eq:appendix:3}
     e^{\alpha A} e^{\beta A} &= e^{(\alpha+\beta) A}, &\forall
-    A\in\R^{d\times d}\; \forall \alpha,\beta\in \R,\\
+    	A\in\R^{d\times d}\; \forall \alpha,\beta\in \R,\\
     \label{eq:appendix:4}
-    e^A e^{-A} &= \identity &\forall A\in\R^{d\times d}.
+    e^A e^{-A} &= \identity &\forall A\in\R^{d\times d},\\
+    \label{eq:appendix:5}
+    e^{S^{-1}AS} &= S^{-1} A S^{-1} &\forall A \in\R^{d\times d} \text{ intervertible},\\
+    \label{eq:appendix:6}
+    e^{\diag(\lambda_1, \dots, \lambda_d)} &= \diag(e^{\lambda_1}, \dots, e^{\lambda_d})
+		&\forall \lambda_i \in\R, \, i = 1, \dots, d. 
   \end{xalignat}
-  Moreover, $e^A$ is invertible for arbitrary quadratic matrices $A$.
+  Moreover, $e^A$ is invertible for arbitrary quadratic matrices $A$ with $(e^A)^{-1} = e^{-A}$.
 \end{lemma}
+
+\begin{proof}
+	The equality \ref{eq:appendix:2} follows directly from the definition.
+    
+    For \ref{eq:appendix:3} consider the function $\phi(\alpha)$ given by
+    \begin{gather*}
+	\phi(\alpha) = e^{\alpha A}e^{\beta A} - e^{(\alpha + \beta) A}.
+	\end{gather*}
+    For the derivative $\phi '$ there holds
+    \begin{gather*}
+	\phi'(\alpha) = A\big(e^{\alpha A}e^{\beta A}
+		- e^{(\alpha + \beta) A} \big) = A \phi(\alpha).
+	\end{gather*}
+    For the obtained differential equation we obtain the initial value at
+	$\alpha = 0$ by
+    \begin{gather*}
+	\phi(0) = \identity e^{\beta A} - e^{\beta A} = 0.
+	\end{gather*}
+    The solution is to this IVP then given by $\phi(\alpha) = e^{\alpha A}
+		\phi(0) = 0$. Hence there holds
+    \begin{gather*}
+	\phi(\alpha) = \begin{cases}
+	 e^{\alpha A}e^{\beta A} - e^{(\alpha + \beta) A} \\
+     0
+	\end{cases}
+	\end{gather*}
+    and we obtain $e^{\alpha A}e^{\beta A} = e^{(\alpha + \beta) A}$
+		as desired.
+    
+    Equation \ref{eq:appendix:4} is a special case of \ref{eq:appendix:3}
+	with parameters $\alpha=1$ and $\beta = -1$. Using \ref{eq:appendix:2}
+	yields the result.
+    
+    For \ref{eq:appendix:5} note that $\R^{d \times d}$ forms a ring and is
+	associative as such. Then for $k \in \N_0$ we have
+    \begin{align*}
+	(S^{-1} AS)^k &= (S^{-1} AS) (S^{-1} AS) \cdots (S^{-1} AS)(S^{-1} AS) \\
+		&= S^{-1} A (SS^{-1}) A (S \cdots S^{-1}) A (SS^{-1}) AS = S^{-1} A^k S& \\
+			\intertext{and thus by convergence}
+	e^{S^{-1}AS} &= \sum_{k=0}^\infty \frac{1}{k!} (S^{-1}AS)^k \\
+		&= \sum_{k=0}^\infty\frac{1}{k!} S^{-1} A^k S \\
+		&= \enskip S^{-1} \cdot \left( \sum_{k=0}^\infty \frac{1}{k!} A^k \right)
+			\cdot S  \enskip =  \enskip S^{-1} e^A S.&
+	\end{align*}
+    
+    Lastly, let $D = \diag(\lambda_1, \dots, \lambda_d) \in \R^{d \times d}$
+	where $\lambda_i \in \R$, $i= 1, \dots, d$. Then, $D^k = \diag(\lambda_1^k,
+	\dots, \lambda_n^k)$ for any $k \in \N_0$. Then we have
+	\begin{align}
+	e^D =& \sum_{k=0}^\infty \frac{1}{k!} \diag(\lambda_1^k, \dots, \lambda_n^k) \\
+	=& \sum_{k=0}^\infty \diag \left(\frac{1}{k!}\lambda_1^k, \dots,
+		\frac{1}{k!}\lambda_n^k \right) \\
+	=& \diag \left(\sum_{k=0}^\infty \frac{1}{k!} \lambda_1^k, \dots, \sum _{k=0} ^m
+		\frac{1}{k!}\lambda_n^k \right) \\
+	=& \diag \left(\sum_{k=0}^\infty \frac{1}{k!} \lambda_1^k, \dots, \lim_{m \to \infty}
+		\sum _{k=0} ^m \frac{1}{k!}\lambda_n^k 	\right) \\
+	=& \diag(e^{\lambda_1^k}, \dots, e^{\lambda_n^k})
+	\end{align}
+	Here we have used the absolute convergence of the series and that these matrices are
+	elements of the ring $R^{d \times d}$.
+	\end{proof}
+
+\begin{example}
+	We will perform an exemplary calculation of a matrix exponential. Consider
+	\begin{gather*}
+		A = \begin{pmatrix} 0 & 1 \\ k^2 & 0 \end{pmatrix}.
+	\end{gather*}
+	As the matrix exponential of a diagonal matrix is simply a diagonal matrix 
+	with the exponential of the entries.
+	
+	To diagonalize $A$ note that the eigenvalues $\lambda_1, \, \lambda_2$ of
+	$A$ are $\lambda_1 = k$ and $\lambda_2 = -k$. By $D$ we denote the diagnoal
+	matrix with the eigenvalues of $A$ as diagonal elements. The correspondig
+	eigenvectors $v_1, \, v_2$ are $v_1 = \big( 1, k \big)^T$ and
+	$v_2 = \big(1, -k \big)$. The matrix $S = (v_1 | v_2) \in \R^{2\times 2}$
+	satisfies
+	\begin{gather*}
+		A = S^{-1} D S.
+	\end{gather*}
+	The inverse of $S$ is given as	
+	\begin{gather*}
+		S^{-1} = \frac 12
+			\begin{pmatrix}
+				1 & \nicefrac 1k \\
+				1 & - \nicefrac 1k
+			\end{pmatrix}
+	\end{gather*}
+	and with the above lemma we can now calculate
+	\begin{gather*}
+	e^A = S e^D S^{-1} = \frac 12
+			\begin{pmatrix}
+				e^k + e^{-k} & \nicefrac 1k (e^k - e^{-k}) \\
+				k (e^k - e^{-k}) & e^k + e^{-k}
+			\end{pmatrix}
+			=
+			\begin{pmatrix}
+				\cosh(k) & \nicefrac 1k \sinh(k) \\
+				k \sinh(k) & \cosh(k)
+			\end{pmatrix}
+	\end{gather*}
+\end{example}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -226,19 +355,26 @@
 	\begin{align*}
 	&& y_1 = y_0 + h f(y_0) && \text{resp.} && y_1 = y_0 + h f(y_1) &&
 	\end{align*}
-	Clearly, the explicit Euler is rather easy to compute since all one
-	needs are $f$, $h$ and $y_0$. On the other hand, the implicit Euler
-	is more difficult since for calculating $y_1$ we need the value of $f$ at $y_1$.
+	Clearly, the explicit Euler is a rather easy calculation since all
+	one needs are $f$, $h$ and $y_0$. The implicit Euler is more
+	difficult to compute since for calculating $y_1$ we need the value
+	of $f$ at $y_1$. The goal of this section is to visualize and give
+	an intuition for the two algorithms.
 
-	Consider the following visualizations.
+	Consider the following visualizations.    
 	\begin{center}
-	\begin{minipage}[t]{0.42\textwidth}
+	\begin{minipage}[t]{0.45\textwidth}
 	\begin{tikzpicture}[domain=0:4]
 	\draw[->] (0,0) -- (4.5,0) node[anchor=north] {$t$};
 	\draw[->] (0,0) -- (0,4) node[anchor=east] {$y$};
 	\draw[dashed] (2,4) -- (2,-0.22) node[anchor=north] {$t_1$};
-	\draw  plot[id=exp] function{exp(0.35*x)} node[left] {$u$};
-	\draw[-{>[scale=2.0]}] plot[id=exp] function{0.35*x+1} node[right] {$u'(t_0)$};
+	\draw plot [smooth] coordinates {
+			(0,1) (0.5,1.19125) (1,1.41907) 
+			(1.5,1.69046) (2,2.01375) 
+			(2.5, 2.39888) (3, 2.85765) 
+			(3.5, 3.40417) (4, 4.0552)
+					} node[left] {$u$};
+	\draw[-{>[scale=2.0]}] (0,1) -- (4, 2.4) node[right] {$u'(t_0)$};
 	\end{tikzpicture}
 
 	For the explicit Euler we take $u_0$ and $u'_0$. $y_1$, our approximated
@@ -246,22 +382,26 @@
 	$g(t) = y_0 + t \cdot u'(t_0)$.
 	\end{minipage}
 	\begin{minipage}[t]{0.1\textwidth}
-	\textcolor{white}{lalalala}
+	\phantom{Käse}
 	\end{minipage}
-	\begin{minipage}[t]{0.42\textwidth}
+	\begin{minipage}[t]{0.45\textwidth}
 	\begin{tikzpicture}[domain=0:4]
 	\draw[->] (0,0) -- (4.5,0) node[anchor=north] {$t$};
 	\draw[->] (0,0) -- (0,4) node[anchor=east] {$y$};
 	\draw[dashed] (2,4) -- (2,-0.22) node[anchor=north] {$t_1$};
-	\draw  plot[id=exp] function{exp(0.35*x)} node[left] {$u$};
-	\draw[{<[scale=3.0]}-] plot[id=exp] function{0.35*exp(.7)*x+1} node[right] {$u'(t_1)$};
+	\draw plot [smooth] coordinates {
+			(0,1) (0.5,1.19125) (1,1.41907) 
+			(1.5,1.69046) (2,2.01375) 
+			(2.5, 2.39888) (3, 2.85765) 
+			(3.5, 3.40417) (4, 4.0552)
+					} node[left] {$u$};
+	\draw[{<[scale=3.0]}-] (0,1) -- (4, 3.81925) node[right] {$u'(t_1)$};
 	\end{tikzpicture}
 
 	For implicit Euler we go backwards. On the $t_1$-axis we are looking
 	for an the affine function $g$ that fulfills $g(0) = u_0$ and $g'(t_1) = f(t_1)$.
 	Then we set $y_1 = g(t_1)$.
 	\end{minipage}
-	\end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
