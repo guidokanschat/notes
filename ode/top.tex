@@ -4,7 +4,6 @@
 \usepackage[backend=biber,style=alphabetic]{biblatex}
 \addbibresource{all.bib}
 \addbibresource{skript.bib}
-% \usepackage{tikz} % Missing?
   \usetikzlibrary{snakes}       % veraltet, sollte durch decorations ersetzt werden
   \usetikzlibrary{arrows.meta}  % Die brauche ich für die Visualisierung
                               % vom expliziten und impliziten Euler im Appendix
@@ -29,6 +28,9 @@
 % Definitions for boundary value problems
 \def\rwaa{B_a}
 \def\rwab{B_b}
+
+% diagonal matrix
+\def\diag{\operatorname{diag}} % brauche ich für den Appendix
 
 \begin{document}
 
