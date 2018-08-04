@@ -371,7 +371,32 @@ Assembling everything, we obtain
   initial values (see Lemma~\ref{Lemma:bvp-derivative}).
 \end{remark}
 
-\input{algorithms/single-shooting}
+\begin{Algorithm}{single-shooting}
+  The single shooting method with standard \putindex{Newton method}
+  consists of the following steps:
+  \begin{enumerate}
+  \item Start with an initial guess $v^{(0)}\in \R^d$.
+  \item For $v^{(n)}$ given, solve the IVP and the associated variation equation
+    \begin{xalignat*}{2}
+      \tfrac\partial{\partial t}u^{(n)}(t) &=
+      f\bigl(t,u^{(n)}(t)\bigr)
+      & u^{(n)}(a) &= v^{(n)},\\
+      \tfrac\partial{\partial t}\fundam^{(n)}(t;a)
+      &= \nabla_uf\bigl(t,u^{(n)}(t)\bigr)\fundam^{(n)}(t;a)
+      &\fundam^{(n)}(a;a) &= \identity.
+    \end{xalignat*}
+  \item Set
+    \begin{gather}
+      \label{eq:rwa:14}
+      v^{(n+1)} = v^{(n)}
+      - \bigl(\rwaa + \rwab \fundam^{(n)}(b;a)\bigr)^{-1}
+      r\bigl(v^{(n)},u^{(n)}(b)\bigr)
+    \end{gather}
+  \item Stop the iteration if the value
+    $r\bigl(v,u(t;u_0^{(n+1)})\bigr)$ is sufficiently small,\\
+    otherwise repeat from 2.
+  \end{enumerate}
+\end{Algorithm}
 
 % \begin{corollary}
 %   For linear a BVP~\eqref{eq:rwa:6} the initial value $v$, such that
