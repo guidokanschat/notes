@@ -223,7 +223,7 @@
   completion process itself. To avoid this we define the limit of a
   Cauchy-sequence as an equivalence class on the space of
   Cauchy-sequences themselves: We call two Cauchy sequences
-  $\{v_n\}$ and $\{w_n\}$ equivalent, if
+  $\{v_n\}_{n = 1, \dots}$ and $\{w_n\}_{n = 1, \dots}$ equivalent, if
   \begin{gather*}
     \norm{v_n-w_n} \to 0
     \quad\text{as}\quad
@@ -288,11 +288,11 @@ The concepts presented in \slideref{Definition}{Banach-hilbert} are related as f
     = \lim_{n\to\infty}\sum_{k=1}^n x_k \overline{y_k}.
   \end{gather*}
   An example for a sequence in $\ell^2(\R)$ is for instance the
-  sequence $v = \{1/k\}$, since
+  sequence $v = \{1/k\}_{k=1,\dots}$, since
   \begin{gather*}
-    \norm{v}^2 = \sum_{i=k}^\infty \frac1{k^2} < \infty.
+    \norm{v}^2 = \sum_{i=1}^\infty \frac1{k^2} < \infty.
   \end{gather*}
-  The sequence $w = \{1\}$ is not, since it does not converge
+  The sequence $w = \{1\}_{k=1,\dots}$ is not, since it does not converge
   quadratically.
 \end{example}
 
