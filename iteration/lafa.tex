@@ -187,7 +187,19 @@
   \end{gather}
 \end{Lemma}
 
-
+\begin{proof}
+  The Pythagorean Theorem ~\ref{eq:lafa:14} follows directly with
+  \begin{gather*}
+    \norm{u+v}^2
+    = \scal(u+v,u+v)
+    = \norm{u}^2 + 2 \scal(u,v) + \norm{v}^2
+    = \norm{u}^2 + \norm{v}^2
+  \end{gather*}
+  Using that $\overline{-1} = -1$ we get that
+  \begin{gather*}
+  \scal(u+v,u+v) + \scal(u-v,u-v) = 2\norm{u^2} + 2\norm{v}^2.
+  \end{gather*}
+\end{proof}
 
 \begin{Definition}{complete}
   A space $V$ with is \define{complete} with respect to a norm, if all
@@ -206,11 +218,11 @@
 \end{Definition}
 
 \begin{remark}
-  The definition of completeness in \slideref{Definition}{complete} is
-  intuitive, but mathematically vague, since the limit of a Cauchy
-  sequence is defined by the completion process itself. The way out is
-  the definition of the limit of a Cauchy sequence as an equivalence
-  class of the sequences themselves. We call two Cauchy sequences
+  \slideref{Definition}{complete} is intuitive, but mathematically
+  vague, since the limit of a Cauchy sequence is defined by the
+  completion process itself. To avoid this we define the limit of a
+  Cauchy-sequence as an equivalence class on the space of
+  Cauchy-sequences themselves: We call two Cauchy sequences
   $\{v_n\}$ and $\{w_n\}$ equivalent, if
   \begin{gather*}
     \norm{v_n-w_n} \to 0
@@ -218,9 +230,9 @@
     n\to \infty.
   \end{gather*}
   If the limits of both sequences exist, we know that this condition
-  is equivalent to both limits being equal. If they don't, they are
-  defined by these equivalence classes in a way consistent with the
-  standard notion of limits .
+  is equivalent to both limits being equal. If the limits do not exists,
+  they are defined by these equivalence classes in a way consistent with
+  the standard notion of limits.
 \end{remark}
 
 \begin{Definition}{Banach-space}
