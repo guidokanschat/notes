@@ -235,22 +235,37 @@
   the standard notion of limits.
 \end{remark}
 
-\begin{Definition}{Banach-space}
-  A \define{normed vector space} is a vector space $V$ with a norm
+\begin{Definition}{Banach-hilbert}
+  A normed vector space is a vector space $V$ with a norm
   $\norm\cdot$. We may also write $\norm{\cdot}_V$ to highlight the
   connection.
 
   A normed vector space $V$ which is complete with respect to its norm is
   called a \define{Banach space}.
+  
+  A vector space $V$ equipped with an inner product $\scal(.,.)$ is called
+  an \define{inner product space} or \define{pre-Hilbert space}. A
+  \define{Hilbert space} is a pre-Hilbert space which is also \putindex{complete}.
 \end{Definition}
 
-\begin{Definition}{hilbert-space}  
-  A vector space $V$ equipped with an inner product $\scal(.,.)$ and its
-  norm
-  is called an \define{inner product space}
-  or \define{pre-Hilbert space}. A \define{Hilbert space} is
-  a pre-Hilbert space which is also \putindex{complete}.
-\end{Definition}
+\begin{remark}
+The concepts presented in \slideref{Definition}{Banach-hilbert} are related as follows:
+
+\begin{figure}[hp]
+\begin{center}
+\begin{tikzpicture}[scale=2]
+\node[rectangle, draw, fill=white] (N) at (2,0) {Normed vector space};
+\node[rectangle, draw, fill=white] (P) at (0,0) {pre-Hilbert space};
+\node[rectangle, draw, fill=white] (B) at (2,1) {Banach space};
+\node[rectangle, draw, fill=white] (H) at (0,1) {Hilbert space};
+\draw[->] (H) -- (B);
+\draw[->] (H) -- (P);
+\draw[->] (B) -- (N);
+\draw[->] (P) -- (N);
+\end{tikzpicture}
+\end{center}
+\end{figure}
+\end{remark}
 
 \begin{example}
   For any positive integer, the space $\R^n$ equipped with the
