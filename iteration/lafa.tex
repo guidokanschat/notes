@@ -290,7 +290,7 @@ The concepts presented in \slideref{Definition}{Banach-hilbert} are related as f
   An example for a sequence in $\ell^2(\R)$ is for instance the
   sequence $v = \{1/k\}_{k=1,\dots}$, since
   \begin{gather*}
-    \norm{v}^2 = \sum_{i=1}^\infty \frac1{k^2} < \infty.
+    \norm{v}^2 = \sum_{k=1}^\infty \frac1{k^2} < \infty.
   \end{gather*}
   The sequence $w = \{1\}_{k=1,\dots}$ is not, since it does not converge
   quadratically.
@@ -398,8 +398,9 @@ The concepts presented in \slideref{Definition}{Banach-hilbert} are related as f
 \begin{Definition}{orthogonal}
   Let $V$ be an inner product space over a field $\mathbb K$. Two
   vectors $x,y\in V$ are called \define{orthogonal} if $\scal(x,y) = 0$. We
-  write $x\perp y$. Let $W$ be a subspace of $V$. Then, a vector $v$
-  is orthogonal to $W$, if it is orthogonal to every vector in $W$.
+  write $x\perp y$. Let $W$ be a subspace of $V$. We say that a vector $v$
+  is orthogonal to the subspace $W$, if it is orthogonal to every vector in
+  $W$.
 
   A set of nonzero mutually orthogonal vectors
   $\{x_i\} \subset V$ is called \define{orthogonal set}. If
@@ -419,8 +420,8 @@ The concepts presented in \slideref{Definition}{Banach-hilbert} are related as f
 \end{Definition}
 
 \begin{Lemma}{orthogonal-closed}
-  The the orthogonal complement $\ortho W$ of a subspace $W\subset V$
-  is closed.
+  The orthogonal complement $\ortho W$ of a subspace $W\subset V$
+  is closed in the sense of ~\slideref{Definition}{complete}.
 \end{Lemma}
 
 \begin{proof}
@@ -451,21 +452,23 @@ The concepts presented in \slideref{Definition}{Banach-hilbert} are related as f
   if a sequence $w_n \subset W$ converges to $w\in \overline{W}$, we
   have
   \begin{gather*}
-    \scal(u,w) = \lim_{n\to\infty} \scal(u,w_n) = 0.
+    \scal(u,w) = \lim_{n\to\infty} \scal(u,w_n) = 0,
   \end{gather*}
-  Hence, $u\in \overline{W}^\perp$ and $W^\perp = \overline{W}^\perp$.
+  since $u \in W^\perp$. Hence, $u\in \overline{W}^\perp$ and
+  $W^\perp = \overline{W}^\perp$.
 
   Now, the ``only if'' follows by the fact, that if $W$ is not
   closed, there is an element $w\in \overline{W}$ but not in $W$ such that
   $\scal(w,u)=0$ for all $u\in W^\perp$. Thus, $w\not\in W^\perp$ and
   consequently $w\not\in W^\perp \oplus W$.
 
-  Let now $W$ be closed. We show that there is a unique decomposition
+  Let now $W$ be closed. We show that for all $v \in V$ there is a unique
+  decomposition
   \begin{gather}
     \label{eq:infsup:8}
-    v = w + u,\qquad w\in W, \;u\in W^\perp,
+    v = w + u,\qquad \text{with} \qquad w\in W, \;u\in W^\perp.
   \end{gather}
-  which is equivalent to $V = W \oplus W^\perp$. Uniqueness follows,
+  This is equivalent to $V = W \oplus W^\perp$. Uniqueness follows,
   since
   \begin{gather*}
     v = w_1+u_1 = w_2+u_2
@@ -481,7 +484,7 @@ The concepts presented in \slideref{Definition}{Banach-hilbert} are related as f
   If $v\in W$, we choose $w=v$ and $u=0$. For $v\not\in W$, we prove
   existence by considering that due to the closedness of $W$ there holds
   \begin{gather*}
-    d=\inf_{w\in W} \norm{v-w} >0.
+    d=\inf_{w' \in W} \norm{v-w'} >0.
   \end{gather*}
   Let $w_n$ be a minimizing sequence. Using the parallelogram identity
   \begin{gather*}
@@ -497,13 +500,13 @@ The concepts presented in \slideref{Definition}{Banach-hilbert} are related as f
   since $(w_m+w_n)/2\in W$ and $d$ is the infimum. Now we use the
   minimizing property to obtain
   \begin{gather*}
-    \lim_{m,n\to\infty}\norm{w_m-w_n}^2 = 2d^2-2d^2 -4d^2=0.
+    \lim_{m,n\to\infty}\norm{w_m-w_n}^2 = 2d^2+2d^2 -4d^2=0.
   \end{gather*}
-  By completeness of $V$, $w=\lim w_n$ exists and by the closedness of
-  $W$, we have $w\in W$. Let $u=v-w$. By continuity of the norm, we
-  have $\norm{u}=d$. It remains to show that $u\in W^\perp$. To this
-  end, we introduce the variation $w+\epsilon \tilde w$ with $\tilde
-  w\in W$ to obtain
+  Since $V$ is given as a Hilbert space and as such complete, $w=\lim w_n$
+  exists and by the closedness of $W$, we have $w\in W$. Let $u=v-w$.
+  By continuity of the norm, we have $\norm{u}=d$. It remains to show
+  that $u\in W^\perp$. To this end, we introduce the variation
+  $w+\epsilon \tilde w$ with $\tilde w \in W$ to obtain
   \begin{align*}
     d^2 &\le \norm{v-w-\epsilon \tilde w}^2\\
     &= \norm{u}^2-2\epsilon\scal(u,\tilde w)+\epsilon^2 \norm{\tilde w},
@@ -512,7 +515,8 @@ The concepts presented in \slideref{Definition}{Banach-hilbert} are related as f
   \begin{gather*}
     0\le-2\epsilon\scal(u,\tilde w)+\epsilon^2 \norm{\tilde w},
   \end{gather*}
-  which requires $\scal(u,\tilde w) = 0$.
+  which requires $\scal(u,\tilde w) = 0$. Since $\tilde w \in W$ was chosen
+  arbitrarily, we have $u \in W^\perp$.
 \end{proof}
 
 \begin{Corollary}{ortho-density}
