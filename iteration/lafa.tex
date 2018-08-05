@@ -496,9 +496,9 @@
   $\{x_i\}$ with the property that
   \begin{gather*}
     \forall n\in \mathbb N:\quad
-    \operatorname*{span}_{i=1,\dots,n} \{x_i\}
+    \spann_{i=1,\dots,n} \{x_i\}
     =
-    \operatorname*{span}_{i=1,\dots,n} \{v_i\}.
+    \spann_{i=1,\dots,n} \{v_i\}.
   \end{gather*}
 \end{Lemma*}
 
@@ -533,16 +533,19 @@
   $M$. For $i=2,\dots,\infty$ choose with $v_1,\dots,v_{i-1}$ given
   $v_i$ as the next vector in $M$ which is not in the subspace spanned
   by $v_1,\dots,v_{i-1}$. This procedure generates an at most
-  countable sequence $\{v_i\}$ of linearly independent vectors. It
-  will only stop, if $V$ is finite dimensional, and we have that every
-  element in $M$ can be written as a finite linear combination of
-  vectors $v_i$.
+  countable sequence $\{v_1, \dots, v_i\}_{i=1, \dots}$ of linearly
+  independent vectors. It will only stop, if $V$ is finite dimensional.
+  Furthermore, we have that every element in $M$ can be written as a finite
+  linear combination of these vectors: Assume $w \in M$ as $w \not in
+  \spann{v_1,\dots,v_k}$ for any natural number $k$. Since $M$ is countable,
+  we will eventually get to $w$ which then --- by definition of the sequence
+  --- will be added to it as $v_{k+1} = w$.
   
-  The sequence $\{v_i\}$ is a Schauder basis for $V$. In fact, given a
+  The sequence $\{v_i\}_{i=1,\dots}$ is a Schauder basis for $V$. In fact, given a
   vector $v\in V$ we have to show that for every $\epsilon$, there is
   a finite linear combination $s_n = \sum_{i=1}^n \alpha_i v_i$ such
-  that $\norm{v-s_n} < \epsilon$. Let by separability $w_\epsilon$ in
-  $M$ be such that $\norm{v-w_\epsilon} < \epsilon$. Since
+  that $\norm{v-s_n} < \epsilon$. Let by separability $w_\epsilon$ be in
+  $M$ such that $\norm{v-w_\epsilon} < \epsilon$. Since
   $w_\epsilon in M$, there is $n$ such that $s_n = w_\epsilon$.
 
   Finally, we use the Gram--Schmidt procedure to orthogonalize the
