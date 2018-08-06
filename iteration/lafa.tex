@@ -34,7 +34,11 @@
   \end{gather}
 \end{intro}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Banach and Hilbert spaces}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{Notation}{field-k}
   This section deals with real and complex vector spaces. Therefore,
@@ -670,7 +674,7 @@ completed to be a basis of $V$.
   Under the same assumptions as in \slideref{Lemma}{Bessel-inequality}
   the sequence
   \begin{gather*}
-    f_n = \sum_{i=1}^n \alpha_i x_i
+    f_n = \sum_{i=1}^n \alpha_i x_i = \sum_{i=1}^n \scal(f, x_i) x_i
   \end{gather*}
   converges to $f$ in $V$ and there holds
   \begin{gather}
@@ -680,11 +684,64 @@ completed to be a basis of $V$.
 \end{Lemma*}
 
 \begin{todo}
-\begin{proof}
-    
+\begin{proof}   
+    By Bessel's inequality we know that the series $\{f_n\}_{n=1,\dots}$
+    converges to some $\bar{f}$ in $V$. Now consider $(f-\bar{f}, x_l)$
+    for some natural number $l$. If we show this to be zero, we know that
+    $f-\bar{f}=0$ and thus 
+    \begin{gather*}
+    f=\bar{f}=\lim_{n\to\infty}\sum_{i=1}^n \scal(f, x_i) x_i.
+    \end{gather*}
+    By linearity of the inner product we have
+    \begin{gather*}
+    \scal(f-\bar{f}, x_l)
+      = \scal(f- \sum_{i=1}^\infty \scal(f, x_i) x_i, x_l)
+      = \scal(f, x_l) - \scal(x_k, x_l) \cdot \sum_{i=1}^\infty \scal(x_k, f).
+    \end{gather*}
+    Since the $\{x_i\}_{i=1,\dots}$ form an orthonormal basis we have
+    $\scal(x_k, x_l) = \delta_{k,l}$. We obtain that the above is equal
+    to
+    \begin{gather*}
+      \scal(f, x_l) - \scal(x_l, f) \cdot 1 = 0.
+    \end{gather*}
+    Lastly, consider $\norm{f}^2$. Adding and subtracting again yields
+    for any natural number $N$
+    \begin{gather*}
+    \norm{f}^2 = \norm{f - \sum_{i=1} ^N \scal(f, x_i) x_i
+        + \sum_{i=1} ^N \scal(f, x_i) x_i}^2.
+    \end{gather*}
+    Then, by the Pythagorean theorem we have that the above equals
+    \begin{gather*}
+    \norm{f - \sum_{i=1} ^N \scal(f, x_i) x_i}^2
+        + \norm{\sum_{i=1} ^N \scal(f, x_i) x_i}^2.
+    \end{gather*}
+    The $\{\scal(f, x_i) x_i\}_{i=1,\dots}$ form an orthogonal basis
+    se we again apply the Pythagorean theorem and obtain
+    \begin{gather*}
+    \norm{f - \sum_{i=1} ^N \scal(f, x_i) x_i}^2
+        + \sum_{i=1} ^N \norm{\scal(f, x_i) x_i}^2 
+    = \norm{f - \sum_{i=1} ^N \scal(f, x_i) x_i}^2
+        + \sum_{i=1} ^N \abs{\scal(f, x_i)}^2 \norm{x_i}^2
+    = \norm{f - \sum_{i=1} ^N \scal(f, x_i) x_i}^2
+        + \sum_{i=1} ^N \abs{\scal(f, x_i)}^2 .
+    \end{gather*}
+    Since we have shown that $\norm{f - \sum_{i=1} ^N \scal(f, x_i) x_i}^2$
+    converges to zero as $N \to \infty$, taking the limit yields
+    \begin{gather*}
+      \norm{f}^2 = \norm{f - \sum_{i=1} ^N \scal(f, x_i) x_i}^2
+        + \sum_{i=1} ^N \abs{\scal(f, x_i)}^2 \to \norm{f-f}
+          + \sum_{i=1} ^\infty \abs{\scal(f, x_i)}^2.
+    \end{gather*}
+    Thus, Parseval's identity has been established as desired.
 \end{proof}
+Still minor errors to fix \dots
 \end{todo}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Linear operators}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{intro}
   Linear mappings are the next central topic of linear algebra, which
