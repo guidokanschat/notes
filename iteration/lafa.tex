@@ -343,6 +343,7 @@ The concepts presented in \slideref{Definition}{Banach-hilbert} are related as f
   if it has a countable dense subset.
 \end{Definition}
 
+\begin{todo}
 \begin{remark}
   From the point of view of numerical analysis and computation, spaces
   which are not separable are of limited interest. In fact, every
@@ -356,6 +357,13 @@ The concepts presented in \slideref{Definition}{Banach-hilbert} are related as f
   choice. Separable spaces allow us for instance to construct bases
   instead of deducing their existence indirectly.
 \end{remark}
+  I think this remark should be at the beginning of this chapter since
+  here the idea behind these notes becomes clearer (to me). Also here,
+  it some kind of disturbs the flow of the notes. Perhaps, if it is
+  \emph{very} important to you, you could write a review at the end of
+  the chapter stating the results and how your goals have been
+  accomplished -- and maybe also \emph{why} this goal is so important.
+\end{todo}
 
 \begin{Definition}{schauder-basis}
   Let $V$ be a Hilbert space over a field $\mathbb K$. A
@@ -612,7 +620,7 @@ The concepts presented in \slideref{Definition}{Banach-hilbert} are related as f
   countable sequence $\{v_1, \dots, v_i\}_{i=1, \dots}$ of linearly
   independent vectors. It will only stop, if $V$ is finite dimensional.
   Furthermore, we have that every element in $M$ can be written as a finite
-  linear combination of these vectors: Assume $w \in M$ as $w \not in
+  linear combination of these vectors: Assume $w \in M$ as $w \not \in
   \spann{v_1,\dots,v_k}$ for any natural number $k$. Since $M$ is countable,
   we will eventually get to $w$ which then --- by definition of the sequence
   --- will be added to it as $v_{k+1} = w$.
@@ -684,30 +692,26 @@ completed to be a basis of $V$.
   \end{gather}
 \end{Lemma*}
 
-\begin{todo}
-There are most presumably still (minor) errors to fix \dots
-
 \begin{proof}   
   First, we will show that the series $\{f_n\}_{n=1,\dots}$ is a
-  Cauchy-sequence. Using the completeness of $V$, we will deduce that
+  Cauchy sequence and, using the completeness of $V$, deduce that
   $\{f_n\}_{n=1,\dots}$ does indeed converge in $V$. Second, we will
-  prove that indeed there holds $f_n \to f$ as $n \to \infty$. Lastly,
-  it is easy to show that $\norm{f}^2$ does indeed equal to
+  prove that indeed there holds $f_n \to f$ as $n \to \infty$.
+  Finally, it is easy to show that $\norm{f}^2$ does indeed equal to
   $\sum_{i=1}^\infty \abs{\scal(f, x_i)}^2$.
   
-  Take $m,\, n$ natural numbers and assume without loss of generality
-  that $n>m$. Consider then
+  Take $m,\, n \in \mathbb{N}$ with $n>m$ and consider
   \begin{gather*}
     \norm{f_n - f_m}^2 = \norm{\sum_{i=m+1}^n \scal(f, x_i) x_i}^2.
   \end{gather*}
   Since $\{x_i\}_{i=1,\dots}$ are indeed pairwise orthogonal, we can
-  use the Pythagorean Theorem to obtain that the above equals
+  use the Pythagorean Theorem to obtain that the above equation becomes
   \begin{gather*}
     \sum_{i=m+1}^n \norm{\scal(f, x_i) x_i}^2
       = \sum_{i=m+1}^n \abs{\scal(f, x_i)}^2  \norm{x_i}^2.
   \end{gather*}
-  Furthermore, the $\{x_i\}_{i=1,\dots}$ form an orthonormal basis of $V$.
-  Hence $\norm{x_i} = 1$ for all $i=1, \dots$. The above now simplifies to
+  Furthermore, the $\{x_i\}_{i=1,\dots}$ are orthonormal. Hence,
+  $\norm{x_i} = 1$ for all $i=1, \dots$. The above equation simplifies to
   \begin{gather*}
     \sum_{i=m+1}^n \abs{\scal(f, x_i)}^2.
   \end{gather*}
@@ -723,36 +727,30 @@ There are most presumably still (minor) errors to fix \dots
   
   To prove that $f = \bar{f}$, consider $\scal(f-\bar{f}, x_k)$ for some
   $k \in \mathbb{N}$. If we show that this equals zero, we know that
-  $(f-\bar{f}) \perp x_k$ for any natural number $k$. 
-  By linearity, we have that
+  $(f-\bar{f}) \perp x_k$ for any $k \in \mathbb{N}$. 
+  By linearity of the inner product, we have that
   \begin{align*}
   \scal(f-\bar{f}, x_k) &= \scal(f, x_k)
     -\sum_{i=1}^\infty \scal(f, x_i)\scal(x_i, x_k) \\
-    \intertext{
-        Now since $\{x_i\}_{i=1,\dots}$ we have that $\scal(x_i, x_k) = 0$
-        for all natural $i \not = k$ and $\scal(x_i, x_k) = 1$ if $i=k$.
-        }
     &= \scal(f, x_k) - \scal(f, x_k) = 0.
   \end{align*}
-  Hence $(f-\bar{f}) \perp x_k$. Since $\{x_k\}_{k=1,\dots}$ form an
-  orthonormal basis, there holds
+  Here we used that $\scal(x_i, x_k) = \delta_{i,k}$. Hence $(f-\bar{f})
+  \perp x_k$. Since $\{x_k\}_{k=1,\dots}$ form a basis, there holds
   \begin{gather}
   \label{eq:lafa:18b}
   f = \bar{f} = \lim_{n\to \infty} \sum_{i=1}^n \scal(f, x_i) x_i.
   \end{gather}
   
-  Lastly, we have that
+  Finally, we have that
   \begin{gather*}
     \norm{f} = \norm{\lim_{n\to \infty} \sum_{i=1}^n \scal(f, x_i) x_i}.
   \end{gather*}
-  By continuity of the norm and equation ~(\ref{eq:lafa:18b}) we have that
-  the above equals
+  By continuity of the norm and equation ~(\ref{eq:lafa:18b}) the above
+  equation becomes
   \begin{gather*}
     \lim_{n\to \infty} \norm{\sum_{i=1}^n \scal(f, x_i) x_i}.
   \end{gather*}
-  Now we use the Pythagorean theorem again: The $\{x_i\}_{i=1,\dots}$ form an
-  orthonormal basis, i.e. there holds $x_k \perp x_l$ if $k\neq l$ and
-  $\norm{x_i} = 1$ for all $i=1,\dots$. We obtain
+  Using the Pythagorean theorem and the orthogornality we obtain
   \begin{gather*}
   \lim_{n\to \infty} \sum_{i=1}^n \abs{\scal(f, x_i)} \cdot 1
     = \sum_{i=1}^\infty \abs{\scal(f, x_i)}.
@@ -764,16 +762,17 @@ There are most presumably still (minor) errors to fix \dots
   In his monograph ``Mémoire sur les séries et sur l'intégration complète
   d'une équation aux différences partielles linéaires du second ordre,
   à coefficients constants'' from April 5, 1799, Marc-Antoine Parseval
-  published his ``original'' identity for Fourier coefficients. In 1898,
-  Guiseppe Peano came up with the theory of pre-Hilbert spaces, or, at that
-  time, inner product spaces. In 1907, Riesz and Fischer (independently) came
-  up with their famous theorem, the completeness of $L^p$ for $0<p \le \infty$.
-  The more general version of his theorem stated above was published in
-  Titchmarchs book in 1939. In the meantime, someone must have connected
-  the dots and found this more general fomulation. Unfortunately, his/her
-  name has aparrently been forgotten.
+  published his ``original'' identity for Fourier coefficients. The other
+  ingredients for more more generalized formulation took some more time:
+  In 1898, Guiseppe Peano came up with the theory of pre-Hilbert spaces,
+  or, at that time, inner product spaces. In 1907, Riesz and Fischer
+  (independently) came up with their famous theorem, the completeness of
+  $L^p$ for $0<p \le \infty$ which has been used for $p=2$. The more
+  general version of his theorem was published in Titchmarchs book in
+  1939. In the meantime, someone must have connected the dots and found
+  this more general formulation. Unfortunately, his/her name has apparently
+  been forgotten.
 \end{remark}
-\end{todo}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
