@@ -647,13 +647,14 @@ completed to be a basis of $V$.
 
 \begin{Lemma*}{Bessel-inequality}{Bessel inequality}
   Let $\{x_i\}$ be an orthonormal basis of the Hilbert space $V$. For
-  $v\in V$, define the \define{Fourier coefficient}s
+  $v\in V$, define %the \define{Fourier coefficient}s
   \begin{gather}
     \label{eq:lafa:18}
     \alpha_i = \scal(v,x_i), \qquad i=1,\dots
   \end{gather}
   Then,
   \begin{gather}
+    \label{eq:lafa:18a}
     \sum_{i=1}^\infty \abs{\alpha_i}^2 \le \norm{v}_V^2.
   \end{gather}
 \end{Lemma*}
@@ -684,57 +685,93 @@ completed to be a basis of $V$.
 \end{Lemma*}
 
 \begin{todo}
+There are most presumably still (minor) errors to fix \dots
+
 \begin{proof}   
-    By Bessel's inequality we know that the series $\{f_n\}_{n=1,\dots}$
-    converges to some $\bar{f}$ in $V$. Now consider $(f-\bar{f}, x_l)$
-    for some natural number $l$. If we show this to be zero, we know that
-    $f-\bar{f}=0$ and thus 
-    \begin{gather*}
-    f=\bar{f}=\lim_{n\to\infty}\sum_{i=1}^n \scal(f, x_i) x_i.
-    \end{gather*}
-    By linearity of the inner product we have
-    \begin{gather*}
-    \scal(f-\bar{f}, x_l)
-      = \scal(f- \sum_{i=1}^\infty \scal(f, x_i) x_i, x_l)
-      = \scal(f, x_l) - \scal(x_k, x_l) \cdot \sum_{i=1}^\infty \scal(x_k, f).
-    \end{gather*}
-    Since the $\{x_i\}_{i=1,\dots}$ form an orthonormal basis we have
-    $\scal(x_k, x_l) = \delta_{k,l}$. We obtain that the above is equal
-    to
-    \begin{gather*}
-      \scal(f, x_l) - \scal(x_l, f) \cdot 1 = 0.
-    \end{gather*}
-    Lastly, consider $\norm{f}^2$. Adding and subtracting again yields
-    for any natural number $N$
-    \begin{gather*}
-    \norm{f}^2 = \norm{f - \sum_{i=1} ^N \scal(f, x_i) x_i
-        + \sum_{i=1} ^N \scal(f, x_i) x_i}^2.
-    \end{gather*}
-    Then, by the Pythagorean theorem we have that the above equals
-    \begin{gather*}
-    \norm{f - \sum_{i=1} ^N \scal(f, x_i) x_i}^2
-        + \norm{\sum_{i=1} ^N \scal(f, x_i) x_i}^2.
-    \end{gather*}
-    The $\{\scal(f, x_i) x_i\}_{i=1,\dots}$ form an orthogonal basis
-    se we again apply the Pythagorean theorem and obtain
-    \begin{gather*}
-    \norm{f - \sum_{i=1} ^N \scal(f, x_i) x_i}^2
-        + \sum_{i=1} ^N \norm{\scal(f, x_i) x_i}^2 
-    = \norm{f - \sum_{i=1} ^N \scal(f, x_i) x_i}^2
-        + \sum_{i=1} ^N \abs{\scal(f, x_i)}^2 \norm{x_i}^2
-    = \norm{f - \sum_{i=1} ^N \scal(f, x_i) x_i}^2
-        + \sum_{i=1} ^N \abs{\scal(f, x_i)}^2 .
-    \end{gather*}
-    Since we have shown that $\norm{f - \sum_{i=1} ^N \scal(f, x_i) x_i}^2$
-    converges to zero as $N \to \infty$, taking the limit yields
-    \begin{gather*}
-      \norm{f}^2 = \norm{f - \sum_{i=1} ^N \scal(f, x_i) x_i}^2
-        + \sum_{i=1} ^N \abs{\scal(f, x_i)}^2 \to \norm{f-f}
-          + \sum_{i=1} ^\infty \abs{\scal(f, x_i)}^2.
-    \end{gather*}
-    Thus, Parseval's identity has been established as desired.
+  First, we will show that the series $\{f_n\}_{n=1,\dots}$ is a
+  Cauchy-sequence. Using the completeness of $V$, we will deduce that
+  $\{f_n\}_{n=1,\dots}$ does indeed converge in $V$. Second, we will
+  prove that indeed there holds $f_n \to f$ as $n \to \infty$. Lastly,
+  it is easy to show that $\norm{f}^2$ does indeed equal to
+  $\sum_{i=1}^\infty \abs{\scal(f, x_i)}^2$.
+  
+  Take $m,\, n$ natural numbers and assume without loss of generality
+  that $n>m$. Consider then
+  \begin{gather*}
+    \norm{f_n - f_m}^2 = \norm{\sum_{i=m+1}^n \scal(f, x_i) x_i}^2.
+  \end{gather*}
+  Since $\{x_i\}_{i=1,\dots}$ are indeed pairwise orthogonal, we can
+  use the Pythagorean Theorem to obtain that the above equals
+  \begin{gather*}
+    \sum_{i=m+1}^n \norm{\scal(f, x_i) x_i}^2
+      = \sum_{i=m+1}^n \abs{\scal(f, x_i)}^2  \norm{x_i}^2.
+  \end{gather*}
+  Furthermore, the $\{x_i\}_{i=1,\dots}$ form an orthonormal basis of $V$.
+  Hence $\norm{x_i} = 1$ for all $i=1, \dots$. The above now simplifies to
+  \begin{gather*}
+    \sum_{i=m+1}^n \abs{\scal(f, x_i)}^2.
+  \end{gather*}
+  By Bessel's inequality we know that
+  \begin{gather*}
+    \sum_{i=1}^\infty \abs{\scal(f, x_i)}^2 \le \norm{f}_V^2
+  \end{gather*}
+  and hence $\{f_n\}_{n=1,\dots}$ converges. Therefore, the difference
+  $\norm{f_n - f_m}^2$ can be arbitrarily small and hence the sequence
+  $\{f_n\}_{n=1,\dots}$ is Cauchy. Since $V$ is given as a Hilbert space,
+  $V$ is also complete. By that, the sequence $\{f_n\}_{n=1,\dots}$
+  converges to some $\bar{f} \in V$.
+  
+  To prove that $f = \bar{f}$, consider $\scal(f-\bar{f}, x_k)$ for some
+  $k \in \mathbb{N}$. If we show that this equals zero, we know that
+  $(f-\bar{f}) \perp x_k$ for any natural number $k$. 
+  By linearity, we have that
+  \begin{align*}
+  \scal(f-\bar{f}, x_k) &= \scal(f, x_k)
+    -\sum_{i=1}^\infty \scal(f, x_i)\scal(x_i, x_k) \\
+    \intertext{
+        Now since $\{x_i\}_{i=1,\dots}$ we have that $\scal(x_i, x_k) = 0$
+        for all natural $i \not = k$ and $\scal(x_i, x_k) = 1$ if $i=k$.
+        }
+    &= \scal(f, x_k) - \scal(f, x_k) = 0.
+  \end{align*}
+  Hence, there holds
+  \begin{gather}
+  \label{eq:lafa:18b}
+  f = \bar{f} = \lim_{n\to \infty} \sum_{i=1}^n \scal(f, x_i) x_i.
+  \end{gather}
+  
+  Lastly, we have that
+  \begin{gather*}
+    \norm{f} = \norm{\lim_{n\to \infty} \sum_{i=1}^n \scal(f, x_i) x_i}.
+  \end{gather*}
+  By continuity of the norm and equation ~(\ref{eq:lafa:18b}) we have that
+  the above equals
+  \begin{gather*}
+    \lim_{n\to \infty} \norm{\sum_{i=1}^n \scal(f, x_i) x_i}.
+  \end{gather*}
+  Now we use the Pythagorean theorem again: The $\{x_i\}_{i=1,\dots}$ form an
+  orthonormal basis, i.e. there holds $x_k \perp x_l$ if $k\new l$ and
+  $\norm{x_i} = 1$ for all $i=1,\dots$. We obtain
+  \begin{gather*}
+  \lim_{n\to \infty} \sum_{i=1}^n \abs{\scal(f, x_i)} \cdot 1
+    = \sum_{i=1}^\infty \abs{\scal(f, x_i)}.
+  \end{gather*}
+  Thus, Parseval's identity has been established as desired.
 \end{proof}
-Still minor errors to fix \dots
+
+\begin{remark}
+  In his monograph ``Mémoire sur les séries et sur l'intégration complète
+  d'une équation aux différences partielles linéaires du second ordre,
+  à coefficients constants'' from April 5, 1799, Marc-Antoine Parseval
+  published his ``original'' identity for Fourier coefficients. In 1898,
+  Guiseppe Peano came up with the theory of pre-Hilbert spaces, or, at that
+  time, inner product spaces. In 1907, Riesz and Fischer (independently) came
+  up with their famous theorem, the completeness of $L^p$ for $0<p \le \infty$.
+  The more general version of his theorem stated above was published in
+  Titchmarchs book in 1939. In the meantime, someone must have connected
+  the dots and found this more general fomulation. Unfortunately, his/her
+  name has aparrently been forgotten.
+\end{remark}
 \end{todo}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
