@@ -734,7 +734,8 @@ There are most presumably still (minor) errors to fix \dots
         }
     &= \scal(f, x_k) - \scal(f, x_k) = 0.
   \end{align*}
-  Hence, there holds
+  Hence $(f-\bar{f}) \perp x_k$. Since $\{x_k\}_{k=1,\dots}$ form an
+  orthonormal basis, there holds
   \begin{gather}
   \label{eq:lafa:18b}
   f = \bar{f} = \lim_{n\to \infty} \sum_{i=1}^n \scal(f, x_i) x_i.
@@ -750,7 +751,7 @@ There are most presumably still (minor) errors to fix \dots
     \lim_{n\to \infty} \norm{\sum_{i=1}^n \scal(f, x_i) x_i}.
   \end{gather*}
   Now we use the Pythagorean theorem again: The $\{x_i\}_{i=1,\dots}$ form an
-  orthonormal basis, i.e. there holds $x_k \perp x_l$ if $k\new l$ and
+  orthonormal basis, i.e. there holds $x_k \perp x_l$ if $k\neq l$ and
   $\norm{x_i} = 1$ for all $i=1,\dots$. We obtain
   \begin{gather*}
   \lim_{n\to \infty} \sum_{i=1}^n \abs{\scal(f, x_i)} \cdot 1
