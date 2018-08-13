@@ -829,9 +829,32 @@ completed to be a basis of $V$.
 \end{Theorem}
 
 \begin{todo}
-  \begin{proof}
-    
-  \end{proof}
+\begin{proof}
+  Let $L\colon V\to W$ be bounded with boundary constant $c$ and let
+  the sequence $\{v_n\}_{n=1,\dots} \subset V$ converge to some 
+  $v \in V$ as $n \to \infty$. Using the boundedness of $L$, we obtain
+  \begin{gather*}
+    \norm{Lv_n - Lv} = \norm{L(v_n - v)} \le c\norm{v_n - v}.
+  \end{gather*}
+  By the convergence of $\{v_n\}_{n=1,\dots}$ we get that $Lv_n \to Lv$
+  as $n \to \infty$. Hence, $L$ is continous.
+  
+  Now assume $L$ as unbounded. Then, there exists a sequence
+  $\{v_n\}_{n=1,\dots}$ such that $\norm{Lv_n}$ diverges as $n \to \infty$.
+  Define the sequence $\{\tilde{v}_n\}_{n=1,\dots}$ as
+  \begin{gather*}
+    \tilde{v}_n = \frac{v_n}{\norm{Lv_n}}.
+  \end{gather*}
+  We immediately get that $\norm{L\tilde{v}_n} = 1$ for all $n$, but
+  $\norm{\lim_{n\to\infty}L\tilde{v}_n} = 0$. Thus, $L$ is not continous.
+  
+  For the second equivalence note that continuity trvially implies
+  continuity in a single point, e.g. $x \in V$. Now let $L$ be continous 
+  n $x$ and take the sequence $\{v_n\}_{n=1,\dots} \subsbet V$ converging
+  to $v \in V$ Then, $\{v_n-(v-x)\}_{n=1,\dots}$ converges to $x$ and by
+  continuity we have $L(v_n-(v-x)) = Lv_n - Lv + Lx \to Lx$ as $n \to \infty$.
+  This yields $Lv_n \to Lv$ and thus, $L$ is continous.
+\end{proof}
 \end{todo}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
