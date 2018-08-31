@@ -34,7 +34,11 @@
   \end{gather}
 \end{intro}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Banach and Hilbert spaces}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{Notation}{field-k}
   This section deals with real and complex vector spaces. Therefore,
@@ -84,11 +88,15 @@
   C$ or $\mathbb K = \R$. An \define{inner product} on $V$ is a mapping
   $\scal(.,.): V\times V \to \mathbb K$ with the properties
   \begin{xalignat}2
+    \label{eq:inner-product:1}
     \scal(\alpha x+y,z) &= \alpha \scal(x,z) + \scal(y,z)
     && \forall x,y,z \in V; \alpha \in \mathbb K\\
+    \label{eq:inner-product:2}
     \scal(x,y) &= \overline{\scal(y,x)} && \forall x,y \in V \\
-    \scal(x,x) & \ge 0 \quad\forall x\in V &\text{and}
-    & \scal(x,x)=0 \Leftrightarrow x=0,
+    \label{eq:inner-product:3}
+    \scal(x,x) & \ge 0 \quad\forall x\in V &&\text{and} \\
+    \label{eq:inner-product:4}
+    \scal(x,x) & =0 \Leftrightarrow x=0,
   \end{xalignat}
   usually referred to as (bi-)linearity, symmetry, and
   definiteness. We note that linearity in the second argument follows
@@ -103,6 +111,43 @@
   \end{gather}
   Equality holds if and only if $v$ and $w$ are collinear.
 \end{Theorem*}
+
+\begin{proof}
+  The case $w = 0$ is trivial. Without loss of generality we can therefore
+  assume that $w \not = 0$. Define $\lambda \in \C$ as $\lambda =
+  \frac{\scal(v,w)}{\scal(w,w)}$. By (\ref{eq:inner-product:3}) we have
+  \begin{gather*}
+  0 \le \scal(v - \lambda w, v - \lambda w) \label{eq:bcs:1}
+  \end{gather*}
+  and by ~(\ref{eq:inner-product:2}) the right-hand side extends to
+  \begin{gather*}
+  \scal(v, v) - \scal(v, \lambda w) - \scal(\lambda w, v) +
+    \scal(\lambda w, \lambda w) \\
+  = \scal(v, v) - \overline{\lambda} \scal(v, w) - \overline{\lambda} \scal(v, w)
+    + \lambda \overline{\lambda}\scal(w, w).
+  \end{gather*}
+  Evaluating $\lambda$ yields the inequality
+  \begin{gather*}
+  0 \le \scal(v, v) - \frac{\overline{\scal(v, w)} \scal(v, w)}{\scal(w, w)}
+    - \frac{\overline{\scal(v, w)} \scal(v, w)}{\scal(w, w)}
+    + \frac{\overline{\scal(v, w)} \scal(v, w)\scal(w, w)}{\scal(w, w)^2}.
+  \end{gather*}
+  The result follows from multiplication with $\scal(w, w)$ and arranging
+  the summands.
+  
+  For the second part let $v, \, w$ be colinear, i.e. there is a $\lambda \in
+  \mathbb K$ such that $v = \lambda w$. Then deducing the equality is trivial.
+  Now let equality hold for (\ref{eq:lafa:6}). We immediately get that the equality
+  must also hold for
+  \begin{gather*}
+  0 = \scal(v - \lambda w, v - \lambda w).
+  \end{gather*}
+  However, by ~(\ref{eq:inner-product:4}) this implies
+  \begin{gather*}
+  0 = v - \lambda w.
+  \end{gather*}
+  Thus, $v$ and $w$ are colinear.
+\end{proof}
 
 \begin{Lemma}{inner-product-norm}
   Every inner product defines a norm by
@@ -146,7 +191,19 @@
   \end{gather}
 \end{Lemma}
 
-
+\begin{proof}
+  The Pythagorean Theorem ~(\ref{eq:lafa:14}) follows directly with
+  \begin{gather*}
+    \norm{u+v}^2
+    = \scal(u+v,u+v)
+    = \norm{u}^2 + 2 \scal(u,v) + \norm{v}^2
+    = \norm{u}^2 + \norm{v}^2
+  \end{gather*}
+  Using that $\overline{-1} = -1$ we get that
+  \begin{gather*}
+  \scal(u+v,u+v) + \scal(u-v,u-v) = 2\norm{u^2} + 2\norm{v}^2.
+  \end{gather*}
+\end{proof}
 
 \begin{Definition}{complete}
   A space $V$ with is \define{complete} with respect to a norm, if all
@@ -165,39 +222,54 @@
 \end{Definition}
 
 \begin{remark}
-  The definition of completeness in \slideref{Definition}{complete} is
-  intuitive, but mathematically vague, since the limit of a Cauchy
-  sequence is defined by the completion process itself. The way out is
-  the definition of the limit of a Cauchy sequence as an equivalence
-  class of the sequences themselves. We call two Cauchy sequences
-  $\{v_n\}$ and $\{w_n\}$ equivalent, if
+  \slideref{Definition}{complete} is intuitive, but mathematically
+  vague, since the limit of a Cauchy sequence is defined by the
+  completion process itself. To avoid this we define the limit of a
+  Cauchy-sequence as an equivalence class on the space of
+  Cauchy-sequences themselves: We call two Cauchy sequences
+  $\{v_n\}_{n = 1, \dots}$ and $\{w_n\}_{n = 1, \dots}$ equivalent, if
   \begin{gather*}
     \norm{v_n-w_n} \to 0
     \quad\text{as}\quad
     n\to \infty.
   \end{gather*}
   If the limits of both sequences exist, we know that this condition
-  is equivalent to both limits being equal. If they don't, they are
-  defined by these equivalence classes in a way consistent with the
-  standard notion of limits .
+  is equivalent to both limits being equal. If the limits do not exist,
+  they are defined by these equivalence classes in a way consistent with
+  the standard notion of limits.
 \end{remark}
 
-\begin{Definition}{Banach-space}
+\begin{Definition}{Banach-hilbert}
   A \define{normed vector space} is a vector space $V$ with a norm
   $\norm\cdot$. We may also write $\norm{\cdot}_V$ to highlight the
   connection.
 
   A normed vector space $V$ which is complete with respect to its norm is
   called a \define{Banach space}.
+  
+  A vector space $V$ equipped with an inner product $\scal(.,.)$ is called
+  an \define{inner product space} or \define{pre-Hilbert space}. A
+  \define{Hilbert space} is a pre-Hilbert space which is also \putindex{complete}.
 \end{Definition}
 
-\begin{Definition}{hilbert-space}  
-  A vector space $V$ equipped with an inner product $\scal(.,.)$ and its
-  norm
-  is called an \define{inner product space}
-  or \define{pre-Hilbert space}. A \define{Hilbert space} is
-  a pre-Hilbert space which is also \putindex{complete}.
-\end{Definition}
+\begin{remark}
+The concepts presented in \slideref{Definition}{Banach-hilbert} are related as follows:
+
+\begin{figure}[hp]
+\begin{center}
+\begin{tikzpicture}[scale=2]
+\node[rectangle, draw, fill=white] (N) at (2,0) {Normed vector space};
+\node[rectangle, draw, fill=white] (P) at (0,0) {pre-Hilbert space};
+\node[rectangle, draw, fill=white] (B) at (2,1) {Banach space};
+\node[rectangle, draw, fill=white] (H) at (0,1) {Hilbert space};
+\draw[->] (H) -- (B);
+\draw[->] (H) -- (P);
+\draw[->] (B) -- (N);
+\draw[->] (P) -- (N);
+\end{tikzpicture}
+\end{center}
+\end{figure}
+\end{remark}
 
 \begin{example}
   For any positive integer, the space $\R^n$ equipped with the
@@ -220,11 +292,11 @@
     = \lim_{n\to\infty}\sum_{k=1}^n x_k \overline{y_k}.
   \end{gather*}
   An example for a sequence in $\ell^2(\R)$ is for instance the
-  sequence $v = \{1/k\}$, since
+  sequence $v = \{1/k\}_{k=1,\dots}$, since
   \begin{gather*}
-    \norm{v}^2 = \sum_{i=k}^\infty \frac1{k^2} < \infty.
+    \norm{v}^2 = \sum_{k=1}^\infty \frac1{k^2} < \infty.
   \end{gather*}
-  The sequence $w = \{1\}$ is not, since it does not converge
+  The sequence $w = \{1\}_{k=1,\dots}$ is not, since it does not converge
   quadratically.
 \end{example}
 
@@ -271,6 +343,7 @@
   if it has a countable dense subset.
 \end{Definition}
 
+\begin{todo}
 \begin{remark}
   From the point of view of numerical analysis and computation, spaces
   which are not separable are of limited interest. In fact, every
@@ -284,6 +357,13 @@
   choice. Separable spaces allow us for instance to construct bases
   instead of deducing their existence indirectly.
 \end{remark}
+  I think this remark should be at the beginning of this chapter since
+  here the idea behind these notes becomes clearer (to me). Also here,
+  it some kind of disturbs the flow of the notes. Perhaps, if it is
+  \emph{very} important to you, you could write a review at the end of
+  the chapter stating the results and how your goals have been
+  accomplished -- and maybe also \emph{why} this goal is so important.
+\end{todo}
 
 \begin{Definition}{schauder-basis}
   Let $V$ be a Hilbert space over a field $\mathbb K$. A
@@ -330,8 +410,9 @@
 \begin{Definition}{orthogonal}
   Let $V$ be an inner product space over a field $\mathbb K$. Two
   vectors $x,y\in V$ are called \define{orthogonal} if $\scal(x,y) = 0$. We
-  write $x\perp y$. Let $W$ be a subspace of $V$. Then, a vector $v$
-  is orthogonal to $W$, if it is orthogonal to every vector in $W$.
+  write $x\perp y$. Let $W$ be a subspace of $V$. We say that a vector $v$
+  is orthogonal to the subspace $W$, if it is orthogonal to every vector in
+  $W$.
 
   A set of nonzero mutually orthogonal vectors
   $\{x_i\} \subset V$ is called \define{orthogonal set}. If
@@ -351,8 +432,8 @@
 \end{Definition}
 
 \begin{Lemma}{orthogonal-closed}
-  The the orthogonal complement $\ortho W$ of a subspace $W\subset V$
-  is closed.
+  The orthogonal complement $\ortho W$ of a subspace $W\subset V$
+  is closed in the sense of ~\slideref{Definition}{complete}.
 \end{Lemma}
 
 \begin{proof}
@@ -383,21 +464,23 @@
   if a sequence $w_n \subset W$ converges to $w\in \overline{W}$, we
   have
   \begin{gather*}
-    \scal(u,w) = \lim_{n\to\infty} \scal(u,w_n) = 0.
+    \scal(u,w) = \lim_{n\to\infty} \scal(u,w_n) = 0,
   \end{gather*}
-  Hence, $u\in \overline{W}^\perp$ and $W^\perp = \overline{W}^\perp$.
+  since $u \in W^\perp$. Hence, $u\in \overline{W}^\perp$ and
+  $W^\perp = \overline{W}^\perp$.
 
   Now, the ``only if'' follows by the fact, that if $W$ is not
   closed, there is an element $w\in \overline{W}$ but not in $W$ such that
   $\scal(w,u)=0$ for all $u\in W^\perp$. Thus, $w\not\in W^\perp$ and
   consequently $w\not\in W^\perp \oplus W$.
 
-  Let now $W$ be closed. We show that there is a unique decomposition
+  Let now $W$ be closed. We show that for all $v \in V$ there is a unique
+  decomposition
   \begin{gather}
     \label{eq:infsup:8}
-    v = w + u,\qquad w\in W, \;u\in W^\perp,
+    v = w + u,\qquad \text{with} \qquad w\in W, \;u\in W^\perp.
   \end{gather}
-  which is equivalent to $V = W \oplus W^\perp$. Uniqueness follows,
+  This is equivalent to $V = W \oplus W^\perp$. Uniqueness follows,
   since
   \begin{gather*}
     v = w_1+u_1 = w_2+u_2
@@ -413,7 +496,7 @@
   If $v\in W$, we choose $w=v$ and $u=0$. For $v\not\in W$, we prove
   existence by considering that due to the closedness of $W$ there holds
   \begin{gather*}
-    d=\inf_{w\in W} \norm{v-w} >0.
+    d=\inf_{w' \in W} \norm{v-w'} >0.
   \end{gather*}
   Let $w_n$ be a minimizing sequence. Using the parallelogram identity
   \begin{gather*}
@@ -429,13 +512,13 @@
   since $(w_m+w_n)/2\in W$ and $d$ is the infimum. Now we use the
   minimizing property to obtain
   \begin{gather*}
-    \lim_{m,n\to\infty}\norm{w_m-w_n}^2 = 2d^2-2d^2 -4d^2=0.
+    \lim_{m,n\to\infty}\norm{w_m-w_n}^2 = 2d^2+2d^2 -4d^2=0.
   \end{gather*}
-  By completeness of $V$, $w=\lim w_n$ exists and by the closedness of
-  $W$, we have $w\in W$. Let $u=v-w$. By continuity of the norm, we
-  have $\norm{u}=d$. It remains to show that $u\in W^\perp$. To this
-  end, we introduce the variation $w+\epsilon \tilde w$ with $\tilde
-  w\in W$ to obtain
+  Since $V$ is given as a Hilbert space and as such complete, $w=\lim w_n$
+  exists and by the closedness of $W$, we have $w\in W$. Let $u=v-w$.
+  By continuity of the norm, we have $\norm{u}=d$. It remains to show
+  that $u\in W^\perp$. To this end, we introduce the variation
+  $w+\epsilon \tilde w$ with $\tilde w \in W$ to obtain
   \begin{align*}
     d^2 &\le \norm{v-w-\epsilon \tilde w}^2\\
     &= \norm{u}^2-2\epsilon\scal(u,\tilde w)+\epsilon^2 \norm{\tilde w},
@@ -444,7 +527,8 @@
   \begin{gather*}
     0\le-2\epsilon\scal(u,\tilde w)+\epsilon^2 \norm{\tilde w},
   \end{gather*}
-  which requires $\scal(u,\tilde w) = 0$.
+  which requires $\scal(u,\tilde w) = 0$. Since $\tilde w \in W$ was chosen
+  arbitrarily, we have $u \in W^\perp$.
 \end{proof}
 
 \begin{Corollary}{ortho-density}
@@ -533,16 +617,19 @@
   $M$. For $i=2,\dots,\infty$ choose with $v_1,\dots,v_{i-1}$ given
   $v_i$ as the next vector in $M$ which is not in the subspace spanned
   by $v_1,\dots,v_{i-1}$. This procedure generates an at most
-  countable sequence $\{v_i\}$ of linearly independent vectors. It
-  will only stop, if $V$ is finite dimensional, and we have that every
-  element in $M$ can be written as a finite linear combination of
-  vectors $v_i$.
+  countable sequence $\{v_1, \dots, v_i\}_{i=1, \dots}$ of linearly
+  independent vectors. It will only stop, if $V$ is finite dimensional.
+  Furthermore, we have that every element in $M$ can be written as a finite
+  linear combination of these vectors: Assume $w \in M$ as $w \not \in
+  \spann{v_1,\dots,v_k}$ for any natural number $k$. Since $M$ is countable,
+  we will eventually get to $w$ which then --- by definition of the sequence
+  --- will be added to it as $v_{k+1} = w$.
   
-  The sequence $\{v_i\}$ is a Schauder basis for $V$. In fact, given a
+  The sequence $\{v_i\}_{i=1,\dots}$ is a Schauder basis for $V$. In fact, given a
   vector $v\in V$ we have to show that for every $\epsilon$, there is
   a finite linear combination $s_n = \sum_{i=1}^n \alpha_i v_i$ such
-  that $\norm{v-s_n} < \epsilon$. Let by separability $w_\epsilon$ in
-  $M$ be such that $\norm{v-w_\epsilon} < \epsilon$. Since
+  that $\norm{v-s_n} < \epsilon$. Let by separability $w_\epsilon$ be in
+  $M$ such that $\norm{v-w_\epsilon} < \epsilon$. Since
   $w_\epsilon in M$, there is $n$ such that $s_n = w_\epsilon$.
 
   Finally, we use the Gram--Schmidt procedure to orthogonalize the
@@ -568,13 +655,14 @@ completed to be a basis of $V$.
 
 \begin{Lemma*}{Bessel-inequality}{Bessel inequality}
   Let $\{x_i\}$ be an orthonormal basis of the Hilbert space $V$. For
-  $v\in V$, define the \define{Fourier coefficient}s
+  $v\in V$, define %the \define{Fourier coefficient}s
   \begin{gather}
     \label{eq:lafa:18}
     \alpha_i = \scal(v,x_i), \qquad i=1,\dots
   \end{gather}
   Then,
   \begin{gather}
+    \label{eq:lafa:18a}
     \sum_{i=1}^\infty \abs{\alpha_i}^2 \le \norm{v}_V^2.
   \end{gather}
 \end{Lemma*}
@@ -595,7 +683,7 @@ completed to be a basis of $V$.
   Under the same assumptions as in \slideref{Lemma}{Bessel-inequality}
   the sequence
   \begin{gather*}
-    f_n = \sum_{i=1}^n \alpha_i x_i
+    f_n = \sum_{i=1}^n \alpha_i x_i = \sum_{i=1}^n \scal(f, x_i) x_i
   \end{gather*}
   converges to $f$ in $V$ and there holds
   \begin{gather}
@@ -604,12 +692,93 @@ completed to be a basis of $V$.
   \end{gather}
 \end{Lemma*}
 
-\begin{todo}
-\begin{proof}
-    
+\begin{proof}   
+  First, we will show that the series $\{f_n\}_{n=1,\dots}$ is a
+  Cauchy sequence and, using the completeness of $V$, deduce that
+  $\{f_n\}_{n=1,\dots}$ does indeed converge in $V$. Second, we will
+  prove that indeed there holds $f_n \to f$ as $n \to \infty$.
+  Finally, it is easy to show that $\norm{f}^2$ does indeed equal to
+  $\sum_{i=1}^\infty \abs{\scal(f, x_i)}^2$.
+  
+  Take $m,\, n \in \mathbb{N}$ with $n>m$ and consider
+  \begin{gather*}
+    \norm{f_n - f_m}^2 = \norm{\sum_{i=m+1}^n \scal(f, x_i) x_i}^2.
+  \end{gather*}
+  Since $\{x_i\}_{i=1,\dots}$ are indeed pairwise orthogonal, we can
+  use the Pythagorean Theorem to obtain that the above equation becomes
+  \begin{gather*}
+    \sum_{i=m+1}^n \norm{\scal(f, x_i) x_i}^2
+      = \sum_{i=m+1}^n \abs{\scal(f, x_i)}^2  \norm{x_i}^2.
+  \end{gather*}
+  Furthermore, the $\{x_i\}_{i=1,\dots}$ are orthonormal. Hence,
+  $\norm{x_i} = 1$ for all $i=1, \dots$. The above equation simplifies to
+  \begin{gather*}
+    \sum_{i=m+1}^n \abs{\scal(f, x_i)}^2.
+  \end{gather*}
+  By Bessel's inequality we know that
+  \begin{gather*}
+    \sum_{i=1}^\infty \abs{\scal(f, x_i)}^2 \le \norm{f}_V^2
+  \end{gather*}
+  and hence $\{f_n\}_{n=1,\dots}$ converges. Therefore, the difference
+  $\norm{f_n - f_m}^2$ can be arbitrarily small and hence the sequence
+  $\{f_n\}_{n=1,\dots}$ is Cauchy. Since $V$ is given as a Hilbert space,
+  $V$ is also complete. By that, the sequence $\{f_n\}_{n=1,\dots}$
+  converges to some $\bar{f} \in V$.
+  
+  To prove that $f = \bar{f}$, consider $\scal(f-\bar{f}, x_k)$ for some
+  $k \in \mathbb{N}$. If we show that this equals zero, we know that
+  $(f-\bar{f}) \perp x_k$ for any $k \in \mathbb{N}$. 
+  By linearity of the inner product, we have that
+  \begin{align*}
+  \scal(f-\bar{f}, x_k) &= \scal(f, x_k)
+    -\sum_{i=1}^\infty \scal(f, x_i)\scal(x_i, x_k) \\
+    &= \scal(f, x_k) - \scal(f, x_k) = 0.
+  \end{align*}
+  Here we used that $\scal(x_i, x_k) = \delta_{i,k}$. Hence $(f-\bar{f})
+  \perp x_k$. Since $\{x_k\}_{k=1,\dots}$ form a basis, there holds
+  \begin{gather}
+  \label{eq:lafa:18b}
+  f = \bar{f} = \lim_{n\to \infty} \sum_{i=1}^n \scal(f, x_i) x_i.
+  \end{gather}
+  
+  Finally, we have that
+  \begin{gather*}
+    \norm{f} = \norm{\lim_{n\to \infty} \sum_{i=1}^n \scal(f, x_i) x_i}.
+  \end{gather*}
+  By continuity of the norm and equation ~(\ref{eq:lafa:18b}) the above
+  equation becomes
+  \begin{gather*}
+    \lim_{n\to \infty} \norm{\sum_{i=1}^n \scal(f, x_i) x_i}.
+  \end{gather*}
+  Using the Pythagorean theorem and the orthogornality we obtain
+  \begin{gather*}
+  \lim_{n\to \infty} \sum_{i=1}^n \abs{\scal(f, x_i)} \cdot 1
+    = \sum_{i=1}^\infty \abs{\scal(f, x_i)}.
+  \end{gather*}
+  Thus, Parseval's identity has been established as desired.
 \end{proof}
-\end{todo}
+
+\begin{remark}
+  In his monograph ``Mémoire sur les séries et sur l'intégration complète
+  d'une équation aux différences partielles linéaires du second ordre,
+  à coefficients constants'' from April 5, 1799, Marc-Antoine Parseval
+  published his ``original'' identity for Fourier coefficients. The other
+  ingredients for more more generalized formulation took some more time:
+  In 1898, Guiseppe Peano came up with the theory of pre-Hilbert spaces,
+  or, at that time, inner product spaces. In 1907, Riesz and Fischer
+  (independently) came up with their famous theorem, the completeness of
+  $L^p$ for $0<p \le \infty$ which has been used for $p=2$. The more
+  general version of his theorem was published in Titchmarchs book in
+  1939. In the meantime, someone must have connected the dots and found
+  this more general formulation. Unfortunately, his/her name has apparently
+  been forgotten.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Linear operators}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{intro}
   Linear mappings are the next central topic of linear algebra, which
@@ -660,9 +829,32 @@ completed to be a basis of $V$.
 \end{Theorem}
 
 \begin{todo}
-  \begin{proof}
-    
-  \end{proof}
+\begin{proof}
+  Let $L\colon V\to W$ be bounded with boundary constant $c$ and let
+  the sequence $\{v_n\}_{n=1,\dots} \subset V$ converge to some 
+  $v \in V$ as $n \to \infty$. Using the boundedness of $L$, we obtain
+  \begin{gather*}
+    \norm{Lv_n - Lv} = \norm{L(v_n - v)} \le c\norm{v_n - v}.
+  \end{gather*}
+  By the convergence of $\{v_n\}_{n=1,\dots}$ we get that $Lv_n \to Lv$
+  as $n \to \infty$. Hence, $L$ is continous.
+  
+  Now assume $L$ as unbounded. Then, there exists a sequence
+  $\{v_n\}_{n=1,\dots}$ such that $\norm{Lv_n}$ diverges as $n \to \infty$.
+  Define the sequence $\{\tilde{v}_n\}_{n=1,\dots}$ as
+  \begin{gather*}
+    \tilde{v}_n = \frac{v_n}{\norm{Lv_n}}.
+  \end{gather*}
+  We immediately get that $\norm{L\tilde{v}_n} = 1$ for all $n$, but
+  $\norm{\lim_{n\to\infty}L\tilde{v}_n} = 0$. Thus, $L$ is not continous.
+  
+  For the second equivalence note that continuity trvially implies
+  continuity in a single point, e.g. $x \in V$. Now let $L$ be continous 
+  n $x$ and take the sequence $\{v_n\}_{n=1,\dots} \subsbet V$ converging
+  to $v \in V$ Then, $\{v_n-(v-x)\}_{n=1,\dots}$ converges to $x$ and by
+  continuity we have $L(v_n-(v-x)) = Lv_n - Lv + Lx \to Lx$ as $n \to \infty$.
+  This yields $Lv_n \to Lv$ and thus, $L$ is continous.
+\end{proof}
 \end{todo}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -777,12 +969,59 @@ completed to be a basis of $V$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Weak convergence and compact operators}
-\input{unbounded-op}
+
+\begin{example}
+  Let $\phi:\ell^2(\R)\to\ell^2(\R)$ be such that
+  \begin{gather*}
+    v =
+    \begin{pmatrix}
+      x_1 \\ x_2 \\ \vdots \\ x_k \\ \vdots
+    \end{pmatrix}
+    \mapsto \phi(v) =
+    \begin{pmatrix}
+      x_1 \\ 4x_2 \\ \vdots \\ k^2x_k \\ \vdots
+    \end{pmatrix}.
+  \end{gather*}
+  Clearly, $\phi$ is linear. But if we consider the sequence of
+  vectors $v_n = \{\delta_{nk}\}$, we see that $v_n \mapsto n^2 v_n$ and
+  thus, while the sequence is bounded in $\ell^2(\R)$, its image is
+  not.
+  
+  Moreover, take now the sequence of sequences
+  \begin{gather*}
+    v_n = \left\{1,\tfrac12,\dots,\tfrac1n,0,\dots,0\right\}
+    \quad \mapsto \quad \phi(v_n) = \{1,2,\dots,n,0,\dots,0\}.
+  \end{gather*}
+  The sequence $v_n$ converges to a limit $v \in \ell^2(\R)$, while
+  the sequence $\phi(v_n)$ diverges. While $\phi(v_n)$ is defined for
+  all $v_n$, it is not bounded for the limit $v$.
+\end{example}
+
+\begin{remark}
+  By virtue of completeness of the space, whenever a linear operator
+  is not bounded, it must be undefined for some vectors. We could
+  exclude such operators from our considerations, but we would
+  severely limit the theory we want to develop. Instead, we will
+  accept the fact, that we have to extend the notion of a linear
+  mapping $\phi: V\to W$ to a linear operator $\phi: V\to W$, which
+  may not be defined on all of $V$. The following definition fixes
+  this problem somewhat.
+\end{remark}
+
+\begin{Definition}{operator-domain}
+  Let $\phi: V\to W$ be a linear operator. Then, the \define{domain}
+  of $\phi$ is
+  \begin{gather*}
+    \mathcal D(\phi) = \bigl\{ v\in V \big|
+    \phi(v) \in W \bigr\}.
+  \end{gather*}
+  Here, $\phi(v) \in W$ implies that $\phi(v)$ is also well defined.
+\end{Definition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Unbounded linear operators}
-\input{unbounded-op}
+
 
 %%% Local Variables: 
 %%% mode: latex
