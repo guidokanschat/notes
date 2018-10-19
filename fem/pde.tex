@@ -1,11 +1,26 @@
-\section{Elliptic boundary value problems}
 
 \begin{Notation}{coordinates}
   Dimension of ``physical space'' will be denoted by $d$.  We denote
-  coordinates in $\R^d$ as $\vx = (x_1,\dots,x_d)^T$. In the special
-  cases $d=2,3$ we also write $\vx = (x,y)^T$ and $\vx = (x,y,z)^T$.
-
-  The Euclidean norm on $\R^d$ is denoted as $\abs{\vx}$.
+  coordinates in $\R^d$ as
+  \begin{gather*}
+    \vx = (x_1,\dots,x_d)^T  .
+  \end{gather*}
+  In the special cases $d=2,3$ we also write
+  \begin{gather*}
+  \vx =
+  \begin{pmatrix}
+    x\\y
+  \end{pmatrix},
+  \qquad\qquad
+  \vx = \begin{pmatrix}
+    x\\y\\z
+  \end{pmatrix},
+  \end{gather*}
+  respectively.
+  The Euclidean norm on $\R^d$ is denoted as
+  \begin{gather*}
+     \abs{\vx} = \sqrt{\sum_{i=1}^d x_i^2}.
+  \end{gather*}
 \end{Notation}
 
 \begin{Notation}{partial-derivative}
@@ -118,7 +133,7 @@
 
 \begin{Theorem*}{Dirichlet-principle}{Dirichlet principle}
   If a function $u\in C^2(\domain)\cap C(\overline{\domain})$ solves
-  the putindex{Dirichlet problem}, then it minimizes the
+  the \putindex{Dirichlet problem}, then it minimizes the
   \define{Dirichlet energy}
   \begin{gather}
     \label{eq:Dirichlet-energy}
@@ -187,6 +202,18 @@
   \end{gather}
 \end{Lemma*}
 
+\begin{Lemma}{h1-norm}
+  The definitions
+  \begin{gather}
+    \begin{split}
+      \abs{v}_1 &= \norm{\nabla v},\\
+      \norm{v}_1 &= \sqrt{\norm{v}^2_{L^2(\domain)}
+        + \abs{v}^2_1},
+    \end{split}
+  \end{gather}
+  both define a norm on $V_0$.
+\end{Lemma}
+
 \begin{Problem}{Friedrichs}
   Prove the Friedrichs inequality.
 \end{Problem}
@@ -234,7 +261,6 @@
   The weak formulation in \slideref{Definition}{weak-formulation} has
   a unique solution.
 \end{Theorem}
-
 
 %%% Local Variables: 
 %%% mode: latex

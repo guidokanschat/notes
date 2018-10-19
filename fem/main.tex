@@ -1,39 +1,15 @@
-\documentclass[USenglish,12pt]{report}
+\documentclass[USenglish]{report}
 \usepackage{../mathsim}
-\usepackage[notref,notcite]{showkeys}
-%\usepackage{hyperref}
-\usepackage{tikz}
-\usetikzlibrary{svg.path}
-\usepackage[backend=bibtexu,style=alphabetic]{biblatex}
-\addbibresource{all}
+
+% \usepackage{hyperref} % Fänd ich sehr praktisch
 \excludecomment{solution}
 
-\def\constref#1{C_{\text{\ref{#1}}}}
-\title{\textbf{Notes on Applied Mathematics}
-\\[5mm]
-{\large Discontinuous Galerkin methods}}
-\author{Guido Kanschat}
-\date{\today}
-
-\begin{document}
-\maketitle
-
-\chapter{Elliptic PDE and their weak formulation}
-\input{pde}
-
-\chapter{Discontinuous Galerkin methods}
-\section{Nitsche's method}
-\label{sec:nitsches-method}
-\input{nitsche}
-
-\section{The interior penalty method}
-\label{sec:interior-penalty}
-\input{ip}
-\subsection{Bounded formulation in $H^1$}
-\input{ip-lifting}
+\makeindex
+\input{top}
 \end{document}
 
-%%% Local Variables:
+
+%%% Local Variables: 
 %%% mode: latex
-%%% TeX-master: t
-%%% End:
+%%% TeX-master: "main"
+%%% End: 
