@@ -1,0 +1,38 @@
+\usepackage[notref,notcite]{showkeys}
+%\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{svg.path}
+\usepackage[backend=bibtexu,style=alphabetic]{biblatex}
+\addbibresource{all}
+\excludecomment{solution}
+
+\def\constref#1{C_{\text{\ref{#1}}}}
+\title{Finite Elements}
+\author{Guido Kanschat}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\chapter{Elliptic PDE and Their Weak Formulation}
+\section{Elliptic boundary value problems}
+\input{pde}
+
+\section{Hilbert Spaces and Bilinear Forms}
+\input{hilbert}
+
+%\chapter{Discontinuous Galerkin methods}
+%\section{Nitsche's method}
+%\label{sec:nitsches-method}
+%\input{nitsche}
+
+%\section{The interior penalty method}
+%\label{sec:interior-penalty}
+%\input{ip}
+%\subsection{Bounded formulation in $H^1$}
+%\input{ip-lifting}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

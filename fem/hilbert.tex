@@ -1,0 +1,418 @@
+\begin{Definition}{inner-product}
+  Let $V$ be a vector space over $\R$. An \define{inner product} on $V$ is a mapping
+  $\scal(.,.): V\times V \to \R$ with the properties
+  \begin{xalignat}2
+    \label{eq:inner-product:1}
+    \scal(\alpha x+y,z) &= \alpha \scal(x,z) + \scal(y,z)
+    && \forall x,y,z \in V; \alpha \in \mathbb K\\
+    \label{eq:inner-product:2}
+    \scal(x,y) &= \scal(y,x) && \forall x,y \in V \\
+    \label{eq:inner-product:3}
+    \scal(x,x) & \ge 0 \quad\forall x\in V &&\text{and} \\
+    \label{eq:inner-product:4}
+    \scal(x,x) & =0 \Leftrightarrow x=0,
+  \end{xalignat}
+  usually referred to as (bi-)linearity, symmetry, and
+  definiteness. We note that linearity in the second argument follows
+  immediately by symmetry.
+\end{Definition}
+
+\begin{Theorem*}{bcs-inequality}{Bunyakovsky-Cauchy-Schwarz inequality}
+  For every \putindex{inner product} there holds the inequality
+  \begin{gather}
+    \label{eq:hilbert:6}
+    \scal(v,w) \le \sqrt{\scal(v,v)} \sqrt{\scal(w,w)}.
+  \end{gather}
+  Equality holds if and only if $v$ and $w$ are collinear.
+\end{Theorem*}
+
+\begin{proof}
+  The case $w = 0$ is trivial. Without loss of generality we can therefore
+  assume that $w \not = 0$. Define $\lambda \in \C$ as $\lambda =
+  \frac{\scal(v,w)}{\scal(w,w)}$. By (\ref{eq:inner-product:3}) we have
+  \begin{gather*}
+  0 \le \scal(v - \lambda w, v - \lambda w) \label{eq:bcs:1}
+  \end{gather*}
+  and by ~(\ref{eq:inner-product:2}) the right-hand side extends to
+  \begin{gather*}
+  \scal(v, v) - \scal(v, \lambda w) - \scal(\lambda w, v) +
+    \scal(\lambda w, \lambda w) \\
+  = \scal(v, v) - \overline{\lambda} \scal(v, w) - \overline{\lambda} \scal(v, w)
+    + \lambda \overline{\lambda}\scal(w, w).
+  \end{gather*}
+  Evaluating $\lambda$ yields the inequality
+  \begin{gather*}
+  0 \le \scal(v, v) - \frac{\overline{\scal(v, w)} \scal(v, w)}{\scal(w, w)}
+    - \frac{\overline{\scal(v, w)} \scal(v, w)}{\scal(w, w)}
+    + \frac{\overline{\scal(v, w)} \scal(v, w)\scal(w, w)}{\scal(w, w)^2}.
+  \end{gather*}
+  The result follows from multiplication with $\scal(w, w)$ and arranging
+  the summands.
+  
+  For the second part let $v, \, w$ be colinear, i.e. there is a $\lambda \in
+  \mathbb K$ such that $v = \lambda w$. Then deducing the equality is trivial.
+  Now let equality hold for (\ref{eq:hilbert:6}). We immediately get that the equality
+  must also hold for
+  \begin{gather*}
+  0 = \scal(v - \lambda w, v - \lambda w).
+  \end{gather*}
+  However, by ~(\ref{eq:inner-product:4}) this implies
+  \begin{gather*}
+  0 = v - \lambda w.
+  \end{gather*}
+  Thus, $v$ and $w$ are colinear.
+\end{proof}
+
+\begin{Lemma}{inner-product-norm}
+  Every inner product defines a norm by
+  \begin{gather}
+    \label{eq:hilbert:7}
+    \norm{v} = \sqrt{\scal(v,v)}.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  Definiteness and homogeneity follow from the properties of the inner
+  product. It remains to show the triangle inequality
+  \begin{gather*}
+    \norm{u+v} \le \norm{u}+\norm{v}.
+  \end{gather*}
+  Squaring the left hand side yields with the
+  Bunyakovsky-Cauchy-Schwarz inequality
+  \begin{multline*}
+    \norm{u+v}^2
+    = \scal(u+v,u+v)
+    = \norm{u}^2 + 2 \scal(u,v) + \norm{v}^2
+    \\
+    \le \norm{u}^2 + 2 \norm u \norm v + \norm{v}^2
+    = \bigl(\norm u + \norm v\bigr)^2.
+  \end{multline*}
+\end{proof}
+
+\begin{Definition}{complete}
+  A space $V$ with is \define{complete} with respect to a norm, if all
+  \putindex{Cauchy sequence}s with elements in $V$ have their limit in
+  $V$. A subspace $W\subset V$ is \define{closed} if it is complete in
+  the topology of $V$.
+
+  The \define{completion} of a space $V$ with respect to a norm
+  consists of the space $V$ and the limits of all Cauchy sequences in
+  $V$. We denote the completion of a space $V$ by
+  \begin{gather}
+    \label{eq:hilbert:8}
+    \overline{V} = \overline{V}^{\norm{\cdot}_V}.
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{Banach-hilbert}
+  A \define{normed vector space} is a vector space $V$ with a norm
+  $\norm\cdot$. We may also write $\norm{\cdot}_V$ to highlight the
+  connection.
+
+  A normed vector space $V$ which is complete with respect to its norm is
+  called a \define{Banach space}.
+  
+  A vector space $V$ equipped with an inner product $\scal(.,.)$ is called
+  an \define{inner product space} or \define{pre-Hilbert space}. A
+  \define{Hilbert space} is a pre-Hilbert space which is also \putindex{complete}.
+\end{Definition}
+
+\begin{Definition}{orthogonal}
+  Let $V$ be an inner product space over a field $\mathbb K$. Two
+  vectors $x,y\in V$ are called \define{orthogonal} if $\scal(x,y) = 0$. We
+  write $x\perp y$. Let $W$ be a subspace of $V$. We say that a vector $v$
+  is orthogonal to the subspace $W$, if it is orthogonal to every vector in
+  $W$.
+
+  A set of nonzero mutually orthogonal vectors
+  $\{x_i\} \subset V$ is called \define{orthogonal set}. If
+  additionally $\norm{x_i} = 1$ for all vectors, it is called an
+  \define{orthonormal set}. These notions transfer directly from
+  finite to countable sets.
+\end{Definition}
+
+\begin{Definition}{orthogonal-complement}
+  Let $W\subset V$ be a subspace of a Hilbert space $V$. We define its
+  \define{orthogonal complement} $\ortho W\subset V$ by
+  \begin{gather}
+    \label{eq:infsup:7}
+    \ortho W = \bigl\{v\in V \big| \scal(v,w)_{V} = 0
+    \;\forall\,w\in W\bigr\}.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{orthogonal-closed}
+  The orthogonal complement $\ortho W$ of a subspace $W\subset V$
+  is closed in the sense of ~\slideref{Definition}{complete}.
+\end{Lemma}
+
+\begin{proof}
+  By the \putindex{Bunyakovsky-Cauchy-Schwarz inequality}, the inner
+  product is continuous on $V\times V$. Therefore, the mapping
+  \begin{align*}
+    \phi_w\colon V &\to \R,\\
+    v&\mapsto \scal(v,w),
+  \end{align*}
+  is continuous. For any $w\in W$, the kernel of $\phi_w$ is closed as
+  the pre-image of the closed set $\{0\}$. Since
+  \begin{gather*}
+    \ortho W = \bigcap_{w\in W} \ker{\phi_w},
+  \end{gather*}
+  it is closed as the intersection of closed sets.
+\end{proof}
+
+\begin{Theorem}{orthogonal-complement}
+  Let $W$ be a subspace of a Hilbert space $V$ and $W^\perp$ its
+  orthogonal complement. Then, $W^\perp = \overline{W}^\perp$. Further,
+  $V = W \oplus W^\perp$ if and only if $W$ is closed.
+\end{Theorem}
+
+\begin{proof}
+  Clearly, $\overline{W}^\perp \subset W^\perp$ since
+  $W\subset\overline{W}$. Let now $u\in W^\perp$. Then, $\phi =
+  \scal(u,\cdot)$ is a continuous linear functional on $V$. Therefore,
+  if a sequence $w_n \subset W$ converges to $w\in \overline{W}$, we
+  have
+  \begin{gather*}
+    \scal(u,w) = \lim_{n\to\infty} \scal(u,w_n) = 0,
+  \end{gather*}
+  since $u \in W^\perp$. Hence, $u\in \overline{W}^\perp$ and
+  $W^\perp = \overline{W}^\perp$.
+
+  Now, the ``only if'' follows by the fact, that if $W$ is not
+  closed, there is an element $w\in \overline{W}$ but not in $W$ such that
+  $\scal(w,u)=0$ for all $u\in W^\perp$. Thus, $w\not\in W^\perp$ and
+  consequently $w\not\in W^\perp \oplus W$.
+
+  Let now $W$ be closed. We show that for all $v \in V$ there is a unique
+  decomposition
+  \begin{gather}
+    \label{eq:infsup:8}
+    v = w + u,\qquad \text{with} \qquad w\in W, \;u\in W^\perp.
+  \end{gather}
+  This is equivalent to $V = W \oplus W^\perp$. Uniqueness follows,
+  since
+  \begin{gather*}
+    v = w_1+u_1 = w_2+u_2
+  \end{gather*}
+  implies that for any $y\in V$
+  \begin{gather*}
+    0 = \scal(w_1-w_2+u_1-u_2,y) = \scal(w_1-w_2,y) + \scal(u_1-u_2,y).
+  \end{gather*}
+  Choosing $y=u_1-u_2$ and $w_1-w_2$ in turns, we see that one of the
+  inner products vanishes for orthogonality and the other implies that
+  the difference is zero.
+
+  If $v\in W$, we choose $w=v$ and $u=0$. For $v\not\in W$, we prove
+  existence by considering that due to the closedness of $W$ there holds
+  \begin{gather*}
+    d=\inf_{w' \in W} \norm{v-w'} >0.
+  \end{gather*}
+  Let $w_n$ be a minimizing sequence. Using the parallelogram identity
+  \begin{gather*}
+    \norm{a+b}^2+\norm{a-b}^2 = 2\norm{a}^2+2\norm{b}^2,
+  \end{gather*}
+  we prove that $\{w_n\}$ is a Cauchy sequence by
+  \begin{align*}
+    \norm{w_m-w_n}^2 &= \norm{(v-w_n)-(v-w_m)}^2\\
+    &= 2\norm{v-w_n}^2+2\norm{v-w_m}^2-\norm{2v-w_m-w_n}^2\\
+    &= 2\norm{v-w_n}^2+2\norm{v-w_m}^2-4\norm*{v-\frac{w_m+w_n}2}^2\\
+    &\le 2\norm{v-w_n}^2+2\norm{v-w_m}^2-4d^2,
+  \end{align*}
+  since $(w_m+w_n)/2\in W$ and $d$ is the infimum. Now we use the
+  minimizing property to obtain
+  \begin{gather*}
+    \lim_{m,n\to\infty}\norm{w_m-w_n}^2 = 2d^2+2d^2 -4d^2=0.
+  \end{gather*}
+  Since $V$ is given as a Hilbert space and as such complete, $w=\lim w_n$
+  exists and by the closedness of $W$, we have $w\in W$. Let $u=v-w$.
+  By continuity of the norm, we have $\norm{u}=d$. It remains to show
+  that $u\in W^\perp$. To this end, we introduce the variation
+  $w+\epsilon \tilde w$ with $\tilde w \in W$ to obtain
+  \begin{align*}
+    d^2 &\le \norm{v-w-\epsilon \tilde w}^2\\
+    &= \norm{u}^2-2\epsilon\scal(u,\tilde w)+\epsilon^2 \norm{\tilde w},
+  \end{align*}
+  implying for any $\epsilon>0$
+  \begin{gather*}
+    0\le-2\epsilon\scal(u,\tilde w)+\epsilon^2 \norm{\tilde w},
+  \end{gather*}
+  which requires $\scal(u,\tilde w) = 0$. Since $\tilde w \in W$ was chosen
+  arbitrarily, we have $u \in W^\perp$.
+\end{proof}
+
+\begin{Corollary}{ortho-density}
+  A subspace $W$ of a Hilbert space $V$ is dense in $V$ if and only if
+  $\ortho W = \{0\}$.
+\end{Corollary}
+
+\begin{proof}
+  The ``only if'' is an immediate application of
+  \slideref{Theorem}{orthogonal-complement}. For the opposite
+  direction, assume $\overline W \neq V$. Choose $v\in V$ such that
+  $v\not\in \overline W$. By
+  \slideref{Theorem}{orthogonal-complement}, there are unique elements
+  $w\in W$ and $u\in \ortho W$, such that $v=w+u$. In particular,
+  $u\neq 0$.
+\end{proof}
+
+\begin{Definition}{ortho-projection}
+  Let $W$ be a closed subspace of the Hilbert space $V$ and $\ortho W$
+  be its orthogonal complement. Then, the
+  \define{orthogonal projection} operators
+  \begin{gather}
+    \label{eq:lafa:9}
+    \begin{split}
+      \Pi_W &\colon V\to W\\
+      \Pi_{\ortho W} &\colon V\to \ortho W\\
+    \end{split}
+  \end{gather}
+  are defined by the unique decomposition
+  \begin{gather}
+    \label{eq:lafa:10}
+    v = \Pi_W v + \Pi_{\ortho W} v.
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{dual-space}
+  A \define{linear functional} on a vector space $V$ is a
+  \putindex{linear mapping} from $V$ to $\mathbb K$.
+
+  The \define{dual space} $V^*$ of a vector space $V$, also called the
+  \define{normed dual}, is the space of all bounded linear functionals
+  on $V$ equipped with the norm
+  \begin{gather}
+    \norm{\phi}_{V^*} = \sup_{v\in V} \frac{\phi(v)}{\norm{v}_V}.
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem*}{Riesz-representation}{Riesz representation theorem}
+  Let $V$ be a Hilbert space. Then, $V$ is isometrically isomorphic to
+  $V^*$. In particular, there is an isomorphism
+  \begin{gather}
+    \label{eq:hilbert:1}
+    \begin{split}
+      \varrho\colon V & \to V^*, \\
+      y & \mapsto f,
+    \end{split}
+  \end{gather}
+  such that
+  \begin{gather}
+    \label{eq:hilbert:2}
+    \begin{split}
+    \scal(x,y) &= f(x) \qquad \forall x\in V,\\
+    \norm{y}_V &= \norm{f}_{V^*}.
+    \end{split}
+  \end{gather}
+  We refer to $\varrho$ as \define{Riesz isomorphism}.
+\end{Theorem*}
+
+\begin{proof}
+  The proof is constructive and makes use of the orthogonal
+  complement.
+
+  First, it is clear that for any $y\in V$ a linear functional
+  $f\in V^*$ is defined by $f(\cdot) = \scal(y,\cdot)$. Furthermore,
+  $\varrho$ is injective, since
+  \begin{gather*}
+    \scal(x,y) = 0 \qquad\forall x\in V
+  \end{gather*}
+  implies $y\in \ortho V = \{0\}$. By the
+  \putindex{Bunyakovsky-Cauchy-Schwarz inequality}, we have
+  \begin{gather*}
+    \norm{f}_{V^*} = \sup_{x\in V}\frac{\abs{f(x)}}{\norm{x}_V}
+    = \sup_{x\in V}\frac{\abs{\scal(x,y)}}{\norm{x}_V}
+      \le \norm{y}_V,
+  \end{gather*}
+  with equality for $x=y$.  It remains to show that $\varrho$ is
+  surjective. To this end, let $f\in V^*$ be arbitrary and let
+  $N = \ker f$. If $N=V$, we choose $y=0$. If not, choose
+  $\ortho y \in \ortho N$ and let
+  \begin{gather}
+    \label{eq:lafa:13}
+    y = \frac{\overline{f(\ortho y)}}{\norm*{\ortho y}^2} \ortho y \in
+    \ortho N,
+  \end{gather}
+  such that $f(y) = \abs*{f(\ortho y)}^2/\norm*{\ortho y}^2 \neq 0$.
+  Let now $x\in V$ be chosen arbitrarily. Then, there holds
+  \begin{gather*}
+    x = \left(x-\frac{f(x)}{f(y)} y\right)
+    + \frac{f(x)}{f(y)} y.
+    \\
+  \end{gather*}
+  Since
+  \begin{gather*}
+      f = \left(x-\frac{f(x)}{f(y)} y\right) 
+      = \left(f(x)-f(x) \frac{f(y)}{f(y)}\right)
+      = 0,
+  \end{gather*}
+  this decomposition amounts to $x = x^0+\ortho x$ with $x^0\in N$ and
+  $\ortho x \in \ortho N$. It is unique according to
+  \slideref{Definition}{ortho-projection}. Thus, we have that $\ortho x$ is a
+  multiple of $y$, say $\ortho x=\alpha y$ and thus
+  \begin{gather*}
+    \begin{aligned}
+    f(x) &= f(x^0) + f(\ortho x)
+    &=& \alpha f(y)
+    &=& \alpha \frac{\abs*{f(\ortho y)}^2}{\norm*{\ortho y}^2}
+    \\
+    \scal(x,y) &= \scal(x^0,y)  + \scal(\ortho x,y)
+    &=& \alpha \norm{y}_V^2
+    &=& \alpha \frac{\abs*{f(\ortho y)}^2}{\norm*{\ortho y}^4}
+    \norm*{\ortho y}^2
+    \end{aligned}
+  \end{gather*}
+  Hence, the two terms are equal and $\varrho$ is surjective.
+\end{proof}
+
+\begin{Definition}{bilinear-form}
+  A \define{bilinear form} $a(.,.)$ on a Hilbert space $V$ is a
+  mapping $a\colon V\times V \to \R$, which is linear in both
+  arguments. The bilinear form is \textbf{bounded}, if
+  \begin{gather}
+    a(u,v) \le \norm{u}_V \norm{v}_V, \qquad \forall u,v\in V.
+  \end{gather}
+  It is called \define{coercive} or \define{elliptic}, if
+  \begin{gather}
+    a(u,u) \ge \alpha \norm{u}_V^2 \qquad\forall u\in V.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{pde-bilinear}
+  A solution to the Dirichlet problem
+  \begin{gather}
+    \begin{aligned}
+      \sum_{i,j=1}^d \d_i \bigl(a_{ij} \d_j u\bigr)
+      + \sum_{i=1}^d \bigl(b_i \d_i u\bigr) + c u &= f
+      & \qquad\text{in }&\domain\\
+      u &= 0
+      & \qquad\text{on }&\d\domain
+    \end{aligned}
+  \end{gather}
+  solves the weak problem: find $u\in V_0$ such that for all
+  $v\in V_0$
+  \begin{gather}
+    a(u,v) \equiv \form(\mathbf A \nabla u,\nabla v)
+    + \form(\mathbf b\cdot\nabla u,v)
+    +\form(cu,v) = \form(f,v),
+  \end{gather}
+  and vice versa.
+\end{Lemma}
+
+\begin{Lemma*}{lax-milgram}{Lax-Milgram}
+  Let $a(.,.)$ be a coercive bilinear form on a Hilbert space $V$ and
+  let $f \in V^*$. Then, there is a unique element $u\in V$ such that
+  \begin{gather}
+    a(u,v) = f(v) \qquad\forall v\in V.
+  \end{gather}
+  Furthermore, there holds
+  \begin{gather}
+    \norm{u}_V \le \frac1\alpha \norm{f}_{V^*}.
+  \end{gather}
+\end{Lemma*}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
