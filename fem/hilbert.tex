@@ -241,20 +241,20 @@
   arbitrarily, we have $u \in W^\perp$.
 \end{proof}
 
-\begin{Corollary}{ortho-density}
-  A subspace $W$ of a Hilbert space $V$ is dense in $V$ if and only if
-  $\ortho W = \{0\}$.
-\end{Corollary}
+% \begin{Corollary}{ortho-density}
+%   A subspace $W$ of a Hilbert space $V$ is dense in $V$ if and only if
+%   $\ortho W = \{0\}$.
+% \end{Corollary}
 
-\begin{proof}
-  The ``only if'' is an immediate application of
-  \slideref{Theorem}{orthogonal-complement}. For the opposite
-  direction, assume $\overline W \neq V$. Choose $v\in V$ such that
-  $v\not\in \overline W$. By
-  \slideref{Theorem}{orthogonal-complement}, there are unique elements
-  $w\in W$ and $u\in \ortho W$, such that $v=w+u$. In particular,
-  $u\neq 0$.
-\end{proof}
+% \begin{proof}
+%   The ``only if'' is an immediate application of
+%   \slideref{Theorem}{orthogonal-complement}. For the opposite
+%   direction, assume $\overline W \neq V$. Choose $v\in V$ such that
+%   $v\not\in \overline W$. By
+%   \slideref{Theorem}{orthogonal-complement}, there are unique elements
+%   $w\in W$ and $u\in \ortho W$, such that $v=w+u$. In particular,
+%   $u\neq 0$.
+% \end{proof}
 
 \begin{Definition}{ortho-projection}
   Let $W$ be a closed subspace of the Hilbert space $V$ and $\ortho W$
@@ -379,8 +379,10 @@
 \end{Definition}
 
 \begin{Lemma}{pde-bilinear}
-  A solution to the Dirichlet problem
+  Let $a_{ij} \in C^1(\domain)$, $b_i, c\in C^0(\domain)$. A solution
+  to the Dirichlet problem
   \begin{gather}
+    \label{eq:hilbert:div-eq}
     \begin{aligned}
       \sum_{i,j=1}^d \d_i \bigl(a_{ij} \d_j u\bigr)
       + \sum_{i=1}^d \bigl(b_i \d_i u\bigr) + c u &= f
@@ -392,11 +394,18 @@
   solves the weak problem: find $u\in V_0$ such that for all
   $v\in V_0$
   \begin{gather}
+    \label{eq:hilbert:weak}
     a(u,v) \equiv \form(\mathbf A \nabla u,\nabla v)
     + \form(\mathbf b\cdot\nabla u,v)
     +\form(cu,v) = \form(f,v),
   \end{gather}
-  and vice versa.
+  where $\mathbf A(\vx) = \bigl(a_{ij}(\vx)\bigr)$ is the matrix of
+  coefficients of the second order term and
+  $\mathbf b(\vx) = \bigl(b_{i}(\vx)\bigr)$ is the vector of
+  coefficients of the first order term.
+
+  If additionally $u\in C^2(\domain)$ holds, then the solution to the
+  weak problem solves the Dirichlet problem in differential form.
 \end{Lemma}
 
 \begin{Lemma*}{lax-milgram}{Lax-Milgram}
@@ -411,6 +420,29 @@
   \end{gather}
 \end{Lemma*}
 
+\begin{Lemma}{weak-well-posed}
+  Let $a_{ij}, c\in L^\infty(\domain)$, $b_i \in C^1(\overline{\domain})$ such
+  that there holds for a positive constant $\alpha$
+  \begin{gather}
+    \label{eq:hilbert:elliptic}
+    \begin{split}
+    \alpha\abs{\xi}^2 &\le \xi^T \mathbf A(\vx) \xi,
+    \qquad \forall \xi \in \R^d,
+    \\
+    0 &\le c + \div \mathbf b.
+    \end{split}
+  \end{gather}
+  Then, the associated bilinear form is coercive and bounded on
+  $H^1_0(\domain)$, and thus the weak formulation has a unique
+  solution.
+\end{Lemma}
+
+\begin{Definition}{elliptic}
+  A differential equation of second order in divergence
+  form~\eqref{eq:hilbert:div-eq} such that~\ref{eq:hilbert:elliptic}
+  holds is called \define{elliptic}. The lower bound $\alpha$ is the
+  ellipticity constant.
+\end{Definition}
 
 %%% Local Variables: 
 %%% mode: latex

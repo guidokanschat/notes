@@ -137,7 +137,7 @@
   \define{Dirichlet energy}
   \begin{gather}
     \label{eq:Dirichlet-energy}
-    E(v) = \int_{\domain} \abs{\nabla v}^2 \dvx - \int_{\domain} f v \dvx,
+    E(v) = \int_{\domain} \tfrac12 \abs{\nabla v}^2 \dvx - \int_{\domain} f v \dvx,
   \end{gather}
   among all functions $v$ from the set
   \begin{gather}
@@ -206,7 +206,7 @@
   The definitions
   \begin{gather}
     \begin{split}
-      \abs{v}_1 &= \norm{\nabla v},\\
+      \abs{v}_1 &= \norm{\nabla v}_{L^2(\domain)},\\
       \norm{v}_1 &= \sqrt{\norm{v}^2_{L^2(\domain)}
         + \abs{v}^2_1},
     \end{split}
@@ -233,11 +233,8 @@
 \end{Lemma}
 
 \begin{Definition}{h10}
-  The completion of $V_0$ under the norm
-  \begin{gather}
-    \abs{v}_1 = \norm{\nabla v}
-  \end{gather}
-  is the \define{Sobolev space} $H^1_0(\domain)$.
+  The completion of $V_0$ under the norm $\norm{v}_1$ is the
+  \define{Sobolev space} $H^1_0(\domain)$.
 \end{Definition}
 
 \begin{Lemma*}{Friedrichs-h1}{Friedrichs inequality}
@@ -247,6 +244,21 @@
       \le \diam(\domain) \norm{\nabla v}_{\domain}.
   \end{gather}
 \end{Lemma*}
+
+\begin{proof}
+  Let $v\in H^1_0(\domain)$.  We make use of the fact, that by
+  definition of $H^1_0(\domain)$, there is a sequence $v_n \to v$ with
+  $v_n \in V_0$. By~\slideref{Lemma}{Friedrichs-continuous},
+  Friedrichs' inequality holds for $v_n$ uniformly in $n$. We conclude
+  \begin{align*}
+    \norm{v}_\domain &\le \norm{v - v_n}_\domain + \norm{v_n}_\domain \\
+    & \le \norm{v - v_n}_\domain + \diam\domain \norm{\nabla v_n}_\domain \\
+    & \le \norm{v - v_n}_\domain + \diam\domain
+      \bigl(\norm{\nabla v_n - \nabla v}_\domain + \norm{\nabla v}_\domain\bigr)
+  \end{align*}
+  As $n\to\infty$, the norms of the differences converge to zero, such
+  that the desired result holds in the limit.
+\end{proof}
 
 \begin{Definition}{weak-formulation}
   The \putindex{Dirichlet problem} for Poisson's equation in weak form
