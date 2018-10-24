@@ -1,0 +1,268 @@
+\begin{Notation}{multi-index}
+  For a multi-index $\alpha = (\alpha_1,\dots,\alpha_d)$ with
+  nonnegative integer $\alpha_i$ and a function with sufficient
+  differentiability, we define the derivative
+  \begin{gather*}
+    \d^\alpha f = \d_1^{\alpha_1}\cdots\d_d^{\alpha_d} f.
+  \end{gather*}
+  The order of $\d^\alpha$ is
+  \begin{gather*}
+    \abs{\alpha} = \sum \alpha_i.
+  \end{gather*}
+\end{Notation}
+
+\begin{Definition}{distributional-derivative}
+  If for a given function $u$ there exists a function $w$ such that
+  \begin{gather}
+    \label{eq:hk:1}
+     \int_\Omega w \phi \dx
+     =
+     -\int_\Omega u \partial_i \phi \dx,
+     \qquad\forall \phi\in \coo(\domain),
+  \end{gather}
+  then we define $\partial_i u := w$ as the \define{distributional
+    derivative} (partial) of $u$ with respect to $x_i$. Here,
+  $\coo(\domain)$ is the space of all functions in $C^\infty(\domain)$
+  with compact support in $\domain$.
+
+  Similarly through integration by parts, we define distributional
+  directional derivatives, distributional gradients, $\d^\alpha u$,
+  etc.
+
+  We call a distributional derivative \define{weak derivative} in
+  $L^p$ if it is a function in this space.
+\end{Definition}
+
+\begin{remark}
+  Formula~\eqref{eq:hk:1} is the usual integration by
+  parts. Therefore, whenever $u\in\co^1$ in a neighborhood of $x$, the
+  distributional derivative and the usual derivative coincide.
+\end{remark}
+
+\begin{example}
+  Let $\Omega=\R$ and $u(x) = |x|$. Intuitively,
+  it is clear that the distributional derivative, if it exists, must
+  be the \define{Heaviside function}
+  \begin{gather}
+    \label{eq:hk:2}
+    w(x) =
+    \begin{cases}
+      -1 & x<0 \\ 1 & x>0.
+    \end{cases}
+  \end{gather}
+  The proof that this is actually the distributional derivative is
+  left to the reader.
+\end{example}
+
+\begin{example}
+  For the derivative of the \putindex{Heaviside function}
+  in~\eqref{eq:hk:2}, we first observe that it must be zero whenever
+  $x\neq 0$, since the function is continuously differentiable
+  there. Now, we take a test function $\phi\in\co^\infty$ with support
+  in the interval $(-\epsilon,\epsilon)$ for some positive
+  $\epsilon$. Let $w'(x)$ be the derivative of $w$. Then, by
+  integration by parts
+  \begin{gather*}
+    \int_{-\epsilon}^\epsilon w(x) \phi'(x)\dx
+    = -\int_{-\epsilon}^0 w(x)' \phi(x)\dx
+    -\int_0^\epsilon w(x)' \phi(x)\dx
+    + 2 \phi(0) = 2\phi(0),
+  \end{gather*}
+  since $w'(x) = 0$ under both integrals. Thus, $w'(x)$ is an object
+  which is zero everywhere except at zero, but its integral against a
+  test function $\phi$ is nonzero. This contradicts our notion, that
+  integrable functions can be changed on a set of measure zero without
+  changing the integral. Indeed, $w'$ is not a function in the usual
+  sense, and we write $w'(x) = 2 \delta(x)$, where $\delta(x)$ is the
+  \define{Dirac $\delta$-distribution}, which is defined by the two
+  conditions
+  \begin{gather*}
+    \begin{alignedat}{2}
+      \delta(x) &= 0, & \forall x & \neq 0
+      \\
+      \int_\R \delta(x) \phi(x)\dx &= \phi(0), \quad & \forall \phi
+      &\in \co^0(\R).
+    \end{alignedat}
+  \end{gather*}
+  We stress that $\delta$ is not an integrable function, or a function
+  at all.
+\end{example}
+
+\begin{Definition}{Wkp}
+  The \define{Sobolev space} $W^{k,p}(\domain)$ is the space
+  \begin{gather}
+    W^{k,p}(\domain) = \bigl\{
+    u\in L^p(\domain) \big|
+    \d^\alpha u\in L^p(\domain) \forall \abs{\alpha} \le k
+    \bigr\},
+  \end{gather}
+  where the derivatives are understood in weak sense. Its norm is
+  defined by
+  \begin{gather}
+    \norm{v}_{k,p}^p = \sum_{\abs{\alpha} \le k} \norm{\d^\alpha v}_{L^p(\domain)}^p.
+  \end{gather}
+  The following seminorm will be useful:
+  \begin{gather}
+    \abs{v}_{k,p}^p = \sum_{\abs{\alpha} = k} \norm{\d^\alpha v}_{L^p(\domain)}^p.
+  \end{gather}
+\end{Definition}
+
+\begin{Corollary}{wkp-embedding}
+  There holds
+  \begin{gather}
+    W^{k,p}(\domain) \subset W^{k-1,p}(\domain) \subset \dots \subset
+%    W^{1,p}(\domain) \subset
+    W^{0,p}(\domain) = L^{p}(\domain)
+  \end{gather}
+\end{Corollary}
+
+\begin{Definition}{hkp}
+  The \define{Sobolev space} $H^{k,p}(\domain)$ is the completion of
+  $C^\infty(\domain)$ with respect to the norm $\norm{\cdot}_{k,p}^p$.
+
+  In the case $p=2$, we write $H^k(\domain) = H^{k,2}(\domain)$.
+\end{Definition}
+
+\begin{Theorem*}{meyers-serrin}{Meyers-Serrin}
+  \begin{gather*}
+    H^{k,p}(\domain)\cong W^{k,p}(\domain)
+  \end{gather*}
+\end{Theorem*}
+
+\begin{example}
+  Functions, which are in $W^{k,p}(\domain)$ or not.
+  \begin{enumerate}
+  \item The function $x/\abs{x}$ is in $H^1(B_1(0))$ if $d=3$, but not
+    if $d=2$.
+  \end{enumerate}
+\end{example}
+
+\begin{Definition}{boundary-smoothness}
+  A bounded domain $\domain\subset\R^d$ is said to have $C^k$-boundary
+  or to be a $C^k$-domain, if there is a finite covering $\{U_i\}$ of
+  its boundary $\d\domain$, such that for each $U_i$ there is
+  a mapping $\Phi_i \in C^k(U_i)$ with the following properties:
+  \begin{gather}
+    \begin{split}
+      \Phi_i(\d\domain \cap U_i)
+      &\subset \left\{ \vx\in\R^d \mid x_1 = 0 \right\},\\
+      \Phi_i(\domain \cap U_i)
+      &\subset \left\{ \vx\in\R^d \mid x_1 > 0 \right\}.      
+    \end{split}
+  \end{gather}
+  The domain is called Lipschitz, if such a construction exists with
+  Lipschitz-continuous mappings.
+\end{Definition}
+
+\begin{Definition}{continuous-embedding}
+  We say that a normed vector space $U \subset V$ is
+  \define{continuously embedded} in another space $V$, in symbolic
+  language
+  \begin{gather}
+    U \hookrightarrow V,
+  \end{gather}
+  if the inclusion mapping $U \ni x \mapsto x\in V$ is continuous, that is, there is a constant $c$ such that
+  \begin{gather}
+    \norm{x}_V \le c \norm{x}_U.
+  \end{gather}
+  If the spaces $U$ and $V$ consist of equivalence classes, the
+  inclusion may involve choosing representatives on the left or on the
+  right.
+\end{Definition}
+
+\begin{Theorem}{sobolev-embedding}
+  Let $\domain\subset\R^d$ be a bounded Lipschitz domain. Assume
+  $k_1 \le k_2$ and $p,q\in [1,\infty)$. For the space
+  $W^{k,p}(\domain)$ define the number
+  \begin{gather}
+    s = k-\tfrac dp.
+  \end{gather}
+  Then, if $s_1 \ge s_2$, we have the continuous embedding
+  \begin{gather}
+    W^{k_1,p_1}(\domain) \hookrightarrow  W^{k_2,p_2}(\domain).
+  \end{gather}
+\end{Theorem}
+
+\begin{Lemma}{trace-continuous}
+  Let $\domain$ be a bounded Lipschitz domain in $\R^d$. Then, there
+  exists a constant $c$ only depending on $\domain$, such that every
+  function $u\in H^1(\domain) \cap C^1(\overline{\domain})$ admits the
+  estimate
+  \begin{gather}
+    \norm{u}_{L^p(\d\domain)} \le c \norm{u}_{W^{1,p}(\domain)}.
+  \end{gather}
+\end{Lemma}
+
+\begin{Theorem*}{trace}{Trace theorem}
+  Let $\domain$ be a bounded Lipschitz domain in $\R^d$. Then, every
+  function $u\in W^{1,p}(\domain)$ has a well defined trace
+  $\gamma u \in L^p(\d\domain)$ and there holds
+  \begin{gather}
+    \norm{\gamma u}_{L^p(\d\domain)} \le c \norm{u}_{W^{1,p}(\domain)},
+  \end{gather}
+  with the same constant as in the previous lemma. We simply write
+  \begin{gather}
+    u_{|\d\domain} = \gamma u.
+  \end{gather}
+\end{Theorem*}
+
+\begin{remark}
+  The trace theorem guarantees that the imposition of Dirichlet
+  boundary conditions on Sobolev functions is a reasonable
+  operation. In particular, it ensures that $H^1(\domain)$ and
+  $H^1_0(\domain)$ are indeed different spaces. The same does not
+  hold, if we complete $C^1(\domain)$ and $C^1_0(\domain)$ in
+  $L^2(\domain)$.
+
+  Remarkably, we set out defining $W^{1,p}(\domain)$ as a subset of
+  $L^p(\domain)$, which consists of functions ``defined up to a set of
+  measure zero''. Now it turns out, that functions in
+  $W^{1,p}(\domain)$ can have well-defined values on certain sets of
+  measure zero. From the point of view of subsets of $L^p(\domain)$,
+  this is always to be understood by choosing representatives of the
+  equivalence class. This is also the reason why we write
+  ``$\hookrightarrow$'' instead of ``$\subset$''.
+\end{remark}
+
+\begin{Definition}{hoelder-spaces}
+  A function $f \in C^0(\domain)$ is Hölder-continuous with exponent
+  $\gamma \in (0,1]$, if there is a constant $C_f$ such that
+  \begin{gather}
+    \abs{f(\vx)-f(\vy)} \le C_f \abs{\vx-\vy}^\gamma \qquad\forall \vx,\vy\in\domain.
+  \end{gather}
+  In particular, for $\gamma = 1$, we obtain Lipschitz-continuity.
+
+  We define the Hölder space $C^{k,\gamma}$ of $k$-times continuouly
+  differentiable functions such that all derivatives of order $k$ are
+  Hölder-continuous. The norm is
+  \begin{gather}
+    \norm{u}_{C^{k,\gamma}(\domain)} = \max_{j\le k} \sup_{\vx,\vy\in\domain}
+    \frac{\abs{u(\vx)-u(\vy)}}{\abs{\vx-\vy}^\gamma}
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem}{hoelder-embedding}
+  Let $\domain\subset\R^d$ be a bounded Lipschitz domain.
+  If $s = k-\tfrac dp > j+\gamma$, then every function in $W^{k,p}$ has a
+  representative in $C^{j,\gamma}$. We write
+  \begin{gather}
+    W^{k,p}(\domain) \hookrightarrow C^{j,\gamma}(\domain).
+  \end{gather}
+\end{Theorem}
+
+\begin{Corollary}{sobolev-continuous}
+  Elements of Sobolev spaces are continuous if the derivative
+  order is sufficiently high. In particular,
+  \begin{gather}
+    \begin{aligned}
+      H^1(\domain) & \hookrightarrow C(\domain) & d&= 1, \\
+      H^2(\domain) & \hookrightarrow C(\domain) & d&= 2,3.
+    \end{aligned}
+  \end{gather}
+\end{Corollary}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
