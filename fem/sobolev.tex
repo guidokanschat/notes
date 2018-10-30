@@ -171,12 +171,11 @@
 \end{Definition}
 
 \begin{Theorem}{sobolev-embedding}
-  Let $\domain\subset\R^d$ be a bounded Lipschitz domain. Assume
-  $k_1 \le k_2$ and $p,q\in [1,\infty)$. For the space
+  Let $\domain\subset\R^d$ be a bounded Lipschitz domain. For the space
   $W^{k,p}(\domain)$ define the number
   \begin{gather}
     s = k-\tfrac dp.
-  \end{gather}
+  \end{gather} Assume $k_1 \le k_2$ and $p_1,p_2\in [1,\infty)$.
   Then, if $s_1 \ge s_2$, we have the continuous embedding
   \begin{gather}
     W^{k_1,p_1}(\domain) \hookrightarrow  W^{k_2,p_2}(\domain).
@@ -228,7 +227,8 @@
   A function $f \in C^0(\domain)$ is Hölder-continuous with exponent
   $\gamma \in (0,1]$, if there is a constant $C_f$ such that
   \begin{gather}
-    \abs{f(\vx)-f(\vy)} \le C_f \abs{\vx-\vy}^\gamma \qquad\forall \vx,\vy\in\domain.
+    \abs{f(\vx)-f(\vy)} \le C_f \abs{\vx-\vy}^\gamma
+    \qquad\forall \vx,\vy\in\domain.
   \end{gather}
   In particular, for $\gamma = 1$, we obtain Lipschitz-continuity.
 
@@ -236,8 +236,8 @@
   differentiable functions such that all derivatives of order $k$ are
   Hölder-continuous. The norm is
   \begin{gather}
-    \norm{u}_{C^{k,\gamma}(\domain)} = \max_{j\le k} \sup_{\vx,\vy\in\domain}
-    \frac{\abs{u(\vx)-u(\vy)}}{\abs{\vx-\vy}^\gamma}
+    \norm{u}_{C^{k,\gamma}(\domain)} = \max_{\abs{\alpha}\le k} \sup_{\vx,\vy\in\domain}
+    \frac{\abs{\d^\alpha u(\vx)-\d^\alpha u(\vy)}}{\abs{\vx-\vy}^\gamma}
   \end{gather}
 \end{Definition}
 

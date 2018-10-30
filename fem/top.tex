@@ -2,8 +2,6 @@
 %\usepackage{hyperref}
 \usepackage{tikz}
 \usetikzlibrary{svg.path}
-\usepackage[backend=bibtexu,style=alphabetic]{biblatex}
-\addbibresource{all}
 \excludecomment{solution}
 
 \def\constref#1{C_{\text{\ref{#1}}}}
@@ -32,6 +30,9 @@
 \end{intro}
 \input{sobolev}
 
+\section{Regularity of Weak Solutions}
+\input{pde-analysis}
+
 %\chapter{Discontinuous Galerkin methods}
 %\section{Nitsche's method}
 %\label{sec:nitsches-method}
@@ -42,6 +43,10 @@
 %\input{ip}
 %\subsection{Bounded formulation in $H^1$}
 %\input{ip-lifting}
+
+\bibliographystyle{apalike}
+\bibliography{all}
+\printindex
 
 %%% Local Variables:
 %%% mode: latex
