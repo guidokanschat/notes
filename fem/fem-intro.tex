@@ -1,0 +1,116 @@
+\begin{Definition}{mesh}
+  A \define{mesh} $\mesh$ is a nonoverlapping subdivision of the
+  domain $\domain$ into polyhedral \define{cell}s denoted by $\cell$,
+  for instance simplices, quadrilaterals, or hexahedra. The
+  $d-1$-dimensional facets of a cell are denoted by $\face$, the
+  vertices by $\vertex$. Cells are typically considered open sets.
+
+  A mesh $\mesh$ is called regular, if each facet
+  $\face \subset \d\cell$ of the cell $\cell\in\mesh$ is either a
+  facet of another cell $\cell\prime$, that is,
+  $\overline{\face} = \overline{\cell} \cap \overline{\cell\prime}$,
+  or a subset of $\d\domain$.
+\end{Definition}
+
+\begin{Lemma}{mesh-continuity}
+  Let $\mesh$ be a subdivision of $\domain$, and let $u$ be a function on $\domain$, such that $u_{|\cell} \in C^1(\cell)$. Then,
+  \begin{gather}
+    u\in H^1(\domain)
+    \quad \Longleftrightarrow\quad
+    u\in C(\overline\domain).
+  \end{gather}
+\end{Lemma}
+
+\begin{Definition}{barycentric-coordinates}
+  A simplex $\cell\in \R^d$ with vertices $\vertex_0,\dots,\vertex_d$
+  is described by a set of $d+1$ \define{barycentric coordinates}
+  $\vlambda = (\lambda_0,\dots,\lambda_d)^T$ such that
+  \begin{xalignat}2
+    0\le\lambda_i &\le 1& i&=0,\dots,d;\\
+    \lambda_i(\vertex_j) &= \delta_{ij}& i,j&=0,\dots,d\\
+    \sum \lambda_i(\vx) &= 1,
+  \end{xalignat}
+  and there holds
+  \begin{gather}
+    T = \Bigl\{x\in\R^d \Big| x = \sum \vertex_k\lambda_k \Bigr\}.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{barycentric-affine}
+  There is a matrix $B_T\in \R^{d+1\times d}$ and a vector
+  $b_T\in\R^{d+1}$, such that
+  \begin{gather}
+    \vlambda = B_T\vx + b_T.
+  \end{gather}
+\end{Lemma}
+
+\begin{Corollary}{barycentric-interpolation}
+  The barycentric coordinates $\lambda_0,\dots,\lambda_d$ are the
+  linear Lagrange interpolating functions for the points
+  $\vertex_0,\dots,\vertex_d$. In particular, $\lambda_k \equiv 0$ on
+  the facet not containing $\vertex_k$.
+\end{Corollary}
+
+\begin{example}
+  We can use barycentric coordinates to define interpolating polynomials on
+  simplicial meshes easily, as in
+  Table~\ref{tab:barycentric-shapes}.
+  \begin{table}[tp]
+    \centering
+    \begin{tabular}{|c|l|}
+      \hline Degrees of freedom
+      & Shape functions \\\hline
+      \adjustbox{valign=center,margin=3pt}{\includegraphics[width=2cm]{mixed/fig/p1-p.tikz}}
+      &
+        {\begin{minipage}[b]{6cm}
+          \begin{gather*}
+            \phi_i = \lambda_i,
+            \quad i=0,1,2
+          \end{gather*}
+        \end{minipage}}
+      \\\hline
+      \adjustbox{valign=center,margin=3pt}{\includegraphics[width=2cm]{mixed/fig/p2-p.tikz}}
+      &
+        {\begin{minipage}[b]{6cm}
+          \begin{xalignat*}2
+            \phi_{ii} &= 2\lambda_i^2 - \lambda_i,
+            &i&=0,1,2\\
+            \phi_{ij} &= 4\lambda_i\lambda_j
+            &j&\neq i
+          \end{xalignat*}
+        \end{minipage}}
+        \\\hline
+      \adjustbox{valign=center,margin=3pt}{\includegraphics[width=2cm]{mixed/fig/p3-p.tikz}}
+      &
+        {\begin{minipage}[b]{6cm}
+          \begin{xalignat*}2
+          \phi_{iii} &= \tfrac12 \lambda_i(3\lambda_i-1)(3\lambda_i-2)
+          &i&=0,1,2\\
+          \phi_{ij} &= \tfrac92\lambda_i\lambda_j(3\lambda_j-1)
+          &j&\neq i\\
+          \phi_0 &= 27\lambda_0\lambda_1\lambda_2
+        \end{xalignat*}
+        \end{minipage}}
+        \\\hline
+    \end{tabular}
+    \caption{Degrees of freedom and shape functions of simplicial elements
+      in terms of barycentric coordinates}
+    \label{tab:barycentric-shapes}
+  \end{table}
+\end{example}
+
+\begin{remark}
+  The functions $\lambda_i(x)$ are the shape functions of the linear
+  $P_1$ element on $T$. They allow us to define basis functions on the
+  cell $T$ without use of a reference element $\widehat T$.
+
+  Note that $\lambda_i\equiv 0$ on the face opposite to the
+  vertex $x_i$.
+\end{remark}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
