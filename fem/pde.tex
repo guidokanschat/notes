@@ -1,3 +1,4 @@
+\subsection{Linear second order PDE}
 
 \begin{Notation}{coordinates}
   Dimension of ``physical space'' will be denoted by $d$.  We denote
@@ -152,6 +153,7 @@
   deferred to the next theorem.
 \end{notes}
 
+\subsection{Variational principle and weak formulation}
 \begin{Theorem}{Dirichlet-variational-principle}
   A function $u\in V_g$ minimizes the Dirichlet energy, if and only if
   there holds
@@ -273,6 +275,58 @@
   The weak formulation in \slideref{Definition}{weak-formulation} has
   a unique solution.
 \end{Theorem}
+
+\subsection{Boundary conditions in weak form}
+
+\begin{Lemma}{neumann-weak}
+  Let $u\in V=H^1(\domain)$ be a solution to the weak formulation
+  \begin{gather}
+    \int_{\domain} \nabla u\cdot\nabla v \dx
+    = \int_{\domain} fv\dx, \qquad\forall v\in V(\domain).
+  \end{gather}
+  If $u\in C^2(\domain) \cap C^1(\overline{\domain})$ and $\domain$
+  has $C^1$-boundary, then $u$ solves the boundary value problem
+  \begin{gather}
+    \begin{aligned}
+      -\Delta u &= f &\qquad \text{in } &\domain\\
+      \d_n u &= 0 &\text{on } &\d\domain.
+    \end{aligned}
+  \end{gather}
+\end{Lemma}
+
+\begin{Definition}{natural-bc}
+  A boundary condition inherent in the weak formulation and not
+  explicitly stated is called \define{natural boundary condition}. If
+  boundary values are obtained by constraining the function space it
+  is called \define{essential boundary condition}.
+
+  We also call a boundary condition in strong form, if it is a
+  constraint on the function space, and in weak form, if it is part of
+  the weak formulation.
+\end{Definition}
+
+\begin{remark}
+  Dirichlet and homogeneous Neumann boundary conditions are examples
+  for essential and natural boundary conditions.
+\end{remark}
+
+\begin{Lemma}{mixed-bc-weak}
+  The boundary value problem
+  \begin{gather}
+    \begin{aligned}
+      -\Delta u &= f &\qquad \text{in } &\domain\\
+      u &= 0 &\text{on } &\Gamma_D \subset \d\domain\\
+      \d_n u + \alpha u &= g &\text{on } &\Gamma_R \subset \d\domain,
+    \end{aligned}
+  \end{gather}
+  has the weak form: find $u\in V$ such that
+  \begin{gather}
+    \int_{\domain} \nabla u\cdot\nabla v \dx
+    + \int_{\Gamma_R}\alpha u v \ds
+    = \int_{\domain} f v\dx
+    + \int_{\Gamma_R} g v \ds, \qquad\forall v\in V(\domain).    
+  \end{gather}
+\end{Lemma}
 
 %%% Local Variables: 
 %%% mode: latex
