@@ -90,14 +90,33 @@
   $\nodal_\cell^j(f) = \nodal^i(f)$ for all cells $\cell$ and local
   indices $j$. The converse is not true due to the identification
   process.
+\end{Notation}
 
-  We refer to this mapping as the mapping between global and local
-  indices. It induces a ``natural'' basis $\{v_i\}$ of $V_\mesh$ by
+\begin{Definition}{local-global}
+  We refer to the mapping between $\nodal^i$ and $\nodal_\cell^j$ as
+  the mapping between global and local indices
+  \begin{gather}
+    \iota: (\cell, j) \mapsto i.
+  \end{gather}
+  It induces a
+  ``natural'' basis $\{v_i\}$ of $V_\mesh$ by
   \begin{gather}
     v_{i|\cell} = p_{\cell,j},
   \end{gather}
-  where $\{p_{\cell,j}\}$ is the shape function basis on $\cell$.
-\end{Notation}
+  where $\{p_{\cell,j}\}$ is the shape function basis on $\cell$. For
+  each $\nodal^i$, we define $\mesh(\nodal^i)$ as the set of cells
+  $\cell$ sharing the node functional $\nodal^i$, and
+  \begin{gather}
+    \domain\left(\nodal^i\right) = \bigcup_{\cell\in \mesh(\nodal^i)} \cell.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{fe-support}
+  The support of the basis function $v_i\in V_\mesh$ is
+  \begin{gather*}
+    \operatorname{supp}(v_i) \subset \domain\left(\nodal^i\right).
+  \end{gather*}
+\end{Lemma}
 
 \begin{Lemma}{mesh-continuity}
   Let $\mesh$ be a subdivision of $\domain$, and let $u$ be a function
@@ -213,7 +232,106 @@
   vertex $x_i$.
 \end{remark}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Galerkin equations and Céa's lemma}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{Definition*}{galerkin-approximation}{Galerkin approximation}
+  Let $u\in V$ be determined by the weak formulation
+  \begin{gather*}
+    a(u,v) = f(v) \qquad\forall v\in V,
+  \end{gather*}
+  where $V$ is a suitable function space including boundary
+  conditions. The \define{Galerkin approximation}, also called
+  \define{conforming approximation} of this problem reads as follows:
+  choose a subspace $V_n\subset V$ of dimension $n$ and find
+  $u_n\in V_n$, such that
+  \begin{gather*}
+    a(u_n,v_n) = f(v_n) \qquad\forall v_n\in V_n.
+  \end{gather*}
+  We will refer to this equation as the \define{discrete problem}.
+\end{Definition*}
+
+\begin{Corollary*}{galerkin-equations}{Galerkin equations}
+  After choosing a basis $\{v_i\}$ for $V_n$, the Galerkin equations are
+  equivalent to a linear system
+  \begin{gather}
+    \mata \vu = \vf,
+  \end{gather}
+  with $\mata\in\R^{n\times n}$ and $\vf\in \R^n$ defined by
+  \begin{gather}
+    a_{ij} = a(v_j, v_i), \qquad f_i = f(v_i).
+  \end{gather}
+\end{Corollary*}
+
+\begin{Lemma}{discrete-lax-milgram}
+  If the lemma of Lax-Milgram holds for $a(.,.)$ on $V$, it holds on
+  $V_n\subset V$. In particular, solvability of the Galerkin equations
+  is implied.
+\end{Lemma}
+
+\begin{Lemma*}{cea}{Céa}
+  Let $a(.,.)$ be a bounded and elliptic bilinear form on the Hilbert
+  space $V$. Let $u \in V$ and $u_n\in V_n$ be the solution to the
+  weak formulation and its Galerkin approximation, respectively. Then,
+  there holds
+  \begin{gather}
+    \norm{u-u_h}_V \le \frac{M}{\alpha}
+    \inf_{v_n\in V_n}\norm{u-v_h}_V.
+  \end{gather}
+\end{Lemma*}
+
+\begin{Lemma}{fe-matrix}
+  For a finite element discretization of Poisson's equation with the
+  space $V_\mesh$, the Galerkin equations can be computed using the
+  following formulas:
+  \begin{alignat*}3
+    a_{ij} &= \int\limits_\domain \nabla v_j \cdot \nabla v_i \dx
+    &&= \int\limits_{\domain(\nodal^i)} \nabla v_j \cdot \nabla v_i \dx
+    &&= \sum_{\cell\in\mesh(\nodal^i)}\int\limits_\cell \nabla v_j \cdot \nabla v_i \dx\\
+    f_{i} &= \int\limits_\domain f v_i \dx
+    &&= \int\limits_{\domain(\nodal^i)} f v_i \dx
+    &&= \sum_{\cell\in\mesh(\nodal^i)}\int\limits_\cell f v_i \dx
+  \end{alignat*}
+\end{Lemma}
+
+\begin{Algorithm*}{matrix-assembling}{Assembling the matrix}
+  \begin{enumerate}
+  \item Start with a matrix $\mata = 0 \in \R^{n\times n}$
+  \item Loop over all cells $\cell\in\mesh$
+  \item On each cell $\cell$, compute a cell matrix
+    $\mata_\cell \in \R^{n_\cell\times n_\cell}$ by integrating
+    \begin{gather}
+      a_{\cell,ij} = \int_\cell \nabla p_{\cell,j}\cdot\nabla p_{\cell,i}\,dx,
+    \end{gather}
+    where $\{p_{\cell,i}\}$ is the shape function basis.
+  \item Assemble the cell matrices into the global matrix by
+    \begin{gather}
+      a_{\iota(i),\iota(j)} = a_{\iota(i),\iota(j)} + a_{\cell,ij}
+      \qquad i,j = 1,\dots,n_\cell.
+    \end{gather}
+  \end{enumerate}
+\end{Algorithm*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Mapped finite elements}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{Definition}{mapped-mesh}
+  
+\end{Definition}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Shape functions on tensor product cells}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% Local Variables: 
 %%% mode: latex

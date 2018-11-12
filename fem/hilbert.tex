@@ -368,11 +368,13 @@
 \begin{Definition}{bilinear-form}
   A \define{bilinear form} $a(.,.)$ on a Hilbert space $V$ is a
   mapping $a\colon V\times V \to \R$, which is linear in both
-  arguments. The bilinear form is \textbf{bounded}, if
+  arguments. The bilinear form is \textbf{bounded}, if there is a
+  constant $M$ such that
   \begin{gather}
-    a(u,v) \le \norm{u}_V \norm{v}_V, \qquad \forall u,v\in V.
+    a(u,v) \le M \norm{u}_V \norm{v}_V, \qquad \forall u,v\in V.
   \end{gather}
-  It is called \define{coercive} or \define{elliptic}, if
+  It is called \define{coercive} or \define{elliptic}, if there is a
+  constant $\alpha$ such that
   \begin{gather}
     a(u,u) \ge \alpha \norm{u}_V^2 \qquad\forall u\in V.
   \end{gather}

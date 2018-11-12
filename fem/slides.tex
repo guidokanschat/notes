@@ -119,7 +119,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame {\input{blocks/Definition-mesh.tex}}
-\frame {\input{blocks/Lemma-mesh-continuity.tex}}
+\frame {\input{blocks/Definition-finite-element.tex}
+\input{blocks/Notation-dofs.tex}}
+\frame {\input{blocks/Definition-node-topology.tex}
+  \input{blocks/Definition-fe-space.tex}}
+\frame {\input{blocks/Notation-global-local.tex}}
+\frame {\input{blocks/Definition-local-global.tex}}
+\frame {\input{blocks/Lemma-fe-support.tex}}
+\frame {\input{blocks/Lemma-mesh-continuity.tex}
+  \input{blocks/Lemma-nodal-continuity.tex}}
+
 \frame {\input{blocks/Definition-barycentric-coordinates.tex}}
 \frame {\input{blocks/Lemma-barycentric-affine.tex}
   \input{blocks/Corollary-barycentric-interpolation.tex}}
@@ -180,6 +189,11 @@
   \end{columns}
 \end{frame}
 
+\frame {\input{blocks/Definition-galerkin-approximation.tex}}
+\frame {\input{blocks/Corollary-galerkin-equations.tex}}
+\frame {\input{blocks/Lemma-discrete-lax-milgram.tex}
+  \input{blocks/Lemma-cea.tex}}
+\frame {\input{blocks/Lemma-fe-matrix.tex}}
 
 
 \frame{\bibliographystyle{alpha}
