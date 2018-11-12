@@ -322,10 +322,138 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{Definition}{mapped-mesh}
-  
+  A mapped mesh $\mesh$ is a set of cells $\cell$, which are defined
+  by a single \define{reference cell} $\refcell$ and individual
+  smooth mappings
+  \begin{gather}
+    \begin{split}
+      \Phi_\cell \colon \refcell &\to \R^d\\
+      \Phi_\cell(\refcell) &= \cell.
+    \end{split}
+  \end{gather}
+  The definition extends to small sets of reference cells, for
+  instance for triangles and quadrilaterals.
 \end{Definition}
 
+\begin{Example}{mapping-linear}
+  Let the reference triangle $\refcell$ be defined by
+  \begin{gather}
+    \refcell = \left\{
+      \begin{pmatrix}
+        \refx\\\refy
+      \end{pmatrix}
+      \middle|
+      \refx,\refy >0, \refx+\refy < 1
+    \right\}.
+  \end{gather}
+  Then, every cell $\cell$ spanned by the vertices $\vertex_0$,
+  $\vertex_1$, and $\vertex_2$ is obtained by mapping $\refcell$ by
+  the \putindex{affine mapping}
+  \begin{gather}
+    \Phi_\cell(\refvx) =
+    \begin{pmatrix}
+      X_1-X_0 & X_2 - X_0 \\ Y_1-Y_0 & Y_2 - Y_0
+    \end{pmatrix}
+    \begin{pmatrix}
+      \refx \\ \refy
+    \end{pmatrix}
+    +
+    \begin{pmatrix}
+      X_0 \\ Y_0
+    \end{pmatrix} =: \matb_\cell \refvx + \vb_\cell
+  \end{gather}
+\end{Example}
 
+\begin{Example}{mapping-bilinear}
+  The reference cell for a quadrilateral is the reference square
+  $\refcell = (0,1)^2$. Every quadrilateral $\cell$ spanned by the
+  vertices $\vertex_0$ to $\vertex_3$ is then obtained by the
+  \putindex{bilinear mapping}
+  \begin{gather}
+    \Phi_\cell(\refvx)
+    = \vertex_0 (1-\refx)(1-\refy)
+    + \vertex_1 \refx(1-\refy)
+    + \vertex_2 (1-\refx)\refy
+    + \vertex_3 \refx\refy
+  \end{gather}
+\end{Example}
+
+\begin{Definition}{mapped-fe}
+  Mapped shape functions $\{p_i\}$ on a mesh cell $\cell$ are defined by a
+  set of shape functions $\{\refp_i\}$ on the reference cell
+  $\refcell$ through \define{pull-back}
+  \begin{gather}
+    \begin{split}
+      p_i(\vx) &= \refp_i\left(\Phi^{-1}(\vx)\right) = \refp_i(\refvx),\\
+      \nabla p_i(\vx) &= \nabla\Phi^{-T}(\refvx)\refgrad\refp_i(\refvx)
+    \end{split}
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{mapped-norms-affine}
+  Let $\refcell$ be the reference triangle and let $\cell$ be a
+  triangular mesh cell with mapping
+  $\vx = \Phi_\cell(\refvx) = \matb \refvx + \vb$. Let there hold
+  $u(\vx) = \refu(\refvx)$. Then, $u\in H^k(\cell)$ if and only if
+  $\refu\in H^k(\refcell)$ and we have with some constant $c$ the
+  estimates
+  \begin{gather}
+    \begin{split}
+      \snorm{\refu}_{k,\refcell}
+      &\le c \norm{\matb}^k (\det \matb)^{-\nicefrac12}
+      \snorm{u}_{k,\cell},\\
+      \snorm{u}_{k,\cell}
+      &\le c \norm{\matb^{-1}}^k (\det \matb)^{\nicefrac12}
+      \snorm{\refu}_{k,\refcell}.
+    \end{split}
+  \end{gather}
+\end{Lemma}
+
+\begin{Lemma}{shape-regular-transformation}
+  For a cell $\cell$, let $R$ be the radius of the circumscribed
+  circle and $\rho$ the radius of the inscribed circle. Then,
+  \begin{gather}
+    \norm{\matb} \le c R, \qquad \norm{\matb^{-1}} \le c \rho^{-1}.
+  \end{gather}
+\end{Lemma}
+
+\begin{Assumption}{mapping-decomposition}
+  For more general mappings $\Phi\colon \refcell\to \cell$, we
+  make the assumption, that they can be decomposed into three factors,
+  \begin{gather}
+    \Phi = \Phi_W \circ \Phi_S \circ \Phi_O,
+  \end{gather}
+  where $\Phi_O$ is a combination of translation and rotation,
+  $\Phi_S$ is a scaling with a characteristic length $h_T$, and
+  $\Phi_W$ is a warping function not changing the characteristic length.
+\end{Assumption}
+
+\begin{Lemma}{scaling-1}
+  Assume there are constants
+  $0 < M_\cell, m_\cell, d_\cell, D_\cell$, such that
+  \begin{gather}
+    \begin{split}
+      \norm{\nabla\Phi_W(\refvx)} \le M_\cell,
+      \\
+      \norm{\nabla\Phi_W^{-1}(\refvx)} \le m_\cell^{-1} ,
+      \\
+      d^2_\cell \le \det \nabla\Phi_W(\refx)) \le D^2_\cell.      
+    \end{split}
+  \end{gather}
+  for all $\refvx\in\refcell$. Then, for $k=0,1$
+  \begin{gather}
+    \begin{split}
+      \snorm{\refu}_{k,\refcell}
+      &\le \frac{M_\cell}{d_\cell}  h_\cell^{k-\nicefrac12}
+      \snorm{u}_{k,\cell},\\
+      \snorm{u}_{k,\cell}
+      &\le \frac{D_\cell}{m_\cell} h_\cell^{\nicefrac12-k}
+      \snorm{\refu}_{k,\refcell}.
+    \end{split}
+  \end{gather}
+  This extend to higher derivative under assumptions on higher
+  derivatives of $\Phi_\cell$.
+\end{Lemma}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
