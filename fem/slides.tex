@@ -118,84 +118,87 @@
 \frame{\tableofcontents[currentsection,hideothersubsections]}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame {\input{blocks/Definition-facets.tex}
-  \input{blocks/Definition-mesh.tex}}
-\frame {\input{blocks/Definition-finite-element.tex}
-\input{blocks/Notation-dofs.tex}}
-\frame {\input{blocks/Definition-node-topology.tex}
-  \input{blocks/Definition-fe-space.tex}}
-\frame {\input{blocks/Notation-global-local.tex}}
-\frame {\input{blocks/Definition-local-global.tex}}
-\frame {\input{blocks/Lemma-fe-support.tex}}
-\frame {\input{blocks/Lemma-mesh-continuity.tex}
-  \input{blocks/Lemma-nodal-continuity.tex}}
+% \frame {\input{blocks/Definition-facets.tex}
+%   \input{blocks/Definition-mesh.tex}}
+% \frame {\input{blocks/Definition-finite-element.tex}
+% \input{blocks/Notation-dofs.tex}}
+% \frame {\input{blocks/Definition-node-topology.tex}
+%   \input{blocks/Definition-fe-space.tex}}
+% \frame {\input{blocks/Notation-global-local.tex}}
+% \frame {\input{blocks/Definition-local-global.tex}}
+% \frame {\input{blocks/Lemma-fe-support.tex}}
+% \frame {\input{blocks/Lemma-mesh-continuity.tex}
+%   \input{blocks/Lemma-nodal-continuity.tex}}
 
-\frame {\input{blocks/Definition-barycentric-coordinates.tex}}
-\frame {\input{blocks/Lemma-barycentric-affine.tex}
-  \input{blocks/Corollary-barycentric-interpolation.tex}}
+% \frame {\input{blocks/Definition-barycentric-coordinates.tex}}
+% \frame {\input{blocks/Lemma-barycentric-affine.tex}
+%   \input{blocks/Corollary-barycentric-interpolation.tex}}
 
-\begin{frame}
-  \frametitle{The $P_1$ element in barycentric coordinates}
-  \begin{columns}
-    \begin{column}{.5\textwidth}
-      \begin{center}
-        \includegraphics[width=.6\textwidth]{mixed/fig/p1-p.tikz}
-      \end{center}
-    \end{column}
-    \begin{column}{.5\textwidth}
-      \begin{gather*}
-        \phi_i = \lambda_i,
-        \quad i=0,1,2
-      \end{gather*}
-    \end{column}
-  \end{columns}
-\end{frame}
+% \begin{frame}
+%   \frametitle{The $P_1$ element in barycentric coordinates}
+%   \begin{columns}
+%     \begin{column}{.5\textwidth}
+%       \begin{center}
+%         \includegraphics[width=.6\textwidth]{mixed/fig/p1-p.tikz}
+%       \end{center}
+%     \end{column}
+%     \begin{column}{.5\textwidth}
+%       \begin{gather*}
+%         \phi_i = \lambda_i,
+%         \quad i=0,1,2
+%       \end{gather*}
+%     \end{column}
+%   \end{columns}
+% \end{frame}
 
-\begin{frame}
-  \frametitle{The $P_2$ element in barycentric coordinates}
-  \begin{columns}
-    \begin{column}{.5\textwidth}
-      \begin{center}
-        \includegraphics[width=.6\textwidth]{mixed/fig/p2-p.tikz}
-      \end{center}
-    \end{column}
-    \begin{column}{.5\textwidth}
-      \begin{xalignat*}2
-        \phi_{ii} &= 2\lambda_i^2 - \lambda_i,
-        &i&=0,1,2\\
-        \phi_{ij} &= 4\lambda_i\lambda_j
-        &j&\neq i
-      \end{xalignat*}
-    \end{column}
-  \end{columns}
-\end{frame}
+% \begin{frame}
+%   \frametitle{The $P_2$ element in barycentric coordinates}
+%   \begin{columns}
+%     \begin{column}{.5\textwidth}
+%       \begin{center}
+%         \includegraphics[width=.6\textwidth]{mixed/fig/p2-p.tikz}
+%       \end{center}
+%     \end{column}
+%     \begin{column}{.5\textwidth}
+%       \begin{xalignat*}2
+%         \phi_{ii} &= 2\lambda_i^2 - \lambda_i,
+%         &i&=0,1,2\\
+%         \phi_{ij} &= 4\lambda_i\lambda_j
+%         &j&\neq i
+%       \end{xalignat*}
+%     \end{column}
+%   \end{columns}
+% \end{frame}
 
-\begin{frame}
-  \frametitle{The $P_3$ element in barycentric coordinates}
-  \begin{columns}
-    \begin{column}{.5\textwidth}
-      \begin{center}
-        \includegraphics[width=.6\textwidth]{mixed/fig/p3-p.tikz}
-      \end{center}
-    \end{column}
-    \begin{column}{.5\textwidth}
-      \begin{xalignat*}2
-        \phi_{iii} &= \tfrac12 \lambda_i(3\lambda_i-1)(3\lambda_i-2)
-        &i&=0,1,2\\
-        \phi_{ij} &= \tfrac92\lambda_i\lambda_j(3\lambda_j-1)
-        &j&\neq i\\
-        \phi_0 &= 27\lambda_0\lambda_1\lambda_2
-      \end{xalignat*}
-    \end{column}
-  \end{columns}
-\end{frame}
+% \begin{frame}
+%   \frametitle{The $P_3$ element in barycentric coordinates}
+%   \begin{columns}
+%     \begin{column}{.5\textwidth}
+%       \begin{center}
+%         \includegraphics[width=.6\textwidth]{mixed/fig/p3-p.tikz}
+%       \end{center}
+%     \end{column}
+%     \begin{column}{.5\textwidth}
+%       \begin{xalignat*}2
+%         \phi_{iii} &= \tfrac12 \lambda_i(3\lambda_i-1)(3\lambda_i-2)
+%         &i&=0,1,2\\
+%         \phi_{ij} &= \tfrac92\lambda_i\lambda_j(3\lambda_j-1)
+%         &j&\neq i\\
+%         \phi_0 &= 27\lambda_0\lambda_1\lambda_2
+%       \end{xalignat*}
+%     \end{column}
+%   \end{columns}
+% \end{frame}
 
-\frame {\input{blocks/Definition-galerkin-approximation.tex}}
-\frame {\input{blocks/Corollary-galerkin-equations.tex}}
-\frame {\input{blocks/Lemma-discrete-lax-milgram.tex}
-  \input{blocks/Lemma-cea.tex}}
-\frame {\input{blocks/Lemma-fe-matrix.tex}}
+% \frame {\input{blocks/Definition-galerkin-approximation.tex}}
+% \frame {\input{blocks/Corollary-galerkin-equations.tex}}
+% \frame {\input{blocks/Lemma-discrete-lax-milgram.tex}
+%   \input{blocks/Lemma-cea.tex}}
+% \frame {\input{blocks/Lemma-fe-matrix.tex}}
 \frame {\input{blocks/Algorithm-matrix-assembling.tex}}
+
+\subsection{Mapped finite elements}
+
 \frame {\input{blocks/Definition-mapped-mesh.tex}}
 \frame {\input{blocks/Example-mapping-linear.tex}}
 \frame {\input{blocks/Example-mapping-bilinear.tex}}
@@ -204,6 +207,69 @@
 \frame {\input{blocks/Lemma-shape-regular-transformation.tex}}
 \frame {\input{blocks/Assumption-mapping-decomposition.tex}}
 \frame {\input{blocks/Lemma-scaling-1.tex}}
+
+\frame {\input{blocks/Definition-tensor-product-polynomials.tex}}
+\frame {\input{blocks/Lemma-tensor-product-node-functionals.tex}}
+
+\begin{frame}
+  \frametitle{Example: $Q_2$ shape functions}
+  \begin{center}
+    \includegraphics[height=.27\textheight]{graph/shape0}
+    \includegraphics[height=.27\textheight]{graph/shape1}
+    \includegraphics[height=.27\textheight]{graph/shape2}
+
+    \includegraphics[height=.27\textheight]{graph/shape3}
+    \includegraphics[height=.27\textheight]{graph/shape4}
+    \includegraphics[height=.27\textheight]{graph/shape5}
+
+    \includegraphics[height=.27\textheight]{graph/shape6}
+    \includegraphics[height=.27\textheight]{graph/shape7}
+    \includegraphics[height=.27\textheight]{graph/shape8}
+  \end{center}
+\end{frame}
+
+\frame {\input{blocks/Lemma-tensor-product-trace.tex}}
+
+\begin{frame}
+  \frametitle{Example: $Q_2$ continuous basis (selection)}
+  \begin{center}
+    \includegraphics[height=.27\textheight]{graph/cgbasis1-02}
+    \includegraphics[height=.27\textheight]{graph/cgbasis1-03}
+    \includegraphics[height=.27\textheight]{graph/cgbasis1-15}
+    \includegraphics[height=.27\textheight]{graph/cgbasis1-16}
+
+    \includegraphics[height=.27\textheight]{graph/cgbasis1-07}
+    \includegraphics[height=.27\textheight]{graph/cgbasis1-13}
+    \includegraphics[height=.27\textheight]{graph/cgbasis1-18}
+    \includegraphics[height=.27\textheight]{graph/cgbasis1-22}
+
+    \includegraphics[height=.27\textheight]{graph/cgbasis1-17}
+    \includegraphics[height=.27\textheight]{graph/cgbasis1-23}
+    \includegraphics[height=.27\textheight]{graph/cgbasis1-20}
+    \includegraphics[height=.27\textheight]{graph/cgbasis1-24}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Example: $Q_2$ discontinuous basis (selection)}
+  \begin{center}
+    \includegraphics[height=.27\textheight]{graph/dgbasis1-08}
+    \includegraphics[height=.27\textheight]{graph/dgbasis1-15}
+    \includegraphics[height=.27\textheight]{graph/dgbasis1-20}
+    \includegraphics[height=.27\textheight]{graph/dgbasis1-27}
+
+    \includegraphics[height=.27\textheight]{graph/dgbasis1-07}
+    \includegraphics[height=.27\textheight]{graph/dgbasis1-19}
+    \includegraphics[height=.27\textheight]{graph/dgbasis1-23}
+    \includegraphics[height=.27\textheight]{graph/dgbasis1-30}
+
+    \includegraphics[height=.27\textheight]{graph/dgbasis1-26}
+    \includegraphics[height=.27\textheight]{graph/dgbasis1-33}
+    \includegraphics[height=.27\textheight]{graph/dgbasis1-24}
+    \includegraphics[height=.27\textheight]{graph/dgbasis1-22}
+  \end{center}
+\end{frame}
+
 
 
 \frame{\bibliographystyle{alpha}

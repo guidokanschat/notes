@@ -81,6 +81,20 @@
   \end{gather}
 \end{Definition}
 
+\begin{figure}[tp]
+  \begin{center}
+    \includegraphics[width=.5\textwidth]{graph/concatenation.tikz}
+  \end{center}
+  \caption{Identification of node functionals. The node functionals on
+    shared edges (separated for presentation purposes) are
+    distinguished locally as belonging to their respective cells, but
+    identical global indices are assigned to all nodes in a single
+    circle. Thus, all associated shape functions obtain the same
+    coefficient in the global basis representation of a finite element
+    function $u$.}
+  \label{fig:nodes-identification}
+\end{figure}
+
 \begin{Notation}{global-local}
   When we enumerate the degrees of freedom of $V_\mesh$, we obtain a
   global numbering of degrees of freedom $\nodal^i$ with
@@ -455,11 +469,114 @@
   derivatives of $\Phi_\cell$.
 \end{Lemma}
 
+\begin{Remark}{simple-mappings}
+  If the mapping is affine, then $d_\cell = D_\cell$. 
+\end{Remark}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Shape functions on tensor product cells}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{Definition}{tensor-product-polynomials}
+  The space of \define{tensor product polynomials} of degree $k$ in
+  $d$ dimensions, denoted as $\Q_k$ consists of polynomials of degree
+  up to $k$ in each variable. Given a basis for one-dimensional
+  polynomials $\{p_i\}_{i=0,\dots,k}$, a natural basis for $\Q_k$ is
+  obtained by
+  \begin{gather}
+    \label{eq:fem-intro:1}
+    p_{i_1,\dots,i_d}(\vx) = \prod_{k=1}^d p_{i_k}(x_k).
+  \end{gather}
+
+  
+\end{Definition}
+
+\begin{Lemma}{tensor-product-node-functionals}
+  Let $\{\nodal_j\}$ be a set of one-dimensional node functionals dual
+  to the one-dimensional basis $\{p_i\}$ such that
+  \begin{gather}
+    \nodal_j(p_i) = \delta_{ij}.
+  \end{gather}
+  Then, a dual basis for $\{p_{i_1,\dots,i_d}\}$ is obtained by
+  \begin{gather}
+    \nodal_{j_1,\dots,j_d}(p_{i_1,\dots,i_d})
+    = \prod_{k=1}^d \nodal_{j_k}(p_{i_k}).
+  \end{gather}
+\end{Lemma}
+
+\begin{Example*}{q2}{The space $\Q_2$}
+    \begin{center}
+    \includegraphics[width=.3\textwidth]{graph/shape0}
+    \includegraphics[width=.3\textwidth]{graph/shape1}
+    \includegraphics[width=.3\textwidth]{graph/shape2}
+
+    \includegraphics[width=.3\textwidth]{graph/shape3}
+    \includegraphics[width=.3\textwidth]{graph/shape4}
+    \includegraphics[width=.3\textwidth]{graph/shape5}
+
+    \includegraphics[width=.3\textwidth]{graph/shape6}
+    \includegraphics[width=.3\textwidth]{graph/shape7}
+    \includegraphics[width=.3\textwidth]{graph/shape8}
+  \end{center}
+\end{Example*}
+
+
+\begin{Lemma}{tensor-product-trace}
+  The trace of the $d$-dimensional tensor product polynomial space
+  $\Q_k$ on the $\delta$-dimensional facets of the reference cube
+  $\refcell = (0,1)^d$ is the $\delta$-dimensional space $\Q_k$.
+
+  The traces from two cells sharing the same face coincide, if the
+  mapping is continuous. Therefore, continuity can be achieved by
+  unisolvent sets of node functionals on the face.
+\end{Lemma}
+
+\begin{proof}
+  By keeping $d-\delta$ variables constant in the tensor product basis
+  in~\eqref{eq:fem-intro:1}.
+\end{proof}
+
+
+
+\begin{Example*}{cg-q2}{Continuous basis functions}
+  \begin{center}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-02}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-03}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-15}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-16}
+
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-07}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-13}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-18}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-22}
+
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-17}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-23}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-20}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-24}
+  \end{center}
+\end{Example*}
+
+\begin{Example*}{dg-q2}{Discontinuous basis functions}
+  \begin{center}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-08}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-15}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-20}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-27}
+
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-07}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-19}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-23}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-30}
+
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-26}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-33}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-24}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-22}
+  \end{center}
+\end{Example*}
 
 %%% Local Variables: 
 %%% mode: latex
