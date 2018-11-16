@@ -1,0 +1,19 @@
+\begin{thebibliography}{}
+
+\bibitem[Evans, 1998]{Evans98}
+Evans, L.~C. (1998).
+\newblock {\em Partial Differential Equations}.
+\newblock American Mathematical Society.
+
+\bibitem[Gilbarg and Trudinger, 1998]{GilbargTrudinger98}
+Gilbarg, D. and Trudinger, N.~S. (1998).
+\newblock {\em Elliptic Partial Differential Equations of Second Order}.
+\newblock Springer.
+
+\bibitem[Kondrat'ev, 1967]{Kondratev67}
+Kondrat'ev, V.~A. (1967).
+\newblock Boundary value problems for elliptic equations in domains with
+  conical or angular points.
+\newblock {\em Trans. Moscow Math. Soc.}, 16:227--313.
+
+\end{thebibliography}
