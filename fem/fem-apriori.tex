@@ -1,0 +1,30 @@
+\begin{Lemma*}{poincare}{Poincaré inequality}
+  Let $\domain$ be a bounded Lipschitz domain. For any function
+  $u\in H^1(\domain)$ define
+  \begin{gather}
+    \overline u = \frac1{\abs{\domain}} \int_\domain u(\vx) \dvx,
+  \end{gather}
+  where $\abs{\domain}$ denotes the measure of $\domain$. There exists
+  a constant $c$ depending on the domain only, such that each of the
+  following inequalities hold:
+  \begin{align}
+    \norm{u-\overline u}_{L^2(\domain)} &\le c \norm{\nabla u}_{L^2(\domain)}\\
+    \norm{u}_{L^2(\domain)}^2 &\le c \Bigl(\norm{\nabla u}_{L^2(\domain)}^2 + \overline u^2\Bigr)
+  \end{align}
+\end{Lemma*}
+
+\begin{proof}
+  The proof exceeds the tools we have developed in this class. The
+  proof in \cite[Section 7.8]{GilbargTrudinger98} seems elementary and
+  direct, but is technical and requires star-shaped domains. The proof
+  in \cite[Section 5.8.1]{Evans98} is more elegant, but it uses
+  compact embedding and is indirect, such that the constant cannot be
+  determined.
+\end{proof}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

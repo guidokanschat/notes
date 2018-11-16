@@ -38,7 +38,7 @@
   $\vu = (u_1,\dots,u_{n_\cell})^T$ there exists a unique
   $u\in \shapespace(\cell)$ such that
   \begin{gather}
-    \nodal_\cell^i(u) = \vu_i,\quad i=1,\dots,n.
+    \nodal_\cell^i(u) = \vu_i,\quad i=1,\dots,n_\cell.
   \end{gather}
 
   A \define{finite element} is a set of shape function spaces
@@ -248,6 +248,202 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Shape functions on tensor product cells}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{Definition}{tensor-product-polynomials}
+  The space of \define{tensor product polynomials} of degree $k$ in
+  $d$ dimensions, denoted as $\Q_k$ consists of polynomials of degree
+  up to $k$ in each variable. Given a basis for one-dimensional
+  polynomials $\{p_i\}_{i=0,\dots,k}$, a natural basis for $\Q_k$ is
+  the \define{tensor product basis}
+  \begin{gather}
+    \label{eq:fem-intro:1}
+    p_{i_1,\dots,i_d}(\vx)
+    = p_{i_1}\otimes \dots\otimes p_{i_d}
+    = \prod_{k=1}^d p_{i_k}(x_k).
+  \end{gather}
+\end{Definition}
+
+\begin{remark}
+  Note that the basis functions of $\Q_k$ can be denoted as products
+  of univariate polynomials, but that general polynomials in this
+  space as linear combinations of these basis functions do not have
+  this structure.
+\end{remark}
+
+\begin{Lemma}{tensor-product-node-functionals}
+  Let $\{\nodal_j\}$ be a set of one-dimensional node functionals dual
+  to the one-dimensional basis $\{p_i\}$ such that
+  \begin{gather}
+    \nodal_j(p_i) = \delta_{ij}.
+  \end{gather}
+  Then, a dual basis for $\{p_{i_1,\dots,i_d}\}$ is obtained by
+  defining on the tensor product basis of $\Q_k$
+  \begin{gather}
+    \label{eq:fem-intro:2}
+    \nodal_{j_1,\dots,j_d}(p_{i_1,\dots,i_d})
+    = \nodal_{j_1} \otimes \dots\otimes \nodal_{j_d}(p_{i_1}\otimes\dots\otimes p_{i_d})
+    = \prod_{k=1}^d \nodal_{j_k}(p_{i_k}).
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  It is a theorem in linear algebra, that a linear functional on a
+  vector space is uniquely defined by its values on a basis of the
+  space. Thus,~\eqref{eq:fem-intro:2} uniquely defines the node
+  functionals $\nodal_{j_1,\dots,j_d}$. The duality property follows
+  from the fact that
+  \begin{gather*}
+    \nodal_{j_1,\dots,j_d}(p_{i_1,\dots,i_d}) = \prod_{k=1}^d \delta_{i_k,j_k},
+  \end{gather*}
+  which is one if and only if all index pairs match and zero in all
+  other cases.
+\end{proof}
+
+\begin{example}
+  Let a basis $\{p_i\}$ of the univariate space $\P_k$ be defined by
+  Lagrange interpolation in $k+1$ points $t_j \in [0,1]$. A basis of
+  the $d$-dimensional space $\Q_k$ is then obtained by all possible
+  products
+  \begin{gather*}
+    p_{i_1,\dots,i_d}(\vx) = \prod_{k=1}^d p_{i_k}(x_k).
+  \end{gather*}
+  The node functionals following the construction above are obtained by
+  \begin{gather*}
+    \nodal_{j_1,\dots,j_d}(p_{i_1,\dots,i_d}) = \prod_{k=1}^d p_{i_k}(x_{j_k}).
+  \end{gather*}
+  Finally, we have to convert the term on the right into an
+  expression, which can be applied to any polynomial in $\Q_k$. To
+  this end, we observe that
+  \begin{gather*}
+    \prod_{k=1}^d p_{i_k}(x_{j_k}) = p_{i_1,\dots,i_d}(x_{j_1},\dots,x_{j_d}).
+  \end{gather*}
+  Therefore, we conclude that the tensor product node functionals
+  resulting from this construction are
+  \begin{gather*}
+    \nodal_{j_1,\dots,j_d}(p) = p(x_{j_1},\dots,x_{j_d}).
+  \end{gather*}
+\end{example}
+
+\begin{Example*}{q2}{The space $\Q_2$}
+    \begin{center}
+    \includegraphics[width=.3\textwidth]{graph/shape0}
+    \includegraphics[width=.3\textwidth]{graph/shape1}
+    \includegraphics[width=.3\textwidth]{graph/shape2}
+
+    \includegraphics[width=.3\textwidth]{graph/shape3}
+    \includegraphics[width=.3\textwidth]{graph/shape4}
+    \includegraphics[width=.3\textwidth]{graph/shape5}
+
+    \includegraphics[width=.3\textwidth]{graph/shape6}
+    \includegraphics[width=.3\textwidth]{graph/shape7}
+    \includegraphics[width=.3\textwidth]{graph/shape8}
+  \end{center}
+\end{Example*}
+
+
+\begin{Lemma}{tensor-product-trace}
+  The trace of the $d$-dimensional tensor product polynomial space
+  $\Q_k$ on the $\delta$-dimensional facets of the reference cube
+  $\refcell = (0,1)^d$ is the $\delta$-dimensional space $\Q_k$.
+
+  The traces from two cells sharing the same face coincide, if the
+  mapping is continuous. Therefore, continuity can be achieved by
+  unisolvent sets of node functionals on the face.
+\end{Lemma}
+
+\begin{proof}
+  By keeping $d-\delta$ variables constant in the tensor product basis
+  in~\eqref{eq:fem-intro:1}.
+\end{proof}
+
+\begin{Example*}{cg-q2}{Continuous basis functions}
+  \begin{center}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-02}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-03}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-15}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-16}
+
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-07}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-13}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-18}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-22}
+
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-17}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-23}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-20}
+    \includegraphics[height=.20\textwidth]{graph/cgbasis1-24}
+  \end{center}
+\end{Example*}
+
+\begin{Example*}{dg-q2}{Discontinuous basis functions}
+  \begin{center}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-08}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-15}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-20}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-27}
+
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-07}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-19}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-23}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-30}
+
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-26}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-33}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-24}
+    \includegraphics[height=.20\textwidth]{graph/dgbasis1-22}
+  \end{center}
+\end{Example*}
+
+\begin{example}
+  As a second example, we choose $d=2$ and the univariate space $\P_2$ with node functionals
+  \begin{gather}
+    \nodal_0(p) = p(0),
+    \quad \nodal_1(p) = \int_0^1 p(t) \dt,
+    \quad \nodal_2(p) = p(1),
+  \end{gather}
+  that is, a mixture of Lagrange interpolation and orthogonality on
+  the interval $[0,1]$. The matching basis polynomials are
+  \begin{gather}
+    p_0(t) = 3(1-t)^2 - 2(1-t),
+    \quad p_1(t) = 6 t(1-t),
+    \quad p_2(t) = 3t^2-2t.
+  \end{gather}
+  Follwoing the construction of the previous example, we obtain
+  \begin{gather}
+    \begin{aligned}
+    \nodal_{00}(p) &= p(0,0),
+    &\nodal_{02}(p) &= p(0,1),\\
+    \nodal_{20}(p) &= p(1,0),
+    &\nodal_{22}(p) &= p(1,1).
+    \end{aligned}
+  \end{gather}
+  Then,
+  \begin{gather}
+    \nodal_{01}(p_{01}) = \nodal_{01}(p_0\otimes p_1)
+    = p_0(0)\int_0^1 p_1(y)\dy
+    = \int_0^1 p(0,y) \dy.
+  \end{gather}
+  Thus, the node functional $\nodal_{01}$ is the integral over the
+  left edge of the reference square. By the same construction,
+  $\nodal_{01}$ is the integral over the right edge. $\nodal_{10}$ and
+  $\nodal_{12}$ are the integrals over the bottom and top edge,
+  respectively. Finally,
+  \begin{gather}
+    \nodal_{11}(p_{11})
+    = \int_0^1 p_1(x)\dx \int_0^1 p_1(y) \dy
+    = \int_0^1\int_0^1 p_{11}(x,y) \dx\dy.
+  \end{gather}
+  Thus, the tensor product of two line integrals becomes the integral
+  over the area.
+\end{example}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Galerkin equations and Céa's lemma}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -435,16 +631,52 @@
   For more general mappings $\Phi\colon \refcell\to \cell$, we
   make the assumption, that they can be decomposed into three factors,
   \begin{gather}
-    \Phi = \Phi_W \circ \Phi_S \circ \Phi_O,
+    \Phi = \Phi_O \circ \Phi_S \circ \Phi_W,
   \end{gather}
   where $\Phi_O$ is a combination of translation and rotation,
   $\Phi_S$ is a scaling with a characteristic length $h_T$, and
   $\Phi_W$ is a warping function not changing the characteristic length.
 \end{Assumption}
 
+\begin{example}
+  We construct the inverse of $\Phi$ in two dimensions by the
+  following three steps, using as $h_\cell$ the length of the longest
+  edge of $\cell$.
+  \begin{enumerate}
+  \item Choose $\Phi_O$ as the rigid body movement which maps the
+    longest edge to the interval $(0,h_\cell)$ on the $x$-axis and the
+    cell itself to $\cell_O$ in the positive half plane. This mapping
+    has the structure
+    \begin{gather*}
+      \Phi^{-1}_O (\vx) = \mats \vx - \mats \vertex_0,
+    \end{gather*}
+    where $\mats$ is an orthogonal matrix and $\vertex_0$ is the
+    vertex moved to the origin.
+  \item Choose the scaling
+    \begin{gather*}
+      \Phi^{-1}_S (\vx) = \tfrac1{h_\cell} \vx,
+    \end{gather*}
+    such that the longest edge of the resulting cell $\cell_S$ has the
+    longest edge equal to the interval $(0,1)$ on the $x$-axis.
+  \item Warp the cell $\cell_S$ into the reference cell $\refcell$ by
+    the mapping $\Phi^{-1}_W$. This operation leaves the longest edge
+    untouched. For triangles, it is the uniquely defined linear
+    transformation mapping the vertex not on the longest edge to
+    $(0,1)$. For quadrilaterals, it is a bilinear transformation.
+  \end{enumerate}
+
+  In the first step, we have assumed that the cell is convex, which is
+  always true for triangles. For nonconvex quadrilaterals, it can be
+  shown that the determinant of $\nabla\Phi$ changes sign inside the
+  cell, such that these cells are not useful for computations.
+
+  The idea of this decomposition is, that we separate mappings
+  changing the position, size, and shape of the cells.
+\end{example}
+
 \begin{Lemma}{scaling-1}
-  Assume there are constants
-  $0 < M_\cell, m_\cell, d_\cell, D_\cell$, such that
+  Let the typical length of a cell $\cell$ be $h_\cell$. Assume there
+  are constants $0 < M_\cell, m_\cell, d_\cell, D_\cell$, such that
   \begin{gather}
     \begin{split}
       \norm{\nabla\Phi_W(\refvx)} \le M_\cell,
@@ -454,129 +686,71 @@
       d^2_\cell \le \det \nabla\Phi_W(\refx)) \le D^2_\cell.      
     \end{split}
   \end{gather}
-  for all $\refvx\in\refcell$. Then, for $k=0,1$
+  for all $\refvx\in\refcell$. Then, for $k=0,1$ and a constant $c$
   \begin{gather}
     \begin{split}
       \snorm{\refu}_{k,\refcell}
-      &\le \frac{M_\cell}{d_\cell}  h_\cell^{k-\nicefrac12}
+      &\le c \frac{M_\cell}{d_\cell}  h_\cell^{k-\nicefrac d2}
       \snorm{u}_{k,\cell},\\
       \snorm{u}_{k,\cell}
-      &\le \frac{D_\cell}{m_\cell} h_\cell^{\nicefrac12-k}
+      &\le c \frac{D_\cell}{m_\cell} h_\cell^{\nicefrac d2-k}
       \snorm{\refu}_{k,\refcell}.
     \end{split}
   \end{gather}
-  This extend to higher derivative under assumptions on higher
+  This extends to higher derivatives under assumptions on higher
   derivatives of $\Phi_\cell$.
 \end{Lemma}
 
-\begin{Remark}{simple-mappings}
-  If the mapping is affine, then $d_\cell = D_\cell$. 
-\end{Remark}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Shape functions on tensor product cells}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{Definition}{tensor-product-polynomials}
-  The space of \define{tensor product polynomials} of degree $k$ in
-  $d$ dimensions, denoted as $\Q_k$ consists of polynomials of degree
-  up to $k$ in each variable. Given a basis for one-dimensional
-  polynomials $\{p_i\}_{i=0,\dots,k}$, a natural basis for $\Q_k$ is
-  obtained by
-  \begin{gather}
-    \label{eq:fem-intro:1}
-    p_{i_1,\dots,i_d}(\vx) = \prod_{k=1}^d p_{i_k}(x_k).
-  \end{gather}
-
-  
-\end{Definition}
-
-\begin{Lemma}{tensor-product-node-functionals}
-  Let $\{\nodal_j\}$ be a set of one-dimensional node functionals dual
-  to the one-dimensional basis $\{p_i\}$ such that
-  \begin{gather}
-    \nodal_j(p_i) = \delta_{ij}.
-  \end{gather}
-  Then, a dual basis for $\{p_{i_1,\dots,i_d}\}$ is obtained by
-  \begin{gather}
-    \nodal_{j_1,\dots,j_d}(p_{i_1,\dots,i_d})
-    = \prod_{k=1}^d \nodal_{j_k}(p_{i_k}).
-  \end{gather}
-\end{Lemma}
-
-\begin{Example*}{q2}{The space $\Q_2$}
-    \begin{center}
-    \includegraphics[width=.3\textwidth]{graph/shape0}
-    \includegraphics[width=.3\textwidth]{graph/shape1}
-    \includegraphics[width=.3\textwidth]{graph/shape2}
-
-    \includegraphics[width=.3\textwidth]{graph/shape3}
-    \includegraphics[width=.3\textwidth]{graph/shape4}
-    \includegraphics[width=.3\textwidth]{graph/shape5}
-
-    \includegraphics[width=.3\textwidth]{graph/shape6}
-    \includegraphics[width=.3\textwidth]{graph/shape7}
-    \includegraphics[width=.3\textwidth]{graph/shape8}
-  \end{center}
-\end{Example*}
-
-
-\begin{Lemma}{tensor-product-trace}
-  The trace of the $d$-dimensional tensor product polynomial space
-  $\Q_k$ on the $\delta$-dimensional facets of the reference cube
-  $\refcell = (0,1)^d$ is the $\delta$-dimensional space $\Q_k$.
-
-  The traces from two cells sharing the same face coincide, if the
-  mapping is continuous. Therefore, continuity can be achieved by
-  unisolvent sets of node functionals on the face.
-\end{Lemma}
-
 \begin{proof}
-  By keeping $d-\delta$ variables constant in the tensor product basis
-  in~\eqref{eq:fem-intro:1}.
+  By the chain rule,
+  $\nabla \Phi_T = \nabla \Phi_O \nabla \Phi_S \nabla \Phi_W$. By
+  construction, $\nabla\Phi_O$ is an orthogonal matrix, such that
+  \begin{gather*}
+    \norm{\nabla\Phi_O} = \norm{\nabla\Phi_O^{-1}} = 1.
+  \end{gather*}
+  Since it preserves angles and lengths, $\det \nabla\Phi_O =
+  1$. Since $\Phi_S$ is a multiple of the identity, we have
+  \begin{gather*}
+    \norm{\nabla\Phi_S} = h_\cell,
+    \quad\norm{\nabla\Phi_S^{-1}} = \frac1{h_\cell},
+    \quad\det\nabla\Phi_S = h_\cell^d.
+  \end{gather*}
+  By change of variables, we have
+  \begin{gather*}
+    \int_\cell u^2 \dvx
+    = \int_{\refcell} \refu^2 \abs{\det\nabla\Phi_\cell} \dvxref
+    = \int_{\refcell} \refu^2 \det\nabla\Phi_S\det\nabla\Phi_O\det\nabla\Phi_W \dvxref
+    ,
+  \end{gather*}
+  such that the case $k=0$ is proven immediately by
+  \begin{gather*}
+    h_T^d d_\cell^2 \int_{\refcell} \refu^2 \dvxref
+    \le \int_\cell u^2 \dvx
+    \le h_T^d D_\cell^2 \int_{\refcell} \refu^2 \dvxref
+  \end{gather*}
+  By the chain rule, we have
+  \begin{gather*}
+    \refgrad\refu(\refvx) = \nabla\Phi^T \nabla u(\vx)
+    = \nabla\Phi_W^T \nabla\Phi_S^T \nabla\Phi_O^T \nabla u(\vx),
+  \end{gather*}
+  such that there holds
+  \begin{gather}
+    \begin{split}
+      \abs{\refgrad\refu(\refvx)}
+      &\le \norm{\nabla\Phi_W} h_\cell \abs{\nabla u},\\
+      \abs{\nabla u(\vx)}
+      &\le \norm{\nabla\Phi_W^{-1}} h_\cell^{-1} \abs{\refgrad \refu}.
+    \end{split}
+  \end{gather}
 \end{proof}
 
 
-
-\begin{Example*}{cg-q2}{Continuous basis functions}
-  \begin{center}
-    \includegraphics[height=.20\textwidth]{graph/cgbasis1-02}
-    \includegraphics[height=.20\textwidth]{graph/cgbasis1-03}
-    \includegraphics[height=.20\textwidth]{graph/cgbasis1-15}
-    \includegraphics[height=.20\textwidth]{graph/cgbasis1-16}
-
-    \includegraphics[height=.20\textwidth]{graph/cgbasis1-07}
-    \includegraphics[height=.20\textwidth]{graph/cgbasis1-13}
-    \includegraphics[height=.20\textwidth]{graph/cgbasis1-18}
-    \includegraphics[height=.20\textwidth]{graph/cgbasis1-22}
-
-    \includegraphics[height=.20\textwidth]{graph/cgbasis1-17}
-    \includegraphics[height=.20\textwidth]{graph/cgbasis1-23}
-    \includegraphics[height=.20\textwidth]{graph/cgbasis1-20}
-    \includegraphics[height=.20\textwidth]{graph/cgbasis1-24}
-  \end{center}
-\end{Example*}
-
-\begin{Example*}{dg-q2}{Discontinuous basis functions}
-  \begin{center}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-08}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-15}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-20}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-27}
-
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-07}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-19}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-23}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-30}
-
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-26}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-33}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-24}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-22}
-  \end{center}
-\end{Example*}
+\begin{Remark}{simple-mappings}
+  We have $d_\cell = D_\cell$, if and only if the mapping is
+  affine. The quotient $M_\cell/m_\cell$ measures how much the shape
+  of the mesh cell deviates from the reference cell. For instance, it
+  is one for squares.
+\end{Remark}
 
 %%% Local Variables: 
 %%% mode: latex
