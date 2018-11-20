@@ -29,7 +29,7 @@
 \frame{\maketitle}
 \frame{\frametitle{Overview}\tableofcontents[hideallsubsections]}
 \section{Elliptic PDE and Their Weak Formulation}
-%\frame{\tableofcontents[currentsection,hideothersubsections]}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
 
 % \frame {\input{blocks/Notation-coordinates.tex}}
 % \frame {\input{blocks/Notation-partial-derivative.tex}}
@@ -197,17 +197,6 @@
 % \frame {\input{blocks/Lemma-fe-matrix.tex}}
 \frame {\input{blocks/Algorithm-matrix-assembling.tex}}
 
-\subsection{Mapped finite elements}
-
-\frame {\input{blocks/Definition-mapped-mesh.tex}}
-\frame {\input{blocks/Example-mapping-linear.tex}}
-\frame {\input{blocks/Example-mapping-bilinear.tex}}
-\frame {\input{blocks/Definition-mapped-fe.tex}}
-\frame {\input{blocks/Lemma-mapped-norms-affine.tex}}
-\frame {\input{blocks/Lemma-shape-regular-transformation.tex}}
-\frame {\input{blocks/Assumption-mapping-decomposition.tex}}
-\frame {\input{blocks/Lemma-scaling-1.tex}}
-
 \frame {\input{blocks/Definition-tensor-product-polynomials.tex}}
 \frame {\input{blocks/Lemma-tensor-product-node-functionals.tex}}
 
@@ -270,6 +259,35 @@
   \end{center}
 \end{frame}
 
+\subsection{Mapped finite elements}
+
+\frame {\input{blocks/Definition-mapped-mesh.tex}}
+\frame {\input{blocks/Example-mapping-linear.tex}}
+\frame {\input{blocks/Example-mapping-bilinear.tex}}
+\frame {\input{blocks/Definition-mapped-fe.tex}}
+\frame {\input{blocks/Lemma-mapped-norms-affine.tex}}
+\frame {\input{blocks/Lemma-shape-regular-transformation.tex}}
+\frame {\input{blocks/Assumption-mapping-decomposition.tex}}
+\frame {\input{blocks/Lemma-scaling-1.tex}}
+
+\section{A priori error analysis}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+
+\frame {\input{blocks/Lemma-poincare.tex}}
+\frame {\input{blocks/Lemma-bramble-hilbert.tex}}
+\frame {\input{blocks/Lemma-b-h-projector.tex}}
+\frame {\input{blocks/Definition-mesh-family.tex}}
+\frame {\input{blocks/Definition-nodal-interpolation.tex}
+  \input{blocks/Lemma-nodal-interpolation.tex}}
+\frame {\input{blocks/Definition-broken-sobolev-norm.tex}}
+\frame {\input{blocks/Theorem-fe-interpolation.tex}
+  \input{blocks/Corollary-fe-approximation.tex}}
+\frame {\input{blocks/Theorem-fe-convergence.tex}}
+
+\subsection{Estimates of stronger norms}
+
+\frame {\input{blocks/Definition-stronger-norm.tex}}
+\frame {\input{blocks/Lemma-inverse-estimate.tex}}
 
 
 \frame{\bibliographystyle{alpha}

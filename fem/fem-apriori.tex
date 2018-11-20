@@ -1,3 +1,16 @@
+\begin{intro}
+  In this section, we develop error estimates of the following type
+  \begin{verse}
+    If the size of mesh cells converges to zero, then the difference
+    between the true solution and the finite element solution
+    converges to zero with a certain order.
+  \end{verse}
+  They are thus a prediction, that the solutions actually converge,
+  and they measure the asymptotic convergence rate. They do contain unknown constants, such that they are no prediction of the error on a given mesh.
+\end{intro}
+
+\subsection{Approximation of Sobolev spaces by finite elements}
+
 \begin{Lemma*}{poincare}{Poincaré inequality}
   Let $\domain$ be a bounded Lipschitz domain. For any function
   $u\in H^1(\domain)$ define
@@ -22,7 +35,268 @@
   determined.
 \end{proof}
 
+\begin{Lemma*}{bramble-hilbert}{Bramble-Hilbert}
+  Let $\cell\subset \R^d$ be a domain with Lipschitz boundary and let
+  $s(.)$ be a bounded sublinear functional on $H^{k+1}(\cell)$ with
+  the property
+  \begin{gather}
+    s(p) = 0 \qquad\forall p\in \P_k.
+  \end{gather}
+  Then, there exists a constant $c$ only dependent on $\cell$ such that
+  \begin{gather}
+    \abs{s(v)} \le c \snorm{v}_{k+1,\cell}.
+  \end{gather}
+\end{Lemma*}
 
+\begin{proof}
+  Since $s(\cdot)$ is sublinear and vanishes on $\P_k$, we have for
+  $v\in H^{k+1}(\cell)$:
+  \begin{gather}
+    \label{eq:bramble-hilbert-1}
+    \abs{s(v)} \le \abs{s(v+p)} + \abs{s(p)} = \abs{s(v+p)}
+    \qquad\forall p\in\P_k.
+  \end{gather}
+  We will construct a polynomial, such that
+  \begin{gather}
+    \label{eq:bramble-hilbert-2}
+    \overline{\d^\alpha(v+p)}
+    = \frac1{\abs{\cell}}\int_\cell \d^\alpha (v+p) \dx = 0
+    \qquad\forall \abs{\alpha} \le k,
+  \end{gather}
+  that is, the sum $v+p$ and all its derivatives up to order $k$ are
+  mean-value free. Thus, by recursive application of Poincaré
+  inequality, we get for $\abs{\alpha}\le k$
+  \begin{alignat*}2
+    \norm{v+p}_{L^2(\cell)}^2
+    &\le c \left[ \norm{\nabla(v+p)}_{L^2(\cell)}^2 + \overline{v+p}^2\right]
+      && \le c \snorm{v+p}_{1;\cell}^2\\
+    \norm{\d^\alpha(v+p)}_{L^2(\cell)}^2,
+    &\le c \left[ \norm{\nabla\d^\alpha(v+p)}_{L^2(\cell)}^2
+      + \overline{\d^\alpha(v+p)}^2\right]
+      && \le c \snorm{v+p}_{\abs{\alpha}+1;\cell}^2,
+  \end{alignat*}
+  such that $\norm{v+p}_{k+1;\cell} \le \snorm{v+p}_{k+1;\cell}$.
+  Furthermore, since $p\in\P_k$
+  \begin{gather*}
+    \norm{\d^\alpha(v+p)}_{L^2(\cell)} = \norm{\d^\alpha v}_{L^2(\cell)}
+    \qquad\forall \abs{\alpha} = k+1.
+  \end{gather*}
+  Combining with~\eqref{eq:bramble-hilbert-1}, we obtain
+  \begin{gather*}
+    \abs{s(v)} \le c \snorm{v+p}_{k+1;\cell} \le c \snorm{v}_{k+1;\cell}.
+  \end{gather*}
+  It remains to construct the polynomial $p$ with the desired
+  properties. To this end, we note that for two multi-indices $\alpha$
+  and $\beta$ holds that $\d^\alpha \vx^\beta =0$ as soon as
+  $\alpha_i>\beta_i$ for some index $i$. Let
+  \begin{gather*}
+    p(\vx) = \sum_{\abs{\beta}\le k} a_\beta \vx^\beta.
+  \end{gather*}
+  Then, for any $\abs{\alpha} = k$ we get
+  \begin{gather*}
+    \d^\alpha p(\vx) = \alpha! \,\delta_{\alpha\beta},
+  \end{gather*}
+  where $\alpha! = \alpha_1!\alpha_2!\dots\alpha_d!$. Thus, we can use
+  condition~\eqref{eq:bramble-hilbert-2} to fix the coefficients
+  $a_\beta$ to
+  \begin{gather*}
+    a_\beta = \frac1{\beta!\,\abs{\cell}} \int_\cell \d^\beta v\dx
+    \qquad \abs{\beta} = k.
+  \end{gather*}
+  Thus, we have decomposed $p = \tilde p_k + p_{k-1}$, where
+  $\tilde p_k$ is known and $p_{k-1}\in \P_{k-1}$. Thus, we can repeat
+  the process determining the coefficients of highest order in
+  $p_{k-1}$,
+  \begin{gather*}
+    a_\beta = \frac1{\beta!\,\abs{\cell}} \int_\cell \d^\beta (v-\tilde p_k)\dx
+    \qquad \abs{\beta} = k-1.
+  \end{gather*}
+  Recursion down to $k=0$ yields the polynomial $p$ with the desired property.
+\end{proof}
+
+\begin{Corollary}{b-h-projector}
+  Let $\Pi\colon H^{k+1}(\cell) \to \P_k$ be a continuous, linear
+  projector. For any $m\le k$ there exists a constant $c$ such that
+  \begin{gather}
+    \norm{u-\Pi u}_{m,\cell} \le c \snorm{u}_{k+1,\cell}.
+  \end{gather}
+\end{Corollary}
+
+\begin{Definition}{mesh-family}
+  Let $\{\mesh_h\}$ for $h>0$ be a family of meshes parametrized by
+  the parameter
+  \begin{gather}
+    h = \max_{\cell\in\mesh_h} h_\cell,
+  \end{gather}
+  where $h_\cell$ is the characteristic length from the discussion of
+  mappings, for instance the diameter of $\cell$. Such a family is
+  called \define{shape regular}, if the constants $M_\cell$,
+  $m_\cell$, $d_\cell$, and $D_\cell$ in the scaling lemma
+  can be chosen independent of the cell $\cell\in\mesh_h$ and of
+  $h>0$. The family is called \define{quasi-uniform}, if in addition
+  there is a positive constant independent of $h$ such that
+  \begin{gather}
+    h \le c \min_{\cell\in\mesh_h} h_\cell.
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{nodal-interpolation}
+  Let $V$ be a function space on $\domain$, and let
+  $V_h = V_{\mesh_h}$ be a finite element space on the mesh $\mesh_h$
+  on $\domain$ with node functionals $\nodal_i$ and dual basis $p_i$,
+  where $i=1,\dots,n_h$. We define the \define{nodal interpolation}
+  operator by
+  \begin{gather}
+    \begin{split}
+      I_h\colon V&\to V_h\\
+      v &\mapsto \sum \nodal_i(v)p_i.
+    \end{split}
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{nodal-interpolation}
+  The nodal interpolation operator $I_h$ is a projector. It is
+  continuous on $H^2(\domain)$ if the dimension is $d=2,3$ and the
+  node functionals are defined as Lagrange interpolation.
+\end{Lemma}
+
+\begin{Definition}{broken-sobolev-norm}
+  On a mesh $\mesh_h$, we define the \define{broken Sobolev norm} and
+  seminorm by
+  \begin{gather}
+    \begin{split}
+      \norm{u}_{k;h}^2 &= \sum_{\cell\in\mesh_h} \norm{u}_{k;\cell}^2\\
+      \snorm{u}_{k;h}^2 &= \sum_{\cell\in\mesh_h} \snorm{u}_{k;\cell}^2
+    \end{split}
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem}{fe-interpolation}
+  Let $\{\mesh_h\}$ be a shape regular family of meshes.
+  Let the finite element spaces $V_h = V_{\mesh_h}$. Let the nodal
+  interpolation operator $I_h$ be surjective onto $\P_k$ on every cell
+  $\cell\in\mesh_h$ and continuous on $H^{k+1}(\domain)$. Then, there
+  is a constant $c$ such that for any $u\in H^{k+1}(\domain)$ and
+  $m\le k+1$ there holds
+  \begin{gather}
+    \norm{u-I_h u}_{m;h} \le c h^{k+1-m} \snorm{u}_{k+1;h}.
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  We have by definition
+  \begin{gather*}
+    \snorm{u-I_h u}_{m;h} = \sum_{\cell\in\mesh_h} \snorm{u-I_h u}_{m;\cell}.
+  \end{gather*}
+  Using the scaling lemma, we get
+  \begin{gather*}
+    \snorm{u-I_h u}_{m;\cell}
+    \le c h_\cell^{\nicefrac d2-m} \snorm{\refu - \widehat{I_hu}}.
+  \end{gather*}
+  On the reference cell, we use the Bramble-Hilbert lemma, more
+  precisely, \slideref{Corollary}{b-h-projector} to obtain
+  \begin{gather*}
+    \snorm{\refu - \widehat{I_hu}} \le c \snorm{\refu}_{k+1;\refcell}.
+  \end{gather*}
+  Scaling back yields
+  \begin{gather*}
+    \snorm{\refu}_{k+1;\refcell}
+    \le c h_\cell^{k+1-\nicefrac d2} \snorm{u}_{k+1;\cell}.
+  \end{gather*}
+  Combining, we obtain
+  \begin{gather*}
+    \snorm{u-I_h u}_{m;\cell} \le c h_\cell^{k+1-\nicefrac d2 - m +
+      \nicefrac d2}\snorm{u}_{k+1;\cell}.
+  \end{gather*}
+  Summing up and pulling the maximum of $h_\cell^{k+1-m}$ out of the
+  sum yields the result for $h_\cell \le 1$.
+\end{proof}
+
+\begin{remark}
+  Strictly speaking, we have only proven the result for $h_T \le
+  1$.
+  But then, if $\diam\domain = 1$, this condition is always
+  true. Therefore, by rescaling the domain before computing, the
+  estimate holds in general.
+\end{remark}
+
+\begin{Corollary}{fe-approximation}
+  Let $a(.,.)$ be a bounded and elliptic bilinear form on
+  $V\subset H^1(\domain)$ and let the
+  assumptions of the \slideref{Theorem}{fe-interpolation} hold. If
+  furthermore the solution $u\in H^{k+1}(\domain)$, the error between
+  the exact and the finite element solution to a uniquely solvable
+  elliptic boundary value problem, admits the estimate
+  \begin{gather}
+    \norm{u-u_h}_{1;h} \le c h^{k} \snorm{u}_{k+1;h}.
+  \end{gather}  
+\end{Corollary}
+
+\begin{intro}
+  For 2nd order elliptic problems, we have now derived estimates of
+  the $H^1$-norm of the error under the assumption that the solution
+  exhibits further regularity. Now, let us drop this assumptionfor an
+  assumption on the boundary condition only, to obtain a qualitative
+  convergence result.
+\end{intro}
+
+\begin{Theorem}{fe-convergence}
+  Let $\domain\subset \R^d$ be polyhedral. Let the solution space
+  $V\subset H^1(\domain)$ be such that $H^2(\domain)$ is dense in V
+  with respect to the $H^1$-norm. Let $\{\mesh_h\}$ be a quasi-uniform
+  family of meshes with finite element spaces $V_h\subset V$. Let
+  $u\in V$ and $u_h\in V_h$ be solutions to the exact and the finite
+  element versions of a 2nd order boundary value problem. Then,
+  \begin{gather}
+    \lim_{h\searrow 0} \norm{u-u_h}_{1;\domain} = 0.
+  \end{gather}
+\end{Theorem}
+
+\subsection{Estimates of stronger norms}
+
+\begin{intro}
+  So far, we have seen error estimates in a ``natural norm'' defined
+  as a norm such that the Lax-Milgram lemma holds for a given bilinear
+  form $a(.,.)$. In this subsection, we now consider the question of
+  estimates in stronger norms, such that the bilinear form is not
+  elliptic with respect to this norm.
+\end{intro}
+
+\begin{Definition}{stronger-norm}
+  Let $\norm{\cdot}_X$ and $\norm{\cdot}_Y$ be norms on a vector space
+  $V$. We call $\norm{\cdot}_X$ a \define{stronger norm} than
+  $\norm{\cdot}_Y$, if there is a constant $c$ such that for all
+  $v\in V$:
+  \begin{gather}
+    \norm{v}_Y \le \norm{v}_X.
+  \end{gather}
+  In this case, $\norm{\cdot}_Y$ is called the \define{weaker
+    norm}. If a converse inequality holds, the norms are called
+  \define{equivalent}.
+\end{Definition}
+
+\begin{example}
+  For a bounded domain $\domain$, the norms $\norm{\cdot}_{k+1}$ and
+  $\norm{\cdot}_{k}$ are both defined on $V = H^1_0(\domain)$. By the
+  Sobolev embedding theorem, there is a constant $c$ such that for any
+  $v\in V$
+  \begin{gather*}
+    \norm{v}_{k} \le c \norm{v}_{k+1}
+  \end{gather*}
+\end{example}
+
+\begin{Lemma*}{inverse-estimate}{Inverse estimate}
+  Let $\cell$ be a mesh cell of size $h_\cell$. Then, there is a
+  constant only depending on $k$ and the constants of the scaling
+  lemma, such that for every $u\in \P_k$ there holds
+  \begin{gather}
+    \norm{u}_{1;\cell} \le c h_T^{-1} \norm{u}_{0;\cell}.
+  \end{gather}
+\end{Lemma*}
+
+
+
+\subsection{Estimates of weaker norms and linear functionals}
 
 %%% Local Variables: 
 %%% mode: latex
