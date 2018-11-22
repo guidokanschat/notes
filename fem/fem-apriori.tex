@@ -6,7 +6,16 @@
     converges to zero with a certain order.
   \end{verse}
   They are thus a prediction, that the solutions actually converge,
-  and they measure the asymptotic convergence rate. They do contain unknown constants, such that they are no prediction of the error on a given mesh.
+  and they measure the asymptotic convergence rate. They do contain
+  unknown constants, such that they are no prediction of the error on
+  a given mesh.
+
+  The theory in this chapter is about bilinear forms which are bounded
+  and elliptic on a subspace $V \subset H^1(\domain)$ determined by
+  boundary conditions. We will choose $V = H^1_0(\domain)$, even if
+  more general boundary conditions are possible. It is a good approach
+  to think of the Dirichlet problem for the Laplacian, even if we
+  allow for somewhat more general equations.
 \end{intro}
 
 \subsection{Approximation of Sobolev spaces by finite elements}
@@ -179,6 +188,7 @@
   is a constant $c$ such that for any $u\in H^{k+1}(\domain)$ and
   $m\le k+1$ there holds
   \begin{gather}
+    \label{eq:fe-interpolation}
     \norm{u-I_h u}_{m;h} \le c h^{k+1-m} \snorm{u}_{k+1;h}.
   \end{gather}
 \end{Theorem}
@@ -222,11 +232,11 @@
 
 \begin{Corollary}{fe-approximation}
   Let $a(.,.)$ be a bounded and elliptic bilinear form on
-  $V\subset H^1(\domain)$ and let the
-  assumptions of the \slideref{Theorem}{fe-interpolation} hold. If
-  furthermore the solution $u\in H^{k+1}(\domain)$, the error between
-  the exact and the finite element solution to a uniquely solvable
-  elliptic boundary value problem, admits the estimate
+  $V = H^1_0(\domain)$ and let the finite element space $V_h$ be
+  defined on a shape-regular family of meshes $\{\mesh_h\}$, such that
+  the interpolation estimate~\eqref{eq:fe-interpolation} holds. If
+  furthermore the solution $u\in H^{k+1}(\domain)$, the error of the
+  finite element solution $u_h\in V_h \subset V$ admits the estimate
   \begin{gather}
     \norm{u-u_h}_{1;h} \le c h^{k} \snorm{u}_{k+1;h}.
   \end{gather}  
@@ -241,10 +251,10 @@
 \end{intro}
 
 \begin{Theorem}{fe-convergence}
-  Let $\domain\subset \R^d$ be polyhedral. Let the solution space
-  $V\subset H^1(\domain)$ be such that $H^2(\domain)$ is dense in V
-  with respect to the $H^1$-norm. Let $\{\mesh_h\}$ be a quasi-uniform
-  family of meshes with finite element spaces $V_h\subset V$. Let
+  Let $a(.,.)$ be a bounded and elliptic bilinear form on
+  $V = H^1_0(\domain)$ and let the finite element space $V_h$ be
+  defined on a shape-regular family of meshes $\{\mesh_h\}$, such that
+  the interpolation estimate~\eqref{eq:fe-interpolation} holds. Let
   $u\in V$ and $u_h\in V_h$ be solutions to the exact and the finite
   element versions of a 2nd order boundary value problem. Then,
   \begin{gather}
@@ -294,9 +304,129 @@
   \end{gather}
 \end{Lemma*}
 
+\begin{Theorem}{h2-error}
+  Let $a(.,.)$ be a bounded and elliptic bilinear form on
+  $V\subset H^1(\domain)$ and let $\{\mesh_h\}$ be a family of
+  quasi-uniform meshes with finite element spaces $V_h \subset V$
+  containing the space $\P_k$ with $k\ge 2$ on each mesh cell. If
+  furthermore the solution $u\in H^{k+1}(\domain)$, the error between
+  the exact and the finite element solution to a uniquely solvable
+  elliptic boundary value problem, admits the estimate
+  \begin{gather}
+    \norm{u-u_h}_{2;h} \le c h^{k-1} \snorm{u}_{k+1;h}.
+  \end{gather}  
+\end{Theorem}
 
+\begin{proof}
+  We cannot apply Céa's lemma directly, since the bilinear form is not
+  elliptic with respect to the broken $H^2$-inner product on the space
+  $H^1(\domain)$. On the other hand, the error is not polynomial, such
+  that we cannot apply the inverse estimate to it. Instead, we use
+  triangle inequality
+  \begin{gather*}
+    \norm{u-u_h}_{2;h} \le \norm{u-I_h u}_{2;h} + \norm{I_h u-u_h}_{2;h},
+  \end{gather*}
+  and observe, that we already have the desired estimate for the first
+  term. For the second, we estimate by inverse estimate on each cell
+  \begin{gather*}
+    \min_{\cell\in\mesh_h} h_T \norm{I_h u-u_h}_{2;h}
+    \norm{I_hu-u_h}_{1} \le c \norm{I_h u-u_h}_{1}^2,
+  \end{gather*}
+  and
+  \begin{align*}
+    \norm{I_h u-u_h}_{1}^2
+    & \le \frac c\gamma a(I_h u-u_h, I_h u-u_h)
+    \\& = \frac c\gamma a(I_h u-u, I_h u-u_h)
+    \\& \le \frac{cM}{\gamma}\norm{I_h u-u}_{1} \norm{I_h u-u_h}_{1}
+    \\& \le C h^{k} \snorm{u}_{k+1;h} \norm{I_h u-u_h}_{1},
+  \end{align*}
+  where we have used Galerkin orthogonality and the interpolation
+  estimate. Combining the two and using the quasi-uniformity, we
+  obtain the result of the theorem.
+\end{proof}
 
 \subsection{Estimates of weaker norms and linear functionals}
+
+\begin{intro}
+  Deriving optimal error estimates in the $L^2$-norm cannot be
+  achieved by the same technique as used for the $H^2$-norm, as the
+  following simple argument shows: using triangle inequality, we obtain
+  \begin{gather*}
+    \norm{u-u_h}_{L^2} \le \norm{u-I_h u}_{L^2} + \norm{I_h u-u_h}_{L^2},
+  \end{gather*}
+  we obtain that the first term is of order $h^{k+1}$. Thus, for an
+  optimal error estimate, we require that the second term be of order
+  $h^{k+1}$ as well. We need a replacement of the inverse estimate,
+  which gains an order of $h$ instead of loosing it. This is Poincaré
+  inequality, but it requires an almost mean-value free function. And
+  since $I_h u$ is not the interpolant of $u_h$, we cannot guarantee a
+  small mean value of the difference on each mesh cell.
+
+  To the rescue comes a ``duality argument'' known as Aubin-Nitsche
+  trick, which we introduce now.
+\end{intro}
+
+\begin{Definition}{dual-problem}
+  Let the weak form of a boundary value problem on the domain
+  $\domain$ be defined as: find $u\in V$ such that
+  \begin{gather*}
+    a(u,v) = f(v) \qquad\forall v\in V.
+  \end{gather*}
+  Then, the \define{dual problem}, also called \define{adjoint
+    problem}, with right hand side $g\in V^*$ is: find $u^* \in V$ such
+  that
+  \begin{gather*}
+    a(v,u^*) = g(v) \qquad\forall v\in V.
+  \end{gather*}
+\end{Definition}
+
+\begin{Lemma}{poisson-dual}
+  The adjoint problem of the Dirichlet boundary value problem for
+  Poisson's equation is equal to the dual problem, that is, for
+  $u\in H^1_0(\domain)$, the two statements
+  \begin{xalignat*}2
+    a(u,v) &= f(v) &\forall v&\in V,\\
+    a(v,u) &= f(v) &\forall v&\in V,
+  \end{xalignat*}
+  are equivalent.
+\end{Lemma}
+
+\begin{Assumption*}{elliptic-regularity}{Elliptic regularity}
+  Let $a(.,.)$ be a bounded and elliptic bilinear form on
+  $H^1_0(\domain)$. We say that a boundary value problem has
+  \define{elliptic regularity}, if for any $g\in L^2(\domain)$ the
+  solution $u$ is in $H^2(\domain)$. In other words, there is a
+  constant $c$ independent of $g$, such that
+  \begin{gather}
+    \norm{u}_{2;\domain} \le c \norm{g}_{0;\domain}.
+  \end{gather}
+\end{Assumption*}
+
+\begin{example}
+  By \slideref{Remark}{classical-convex}, a second order PDE with
+  coefficients $a_{ij}\in C^{0,1}(\overline\domain)$ and
+  $b_i, c\in L^\infty(\domain)$ has elliptic regularity. The same
+  holds by integration by parts for ints adjoint.
+
+  The same boundary value problem does not have elliptic regularity,
+  if the domain has a nonconvex corner, since we have corner
+  singularity functions which are not in $H^2(\domain)$, and we can
+  construct a right hand side $g\in L^2(\domain)$, which produces such
+  singularities.
+\end{example}
+
+\begin{Theorem}{fe-l2}
+  Let $a(.,.)$ be a bounded and elliptic bilinear form on
+  $V = H^1_0(\domain)$ and let the finite element space $V_h$ be
+  defined on a shape-regular family of meshes $\{\mesh_h\}$, such that
+  the interpolation estimate~\eqref{eq:fe-interpolation} holds. If
+  furthermore the solution $u\in H^{k+1}(\domain)$ and the dual
+  problem has \putindex{elliptic regularity}, the error of the finite
+  element solution $u_h\in V_h \subset V$ admits the estimate
+  \begin{gather}
+    \norm{u-u_h}_{0} \le c h^{k+1} \snorm{u}_{k+1;h}.
+  \end{gather}
+\end{Theorem}
 
 %%% Local Variables: 
 %%% mode: latex

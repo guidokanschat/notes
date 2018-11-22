@@ -99,13 +99,23 @@
   where the derivatives are understood in weak sense. Its norm is
   defined by
   \begin{gather}
-    \norm{v}_{k,p}^p = \sum_{\abs{\alpha} \le k} \norm{\d^\alpha v}_{L^p(\domain)}^p.
+    \norm{v}_{k,p}^p = \norm{v}_{k,p;\domain}^p
+    = \sum_{\abs{\alpha} \le k} \norm{\d^\alpha v}_{L^p(\domain)}^p.
   \end{gather}
   The following seminorm will be useful:
   \begin{gather}
-    \abs{v}_{k,p}^p = \sum_{\abs{\alpha} = k} \norm{\d^\alpha v}_{L^p(\domain)}^p.
+    \snorm{v}_{k,p}^p = \snorm{v}_{k,p;\domain}^p
+    = \sum_{\abs{\alpha} = k} \norm{\d^\alpha v}_{L^p(\domain)}^p.
   \end{gather}
 \end{Definition}
+
+\begin{Notation}{zero-norm}
+  We will use the notation
+  \begin{gather*}
+    \norm{v}_0 = \norm{v}_{0;\domain} = \norm{v}_{L^2(\domain)}.
+  \end{gather*}
+  Accordingly, $W^{0,p}(\domain) = L^p(\domain)$.
+\end{Notation}
 
 \begin{Corollary}{wkp-embedding}
   There holds
