@@ -278,7 +278,7 @@
   $\norm{\cdot}_Y$, if there is a constant $c$ such that for all
   $v\in V$:
   \begin{gather}
-    \norm{v}_Y \le \norm{v}_X.
+    \norm{v}_Y \le c \norm{v}_X.
   \end{gather}
   In this case, $\norm{\cdot}_Y$ is called the \define{weaker
     norm}. If a converse inequality holds, the norms are called
@@ -427,6 +427,103 @@
     \norm{u-u_h}_{0} \le c h^{k+1} \snorm{u}_{k+1;h}.
   \end{gather}
 \end{Theorem}
+
+\begin{Corollary}{fe-functional}
+  Under the assumptions of \slideref{Theorem}{fe-l2}, let $J(.)$ be a
+  bounded linear functional on $L^2(\domain)$. Then,
+  \begin{gather}
+    \abs{J(u)-J(u_h)}_{0} \le c h^{k+1} \snorm{u}_{k+1;h}.
+  \end{gather}
+\end{Corollary}
+
+\subsection{Green's function and maximum norm estimates}
+
+\begin{intro}
+  In this section, we will introduce the basic concepts needed for
+  pointwise error estimation. They heavily rely on Green's function,
+  which is useful for a general understanding of the solution
+  structure as well.
+\end{intro}
+
+\begin{Definition}{greens-function}
+  For a differential equation $Lu = f$ in $\domain$ with boundary
+  conditions $u=0$ on the boundary $\d\domain$, we define
+  \define{Green's function} $G(\vy,\vx)$ associated to the point
+  $\vy\in\domain$ as solution to the problem
+  \begin{gather}
+    \begin{aligned}
+      L G(\vy,\vx) &= \delta(\vx-\vy)&\qquad\forall \vx&\in\domain,\\
+      G(\vy,\vx) &= 0&\qquad\forall \vx&\in\d\domain.
+    \end{aligned}
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem}{greens-function-rd}
+  Green's function for Poisson's equation on the whole space
+  $\domain=\R^d$ is
+  \begin{gather}
+    G(\vy,\vx) =
+    \begin{cases}
+      - \frac1{2\pi} \log \abs{\vx-\vy} & d=2\\
+      \frac1{d(d-2)\abs{B_1(0)}} \frac1{\abs{\vx-\vy}^{d-2}} & d>=3.
+    \end{cases}
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  See~\cite[Section 2.2]{Evans98}.
+\end{proof}
+
+\begin{Lemma}{greens-function-domain}
+  Let $\domain\subset \R^d$ be a bounded domain. Then, Green's
+  function associated to a point $\vy\in\domain$ for a linear
+  differential operator $L$ on $\domain$ is obtained as the sum
+  \begin{gather}
+    G(\vy,\vx) = G_\infty(\vy,\vx) - G_0(\vy,\vx),
+  \end{gather}
+  where $G_\infty(\vy,\vx)$ is Green's function for the whole space
+  and $G_0(\vy,\vx)$ solves $LG_0(\vy,\vx)=0$ with boundary values
+  $G_\infty(\vy,\vx)$. If the domain is convex, then,
+  $G_0(\vy,.)\in H^2(\domain)$ for any interior point $\vy$.
+\end{Lemma}
+
+\begin{Theorem}{greens-function-representation}
+  Let $f\in C(\overline\domain)$ and let $\domain$ be such that the
+  solution to
+  \begin{gather}
+    \begin{aligned}
+      Lu &= f &\qquad\text{in }&\domain,\\
+      u &= 0 &\text{on }&\d\domain,
+    \end{aligned}
+  \end{gather}
+  is in $C^2(\overline\domain)$. Then,
+  \begin{gather}
+    u(\vx) = \int_\domain f(\vy)G(\vy,\vx)\dvy.
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  See \cite[Section 2.2]{Evans98}
+\end{proof}
+
+\begin{Theorem}{linfty-error}
+  Let $a(.,.)$ be a bounded and elliptic bilinear form on
+  $V = H^1_0(\domain)$ on a bounded, convex domain $\domain\subset \R^2$. Let the
+  finite element space $V_h$ be defined on a quasi-uniform family of
+  meshes $\{\mesh_h\}$ with local spaces $\P_1$ or $\Q_1$. If
+  furthermore the solution $u\in W^{2,\infty}(\domain)$, the error of
+  the finite element solution $u_h\in V_h \subset V$ admits the
+  estimate
+  \begin{gather}
+    \norm{u-u_h}_{\infty} \le c h^{2} (1+\abs{\log h}) \snorm{u}_{2,\infty}.
+  \end{gather}
+\end{Theorem}
+
+\begin{remark}
+  This estimate extends to $\domain\in\R^d$ for $d\ge 3$ and to higher
+  polynomial degrees \emph{without} the logarithmic factor. The
+  regularity assumptions are quite high then.
+\end{remark}
 
 %%% Local Variables: 
 %%% mode: latex

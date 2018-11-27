@@ -8,14 +8,7 @@
 \usepackage{../mathsim}
 \usepackage{times}
 \usepackage{xr}
-\externaldocument{awa}
-\externaldocument{explicit}
-\externaldocument{implicit}
-\externaldocument{lmm}
-\externaldocument{rwa}
-\externaldocument{newton}
-\externaldocument{fd}
-\externaldocument{appendix}
+\externaldocument{main}
 \usepackage{mfirstuc}
 \usepackage{mathtools}  
 \mathtoolsset{showonlyrefs}
@@ -295,7 +288,17 @@
 \frame {\input{blocks/Definition-dual-problem.tex}}
 \frame {\input{blocks/Lemma-poisson-dual.tex}}
 \frame {\input{blocks/Assumption-elliptic-regularity.tex}}
-\frame {\input{blocks/Theorem-fe-l2.tex}}
+\frame {\input{blocks/Theorem-fe-l2.tex}
+  \input {blocks/Corollary-fe-functional.tex}}
+
+\subsection{Green's function and maximum norm estimates}
+
+\frame {\input {blocks/Definition-greens-function.tex}
+  \input {blocks/Theorem-greens-function-rd.tex}}
+\frame {\input {blocks/Lemma-greens-function-domain.tex}}
+\frame {\input {blocks/Theorem-greens-function-representation.tex}}
+\frame {\input {blocks/Theorem-linfty-error.tex}}
+
 
 
 \frame{\bibliographystyle{alpha}
