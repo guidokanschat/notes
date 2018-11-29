@@ -34,11 +34,30 @@
 \section{Regularity of Weak Solutions}
 \input{pde-analysis}
 
-\chapter{Conforming finite element methods}
+\chapter{Conforming Finite Element Methods}
 \section{Meshes, shape functions, and degrees of freedom}
 \input{fem-intro}
 \section{A priori error analysis}
 \input{fem-apriori}
+\section{A posteriori error analysis}
+\input{fem-aposteriori}
+
+\chapter{Variational Crimes}
+\begin{intro}
+  In the previous chapter, we considered finite element methods
+  applying the original bilinear form to a subspace $V_h\subset
+  V$. This assumes, that the domain $\domain$ is exactly represented
+  by the mesh, and that all integrals are computed exactly. Both
+  assumptions reduce the applicability of the finite element method
+  considerably. Therefore, we now extend our analysis to cases, where
+  we allow $V_h \not\subset V$ and discrete bilinear forms
+  $a_h(.,.) \neq a(.,.)$.
+\end{intro}
+\section{Variations on Céa's lemma}
+
+
+\section{Numerical quadrature}
+
 
 %\chapter{Discontinuous Galerkin methods}
 %\section{Nitsche's method}

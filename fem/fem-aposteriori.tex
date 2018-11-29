@@ -1,0 +1,73 @@
+\begin{Definition}{a-posteriori}
+  Let $u\in V$ be the solution to a boundary value in weak form and
+  $u_h\in V_h$ be its finite element approximation on the mesh
+  $\mesh_h$. We call a quantity $\eta_h(u_h)$ \define{a posteriori
+    error estimator},
+  \begin{gather}
+    \norm{u-u_h} \le c \eta_h(u_h).
+  \end{gather}
+  The estimator is \define{reliable}, if the constant $c$ is
+  computable. It is \define{efficient}, if the converse estimate holds,
+  namely
+%  with addition of a quantity $\osc_h(f)$
+  \begin{gather}
+    \eta_h(u_h) \le c \norm{u-u_h}.
+  \end{gather}
+\end{Definition}
+
+\subsection{Quasi-interpolation in $H^1$}
+
+\begin{intro}
+  Interpolation in Sobolev spaces in
+  \slideref{Theorem}{fe-interpolation} relies on the nodal
+  interpolation operator in
+  \slideref{Definition}{nodal-interpolation}, which in turn requires
+  point values of the interpolated function. Therefore, it is not
+  defined on $H^1(\domain)$ in dimensions greater than one. Since we
+  need such interpolation operators in the analysis of a posteriori
+  error estimates, we provide them in this section.
+\end{intro}
+
+\begin{Definition}{locally-quasi-uniform}
+  A shape-regular family of meshes $\{\mesh_h\}$ is called
+  \define{locally quasi-uniform}, if there is a constant $c$ such that
+  for every pair of cells $\cell_1$ and $\cell_2$ sharing at least one
+  vertex there holds
+  \begin{gather}
+    h_{\cell_1} \le c h_{\cell_2}.
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{fem-neighborhood}
+  For a vertex or higher-dimensional boundary facet $F$, we define the
+  set of cells
+  \begin{gather}
+    \mesh_{F} = \bigl\{ \cell\in\mesh \big|F \subset\d\cell \bigr\}.
+  \end{gather}
+  Similarly, the set of cells sharing at least one vertex with $\cell$
+  is called $\mesh_{\cell}$. Additionally, we define the subdomains
+  \begin{gather}
+    \overline\domain_{F} = \bigcup_{\cell\in \mesh_{F}}\overline\cell,
+    \qquad
+    \overline\domain_{\cell} = \bigcup_{\cell'\in \mesh_{\cell}}\overline\cell'.
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem*}{clement}{Clément quasi-interpolation}
+  Let $\{\mesh_h\}$ be a locally quasi-uniform family of meshes with
+  piecewise polynomial finite element spaces
+  $V_h\subset H^1(\domain)$. Then, there exist bounded operators
+  $\overline I_h\colon H^1(\domain) \to V_h$ such that for every
+  function $u\in H^1(\domain)$, every mesh cell $\cell$, every face
+  $F$, and for $m=0,1$ there holds
+  \begin{align}
+    \norm{u-\overline I_h u}_{m;T} &\le c h_\cell^{1-m} \snorm{u}_{1;\domain_\cell} \\
+    \norm{u-\overline I_h u}_{0;F} \le c h_\cell^{\nicefrac{1}{2}} \snorm{u}_{1;\domain_\cell}
+  \end{align}
+\end{Theorem*}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
