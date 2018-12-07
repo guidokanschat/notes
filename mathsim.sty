@@ -42,6 +42,13 @@
   \color{black}\MakeFramed {\FrameRestore}}%
  {\endMakeFramed}
 \fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commands for beamer
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\sectoc{\tableofcontents[currentsection,hideothersubsections]}
+\def\subtoc{\tableofcontents[currentsection,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/show/hide/hide]}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Counters and their representation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -110,7 +117,7 @@
 \def\coo{\mathcal C_{00}^\infty}
 \let\domain\Omega
 \def\F{\mathbb F}
-\def\n{n}
+\def\n{\mathbf n}
 \def\P{\mathbb P}
 \def\Q{\mathbb Q}
 \def\Pol{\mathcal P}

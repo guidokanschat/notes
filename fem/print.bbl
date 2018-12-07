@@ -16,4 +16,22 @@ Kondrat'ev, V.~A. (1967).
   conical or angular points.
 \newblock {\em Trans. Moscow Math. Soc.}, 16:227--313.
 
+\bibitem[Rannacher and Scott, 1982]{RannacherScott82}
+Rannacher, R. and Scott, L.~R. (1982).
+\newblock Some optimal error estimates for piecewise linear finite element
+  approximations.
+\newblock {\em Math. Comput.}, 38:437--445.
+
+\bibitem[Schatz and Wahlbin, 1977]{SchatzWahlbin77}
+Schatz, A.~H. and Wahlbin, L.~B. (1977).
+\newblock Maximum norm estimates in the finite element method in plane
+  polygonal domains. {P}art {I}.
+\newblock {\em Math. Comput.}, 32:73--109.
+
+\bibitem[Verfürth, 2013]{Verfuerth13}
+Verfürth, R. (2013).
+\newblock {\em A Posteriori Error Estimation Techniques for Finite Element
+  Methods}.
+\newblock Oxford University Press.
+
 \end{thebibliography}

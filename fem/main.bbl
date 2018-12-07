@@ -28,4 +28,10 @@ Schatz, A.~H. and Wahlbin, L.~B. (1977).
   polygonal domains. {P}art {I}.
 \newblock {\em Math. Comput.}, 32:73--109.
 
+\bibitem[Verfürth, 2013]{Verfuerth13}
+Verfürth, R. (2013).
+\newblock {\em A Posteriori Error Estimation Techniques for Finite Element
+  Methods}.
+\newblock Oxford University Press.
+
 \end{thebibliography}

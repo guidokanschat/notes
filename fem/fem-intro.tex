@@ -70,7 +70,7 @@
   spaces,
   \begin{gather}
     V_\mesh \subset \bigl\{ f\in L^2(\domain) \big|
-    f_{\cell} \in \shapespace(\cell) \bigr\}.
+    f_{|\cell} \in \shapespace(\cell) \bigr\}.
   \end{gather}
   The \define{degrees of freedom} of $V_\mesh$ are the union of all
   node functionals, where we identify node functionals associated to
@@ -134,7 +134,8 @@
 
 \begin{Lemma}{mesh-continuity}
   Let $\mesh$ be a subdivision of $\domain$, and let $u$ be a function
-  on $\domain$, such that $u_{|\cell} \in C^1(\cell)$. Then,
+  on $\domain$, such that $u_{|\cell} \in C^1(\overline{\cell})$ for
+  each $\cell\in\mesh$. Then,
   \begin{gather}
     u\in H^1(\domain)
     \quad \Longleftrightarrow\quad
