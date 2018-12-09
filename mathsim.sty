@@ -90,17 +90,18 @@
 \def\cell{T}
 \def\faces{\mathbb F}
 \def\face{F}
-\def\refcell{\widehat \cell}
-\def\refface{\widehat \face}
-\def\refgrad{\widehat{\nabla}}
-\def\refp{\widehat{p}}
-\def\refu{\widehat{u}}
-\def\refv{\widehat{v}}
-\def\refx{\widehat{x}}
-\def\refy{\widehat{y}}
-\def\refvx{\widehat{\vx}}
-\def\refvu{\widehat{\vu}}
-\def\refvv{\widehat{\vv}}
+\def\reference#1{\widehat{#1}}
+\def\refcell{\reference\cell}
+\def\refface{\reference\face}
+\def\refgrad{\reference{\nabla}}
+\def\refp{\reference{p}}
+\def\refu{\reference{u}}
+\def\refv{\reference{v}}
+\def\refx{\reference{x}}
+\def\refy{\reference{y}}
+\def\refvx{\reference{\vx}}
+\def\refvu{\reference{\vu}}
+\def\refvv{\reference{\vv}}
 \def\vertex{\mathbf X}
 \def\nodal{\mathscr N}
 \def\shapespace{\mathscr P}
@@ -205,9 +206,9 @@
 \def\dy{\,\diffd y}
 \def\dvx{\,\diffd \vx}
 \def\dvy{\,\diffd \vy}
-\def\dvxref{\,\diffd \widehat \vx}
-\def\dxref{\,\diffd \widehat x}
-\def\dsref{\,\diffd \widehat s}
+\def\dvxref{\,\diffd \reference \vx}
+\def\dxref{\,\diffd \reference x}
+\def\dsref{\,\diffd \reference s}
 \def\diag{\operatorname{diag}}
 \endinput
 
