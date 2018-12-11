@@ -4,13 +4,17 @@
   mesh cells. In particular, we investigate approximations of the form
   \begin{gather}
     \int_\cell f(\vx)\dvx
-    \approx \sum_{i=1}^{n_q} \omega_i f(\vx_i) =: Q_\cell(f).
+    \approx \sum_{k=1}^{n_q} \omega_k f(\vx_k) =: Q_\cell(f).
   \end{gather}
   First, we observe that $Q_\cell$ is not a bounded operator on
   $L^1(\domain)$, such that $Q_\cell(\nabla u\cdot \nabla v)$ is
   undefined for functions in $H^1(\domain)$. The surprising result of
   this section is, that quadrature is still admissible for the
   implementation of a finite element method.
+
+  We will first set a theoretical framework and then investigate
+  quadrature rules in detail. The presentation follows~\cite[Chapter
+  4]{Ciarlet78}.
 \end{intro}
 
 \begin{Lemma*}{strang-1}{Strang's first lemma}
@@ -64,6 +68,36 @@
          + \norm{f_n-f}_{V_h^*}\right).
   \end{multline}
 \end{proof}
+
+\begin{remark}
+  We will apply Strang's lemma to a family of meshes indexed by mesh
+  size $h$ and assess the infimum by an interpolation operator. It is
+  clear, that we will only obtain optimal convergence rates compared
+  to the interpolation estimate, if there exists $\gamma_0 >0$ such
+  that $\gamma_n \ge \gamma_0$ uniformly with respect to $n$. While it
+  is not a prerequisite of Strang's lemma, it is our goal for all
+  discretizations.
+\end{remark}
+
+\begin{remark}
+  Quadrature would be infeasible, if we had to devise a quadrature
+  rule for every mesh cell $\cell$. Instead, we tabulate quadrature
+  formulas for the reference cell $\refcell$ by choosing quadrature
+  points $\refvx_k$ and weights $\omega_k$ and write
+  \begin{gather}
+    Q_{\refcell}(\reference f)
+    = \sum_{k=1}^{n_q} \omega_k \reference f(\refvx_k).
+  \end{gather}
+  We compute integrals over $\cell$ though mapping,
+  \begin{gather}
+    Q_T(f) = \sum_{k=1}^{n_q} \det\nabla\Phi_\cell(\refvx_k) \omega_k \reference f(\refvx_k).
+  \end{gather}
+  Thus, $Q_T$ is defined by quadraqture points
+  $\vx_k = \Phi(\refvx_k)$ and weights
+  $\det\nabla\Phi_\cell(\refvx_k) \omega_k$.
+
+  Quadrature rules on the reference 
+\end{remark}
 
 %%% Local Variables: 
 %%% mode: latex
