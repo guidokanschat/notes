@@ -1,0 +1,71 @@
+\begin{intro}
+  We begin the investigation of variational crimes by studying the
+  effect of using numerical quadrature instead of exact integration on
+  mesh cells. In particular, we investigate approximations of the form
+  \begin{gather}
+    \int_\cell f(\vx)\dvx
+    \approx \sum_{i=1}^{n_q} \omega_i f(\vx_i) =: Q_\cell(f).
+  \end{gather}
+  First, we observe that $Q_\cell$ is not a bounded operator on
+  $L^1(\domain)$, such that $Q_\cell(\nabla u\cdot \nabla v)$ is
+  undefined for functions in $H^1(\domain)$. The surprising result of
+  this section is, that quadrature is still admissible for the
+  implementation of a finite element method.
+\end{intro}
+
+\begin{Lemma*}{strang-1}{Strang's first lemma}
+  Let $a(.,.)$ be a bounded and elliptic bilinear form on the Hilbert
+  space $V$. Let $V_n\subset V$ and let $a_h(.,.)$ be a bilinear form,
+  bounded and elliptic on $V_n$ with constants $M_n$ and
+  $\gamma_n$. Let $f, f_n\in V^*$. If $u \in V$ and
+  $u_n\in V_n \subset V$ are solutions to
+  \begin{gather*}
+    \begin{aligned}
+      a(u,v) &= f(v) & \qquad\forall v&\in V,\\
+      a_n(u_n,v_n) &= f_n(v_n) & \qquad\forall v_n&\in V_n,
+    \end{aligned}
+  \end{gather*}
+  respectively, there holds
+  \begin{multline}
+    \norm{u-u_n}_V \le \left(1+\frac{M}{\gamma_n}\right)
+    \inf_{v_n\in V_n}\norm{u-v_n}_V
+    \\+ \frac1{\gamma_n}\left(
+    \norm{a_n(v_n,.)-a(v_n,.)}_{V_h^*}
+         + \norm{f_n-f}_{V_h^*}\right).
+  \end{multline}
+\end{Lemma*}
+
+\begin{proof}
+  Using $V_n$-ellipticity of $a_n(.,.)$ yields for arbitrary $v_n\in V_n$
+  \begin{align*}
+    \gamma_n \norm{u_n-v_n}^2
+    \le &a_n(u_n-v_n,u_n-v_n)\\
+    =& f_n(u_n-v_n) + a(u-v_n, u_n-v_n)
+       - f(u_n-v_n)
+    \\ &+ a(v_n,u_n-v_n) - a_n(v_n, u_n-v_n)
+  \end{align*}
+  We estimate separately
+  \begin{align*}
+    \frac{a(u-v_n, u_n-v_n)}{\norm{u_n-v_n}}
+    &\le M \norm{u_n-v_n},\\
+    \frac{\abs{f_n(u_n-v_n) - f(u_n-v_n)}}{\norm{u_n-v_n}}
+    &\le \sup_{w_n\in V_n} \frac{\abs{f_n(w_n)-f(w_n)}}{\norm{w_n}},
+    \\
+    \frac{\abs{a(v_n,u_n-v_n) - a_n(v_n, u_n-v_n)}}{\norm{u_n-v_n}}
+    &\le \sup_{w_n\in V_n} \frac{\abs{a_n(v_n, w_n)-a(v_n,w_n)}}{\norm{w_n}}.
+  \end{align*}
+  Combining all terms, we obtain
+  \begin{multline}
+    \norm{u-u_n}
+    \le \norm{u-v_n} + \norm{u_n-v_n} \\
+    \le \norm{u-v_n} + \frac1{\gamma_n}\left(
+         M \norm{u-v_n}
+         + \norm{a_n(v_n,.)-a(v_n,.)}_{V_h^*}
+         + \norm{f_n-f}_{V_h^*}\right).
+  \end{multline}
+\end{proof}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

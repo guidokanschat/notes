@@ -485,9 +485,15 @@
 
 \begin{Lemma*}{cea}{Céa}
   Let $a(.,.)$ be a bounded and elliptic bilinear form on the Hilbert
-  space $V$. Let $u \in V$ and $u_n\in V_n$ be the solution to the
-  weak formulation and its Galerkin approximation, respectively. Then,
-  there holds
+  space $V$.  Let $u \in V$ and $u_n\in V_n \subset V$ be
+  the solution to the weak formulation and its Galerkin approximation
+  \begin{gather*}
+    \begin{aligned}
+      a(u,v) &= f(v) & \qquad\forall v&\in V,\\
+      a(u_n,v_n) &= f(v_n) & \qquad\forall v_n&\in V_n,
+    \end{aligned}
+  \end{gather*}
+  respectively. Then, there holds
   \begin{gather}
     \norm{u-u_h}_V \le \frac{M}{\alpha}
     \inf_{v_n\in V_n}\norm{u-v_h}_V.
