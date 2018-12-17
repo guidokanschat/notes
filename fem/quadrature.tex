@@ -21,7 +21,7 @@
   Let $a(.,.)$ be a bounded and elliptic bilinear form on the Hilbert
   space $V$. Let $V_n\subset V$ and let $a_h(.,.)$ be a bilinear form,
   bounded and elliptic on $V_n$ with constants $M_n$ and
-  $\gamma_n$. Let $f, f_n\in V^*$. If $u \in V$ and
+  $\alpha_n$. Let $f, f_n\in V^*$. If $u \in V$ and
   $u_n\in V_n \subset V$ are solutions to
   \begin{gather*}
     \begin{aligned}
@@ -31,18 +31,19 @@
   \end{gather*}
   respectively, there holds
   \begin{multline}
-    \norm{u-u_n}_V \le \left(1+\frac{M}{\gamma_n}\right)
-    \inf_{v_n\in V_n}\norm{u-v_n}_V
-    \\+ \frac1{\gamma_n}\left(
-    \norm{a_n(v_n,.)-a(v_n,.)}_{V_h^*}
-         + \norm{f_n-f}_{V_h^*}\right).
+    \norm{u-u_n}_V \\
+    \le \inf_{v_n\in V_n}\biggl[\left(1+\frac{M}{\alpha_n}\right)
+    \norm{u-v_n}_V
+    + \frac1{\alpha_n}
+    \norm{a_n(v_n,.)-a(v_n,.)}_{V_h^*}\biggr]\\
+         + \frac1{\alpha_n}\norm{f_n-f}_{V_h^*}.
   \end{multline}
 \end{Lemma*}
 
 \begin{proof}
   Using $V_n$-ellipticity of $a_n(.,.)$ yields for arbitrary $v_n\in V_n$
   \begin{align*}
-    \gamma_n \norm{u_n-v_n}^2
+    \alpha_n \norm{u_n-v_n}^2
     \le &a_n(u_n-v_n,u_n-v_n)\\
     =& f_n(u_n-v_n) + a(u-v_n, u_n-v_n)
        - f(u_n-v_n)
@@ -62,7 +63,7 @@
   \begin{multline}
     \norm{u-u_n}
     \le \norm{u-v_n} + \norm{u_n-v_n} \\
-    \le \norm{u-v_n} + \frac1{\gamma_n}\left(
+    \le \norm{u-v_n} + \frac1{\alpha_n}\left(
          M \norm{u-v_n}
          + \norm{a_n(v_n,.)-a(v_n,.)}_{V_h^*}
          + \norm{f_n-f}_{V_h^*}\right).
@@ -70,11 +71,23 @@
 \end{proof}
 
 \begin{remark}
+  Strang's lemma states, that the error can be split into the
+  \putindex{approximation error} of the space $V_h$ and the
+  \putindex{consistency error} of the approximations $a_h(.,.)$ und
+  $f_h(.)$. Both errors are scaled with the stability factor
+  $\nicefrac1{\alpha _n}$ of the discrete problem. So far, this is
+  consistent with error estimates for instance for Runge-Kutta
+  methods. There is an important difference though: the consistency
+  error is not evaluated for the exact solution, but only for its
+  discrete approximation.
+\end{remark}
+
+\begin{remark}
   We will apply Strang's lemma to a family of meshes indexed by mesh
   size $h$ and assess the infimum by an interpolation operator. It is
   clear, that we will only obtain optimal convergence rates compared
-  to the interpolation estimate, if there exists $\gamma_0 >0$ such
-  that $\gamma_n \ge \gamma_0$ uniformly with respect to $n$. While it
+  to the interpolation estimate, if there exists $\alpha_0 >0$ such
+  that $\alpha_n \ge \alpha_0$ uniformly with respect to $n$. While it
   is not a prerequisite of Strang's lemma, it is our goal for all
   discretizations.
 \end{remark}
@@ -92,12 +105,293 @@
   \begin{gather}
     Q_T(f) = \sum_{k=1}^{n_q} \det\nabla\Phi_\cell(\refvx_k) \omega_k \reference f(\refvx_k).
   \end{gather}
-  Thus, $Q_T$ is defined by quadraqture points
-  $\vx_k = \Phi(\refvx_k)$ and weights
+  Thus, $Q_T$ is defined by quadrature points
+  $\vx_k = \Phi(\refvx_k)$ and quadrature weights
   $\det\nabla\Phi_\cell(\refvx_k) \omega_k$.
 
-  Quadrature rules on the reference 
+  Quadrature rules on the reference cell $\refcell$ are obtained by
+  interpolation after choosing quadrature points by employing the
+  properties of orthogonal polynomials.  The construction of such
+  quadrature rules for simplices is somewhat complicated, and we refer
+  to tables in the cited literature.
+
+  An important consequence of the use of quadrature points as roots of
+  orthogonal polynomials is the fact that all weights are positive.
 \end{remark}
+
+\begin{Definition}{tensor-product-quadrature}
+  Given a one-dimensional quadrature rule $Q_I$ on the interval
+  $I=[0,1]$ with
+  \begin{gather}
+    Q_I(\reference f) = \sum_{k=1}^{n_q} \omega_k \reference f(\refx_k).
+  \end{gather}
+  Then, a quadrature rule on $\refcell = [0,1]^d$ is defined by
+  \begin{gather}
+    Q_{\refcell}(\reference f)
+    = \sum_{k_1}^{n_q}\dots\sum_{k_d}^{n_q} \omega_{k_1}\cdots\omega_{k_d}
+    \reference f(x_{k_1},\dots,x_{k_d}).
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{tensor-product-gauss}
+  If $Q_I$ is an $n$-point Gauß formula, the tensor product quadrature
+  in the preceding definition is exact on $\Q_{2n-1}$.
+\end{Lemma}
+
+\begin{remark}
+  When we look at Poisson's equation on simplicial meshes, the integrals
+  \begin{gather}
+    a_\cell(\phi_j,\phi_i)
+    = \int_\cell \nabla\phi_j\cdot\nabla\phi_i\dvx
+    = \int_{\refcell} \nabla\Phi^{-T}\refgrad\refphi_j
+    \cdot\nabla\Phi^{-T}\refphi_i \det\nabla\Phi\dvxref,
+  \end{gather}
+  can be computed exactly, since $\nabla\Phi$ is a constant
+  matrix. Already on arbitrary quadrialterals, $\nabla\Phi^{-T}$ is a
+  rational function, wich is harder to integrate. But, in order to
+  justify the use and investigate the properties of approximations by
+  numerical quadrature, we are considering a model problem with
+  varying coefficients.
+\end{remark}
+
+\begin{Assumption}{bilinear-form-quadrature}
+  Let in this section the bilinear form be defined as
+  \begin{gather}
+    a(u,v) = \int_\domain \nabla u A \nabla v^T \dx,
+  \end{gather}
+  where $A= A(\vx)$ is a matrix with
+  \begin{gather}
+    \xi^T A(\vx) \xi \ge \alpha \abs{\xi^2}
+    \qquad\forall \xi\in\R^d,\quad \forall \vx\in\domain.
+  \end{gather}
+  The function $u\in V=H^1_0(\domain)$ is the solution to
+  \begin{gather}
+    a(u,v) = \form(f,v) \qquad\forall v\in V.
+  \end{gather}
+  We assume that the coefficients $a_{ij}$ and the right hand side $f$
+  are functions which are well-defined in all quadrature points on all
+  meshes of a family $\{\mesh_h\}$.
+\end{Assumption}
+
+\begin{Definition}{bilinear-quadrature}
+  The bilinear form $a_h(.,.)$ obtained by numerical quadrature
+  $Q_{\refcell}$ on the mesh $\mesh_h$ is defined as
+  \begin{gather}
+    a_h(u,v) = \sum_{\cell\in\mesh_h} Q_\cell (\nabla u A \nabla v^T),
+  \end{gather}
+  where $Q_\cell$ is obtained from $Q_{\refcell}$ by the mapping
+  $\Phi_\cell$. The right hand side is
+  \begin{gather}
+    f_h(v) = \sum_{\cell\in\mesh_h} Q_\cell (fv).
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{quadrature-stability}
+  Let a finite element method be defined by a mesh $\mesh_h$ and a
+  shape function space $\shapespace$ on the reference cell $\refcell$.
+  Let $Q_{\refcell}$ be a quadrature formula, such that all quadrature
+  weights are positive. Furthermore, assume that one of the following
+  holds:
+  \begin{enumerate}
+  \item The function values in the quadrature points $\refvx_k$ are
+    unisolvent on
+    \begin{gather}
+      \mathscr G_1
+      = \bigl\{ \d_i p\big| p\in \shapespace, i=1,\dots,d\bigr\},
+    \end{gather}
+  \item The quadrature rule is exact on
+    \begin{gather}
+      \mathscr G_2
+      = \bigl\{ \nabla p\cdot \nabla q \big| p,q\in \shapespace \bigr\}.
+    \end{gather}
+  \end{enumerate}
+  Then, there is a constant $\alpha_0>0$ depending on shape regularity
+  and the quadrature rule, but independent of $h$, such that
+  \begin{gather}
+    a_h(u_h,u_h) \ge \alpha_0 \snorm{u_h}_{1;\domain}^2
+    \qquad\forall u_h\in V_h.
+  \end{gather}
+\end{Lemma}
+
+\begin{remark}
+  If $\shapespace = \P_k$, then $\mathscr G_1 = \P_{k-1}$ and
+  $\mathscr G_2 = \P_{2k-2}$. For $\Q_k$, these relations are more
+  complicated, and the simplest we can say is
+  $\mathscr G_1 \subset \Q_k$ and $\mathscr G_2 \subset \Q_{2k}$
+\end{remark}
+
+\begin{proof}[Proof of \slideref{Lemma}{quadrature-stability}]
+  Assume first condition 1. From the poisitivity of quadrature
+  weights, we conclude that
+  \begin{gather}
+    Q_{\refcell}(\nabla p\cdot\nabla p) = 0
+    = \sum_{k=1}^{n_q} \sum_{i=1}^d \omega_k (\d_ip(\refvx_k))^2 = 0
+  \end{gather}
+  implies $\d_ip(\refvx_k) = 0$. Unisolvence implies
+  $\d_i p \equiv 0$. Therefore,
+  $\sqrt{Q_{\refcell}(\nabla p\cdot\nabla p)}$ defines a norm on the
+  space $\shapespace/\R$. Since this space is finite dimensional and
+  $\snorm{.}_{1;\refcell}$ is a second norm, we conclude from norm
+  equivalence the existence of a constant $c>0$ such that
+  \begin{gather}
+    c \snorm{p}_{1;\refcell}^2 \le Q_{\refcell}(\nabla p\cdot\nabla p)
+    \qquad\forall p\in \shapespace.
+  \end{gather}
+  On the other hand, condition 2 yields the same estimate with $c=1$.
+
+  It is easily verified, that $\snorm{p}_{1;\refcell}^2$ and
+  $Q_{\refcell}(\nabla p\cdot\nabla p)$ scale equally under the
+  mapping $\Phi_\cell$, such that the same estimate holds on $\cell$
+  with a different constant depending on shape regularity, again
+  denoted by $c$. Finally,
+  \begin{align*}
+    \alpha_0 c \snorm{u_h}_{1;\domain}^2
+    &= \alpha_0 c \sum_{\cell\in\mesh_h} \snorm{u_h}_{1;\cell}^2 \\
+    &\le \alpha_0 \sum_{\cell\in\mesh_h}Q_{\refcell}(\nabla u_h\cdot\nabla u_h)\\
+    & \le \sum_{\cell\in\mesh_h} Q_{\refcell}(\nabla u_hA\nabla u_h^T)
+      = a_h(u_h,u_h).
+  \end{align*}
+\end{proof}
+
+\begin{intro}
+  Now that we have established conditions for stability of the
+  discrete problem, we can address an estimate of the consistency
+  error. In order to avoid additional overhead in an already technical
+  argument, we restrict the analysis to the spaces
+  $\shapespace_\cell = \P_k$ on simplices. Instead of proving a
+  general result for arbitrary quadrature formulas, we first take ask,
+  what the order of the quadrature error should be. Indeed, we have
+  the interpolation estimate $\norm{u-I_h u}_{1} = \mathcal
+  O(h^k)$.
+  Therefore, we investigate quadrature rules introducing consistency
+  errors of the same order.
+\end{intro}
+
+\begin{Theorem}{quadrature-error-bilinear}
+  Assume in addition to
+  \slideref{Assumption}{bilinear-form-quadrature} for $k\ge1$ that
+  for all cells $\shapespace_\cell = \P_k$ and $a_{ij}\in
+  W^{k,\infty}(\domain)$.
+  Let the quadrature rule $Q_{\refcell}$ be exact for polynomials in
+  $\P_{2k-2}$.  Then, there exists a constant $c$ such that for all
+  meshes of a quasi-uniform family $\{\mesh_h\}$ of meshes there holds
+  \begin{gather}
+    a(v_h, w_h) - a_h(v_h, w_h) \le c h^k \norm{A}_{k,\infty;\domain}
+    \norm{v_h}_{k;h} \snorm{w_h}_{1;h}.
+  \end{gather}
+\end{Theorem}
+
+\begin{Lemma}{product-sobolev-norm}
+  Let $u\in W^{k,p}(\domain)$ and $v\in W^{k,\infty}(\domain)$. Then,
+  $uv\in W^{k,p}(\domain)$ and
+  \begin{gather}
+    \snorm{uv}_{k,p;\domain}
+    \le c \sum_{i=0}^{k} \snorm{u}_{i,q;\domain}\,
+    \snorm{v}_{k-i,\infty;\domain},
+  \end{gather}
+  with a constant $c$ depending on $k$ and the space dimension, but
+  not on $\domain$.
+\end{Lemma}
+
+\begin{proof}
+  This is basically the product rule. For a multi-index $\alpha$ with
+  $\abs{\alpha} = k$, we have
+  \begin{gather*}
+    \d^{\alpha}(uv) = \sum_{i=0}^k
+    \sum_{\substack{\abs{\beta}=i\\\beta_j\le \alpha_j}} \d^{\beta}u\,\d^{\alpha-\beta} v.
+  \end{gather*}
+  Then, Hörder inequality is applied to the sums and the integrals.
+\end{proof}
+
+\begin{proof}[Proof of \slideref{Theorem}{quadrature-error-bilinear}]
+  We first argue on the reference cell and define the quadrature error
+  \begin{gather}
+    E_{\refcell}(f) = \int_{\refcell} f \dvxref - Q_{\refcell}(f).
+  \end{gather}
+  Our goal is the estimation of $E_{\refcell}(apq)$ for functions
+  $a\in W^{k,\infty}(\refcell)$ and polynomials $p,q\in \P_{k-1}$,
+  such that we obtain an estimate for the constituents of
+  $E_{\refcell}(\refgrad\refu\reference A \refgrad\refv)$.
+
+  We combine $\phi = ap\in W^{k,\infty}(\refcell)$ Since
+  $W^{k,\infty}(\refcell)\hookrightarrow C(\refcell)$, we obtain
+  \begin{gather}
+    \abs{E_{\refcell}(\phi q)} \le c \norm{\phi q}_{\infty}
+      \le c\norm{\phi}_{0,\infty} \norm{q}_{0,\infty}
+      \le c \norm{\phi}_{k,\infty} \norm{q}_{L^2(\refcell)}.
+  \end{gather}
+  For the last inequality, we used the natural bound of the norm in
+  $W^{0,\infty}$ by that of $W^{k,\infty}$ and the norm equivalence on
+  $\P_{k-1}$. We conclude that $J_q(\phi) = E_{\refcell}(\phi q)$ is a
+  bounded linear functional on $W^{k,\infty}$. Furthermore, it
+  vanishes for $\phi\in\P_{k-1}$ by the assumption on the quadrature
+  rule. Thus by the Bramble-Hilbert lemma (\slideref{Lemma}{bramble-hilbert}),
+  \begin{gather}
+    \abs{E_{\refcell}(\phi q)}
+    \le c \snorm{\phi}_{k,\infty}\norm{w}_{L^2(\refcell)}.
+  \end{gather}
+  Now, we apply \slideref{Lemma}{product-sobolev-norm}, to obtain
+  \begin{gather}
+    \begin{split}
+    \snorm{\phi}_{k,\infty}
+    &= \snorm{ap}_{k,\infty}\\
+    &\le c \sum_{i=0}^{k-1} \snorm{a}_{k-i,\infty} \snorm{p}_{i,\infty}\\
+    &\le c \sum_{i=0}^{k-1} \snorm{a}_{k-i,\infty} \snorm{p}_{i},
+    \end{split}
+  \end{gather}
+  where we used that $\snorm{p}_k = 0$ and norm equivalence on
+  $\P_{k-1}$.  Collecting everything and reintroducing $\reference a$,
+  $\reference p$, and $\reference q$ for $a$, $p$, and $q$,
+  respectively, we obtain
+  \begin{gather}
+    \abs{E_{\refcell}(\reference a\reference p\reference q)}
+    \le c \left(\sum_{i=1}^{k-1} \snorm{\reference a}_{k-1,\infty;\refcell}
+      \snorm{\reference p}_{i;\refcell}\right)
+    \norm{\reference q}_{L^2(\refcell)}.
+  \end{gather}
+  The scaling lemma yields
+  \begin{xalignat}2
+    \snorm{\reference a}_{k-1,\infty;\refcell}
+    &\le c h_\cell^{k-i} \snorm{a}_{k-i,\infty;\cell}
+    & 0 & \le i \le k-1,
+    \\
+    \snorm{\reference p}_{i;\refcell}
+    &\le c h_\cell^{i-\nicefrac{d}{2}} \snorm{p}_{i;\cell}
+    & 0 & \le i \le k-1,
+    \\
+    \norm{\reference q}_{L^2(\refcell)}
+    &\le c h_\cell^{-\nicefrac{d}{2}} \norm{q}_{L^2(\cell)}.
+  \end{xalignat}
+  Therefore,
+  \begin{gather}
+    \begin{split}
+    \abs{E_\cell(a p q)}
+    &\le c h_\cell^{\nicefrac{d}{2}}
+    \abs{E_{\refcell}(\reference a\reference p\reference q)}
+    \\ & \le c h_\cell^{k} \left(
+      \sum_{i=1}^{k-1}\snorm{a}_{k-i,\infty;\cell}\snorm{p}_{i;\cell}
+    \right)
+    \norm{q}_{L^2(\cell)}
+    \\ & \le c h_\cell^{k} \norm{a}_{k-i,\infty;\cell}\norm{p}_{i;\cell}
+    \norm{q}_{L^2(\cell)}.
+    \end{split}
+  \end{gather}
+  Entering the derivatives of $u_h$ and $v_h$ for $p$ and $q$,
+  respectively, and summing up over all cells yields the result.
+\end{proof}
+
+\begin{remark}
+  Note that the assumption of quasi-uniformity is convenient for
+  notation, but excessive. Indeed, shape regularity is sufficcient,
+  but in that case, the estimate must be localized, that is,
+  \begin{gather}
+    a(v_h, w_h) - a_h(v_h, w_h) \le c \sum_{\cell\in\mesh_h}
+    h_\cell^k \norm{A}_{k,\infty;\cell}
+    \norm{v_h}_{k;\cell} \snorm{w_h}_{1;\cell}.
+  \end{gather}
+\end{remark}
+
+
 
 %%% Local Variables: 
 %%% mode: latex

@@ -1,5 +1,10 @@
 \begin{thebibliography}{}
 
+\bibitem[Ciarlet, 1978]{Ciarlet78}
+Ciarlet, P.~G. (1978).
+\newblock {\em The Finite Element Method for Elliptic Problems}.
+\newblock North-Holland.
+
 \bibitem[Evans, 1998]{Evans98}
 Evans, L.~C. (1998).
 \newblock {\em Partial Differential Equations}.

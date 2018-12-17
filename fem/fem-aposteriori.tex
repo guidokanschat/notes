@@ -365,7 +365,7 @@
 \end{Theorem}
 
 \begin{proof}
-  We observe, that the right hand side of the
+  Note that the right hand side of the
   estimate~\eqref{eq:fem-aposteriori:5} in
   \slideref{Lemma}{residual-upper-bound} differs from the estimator
   $\eta_h(u_h)$ only by the replacement of $f$ by $\overline
@@ -391,6 +391,10 @@
     number of cells in $\mesh_\cell$. Thus, the upper
     bound~\eqref{eq:fem-aposteriori:6} is an immediate consequence of
     \slideref{Lemma}{residual-upper-bound}.
+    
+    Note: the proof for the lower bound is for linear elements
+    only. It can be generalized to higher order by generalizing the
+    bubble functions below, which is mostly technical.
     
     We observe that the lower bound is local, that is, the estimate on
     each cell $\cell$ is bounded from above by the error on the halo
