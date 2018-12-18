@@ -391,6 +391,17 @@
   \end{gather}
 \end{remark}
 
+\begin{Theorem}{quadrature-error-rhs}
+  Let the finite element use shape function spaces
+  $\shapespace_\cell = \P_k$ and let the quadrature rule
+  $Q_{\refcell}$ be exact for polynomials in $\P_{2k-2}$. Then, there
+  exists a constant $c$ such that for all cells of a quasi-uniform
+  family $\{\mesh_h\}$ of meshes there holds
+  \begin{gather}
+    \abs{E_\cell(fp)} \le c h_\cell^k \norm{f}_{k;\cell}\norm{p}_{1;\cell}
+    \qquad\forall f\in H^2(\domain),\quad \forall p\in\shapespace.
+  \end{gather}
+\end{Theorem}
 
 
 %%% Local Variables: 
