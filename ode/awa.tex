@@ -1,5 +1,5 @@
 \chapter{Initial Value Problems and their Properties}
-\label{cha:awa}
+\label{cha:IVP}
 \input{models}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -8,7 +8,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\begin{Definition*}{ode}{Ordinary differential equations} \label{Definition:awa}
+\begin{Definition*}{ode}{Ordinary differential equations} \label{Definition:IVP}
   \defindex{differential equation!ordinary|see{ordinary differential equation}} \index{ODE|see{ordinary
       differential equation}} An \define{ordinary differential
     equation} (ODE) is an equation for a function $u(t)$, defined on
@@ -36,8 +36,26 @@
   following.
 \end{remark}
 
-\input{definitions/explicit-ode}
-\input{theorems/first-order}
+\begin{Definition}{explicit-ode}{Explicit differential equation}
+  \defindex{ordinary differential equation!explicit} An \define{explicit
+    differential equation} of first order is a equation of the form
+  \begin{align}
+    \label{eq:IVP:ode}
+    u'(t) &= f(t,u(t))\\
+    \text{or shorter:}\qquad u'&=f(t,u). \notag
+  \end{align}
+  A differential equation of order $n$ is called explicit, if it is of
+  the form
+  \begin{gather*}
+    u^{(n)}(t) = F\left(t, u(t), u'(t), \ldots, u^{(n-1)}(t)\right)
+  \end{gather*}
+\end{Definition}
+
+\begin{Lemma}{first-order}
+  Every differential equation of higher order can be written as a
+  system of first-order differential equations. If the equation is
+  explicit, then the system is explicit.
+\end{Lemma}
 
 \begin{proof}
   By the introduction of additional variables $u_0(t) = u(t)$, $u_1(t)
@@ -45,7 +63,7 @@
   order $n$ can be transformed into a system of $n$ differential equations
   of first order. This system has the form
   \begin{gather}
-    \label{eq:awa:13}
+    \label{eq:IVP:13}
     \begin{pmatrix}
       u_0'(t) - u_1(t) \\
       u_1'(t) - u_2(t) \\
@@ -60,7 +78,7 @@
   \end{gather}
   In the case of an explicit equation, the system has the form
   \begin{gather}
-    \label{eq:awa:13a}
+    \label{eq:IVP:13a}
     \begin{pmatrix}
       u_0'(t) \\
       u_1'(t) \\
@@ -76,15 +94,15 @@
 \end{proof}
 
 \begin{example}
-  \label{ex:awa:sine-1}
+  \label{ex:IVP:sine-1}
   The differential equation
   \begin{gather}
-    \label{eq:awa:17}
+    \label{eq:IVP:17}
     u'' + \omega^2 u = f(t)
   \end{gather}
   can be transformed into the system
   \begin{gather}
-    \label{eq:awa:18}
+    \label{eq:IVP:18}
     \begin{split}
       u_1' - u_2 &= 0, \\
       u_2' + \omega^2 u_1 &= f(t).
@@ -93,19 +111,19 @@
   The transformation is not uniquely determined. In this example, a
   more symmetric system can be obtained:
   \begin{gather}
-    \label{eq:awa:18a}
+    \label{eq:IVP:18a}
     \begin{split}
       u_1' - \omega u_2 &= 0, \\
       u_2' + \omega u_1 &= f(t).
     \end{split}
   \end{gather}
-  From a numerical perspective, system ~\ref{eq:awa:18a} should be
-  chosen over ~\ref{eq:awa:18} to avoid loss of significance or overflow,
+  From a numerical perspective, system ~\ref{eq:IVP:18a} should be
+  chosen over ~\ref{eq:IVP:18} to avoid loss of significance or overflow,
   i.e. if $|\omega| \ll 1$ or $|\omega| \gg 1$.
 \end{example}
 
 \begin{Definition}{autonomization}
-  A differential equation of the form~\eqref{eq:awa:ode} is called
+  A differential equation of the form~\eqref{eq:IVP:ode} is called
   \textbf{autonomous}, \defindex{autonomous differential equation} if
   the right hand side $f$ is not explicitly dependent on $t$, i.e.
   \begin{gather}
@@ -133,8 +151,33 @@ Differential equations usually provide sets of solutions from which we
 have to choose a solution. An important selection criteria is setting
 an initial value which leads to a well-posed problem (see below).
 
-\input{definitions/ivp}
-\input{definitions/local-solution}
+\begin{Definition}{IVP}
+  \index{IVP|see{initial value problem}} Given a point
+  $(t_0,u_0)\in \R \times \R^d$.  Furthermore, let the function
+  $f(t,u)$ with values in $\R^d$ be defined in a neighborhood
+  $I\times U \subset \R\times \R^d$ of the initial value.  Then an
+  \define{initial value problem} (IVP) is defined as follows: find a
+  function $u(t)$, such that
+  \begin{subequations}
+    \label{eq:IVP}
+    \begin{align}
+      \label{eq:IVP:2}
+      u'(t)&=f\bigl(t,u(t)\bigr)
+      \\
+      \label{eq:IVP:3}
+      u(t_0)&=u_0
+  \end{align}
+  \end{subequations}
+\end{Definition}
+
+\begin{Definition}{local-solution}
+    \label{def:IVP:local solution}
+  \defindex{solution!local} We call a continuously differentiable
+  function $u(t)$ with $u(t_0) = 0$ a \define{local solution} of the
+  IVP~\eqref{eq:IVP}, if there exists a neighborhood $J$ of the point
+  in time $t_0$ in which $u$ and $f(t,u(t))$ are defined and if the
+  equation~\eqref{eq:IVP:2} holds for all $t\in J$.
+\end{Definition}
 
 \begin{remark}
   We introduced the IVP deliberately in a ``local'' form because the
@@ -151,16 +194,51 @@ an initial value which leads to a well-posed problem (see below).
   $t_0 = 0$.
 \end{remark}
 
-\input{theorems/volterra}
+\begin{Lemma}{volterra}
+  Under the assumption that the right hand side $f$ is continuous in
+  both arguments, the function $u(t)$ is a solution of the initial
+  value problem~\eqref{eq:IVP} if and only if it is a solution of the
+  \define{Volterra integral equation} (VIE) \index{VIE!see{Volterra
+      integral equation}}
+  \begin{gather}
+    \label{eq:volterra}
+    u(t) = u_0 + \int_{t_0}^t f\bigl(s,u(s)\bigr)\ds.
+  \end{gather}
+  The formulation as integral equation allows on the other hand a more
+  general solution term, because the problem is already well-posed for
+  functions $f(t,u)$, which are just integrable with respect to $t$.
+  In that case the solution $u$ would be just absolutely continuous
+  and not continuously differentiable.
+\end{Lemma}
 
 \begin{remark} \label{remark:volterra}
   Both the theoretical analysis of the IVP and the numerical methods
   (with exception of the BDF methods) in this lecture notes, solve
-  actually never the IVP~\eqref{eq:awa} but always the associated
+  actually never the IVP~\eqref{eq:IVP} but always the associated
   integral equation ~\eqref{eq:volterra}.
 \end{remark}
 
-\input{theorems/peano-existence}
+\begin{Theorem*}{peano}{Peano's existence theorem}
+  \defindex{Peano's theorem}
+  \label{satz:peano}
+  Let the function $f(t,u)$ be continuous on the closed set
+  \begin{gather*}
+    \overline D =\bigl\{
+    (t,u) \in \R\times\R^d \;\big|
+    \;|t-t_0| \le \alpha,\;
+    |u-u_0|\le\beta
+    \bigr\},
+  \end{gather*}
+  where $\alpha,\beta>0$. Then there exists a solution
+    $u(t) \in C^1(I)$
+  on the interval
+    $I=[t_0-T,t_0+T]$
+  with
+  \begin{gather*}
+    T=\min\left(\alpha ,\frac{\beta}{M}\right),\;
+    M=\max_{(t,u)\in \overline D} \ |f(t,u)|.
+  \end{gather*}
+\end{Theorem*}
 
 The proof of this theorem is of little consequence for the remainder
 of these notes.  For its verification, we refer to textbooks on the
@@ -170,10 +248,16 @@ theory of ordinary differential equations.
   The Peano existence theorem does not make any statements about the
   uniqueness of a solution and also just guarantees local existence.
   The second limitation is addressed by the following theorem. The
-  first will be postponed to section~\ref{sec:awa:well-posedness}.
+  first will be postponed to section~\ref{sec:IVP:well-posedness}.
 \end{remark}
 
-\input{theorems/peano-continuation}
+\begin{Theorem*}{peano-continuation}{Peano's continuation theorem}
+  Let the assumptions of Theorem~\ref{satz:peano} hold. Then, the
+  solution can be extended to an interval $I_m = [t_-, t_+]$ such that
+  the points $\bigl(t_-,u(t_-)\bigr)$ and $\bigl(t_+,u(t_+)\bigr)$ are
+  on the boundary of $\overline D$. Neither the values of $t$, nor of
+  $u(t)$ need to be bounded as long as $f$ remains bounded.
+\end{Theorem*}
 
 \begin{example}
   The IVP
@@ -204,31 +288,68 @@ theory of ordinary differential equations.
   IVP. Therefore we pay particular attention to the linear case.
 \end{intro}
 
-\input{definitions/linear-ode}
-\input{definitions/integrating-factor}
+\begin{Definition}{linear-ode}
+    \defindex{ordinary differential equation!linear} An IVP according to
+  definition ~\ref{Definition:IVP} is called \textbf{linear} \defindex{linear
+    differential equation} if the right hand side $f$ is an affine
+  function of $u$. Thus, we can write it in the form
+  \begin{subequations}    
+    \label{eq:IVP:4}
+    \begin{xalignat}{2}
+      \label{eq:IVP:5}
+      u'(t) &= A(t)u(t) + b(t)
+      & \forall t &\in \R \\
+      \label{eq:IVP:6}
+      u(t_0) &= u_0
+    \end{xalignat}
+  \end{subequations}
+  with a continuous matrix function $A:\R\to \C^{d \times d}$. If in
+  addition $b(t) \equiv 0$, we call it \define{homogeneous}.
+\end{Definition}
+
+\begin{Definition}{integrating factor}
+    Let the matrix function $A:I\to \C^{d\times d}$ be continuous.  Then
+  the function defined by
+  \begin{gather}
+    \label{eq:IVP:7}
+    M(t) = \exp\left(-\int_{t_0}^t A(s) \ds\right)
+  \end{gather}
+  is called \define{integrating factor} of the
+  equation~\eqref{eq:IVP:5}.
+\end{Definition}
 
 \begin{corollary}
   The integrating factor $M(t)$ has the properties
   \begin{align}
-    \label{eq:awa:14}
+    \label{eq:IVP:14}
     M(t_0) &= \identity\\
-    \label{eq:awa:15}
+    \label{eq:IVP:15}
     M'(t) &= -M(t)A(t).
   \end{align}
 \end{corollary}
 
-\input{theorems/linear-representation}
+\begin{Lemma}{linear-representation}
+  % Voraussetzungen an A und b
+  A solution of the IVP~\eqref{eq:IVP:4} is given through the 
+  representation
+  \begin{gather}
+    \label{eq:IVP:8}
+    u(t) =  M(t)^{-1}\left(u_0 + \int_{t_0}^t M(s) b(s) \ds\right)
+  \end{gather}
+  with the integrating factor $M(t)$ of the equation~\eqref{eq:IVP:7}.
+  This solution exists for all $t\in \R$.
+\end{Lemma}
 
 \begin{proof}
   We consider the auxiliary function $w(t) = M(t) u(t)$ with the
-  integrating factor $M(t)$ of the equation~\eqref{eq:awa:7}. Using the
+  integrating factor $M(t)$ of the equation~\eqref{eq:IVP:7}. Using the
   product rule, there holds
   \begin{gather}
-    \label{eq:awa:19}
+    \label{eq:IVP:19}
     w'(t) =  M(t) u'(t) + M'(t) u(t)
     =  M(t) u'(t) - M(t)A(t)u(t).
   \end{gather}
-  Comparing this to the differential equation~\eqref{eq:awa:5}, we see
+  Comparing this to the differential equation~\eqref{eq:IVP:5}, we see
   that $w$ solves
   \begin{gather*}
     w'(t) = M(t) b(t).
@@ -241,15 +362,15 @@ theory of ordinary differential equations.
   lemma~\ref{Lemma:appendix:exp-1} about the \putindex{matrix
     exponential}, $M(t)$ is invertible for all $t$.  With the
   definition of $w(t)$ we are therefore able to solve for $u(t)$,
-  which results in the equation~\eqref{eq:awa:8}. The global
+  which results in the equation~\eqref{eq:IVP:8}. The global
   solvability follows from the fact that the solution is defined for
   arbitrary $t\in \R$.
 \end{proof}
 
 \begin{example}
-  \label{ex:awa:sine-2}
-  The equation in example~\ref{ex:awa:sine-1} is linear and can be
-  written in the form of~\eqref{eq:awa:4} with
+  \label{ex:IVP:sine-2}
+  The equation in example~\ref{ex:IVP:sine-1} is linear and can be
+  written in the form of~\eqref{eq:IVP:4} with
   \begin{align*}
     A(t) = A &=
     \begin{pmatrix}
@@ -293,18 +414,33 @@ theory of ordinary differential equations.
 \end{example}
 
 \begin{remark}
-  If the function $b(t)$ in~\eqref{eq:awa:5} is only integrable, the
-  function $u(t)$ defined in~\eqref{eq:awa:8} is absolutely continuous
+  If the function $b(t)$ in~\eqref{eq:IVP:5} is only integrable, the
+  function $u(t)$ defined in~\eqref{eq:IVP:8} is absolutely continuous
   and thus differentiable almost everywhere. The chain
-  rule~\eqref{eq:awa:19} is applicable in all points of
+  rule~\eqref{eq:IVP:19} is applicable in all points of
   differentiability and $w(t)$ solves the Volterra integral equation
-  corresponding to~\eqref{eq:awa:4}. Thus, the representation
-  formula~\eqref{eq:awa:8} holds generally for solutions of linear
+  corresponding to~\eqref{eq:IVP:4}. Thus, the representation
+  formula~\eqref{eq:IVP:8} holds generally for solutions of linear
   Volterra integral equations.
 \end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input{theorems/gronwall}
+\begin{Lemma*}{gronwall}{Grönwall}
+  Let be $w(t)$, $a(t)$ and $b(t)$ be nonnegative, integrable
+  functions, such that $a(t)w(t)$ is integrable. Furthermore, let
+  $b(t)$ be monotonically nondecreasing and let $w(t)$ satisfy the
+  integral inequality
+  \begin{gather}
+    \label{eq:IVP:10}
+    w(t) \le b(t) + \int_{t_0}^t a(s)w(s)\ds,\qquad t\ge t_0.
+  \end{gather}
+  Then, for almost all $t \ge t_0$ there holds:
+  \begin{gather}
+    \label{eq:IVP:11}
+    w(t) \le b(t) \exp\left( \int_{t_0}^t  a(s) \ds\right).
+  \end{gather}
+\end{Lemma*}
+
 \begin{proof}
   Using the integrating factor
   \begin{gather*}
@@ -324,7 +460,7 @@ theory of ordinary differential equations.
       w(t) - \int_{t_0}^t a(s) w(s) \ds
     \right].
   \end{gather*}
-  By assumption~\eqref{eq:awa:10}, the bracket on the right is bounded
+  By assumption~\eqref{eq:IVP:10}, the bracket on the right is bounded
   by $b(t)$. Thus,
   \begin{gather*}
     v'(t) \le m(t) a(t) b(t) %\exp\left(-\int_{t_0}^t a(s) \ds\right),
@@ -355,7 +491,7 @@ theory of ordinary differential equations.
     &= \frac{b(t)}{m(t)} \bigl(m(t_0)-m(t)\bigr)
       = \frac{b(t)}{m(t)} - b(t)
   \end{align*}
-  Now, entering into the integral inequality~\eqref{eq:awa:10}, we
+  Now, entering into the integral inequality~\eqref{eq:IVP:10}, we
   obtain
   \begin{gather*}
     w(t) \le b(t) + \int_{t_0}^t a(s)w(s)\ds = \frac{b(t)}{m(t)},
@@ -366,16 +502,16 @@ theory of ordinary differential equations.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{remark}
-	On the form of the requirements~\eqref{eq:awa:10} as well as the
-  estimation~\eqref{eq:awa:11}, we can see that Grönwall's
+	On the form of the requirements~\eqref{eq:IVP:10} as well as the
+  estimation~\eqref{eq:IVP:11}, we can see that Grönwall's
   inequality is basically based on the construction of a majorant for 
 	$w(t)$, which satisfies a linear IVP.
 \end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{Corollary}{awa:unique-linear}
+\begin{Corollary}{IVP:unique-linear}
   Let the functions $u(t)$ and $v(t)$ be two solutions of the linear
-  differential equation~\eqref{eq:awa:5}. If both functions
+  differential equation~\eqref{eq:IVP:5}. If both functions
   coincide in a point $t_0$ then they are identical.
 \end{Corollary}
 
@@ -388,15 +524,15 @@ theory of ordinary differential equations.
   \begin{gather*}
     |w(t)| \le \int_{t_0}^t |A(s)| |w(s)| \ds,
   \end{gather*}
-	from which we conclude with Grönwall's inequality~\eqref{eq:awa:11} 
+	from which we conclude with Grönwall's inequality~\eqref{eq:IVP:11} 
 	for $b(t) = 0$, that $|w(t)|=0$ for all $t$ and therefore
   $u(t) = v(t)$.
 \end{proof}
 
 \begin{corollary}
-  The representation formula~\eqref{eq:awa:8} in
+  The representation formula~\eqref{eq:IVP:8} in
   Lemma~\ref{Lemma:linear-representation} defines the unique solution to the
-  IVP~\eqref{eq:awa:4}. In particular, solutions of linear IVP are
+  IVP~\eqref{eq:IVP:4}. In particular, solutions of linear IVP are
   always defined on the whole real axis.
 \end{corollary}
 
@@ -429,12 +565,12 @@ theory of ordinary differential equations.
   \index{ordinary differential equation!linear!homogeneous}
   The solutions of the homogeneous, linear differential equation
   \begin{gather}
-    \label{eq:awa:9}
+    \label{eq:IVP:9}
     u'(t) = A(t) u(t)
   \end{gather}
   with $u:\R\to\R^d$, define a vector space of dimension $d$. Let
   $\{\psi^{(i)}\}_{i=1,\dots,d}$ be a basis of $\R^d$. 
-	Then the solutions $\phi^{(i)}(t)$ of the equation~\eqref{eq:awa:9} with 
+	Then the solutions $\phi^{(i)}(t)$ of the equation~\eqref{eq:IVP:9} with 
   initial values $\phi^{(i)}(0) = \psi^{(i)}$ form a basis of the solution
   space. The vectors $\{\phi^{(i)}(t)\}$ are linear independent
   for all $t\in \R$.
@@ -443,7 +579,7 @@ theory of ordinary differential equations.
 
 \begin{proof}
   At first we observe that for two solutions $u(t)$ and $v(t)$ of the
-  equation~\eqref{eq:awa:9}, their sum and their scalar multiples are
+  equation~\eqref{eq:IVP:9}, their sum and their scalar multiples are
   solutions too, due to linearity \index{linear} of the derivative
   and the right hand side.  Therefore the vector space structure is
   proven.
@@ -452,13 +588,13 @@ theory of ordinary differential equations.
   independent initial values $\{\psi^{(i)}\}$.  As a consequence the
   functions are linear independent as well.
 
-  Assume that $w(t)$ is a solution of the equation~\eqref{eq:awa:9},
+  Assume that $w(t)$ is a solution of the equation~\eqref{eq:IVP:9},
   which cannot be written as a linear combination of $\psi^{(i)}$.
   Then $w(0)$ is not a linear combination of the vectors $\psi^{(i)}$:
   else let's say $w(0) = \sum \alpha_i \psi^{(i)}$, then
   $w(t) = \sum \alpha_i \phi^{(i)}(t)$ would be a linear combination
   because of uniqueness proven in
-  corollary~\ref{Corollary:awa:unique-linear}.  Since $\{\psi^{(i)}\}$
+  corollary~\ref{Corollary:IVP:unique-linear}.  Since $\{\psi^{(i)}\}$
   according to the assumtions is a basis of $\R^d$, such a $w(0)$
   cannot exist.  Hence it is shown that $\phi^{(i)}(t)$ is a basis of
   the solution space of dimension $d$.
@@ -470,7 +606,7 @@ theory of ordinary differential equations.
   \begin{gather*}
     \phi^{(d)}(t_1) = \sum_{i=1}^{d-1}\alpha_i\phi^{(i)}(t_1) =: w(t).
   \end{gather*}
-  Again according to corollary~\ref{Corollary:awa:unique-linear} we
+  Again according to corollary~\ref{Corollary:IVP:unique-linear} we
   have $\phi^{(d)} \equiv w$, moreover $\phi^{(d)}(0) = w(0)$ which
   again is a contradiction to the assumption $\psi^{(d)}$ is a linear
   combination of the other initial values.
@@ -478,7 +614,22 @@ theory of ordinary differential equations.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\input{definitions/fundamental-system}
+\begin{Definition}{fundamental-system}
+  A basis $\{\phi^{(1)},\dots,\phi^{(d)}\}$ of the solution space of
+  the linear differential equation~\eqref{eq:IVP:9}, in particular the
+  basis with initial values $\phi^{(i)}(0) = e_i$, is called
+  \define{fundamental system} of solutions.  The
+  matrix function
+  \begin{gather}
+    \label{eq:IVP:12}
+    \fundam(t) =
+    \begin{pmatrix}
+      \phi^{(1)}(t)\dots\phi^{(d)}(t)
+    \end{pmatrix}
+  \end{gather}
+  with column vectors $\phi^{(i)}(t)$ is called
+  \define{fundamental matrix}.
+\end{Definition}
 
 \begin{Corollary}{fundamental-regular}
   The fundamental matrix is regular for all $t\in \R$ and solves the
@@ -501,10 +652,23 @@ theory of ordinary differential equations.
 \section{Well-posedness of the IVP}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\label{sec:awa:well-posedness}
+\label{sec:IVP:well-posedness}
 
 
-\input{definitions/hadamard}
+\begin{Definition}{hadamard} 
+  A mathematical problem is called \define{well-posed} if the
+  following \textbf{Hadamard conditions} are satisfied:
+  \index{Hadamard conditions}
+  \begin{enumerate}
+  \item A solution exists.
+  \item The solution is unique.
+  \item The solution is continuously dependent on the data.
+  \end{enumerate}
+  The third condition in this form is purely qualitative. Typically,
+  in order to characterize problems with good approximation
+  properties, we will require \putindex{Lipschitz continuity}, which
+  has a more quantitative character.
+\end{Definition}
 
 \begin{example}
   The IVP
@@ -532,7 +696,7 @@ theory of ordinary differential equations.
 	it is Lipschitz continuous with regard to $y$, i.e., it exists a 
 	positive constant $L$, such that
   \begin{gather}
-    \label{eq:awa:1}
+    \label{eq:IVP:1}
     \forall t\in I;\,x,y\in\Omega \;:\;
     \abs{f(t,x)-f(t,y)} \le L \abs{x-y}
   \end{gather}
@@ -550,7 +714,7 @@ theory of ordinary differential equations.
      \frac{\partial}{\partial u_i} f_j(t,u)
    } \le K.
   \end{gather*}
-  Then, $f$ satisfies the Lipschitz condition~\eqref{eq:awa:1} with
+  Then, $f$ satisfies the Lipschitz condition~\eqref{eq:IVP:1} with
   $L=K$. Indeed, by using Taylor expansion, we see that
   \begin{multline*}
     f_j(t, u) - f_j(t,v)
@@ -565,7 +729,28 @@ theory of ordinary differential equations.
 \end{example}
 
 
-\input{theorems/stability}
+\begin{Theorem*}{IVP-stability}{Stability}
+  Let $f(t,u)$ and $g(t,u)$ be two continuous functions on a
+  cylinder $D = I \times \Omega$ where the interval $I$ contains
+  $t_0$ and $\Omega$ is a convex set in $\R^d$.  Furthermore, let
+  $f$ admit a Lipschitz condition with constant $L$ on $D$. Let $u$
+  and $v$ be solutions to the IVP
+  \begin{xalignat}{2}
+    \label{eq:IVP:20}
+    u'&=f(t,u) \quad\forall t\in I,& u(t_0)&= u_0,\\
+    \label{eq:IVP:21}
+    v'&=g(t,v) \quad\forall t\in I,& v(t_0)&= v_0.
+  \end{xalignat}
+  Then, there holds
+  \begin{gather}
+    \label{eq:IVP:22}
+    \abs{u(t)-v(t)} \le e^{L|t-t_0|}
+    \left[ \abs{u_0-v_0}
+      + \int_{t_0}^{t} \max_{x\in\Omega}
+      \abs{f(s,x)-g(s,x)}\ds
+    \right].
+  \end{gather}
+\end{Theorem*}
 
 \begin{proof}
   Both $u(t)$ and $v(t)$ solve their respective Volterra integral
@@ -593,7 +778,25 @@ theory of ordinary differential equations.
 \end{proof}
 
 
-\input{theorems/picard-lindelof}
+\begin{Theorem*}{picardlindelof}{Picard-Lindelöf}
+  \defindex{Picard-Lindelöf theorem} 
+  Let $f(t,y)$ be continuous on a cylinder
+  \begin{gather*}
+    D = \{ (t,y) \in \R \times
+    \R^d | \ |t-t_0| \le a, |y-u_0| \le b \}.
+  \end{gather*}
+  Let $f$ be bounded such that there is a constant $M = \max_D
+  \abs{f}$ and satisfy the Lipschitz condition~\eqref{eq:IVP:1} with
+  constant $L$ on $D$.  Then the IVP
+  \begin{gather*}
+    \begin{split}
+      u' &= f(t,u) \\ u(t_0) &= u_0
+    \end{split}
+  \end{gather*}
+  is uniquely solvable on the interval
+  $I = [t_0-T,t_0+T]$ where
+  $T = \min \{ a, \frac{b}{M} \}$.
+\end{Theorem*}
 
 \begin{proof}
   First, we assume for simplicity $t_0=0$ or we transform the problem
@@ -606,7 +809,7 @@ theory of ordinary differential equations.
   through the \putindex{Volterra integral
     equation}~\eqref{eq:volterra} as
   \begin{gather}
-    \label{eq:awa:16}
+    \label{eq:IVP:16}
    F(u)(t) = u_0 + \int\limits_{0}^t f(s,u(s)) \ds.
   \end{gather}
   Obviously $u$ is a solution of the Volterra integral
@@ -697,7 +900,7 @@ theory of ordinary differential equations.
 %   IVP depends continuously on the initial value $u_0$ and the gradient
 %   of the solution $u$ with respect to $u_0$ solves the IVP
 %   \begin{gather}
-%     \label{eq:awa:23}
+%     \label{eq:IVP:23}
 %     \begin{split}
 %     (\nabla_{u_0} u)' &= \nabla_u f(t,u) \nabla_{u_0} u,
 %     \\

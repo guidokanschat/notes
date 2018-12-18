@@ -3,7 +3,7 @@
 \section{Introduction}
 \begin{intro}
   This chapter deals with problems of a fundamentally different type
-  than the problems we examined in chapter~\ref{cha:awa} and which we
+  than the problems we examined in chapter~\ref{cha:IVP} and which we
   solved with previous numerical methods, namely boundary value
   problems. Here, we have prescribed values at the beginning and at
   the end of an interval of interest.
@@ -18,7 +18,7 @@
 \begin{remark}
   Since boundary values are imposed at two different
   points in time, the concept of local solutions from
-  definition~\ref{def:awa:local solution} is not applicable.
+  \slideref{Definition}{local-solution} is not applicable.
   Thus, tricks as going forward from interval to interval, which is
   for instance done with Euler's method in the proof of Péano's
   theorem, are here not applicable.  For this reason nothing can be
@@ -634,8 +634,58 @@ In practice, $u(b;v+\epsilon e_i)$ and $u(b;v)$ are computed numerically by any 
   shooting and change the underlying Newton method only slightly.
 \end{intro}
 
-\input{definitions/multiple-shooting-multiple}
-\input{definitions/bvp-parameter}
+\begin{Definition}{multiple-shooting-multiple}
+  A multi-point boundary value problem has boundary conditions of the
+  form
+  \begin{gather}
+    \label{eq:multiple-shooting-multiple:1}
+    r\bigl(u(t_0), u(t_{k_1}), u(t_{k_2}),\dots, u(t_{k_\ell})\bigr) = 0,
+  \end{gather}
+  with $a=t_0$, $m=k_\ell$, and $b=t_m$
+  A multiple shooting method for such a problem can be designed by
+  including all values $t_{k_i}$ into the partitioning of the time
+  interval. The corresponding shooting function and Jacobian are
+  {\small
+    \begin{gather}
+      \label{eq:multiple-shooting-multiple:2}
+      F(v) =
+      \begin{bmatrix}
+        F_1(v_1, v_2)\\
+        \vdots\\
+        F_{m}(v_{m}, v_{m+1})\\
+        F_{m+1}(v_{1},\ldots,v_{m+1})
+      \end{bmatrix}
+      ,\quad
+      \nabla F(v) =
+      \begin{bmatrix}
+        G_1 & -\identity \\
+        &G_2 & -\identity \\
+        &&\ddots & \ddots \\
+        &&&G_{m} & -\identity \\
+        \rwaa &\cdots&B_{k_i}&\cdots& \rwab
+      \end{bmatrix}.
+    \end{gather}
+  }
+  Here,
+  \begin{xalignat*}{2}
+    F_k(v_k,v_{k+1})&= u_k(t_{k}) - v_{k+1} & k&=1,\dots,m, \\
+    F_{m+1}(v_1,\ldots,v_{m+1}) &= r\bigl(v_1, \ldots, v_{m+1}\bigr),\\
+    G_k &= \fundamental(t_k;t_{k-1}) & k&=1,\dots,m.
+  \end{xalignat*}
+\end{Definition}
+
+\begin{Definition}{bvp-parameter}
+  Given a vector $p\in \R^q$, a parameter dependent boundary value
+  problem depending on $p$ has the form
+  \begin{gather}
+    \label{eq:bvp-parameter:1}
+    \begin{split}
+      u' &= f(t, u; p),\\
+      r\bigl(u(a), u(b); p\bigr) &= 0.
+    \end{split}
+  \end{gather}
+  Here, $r(\ldots) \in \R^{d+q}$ where $d$ is the dimension of the ODE system.
+\end{Definition}
 
 \begin{remark}
   Every parameter dependent ODE can be transformed into a regular ODE
@@ -653,7 +703,25 @@ In practice, $u(b;v+\epsilon e_i)$ and $u(b;v)$ are computed numerically by any 
   that we incorporate it directly.
 \end{remark}
 
-\input{definitions/multiple-shooting-parameter}
+\begin{Definition}{multiple-shooting-parameter}
+  The Jacobian of the Newton method for parameter dependent BVP is
+  \begin{gather}
+    \label{eq:multiple-shooting-parameter:1}
+    \nabla F(v) =
+    \begin{bmatrix}
+      G_1 & -\identity &&& P_1\\
+      &\ddots & \ddots \\
+      &&G_{m} & -\identity & P_{m-1}\\
+      \rwaa &&& \rwab & P_m
+    \end{bmatrix}.
+  \end{gather}
+  Here,
+  \begin{xalignat*}{2}
+    P_k &= \frac{\partial u_k(t_k)}{\partial p} & k&=1,\dots,m,\\
+    P_m &= \frac{\partial r(\dots)}{\partial p},\\
+    G_k &= \fundamental(t_k;t_{k-1};p) & k&=1,\dots,m.
+  \end{xalignat*}
+\end{Definition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
