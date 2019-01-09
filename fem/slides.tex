@@ -14,7 +14,7 @@
 \mathtoolsset{showonlyrefs}
 
 \def\footnote#1{}
-
+\def\putindex#1{#1}
 \title{Finite Elements}
 \author{Guido Kanschat}
 \date{\today}
@@ -331,6 +331,31 @@
 \frame {\input {blocks/Theorem-quadrature-error-bilinear.tex}}
 \frame {\input {blocks/Lemma-product-sobolev-norm.tex}}
 \frame {\input {blocks/Theorem-quadrature-error-rhs.tex}}
+
+\section{Solving the Discrete Problem}
+\frame{\sectoc}
+\subsection{Richardson's method}
+\frame {\input {blocks/Definition-spd-condition-number.tex}}
+\frame {\input {blocks/Definition-matrix-condition-number.tex}}
+\frame {\input {blocks/Lemma-richardson-error-step.tex}}
+\frame {\input {blocks/Theorem-richardson-convergence1.tex}}
+\frame {\input {blocks/Definition-richardson-method.tex}}
+\frame {\input {blocks/Theorem-richardson-convergence2.tex}}
+\frame {\input {blocks/Definition-riesz-isomorphism.tex}}
+\frame {\input {blocks/Definition-p-richardson-method.tex}}
+\subsection{The conjugate gradient method}
+\frame {\input {blocks/Definition-steepest-descent.tex}}
+\frame {\input {blocks/Lemma-steepest-descent.tex}}
+\frame {\input {blocks/Definition-cg-method.tex}}
+\frame {\input {blocks/Definition-pcg-method.tex}}
+\frame {\input {blocks/Definition-krylov-space.tex}}
+\frame {\input {blocks/Lemma-cg-orthogonality.tex}}
+\frame {\input {blocks/Lemma-cg-minimization.tex}}
+\frame {\input {blocks/Theorem-cg-convergence.tex}}
+
+\subsection{Condition numbers of finite element matrices}
+\frame {\input {blocks/Lemma-condition-number-mass-matrix.tex}}
+\frame {\input {blocks/Corollary-refined-condition-number.tex}}
 
 \section{Bibliography}
 \frame{\bibliographystyle{alpha}
