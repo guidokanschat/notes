@@ -1,0 +1,65 @@
+\begin{Lemma}{condition-number-mass-matrix}
+  \label{lemma:itintro:1}
+  Let $\{\phi_i\}$ be the basis of a finite element shape function space
+  on a quasi-uniform mesh of mesh size $h$. Let
+  $\matm$, the so called \define{mass matrix} be the matrix associated
+  with the $L^2$-inner product with entries
+  \begin{gather*}
+    m_{ij} = \int_\Omega \phi_i(x) \phi_j(x) \dx.
+  \end{gather*}
+  Then,
+  \begin{gather*}
+    \Lambda(\matm) \simeq h^{d} \simeq  \lambda(\matm)
+  \end{gather*}
+  Therefore, the condition number is
+  \begin{gather*}
+    \kappa(\matm) = \frac{\mathcal O(h^{d})}{\mathcal O(h^{d})} = {\mathcal O(1)}.
+  \end{gather*}
+\end{Lemma}
+
+\begin{proof}
+  % It is easy to verify, that $m_{ii}> 0$, and that there are not more
+  % entries in each row as edges of the triangulation meet in one vertex
+  % are different from zero. Furthermore, that the size of those entries
+  % is of order $h^d$, where $d$ is the space dimension. From these two
+  % facts we immediately obtain
+  % \begin{gather*}
+  %   \Lambda(\matm) = \mathcal O(h^{d}).
+  % \end{gather*}
+  % The argument for $\lambda(\matm)$ is more subtle. 
+  For any mesh cell
+  $T$, let $\vecx_T$ be the entries of the vector $\vecx$ which
+  belong to node values of the cell $T$. Let $\matm_T$ be the cell
+  mass matrix obtained by restricting the $L^2$-inner product to
+  $T$. Then,
+  \begin{gather*}
+    \vecx^T \matm \vecx
+    = \sum_{T\in\T_h} \vecx^T_T \matm_T \vecx_T
+    \begin{cases}
+    \ge \min\limits_{T\in\T_h} \frac{\vecx^T_T \matm_T \vecx_T}{\abs{\vecx_T}} \sum_{T\in\T_h} \abs{\vecx_T}^2 \ge \lambda(\matm_T) \abs{\vecx}^2,\\
+    \le \max\limits_{T\in\T_h} \frac{\vecx^T_T \matm_T \vecx_T}{\abs{\vecx_T}} \sum_{T\in\T_h} \abs{\vecx_T}^2 \le c \Lambda(\matm_T) \abs{\vecx}^2,
+    \end{cases}
+  \end{gather*}
+  where the constant in the upper bound is due to degrees of freedom
+  shared by different elements. Dividing by $\abs{\vecx}^2$, we
+  obtain
+  \begin{gather}
+    \lambda(\matm_\cell) \le \frac{\vecx^T \matm \vecx}{\abs{\vecx}^2} \le c \Lambda(\matm_\cell).
+  \end{gather}
+  In order to estimate the eigenvalues of $\matm_T$, we note that for
+  a unisolvent element, the norms $\abs{\vecx_T}$ and $\norm{u}_{0,T}$ are
+  equivalent on the reference cell, and the $L^2$-norm scales with
+  $h^d$ when transforming to the real cell $T$. Thus, we have
+  $\lambda(\matm) = \mathcal O(h^{d}) = \Lambda(\matm)$.
+\end{proof}
+
+\begin{Corollary}{refined-condition-number}
+  Let $\mesh_h$ be a shape-regular mesh with cell sizes ranging
+  between the minimum $h$ and the maximum $H$. Then, we have
+  \begin{align*}
+    \Lambda(\matm) &= \mathcal O(H^{d}) \\
+    \lambda(\matm) &= \mathcal O(h^{d}) \\
+    \kappa(\matm) &= \mathcal O\left(\left(\frac Hh\right)^{d}\right)
+  \end{align*}
+\end{Corollary}
+
