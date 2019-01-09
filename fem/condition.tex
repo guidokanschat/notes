@@ -1,19 +1,62 @@
-\begin{Lemma}{condition-number-mass-matrix}
-  \label{lemma:itintro:1}
-  Let $\{\phi_i\}$ be the basis of a finite element shape function space
-  on a quasi-uniform mesh of mesh size $h$. Let
-  $\matm$, the so called \define{mass matrix} be the matrix associated
-  with the $L^2$-inner product with entries
+\begin{Notation}{up-to-a-constant}
+  In asymptotic estimates, we will use the notation
   \begin{gather*}
-    m_{ij} = \int_\Omega \phi_i(x) \phi_j(x) \dx.
+    a \lesssim b \qquad\text{and}\qquad b \gtrsim a,
   \end{gather*}
-  Then,
+  if there is a constant c independent of the relevant quantities, such that
+  \begin{gather*}
+    a \le c \,b\qquad\text{and}\qquad c\,b \gtrsim a.
+  \end{gather*}
+  We use
+  \begin{gather*}
+    a \simeq b,
+  \end{gather*}
+  if both hold. The latter is more precise than $a = \mathcal O(b)$,
+  since it implies the same asymptotic order.
+\end{Notation}
+
+\begin{example}
+  The interpolation estimate~\eqref{eq:fe-interpolation} could be written as
+  \begin{align*}
+    \norm{u-I_h u}_{m;h} \lesssim h^{k+1-m} \snorm{u}_{k+1;h},\\
+    \intertext{instead of}
+    \norm{u-I_h u}_{m;h} \le c h^{k+1-m} \snorm{u}_{k+1;h}.
+  \end{align*}
+  The statement of the equivalence of two norms becomes
+  \begin{gather*}
+    \norm{\cdot}_X \simeq \norm{\cdot}_Y,
+  \end{gather*}
+  while 
+  \begin{gather*}
+    \norm{\cdot}_X \lesssim \norm{\cdot}_Y
+  \end{gather*}
+  states that the $Y$-norm is not weaker than the $X$-norm.
+\end{example}
+
+\begin{Definition}{mass-stiffness}
+  Let $\mesh_h$ be a mesh on the domain $\domain$ and $V_h$ a finite
+  element space with basis $\{\phi_i\}$. Then, the matrix associated
+  with the $L^2$-inner product,
+  \begin{gather*}
+    m_{ij} = \int_\Omega \phi_j(x) \phi_i(x) \dx,
+  \end{gather*}
+  is called \define{mass matrix}. The matrix associated with the
+  bilinear form of the equation is called \define{stiffness matrix},
+  \begin{gather*}
+    a_{ij} = a(\phi_j,\phi_i).
+  \end{gather*}
+\end{Definition}
+
+\begin{Lemma}{condition-number-mass-matrix}
+  Let $\{\phi_i\}$ be the basis of a finite element shape function
+  space on a quasi-uniform family of meshes $\{\mesh_h\}$. Let
+  $\matm_h$ be the mass matrix. Then,
   \begin{gather*}
     \Lambda(\matm) \simeq h^{d} \simeq  \lambda(\matm)
   \end{gather*}
-  Therefore, the condition number is
+  Therefore, the condition number is (asymptotically in $h$)
   \begin{gather*}
-    \kappa(\matm) = \frac{\mathcal O(h^{d})}{\mathcal O(h^{d})} = {\mathcal O(1)}.
+    \kappa(\matm) \simeq 1.
   \end{gather*}
 \end{Lemma}
 
@@ -28,12 +71,12 @@
   % \end{gather*}
   % The argument for $\lambda(\matm)$ is more subtle. 
   For any mesh cell
-  $T$, let $\vecx_T$ be the entries of the vector $\vecx$ which
-  belong to node values of the cell $T$. Let $\matm_T$ be the cell
+  $\cell\in\mesh_h$, let $\vecx_T$ be the entries of the vector $\vecx$ which
+  belong to node values of the cell $\cell$. Let $\matm_\cell$ be the cell
   mass matrix obtained by restricting the $L^2$-inner product to
-  $T$. Then,
+  $\cell$. Then,
   \begin{gather*}
-    \vecx^T \matm \vecx
+    \vecx^T \matm_h \vecx
     = \sum_{T\in\T_h} \vecx^T_T \matm_T \vecx_T
     \begin{cases}
     \ge \min\limits_{T\in\T_h} \frac{\vecx^T_T \matm_T \vecx_T}{\abs{\vecx_T}} \sum_{T\in\T_h} \abs{\vecx_T}^2 \ge \lambda(\matm_T) \abs{\vecx}^2,\\
@@ -44,22 +87,113 @@
   shared by different elements. Dividing by $\abs{\vecx}^2$, we
   obtain
   \begin{gather}
-    \lambda(\matm_\cell) \le \frac{\vecx^T \matm \vecx}{\abs{\vecx}^2} \le c \Lambda(\matm_\cell).
+    \lambda(\matm_\cell) \le \frac{\vecx^T \matm_h \vecx}{\abs{\vecx}^2} \le c \Lambda(\matm_\cell).
   \end{gather}
   In order to estimate the eigenvalues of $\matm_T$, we note that for
   a unisolvent element, the norms $\abs{\vecx_T}$ and $\norm{u}_{0,T}$ are
   equivalent on the reference cell, and the $L^2$-norm scales with
   $h^d$ when transforming to the real cell $T$. Thus, we have
-  $\lambda(\matm) = \mathcal O(h^{d}) = \Lambda(\matm)$.
+  $\lambda(\matm_h) = \mathcal O(h^{d}) = \Lambda(\matm_h)$.
 \end{proof}
 
 \begin{Corollary}{refined-condition-number}
   Let $\mesh_h$ be a shape-regular mesh with cell sizes ranging
   between the minimum $h$ and the maximum $H$. Then, we have
   \begin{align*}
-    \Lambda(\matm) &= \mathcal O(H^{d}) \\
-    \lambda(\matm) &= \mathcal O(h^{d}) \\
-    \kappa(\matm) &= \mathcal O\left(\left(\frac Hh\right)^{d}\right)
+    \Lambda(\matm) &\simeq H^{d} \\
+    \lambda(\matm) &\simeq h^{d} \\
+    \kappa(\matm) &\simeq \left(\frac Hh\right)^{d}
   \end{align*}
 \end{Corollary}
 
+\begin{remark}
+  We have only computed the dependence of the condition number on the
+  mesh size $h$, not on the polynomial degree of the shape function
+  space. Indeed, the used equivalence between the $L^2$-norm of a
+  polynomial on the reference cell and the Euclidean norm of its
+  coefficient vector depends not only on the degree of the shape
+  function space, but on its basis.
+\end{remark}
+
+\begin{Theorem}{condition-number-stiffness-matrix}
+  Let $\{\phi_i\}$ be the nodal basis of a finite element shape
+  function space on a quasi-uniform family of meshes
+  $\{\mesh_h\}$. Let $\mata_h$ be the stiffness matrix of the
+  Laplacian with Dirichlet boundary values.  Then,
+  \begin{gather*}
+    \Lambda(\mata) \simeq h^{d-2}, \qquad \lambda(\mata)  \simeq h^{d}
+  \end{gather*}
+  Therefore, the condition number is
+  \begin{gather*}
+    \kappa(\matm) \simeq h^{-2}.
+  \end{gather*}
+\end{Theorem}
+
+\begin{proof}
+  First, we investigate the largest eigenvalue. By the scaling
+  argument, there holds $a_{ij} \simeq h^{d-2}$. Since by the
+  Gershgorin theorem all eigenvalues are bounded by the sum of the
+  elements in a row, and this number is bounded uniformly on shape
+  regular meshes, we have $\Lambda(\mata_h) \lesssim h^{d-2}$. Now, we
+  choose a particular example, namely a vector $\vecx$ with a single one and
+  all other entries zero. The corresponding finite element function
+  $u_h$ has maximum one and support of radius $h$. Therefore,
+  \begin{gather*}
+    \vecx^T\mata_h\vecx=
+    \int_\domain \abs{\nabla u_h}^2 \dvx
+    \simeq h^{d-2}.
+  \end{gather*}
+  Thus, $\Lambda(\mata_h) \gtrsim h^{d-2}$. In order to estimate the
+  smallest eigenvalue, we use the Rayleigh quotient and the finite
+  element function $u_h$ corresponding to the coefficient vector
+  $\vecx$ to obtain
+  \begin{multline}
+    \lambda(\mata_h)
+    = \min_{\vecx\in\R^n}\frac{\vecx^T\mata_h\vecx}{\vecx^T\vecx}
+    = \min_{\vecx\in\R^n}\frac{\vecx^T\mata_h\vecx}{\form(u_h,u_h)_{L^2}}
+    \frac{\form(u_h,u_h)_L^2}{\vecx^T\vecx}
+    \\
+    = \min_{\vecx\in\R^n}\left(\frac{a(u_h,u_h)}{\form(u_h,u_h)}
+    \frac{\vecx^T\matm_h\vecx}{\vecx^T\vecx}\right)
+    \ge \min_{u_h\in V_h}\frac{a(u_h,u_h)}{\form(u_h,u_h)_L^2}
+    \min_{\vecx\in\R^n}\frac{\vecx^T\matm_h\vecx}{\vecx^T\vecx}.
+  \end{multline}
+  Thus, the smallest eigenvalue of $\mata_h$ is bounded by the product
+  of the smallest eigenvalue of the mass matrix and a value $\mu$ given by
+  \begin{gather}
+    \min_{u_h\in V_h}\frac{a(u_h,u_h)}{\form(u_h,u_h)_L^2} \ge
+    \min_{u\in V}\frac{a(u,u)}{\form(u,u)_L^2} =: \mu.
+  \end{gather}
+  Here, we need a result from the spectral analysis of the
+  Laplacian. When we define the variational eigenvalue problem
+  \begin{gather}
+    a(u,v) = \lambda \form(u,v)\qquad\forall v\in V = H^1_0(\domain),
+  \end{gather}
+  then, there is a positive minimal solution $\mu$, the first
+  eigenvalue of the Laplacian, and an associated eigenfunction $u$,
+  such that the equation holds for all $v$. Therefore, the eigenvalue
+  is bounded with $\lambda(\mata_h) \gtrsim h^{-d}$. Furthermore, it
+  can be shown that this function is smooth and does not
+  oscillate. This actually follows from the regularity result in
+  \slideref{Theorem}{gt-8-13}. Therefore, the solution $u_h\in V_h$ to
+  \begin{gather}
+    a(u_h, v_h) = a(u,v_h) \qquad\forall v_h\in V_h,
+  \end{gather}
+  converges to $u$ in $H^1$ and $L^2$. With our standard estimates, we obtain
+  \begin{gather}
+    \form(u, u_h)
+    = \form(u_h,u_h) + \form(u-u_h,u_h)
+    = \form(u_h,u_h) + r_h(u),
+  \end{gather}
+  where $r_h(u)\to 0$ as $h\to 0$. Hence,
+  \begin{gather}
+    a(u_h,u_h) = a(u,u_h) = \mu \form(u,u_h) \to \mu \form(u_h,u_h).
+  \end{gather}
+  We conclude that the lower bound for the eigenvalue is sharp and the
+  theorem holds.
+\end{proof}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
