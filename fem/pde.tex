@@ -147,6 +147,94 @@
   \end{gather}
 \end{Theorem*}
 
+\begin{proof}
+    Using variation of $E$, we will show that
+    \begin{gather*}
+        \frac{\diffd}{\diffd \varepsilon} E(u+\varepsilon v)
+        \Big|_{\varepsilon=0} = 0
+    \end{gather*}
+    for all $v \in V_0$ since this implies $u + \varepsilon v = g$
+    on $\d\domain$. By evaluating the square we have
+    \begin{gather*}
+        \frac{\diffd}{\diffd \varepsilon} E(u+\varepsilon v)
+          = \int_\domain \nabla u \nabla v + \varepsilon \abs{\nabla v}^2 - fv \dx
+    \end{gather*}
+    Since we are intersted in $E(u)$, we now consider $\varepsilon=0$. We
+    get that $u$ minimises $E(u+\varepsilon v)$ at $\varepsilon = 0$ implies
+    \begin{gather*}
+        \int_\domain \nabla u \nabla v \dx = \int_\domain fv \dx,
+          \qquad\forall v\in V_0.
+    \end{gather*}
+    By Green's formula
+    \begin{gather*}
+        \int_\domain \nabla u \nabla v \dx = \int_\domain - \Delta u v \dx
+          + \int_{\d\domain} \d_n u v \ds
+    \end{gather*}
+    we obtain that if $u$ minimises $E(-)$, then
+    \begin{gather*}
+         \int_\domain \nabla u \nabla v \dx = \int_\domain fv \dx,
+          \qquad\forall v\in V_0,
+    \end{gather*}
+    since $v \in V_0$ vanishes on $\d\domain$. In summary, we have
+      proven so far that if $u$ solves Poisson's Equation, then it
+        is a stationary point of $E(-)$. It remains to show that $E(u) \le E(v)$.
+          Using $\int_\domain fv \dx = \int_\domain \nabla u \nabla v$ yields
+    \begin{gather*}
+        E(v) - E(u) = \frac 12 \int_\domain |\nabla v|^2 - 2 \nabla v \nabla u
+          + |\nabla u|^2 \dx = \frac 12 |\nabla v - \nabla u|^2 \dx \ge 0.
+    \end{gather*}
+    To show that the minimiser exists, we show that $E(-)$ is bounded from
+      below and hence the exists an infinum. Thus, there also exists a series
+        $\{u^{(n)}\}_{n \in \mathbb{N}}$ converging to this infinum, i.e.
+    \begin{gather*}
+        \lim_{n \to \infty} E(u^{(n)}) = \inf_{v \in V_0} E(v).
+    \end{gather*}
+    Second, we show that $\{u^{(n)}\}_n$ is a Cauchy sequence.
+    
+    For the first part we use Friedrich's inequality
+    \begin{gather*}
+        \norm{v}_{L^2(\domain)} \le \lambda(\Omega)
+          \norm{\nabla v}_{L^2(\domain)} \qquad v \in V_0.
+    \end{gather*}
+    The proof of this result will be given later. Using Hölder's inequality
+    we obtain
+    \begin{gather*}
+        E(v) = \frac 12 \norm{\nabla v}^2 _{L^2(\domain} - \int_\domain fv \dx
+          \ge \frac 12 \norm{\nabla v}^2 _{L^2(\domain}
+            - \norm{f}_{L^2(\domain} \norm{v}_{L^2(\domain}
+    \end{gather*}
+    Applying Friedrich's inquality yields that the above expression is
+      greater or equal than
+    \begin{gather*}
+        \frac 12 \norm{\nabla v}^2 _{L^2(\domain}
+          - \norm{\nabla v}_{L^2(\domain} \frac 1{\lambda (\domain)}
+            \norm{f}_{L^2(\domain}.
+    \end{gather*}
+    Finally, we apply Young's inequality $ab \le \nicefrac 12 (a^2 + b^2)$ to obtain
+    \begin{gather*}
+        \frac 12 \norm{\nabla v}^2 _{L^2(\domain}
+          - \norm{\nabla v}_{L^2(\domain}^2 - \frac 1{2\lambda (\domain)} \norm{f}_{L^2(\domain}^2
+    \end{gather*}
+    which yields $E(v) \ge - \frac 1{2\lambda (\domain)^2} \norm{f}_{L^2(\domain}^2$
+    as a lower bound independent of $v$. To prove the second part,
+    we use the parallelogram identity $\abs{v+w}^2 + \abs{v-w}^2 = 2\abs{v}^2 + 2 \abs{w}^2$.
+    Let $m, n$ be natural numbers, then
+    \begin{align*}
+        \snorm{u^{(n)} - u^{(m)}}^2 _1 =& 2 \snorm{u^{(n)}}^2 _1
+        + 2 \snorm{u^{(m)}}^2_1- 4 \snorm{\nicefrac 12 (u^{(n)} + u^{(m)}}^2_1 \\
+        =& 4 E(u^{(n)}) + 4\int f u^{(n)} \dx + 4 E(u^{(m)}) + 4\int f u^{(m)} \dx \\
+        &- 8 E(\nicefrac 12 (u^{(n)} + u^{(m)}) - 8 \int \nicefrac 12 f(u^{(n)} + u^{(m)}) \\
+        =& 4 E(u^{(n)}) + 4 E(u^{(m)}) - 8 E(\nicefrac 12 f(u^{(n)} + u^{(m)}))
+    \end{align*}
+    Taking the limit $m,n\to \infty$ yields $4 E(u^{(n)}) + 4 E(u^{(m)})
+    \to 8 \inf_{v \in V_0} E(v)$. Lastly, $-E(\nicefrac 12 f(u^{(n)} + u^{(m)}))$ can
+    be bounded by $inf_{v \in V_0} E(v)$. It follows that $\limsup_{m,n\to\infty}
+    \snorm{u^{(n)}-u^{(m)}}^2_1 \le 0$ and consequently as desired
+    \begin{gather*}
+        \lim_{m,n\to\infty} \snorm{u^{(n)}-u^{(m)}}^2_1 = 0.
+    \end{gather*}
+\end{proof}
+
 \begin{notes}{Dirichlet-proof}
   Dirichlet's principle proved essential for the development of a
   rigorous solution theory for Poisson's equation.  Its proof will be
