@@ -232,6 +232,9 @@
     = \vec x^{(k)}
     - \omega_k \mat B^{-1}\bigl(\mat A \vec x^{(k)} - \vec b \bigr).
   \end{gather}
+\end{Definition}
+
+\begin{remark}
   The iteration in~\eqref{eq:richardson:7} is commonly referred to as
   \define{preconditioned Richardson iteration} and $\mat B^{-1}$ as the
   \define{preconditioner}. Note that by introducing the iteration in
@@ -259,8 +262,8 @@
   \begin{gather}
     \label{eq:richardson:11}
     u^{(k+1)} = u^{(k)} - \omega_k B^{-1} (A u^{(k)} - f).
-  \end{gather}
-\end{Definition}
+  \end{gather}  
+\end{remark}
 
 \begin{remark}
   The space $X$ and is inner product does not appear anymore in this

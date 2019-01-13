@@ -1,17 +1,4 @@
 
-\begin{remark}
-  This part of the notes deals with preconditioning of symmetric
-  operators, or those, which have a dominating symmetric part. The
-  theory of preconditioning methods for nonsymmetric and in particular
-  non-normal operators is currently not well developed and thus will not
-  be covered by these notes. 
-\end{remark}
-
-\begin{notation}
-  Iterative methods will be considered in a Hilbert space $X$ with
-  inner product $\scal(.,.)$.
-\end{notation}
-
 \begin{intro}
   The motivation for the use of iterative methods lies in the fact
   that matrices resulting from the discretization of partial
@@ -20,7 +7,7 @@
   finite elements on a uniform grid of $(n-1)$ cells in each
   direction. This leeds to $n^3$ degrees of freedom which we number
   lexicographically. The matrix stencil, that is, the distribution of
-  nonzero entries, in ome dimension is tridiagonal, that is,
+  nonzero entries, in one dimension is tridiagonal, that is,
   \begin{gather*}
     S_1 =
     \begin{pmatrix}
@@ -53,16 +40,16 @@
   \end{gather*}
   The corresponding matrix has $N=n^3$ rows and columns. Let us compare
   some solution methods for $n=100$ with respect to memory and a
-  hypothetic hardware which executes $10^9$ multiplications per second
+  hypothetic hardware which executes $10^{10}$ multiplications per second
   (additions are free).
   \begin{description}
   \item[Gaussian elimination] The effort needed is $\tfrac13
     N^3+\mathcal O(N^2)$,
     leading to the computing time
     \begin{gather*}
-      T_{G} = \frac{10^{18}}{3\cdot 10^9} \;\text{sec}
-      \approx 3\cdot10^8 \;\text{sec}
-      \approx 10.6 \;\text{years}
+      T_{G} = \frac{10^{18}}{3\cdot 10^{10}} \;\text{sec}
+      \approx 3\cdot10^7 \;\text{sec}
+      \approx 1.06 \;\text{years}
     \end{gather*}
     The backward substitution is only of order $N^2$ and can be
     neglected. The memory requirement with double precision is
@@ -75,9 +62,9 @@
     the leading term of the effort is $\tfrac13 N\cdot M^2$, yielding
     with $M=n^2$ a computing time of
       \begin{gather*}
-        T_{BLU} = \frac{10^{6}\cdot 10^{4} \cdot 10^{4}}{3\cdot 10^9} \;\text{sec}
-      \approx 3\cdot10^4 \;\text{sec}
-      \approx 9 \;\text{hours}
+        T_{BLU} = \frac{10^{6}\cdot 10^{4} \cdot 10^{4}}{3\cdot 10^{10}} \;\text{sec}
+      \approx 3\cdot10^3 \;\text{sec}
+      \approx 50 \;\text{minutes}
       \end{gather*}
       The storage requirement for $N\cdot M$ double precision numbers
       is $8\cdot 10^{10}$ Bytes, almost 100 gigabytes.
@@ -85,19 +72,19 @@
       with such a matrix, given that there are at most 9 nonzero
       entries per row costs
       \begin{gather*}
-        T_{mult} = \frac{9\cdot 10^6}{10^9} \approx 0.01 \;\text{sec},
+        T_{mult} = \frac{9\cdot 10^6}{10^{10}} \approx 1 \;\text{msec},
       \end{gather*}
-      that is, we can perform more than $10^6$ steps of an iterative
-      method before we reach the effort of the banded LU
+      that is, we can perform more than $10^6$ matrix-vector
+      multiplications before we reach the effort of the banded LU
       decomposition. The storage requirement is roughly 1 gigabyte and
-      can be reduced to almost zero by a smart implementation. 
+      can be reduced to almost zero by a smart implementation.
   \end{description}
 \end{intro}
 
 \begin{remark}
   For purposes of analysis we typically choose the space $X =
   L^2(\Omega)$. We admit a small inaccuracy here: when we run the
-  algorithms on a computer, we usually employ the Eiclidean inner
+  algorithms on a computer, we usually employ the Euclidean inner
   product, thus $X$ should be the space of degrees of freedom. But
   this is a discrete space, where we cannot use theory of function
   spaces easily. Instead, we note that the $L^2$-inner product of
@@ -195,102 +182,41 @@
   After choosing a basis for a finite dimensional space $X_n$ or a
   Schauder basis for the space $X$ (assuming $X$ separable), say
   $\{\phi_i\}$, we can define a (possibly infinite-dimensional) matrix
-  $\mat A$ associated with the bilinear form $a(.,.)$ with the entries
+  $\mata$ associated with the bilinear form $a(.,.)$ with the entries
   \begin{gather*}
     a_{i j} = a(\phi_j, \phi_i).
   \end{gather*}
   
   If we restrict the bilinear forms to a finite dimensional subspace
-  $X_n$, we denote the matrices $\mat A$ restricted to this subspace
-  by $\mat A_n$.
+  $X_n$, we denote the matrices $\mata$ restricted to this subspace
+  by $\mata_n$.
 \end{notation}
 
 \begin{Definition}{matrix-condition-number}
-  \defindex{Lambdama@$\Lambda(\mat A)$}
-  \defindex{lambdama@$\lambda(\mat A)$}
-  The two extremal eigenvalues of the matrix $\mat A_n$ can be
+  \defindex{Lambdama@$\Lambda(\mata)$}
+  \defindex{lambdama@$\lambda(\mata)$}
+  The two extremal eigenvalues of the matrix $\mata_n$ can be
   obtained by the maximum and minimum of the \define{Rayleigh
     quotient}
   \begin{gather}
     \label{eq:itintro:3}
-    \Lambda(\mat A) = \max_{\vec x\in \R^n}\frac{\vec x^T \mat A \vec x}{\vec x^T\vec x},
+    \Lambda(\mata) = \max_{\vecx\in \R^n}\frac{\vecx^T \mata \vecx}{\vecx^T\vecx},
     \qquad
-    \lambda(\mat A) = \min_{\vec x\in \R^n}\frac{\vec x^T \mat A \vec x}{\vec x^T\vec x}.
+    \lambda(\mata) = \min_{\vecx\in \R^n}\frac{\vecx^T \mata \vecx}{\vecx^T\vecx}.
   \end{gather}
-  \defindex{kappama@$\kappa(\mat A)$}
+  \defindex{kappama@$\kappa(\mata)$}
   The \putindex{spectral condition number} is
   \begin{gather*}
-    \kappa_n(\mat A) = \frac{\Lambda(\mat A)}{\lambda(\mat A)}.
+    \kappa_n(\mata) = \frac{\Lambda(\mata)}{\lambda(\mata)}.
   \end{gather*}
 \end{Definition}
 
 \begin{remark}
   The spectral condition number of the operator $A$ depends on the
   bilinear form $a(.,.)$ and the choice of the norm in $X$. On the
-  other hand, the spectral condition number of the matrix $\mat A$
+  other hand, the spectral condition number of the matrix $\mata$
   depends on the choice of a basis of the space $X_n$.
 \end{remark}
-
-\begin{Lemma}{condition-number-mass-matrix}
-  \label{lemma:itintro:1}
-  Let $\{\phi_i\}$ be the standard, piecewise linear, finite element
-  basis on a quasi-uniform triangulation of mesh size $h$. Let $\mat
-  M$, the so called \define{mass matrix} be the matrix associated with
-  the $L^2$-inner product with entries
-  \begin{gather*}
-    m_{ij} = \int_\Omega \phi_i(x) \phi_j(x) \dx.
-  \end{gather*}
-  Then,
-  \begin{gather*}
-    \Lambda(\mat M) \simeq h^{d} \simeq  \lambda(\mat M)
-  \end{gather*}
-  Therefore, the condition number is
-  \begin{gather*}
-    \kappa(\mat M) = \frac{\mathcal O(h^{d})}{\mathcal O(h^{d})} = {\mathcal O(1)}.
-  \end{gather*}
-\end{Lemma}
-
-\begin{proof}
-  It is easy to verify, that $m_{ii}> 0$, and that not more
-  entries in each row as edges of the triangulation meet in one vertex
-  are different from zero. Furthermore, that the size of those entries
-  is of order $h^d$, where $d$ is the space dimension. From these two
-  facts we immediately obtain
-  \begin{gather*}
-    \Lambda(\mat M) = \mathcal O(h^{d}).
-  \end{gather*}
-  The argument for $\lambda(\mat M)$ is more subtle. For any mesh cell
-  $T$, let $\vec x_T$ be the entries of the vector $\vec x$ which
-  belong to node values of the cell $T$. Let $\mat M_T$ be the cell
-  mass matrix obtained by restricting the $L^2$-inner product to
-  $T$. Then,
-  \begin{gather*}
-    \vec x^T \mat M \vec x
-    = \sum_{T\in\T_h} \vec x^T_T \mat M_T \vec x_T
-    \ge \min_{T\in\T_h} \frac{\vec x^T_T \mat M_T \vec x_T}{\vec
-      x^T_T\vec x_T}
-    \sum_{T\in\T_h} |\vec x_T|^2 \ge \lambda(\mat M_T)  |\vec x|^2.
-  \end{gather*}
-  In order to estimate the eigenvalues of $\mat M_T$, we note that for
-  a unisolvent element, the norms $|\vec x_T|$ and $\|u\|_{0,T}$ are
-  equivalent on the reference cell, and the $L^2$-norm scales with
-  $h^d$ when transforming to the real cell $T$. Thus, we have
-  $\lambda(\mat M) = \mathcal O(h^{d})$.
-\end{proof}
-
-\begin{Corollary}{refined-condition-number}
-  Let $\mesh_h$ be a mesh with cell sizes ranging between the minimum $h$ and
-  the maximum $H$. Then, we have
-  \begin{align*}
-    \Lambda(\mat M) &= \mathcal O(H^{d}) \\
-    \lambda(\mat M) &= \mathcal O(h^{d}) \\
-    \kappa(\mat M) &= \mathcal O\left(\left(\frac Hh\right)^{d}\right)
-  \end{align*}
-\end{Corollary}
-
-\begin{todo}
-  This can be fixed by using weighted norms in $\R^n$.
-\end{todo}
 
 %%% Local Variables: 
 %%% mode: latex

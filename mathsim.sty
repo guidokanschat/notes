@@ -12,6 +12,7 @@
 \RequirePackage[USenglish]{babel}
 \RequirePackage{stringstrings}
 \RequirePackage{xr}
+\RequirePackage{nicefrac}
 
 \RequirePackage{graphicx}
 \RequirePackage{xcolor,framed}
@@ -41,6 +42,13 @@
   \color{black}\MakeFramed {\FrameRestore}}%
  {\endMakeFramed}
 \fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commands for beamer
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\sectoc{\tableofcontents[currentsection,hideothersubsections]}
+\def\subtoc{\tableofcontents[currentsection,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/show/hide/hide]}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Counters and their representation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -67,6 +75,8 @@
 \newtheorem{notes}[slidetheorem]{\iflanguage{german}{Anmerkung}{}\iflanguage{english}{Note}{}}
 \newtheorem{review}[slidetheorem]{\iflanguage{german}{Zusammenfassung}{}\iflanguage{english}{Review}{}}
 \newtheorem{problem}[slidetheorem]{\iflanguage{german}{Aufgabe}{}\iflanguage{english}{Problem}{}}
+\newslidetheorem{Remark}
+\newslidetheorem{Algorithm}
 
 % Definitions for index
 \def\defindex#1{\index{#1|textbf}}
@@ -80,9 +90,22 @@
 \def\cell{T}
 \def\faces{\mathbb F}
 \def\face{F}
-\def\refcell{\widehat \cell}
-\def\refface{\widehat \face}
-\def\nodal{\mathcal N}
+\def\reference#1{\widehat{#1}}
+\def\refcell{\reference\cell}
+\def\refface{\reference\face}
+\def\refgrad{\reference{\nabla}}
+\def\refp{\reference{p}}
+\def\refu{\reference{u}}
+\def\refv{\reference{v}}
+\def\refx{\reference{x}}
+\def\refy{\reference{y}}
+\def\refphi{\reference{\phi}}
+\def\refvx{\reference{\vx}}
+\def\refvu{\reference{\vu}}
+\def\refvv{\reference{\vv}}
+\def\vertex{\mathbf X}
+\def\nodal{\mathscr N}
+\def\shapespace{\mathscr P}
 \def\jmp#1{\left\llbracket#1\right\rrbracket}
 \def\mvl#1{\{\!\!\{#1\}\!\!\}}
 %\def\mvl#1{\left\langle#1\right\rangle}
@@ -93,9 +116,10 @@
 % Single letters
 \def\C{\mathbb C}
 \def\co{\mathcal C}
+\def\coo{\mathcal C_{00}^\infty}
 \let\domain\Omega
 \def\F{\mathbb F}
-\def\n{n}
+\def\n{\mathbf n}
 \def\P{\mathbb P}
 \def\Q{\mathbb Q}
 \def\Pol{\mathcal P}
@@ -110,14 +134,29 @@
 \def\ellipc{\gamma_c}
 
 % Matrices
+\def\mata{\mathbf A}
+\def\matb{\mathbf B}
+\def\matm{\mathbf M}
+\def\mats{\mathbf S}
 \def\identity{\mathbb I}
 \def\id{\mathbb I}
 \def\fundam{Y}
 \def\fundamental(#1;#2){\fundam(#1;#2)}
 \def\verfahren{F}
 
-\def\mat#1{\mathfrak{#1}}
-\def\vec#1{\mathfrak{#1}}
+\def\mat#1{\mathbf{#1}}
+\def\vec#1{\mathbf{#1}}
+
+% vectors
+\def\vb{\mathbf b}
+\def\vf{\mathbf f}
+\def\vn{\mathbf n}
+\def\vx{\mathbf x}
+\def\vy{\mathbf y}
+\def\vu{\mathbf u}
+\def\vv{\mathbf v}
+\def\vecx{\vec x}
+\def\vlambda{\boldsymbol\lambda}
 
 % Spaces, norms, and forms
 \def\Alt{\operatorname{Alt}}
@@ -152,10 +191,12 @@
 \def\deformed#1{\widehat{#1}}
 \def\curl{\nabla\!\times\!}
 \def\vcurl{\nabla\!\times\!}
+\def\diam{\operatorname{diam}}
 \def\div{\nabla\!\cdot\!}
 \def\strain#1{\epsilon(#1)}
 \def\supp{\operatorname{supp}}
 \def\esssup{\operatorname{ess sup}}
+\def\osc{\operatorname{osc}}
 % differential quotients for integrals
 \let\d\partial
 \def\diffd{\mathrm{d}}
@@ -165,8 +206,12 @@
 \def\ds{\,\diffd s}
 \def\dt{\,\diffd t}
 \def\dx{\,\diffd x}
-\def\dxref{\,\diffd \widehat x}
-\def\dsref{\,\diffd \widehat s}
+\def\dy{\,\diffd y}
+\def\dvx{\,\diffd \vx}
+\def\dvy{\,\diffd \vy}
+\def\dvxref{\,\diffd \reference \vx}
+\def\dxref{\,\diffd \reference x}
+\def\dsref{\,\diffd \reference s}
 \def\diag{\operatorname{diag}}
 \endinput
 

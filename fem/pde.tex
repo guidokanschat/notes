@@ -1,0 +1,334 @@
+\subsection{Linear second order PDE}
+
+\begin{Notation}{coordinates}
+  Dimension of ``physical space'' will be denoted by $d$.  We denote
+  coordinates in $\R^d$ as
+  \begin{gather*}
+    \vx = (x_1,\dots,x_d)^T  .
+  \end{gather*}
+  In the special cases $d=2,3$ we also write
+  \begin{gather*}
+  \vx =
+  \begin{pmatrix}
+    x\\y
+  \end{pmatrix},
+  \qquad\qquad
+  \vx = \begin{pmatrix}
+    x\\y\\z
+  \end{pmatrix},
+  \end{gather*}
+  respectively.
+  The Euclidean norm on $\R^d$ is denoted as
+  \begin{gather*}
+     \abs{\vx} = \sqrt{\sum_{i=1}^d x_i^2}.
+  \end{gather*}
+\end{Notation}
+
+\begin{Notation}{partial-derivative}
+  Partial derivatives of a function $u\in C^1(\R^d)$ are denoted by
+  \begin{gather*}
+    \frac{\d u(\vx)}{\d x_i} = \tfrac{\d}{\d x_i} u(\vx)
+    = \d_{x_i} u(\vx) = \d_i u(\vx).
+  \end{gather*}
+
+  The \define{gradient} of $u \in C^1$ is the row vector
+  \begin{gather*}
+    \nabla u = (\d_1u,\dots,\d_du)
+  \end{gather*}
+
+  The \define{Laplacian} of a function $u\in C^2(\R^d)$ is
+  \begin{gather*}
+    \Delta u = \d_1^2 u + \dots + \d_d^2 u = \sum_{i=1}^d \d_i^2 u
+  \end{gather*}
+\end{Notation}
+
+\begin{Notation}{elim-coord}
+  When we write equations, we typically omit the independent variable
+  $\vx$. Therefore,
+  \begin{gather*}
+    \Delta u \equiv \Delta u(\vx).
+  \end{gather*}
+\end{Notation}
+
+\begin{Definition}{lin-pde-2order}
+  A linear PDE of second order in divergence form for a function
+  $u\in C^2(\R^d)$ is an equation of the form
+  \begin{gather}
+    -\sum_{i,j=1}^d \d_i \bigl(a_{ij}(\vx) \d_j u\bigr)
+    + \sum_{i=1}^d \bigl(b_i(\vx) \d_i u\bigr) + c(\vx) u = f(x)
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{poisson-eqn}
+  An important model problem for the equations we are going to study
+  is \define{Poisson's equation}
+  \begin{gather}
+    \label{eq:Poisson}
+    -\Delta u = f.
+  \end{gather}
+\end{Definition}
+
+\begin{intro}
+  Already with ordinary differential equations we experience that we
+  typically do not search for solutions of the equation itself, but
+  that we ``anchor'' the solution by solving an initial value problem,
+  fixing the solution at one point on the time axis.
+
+  It does not make sense to speak about an initial point in
+  $\R^d$. Instead, it turns out that it is appropriate to consider
+  solutions on certain subsets of $\R^d$ and impose conditions at the
+  boundary.
+\end{intro}
+
+\begin{Definition}{domain}
+  A \define{domain} in $\R^d$ is a connected, open set of $\R^d$. We
+  typically use the notation $\domain\subset\R^d$.
+
+  The \define{boundary} of a domain $\domain$ is denoted by
+  $\d\domain$. To any point $\vx\in\d\domain$, we associate the outer
+  unit \define{normal vector} $\vn \equiv \vn(\vx)$.
+
+  The symbol $\d_n u \equiv (\nabla u) \vn$ denotes the \define{normal
+    derivative} of a function $u\in C^1(\overline{\domain})$ at a point
+  $\vx\in\d\domain$.
+\end{Definition}
+
+\begin{Definition}{boundary-conditions}
+  We distinguish three types of boundary conditions for Poisson's
+  equation, namely for a point $\vx\in\d\domain$ with a given function $g$
+  \begin{enumerate}
+  \item Dirichlet:
+    \begin{gather*}
+      u(\vx) = g(\vx)
+    \end{gather*}
+  \item Neumann:
+    \begin{gather*}
+      \d_n u(\vx) = g(\vx)
+    \end{gather*}
+  \item Robin: for some positive function $\alpha$ on $d\domain$
+    \begin{gather*}
+      \d_n u(\vx) + \alpha(\vx) u(\vx) = g(\vx)
+    \end{gather*}
+  \end{enumerate}
+  While only one of these boundary conditions can hold in a single
+  point $\vx$, different boundary conditions can be active on
+  different subsets of $\d\domain$. We denote such subsets as
+  $\Gamma_D$, $\Gamma_N$, and $\Gamma_R$.
+\end{Definition}
+
+\begin{Definition}{dirichlet-problem-differential}
+  The \define{Dirichlet problem} for \putindex{Poisson's equation} (in
+  differential form) is: find
+  $u\in C^2(\domain)\cap C(\overline{\domain})$, such that
+  \begin{subequations}
+    \begin{xalignat}2
+      -\Delta u(\vx) &= f(\vx) & x&\in \domain, \\
+      u(\vx) &= g(\vx) & x&\in \d\domain.
+    \end{xalignat}
+  \end{subequations}
+  Here, the functions $f$ on $\domain$ and $g$ on $\d\domain$ are data
+  of the problem.
+
+  The Dirichlet problem is called \define{homogeneous}, if $g\equiv 0$.
+\end{Definition}
+
+\begin{Theorem*}{Dirichlet-principle}{Dirichlet principle}
+  If a function $u\in C^2(\domain)\cap C(\overline{\domain})$ solves
+  the \putindex{Dirichlet problem}, then it minimizes the
+  \define{Dirichlet energy}
+  \begin{gather}
+    \label{eq:Dirichlet-energy}
+    E(v) = \int_{\domain} \tfrac12 \abs{\nabla v}^2 \dvx - \int_{\domain} f v \dvx,
+  \end{gather}
+  among all functions $v$ from the set
+  \begin{gather}
+    V_g = \bigl\{ v\in C^2(\domain)\cap C(\overline{\domain})
+    \big| v_{|\d\domain} = g \bigr\}.
+  \end{gather}
+\end{Theorem*}
+
+\begin{notes}{Dirichlet-proof}
+  Dirichlet's principle proved essential for the development of a
+  rigorous solution theory for Poisson's equation.  Its proof will be
+  deferred to the next theorem.
+\end{notes}
+
+\subsection{Variational principle and weak formulation}
+\begin{Theorem}{Dirichlet-variational-principle}
+  A function $u\in V_g$ minimizes the Dirichlet energy, if and only if
+  there holds
+  \begin{gather}
+    \int_{\domain} \nabla u\cdot\nabla v \dx
+    = \int_{\domain} fv\dx, \qquad\forall v\in V_0.
+  \end{gather}
+  Moreover, any solution to the Dirichlet problem in
+  \slideref{Definition}{dirichlet-problem-differential} solves this
+  equation.
+\end{Theorem}
+
+\begin{Corollary}{Dirichlet-uniqueness}
+  If a minimizer of the Dirichlet energy exists, it is necessarily unique.
+\end{Corollary}
+
+\begin{Lemma}{reduction-to-zero-bc}
+  A function $u\in V_g$ minimizes the Dirichlet energy admits the
+  representation $u = u_g + u_0$, where $u_g\in V_g$ is arbitrary and
+  $u_0\in V_0$ solves
+  \begin{gather}
+    \int_{\domain} \nabla u\cdot\nabla v \dx
+    = \int_{\domain} fv\dx
+    - \int_{\domain} \nabla u_g\cdot\nabla v \dx,
+    \qquad\forall v\in V_0.
+  \end{gather}
+  The function $u_0$ depends on the choice of $u_g$, but not the minimizer $u$.
+\end{Lemma}
+
+\begin{Notation}{l2}
+  The inner product of $L^2(\domain)$ is denoted by
+  \begin{gather*}
+    \form(u,v) \equiv \form(u,v)_{\domain}
+    \equiv \form(u,v)_{L^2(\domain)}
+    = \int_{\domain} u v \dvx.
+  \end{gather*}
+  Its norm is
+  \begin{gather*}
+    \norm{u} \equiv \norm{u}_{\domain} \equiv \norm{u}_{L^2(\domain)}
+    \equiv \norm{u}_{L^2} = \sqrt{\form(u,v)_{L^2(\domain)}}.
+  \end{gather*}
+\end{Notation}
+\begin{Lemma*}{Friedrichs-continuous}{Friedrichs inequality}
+  For any function in $v\in V_0$ there holds
+  \begin{gather}
+      \norm{v}_{\domain}
+      \le \diam(\domain) \norm{\nabla v}_{\domain}.
+  \end{gather}
+\end{Lemma*}
+
+\begin{Lemma}{h1-norm}
+  The definitions
+  \begin{gather}
+    \begin{split}
+      \abs{v}_1 &= \norm{\nabla v}_{L^2(\domain)},\\
+      \norm{v}_1 &= \sqrt{\norm{v}^2_{L^2(\domain)}
+        + \abs{v}^2_1},
+    \end{split}
+  \end{gather}
+  both define a norm on $V_0$.
+\end{Lemma}
+
+\begin{Problem}{Friedrichs}
+  Prove the Friedrichs inequality.
+\end{Problem}
+
+\begin{Lemma}{Dirichlet-energy-boundedness}
+  The Dirichlet energy with homogeneous boundary conditions is bounded
+  from below and thus has an infimum. In particular, there exists a
+  \define{minimizing sequence} $\{u^n\}$ such that as $n\to\infty$,
+  \begin{gather}
+    E(u^n) \to \inf_{v\in V_0} E(v).
+  \end{gather}
+\end{Lemma}
+
+\begin{Lemma}{minimizing-sequence}
+  The minimizing sequence for the Dirichlet energy is a
+  \putindex{Cauchy sequence}.
+\end{Lemma}
+
+\begin{Definition}{h10}
+  The completion of $V_0$ under the norm $\norm{v}_1$ is the
+  \define{Sobolev space} $H^1_0(\domain)$.
+\end{Definition}
+
+\begin{Lemma*}{Friedrichs-h1}{Friedrichs inequality}
+  For any function in $v\in H^1_0$ there holds
+  \begin{gather}
+      \norm{v}_{\domain}
+      \le \diam(\domain) \norm{\nabla v}_{\domain}.
+  \end{gather}
+\end{Lemma*}
+
+\begin{proof}
+  Let $v\in H^1_0(\domain)$.  We make use of the fact, that by
+  definition of $H^1_0(\domain)$, there is a sequence $v_n \to v$ with
+  $v_n \in V_0$. By~\slideref{Lemma}{Friedrichs-continuous},
+  Friedrichs' inequality holds for $v_n$ uniformly in $n$. We conclude
+  \begin{align*}
+    \norm{v}_\domain &\le \norm{v - v_n}_\domain + \norm{v_n}_\domain \\
+    & \le \norm{v - v_n}_\domain + \diam\domain \norm{\nabla v_n}_\domain \\
+    & \le \norm{v - v_n}_\domain + \diam\domain
+      \bigl(\norm{\nabla v_n - \nabla v}_\domain + \norm{\nabla v}_\domain\bigr)
+  \end{align*}
+  As $n\to\infty$, the norms of the differences converge to zero, such
+  that the desired result holds in the limit.
+\end{proof}
+
+\begin{Definition}{weak-formulation}
+  The \putindex{Dirichlet problem} for Poisson's equation in weak form
+  reads: find $u\in H^1_g(\domain)$ such that
+  \begin{gather}
+    \int_{\domain} \nabla u\cdot\nabla v \dx
+    = \int_{\domain} fv\dx, \qquad\forall v\in H^1_0(\domain).
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem}{weak-unique-solution-1}
+  The weak formulation in \slideref{Definition}{weak-formulation} has
+  a unique solution.
+\end{Theorem}
+
+\subsection{Boundary conditions in weak form}
+
+\begin{Lemma}{neumann-weak}
+  Let $u\in V=H^1(\domain)$ be a solution to the weak formulation
+  \begin{gather}
+    \int_{\domain} \nabla u\cdot\nabla v \dx
+    = \int_{\domain} fv\dx, \qquad\forall v\in V(\domain).
+  \end{gather}
+  If $u\in C^2(\domain) \cap C^1(\overline{\domain})$ and $\domain$
+  has $C^1$-boundary, then $u$ solves the boundary value problem
+  \begin{gather}
+    \begin{aligned}
+      -\Delta u &= f &\qquad \text{in } &\domain\\
+      \d_n u &= 0 &\text{on } &\d\domain.
+    \end{aligned}
+  \end{gather}
+\end{Lemma}
+
+\begin{Definition}{natural-bc}
+  A boundary condition inherent in the weak formulation and not
+  explicitly stated is called \define{natural boundary condition}. If
+  boundary values are obtained by constraining the function space it
+  is called \define{essential boundary condition}.
+
+  We also call a boundary condition in strong form, if it is a
+  constraint on the function space, and in weak form, if it is part of
+  the weak formulation.
+\end{Definition}
+
+\begin{remark}
+  Dirichlet and homogeneous Neumann boundary conditions are examples
+  for essential and natural boundary conditions.
+\end{remark}
+
+\begin{Lemma}{mixed-bc-weak}
+  The boundary value problem
+  \begin{gather}
+    \begin{aligned}
+      -\Delta u &= f &\qquad \text{in } &\domain\\
+      u &= 0 &\text{on } &\Gamma_D \subset \d\domain\\
+      \d_n u + \alpha u &= g &\text{on } &\Gamma_R \subset \d\domain,
+    \end{aligned}
+  \end{gather}
+  has the weak form: find $u\in V$ such that
+  \begin{gather}
+    \int_{\domain} \nabla u\cdot\nabla v \dx
+    + \int_{\Gamma_R}\alpha u v \ds
+    = \int_{\domain} f v\dx
+    + \int_{\Gamma_R} g v \ds, \qquad\forall v\in V(\domain).    
+  \end{gather}
+\end{Lemma}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

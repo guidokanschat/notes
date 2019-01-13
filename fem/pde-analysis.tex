@@ -1,0 +1,91 @@
+\begin{intro}
+  So far, we have proven existence and uniqueness of weak
+  solutions. We have seen, that these solutions may not even be
+  continuous, far from differentiable. In this section, we collect a
+  few results from the analysis of elliptic pde which establish higher
+  regularity under stronger conditions.
+\end{intro}
+
+\begin{Definition}{wkp-loc}
+  The space $W^{k,p}_{\text{loc}}(\domain)$ consists of functions $u$
+  such that $u\in W^{k,p}(\domain_1)$ for any
+  $\domain_1 \subset\subset \domain$, where the latter reads compactly
+  embedded, namely $\overline\domain_1\subset\domain$. Similarly, we
+  define $H^k_{\text{loc}}$.
+\end{Definition}
+
+\begin{Theorem*}{gt-8-8}{\cite[Theorem 8.8]{GilbargTrudinger98}}
+  Let $a_{ij} \in C^{0,1}(\overline\domain)$ and
+  $b_i, c \in L^\infty(\domain)$. If $u\in H^1(\domain)$ is a solution
+  to the elliptic equation and $f\in L^2(\domain)$, then $u\in H^2_{\text{loc}}(\domain)$.
+\end{Theorem*}
+
+\begin{Theorem*}{gt-8-10}{Interior regularity}
+  Let $a_{ij} \in C^{k,1}(\overline\domain)$ and
+  $b_i, c \in C^{k-1,1}(\overline\domain)$. If $u\in H^1(\domain)$ is
+  a solution to the elliptic equation and $f\in W^{k,2}(\domain)$,
+  then $u\in H^{k+2}_{\text{loc}}(\domain)$.
+\end{Theorem*}
+
+\begin{proof}
+  \cite[Theorem 8.10]{GilbargTrudinger98}
+\end{proof}
+
+\begin{Corollary}{gt-8-10}
+  If in the interior regularity theorem $d=2,3$, then $u$ is a
+  classical solution of the PDE if $k\ge 2$.
+
+  If $a_{ij}, b_i, c \in C^{\infty}(\overline\domain)$, then
+  $u\in C^\infty(\domain)$.
+\end{Corollary}
+
+\begin{Theorem*}{gt-8-13}{Global regularity}
+  If in addition to the assumptions of the interior regularity theorem
+  $\domain$ is a $C^{k+2}$-domain, then the solution
+  $u\in H^1_0(\domain)$ to the homogeneous Dirichlet boundary value problem 
+  problem is in $H^{k+2}(\domain)$.
+\end{Theorem*}
+
+\begin{proof}
+  \cite[Theorem 8.13]{GilbargTrudinger98}
+\end{proof}
+
+\begin{Corollary}{h2-solution-bvp}
+  Let $\domain\subset \R^d$ with $d=2,3$ be a $C^2$-domain,
+  $a_{ij} \in C^{0,1}(\overline\domain)$ and
+  $b_i, c \in L^\infty(\domain)$. If $u\in H^1_0(\domain)$ is a solution
+  to the elliptic equation and $f\in L^2(\domain)$, then
+  $u\in H^2(\domain)$.
+\end{Corollary}
+
+\begin{Remark}{classical-smooth}
+  In order to guarantee a classical solution by these arguments, we
+  must require that $\domain$ has $C^4$ boundary.
+\end{Remark}
+
+\begin{Remark}{classical-convex}
+  The condition $\d\domain\in C^2$ in the previous corollary can be
+  replaced by the assumption that $\domain$ is convex.
+\end{Remark}
+
+\begin{Theorem*}{kondratev}{Kondratev}
+  Let the assumptions of the interior regularity theorem
+  \slideref{Theorem}{gt-8-8} hold. Assume further that $\d\domain$ is
+  piecewise $C^2$ with finitely many irregular points. Then, the
+  solution $u\in H^1_0(\domain)$ of the elliptic PDE admits a
+  representation
+  \begin{gather}
+    u = u_0 + \sum_{i=1}^n u_i,
+  \end{gather}
+  where $u_0\in H^2(\domain)$ and $u_i$ is a singularity function
+  associated with the irregular point $\vx_i$.
+\end{Theorem*}
+
+\begin{proof}
+  \cite{Kondratev67}
+\end{proof}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

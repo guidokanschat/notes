@@ -1,0 +1,524 @@
+\begin{Definition}{a-posteriori}
+  Let $u\in V$ be the solution to a boundary value in weak form and
+  $u_h\in V_h$ be its finite element approximation on the mesh
+  $\mesh_h$. We call a quantity $\eta_h(u_h)$ \define{a posteriori
+    error estimator},
+  \begin{gather}
+    \norm{u-u_h} \le c \eta_h(u_h).
+  \end{gather}
+  The estimator is \define{reliable}, if the constant $c$ is
+  computable. It is \define{efficient}, if the converse estimate holds,
+  namely
+%  with addition of a quantity $\osc_h(f)$
+  \begin{gather}
+    \eta_h(u_h) \le c \norm{u-u_h}.
+  \end{gather}
+\end{Definition}
+
+\subsection{Quasi-interpolation in $H^1$}
+
+\begin{intro}
+  Interpolation in Sobolev spaces in
+  \slideref{Theorem}{fe-interpolation} relies on the nodal
+  interpolation operator in
+  \slideref{Definition}{nodal-interpolation}, which in turn requires
+  point values of the interpolated function. Therefore, it is not
+  defined on $H^1(\domain)$ in dimensions greater than one. Since we
+  need such interpolation operators in the analysis of a posteriori
+  error estimates, we provide them in this section.
+  
+  Most details in this section are from~\cite{Verfuerth13}. For the
+  ease of presentation, we present the results for Dirichlet problem
+  of the Laplacian, namely $V = H^1_0(\domain)$ and
+  \begin{gather*}
+    a(u,v) = \int_\domain \nabla u\cdot\nabla v\dvx.
+  \end{gather*}
+\end{intro}
+
+\begin{Definition}{locally-quasi-uniform}
+  A shape-regular family of meshes $\{\mesh_h\}$ is called
+  \define{locally quasi-uniform}, if there is a constant $c$ such that
+  for every pair of cells $\cell_1$ and $\cell_2$ sharing at least one
+  vertex there holds
+  \begin{gather}
+    h_{\cell_1} \le c h_{\cell_2}.
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{fem-neighborhood}
+  For a vertex or higher-dimensional boundary facet $F$, we define the
+  set of cells
+  \begin{gather}
+    \mesh_{F} = \bigl\{ \cell\in\mesh \big|F \subset\d\cell \bigr\}.
+  \end{gather}
+  Similarly, the set of cells sharing at least one vertex with $\cell$
+  is called $\mesh_{\cell}$. Additionally, we define the subdomains
+  \begin{gather}
+    \overline\domain_{F} = \bigcup_{\cell\in \mesh_{F}}\overline\cell,
+    \qquad
+    \overline\domain_{\cell} = \bigcup_{\cell'\in \mesh_{\cell}}\overline\cell'.
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem*}{clement}{Clément quasi-interpolation}
+  Let $\{\mesh_h\}$ be a locally quasi-uniform family of meshes with
+  piecewise polynomial finite element spaces
+  $V_h\subset H^1_0(\domain)$. Then, there exist bounded operators
+  $\overline I_h\colon H^1_0(\domain) \to V_h$ such that for every
+  function $u\in H^1_0(\domain)$, every mesh cell $\cell$, every face
+  $F$, and for $m=0,1$ there holds
+  \begin{align}
+    \norm{u-\overline I_h u}_{m;T} &\le c h_\cell^{1-m} \snorm{u}_{1;\domain_\cell} \\
+    \norm{u-\overline I_h u}_{0;F} &\le c h_\cell^{\nicefrac{1}{2}} \snorm{u}_{1;\domain_\cell}
+  \end{align}
+\end{Theorem*}
+
+\begin{proof}
+  We construct the quasi-interpolation operator on a mesh cell $\cell$
+  into the lowest order space $\P_1$ or $\Q_1$ in two steps. First,
+  for each vertex $\vertex_i$ of $\cell$, let
+  \begin{gather}
+    \overline u_i = \frac1{\abs{\domain_{\vertex_i}}}
+    \int_{\domain_{\vertex_i}} u \dvx.
+  \end{gather}
+  By Poincaré inequality,
+  \begin{gather}
+    \label{eq:fem-aposteriori:1}
+    \norm{u-\overline u_i}_{\domain_{\vertex_i}}
+    \le c \diam(\domain_{\vertex_i}) \norm{\nabla u}_{\domain_{\vertex_i}}.
+  \end{gather}
+  For a vertex $\vertex_i$ on the boundary, we observe
+  \begin{gather}
+    \label{eq:fem-aposteriori:2}
+    \begin{split}
+      \norm{\overline u_i}_{\domain_{\vertex_i}}^2
+      &= \frac1{\abs{\domain_{\vertex_i}}^2}
+      \int_{\domain_{\vertex_i}}\left(\int u \dvy\right)^2\dvx\\
+      & = \frac1{\abs{\domain_{\vertex_i}}}\left(\int 1 u \dvy\right)^2\\
+      & \le \frac1{\abs{\domain_{\vertex_i}}} \int 1^2\dvy \int u^2\dvy \\
+      & = \norm{u}^2_{{\domain_{\vertex_i}}}\\
+      & \le c \diam({\domain_{\vertex_i}})^2 \norm{\nabla u}_{{\domain_{\vertex_i}}}^2,
+    \end{split}
+  \end{gather}
+  by Friedrichs' inequality, since the subdomain
+  ${\domain_{\vertex_i}}$ has at least one face on $\d\domain$.
+
+  Now, we define the quasi-interpolation operator
+  $\overline I_h\colon H^1_0(\domain)\to V_h$ cellwise on simplices by
+  \begin{gather}
+    \label{eq:fem-aposteriori:3}
+    \overline I_h u_{|\cell}
+    = \sum_{\vertex_i\in\d\cell\cap\domain} \lambda_i \overline u_i.
+  \end{gather}
+  Note, that zero boundary conditions are enforced by omitting
+  vertices on the boundary.  On quadrilaterals, we use the bilinear
+  shape functions associated with the vertices instead of the
+  \putindex{barycentric coordinates} $\lambda_i$. Now, using
+  $\sum\lambda_i=1$ and $0\le \lambda_i \le 1$, we estimate
+  \begin{align*}
+    \norm{u - \overline I_h u}_\cell
+    & \le \sum_{\vertex_i\in\d\cell} \norm{\lambda_i(u-\overline u_i)}_{\cell}
+      + \sum_{\vertex_i\in\d\cell\cap\d\domain}
+      \norm{\lambda_u \overline u_i} \\
+    & \le \sum_{\vertex_i\in\d\cell} \norm{u-\overline u_i}_{\cell}
+      + \sum_{\vertex_i\in\d\cell\cap\d\domain}
+      \norm{\overline u_i} \\
+    & \le \diam({\domain_{\vertex_i}})\left(
+      \sum_{\vertex_i\in\d\cell} \norm{\nabla u}_{\domain_{\vertex_i}}
+      + \sum_{\vertex_i\in\d\cell\cap\d\domain} \norm{\nabla u}_{\domain_{\vertex_i}}
+      \right),
+  \end{align*}
+  where we used~\eqref{eq:fem-aposteriori:1}
+  and~\eqref{eq:fem-aposteriori:2} in the end. Observing that both
+  sums extend over finitely many vertices and that by local
+  quasi-uniformity we can bound the diameter of
+  $\diam({\domain_{\vertex_i}})$ by that of $\cell$, namely
+  $\diam({\domain_{\vertex_i}}) \le c h_\cell$, we obtain the estimate
+  in $L^2(\cell)$. For the estimate in $H^1(\cell)$, we observe that
+  the mean value calculation is a continuous operation on
+  $H^1_0(\domain(\vertex_i))$, and that~\eqref{eq:fem-aposteriori:3} as a finite
+  sum is continuous, therefore,
+  \begin{gather}
+    \snorm{u-\overline I_h u}_{1;\cell} \le \norm{\nabla u}_{\cell} +
+    \norm{\nabla \overline I_h u}_{\cell}
+    \le c \norm{\nabla u}_{\domain(\cell)}.
+  \end{gather}
+  Finally, we use the trace estimate for $u\in H^1(\cell)$
+  \begin{gather}
+    \norm{u}_F
+    \le c \left(h^{-\nicefrac12} \norm{u}_\cell
+      +h^{\nicefrac12} \norm{\nabla u}_\cell\right),
+  \end{gather}
+  to obtain the estimate on the edge.
+\end{proof}
+
+\begin{Theorem*}{scott-zhang}{Scott-Zhang quasi-interpolation}
+  Let $\{\mesh_h\}$ be a locally quasi-uniform family of meshes with
+  piecewise polynomial finite element spaces
+  $V_h\subset H^1(\domain)$. Then, there exist bounded operators
+  $\overline I_h\colon H^1(\domain) \to V_h$ such that for every
+  function $u\in H^1(\domain)$, every mesh cell $\cell$, every face
+  $F$, and for $m=0,1$ there holds
+  \begin{align}
+    \norm{u-\overline I_h u}_{m;T} &\le c h_\cell^{1-m} \snorm{u}_{1;\domain_\cell} \\
+    \norm{u-\overline I_h u}_{0;F} &\le c h_\cell^{\nicefrac{1}{2}} \snorm{u}_{1;\domain_\cell},
+  \end{align}
+  and $\overline I_h u$ is a quasi-interpolation on the boundary $\d\domain$.
+\end{Theorem*}
+
+\begin{Theorem*}{schoeberl-interpolation}{Schöberl quasi-interpolation}
+  Let $\{\mesh_h\}$ be a locally quasi-uniform family of meshes with
+  piecewise polynomial finite element spaces
+  $V_h\subset H^1(\domain)$. Then, there exist bounded
+  \emph{projection} operators
+  $\overline I_h\colon H^1(\domain) \to V_h$ such that for every
+  function $u\in H^1(\domain)$, every mesh cell $\cell$, every face
+  $F$, and for $m=0,1$ there holds
+  \begin{align}
+    \norm{u-\overline I_h u}_{m;T} &\le c h_\cell^{1-m} \snorm{u}_{1;\domain_\cell} \\
+    \norm{u-\overline I_h u}_{0;F} &\le c h_\cell^{\nicefrac{1}{2}} \snorm{u}_{1;\domain_\cell}.
+  \end{align}  
+\end{Theorem*}
+
+\begin{Definition}{residual}
+  Let $a(u,v) = f(v)$ be the weak formulation of a BVP on the space
+  $V$.  Then, we define the \define{residual}
+\begin{gather}
+  \begin{split}
+    R\colon V &\to V^* \\
+    w&\mapsto f(\cdot) - a(w,\cdot).
+  \end{split}
+\end{gather}
+\end{Definition}
+\begin{Lemma}{residual-hm1}
+  For $u\in V=H^1_0(\domain)$ solution to Poisson's equation and any
+  other function $w\in V$, there holds
+  \begin{gather}
+    \snorm{u-v}_1 = \norm{R v}_{-1}
+    := \sup_{w\in V} \frac{\left<R v,w\right>}{\snorm{w}_1}.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  We have
+  \begin{gather}
+    \left<Rv,w\right>
+    = f(w) - a(v,w)
+    = a(u-v,w).
+  \end{gather}
+  Since $a(.,.)$ is s.p.d., we can apply Cauchy-Schwarz to obtain the result.
+\end{proof}
+
+\begin{Definition}{mvl-jmp}
+  Let $u$ be a piecewise continuous function on a mesh $\mesh$. On a
+  face $F$ between two cells $\cell_1$ and $\cell_2$, we define the
+  \define{mean value operator}
+  \begin{gather}
+    \mvl{u}(\vx) = \frac{u_1(\vx) + u_2(\vx)}2
+    = \lim_{\epsilon\searrow 0}
+    \frac{u(\vx-\epsilon \n_1) + u(\vx - \epsilon\n_2)}2,
+  \end{gather}
+  where $\n_i$ are the outer normal vectors of the two cells. The
+  \define{jump operator} is
+  \begin{gather}
+    \mvl{u\n} = \frac{(u_1-u_2)\n_1}2 = \frac{(u_2-u_1)\n_2}2.
+  \end{gather}
+\end{Definition}
+\begin{Definition}{residual-strong}
+  Let $u\in V=H^1_0(\domain)$ be the solution to Poisson's equation
+  and let $u_h\in V_h$ be a finite element function.  The strong form
+  of the residual is
+  \begin{gather}
+    \left<Rv,w\right> = \sum_{\cell\in\mesh_h}\int_{\cell} r_\cell(u_h) w\dvx
+    - \sum_{F\in \mathbb F_h^i} 2\mvl{\n\cdot\nabla u_h} w\ds,
+  \end{gather}
+  where
+  \begin{gather}
+    r_\cell(u_h) = f + \Delta u_h.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{residual-upper-bound}
+  Let $\mesh_h$ be a locally quasi-uniform mesh.
+  There is a constant $c>0$ such that the error between the true
+  solution $u\in V=H^1_0(\domain)$ and the finite element solution
+  $u_h\in V_h \subset V$ is bounded by
+  \begin{gather}
+    \label{eq:fem-aposteriori:5}
+    \snorm{u-u_h}_{1;\mesh_h} \le c \left(
+      \sum_{\cell\in\mesh_h} h_\cell^2 \norm{r_\cell(u_h)}_\cell^2
+      + \sum_{F\in \mathbb F_h^i} h_F
+      \norm{\mvl{\n\cdot\nabla u_h}}_F^2
+    \right)^{\nicefrac12}.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  We begin with the equivalence of error in $V$ and residual in
+  $V^*$. For the residual, there holds Galerkin orthogonality, such
+  that we obtain
+  \begin{gather}
+    \label{eq:fem-aposteriori:4}
+    \snorm{u-u_h}_1
+    = \sup_{w\in V}\frac{\left<Ru_h,w\right>}{\snorm{w}_1}
+    = \sup_{w\in V}\frac{\left<Ru_h,w- \overline I_h w\right>}{\snorm{w}_1}.
+  \end{gather}
+  Using the strong form and the quasi-interpolation $\overline I_h$,
+  we get
+  \begin{align*}
+    \left<Ru_h,w\right>
+    &= \sum_{\cell\in\mesh_h}\int_{\cell} r_\cell(u_h) (w-\overline I_h w)\dvx
+    - \sum_{F\in \mathbb F_h^i} 2\mvl{\n\cdot\nabla u_h} (w-\overline I_h w)\ds
+    \\
+    & \le \sum_{\cell\in\mesh_h} \norm{r_\cell(u_h)}_\cell
+      \norm{w-\overline I_h w}_\cell
+      + \sum_{F\in \mathbb F_h^i} \norm{\mvl{\n\cdot\nabla u_h}}_\cell
+      \norm{w-\overline I_h w}_\cell
+      \\
+    & \le c_1 \sum_{\cell\in\mesh_h} h_\cell
+      \norm{r_\cell(u_h)}_\cell
+      \norm{\nabla w}_{\domain_\cell}
+      + c_2 \sum_{F\in \mathbb F_h^i} h_E^{\nicefrac12}
+      \norm{\mvl{\n\cdot\nabla u_h}}_\cell
+      \norm{\nabla w}_{\domain_\cell}
+  \end{align*}
+  Applying Hölder inequality, we obtain for the first term
+  \begin{gather*}
+    \sum_{\cell\in\mesh_h} h_\cell
+    \norm{r_\cell(u_h)}_\cell
+    \norm{\nabla w}_{\domain_\cell}
+    \le
+    \left(\sum_{\cell\in\mesh_h} h_\cell^2
+    \norm{r_\cell(u_h)}_\cell^2\right)^{\nicefrac12}
+  \left(\sum_{\cell\in\mesh_h} \norm{\nabla w}_{\domain_\cell}^2
+  \right)^{\nicefrac12},
+  \end{gather*}
+  and similar for the second term. Both contain a term of the form
+  \begin{gather*}
+    \sum_{\cell\in\mesh_h} \norm{\nabla w}_{\domain_\cell}^2
+    = \sum_{\cell\in\mesh_h} \sum_{\cell'\in\mesh_\cell}\norm{\nabla w}_{\cell'}^2
+    \le n \norm{\nabla w}_{\domain}^2,
+  \end{gather*}
+  where $n$ is the maximal number of occurrences of a cell $\cell'$ in
+  the double sum. This $n$ is bounded uniformly on shape regular
+  family of meshes, since shape regularity prohibits degeneration of
+  cells. Therefore, we conclude
+  \begin{align*}
+    \left<Ru_h,w\right>
+    & \le c \left(\sum_{\cell\in\mesh_h} h_\cell^2
+      \norm{r_\cell(u_h)}_\cell^2 +
+      \sum_{F\in \mathbb F_h^i} h_E
+      \norm{\mvl{\n\cdot\nabla u_h}}_\cell^2\right)^{\nicefrac12}
+      \snorm{w}_{1;\domain}.
+  \end{align*}
+  Entering into~\eqref{eq:fem-aposteriori:4} yields the proposition.
+\end{proof}
+
+\begin{remark}
+  The constant $c$ in the previous theorem depends on the constant in
+  the quasi-interpolation estimate, which in turn was derived using
+  Poincaré and trace inequalities. Traditionally, both are derived
+  using indirect arguments, but a constructive proof with computable
+  bounds is possible. For details, see~\cite[Chapter
+  3]{Verfuerth13}. There still remains the question, whether these
+  bounds are sufficiently sharp to be applicable in practice.
+\end{remark}
+
+\begin{Definition}{osc}
+  For a function $f\in L^2(\domain)$, we define the cell-wise average
+  \begin{gather}
+    \overline f(\vx) = \frac1{\abs{\cell}}\int_\cell f \dvx
+    \qquad\vx\in\cell, \quad\cell\in\mesh_h,
+  \end{gather}
+  and the \define{data oscillation}
+  \begin{gather}
+    \operatorname{osc}_\cell f = \norm{f-\overline f}_\cell.
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{residual-estimator}
+  The residual based error estimator for the finite element method for
+  Poisson's equation on a mesh $\mesh$ is defined as
+  \begin{gather}
+    \eta_{h}(u_h) = \sum_{\cell\in\mesh} \eta_{\cell}(u_h),
+  \end{gather}
+  where
+  \begin{gather}
+    \eta_{\cell}(u_h)^2 = h_{\cell}^2 \norm{\overline f + \Delta u_h}_\cell^2
+    + \frac12 \sum_{F\subset \d\cell} h_F\norm{\mvl{n\cdot\nabla u_h}}_E^2.
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem}{residual-estimate}
+  There holds with positive constants $c_1$ and $c_2$
+  \begin{align}
+    \label{eq:fem-aposteriori:6}
+    c_1 \snorm{u-u_h}_1^2
+    &\le \eta_{h}(u_h)^2
+      + \sum_{\cell\in\mesh_h} h^2_\cell\operatorname{osc}_\cell^2 f
+    \\
+    \label{eq:fem-aposteriori:7}
+    c_2 \,\eta_\cell^2(u_h)
+    &\le \snorm{u-u_h}_{1;\domain_{\cell}}^2
+      + \sum_{\cell\in\mesh_\cell} h^2_\cell\operatorname{osc}_\cell^2 f
+  \end{align}
+\end{Theorem}
+
+\begin{proof}
+  Note that the right hand side of the
+  estimate~\eqref{eq:fem-aposteriori:5} in
+  \slideref{Lemma}{residual-upper-bound} differs from the estimator
+  $\eta_h(u_h)$ only by the replacement of $f$ by $\overline
+  f$. Therefore, we can start the proof of this lemma by
+  changing~\eqref{eq:fem-aposteriori:4} to
+  \begin{gather}
+    \snorm{u-u_h}_1
+    = \sup_{w\in V}\frac{\left<Ru_h,w\right>}{\snorm{w}_1}
+    = \sup_{w\in V}\frac{\left<\overline Ru_h,w\right> + \form(f-\overline f, w)}{\snorm{w}_1},
+  \end{gather}
+  where we ad hoc defined $\overline R$ like $R$, but replacing
+  $r_\cell = f+\nabla u_h$ by $\overline f + \nabla u_h$. Due to
+  equality, we can still subtract the quasi-interpolant of $w$ and
+  continue through the whole proof. What remains is the estimate
+  \begin{gather}
+    \label{eq:fem-aposteriori:8}
+    \form(f-\overline f, w - \overline I_h w)
+    \le c \sum_{\cell\in\mesh} h_\cell \norm{f-\overline f}_{\cell} \norm{\nabla w}_{\domain_\cell}
+    \le c \left(\sum_{\cell\in\mesh} h_\cell \norm{f-\overline f}_{\cell}\right)^{\nicefrac12}
+      \snorm{w}_{1;\domain},
+    \end{gather}
+    which is proven by Hölder inequality and the boundedness of the
+    number of cells in $\mesh_\cell$. Thus, the upper
+    bound~\eqref{eq:fem-aposteriori:6} is an immediate consequence of
+    \slideref{Lemma}{residual-upper-bound}.
+    
+    Note: the proof for the lower bound is for linear elements
+    only. It can be generalized to higher order by generalizing the
+    bubble functions below, which is mostly technical.
+    
+    We observe that the lower bound is local, that is, the estimate on
+    each cell $\cell$ is bounded from above by the error on the halo
+    $\domain_\cell$. Therefore, we start by constructing test
+    functions with support on a cell. On a simplex, we define the
+    \define{bubble function} in terms of \putindex{barycentric coordinates}
+    \begin{gather}
+      \label{eq:bubble-simplex}
+      B_\cell = \frac1{(d+1)^{d+1}}\lambda_0\lambda_1\dots\lambda_d,
+    \end{gather}
+    while on the reference hypercube $(0,1)^d$ we let
+    \begin{gather}
+      \label{eq:bubble-tensor}
+      \reference B_\cell(\refvx) = b(\refx_1)b(\refx_2)\dots b(\refx_d)
+      \qquad b(x) = 4 x(1-x).
+    \end{gather}
+    Both share the following properties: they vanish on $\d\cell$,
+    they are positive inside $\cell$, and $\max B_\cell=1$. From
+    positivity, we deduce the existence of a constant $c$ depending on
+    shape regularity and the shape function space $\shapespace(\cell)$, such that
+    \begin{gather}
+      \int_\cell p^2 B_\cell \dvx \ge c \norm{p}_\cell^2
+      \qquad\forall p\in \shapespace(\cell).
+    \end{gather}
+    Furthermore, $B_\cell$ is polynomial, such that the inverse estimate holds.
+
+    Choose now the test function
+    $w_\cell = (\overline f + \Delta u_h) B_\cell$. Since it vanishes
+    on the boundary and outside of $\cell$, the strong and weak form
+    of the residual reduce to
+    \begin{gather}
+      \int_\cell r_\cell(u_h) w_\cell \dvx = \int_\cell \nabla(u-u_h)\cdot\nabla w_\cell \dvx.
+    \end{gather}
+    Adding the difference of $f$ and $\overline f$ on both sides yields
+    \begin{gather}
+      \int_\cell (\overline f+\Delta u_h)^2 B_\cell \dvx
+      =\int_\cell \nabla(u-u_h)\cdot\nabla w_\cell \dvx
+      + \int_\cell (\overline f - f) w_\cell \dvx.
+    \end{gather}
+    On the left, we estimate
+    \begin{gather}
+      c \norm{\overline f + \Delta u_h}_\cell^2 \le \int_\cell (\overline f+\Delta u_h)^2 B_\cell \dvx.
+    \end{gather}
+    On the right, we estimate the residual term by
+    \begin{align*}
+      \int_\cell \nabla(u-u_h)\cdot\nabla w_\cell \dvx
+      & \le \snorm{u-u_h}_{1;\cell} \,\snorm{w_\cell}_{1;\cell}
+      \\
+      & \le c \snorm{u-u_h}_{1;\cell} \, h_\cell^{-1} \norm{\overline f + \Delta u_h}_\cell.
+    \end{align*}
+    The data oscillation is estimated in a straightforward way by
+    \begin{align*}
+      \int_\cell (\overline f-f) w_\cell \dvx
+      &\le \operatorname{osc}_\cell f \norm{\overline f+\Delta u_h}_\cell
+    \end{align*}
+    Combining these three estimates yields
+    \begin{gather}
+      \label{eq:fem-aposteriori:9}
+      c \norm{\overline f+\Delta u_h}_\cell
+      \le h_\cell^{-1} \snorm{u-u_h}_{1;\cell}
+      + \operatorname{osc}_\cell f,
+    \end{gather}
+    which is the desired estimate for the cell term of the estimator
+    $\eta_{\cell}(u_h)$ if we multiply by $h_\cell$.
+
+    The estimate for the face term is similar, using a bubble function
+    for the face. Since this functon is nonzero on the face, its
+    support extends over two mesh cells. On simplicial cells, it is
+    constructed like the cell bubble in
+    equation~\eqref{eq:bubble-simplex}, but extending the product only
+    over indices of vertices on the face. Therefore, it is a
+    polynomial of degree $d-1$ on the face and also in the interior of
+    each cell. For hypercubes, it is the product of the quadratic
+    polynomials $b(x)$ of variables on the face times a linear
+    function decaying linearly from 1 to zero. Again, we normalize
+    such that the maximum equals 1. Choosing\footnote{For linear
+      elements, the derivative on the face is constant and thus this
+      definition is obvious. For higher order polynomials, we need a
+      an extension from the face into the interior, which can be
+      obtained from the barycentric coordinates or the tensor product
+      structure.} $w_F = 2\mvl{\n\cdot\nabla u_h}_F B_F$, we obtain
+    \begin{align*}
+      c\norm{\mvl{\n\cdot\nabla u_h}}_F^2
+      &\le \int_F \mvl{\n\cdot\nabla u_h}^2 B_F \ds
+      \\&= \int_F \mvl{\n\cdot\nabla u_h} w_F \ds
+      \\&= \sum_{\cell\in\mesh_F} \int_\cell r_\cell w_F \dvx - \left<R,w_F\right>
+      \\&= \sum_{\cell\in\mesh_F} \int_\cell r_\cell w_F \dvx
+      - \int_{\domain_F} \nabla (u-u_h)\cdot\nabla w_F \dvx
+      \\&= \sum_{\cell\in\mesh_F} \int_\cell (\overline f + \Delta u_h) w_F \dvx
+      - \int_{\domain_F} \nabla (u-u_h)\cdot\nabla w_F \dvx
+      + \sum_{\cell\in\mesh_F} \int_\cell (\overline f - f)w_F \dvx.
+    \end{align*}
+    Again, we estimate the three terms on the right hand side
+    separately. For the first, we estimate the norm of $w_F$ by its
+    trace on the edge $F$. From the already proven estimate for the
+    cell residual~\eqref{eq:fem-aposteriori:9}, we obtain
+    \begin{align*}
+      \sum_{\cell\in\mesh_F} \int_\cell (\overline f + \Delta u_h) w_F \dvx
+      & \le \sum_{\cell\in\mesh_F} \norm{\overline f + \Delta u_h}_\cell
+        \,\norm{w_F}_{\cell}
+      \\&\le \sum_{\cell\in\mesh_F} \norm{\overline f + \Delta u_h}_\cell
+      \,c h_F^{\nicefrac12} \norm{\mvl{\n\cdot\nabla u_h}}_F
+      \\&\le 
+      + c  \sum_{\cell\in\mesh_F} \left(h_F^{-\nicefrac12} \snorm{u-u_h}_{1;\cell}
+      + h_F^{\nicefrac12}\operatorname{osc}_{\cell} f\right)\norm{\mvl{\n\cdot\nabla u_h}}_F
+    \end{align*}
+    Similarly, the inverse estimate for $w_F$ yields
+    \begin{align*}
+      \int_{\domain_F} \nabla (u-u_h)\cdot\nabla w_F \dvx
+      &\le \snorm{u-u_h}_{1;\domain_F} \norm{\nabla w_F}_{\domain_F}
+      \\&\le \snorm{u-u_h}_{1;\domain_F}
+      \,c h_F^{-\nicefrac12}\norm{\mvl{\n\cdot\nabla u_h}}_F.
+    \end{align*}
+    Finally, the data oscillation terms becomes
+    \begin{align*}
+      \sum_{\cell\in\mesh_F} \int_\cell (\overline f - f)w_F \dvx
+      &\le \sum_{\cell\in\mesh_F} \norm{\overline f - f}_\cell \norm{w_F}_\cell
+      \\&\le \sum_{\cell\in\mesh_F} \norm{\overline f - f}_\cell
+      \,c h_F^{\nicefrac12}\norm{\mvl{\n\cdot\nabla u_h}}_F.
+    \end{align*}
+    Summing and scaling with $h_F^{\nicefrac12}$ yields the result.
+\end{proof}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

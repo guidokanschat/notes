@@ -240,16 +240,14 @@
 \end{remark}
 
 \begin{Definition}{Banach-hilbert}
-  A \define{normed vector space} is a vector space $V$ with a norm
-  $\norm\cdot$. We may also write $\norm{\cdot}_V$ to highlight the
-  connection.
-
-  A normed vector space $V$ which is complete with respect to its norm is
-  called a \define{Banach space}.
-  
   A vector space $V$ equipped with an inner product $\scal(.,.)$ is called
   an \define{inner product space} or \define{pre-Hilbert space}. A
   \define{Hilbert space} is a pre-Hilbert space which is also \putindex{complete}.
+
+  A \define{normed vector space} is a vector space $V$ with a norm
+  $\norm\cdot$. We may also write $\norm{\cdot}_V$ to highlight the
+  connection. A normed vector space $V$ which is complete with respect to its norm is
+  called a \define{Banach space}.
 \end{Definition}
 
 \begin{remark}
@@ -850,7 +848,7 @@ completed to be a basis of $V$.
   
   For the second equivalence note that continuity trvially implies
   continuity in a single point, e.g. $x \in V$. Now let $L$ be continous 
-  n $x$ and take the sequence $\{v_n\}_{n=1,\dots} \subsbet V$ converging
+  n $x$ and take the sequence $\{v_n\}_{n=1,\dots} \subset V$ converging
   to $v \in V$ Then, $\{v_n-(v-x)\}_{n=1,\dots}$ converges to $x$ and by
   continuity we have $L(v_n-(v-x)) = Lv_n - Lv + Lx \to Lx$ as $n \to \infty$.
   This yields $Lv_n \to Lv$ and thus, $L$ is continous.

@@ -163,7 +163,7 @@
 
 \begin{proof}
   Chose $\| \cdot \|$ a submultiplicative matrix norm on $\R^d$. We want to
-  show that the sequence of partial sums $(S_n)_{n \in \N_0}$ with $S_n$
+  show that the sequence of partial sums $(S_n)_{n \in \mathbb N_0}$ with $S_n$
   given as $\lim_{m \to \infty} \sum_{k=n} ^m \frac{A^k}{k!}$ converges to
   $S := e^A = \lim_{m \to \infty} \sum_{k=0} ^m \frac{A^k}{k!}$. Consider
   therefore
@@ -233,7 +233,7 @@
 	yields the result.
     
     For \ref{eq:appendix:5} note that $\R^{d \times d}$ forms a ring and is
-	associative as such. Then for $k \in \N_0$ we have
+	associative as such. Then for $k \in \mathbb N_0$ we have
     \begin{align*}
 	(S^{-1} AS)^k &= (S^{-1} AS) (S^{-1} AS) \cdots (S^{-1} AS)(S^{-1} AS) \\
 		&= S^{-1} A (SS^{-1}) A (S \cdots S^{-1}) A (SS^{-1}) AS = S^{-1} A^k S& \\
@@ -246,7 +246,7 @@
     
     Lastly, let $D = \diag(\lambda_1, \dots, \lambda_d) \in \R^{d \times d}$
 	where $\lambda_i \in \R$, $i= 1, \dots, d$. Then, $D^k = \diag(\lambda_1^k,
-	\dots, \lambda_n^k)$ for any $k \in \N_0$. Then we have
+	\dots, \lambda_n^k)$ for any $k \in \mathbb N_0$. Then we have
 	\begin{align}
 	e^D =& \sum_{k=0}^\infty \frac{1}{k!} \diag(\lambda_1^k, \dots, \lambda_n^k) \\
 	=& \sum_{k=0}^\infty \diag \left(\frac{1}{k!}\lambda_1^k, \dots,
@@ -402,8 +402,9 @@
 	for an the affine function $g$ that fulfills $g(0) = u_0$ and $g'(t_1) = f(t_1)$.
 	Then we set $y_1 = g(t_1)$.
 	\end{minipage}
+      \end{center}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Derivation of a BDF-scheme}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
