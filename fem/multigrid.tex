@@ -1,3 +1,99 @@
+\def\restrict{r}
+\def\prolongate{p}
+\begin{example}
+  Smoothing property of the Richardson method with $\omega = 1/2$ for the one-dimensional Laplacian.
+\end{example}
+\begin{Algorithm*}{mgm}{The Multigrid iteration MGM($\ell, u_\ell^{k}, b_\ell$)}
+  \index{multigrid iteration}
+  \begin{enumerate}
+  \item Pre-smoothing: let $u_\ell^{k,0} = u_\ell^{k}$ and for
+    $i=0,\dots,\nu_1-1$ do
+    \begin{gather}
+      u_\ell^{k,i+1} = u_\ell^{k,i}
+      + \omega\bigl(b_\ell - A_\ell u_\ell^{k,i}\bigr).
+    \end{gather}
+  \item Coarse grid correction: compute
+    $b_{\ell-1} = \restrict(b_\ell - A_\ell u_\ell^{k,\nu_1})$ and
+    \begin{enumerate}
+    \item If $\ell=1$ solve $A_0 u_0^{\mu} = b_0$ exactly
+    \item If $\ell>1$, let $u_{\ell-1}^0 = 0$ and for $i=0,\dots,\mu-1$ do
+      \begin{gather*}
+        u_{\ell-1}^{i+1} = \text{MGM}(\ell-1, u_{\ell-1}^{i},b_{\ell-1}).
+      \end{gather*}
+      Then, add
+      $u_\ell^{k,\nu_1+1} = u_\ell^{k,\nu_1} + \prolongate u_{\ell-1}^{\mu}$.
+    \end{enumerate}
+  \item Post-smoothing: for $i=\nu_1+1,\dots,\nu_1+\nu_2$ do
+    \begin{gather}
+      u_\ell^{k,i+1} = u_\ell^{k,i}
+      + \omega\bigl(b_\ell - A_\ell u_\ell^{k,i}\bigr).
+    \end{gather}
+    and let
+    $u_\ell^{k+1}=u_\ell^{k,\nu_1+\nu_2+1}$.
+  \end{enumerate}
+\end{Algorithm*}
+
+\begin{remark}
+  The multigrid method for $\mu=1$ is called the V-cycle, for $\mu=2$
+  it is the W-cycle. The generalization where $\mu$ depends on $\ell$,
+  typically in the form $2^{L-\ell}$, where $L$ is the finest level,
+  is called the variable V-cycle.
+\end{remark}
+
+\begin{remark}
+  The Richardson method in pre- and post-smoothing can be replaced by
+  other relaxation methods like Jacobi, Gauss-Seidel, SOR, or
+  SSOR. Even more complex operations may be considered.
+
+  If the smoother, like SOR, is not symmetric, it is possible to apply
+  the transpose (backward SOR instead of forward) in post-smoothing to
+  obtain a method which is symmetric.
+\end{remark}
+
+\begin{Lemma}{mgm-error}
+  Let $S_\ell$ be the error propagation operator of the
+  smoother. Then, the error propagation operator of a single step of
+  the multigrid iteration is defined recursively by
+  \begin{gather}
+    I - M_\ell = S_\ell^{\nu_2}
+    (I-\prolongate M_{\ell-1}^{\mu}\restrict A)
+    S_\ell^{\nu_1},
+  \end{gather}
+  and $M_0 = A^{-1}$.
+\end{Lemma}
+
+\begin{proof}
+  We prove for $k=0$, which proves for every step and omit the superscript $k$.
+  First, observe that for the exact solution $u_\ell$ of
+  $A_\ell u_\ell = b_\ell$ there holds
+  \begin{gather*}
+    u_\ell - u_\ell^{i+1}
+    = S \left(u_\ell - u_\ell^{i+1}\right)
+    \qquad i=i=0,\dots,\nu_1-1,\nu_1+1,\dots,\nu_1+\nu_2.
+  \end{gather*}
+  Thus,
+  \begin{gather*}
+    u_\ell - u_\ell^{\nu_1} = S^{\nu_1}(u_\ell - u_\ell^{0}),
+    \qquad
+    u_\ell - u_\ell^{\nu_1+\nu_2+1}
+    = S^{\nu_2}(u_\ell - u_\ell^{\nu_1+1}),
+  \end{gather*}
+  We continue by induction. For $\ell=1$, we have
+  \begin{gather*}
+    u_1-u_1^{\nu_1+1}
+    = u_1-u_1^{\nu_1} - \prolongate u_{0}^{\mu}
+    = u_1-u_1^{\nu_1} - \prolongate A_0^{-1}
+     \restrict A_1(u_1-u_1^{\nu_1}).
+   \end{gather*}
+   Combining with the error propagation of pre and post smoothing, we
+   get
+  \begin{gather*}
+    u_1 -u_1^{\nu_1+\nu_2+1}
+    = S_\ell^{\nu_2}
+    (I-\prolongate A_0^{-1} \restrict A_1)
+    S_\ell^{\nu_1} \left(u_1 -u_1^{0}\right).
+  \end{gather*}
+\end{proof}
 
 %%% Local Variables:
 %%% mode: latex
