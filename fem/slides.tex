@@ -4,6 +4,8 @@
 \usepackage{tikz,tikzscale}
 \usetikzlibrary{snakes}
 \input{mixed/fig/tikzsettings}
+\def\restrict{r}
+\def\prolongate{p}
 
 \usepackage{../mathsim}
 \usepackage{times}
@@ -361,6 +363,9 @@
 \frame {\input {blocks/Lemma-condition-number-mass-matrix.tex}}
 \frame {\input {blocks/Corollary-refined-condition-number.tex}}
 \frame {\input {blocks/Theorem-condition-number-stiffness-matrix.tex}}
+
+\subsection{Multigrid methods}
+\frame {\input {blocks/Algorithm-mgm.tex}}
 
 \section{Bibliography}
 \frame{\bibliographystyle{alpha}

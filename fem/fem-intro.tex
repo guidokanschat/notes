@@ -175,6 +175,10 @@
   \end{gather}
 \end{Definition}
 
+\begin{todo}
+  Properties of simplicial coordinates, e.g. $\{\lambda_i=0\}$ is the facet opposite to $\vertex_i$.
+\end{todo}
+
 \begin{Lemma}{barycentric-affine}
   There is a matrix $B_T\in \R^{d+1\times d}$ and a vector
   $b_T\in\R^{d+1}$, such that
@@ -262,7 +266,7 @@
   \begin{gather}
     \label{eq:fem-intro:1}
     p_{i_1,\dots,i_d}(\vx)
-    = p_{i_1}\otimes \dots\otimes p_{i_d}
+    = p_{i_1}\otimes \dots\otimes p_{i_d}(\vx)
     = \prod_{k=1}^d p_{i_k}(x_k).
   \end{gather}
 \end{Definition}
