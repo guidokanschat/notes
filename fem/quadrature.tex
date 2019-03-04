@@ -276,7 +276,7 @@
   $\P_{2k-2}$.  Then, there exists a constant $c$ such that for all
   meshes of a quasi-uniform family $\{\mesh_h\}$ of meshes there holds
   \begin{gather}
-    a(v_h, w_h) - a_h(v_h, w_h) \le c h^k \norm{A}_{k,\infty;\domain}
+    \abs{a(v_h, w_h) - a_h(v_h, w_h)} \le c h^k \norm{A}_{k,\infty;\domain}
     \norm{v_h}_{k;h} \snorm{w_h}_{1;h}.
   \end{gather}
 \end{Theorem}
@@ -399,7 +399,7 @@
   family $\{\mesh_h\}$ of meshes there holds
   \begin{gather}
     \abs{E_\cell(fp)} \le c h_\cell^k \norm{f}_{k;\cell}\norm{p}_{1;\cell}
-    \qquad\forall f\in H^2(\domain),\quad \forall p\in\shapespace.
+    \qquad\forall f\in H^k(\domain),\quad \forall p\in\shapespace.
   \end{gather}
 \end{Theorem}
 

@@ -76,7 +76,7 @@
   mass matrix obtained by restricting the $L^2$-inner product to
   $\cell$. Then,
   \begin{gather*}
-    \vecx^T \matm_h \vecx
+    \norm{u_h}_{L^2(\domain)}^2 \vecx^T \matm_h \vecx
     = \sum_{T\in\T_h} \vecx^T_T \matm_T \vecx_T
     \begin{cases}
     \ge \min\limits_{T\in\T_h} \frac{\vecx^T_T \matm_T \vecx_T}{\abs{\vecx_T}} \sum_{T\in\T_h} \abs{\vecx_T}^2 \ge \lambda(\matm_T) \abs{\vecx}^2,\\
