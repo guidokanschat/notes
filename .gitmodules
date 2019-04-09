@@ -1,3 +1,3 @@
 [submodule "slidetheorem"]
 	path = slidetheorem
-	url = git@github.com:guidokanschat/slidetheorem.git
+	url = https://github.com/guidokanschat/slidetheorem.git
