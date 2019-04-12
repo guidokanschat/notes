@@ -150,10 +150,70 @@
   \end{gather}
 \end{Beispiel}
 
-
 \subsection{Orthogonale Basen}
 
+\begin{Lemma}{gram-system}
+  Wählt man eine Basis $\{\phi_i\}$ für $W$, so transformiert wird die
+  Orthogonalitätsbedingung in \slideref{Satz}{bestapproximation} zum
+  linearen Gleichungssystem
+  \begin{gather}
+    \matg\vx = \vb.
+  \end{gather}
+  Hier sind $\vx$ der Koeffizientenvektor der Lösung $u_b$, $\matg$ die
+  \define{Gramsche Matrix} und $\vb$ die rechte Seite gegeben durch
+\begin{gather}
+  g_{ij} = \scal(\phi_i,\phi_j), \qquad
+  b_i = \scal(u,\phi_i).
+\end{gather}
+\end{Lemma}
 
+\begin{remark}
+  Das Gleichungssystem hängt nur von der Wahl einer Basis in $W$ ab,
+  nicht in $V$.
+\end{remark}
+
+\begin{Definition}{ortho-system}
+  Eine Menge von Vektoren $\{\phi_1,\dots,\phi_n\}\subset V$ bildet
+  ein \define{Orthogonalsystem}, wenn
+  \begin{gather*}
+    \scal(\phi_i,\phi_j) = 0
+    \qquad \forall 1\le i < j \le n.
+  \end{gather*}
+  Sie ist ein \define{Orthonormalsystem}, wenn zusätzlich
+  $\norm{\phi_i} = 1$ für alle Elemente gilt. Ein Orthonormalsystem, das eine Basis bildet, heißt \define{Orthonormalbasis} (\define{ONB}).
+\end{Definition}
+
+\begin{Lemma}{ortho-lu}
+  Jedes Orthogonalsystem ist linear unabhängig.
+\end{Lemma}
+
+\begin{Theorem*}{gram-schmidt}{Gram-Schmidt-Verfahren}
+  Jede linear unabhängige Menge von Vektoren
+  $\{\phi_1,\dots,\phi_n\}\subset V$ wird mit dem folgenden Verfahren
+  in ein Orthonormalsystem $\{v_1,\dots,v_n\}\subset V$ umgeformt:
+  \begin{gather}
+    \begin{aligned}
+      v_1 &= \tfrac1{\norm{\phi_1}} \,\phi_1\\
+      w_j &= \phi_j - \sum_{i=1}^{j-1} \scal(\phi_j,v_i)\,v_i
+      & \quad v_j &= \tfrac1{\norm{w_j}}\, w_j
+      &\quad j=2,\dots,n
+    \end{aligned}
+  \end{gather}
+  Für alle $1\le k \le n$ gilt
+  \begin{gather}
+    \operatorname{span}\{\phi_1,\dots,\phi_k\}
+    =
+    \operatorname{span}\{v_1,\dots,v_k\}
+  \end{gather}
+\end{Theorem*}
+
+\begin{proof}
+  Siehe \cite{Rannacher17}.
+\end{proof}
+
+\begin{Algorithmus*}{gram-schmidt}{Gram-Schmidt}
+  \lstinputlisting{code/gram-schmidt.py}
+\end{Algorithmus*}
 
 %%% Local Variables:
 %%% mode: latex
