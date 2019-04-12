@@ -1,0 +1,37 @@
+\usepackage[notref,notcite]{showkeys}
+%\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{svg.path}
+\excludecomment{solution}
+\input{mixed/fig/tikzsettings}
+
+\def\constref#1{C_{\text{\ref{#1}}}}
+\title{Einführung in die Numerik}
+\author{Guido Kanschat}
+\date{\today}
+
+\def\vecx{\mathbf x}
+\begin{document}
+\maketitle
+\tableofcontents
+\chapter{Approximation durch Polynome}
+\section{Orthogonale Projektionen}
+\input{orthopoly}
+
+\section{Konditionierung und Stabilität}
+%\input{stability}
+
+\section{Interpolation}
+%\input{interpolation}
+
+\section{Quadratur}
+%\input{quadrature}
+
+\bibliographystyle{apalike}
+\bibliography{all}
+\printindex
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

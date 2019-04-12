@@ -1,0 +1,161 @@
+\subsection{Polynomräume}
+
+\begin{Satz}{nullstellen}
+  Ein reelles Polynom vom Grad $n$ hat höchstens $n$ Nullstellen oder es ist das Nullpolynom.
+\end{Satz}
+
+\begin{proof}
+  Für $n=1$ handelt es sich um ein lineares Polynom und die Aussage
+  des Satzes ist unmittelbar klar. Sei nun $p$ ein Polynom strikt vom
+  Grad $n>1$ mit Nullstelle $x_0$. Dann gibt es nach dem euklidischen
+  Algorithmus zur Division mit Rest ein Polynom $q$ vom Grad $n-1$ und
+  eine Konstante $c$, so dass
+  \begin{gather}
+    p(x) = (x-x_0)q(x)+c.
+  \end{gather}
+  Daraus folgt $p(x_0) = c$, so dass folgt $c=0$. Wir können dieses
+  Verfahren für alle weiteren Nullstellen $x_1,\dots,x_m$ wiederholen
+  und erhalten
+  \begin{gather}
+    p(x) =  r(x) \prod_{k=0}^m (x-x_i),
+  \end{gather}
+  wobei $r(x)$ ein Polynom vom Grad $n-m$ sein muss, da $p$ vom Grad
+  $n$ ist. Insbesondere muss gelten $m\le n$.
+\end{proof}
+
+\begin{Korollar}{monome-linear-unabhaengig}
+  Zwei reelle Polynome vom Grad $n$ sind identisch, wenn sie in
+  mindestens $n+1$ Punkten übereinstimmen. Insbesondere ist jede Menge
+  von Monomen $\{x^{k_0}, x^{k_1},\dots,x^{k_n}\}$ für paarweise
+  verschiedene Exponenten $k_i$ linear unabhängig.
+\end{Korollar}
+
+\begin{Satz}{polynomraum}
+  Die Polynome vom maximalen Grad $n$ bilden einen Vektorraum der
+  Dimension $n+1$.  Wir bezeichnen ihn mit $\P_n$.
+\end{Satz}
+
+\subsection{Skalarprodukt und Orthogonalität}
+\begin{Definition}{skalarprodukt}
+  Sei $V$ ein reeller Vektorraum. Eine Abbildung
+  $a\colon V \times V \to \R$ heißt \define{Bilinearform}, wenn für
+  $u,v,w\in V$ und $\alpha,\beta\in \R$ gilt
+  \begin{align}
+    a(\alpha u + \beta v,w) &= \alpha a(u,w) + \beta a(v,w)\\
+    a(w,\alpha u + \beta v) &= \alpha a(w,u) + \beta a(w,v).
+  \end{align}
+  Eine Bilinearform heißt \define{symmetrisch}, wenn für $u,v\in V$ gilt
+  \begin{gather}
+    a(u,v) = a(v,u).
+  \end{gather}
+  Sie heißt \define{positiv semi-definit}, wenn $a(u,u) \ge 0$ für alle
+  $u\in V$ und \define{positiv definit}, wenn zusätzlich
+  \begin{gather}
+    a(u,u) = 0 \quad \Longrightarrow \quad u=0.
+  \end{gather}
+  Eine symmetrische, positiv definite Bilinearform heißt
+  \define{Skalarprodukt}, in der Regel notiert als $\scal(\cdot,\cdot)$.
+\end{Definition}
+
+\begin{Lemma}{hilbertnorm}
+  Sei $V$ ein reeller Vectorraum mit Skalarprodukt
+  $\scal(\cdot,\cdot)$. Dann ist durch
+  \begin{gather}
+    \norm{u} = \sqrt{\scal(u,u)}
+  \end{gather}
+  auf $V$ eine Norm definiert. Ein reeller Vektorraum $V$ mit
+  Skalarprodukt und zugehöriger Norm heißt \define{euklidischer
+    Vektorraum}.
+\end{Lemma}
+
+\begin{Beispiel*}{l2-norm}{$L^2$-Skalarprodukt}
+  Auf dem Raum $V=\P_n$ der reellen Polynome vom Grad bis zu $n$ ist durch
+  \begin{gather}
+    \scal(p,q) = \int_{-1}^1 p(x)q(x)\dx
+  \end{gather}
+  ein Skalarprodukt definiert.
+\end{Beispiel*}
+
+\begin{Definition}{orthogonal}
+  Zwei Vektoren $u,v\in V$ heißen \define{orthogonal}, wenn
+  \begin{gather}
+    \scal(u,v) = 0.
+  \end{gather}
+  Ein Vektor $u\in V$ ist orthogonal zum Untervektorraum $W\subset V$, wenn
+  \begin{gather}
+    \scal(u,v) = 0\quad\forall v\in W.
+  \end{gather}
+\end{Definition}
+
+\begin{Notation}{euklidischer-vr}
+  Von nun an bezeichnet $V$ immer einen endlichdimensionalen, reellen,
+  euklidischen Vektorraum.
+\end{Notation}
+
+\begin{Definition}{bestapproximation}
+  Sei $A\subset V$ ein affiner Unterraum eines euklidischen
+  Vektorraums. Dann ist die Bestapproximation $u_b\in A$ eines Vektors
+  $u\in V$ in $A$ definiert durch die Beziehung
+  \begin{gather}
+    \norm{u-u_b} = \min_{v\in A} \norm{u-v}.
+  \end{gather}
+\end{Definition}
+
+\begin{Satz}{bestapproximation}
+  Sei $A=w+W$ ein nichtleerer, affiner Unterraum von $V$.  Dann
+  existiert die Bestapproximation nach
+  \slideref{Definition}{bestapproximation} und ist eindeutig
+  bestimmt. Es gilt die notwendige und hinreichende Bedingung
+  \begin{gather}
+    \scal(u-u_b,v) = 0 \quad \forall v\in W.
+  \end{gather}
+\end{Satz}
+
+\begin{proof}
+  Siehe \cite[Satz 2.14]{Rannacher17} oder \cite[Satz 3.4]{DeuflhardHohmann08}.
+\end{proof}
+
+\begin{Definition}{komplement-projektion}
+  Sei $W \subset V$ ein Untervektorraum. Dann gilt
+  $V = W \oplus W^\perp$, wobei das \define{orthogonale Komplement}
+  $W^\perp$ eindeutig definiert ist durch
+  \begin{gather}
+    W^\perp = \bigl\{ v\in V \big| \scal(v,w) = 0 \quad\forall w\in W\bigr\}.
+  \end{gather}
+  Die Lösung $\Pi_W u = u_b\in W$ der Bestaproximationsaufgabe nennen
+  wir die \define{orthogonale Projektion} von $u\in V$ auf $W$.
+\end{Definition}
+
+\begin{lemma}
+  Das orthogonale Komplement und die orthogonale Projektion sind wohldefiniert.
+\end{lemma}
+
+\begin{proof}
+  \slideref{Satz}{bestapproximation}.
+\end{proof}
+
+\begin{Beispiel}{polynom-bestapproximation}
+  Die Aufgabe der Gaußschen Ausgleichsrechnung lautet: finde zu einer
+  gegebenen Funktion $f$ das Polynom vom Grad höchstens $n$, das auf
+  dem Intervall $[-1,1]$ den mittleren quadratischen Abstand
+  minimiert, also $p\in \P_n$ mit
+  \begin{gather}
+    \int_{-1}^1 \bigl(f(x)-p(x)\bigr)^2 \dx
+    = \min_{q\in \P_n} \int_{-1}^1 \bigl(f(x)-q(x)\bigr)^2 \dx.
+  \end{gather}
+  Die Lösung erfüllt
+  \begin{gather}
+    \int_{-1}^1 p(x)q(x) \dx = \int_{-1}^1 f(x)q(x) \dx
+    \qquad\forall q\in \P_n.
+  \end{gather}
+\end{Beispiel}
+
+
+\subsection{Orthogonale Basen}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

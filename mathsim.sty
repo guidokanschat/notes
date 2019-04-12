@@ -9,7 +9,7 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{makeidx}
-\RequirePackage[USenglish]{babel}
+\RequirePackage{babel}
 \RequirePackage{stringstrings}
 \RequirePackage{xr}
 \RequirePackage{nicefrac}
@@ -61,7 +61,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\newtheorem{theorem}{\iflanguage{german}{Satz}{}\iflanguage{english}{Theorem}{}}[chapter]
 \newtheorem{lemma}[slidetheorem]{Lemma}
-\newtheorem{corollary}[slidetheorem]{Corollary}
+\newtheorem{corollary}[slidetheorem]{\iflanguage{german}{Korollar}{}\iflanguage{english}{Corollary}{}}
 \theoremstyle{definition}
 \newtheorem{assumption}[slidetheorem]{Assumption}
 \newtheorem{definition}[slidetheorem]{Definition}
