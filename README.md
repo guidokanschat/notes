@@ -20,7 +20,7 @@ git submodule update
 
 Finally, make sure that `$NOTESPATH` is in your `TEXINPUTS`variable, for instance by (bash)
 ```
-export TEXINPUTS=$NOTESPATH//:$TEXINPUTS
+export TEXINPUTS=.:$NOTESPATH//:$TEXINPUTS
 ```
 
 ### Compiling ###
