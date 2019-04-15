@@ -312,7 +312,7 @@
   complement.
 
   First, it is clear that for any $y\in V$ a linear functional
-  $f\in V^*$ is defined by $f(\cdot) = \scal(y,\cdot)$. Furthermore,
+  $f\in V^*$ is defined by $f(\cdot) = \scal(\cdot,y)$. Furthermore,
   $\varrho$ is injective, since
   \begin{gather*}
     \scal(x,y) = 0 \qquad\forall x\in V
@@ -330,26 +330,27 @@
   $\ortho y \in \ortho N$ and let
   \begin{gather}
     \label{eq:lafa:13}
-    y = \frac{\overline{f(\ortho y)}}{\norm*{\ortho y}^2} \ortho y \in
+    y = \frac{f(\ortho y)}{\norm*{\ortho y}^2} \ortho y \in
     \ortho N,
   \end{gather}
   such that $f(y) = \abs*{f(\ortho y)}^2/\norm*{\ortho y}^2 \neq 0$.
   Let now $x\in V$ be chosen arbitrarily. Then, there holds
   \begin{gather*}
     x = \left(x-\frac{f(x)}{f(y)} y\right)
-    + \frac{f(x)}{f(y)} y.
+    + \frac{f(x)}{f(y)} y,
     \\
   \end{gather*}
+  where $\frac{f(x)}{f(y)}$ denotes a scalar.
   Since
   \begin{gather*}
-      f = \left(x-\frac{f(x)}{f(y)} y\right) 
+      f \left(x-\frac{f(x)}{f(y)} y\right) 
       = \left(f(x)-f(x) \frac{f(y)}{f(y)}\right)
       = 0,
   \end{gather*}
   this decomposition amounts to $x = x^0+\ortho x$ with $x^0\in N$ and
   $\ortho x \in \ortho N$. It is unique according to
   \slideref{Definition}{ortho-projection}. Thus, we have that $\ortho x$ is a
-  multiple of $y$, say $\ortho x=\alpha y$ and thus
+  multiple of $y$, say $\ortho x=\alpha y$ with $\alpha=\frac{f(x)}{f(y)}$ and thus
   \begin{gather*}
     \begin{aligned}
     f(x) &= f(x^0) + f(\ortho x)
