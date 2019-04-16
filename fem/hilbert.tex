@@ -421,14 +421,73 @@
   \end{gather}
   Furthermore, there holds
   \begin{gather}
+    \label{eq:hilbert:lax-milgram-estimate}
     \norm{u}_V \le \frac1\alpha \norm{f}_{V^*}.
   \end{gather}
 \end{Lemma*}
 
 \begin{proof}
-  To proof Lax-Milgram we first consider the uniqueness and then the existence of the solution $u$.
+  To prove Lax-Milgram we first consider uniqueness and then the
+  existence of the solution $u$.
 
-  Assume that there are solutions $u_1$ and $u_2$ of \eqref{eq:hilbert:lax-milgram}
+  Assume that there are solutions $u_1, u_2\in V$ of \eqref{eq:hilbert:lax-milgram},
+  i.\,e. there holds $a(u_1,v)=f(v)$ and $a(u_2,v)=f(v)$ for all $v\in V$.
+  Thus, $a(u_1-u_2,v)=0$ for all $v\in V$.
+  Now choose $v=u_1-u_2\in V$.
+  Since $a(.,.)$ is coercive with $\alpha>0$ it holds
+  \begin{gather*}
+    0 = a(u_1-u_2,u_1-u_2)\geq \alpha \norm{u_1-u_2}_{V}^2 
+  \end{gather*}
+  which implies $u_1-u_2=0$. Hence $u_1=u_2$.
+
+  Let us now consider existence of a solution.
+  We will define a linear functional to apply Riesz and Banach fixed point theorem.
+  For all $y\in V$ there holds
+  \begin{gather*}
+    \scal(y,\cdot) - \left[\omega a(y,\cdot) -f(\cdot)\right] \in V^*
+  \end{gather*}
+  with $\omega>0$.
+  Due to Riesz there exists an isomorphism $\rho:V\rightarrow V^*$ that maps a given $z\in V$ to
+  $\scal(y,\cdot) - \omega \left[ a(y,\cdot)-f(\cdot) \right]$ such that
+  \begin{gather*}
+    \scal(v,z) = \scal(y,v) - \omega\left[a(y,v) - f(v) \right] \qquad \forall v\in V.
+  \end{gather*}
+  Now we define the mapping $T_\omega:V\rightarrow V$ that maps $y\mapsto z$ and
+  define $S:V\rightarrow V$ such that
+  \begin{gather*}
+    \scal(Su,v) = a(u,v) \qquad \forall v\in V 
+  \end{gather*}
+  with $\norm{Su}_V \leq M \norm{u}_V$ for $M>0$.
+  Now consider $y-x$ instead of $y$.
+  This leads for all $v\in V$ to
+  \begin{gather*}
+    \scal(T_\omega y - T_\omega x,v)
+    = \scal(y-x,v) - \omega\left[a(y-x,v) \right]
+    = \scal(y-x,v) - \omega \scal(S(y-x),v).
+  \end{gather*}
+  Thus, we can conclude that $T_\omega (y-x)=y-x-\omega S(y-x)$.
+  Applying the norm and using the fact that it is induced by the inner product of $V$
+  we get
+  \begin{gather*}
+    \begin{aligned}
+      \norm{T_\omega y - T_\omega x}_V^2 &= \norm{y-x}_V^2 - 2 \omega \scal(S(y-x),y-x) + \omega^2 \norm{S(y-x)}^2 \\
+      &\leq \norm{y-x}^2 - 2\omega a(y-x,y-x) + \omega^2 M^2 \norm{y-x}^2 \\
+      &\leq (1-2\omega\alpha + \omega^2 M^2) \norm{y-x}^2.
+    \end{aligned}
+  \end{gather*}
+  As we want to apply Banach fixed point theorem, we need $T_\omega$ to be a contraction.
+  Therefore, we need $1-2\omega\alpha + \omega^2 M^2 < 1$ which is given for
+  $\omega\in\left(0,\frac{2\alpha}{M^2}\right)$.
+  Hence, $T_\omega$ is a contraction and there exists a $\nu\in V$ such that $\T_\omega \nu = \nu$
+  and $\scal(T_\omega \nu,\nu) = \scal(\nu,\nu) - \omega\left[ a(\nu,v) - f(v) \right]$
+  which implies $a(\nu,v)=f(v)$.
+  Thus, there exists a solution $\nu$.
+
+  Now the stability estimate \eqref{eq:hilbert:lax-milgram-estimate} is left to prove.
+  Using the coercivity of our bilinear form yields
+  \begin{gather*}
+    \alpha \norm{u}_V \leq \frac{a(u,u)}{\norm{u}_V} = \frac{f(u)}{\norm{u}_V} \leq \sup_{u\in V} \frac{\snorm{f(u)}}{\norm{u}_V} = \norm{f}_{V^*}.
+  \end{gather*}
 \end{proof}
 
 \begin{Lemma}{weak-well-posed}
