@@ -68,13 +68,13 @@
     Vektorraum}.
 \end{Lemma}
 
-\begin{Beispiel*}{l2-norm}{$L^2$-Skalarprodukt}
+\begin{Lemma*}{l2-norm}{$L^2$-Skalarprodukt}
   Auf dem Raum $V=\P_n$ der reellen Polynome vom Grad bis zu $n$ ist durch
   \begin{gather}
     \scal(p,q) = \int_{-1}^1 p(x)q(x)\dx
   \end{gather}
   ein Skalarprodukt definiert.
-\end{Beispiel*}
+\end{Lemma*}
 
 \begin{Definition}{orthogonal}
   Zwei Vektoren $u,v\in V$ heißen \define{orthogonal}, wenn
@@ -92,6 +92,21 @@
   euklidischen Vektorraum.
 \end{Notation}
 
+\begin{Lemma*}{bcs}{Bunjakowski-Cauchy-Schwarzsche Ungleichung}
+  Für zwei beliebige Elemente $u,v\in V$ gilt
+  \begin{gather}
+    \scal(u,v) \le \norm{u}\,\norm{v}.
+  \end{gather}
+\end{Lemma*}
+
+\begin{Lemma*}{pythagoras}
+  Seien zwei Vektoren $u\in V$ und $v\in V$ orthogonal zueinander. Dann gilt
+  \begin{gather}
+    \norm{u+v}^2 = \norm{u}^2 + \norm{v}^2
+  \end{gather}
+\end{Lemma*}
+
+\subsection{Bestapproximation und orthogonale Projektion}
 \begin{Definition}{bestapproximation}
   Sei $A\subset V$ ein affiner Unterraum eines euklidischen
   Vektorraums. Dann ist die Bestapproximation $u_b\in A$ eines Vektors
