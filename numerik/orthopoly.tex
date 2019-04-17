@@ -183,6 +183,16 @@
   $\norm{\phi_i} = 1$ für alle Elemente gilt. Ein Orthonormalsystem, das eine Basis bildet, heißt \define{Orthonormalbasis} (\define{ONB}).
 \end{Definition}
 
+\begin{Lemma}{least-squares-orthogonal}
+  Bezüglich einer ONB ist die Gramsche Matrix die
+  Einheitsmatrix. Damit berechnen sich die Einträge des
+  Koeffizientenvektors $\vx$ in \slideref{Lemma}{gram-system} durch
+  die einfache Formel
+  \begin{gather}
+    x_i = b_i = \scal(u,\phi_i).
+  \end{gather}
+\end{Lemma}
+
 \begin{Lemma}{ortho-lu}
   Jedes Orthogonalsystem ist linear unabhängig.
 \end{Lemma}
@@ -214,6 +224,24 @@
 \begin{Algorithmus*}{gram-schmidt}{Gram-Schmidt}
   \lstinputlisting{code/gram-schmidt.py}
 \end{Algorithmus*}
+
+\begin{Beispiel}{gram-schmidt}
+  Wir wählen für Polynome das $L^2$-Skalarprodukt aus
+  \slideref{Beispiel}{l2-norm} und die Basis $\{1,x,\dots,x^{n-1}\}$
+  für $\P_{n-1}$. Wir verwenden die Iplementation in
+  \slideref{Algorithmus}{gram-schmidt} und messen den Erfolg nach der
+  Größe der Nebendiagonaleinträge der Gramschen Matrix.
+  \begin{center}
+    \begin{tabular}{c|c}
+      $n$ & $\max_{i\neq j} \abs{g_{ij}}$ \\
+      \hline
+      5 & 8.9\cdot 10^{-16}\\
+      10 & 9.1\cdot 10^{-12}\\
+      15 & 1.2\cdot 10^{-7}\\
+      20 & 0.23
+    \end{tabular}
+  \end{center}
+\end{Beispiel}
 
 %%% Local Variables:
 %%% mode: latex
