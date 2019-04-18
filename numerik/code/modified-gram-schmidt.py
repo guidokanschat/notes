@@ -1,10 +1,9 @@
-def gram_schmidt(v):
+def modified_gram_schmidt(v):
   (n,m) = v.shape
-  for j in range(n):
-    delta = np.zeros(m)
+  for j in range(m):
+    r = np.zeros(m)
     for i in range(j-1):
       r = sprod(v[:,j],v[:,i])
-      delta += r*v[:,i]
-    v[:,j] -= delta
+      v[:,j] -= r*v[:,i]
     norm = np.sqrt(sprod(v[:,j],v[:,j]))
     v[:,j] /= norm
