@@ -1,8 +1,6 @@
 \usepackage[notref,notcite]{showkeys}
 % \usepackage{hyperref}
-\usepackage{listings}
 \lstset{language=Python}
-\usepackage{tikz}
 \usetikzlibrary{svg.path}
 \excludecomment{solution}
 \input{mixed/fig/tikzsettings}
@@ -16,18 +14,15 @@
 \begin{document}
 \maketitle
 \tableofcontents
-\chapter{Approximation durch Polynome}
-\section{Orthogonale Projektionen}
+\chapter{Orthogonale Polynome}
 \input{orthopoly}
 
-\section{Konditionierung und Stabilität}
+\chapter{Konditionierung und Stabilität}
+\label{sec:stability}
 %\input{stability}
 
-\section{Interpolation}
+\chapter{Interpolation und Quadratur}
 %\input{interpolation}
-
-\section{Quadratur}
-%\input{quadrature}
 
 \bibliographystyle{apalike}
 \bibliography{all}

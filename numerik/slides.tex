@@ -1,0 +1,81 @@
+\documentclass[german,ignorenonframetext,notheorems,aspectratio=1610]{beamer}
+\usetheme[compress]{Madrid}
+\usecolortheme{iwr}
+\usepackage{mathsim}
+\lstset{language=Python}
+\usetikzlibrary{snakes}
+\input{mixed/fig/tikzsettings}
+\def\restrict{r}
+\def\prolongate{p}
+
+\usepackage{times}
+\usepackage{xr}
+\externaldocument{main}
+\usepackage{mfirstuc}
+\usepackage{mathtools}  
+\mathtoolsset{showonlyrefs}
+
+\def\footnote#1{}
+\def\putindex#1{#1}
+\title{Einführung in die Numerik}
+\author{Guido Kanschat}
+\date{\today}
+\begin{document}
+\frame{\maketitle}
+\frame{\frametitle{Inhalt}\tableofcontents[hideallsubsections]}
+\section{Orthogonale Projektionen}
+\frame{\sectoc}
+
+\subsection{Polynomräume}
+\frame {\input {blocks/Satz-nullstellen.tex}
+  \input {blocks/Korollar-monome-linear-unabhaengig.tex}
+  \input {blocks/Satz-polynomraum.tex}}
+
+\subsection{Skalarprodukt und Orthogonalität}
+\frame{\subtoc}
+\frame {\input {blocks/Definition-skalarprodukt.tex}}
+\frame {\input {blocks/Lemma-hilbertnorm.tex}}
+\frame {\input {blocks/Lemma-l2-norm.tex}}
+\frame {\input {blocks/Definition-orthogonal.tex}
+  \input {blocks/Notation-euklidischer-vr.tex}}
+\frame {\input {blocks/Lemma-bcs.tex}}
+\frame {\input {blocks/Lemma-pythagoras.tex}}
+
+\subsection{Bestapproximation und orthogonale Projektion}
+\frame{\subtoc}
+\frame {\input {blocks/Definition-bestapproximation.tex}
+  \input {blocks/Satz-bestapproximation.tex}}
+\frame {\input {blocks/Definition-komplement-projektion.tex}}
+\frame {\input {blocks/Beispiel-polynom-bestapproximation.tex}}
+
+\subsection{Orthogonale Basen}
+\frame{\subtoc}
+\frame {\input {blocks/Lemma-gram-system.tex}}
+\frame {\input {blocks/Definition-ortho-system.tex}
+  \input {blocks/Lemma-ortho-lu.tex}}
+\frame {\input {blocks/Lemma-parseval.tex}}
+\frame {\input {blocks/Lemma-gram-system.tex}
+  \input {blocks/Lemma-least-squares-orthogonal.tex}}
+\frame {\input {blocks/Theorem-gram-schmidt.tex}}
+\frame {\input {blocks/Algorithmus-gram-schmidt.tex}}
+\frame {\input {blocks/Beispiel-gram-schmidt.tex}}
+\frame {\input {blocks/Algorithmus-mgs.tex}}
+\frame {\input {blocks/Beispiel-gs-mgs.tex}}
+
+\subsection{Dreiterm-Rekursion}
+\frame{\subtoc}
+\frame {\input {blocks/Satz-dreiterm.tex}}
+\frame {\input {blocks/Bemerkung-dreiterm-normierung.tex}}
+\frame {\input {blocks/Definition-legendre-polynome.tex}}
+\frame {\input {blocks/Beispiel-least-squares-legendre.tex}}
+\frame {\input {blocks/Definition-chebyshev-polynome.tex}}
+
+\section{Bibliography}
+\frame{\bibliographystyle{alpha}
+\bibliography{all}}
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
