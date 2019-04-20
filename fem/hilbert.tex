@@ -312,7 +312,7 @@
   complement.
 
   First, it is clear that for any $y\in V$ a linear functional
-  $f\in V^*$ is defined by $f(\cdot) = \scal(y,\cdot)$. Furthermore,
+  $f\in V^*$ is defined by $f(\cdot) = \scal(\cdot,y)$. Furthermore,
   $\varrho$ is injective, since
   \begin{gather*}
     \scal(x,y) = 0 \qquad\forall x\in V
@@ -330,26 +330,27 @@
   $\ortho y \in \ortho N$ and let
   \begin{gather}
     \label{eq:lafa:13}
-    y = \frac{\overline{f(\ortho y)}}{\norm*{\ortho y}^2} \ortho y \in
+    y = \frac{f(\ortho y)}{\norm*{\ortho y}^2} \ortho y \in
     \ortho N,
   \end{gather}
   such that $f(y) = \abs*{f(\ortho y)}^2/\norm*{\ortho y}^2 \neq 0$.
   Let now $x\in V$ be chosen arbitrarily. Then, there holds
   \begin{gather*}
     x = \left(x-\frac{f(x)}{f(y)} y\right)
-    + \frac{f(x)}{f(y)} y.
+    + \frac{f(x)}{f(y)} y,
     \\
   \end{gather*}
+  where $\frac{f(x)}{f(y)}$ denotes a scalar.
   Since
   \begin{gather*}
-      f = \left(x-\frac{f(x)}{f(y)} y\right) 
+      f \left(x-\frac{f(x)}{f(y)} y\right) 
       = \left(f(x)-f(x) \frac{f(y)}{f(y)}\right)
       = 0,
   \end{gather*}
   this decomposition amounts to $x = x^0+\ortho x$ with $x^0\in N$ and
   $\ortho x \in \ortho N$. It is unique according to
   \slideref{Definition}{ortho-projection}. Thus, we have that $\ortho x$ is a
-  multiple of $y$, say $\ortho x=\alpha y$ and thus
+  multiple of $y$, say $\ortho x=\alpha y$ with $\alpha=\frac{f(x)}{f(y)}$ and thus
   \begin{gather*}
     \begin{aligned}
     f(x) &= f(x^0) + f(\ortho x)
@@ -415,13 +416,79 @@
   $V$ and let $f \in V^*$. Then, there is a unique element $u\in V$
   such that
   \begin{gather}
+    \label{eq:hilbert:lax-milgram}
     a(u,v) = f(v) \qquad\forall v\in V.
   \end{gather}
   Furthermore, there holds
   \begin{gather}
+    \label{eq:hilbert:lax-milgram-estimate}
     \norm{u}_V \le \frac1\alpha \norm{f}_{V^*}.
   \end{gather}
 \end{Lemma*}
+
+\begin{proof}
+  To prove Lax-Milgram we first consider uniqueness and then the
+  existence of a solution.
+
+  Assume that there are solutions $u_1, u_2\in V$ of \eqref{eq:hilbert:lax-milgram},
+  i.\,e. there holds $a(u_1,v)=f(v)$ and $a(u_2,v)=f(v)$ for all $v\in V$.
+  Thus, $a(u_1-u_2,v)=0$ for all $v\in V$.
+  Now choose $v=u_1-u_2\in V$.
+  Since $a(.,.)$ is coercive with $\alpha>0$ it holds
+  \begin{gather*}
+    0 = a(u_1-u_2,u_1-u_2)\geq \alpha \norm{u_1-u_2}_{V}^2 
+  \end{gather*}
+  which implies $u_1-u_2=0$. Hence $u_1=u_2$.
+
+  Let us now consider the existence of a solution.
+  We will define a linear functional to apply Riesz and Banach fixed point theorem.
+  For all $y\in V$ there holds
+  \begin{gather*}
+    \scal(y,\cdot) - \omega\left[a(y,\cdot) -f(\cdot)\right] \in V^*
+  \end{gather*}
+  with $\omega>0$.
+  Due to Riesz there exists an isomorphism $\rho:V\rightarrow V^*$ that maps a given $z\in V$ to
+  $\scal(y,\cdot) - \omega \left[ a(y,\cdot)-f(\cdot) \right]$ such that
+  \begin{gather*}
+    \scal(v,z) = \scal(y,v) - \omega\left[a(y,v) - f(v) \right] \qquad \forall v\in V.
+  \end{gather*}
+  Now we define the mapping $T_\omega:V\rightarrow V$ that maps $y\mapsto z$ and
+  define $S:V\rightarrow V$ such that
+  \begin{gather*}
+    \scal(Su,v) = a(u,v) \qquad \forall v\in V 
+  \end{gather*}
+  with $\norm{Su}_V \leq M \norm{u}_V$ for $M>0$.
+  Now consider $y-x$ instead of $y$.
+  This leads for all $v\in V$ to
+  \begin{gather*}
+    \scal(T_\omega y - T_\omega x,v)
+    = \scal(y-x,v) - \omega\left[a(y-x,v) \right]
+    = \scal(y-x,v) - \omega \scal(S(y-x),v).
+  \end{gather*}
+  Thus, we can conclude that $T_\omega (y-x)=y-x-\omega S(y-x)$.
+  Applying the norm and using the fact that it is induced by the inner product of $V$
+  we get
+  \begin{gather*}
+    \begin{aligned}
+      \norm{T_\omega y - T_\omega x}_V^2 &= \norm{y-x}_V^2 - 2 \omega \scal(S(y-x),y-x) + \omega^2 \norm{S(y-x)}^2 \\
+      &\leq \norm{y-x}^2 - 2\omega a(y-x,y-x) + \omega^2 M^2 \norm{y-x}^2 \\
+      &\leq (1-2\omega\alpha + \omega^2 M^2) \norm{y-x}^2.
+    \end{aligned}
+  \end{gather*}
+  As we want to apply Banach fixed point theorem, we need $T_\omega$ to be a contraction.
+  Therefore, we need $1-2\omega\alpha + \omega^2 M^2 < 1$ which is given for
+  $\omega\in\left(0,\frac{2\alpha}{M^2}\right)$.
+  Hence, $T_\omega$ is a contraction and there exists a $\nu\in V$ such that $T_\omega \nu = \nu$
+  and $\scal(T_\omega \nu,\nu) = \scal(\nu,\nu) - \omega\left[ a(\nu,v) - f(v) \right]$
+  which implies $a(\nu,v)=f(v)$.
+  Thus, there exists a solution $\nu$.
+
+  Now the stability estimate \eqref{eq:hilbert:lax-milgram-estimate} is left to prove.
+  Using the coercivity of our bilinear form yields
+  \begin{gather*}
+    \alpha \norm{u}_V \leq \frac{a(u,u)}{\norm{u}_V} = \frac{f(u)}{\norm{u}_V} \leq \sup_{u\in V} \frac{\snorm{f(u)}}{\norm{u}_V} = \norm{f}_{V^*}.
+  \end{gather*}
+\end{proof}
 
 \begin{Lemma}{weak-well-posed}
   Let $a_{ij}, c\in L^\infty(\domain)$, $b_i \in C^1(\overline{\domain})$ such
