@@ -188,20 +188,19 @@
 
 \begin{Definition}{datenfehler}
   Aus der Verwendung fehlerhafter Eingabedaten $x+\delta x$ ergeben
-  sich fehlerhafte Resultate $y+\delta y$. Mit $\norm{\delta x}$ und
-  $\norm{\delta y}$ bezeichnen wir den \textbf{absoluten
-    Fehler}\index{Fehler!absolut} in der Norm, mit $\abs{\delta x_j}$
-  und $\abs{\delta y_i}$ die komponentenweisen absoluten Fehler. Der
-  \textbf{relative Fehler}\index{Fehler!relativ} ist
-  $\norm{\delta x}/\norm{x}$, und $\norm{\delta y}/\norm{y}$ bzw.\
-  $\abs{\delta x_j}/\abs{x_j}$ und $\abs{\delta y_i}/\abs{y_i}$.
+  sich fehlerhafte Resultate $y+\delta y$. Mit $\delta x$ und
+  $\delta y$ bezeichnen wir die \textbf{absoluten
+    Fehler}\index{Fehler!absolut}. Die
+  \textbf{relativen Fehler}\index{Fehler!relativ} sind
+  $\nicefrac{\delta x}{\norm{x}}$, und $\nicefrac{\delta y}{\norm{y}}$ bzw.\
+  $\nicefrac{\delta x_j}{\abs{x_j}}$ und $\nicefrac{\delta y_i}{\abs{y_i}}$.
 
   Eine numerische Aufgabe heißt \define{gut konditioniert}, wenn es
   eine moderate Konstante $\kappa$ bzw. Konstanten $\kappa_{ij}$ gibt, so dass die Abschätzung
   \begin{gather}
     \frac{\norm{\delta y}}{\norm{y}}
     \le \kappa \frac{\norm{\delta x}}{\norm{x}}
-    \qquad\text{bzw.}
+    \qquad\text{bzw.}\qquad
     \frac{\abs{\delta y_i}}{\abs{y_i}}
     \le \kappa_{ij} \frac{\abs{\delta x_j}}{\abs{x_j}}
   \end{gather}
@@ -262,9 +261,25 @@
   \begin{xalignat}3
     f &\doteq g
     &:\Leftrightarrow&
-    & f(t) = g(t) + \bigo(t).
+    & f(t) = g(t) + \smallo(1).
   \end{xalignat}
 \end{Definition}
+
+\begin{remark}
+  Typischerweise wird bei der Schreibweise mit Landauschen Symbolen
+  implizit eine Konvergenz für $t\to 0$, $t\to\infty$ oder zum
+  Beispiel $h\to 0$ und $n\to\infty$ angenommen. Diese erschließt sich
+  aus dem Sinn.
+  
+  Die Definition von $\smallo(\cdot)$ impliziert, dass die Konvergenz
+  $f(t)\to 0$ durch
+  \begin{gather}
+    f(t) = \smallo(1)
+  \end{gather}
+  dargestellt wird. Hier insbesondere ist der Schluss aus dem Sinn
+  schwierig, da die unabhängige Variable nicht im $\smallo$-Ausdruck
+  erscheint.
+\end{remark}
 
 \begin{Beispiel}{smallo-differential}
   Als Definition der Ableitung der Funktion $f$ im Punkt $x$ kennen wir
@@ -275,8 +290,9 @@
   \begin{gather}
     \begin{split}
       f(x+h)-f(x) - h f'(x) &= \smallo(h)\\
-      \text{oder: }\qquad
       \frac{f(x+h)-f(x)}{h} - f'(x) &= \smallo(1)
+      \qquad\text{für } h\to 0\\
+      \frac{f(x+h)-f(x)}{h}  &\doteq f'(x)
       \qquad\text{für } h\to 0.
     \end{split}
   \end{gather}
@@ -298,9 +314,10 @@ Damit können wir schreiben
 Oder
 \begin{gather}
   \begin{split}
-    \frac{f(x+h)-f(x)}h &\doteq f'(x)
+    \frac{f(x+h)-f(x)}h &\doteq f'(x),
   \end{split}
 \end{gather}
+wobei wir im letzten Beispiel Information veschenkt haben.
 \end{Beispiel}
 
 \begin{Lemma}{diff-fehler}
@@ -364,6 +381,66 @@ Oder
 \end{Bemerkung}
 
 \section{Stabilität eines Algorithmus}
+
+\begin{intro}
+  Im letzten Abschnitt haben wir untersucht, wie sich die Fehler von
+  Eingabedaten bei der Anwendung eines mathematisch exakten
+  Algorithmus auf die Augabedaten auswirken. Hier nun beschäftigen wir
+  uns mit den Auswirkungen inexakter Rechnungen auf das Ergebnis.
+\end{intro}
+
+\begin{Definition}{algorithmus}
+  Ein \define{Algorithmus} ist eine eindeutige Handlungsvorschrift zur Lösung
+  eines Problems oder einer Klasse von Problemen. Algorithmen bestehen
+  aus endlich vielen, wohldefinierten Einzelschritten. Damit können
+  sie zur Ausführung in ein Computerprogramm implementiert, aber auch
+  in menschlicher Sprache formuliert werden. Bei der Problemlösung
+  wird eine bestimmte Eingabe in eine bestimmte Ausgabe überführt.
+
+  \hfill nach Wikipedia (22.4.2019)
+\end{Definition}
+
+\begin{Beispiel*}{algorithmuseigenschaften}{Eigenschaften von Algorithmen}
+  \begin{description}
+  \item[Determiniertheit:] Gleiche Eingabe, gleiche Ausgabe
+  \item[Statische Finitheit:] Beschreibung endlicher Länge
+  \item[Dynamische Finitheit:] Endlicher Speicherplatz
+  \item[Terminiertheit:] Endet nach endlich vielen Schritten
+  \item[Effektivität:] Der Effekt jedes Schrittes ist eindeutig festgelegt
+  \end{description}
+\end{Beispiel*}
+
+\begin{remark}
+  Der aktuelle Entwicklungshorizont ist \define{Exascale computing},
+  das heißt, berechnungen mit $10^{18}$ Fließkommaoperationen
+  (\define{FLOP}) pro Sekunde. Das führt zu etwa $10^9$ gleichzeitigen
+  FLOP, deren zeitliche Abfolge nicht determiniert ist. Dies steht
+  wegen der fehlenden Assoziativität im Widerspruch zu
+  Determiniertheit und Effektivität.
+
+  Die Idee des Algorithmus als eine \glqq Abfolge von
+  Elementaroperationen\grqq{} stößt hier an ihre Grenzen, wie auch die
+  Idee der Turing-Maschine als Muster aller Computer.
+\end{remark}
+
+\begin{remark}
+  Wir betrachten Algorithmen auf verschiedenen Abstraktionsebenen. So
+  ist sowohl das Gram-Schmidt-Verfahren in
+  \slideref{Theorem}{gram-schmidt} ein Algorithmus, wie auch die
+  beiden Beschreibungen in Python in
+  \slideref{Algorithmus}{gram-schmidt} und
+  \slideref{Algorithmus}{mgs}. Zur genaueren Spezifikation bezeichnen
+  wir ersteren auch als \define{mathematisches Verfahren}, letztere
+  auch als \define{Implementation}.
+\end{remark}
+
+\begin{remark}
+  Mathematische Verfahren benutzen eine Formelsprache, in die die
+  Assoziativität der Grundoperationen bereits eingebaut ist. Während
+  wir eine Summe sequenziell denken mögen, so gibt die Formel keine
+  Reihenfolge strikt vor.
+\end{remark}
+
 
 %%% Local Variables:
 %%% mode: latex
