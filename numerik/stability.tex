@@ -1,0 +1,371 @@
+\section{Fließkommazahlen}
+
+\begin{Definition}{fliesskomma}
+  Die Darstellung einer numerischen größe als \define{Fließkommazahl}
+  (auch \define{Gleitkommazahl}) beruht auf einer Basis $2 \le b \in \mathbb N$. Sie
+  besteht aus einer \define{Mantisse} $\nicefrac1b \le m < 1$ und einem
+  Exponenten $e$, so dass eine Zahl $x\neq 0$ die Gestalt
+  \begin{gather}
+    x=\pm m \cdot b^{e}
+  \end{gather}
+  hat. Diese Darstellung ist durch die Normierung von $m$
+  eindeutig. Sowohl die Mantisse, als auch der Exponent haben einen
+  endlichen Wertebereich, typischerweise eine feste Anzahl von
+  Stellen. Die endliche Menge der damit darstellbaren Zahlen
+  bezeichnen wir mit $\mathbb M$.
+\end{Definition}
+
+\begin{intro}
+  Die folgenden drei Beispiele beschreiben Teile der Implementation
+  von Fließkommazahlen nach dem IEE-Standard 754. Die Quelle ist
+  jeweils Wikipedia.
+\end{intro}
+\begin{Beispiel}{ieee754-double}
+  Im Fließkommaformat mit 64 Bit (NumPy: \texttt{float64}) nach dem Standard
+  \putindex{IEEE 754}, das auf Rechnern sehr weit verbreitet ist, wird
+  die Basis 2 verwendet. Es hat
+  \begin{itemize}
+  \item 1 Bit Vorzeichen,
+  \item 11 Bit Exponent und
+  \item 53 Bit Mantisse (das erste ist immer 1 und wird nicht gespeichert)
+  \end{itemize}
+  Der Wertebereich ist zunächst
+  \begin{gather}
+    \left.
+      \begin{matrix}
+        2^{-1022} \\ \approx 2.25 \cdot 10^{-308}
+      \end{matrix}
+    \right\}
+    \le x \le
+    \left\{
+      \begin{matrix}
+        2^{1023}(2-2^{-52}) \\
+        \approx 1.8 \cdot 10^{308}
+      \end{matrix}
+    \right.
+  \end{gather}
+  Tatsächlich liegt das Minimum durch Verkürzung der Mantisse bei
+  $2^{-1074}$. Zusätzlich gibt es Darstellungen für $\pm 0$,
+  unendlich, und illegale Zahlen.
+\end{Beispiel}
+
+\begin{Beispiel}{ieee754-single}
+  Das Format mit 32 Bit (NumPy: \texttt{float32}) nach \putindex{IEEE 754} hat
+  \begin{itemize}
+  \item 1 Bit Vorzeichen,
+  \item 8 Bit Exponent und
+  \item 24 Bit Mantisse.
+  \end{itemize}
+\end{Beispiel}
+
+\begin{Beispiel}{ieee754-half}
+  Das Format mit 16 Bit (NumPy: \texttt{float16}) nach \putindex{IEEE 754} hat
+  \begin{itemize}
+  \item 1 Bit Vorzeichen,
+  \item 5 Bit Exponent und
+  \item 11 Bit Mantisse.
+  \end{itemize}
+\end{Beispiel}
+
+\begin{Definition}{runden}
+  Zahlen, die durch die endliche Mantisse nicht dargestellt werden
+  können, unterliegen der \define{Rundung} auf eine benachbarte
+  Fließkommazahl, notiert als $\rd(x)$. Besitzt die Mantisse $r$
+  Stellen zum Exponenten $b$, so ist der relative Fehler, der dabei
+  entsteht beschränkt durch $b^{1-r}$ bei Rundung zur nächsten
+  Fließkommazahl sogar durch $\tfrac12 b^{1-r}$. Wir bezeichnen das
+  Maximum des möglichen relativen Rundungsfehlers für ein
+  Fließkommaformat als \define{Maschinengenauigkeit}, abgekürzt mit
+  $\eps$. Es gild also per definitionem
+  \begin{gather}
+    \left\lvert\frac{x-\rd(x)}{x}\right\rvert
+    \le \eps.
+  \end{gather}
+\end{Definition}
+
+\begin{Beispiel}{eps-ieee}
+  Bei den Fließkommaformaten nach IEEE 754 gilt die Rundung zur
+  nächsten darstellbaren Zahl. Sollte eine Zahl exakt zwischen zwei
+  darstellbaren Zahlen liegen, so wird zur nächsten darstellbaren Zahl
+  mit gerader Mantisse gerundet.
+
+  Die Maschinengenauigkeit liegt bei
+  \begin{center}
+    \begin{tabular}[l]{l|ll}
+      Format & \multicolumn{2}{c}{\eps}\\\hline
+      \texttt{float64} & $2^{-53}$ & $\approx 1.11\cdot 10^{-16}$ \\
+      \texttt{float32} & $2^{-24}$ & $\approx 5.96\cdot 10^{-8}$ \\
+      \texttt{float16} & $2^{-11}$ & $\approx 4.88\cdot 10^{-4}$ \\
+    \end{tabular}
+  \end{center}
+\end{Beispiel}
+
+\begin{Definition}{maschinenoperationen}
+  Die Implementation der Grundrechenarten für Fließkommazahlen
+  beinhaltet immer eine Rundung, damit das Ergebnis darstellbar
+  ist. Wir kennzeichnen diese \define{Maschinenoperationen} für
+  $x,y\in \mathbb M$ mit den Symbolen
+  \begin{xalignat}2
+    x \oplus y &= \rd(x+y) & x \odot y &= \rd(xy)\\
+    x \ominus y &= \rd(x-y) & x \oslash y &= \rd(x/y).
+  \end{xalignat}
+\end{Definition}
+
+\begin{Lemma}{nichtassoziativ}
+  Die Maschinenoperation $\oplus$ und $\odot$ sind weder assoziativ
+  noch distributiv, wenn auch die Unterschiede nur in der Größenordnung der Maschinengenauigkeit $\eps$ liegen.
+\end{Lemma}
+
+\begin{proof}
+  Die Rundung am Ende einer Operation kann so verstanden werden, dass
+  jeweils ein unbekannter, relativer Fehler $\abs{\epsilon} \le \eps$
+  zum Ergebnis addiert wird. Damit gilt
+  \begin{gather}
+    \begin{split}
+      (x\oplus y) \oplus z
+      &= \bigl((x+y)(1+\epsilon_1)+z\bigr)(1+\epsilon_2)\\
+      &= (x+y+z + \epsilon_1x+\epsilon_1y)(1+\epsilon_2)\\
+      x\oplus (y \oplus z)
+      &= (x+y+z + \epsilon_3y+\epsilon_3z)(1+\epsilon_4).
+    \end{split}
+  \end{gather}
+  Selbst wenn die Werte der $\epsilon_i$ alle etwa gleich groß sind,
+  so differieren doch die Fehler, wenn $x$ und $z$ sehr verschieden
+  sind. Die Rechnungen für die Multiplikation und das
+  Distributivgesetz sind ähnlich.
+\end{proof}
+
+\begin{remark}
+  Das vorherige Lemma gibt einen ersten Hinweis, warum die beiden
+  Varianten des Gram-Schmidt-Verfahrens sich so verschieden verhalten.
+\end{remark}
+
+\begin{Beispiel*}{harmonisch}{Harmonische Reihe in Fließkommaarithmetik}
+  \lstinputlisting[frame=single]{code/harmonic.py}
+
+  Bricht das Programm ab? Warum?
+\end{Beispiel*}
+
+\begin{Aufgabe}{rundung}
+  Schreiben Sie ein Programm, das bis auf 10\% Genauigkeit die
+  kleinsten Zahlen $a$ und $b$ ermittelt, so dass $1.0+a=1.0$ und
+  $1.9+b=1.9$. Bestimmen Sie damit $\eps$ für mindestens eines der
+  IEEE 754 Fließkommaformate.
+\end{Aufgabe}
+
+\begin{Fazit}{rundung}
+  \begin{enumerate}
+  \item Fließkommazahlen haben endlichen Wertebereich
+  \item Die Eingabe reeller Zahlen sowie die Ergebnisse von
+    Rechenoperationen werden durch Rundung verfälscht.
+  \item Rundungsfehler sind relative Fehler beschränkt durch die
+    Maschinengenauigkeit $\eps$
+  \item Grundrechenarten mit Fließkommazahlen sind nicht assoziativ
+  \end{enumerate}
+\end{Fazit}
+
+\section{Konditionierung einer Rechenaufgabe}
+
+\begin{intro}
+  In diesem Abschnitt nehmen wir zunächst an, die Berechnungen seien
+  exakt und nur die Eingabedaten durch Rundung verfälscht. Daraufhin
+  untersuchen wir, wie stark sich die Lösung einer Rechenaufgabe
+  abhängig von Variationen der Eingabedaten verändert.
+\end{intro}
+
+\subsection{Einführung der Konditionierung}
+
+\begin{Definition}{aufgabe}
+  Eine \define{numerische Aufgabe} ist die Berechnung endlich vieler
+  \define{Ausgabedaten} $y_i$, $i=1,\dots,n$ aus ebenfalls endlich
+  vielen Eingabedaten $x_j$, $j=1,\dots,m$. Wir schreiben
+  \begin{gather}
+    y_i = f_i(x_1,\dots,x_m).
+  \end{gather}
+  Zur Lösung der Aufgabe verwenden wir als Rechenvorschrift einen
+  \define{Algorithmus}, bzw.\ seine Implementation $f$ auf einem Computer.
+\end{Definition}
+
+\begin{Definition}{datenfehler}
+  Aus der Verwendung fehlerhafter Eingabedaten $x+\delta x$ ergeben
+  sich fehlerhafte Resultate $y+\delta y$. Mit $\norm{\delta x}$ und
+  $\norm{\delta y}$ bezeichnen wir den \textbf{absoluten
+    Fehler}\index{Fehler!absolut} in der Norm, mit $\abs{\delta x_j}$
+  und $\abs{\delta y_i}$ die komponentenweisen absoluten Fehler. Der
+  \textbf{relative Fehler}\index{Fehler!relativ} ist
+  $\norm{\delta x}/\norm{x}$, und $\norm{\delta y}/\norm{y}$ bzw.\
+  $\abs{\delta x_j}/\abs{x_j}$ und $\abs{\delta y_i}/\abs{y_i}$.
+
+  Eine numerische Aufgabe heißt \define{gut konditioniert}, wenn es
+  eine moderate Konstante $\kappa$ bzw. Konstanten $\kappa_{ij}$ gibt, so dass die Abschätzung
+  \begin{gather}
+    \frac{\norm{\delta y}}{\norm{y}}
+    \le \kappa \frac{\norm{\delta x}}{\norm{x}}
+    \qquad\text{bzw.}
+    \frac{\abs{\delta y_i}}{\abs{y_i}}
+    \le \kappa_{ij} \frac{\abs{\delta x_j}}{\abs{x_j}}
+  \end{gather}
+  für den bestmöglichen Algorithmus zur Lösung der Aufgabe
+  gilt. Andernfalls heißt sie \define{schlecht konditioniert}.
+\end{Definition}
+
+\begin{remark}
+  Die Begriffe \glqq gut\grqq, bzw. \glqq schlecht
+  konditioniert\grqq{} sind nicht scharf definiert. In der Tat hängt
+  die Grenze, ab der die Konstante $\kappa$ nicht mehr als \glqq
+  moderat\grqq{} angesehen wird, von außermathematischen Faktoren wie
+  den Ansprüchen der Anwendung oder dem persönlichen Geschmack des
+  Anwenders ab. Dennoch werden wir uns nun um eine Quantifizierung der
+  Konditionierung bemühen, die bei der Entscheidung, ob eine Aufgabe
+  berechenbar ist, helfen kann.
+\end{remark}
+
+\begin{remark}
+  Von entscheidender Bedeutung ist, dass die Konditionierung einer
+  numerischen Aufgabe das Optimum über alle Algorithmen ist und damit
+  vom konkreten Algorithmus unabhängig. Die ungeschickte Wahl eines
+  Verfahrens führt natürlich zu einer schlechteren Konstanten in der
+  Konditionsabschätzung.
+\end{remark}
+
+\subsection{Differenzielle Fehleranalyse}
+
+\begin{intro}
+  Besonders einfach lassen sich die Relationen zwischen den Fehlern
+  der Eingabe- und Ausgabedaten über Ableitungen der Funktion $f$ in
+  \slideref{Definition}{aufgabe} beschreiben. Für diesen Fall stehen
+  uns alle Rechenregeln wie Ketten- und Produktregel oder der Satz von
+  Taylor zur Verfügung. Natürlich gelten die Aussagen dann nur
+  asymptotisch für $\eps \to 0$.
+
+  Andererseits ist $\eps$ in der Regel sehr klein, weshalb die
+  asymptotische Analyse oft hinreichend genau ist. Und schließlich
+  bemühen wir uns, wo immer möglich, gesicherte Scharanken einzubauen.
+\end{intro}
+
+\begin{Definition}{landau}
+  Zur quantitativen Beschreibung von Grenzprozessen dienen die
+  \define{Landauschen Symbole} $\bigo(\cdot)$ und
+  $\smallo(\cdot)$. Für Folgen/Funktionen $f(x)$ und $g(x)$ bedeuten
+  \begin{xalignat}3
+    f &= \smallo(g)
+    &:\Leftrightarrow&
+    & \lim\limits_{x\to a} \frac{\abs{f(x)}}{\abs{g(x)}} &= 0
+    \\
+    f &= \bigo(g)
+    &:\Leftrightarrow&
+    & \operatorname*{lim sup}_{x\to a} \frac{\abs{f(x)}}{\abs{g(x)}} & < \infty.
+  \end{xalignat}  
+  Dabei darf $a$ eine feste Zahl oder den Limes gegen $\pm\infty$
+  bezeichnen. Zusätzlich definieren wir \define{gleich in erster
+    Näherung}
+  \begin{xalignat}3
+    f &\doteq g
+    &:\Leftrightarrow&
+    & f(t) = g(t) + \bigo(t).
+  \end{xalignat}
+\end{Definition}
+
+\begin{Beispiel}{smallo-differential}
+  Als Definition der Ableitung der Funktion $f$ im Punkt $x$ kennen wir
+  \begin{gather}
+    \lim\limits_{h\to 0}\frac{f(x+h)-f(x)}{h} = f'(x).
+  \end{gather}
+  In unserer Schreibweise
+  \begin{gather}
+    \begin{split}
+      f(x+h)-f(x) - h f'(x) &= \smallo(h)\\
+      \text{oder: }\qquad
+      \frac{f(x+h)-f(x)}{h} - f'(x) &= \smallo(1)
+      \qquad\text{für } h\to 0.
+    \end{split}
+  \end{gather}
+\end{Beispiel}
+
+\begin{Beispiel}{bigo-taylor}
+  Nach dem Satz von Taylor gilt für eine zweimal stetig
+  differenzierbare Funktion $f$ mit $\xi\in(x,x+h)$
+  \begin{gather}
+ f(x+h) = f(x) + h f'(x) + \tfrac{h^2}{2} f''(\xi)   
+\end{gather}
+Damit können wir schreiben
+\begin{gather}
+  \begin{split}
+    f(x+h)-f(x) &= \bigo(h)\\
+    f(x+h)-f(x) &=  h f'(x) + \bigo(h^2).
+  \end{split}
+\end{gather}
+Oder
+\begin{gather}
+  \begin{split}
+    \frac{f(x+h)-f(x)}h &\doteq f'(x)
+  \end{split}
+\end{gather}
+\end{Beispiel}
+
+\begin{Lemma}{diff-fehler}
+  Sei die Funktion $f$ in \slideref{Definition}{aufgabe} stetig
+  differenzierbar um das Datum $x$. Dann gilt für die relativen Fehler
+  \begin{gather*}
+    \frac{\delta y_i}{y_i}
+    \doteq \sum_{j=1}^m \kappa_{ij}\frac{\delta x_j}{x_j}
+  \end{gather*}
+  mit den \define{Konditionszahlen}
+  \begin{gather}
+    \kappa_{ij} = \frac{\d f_i}{\d x_j}(x)
+    \frac{x_j}{y_i}
+  \end{gather}
+\end{Lemma}
+
+\begin{Beispiel*}{kond-mult}{Konditionierung der Multiplikation}
+  Es gilt
+  \begin{gather}
+    y_1 = f(x_1,x_2) = x_1 x_2,
+    \quad \frac{\d f}{\d x_1} = x_2,
+    \quad \frac{\d f}{\d x_2} = x_1.
+  \end{gather}
+  Damit folgt
+  \begin{gather}
+    \kappa_{11} = \kappa_{12} = 1,
+  \end{gather}
+  die Multiplikation ist also gut konditioniert, da die relativen
+  Fehler der Ausgabedaten gleich denen der Eingabedaten sind.
+\end{Beispiel*}
+
+\begin{Beispiel*}{kond-add}{Konditionierung der Addition}
+  Es gilt
+  \begin{gather}
+    y_1 = f(x_1,x_2) = x_1 + x_2,
+    \quad \frac{\d f}{\d x_1} = 1,
+    \quad \frac{\d f}{\d x_2} = 1.
+  \end{gather}
+  Damit folgt
+  \begin{gather}
+    \kappa_{11} = \frac{1}{1+\frac{x_2}{x_1}},
+    \qquad\kappa_{12} = \frac{1}{1+\frac{x_1}{x_2}}.
+  \end{gather}
+  Für den Fall $x_1 \approx -x_2$ ist die Addition also schlecht konditioniert.
+\end{Beispiel*}
+
+\begin{Bemerkung}{ausloeschung}
+  Man nennt die schlechte Konditionierung der Subtraktion fast
+  gleicher Zahlen auch anschaulich \define{Auslöschung}, was wir an
+  folgendem Beispiel erklären:
+  \begin{center}
+    \begin{tabular}{r@{}l}
+      0.1234569&\\
+      -0.1234567&\\\hline
+      0.0000002&=0.2 $\cdot 10^{-6}$.
+    \end{tabular}
+  \end{center}
+  Bei der Subtraktion zweier Zahlen mit 7-stelliger Mantisse haben
+  sich 6 Stellen ausgelöscht und es bleibt nur eine einzige
+  signifikante Stelle.
+\end{Bemerkung}
+
+\section{Stabilität eines Algorithmus}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
