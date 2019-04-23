@@ -400,7 +400,7 @@ wobei wir im letzten Beispiel Information veschenkt haben.
   \hfill nach Wikipedia (22.4.2019)
 \end{Definition}
 
-\begin{Beispiel*}{algorithmuseigenschaften}{Eigenschaften von Algorithmen}
+\begin{Bemerkung*}{algorithmuseigenschaften}{Eigenschaften von Algorithmen}
   \begin{description}
   \item[Determiniertheit:] Gleiche Eingabe, gleiche Ausgabe
   \item[Statische Finitheit:] Beschreibung endlicher Länge
@@ -408,20 +408,7 @@ wobei wir im letzten Beispiel Information veschenkt haben.
   \item[Terminiertheit:] Endet nach endlich vielen Schritten
   \item[Effektivität:] Der Effekt jedes Schrittes ist eindeutig festgelegt
   \end{description}
-\end{Beispiel*}
-
-\begin{remark}
-  Der aktuelle Entwicklungshorizont ist \define{Exascale computing},
-  das heißt, berechnungen mit $10^{18}$ Fließkommaoperationen
-  (\define{FLOP}) pro Sekunde. Das führt zu etwa $10^9$ gleichzeitigen
-  FLOP, deren zeitliche Abfolge nicht determiniert ist. Dies steht
-  wegen der fehlenden Assoziativität im Widerspruch zu
-  Determiniertheit und Effektivität.
-
-  Die Idee des Algorithmus als eine \glqq Abfolge von
-  Elementaroperationen\grqq{} stößt hier an ihre Grenzen, wie auch die
-  Idee der Turing-Maschine als Muster aller Computer.
-\end{remark}
+\end{Bemerkung*}
 
 \begin{remark}
   Wir betrachten Algorithmen auf verschiedenen Abstraktionsebenen. So
@@ -439,6 +426,127 @@ wobei wir im letzten Beispiel Information veschenkt haben.
   Assoziativität der Grundoperationen bereits eingebaut ist. Während
   wir eine Summe sequenziell denken mögen, so gibt die Formel keine
   Reihenfolge strikt vor.
+\end{remark}
+
+\begin{Definition}{stabil}
+  Wir nennen einen Algorithmus, bzw.\ seine Implementation auf einem
+  Computer \define{stabil}, wenn die Akkumulation von Rundungsfehlern
+  bei der Durchführung den Fehler durch die Kondititionierung nicht
+  wesentlich verschlechtert.
+\end{Definition}
+
+\begin{remark}
+  Früher, als Fließkommazahlen mit 32 Bit der Standard waren, war die
+  Analyse der Fehler von Rechenverfahren ein zentrales Thema der
+  Numerik. Heute, im Zeitalter von 64 Bit hat sich das relativiert und
+  wir legen mehr Gewicht auf mathematische Eigenschaften der Algorithmen.
+
+  Andererseits bieten die modernsten Graphikkarten (GPU) sehr schnelle
+  Berechnung mit 16 Bit an, was sich in einer Implementation mit
+  verschiedenen Genauigkeiten nutzen lässt.
+
+  Der Sinn dieses Kapitels liegt damit statt des rigorosen Studiums
+  der Fehleranalyse mehr darin, Bewusstsein für das Konzept der
+  Stabilität zu wecken. Bereits beim Gram-Schmidt-Verfahren haben wir
+  gesehen, dass es in der Tat Algorithmen gibt, bei denen Stabilität
+  ein Problem ist. Glücklicherweise sind das wenige und es genügt
+  zumeist, aus der Literatur die stabile Variante zu wählen.
+
+  Die Rundungsfehleranalyse ist aufwändig und nach Ansicht des Autors
+  nur dann anzuraten, wenn der Verdacht auf Instabilität
+  besteht. Daher werden wir hier nur exemplarisch vorgehen und sie an
+  einigen Beispielen erläutern.
+\end{remark}
+
+\begin{Definition}{vorwaertsanalyse}
+  Bei der \define{Vorwärtsanalyse} von Rundungsfehlern folgt man den
+  Elementaroperationen des Algorithmus und berücksichtigt in jedem
+  Schritt den Rundungsfehler.
+
+  Ein Algorithmus ist stabil im Sinne der Vorwärtsanalyse, wenn die
+  akkumulierten Rundungsfehler den Fehler durch die Konditionierung
+  nicht wesentlich überschreiten.
+\end{Definition}
+
+\begin{remark}
+  Graphisch ist die Vorwärtsanalyse in \cite[Abschnitt
+  2.3.1]{DeuflhardHohmann08} veranschaulicht
+\end{remark}
+
+\begin{example}
+  Exemplarisch führen wir die Rundungsfehleranalyse am Beispiel in
+  \cite[Abschnitt 1.3.2]{Rannacher17} durch.
+\end{example}
+
+\begin{Definition}{rueckwaertsanalyse}
+  Bei der \define{Rückwartsanalyse} des Rundungsfehlers bestimmt man
+  zur genäherten Lösung $\tilde y = \tilde f(x)$ einen Eingabewert
+  $\tilde x$, so dass $\tilde y = f(\tilde x)$ das Ergebnis des
+  exakten Algorithmus angewandt auf die fehlerhaften Daten $\tilde x$
+  ist.
+
+  Ein Algorithmus ist stabil im Sinne der Rückwärtsanalyse, wenn
+  $\norm{\tilde x-x}$ in derselben Größenordnung wie der erwartete
+  Eingabefehler ist.
+\end{Definition}
+
+\begin{example}
+  Exemplarisch führen wir die Rundungsfehleranalyse am Beispiel in
+  \cite[Lemma 2.30]{DeuflhardHohmann08} durch.
+\end{example}
+
+\subsection{Effizienz eines Algorithmus}
+
+\begin{remark}
+  Der aktuelle Entwicklungshorizont ist \define{Exascale computing},
+  das heißt, berechnungen mit $10^{18}$ Fließkommaoperationen
+  (\define{FLOP}) pro Sekunde. Das führt zu etwa $10^9$ gleichzeitigen
+  Operationen, deren zeitliche Abfolge nicht mehr festgelegt ist. Dies
+  steht wegen der fehlenden Assoziativität im Widerspruch zu
+  Determiniertheit und Effektivität.
+
+  Die Idee des Algorithmus als eine \glqq Abfolge von
+  Elementaroperationen\grqq{} stößt hier an ihre Grenzen, wie auch die
+  Idee der Turing-Maschine als Muster aller Computer.
+\end{remark}
+
+\begin{remark}
+  Eine wichtige Eigenschaft von Algorithmen fehlte in der Auflistung
+  \slideref{Bemerkung}{algorithmuseigenschaften}, die durch die
+  theoretische Informatik geprägt ist, nämlich die \define{Effizienz},
+  also die möglichst schnelle Abarbeitung auf einer gegebenen
+  Rechenmaschine.
+
+  Maße für Effizienz sind vielfältig und reichen von mathematischen
+  Eigenschaften zum Zusammenspiel von Mathematik und Maschine. Wir
+  listen hier die am häufigsten benutzen auf.
+
+  \begin{description}
+  \item[Aufwand:] Die Anzahl an Fließkommaoperationen, die insgesamt
+    zur Berechnung des Ergebnisses nötig sind
+  \item[Auslastung:] Anzahl der (sinnvollen) Fließkommaoperationen pro
+    Zeiteinheit verglichen mit dem maximal Möglichen des Computers in
+    \glqq\%-peak performance\grqq.
+  \item[Starke Skalierbarkeit:] Wie verringert sich die
+    Bearbeitungszeit, wenn mehr parallele Prozesse für dasselbe
+    Problem eingesetzt werden?
+  \item[Schwache Skalierbarkeit:] Wie verhält sich die
+    Bearbeitungszeit beim Einsatz von mehr parallelen Prozessen, wenn
+    die Problemgröße proportional zur Zahl der Prozesse wächst?
+  \item[Numerische Intensität:] Die Anzahl an Rechenoperationen pro
+    Speichertransfer
+  \end{description}
+\end{remark}
+
+\begin{remark}
+  Bei der \define{Vektorisierung} von Algorithmen nutzt man aus, dass
+  moderne Rechenwerke sehr effizient dieselbe Operation auf mehreren
+  Daten ausführen können. Dazu ist es wichtig, dass logische
+  Verzweigungen im Algorithmus auf möglichst hoher Ebene angesiedelt
+  sind. Damit ist der Algorithmus, den man sowohl in
+  \cite{Rannacher17} als auch in \cite{DeuflhardHohmann08} für die
+  Berechnung von Nullstellen quadratischer Polynome findet, für die
+  Vektorisierung ungeeignet.
 \end{remark}
 
 
