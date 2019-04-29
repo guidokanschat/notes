@@ -1,3 +1,13 @@
+\begin{intro}
+ In this section we discuss important properties of Hilbert spaces and
+ solvability of PDEs in Hilbert spaces. This will lead us to
+  \slideref{Lemma}{semi-weak-well-posed},
+  which describes a special case of elliptic PDEs.
+  As we will only consider elliptic PDEs in this lecture, this is
+  one of the most important results and will be extended in section \ref{sec:sobolev-spaces}
+  with \slideref{Lemma}{weak-well-posed}.
+\end{intro}
+
 \begin{Definition}{inner-product}
   Let $V$ be a vector space over $\R$. An \define{inner product} on $V$ is a mapping
   $\scal(.,.): V\times V \to \R$ with the properties
@@ -490,28 +500,42 @@
   \end{gather*}
 \end{proof}
 
-\begin{Lemma}{weak-well-posed}
-  Let $a_{ij}, c\in L^\infty(\domain)$, $b_i \in C^1(\overline{\domain})$ such
+\begin{Lemma}{semi-weak-well-posed}
+  Let $a_{ij}\in L^\infty(\domain)$ such
   that there holds for a positive constant $\alpha$
   \begin{gather}
-    \label{eq:hilbert:elliptic}
-    \begin{split}
-    \alpha\abs{\xi}^2 &\le \xi^T \mathbf A(\vx) \xi,
-    \qquad \forall \xi \in \R^d,
-    \\
-    0 &\le c + \div \mathbf b.
-    \end{split}
+    \label{eq:hilbert:semi-elliptic}
+    \alpha\abs{\xi}^2 \le \xi^T \mathbf A(\vx) \xi,
+    \qquad \forall \xi \in \R^d.
   \end{gather}
   Then, the associated bilinear form is coercive and bounded on
   $H^1_0(\domain)$, and thus the weak formulation has a unique
   solution.
 \end{Lemma}
 
+\begin{proof}
+  Let us first consider the boundedness of our bilinear form.
+  Due to the Bunyakovsky-Cauchy-Schwarz inequality there holds
+  \begin{align*}
+    (\mathbf A(x) \nabla u,\nabla v)_{L^2} &= \int_\domain \mathbf A(x) \nabla u \cdot \nabla v \dx \leq \norm{\mathbf A(x) \nabla u}_{L^2} \norm{\nabla v}_{L^2}
+    \intertext{and as $a_{ij}\in L^\infty(\domain)$ there holds for $M:=\max_{ij} \norm{a_{ij}(x)}_\infty>0$}
+    &\leq \max_{ij} \norm{a_{ij}(x)}_\infty \norm{\nabla u}_{L^2} \norm{\nabla v}_{L^2} = M \abs{u}_1 \abs{v}_1.
+  \end{align*}
+  
+  Now consider coercivity. Here we will apply \eqref{eq:hilbert:semi-elliptic}.
+  Then, there holds
+  \begin{align*}
+    (\mathbf A(x) \nabla u,\nabla v)_{L^2} = \int_\domain\mathbf A(x) \nabla u\cdot \nabla u \dx \overset{~\mathclap{\eqref{eq:hilbert:semi-elliptic}}~}{\geq} \alpha \int_\domain \abs{\nabla u}^2 \dx = \alpha \norm{\nabla u}_{L^2}^2 = \alpha \abs{u}_1^2.
+  \end{align*}
+
+  Thus, the associated bilinear form is coercive and bounded, hence there exists a unique solution.
+\end{proof}
+
 \begin{Definition}{elliptic}
   A differential equation of second order in divergence
-  form~\eqref{eq:hilbert:div-eq} such that~\ref{eq:hilbert:elliptic}
-  holds is called \define{elliptic}. The lower bound $\alpha$ is the
-  ellipticity constant.
+  form~\eqref{eq:hilbert:div-eq} with associated coercive
+  and bounded bilinear form is called \define{elliptic}.
+  The lower bound $\alpha$ is the ellipticity constant.
 \end{Definition}
 
 %%% Local Variables: 
