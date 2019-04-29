@@ -1,5 +1,7 @@
 \section{Polynominterpolation}
 
+\subsection{Definition und Konditionsabschätzung}
+
 \begin{Definition}{lagrange-interpolation}
   Die \define{Interpolation}saufgabe nach Lagrange lautet: seien $n+1$
   paarweise verschiedene \define{Stützstellen} $x_0,\dots,x_n$ mit
@@ -60,6 +62,35 @@
   Ausgleichsrechnung mit dem obigen Skalarprodukt aufgefasst werden.
 \end{remark}
 
+\begin{Lemma}{linear-bounded}
+  Sei $f\colon X \to Y$ eine lineare Abbildung zwischen Vektorräumen
+  $X$ und $Y$. Dann sind folgende Aussagen äquivalent:
+  \begin{enumerate}
+  \item In einem beliebigen Punkt $x\in X$ gilt für das gestörte Problem
+    $y+\delta y = f(x+\delta x)$ die Abschätzung
+    \begin{gather}
+      \norm{\delta y} \le \kappa^{\text{abs}} \norm{\delta x}
+      \qquad\forall \delta x \in X.
+    \end{gather}
+  \item Für $y = f(x)$ gilt die Abschätzung
+    \begin{gather}
+      \norm{y} \le \kappa^{\text{abs}} \norm{x}
+      \qquad\forall x \in X.
+    \end{gather}
+  \end{enumerate}
+\end{Lemma}
+
+\begin{remark}
+  Es genügt also, die Konditionierung um die null zu untersuchen, was
+  die Analyse vereinfacht.
+
+  Nun gilt für eine lineare Abbildung $f(0) = 0$. In diesem Falle ist
+  also die Konditionszahl für den relativen Fehler aus
+  \slideref{Definition}{datenfehler}
+  bzw. \slideref{Lemma}{diff-fehler} nicht sinnvoll definiert. Wir
+  benutzen daher die Konditionszahlen für den absoluten Fehler. 
+\end{remark}
+
 \begin{Satz*}{lagrange-kondition}{Konditionszahl der Lagrange-Interpolation}
   Die Konditionszahl des absoluten Fehlers in der Supremumsorm der
   Lagrange-Interpolation zu den Punkten $a = x_0 < \dots < x_n = b$
@@ -81,18 +112,67 @@
 \end{proof}
 
 \begin{Beispiel}{lagrange-kondition-equi}
-  Für äquidistante Stützstellen erhält man exemplarisch die Konditionszahlen
+  Für äquidistante Stützstellen erhält man exemplarisch die Konditionszahlen in der zweiten Spalte. Später entwickeln wir einen optimalen Satz von Stützstellen. Die Konditionszahlen dazu sind in der rechten Spalte.
   \begin{center}
-    \begin{tabular}{r|r}
-      $n$ & $\Lambda_{0,\dots,n}$\\\hline
-      5 & 3.1\\
-      10 & 29.9\\
-      15 & 512\\
-      20 & 10986
+    \begin{tabular}{r|rr}
+      & \multicolumn{2}{c}{ $\Lambda_{0,\dots,n}$}\\
+      $n$ & äquidistant & optimal\\\hline
+      5 & 3.1 & 2.1\\
+      10 & 30 & 2.5 \\
+      15 & 512 & 2.7 \\
+      20 & 10986 & 2.9
     \end{tabular}
   \end{center}
   Quelle: \cite{DeuflhardHohmann08}
 \end{Beispiel}
+
+\subsection{Rekursion durch dividierte Differenzen}
+
+\begin{Lemma*}{Aitken}{Aitken}
+  Für das Interpolationspolynom
+  \begin{gather}
+    p_{0,\dots,n}(x) = p(x;f;x_0,\dots,x_n)
+  \end{gather}
+  zu paarweise verschiedenen Stützstellen $x_0,\dots,x_n$ gilt die
+  Rekursionsformel
+  \begin{gather}
+    p_{0,\dots,n}(x)
+    = \frac{(x_0-x) p_{1,\dots,n}(x) - (x_n-x) p_{0,\dots,n-1}(x)}{t_0-t_n}.
+  \end{gather}
+\end{Lemma*}
+
+\begin{proof}
+  Der Beweis benutzt wieder Induktion. Für eine einzige Stützstelle ist das Interpolationspolynom konstant, $p_i(x) = f_i$ und daher $p_i\in P_0$.
+  Sei nun $\phi(x)$ der Bruch auf der rechten Seite. Durch Induktion sehen wir sofort, dass $\phi\in \P_n$. Ferner gilt für $i=1,\dots,n-1$
+  \begin{gather}
+    \begin{split}
+      \phi(x_i)
+      &= \frac{(x_0-x_i) p_{1,\dots,n}(x_i) - (x_n-x_i)p_{0,\dots,n-1}(x_i)}{x_0-x_n}\\
+      &= \frac{(x_0-x_i) f_i - (x_n-x_i) f_i}{x_0-x_n}\\
+      &= f_i.
+    \end{split}
+  \end{gather}
+  Ebenso verschwindet für $x_0$ und $x_n$ je ein Term und es gilt
+  dieselbe Aussage.
+\end{proof}
+
+\begin{Algorithmus*}{Neville}{Neville}
+  Sei für eine Stelle $x$ an der das Interpolationspolynom berechnet
+  werden soll $p_{ik} = p_{i-k,\dots,i}(x)$ für $i\ge k$. Dann lässt
+  sich $p_{0,\dots,n}(x) = p_{nn}$ rekursiv berechnen durch
+  \begin{enumerate}
+  \item Für $k=0$ setze
+    \begin{gather}
+      p_{i0} = f_i \qquad i=0,\dots,n.
+    \end{gather}
+  \item Für $k=1,\dots,n$ berechne
+    \begin{gather}
+      p_{ik} = p_{i,k-1} + \frac{x-x_i}{x_i-x_{i-k}}
+      \bigl( p_{i,k-1} - p_{i-1,k-1} \bigr)
+      \qquad i=k,\dots,n.
+    \end{gather}
+  \end{enumerate}
+\end{Algorithmus*}
 
 %%% Local Variables:
 %%% mode: latex
