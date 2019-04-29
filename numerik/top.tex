@@ -23,7 +23,28 @@
 \input{stability}
 
 \chapter{Interpolation und Quadratur}
-%\input{interpolation}
+
+\begin{intro}
+  Ziel dieses Kapitels ist die Herleitung von Methoden zur
+  Approximation des Integrals einer Funktion über ein Intervall
+  $[a,b]$. Diese Aufgabe wird in zwei Teile geteilt:
+  \begin{enumerate}
+  \item Wir unterteilen das Intervall in Subintervalle und summieren
+    die Teilintegrale
+    \begin{gather}
+      \int_a^b f \dx = \sum_{i=1}^n \int_{x_{i-1}}^{x_i} f \dx,
+      \qquad
+      a = x_0 < x_1 < \dots < x_n = b.
+    \end{gather}
+  \item Auf jedem Teilintervall finden wir Approximationen für das
+    lokale Integral.
+  \end{enumerate}
+  Da wir Polynome exakt integrieren können, nutzen wir wieder die
+  Approximation von Funktionen durch Polynome, um uns diesem Problem
+  zu nähern.
+\end{intro}
+
+\input{interpolation}
 
 \bibliographystyle{apalike}
 \bibliography{all}

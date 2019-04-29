@@ -15,6 +15,9 @@
 \usepackage{mathtools}  
 \mathtoolsset{showonlyrefs}
 
+\newcommand{\rd}{\operatorname{rd}}
+\newcommand{\eps}{\texttt{eps}}
+
 \def\footnote#1{}
 \def\putindex#1{#1}
 \title{Einführung in die Numerik}
@@ -69,6 +72,52 @@
 \frame {\input {blocks/Definition-legendre-polynome.tex}}
 \frame {\input {blocks/Beispiel-least-squares-legendre.tex}}
 \frame {\input {blocks/Definition-chebyshev-polynome.tex}}
+
+\section{Konditionierung und Stabilität}
+\frame{\sectoc}
+\subsection{Fließkommazahlen}
+\frame{\subtoc}
+
+\frame {\input {blocks/Definition-fliesskomma.tex}}
+\frame {\input {blocks/Beispiel-ieee754-double.tex}}
+\frame {\input {blocks/Beispiel-ieee754-single.tex}
+  \input {blocks/Beispiel-ieee754-half.tex}}
+\frame {\input {blocks/Definition-runden.tex}}
+\frame {\input {blocks/Beispiel-eps-ieee.tex}}
+\frame {\input {blocks/Definition-maschinenoperationen.tex}
+  \input {blocks/Lemma-nichtassoziativ.tex}}
+\frame {\input {blocks/Beispiel-harmonisch.tex}}
+\frame {\input {blocks/Aufgabe-rundung.tex}}
+\frame {\input {blocks/Fazit-rundung.tex}}
+
+\subsection{Konditionierung einer Rechenaufgabe}
+\frame{\subtoc}
+\frame {\input {blocks/Definition-aufgabe.tex}}
+\frame {\input {blocks/Definition-datenfehler.tex}}
+\frame {\input {blocks/Definition-landau.tex}}
+\frame {\input {blocks/Beispiel-smallo-differential.tex}}
+\frame {\input {blocks/Beispiel-bigo-taylor.tex}}
+\frame {\input {blocks/Lemma-diff-fehler.tex}}
+\frame {\input {blocks/Beispiel-kond-mult.tex}}
+\frame {\input {blocks/Beispiel-kond-add.tex}}
+\frame {\input {blocks/Bemerkung-ausloeschung.tex}}
+
+\subsection{Stabilität eines Algorithmus}
+\frame{\subtoc}
+\frame {\input {blocks/Definition-algorithmus.tex}}
+\frame {\input {blocks/Bemerkung-algorithmuseigenschaften.tex}}
+\frame {\input {blocks/Definition-stabil.tex}
+  \input {blocks/Definition-vorwaertsanalyse.tex}
+  \input {blocks/Definition-rueckwaertsanalyse.tex}}
+
+\section{Interpolation und Quadratur}
+\frame{\sectoc}
+\frame {\input {blocks/Definition-lagrange-interpolation.tex}}
+\frame {\input {blocks/Satz-lagrange-interpolation.tex}
+  \input {blocks/Korollar-lagrange-interpolation.tex}}
+\frame {\input {blocks/Lemma-lagrange-basis.tex}}
+\frame {\input {blocks/Satz-lagrange-kondition.tex}}
+\frame {\input {blocks/Beispiel-lagrange-kondition-equi.tex}}
 
 \section{Bibliography}
 \frame{\bibliographystyle{alpha}

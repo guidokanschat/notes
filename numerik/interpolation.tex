@@ -1,0 +1,100 @@
+\section{Polynominterpolation}
+
+\begin{Definition}{lagrange-interpolation}
+  Die \define{Interpolation}saufgabe nach Lagrange lautet: seien $n+1$
+  paarweise verschiedene \define{Stützstellen} $x_0,\dots,x_n$ mit
+  zugehörigen Funktionswerten $f_i$ gegeben. Finde ein Polynom
+  $p\in \P_n$ mit der Eigenschaft
+  \begin{gather}
+    p(x_i) = f_i.
+  \end{gather}
+  Alternativ ist die Interpolationsaufgabe aufzufassen als eine Abbildung
+  \begin{gather}
+    \begin{split}
+      I_n\colon C[a,b] &\to \P_n\\
+      p(x_i) &= f(x_i),
+    \end{split}
+  \end{gather}
+  wobei das Interval $[a,b]$ alle Stützpunkte enthält. 
+  Wir nennen diese Abbildung den
+  \define{Lagrange-Interpolationsoperator} oder kurz
+  \define{Lagrange-Interpolation}.
+\end{Definition}
+
+\begin{Satz}{lagrange-interpolation}
+  Die Interpolationsaufgabe nach Lagrange hat eine eindeutige Lösung,
+  bezeichnet als (Lagrange-)\define{Interpolierende} der Funktion $f$
+  \begin{gather}
+    p(x;f;x_0,\dots,x_n)
+  \end{gather}
+\end{Satz}
+\begin{proof}
+  Der Beweis ist eine direkte Konsequenz des folgenden Lemmas.
+\end{proof}
+
+\begin{Lemma}{lagrange-basis}
+  Seien die Punkte $x_0,\dots,x_n$ paarweise verschieden. Dann gilt
+  für die \define{Lagrange-Polynome}
+  \begin{gather}
+    L_i(x) = L_{i;n}(x) = L_{i}(x;x_0,\dots,x_n)
+    = \prod_{\substack{j=0\\j\neq i}}^n \frac{x-x_j}{x_i-x_j}
+  \end{gather}
+  die Eigenschaft
+  \begin{gather}
+    L_i(x_j) = \delta_{ij},\qquad 0 \le i,j \le n.
+  \end{gather}
+  Die Lagrange-Polynome sind \putindex{orthonormal} bezüglich des
+  Skalarprodukts
+  \begin{gather}
+    \scal(p,q) = \sum_{i=0}^n p(x_i)q(x_i).
+  \end{gather}
+  Daher sind sie linear unabhängig und formen eine Basis von $\P_n$.
+\end{Lemma}
+
+\begin{Korollar}{lagrange-interpolation}
+  Die Lagrange-Interpolation eingeschränkt auf den Raum $\P_n$ ist die
+  Identität
+\end{Korollar}
+\begin{remark}
+  Die Lagrangesche Interpolationsaufgabe kann auch als Gaußsche
+  Ausgleichsrechnung mit dem obigen Skalarprodukt aufgefasst werden.
+\end{remark}
+
+\begin{Satz*}{lagrange-kondition}{Konditionszahl der Lagrange-Interpolation}
+  Die Konditionszahl des absoluten Fehlers in der Supremumsorm der
+  Lagrange-Interpolation zu den Punkten $a = x_0 < \dots < x_n = b$
+  ist die \define{Lebesgue-Konstante}
+  \begin{gather}
+    \Lambda_{x_0,\dots,x_n} = \max_{x\in [a,b]}
+    \sum_{i=0}^n \abs{L_i(x;x_0,\dots,x_n)}.
+  \end{gather}
+  Es gilt also
+  \begin{gather}
+    \max _{x\in[a,b]} \abs{I_n f(x)}
+    \le \Lambda_{x_0,\dots,x_n} \max _{x\in[a,b]} \abs{f(x)}.
+  \end{gather}
+  Diese Abschätzung ist scharf.
+\end{Satz*}
+
+\begin{proof}
+  Siehe \cite[Satz 7.3]{DeuflhardHohmann08}.
+\end{proof}
+
+\begin{Beispiel}{lagrange-kondition-equi}
+  Für äquidistante Stützstellen erhält man exemplarisch die Konditionszahlen
+  \begin{center}
+    \begin{tabular}{r|r}
+      $n$ & $\Lambda_{0,\dots,n}$\\\hline
+      5 & 3.1\\
+      10 & 29.9\\
+      15 & 512\\
+      20 & 10986
+    \end{tabular}
+  \end{center}
+  Quelle: \cite{DeuflhardHohmann08}
+\end{Beispiel}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
