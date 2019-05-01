@@ -126,7 +126,7 @@
   Quelle: \cite{DeuflhardHohmann08}
 \end{Beispiel}
 
-\subsection{Rekursion durch dividierte Differenzen}
+\subsection{Rekursive Interpolation}
 
 \begin{Lemma*}{Aitken}{Aitken}
   Für das Interpolationspolynom
@@ -173,6 +173,137 @@
     \end{gather}
   \end{enumerate}
 \end{Algorithmus*}
+
+\begin{Definition}{newton-basis}
+  Als \define{Newton-Basis} der Hermite-Interpolation bezeichnen wir
+  die Polynome
+  \begin{gather}
+    \omega_i(x) = \prod_{j=0}^{i-1} (x-x_j),
+    \qquad i=0,\dots,n
+  \end{gather}
+  wobei die leere Summe für $i=0$ den Wert 1 annehme.
+\end{Definition}
+
+\begin{Lemma}{newton-basis}
+  Sei $Q_k\in \P_n$ ein Polynom dargestellt bezüglich der Newton-Basis
+  durch
+  \begin{gather}
+    Q_k(x) = \sum_{i=0}^k a_i \omega_i(x),\qquad k=0,\dots,n.
+  \end{gather}
+  Dann gilt
+  \begin{align}
+    Q_k(x) &= Q_{k-1}(x) + a_k \omega_k(x),
+  \end{align}
+  und $a_k$ ist der Koeffizient vor $x^k$ in der Monomdarstellung von
+  $Q_k(x)$.
+\end{Lemma}
+
+\begin{Definition}{div-diff-1}
+  Als \define{dividierte Differenzen} zur
+  Lagrange-Interpoaltionsaufgabe bezeichnen wir die rekursiv
+  definierten Werte
+  \begin{align}
+    [x_i]f
+    &= f_i \\
+    [x_i,\dots,x_{i+k}]f
+    &= \frac{[x_{i+1},\dots,x_{i+k}]f - [x_i,\dots,x_{i+k-1}]f}{x_{i+k}-x_i}
+  \end{align}
+\end{Definition}
+
+\begin{Satz}{newton-lagrange}
+  Für das Lagrange-Interpolationspolynom $p_{i,\dots,i+k}(x)$ zu den
+  paarweise verschiedenen Stützpunkten $x_i,\dots,x_{i+k}$ gilt
+  \begin{gather}
+    p_{i,\dots,i+k}(x)
+    = \sum_{j=i}^{i+k} [x_i,\dots,x_{i+k}]f \frac{\omega_j(x)}{\omega_i(x)}.
+  \end{gather}
+\end{Satz}
+
+\begin{remark}
+  Der Bruch im vorherigen Satz ist nicht problematisch, da
+  \begin{gather}
+    \frac{\omega_j(x)}{\omega_i(x)} = \prod_{\ell=i}^{j-1} (x-x_\ell).
+  \end{gather}
+\end{remark}
+\subsection{Hermite-Interpolation und dividierte Differenzen}
+
+\begin{Definition}{hermite-interpolation}
+  Die \define{Hermite-Interpolation} benutzt neben Funktionswerten
+  auch Ableitungswerte zur Interpolation. Das Interpolationspolynom
+  $p\in \P_n$ genügt in $m$ paarweise verschiedenen Punkten den
+  Bedingungen
+  \begin{gather}
+    \frac{d^j p}{dx^j}(x_i) = f_i^{j},
+    \qquad i = 0,\dots, m, \quad j=0,\dots,n_i,
+  \end{gather}
+  und es gilt
+  \begin{gather}
+    \sum_{i} n_i = n+1.
+  \end{gather}
+  Die definierenden Funktionale\footnote{Als Funktional bezeichnet man
+    eine Abbildung aus einem Vektorraum in den zugehörigen Körper}
+  $\nicefrac{d^j}{dx^j} p(x_i)$ werden auch als \define{Knotenwerte}
+  oder \define{Knotenfunktionale} bezeichnet.
+\end{Definition}
+
+\begin{Satz}{hermite-interpolation}
+  \slideref{Definition}{hermite-interpolation} bestimmt das
+  Interpolationspolynom eindeutig.
+\end{Satz}
+
+\begin{proof}
+  Sei
+  \begin{gather}
+    q_i(x) = \prod_{k\neq i} (x-x_k)^{n+i}.
+  \end{gather}
+  Dann gilt
+  \begin{gather}
+    \frac{d^j q_i}{d x^j} (x_k) =0,
+    \qquad k\neq i, \quad j=0,\dots,n_{k}-1.
+  \end{gather}
+  Ferner gilt für die Polynome
+  \begin{gather}
+    t_{ij} = \frac{(x-x_i)^j}{j!}
+    \qquad\text{dass}\qquad
+    \frac{d^\ell t_{k\ell}}{d x^\ell} (x_k) = \delta_{ik}\delta_{j\ell}.
+  \end{gather}
+  Damit ist die Matrix der Interpolationsbedingungen angewandt auf die
+  doppelt indizierte Basis $h_{ij}(x) = t_{ij}(x) q_i(x)$ diagonal.
+\end{proof}
+
+\begin{Notation}{interpolation-ascending}
+  Bei der Polynominterpolation ist die Anordnung der
+  Interpolationspunkte beliebig. Das ist auch weiterhin der Fall. Für
+  die Darstellung der Resultate und Beweise ist es aber oft hilfreich
+  anzunehmen, dass sie in aufsteigender Folge angeordnet sind. Wir
+  nehmen daher ab jetzt an, dass
+  \begin{gather}
+    a = x_0 \le x_1 \le \dots \le x_n = b.
+  \end{gather}
+  $k$-fach wiederholte Stützstellen bedeuten, dass dort nicht nur der
+  der Funktionswert, sondern auch die ersten $k-1$ Ableitungen
+  interpoloert werden. Damit haben wir f''ur die Interpolation in
+  $\P_n$ immer eine Folge von $n+1$ Stützstellen.
+\end{Notation}
+
+\begin{Beispiel}{taylor-polynom}
+  Sind alle Stützstellen $x_0 = \dots = x_n$ identisch, so erhalten
+  wir duch Interpolation einer Funktion $f\in C^n[a,b]$ das
+  Taylor-Polynom vom Grad $n$
+  \begin{gather}
+    p(x;f;x_0,\dots,x_n) = \sum_{k=0}^n \frac{(x-x_0)^k}{k!} f^{(k)}(x_0).
+  \end{gather}
+\end{Beispiel}
+
+\begin{Beispiel}{hermite-kubisch}
+  Die kubische Hermite-Interpolation auf dem Intervall $[a,b]$ ist
+  definiert durch die Knotenwerte
+  \begin{gather}
+    p(a), p'(s), p(b), p'(b).
+  \end{gather}
+\end{Beispiel}
+
+
 
 %%% Local Variables:
 %%% mode: latex
