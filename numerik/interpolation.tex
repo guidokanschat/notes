@@ -137,7 +137,7 @@
   Rekursionsformel
   \begin{gather}
     p_{0,\dots,n}(x)
-    = \frac{(x_0-x) p_{1,\dots,n}(x) - (x_n-x) p_{0,\dots,n-1}(x)}{t_0-t_n}.
+    = \frac{(x-x_0) p_{1,\dots,n}(x) - (x-x_n) p_{0,\dots,n-1}(x)}{x_n-x_0}.
   \end{gather}
 \end{Lemma*}
 
@@ -147,8 +147,8 @@
   \begin{gather}
     \begin{split}
       \phi(x_i)
-      &= \frac{(x_0-x_i) p_{1,\dots,n}(x_i) - (x_n-x_i)p_{0,\dots,n-1}(x_i)}{x_0-x_n}\\
-      &= \frac{(x_0-x_i) f_i - (x_n-x_i) f_i}{x_0-x_n}\\
+      &= \frac{(x_i-x_0) p_{1,\dots,n}(x_i) - (x_i-x_n)p_{0,\dots,n-1}(x_i)}{x_n-x_0}\\
+      &= \frac{(x_i-x_0) f_i - (x_i-x_n) f_i}{x_n-x_0}\\
       &= f_i.
     \end{split}
   \end{gather}
@@ -175,10 +175,12 @@
 \end{Algorithmus*}
 
 \begin{Definition}{newton-basis}
-  Als \define{Newton-Basis} der Hermite-Interpolation bezeichnen wir
+  Als \define{Newton-Basis} der Lagrange-Interpolation bezeichnen wir
   die Polynome
   \begin{gather}
-    \omega_i(x) = \prod_{j=0}^{i-1} (x-x_j),
+    \omega_i(x)
+    = \omega_{0,\dots,i}(x)
+    = \prod_{j=0}^{i-1} (x-x_j),
     \qquad i=0,\dots,n
   \end{gather}
   wobei die leere Summe für $i=0$ den Wert 1 annehme.
@@ -200,7 +202,7 @@
 
 \begin{Definition}{div-diff-1}
   Als \define{dividierte Differenzen} zur
-  Lagrange-Interpoaltionsaufgabe bezeichnen wir die rekursiv
+  Lagrange-Interpolationsaufgabe bezeichnen wir die rekursiv
   definierten Werte
   \begin{align}
     [x_i]f
@@ -225,6 +227,55 @@
     \frac{\omega_j(x)}{\omega_i(x)} = \prod_{\ell=i}^{j-1} (x-x_\ell).
   \end{gather}
 \end{remark}
+
+\begin{Satz}{Lagrange-restglied}
+  Sei $f \in C^{n+1}[a,b]$ und $p\in \P_n$ die die
+  Lagrange-Interpolierende zu den Stützstellen
+  $a=x_0,\dots,x_n=b$. Dann gibt es zu jedem $x\in \R$ einen Punkt
+  $\xi$ im kleinsten Intervall $I$, das die Punkte $x$, $a$ und $b$
+  enthält, so dass
+  \begin{gather}
+    f(x)- p(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \omega_{0,\dots,n}(x).
+  \end{gather}
+\end{Satz}
+
+\begin{proof}
+  Der Beweis folgt \cite{Satz 2.1.4.1}[Stoer83].  Zunächst bemerken
+  wir, dass für alle Stützstellen $x_i$ gilt, dass
+  $f(x_i) - p(x_i) = 0$. Dort ist also nichts zu beweisen.
+  Sei nun
+  \begin{gather}
+    \label{eq:interpolation:1}
+    F(y) = f(y)-p(y) - \alpha \omega_n(y)
+  \end{gather}
+  und $\alpha$ soll so gewählt werden, dass $F(x) = 0$. Damit hat $F(y)$ im
+  Intervall $I$ insgesamt die $n+2$ Nullstellen $x,x_0,\dots,x_n$.
+  Wiederholte Anwendung des Satzes von Rolle ergibt, dass $F'(y)$
+  insgesamt $n+1$ Nullstellen hat und das $F^{(n+1)}(y)$ eine
+  Nullstelle $\xi$ besitzt. Da $p\in \P_n$ gilt
+  \begin{gather}
+    0 = F^{(n+1)}(\xi) = f^{(n+1)}(\xi) - \alpha (n+1)!
+  \end{gather}
+  und damit
+  \begin{gather}
+    \alpha = \frac{f^{(n+1)}(\xi)}{(n+1)!}.
+  \end{gather}
+\end{proof}
+
+\begin{Korollar}{Lagrange-restglied}
+  Sei $f \in C^{n+1}[a,b]$ und alle Stützstellen $x_i$ im Intervall
+  $[a,b]$. Dann gibt es $\xi\in[a,b]$, so dass
+  \begin{gather}
+    [x_0,\dots,x_n]f = \frac{f^{(n)}}{n!}(\xi).
+  \end{gather}
+\end{Korollar}
+
+\begin{proof}
+  Formel~\eqref{eq:interpolation:1} gibt gerade an, dass $\alpha$ der
+  Koeffizient vor dem nächsten Newton-Basispolynom ist, wenn man den
+  Punkt $x$ der Menge der Stützstellen hinzufügt.
+\end{proof}
+
 \subsection{Hermite-Interpolation und dividierte Differenzen}
 
 \begin{Definition}{hermite-interpolation}
@@ -252,23 +303,42 @@
 \end{Satz}
 
 \begin{proof}
-  Sei
+  Analog zur Lagrange-Interpolation identifizieren wir wieder eine
+  Basis $\{H_{ij}(x)\}$, diesmal doppelt indiziert, die bezüglich der
+  Interpolationsbedingungen orthogonal ist. Damit stellen wir das
+  Interpolationspolynom dar als
   \begin{gather}
-    q_i(x) = \prod_{k\neq i} (x-x_k)^{n+i}.
+    p(x) = \sum_{i=1}^m \sum_{j=0}^{n_i-1} f_i^j H_{ij}(x).
   \end{gather}
-  Dann gilt
+  Zunächst führen wir die Hilfspolynome
   \begin{gather}
-    \frac{d^j q_i}{d x^j} (x_k) =0,
-    \qquad k\neq i, \quad j=0,\dots,n_{k}-1.
+    q_{ij}(x) = \frac{(x-x_i)^j}{j!}\prod_{k\neq i}
+    \left(\frac{x-x_k}{x_i-x_k}\right)^{n_i}
   \end{gather}
-  Ferner gilt für die Polynome
+  ein. Es gilt
   \begin{gather}
-    t_{ij} = \frac{(x-x_i)^j}{j!}
-    \qquad\text{dass}\qquad
-    \frac{d^\ell t_{k\ell}}{d x^\ell} (x_k) = \delta_{ik}\delta_{j\ell}.
+    \begin{aligned}
+      \frac{d^j q_i}{d x^j} (x_k) &=0,
+      \quad &k\neq i,&\quad& j&=0,\dots,n_{k}-1,\\
+      \frac{d^j q_i}{d x^j} (x_i) &=0,
+      \qquad &&& j&=0,\dots,n_{i}-1,\\   
+      \frac{d^{n_{i}-1} q_i}{d x^{n_{i}-1}} (x_i) &=1.
+      \qquad &&&& 
+    \end{aligned}
   \end{gather}
-  Damit ist die Matrix der Interpolationsbedingungen angewandt auf die
-  doppelt indizierte Basis $h_{ij}(x) = t_{ij}(x) q_i(x)$ diagonal.
+  Damit können wir rekursiv definieren
+  \begin{gather}
+    \begin{aligned}
+      H_{i,n_i-1}(x) &= q_{i,n_i-1}(x)
+      & i&= 1,\dots,m\\
+      H_{ij}(x) &= q_{ij}(x) - \sum_{k=j+1}^{n_i-1} q_{ij}^{(k)}(x_i) q_{ik}(x),
+    \end{aligned}
+  \end{gather}
+  wobei die letzte Zeile die Anwendung des Gram-Schmidt-Verfahrens
+  ist. Per constructionem gilt für diese Basis
+  \begin{gather}
+    \frac{d^\ell}{dx^\ell} H_{ij}(x_k) = \delta_{ik}\delta_{j\ell}.
+  \end{gather}
 \end{proof}
 
 \begin{Notation}{interpolation-ascending}
@@ -280,10 +350,10 @@
   \begin{gather}
     a = x_0 \le x_1 \le \dots \le x_n = b.
   \end{gather}
-  $k$-fach wiederholte Stützstellen bedeuten, dass dort nicht nur der
-  der Funktionswert, sondern auch die ersten $k-1$ Ableitungen
-  interpoloert werden. Damit haben wir f''ur die Interpolation in
-  $\P_n$ immer eine Folge von $n+1$ Stützstellen.
+  Dabei sollen $k$-fach wiederholte Stützstellen bedeuten, dass dort
+  nicht nur der der Funktionswert, sondern auch die ersten $k-1$
+  Ableitungen interpoliert werden. Damit haben wir für die
+  Interpolation in $\P_n$ immer eine Folge von $n+1$ Stützstellen.
 \end{Notation}
 
 \begin{Beispiel}{taylor-polynom}
@@ -299,7 +369,7 @@
   Die kubische Hermite-Interpolation auf dem Intervall $[a,b]$ ist
   definiert durch die Knotenwerte
   \begin{gather}
-    p(a), p'(s), p(b), p'(b).
+    p(a), p'(a), p(b), p'(b).
   \end{gather}
 \end{Beispiel}
 
