@@ -454,20 +454,19 @@
   \begin{gather*}
     \scal(v,z) = \scal(y,v) - \omega\left[a(y,v) - f(v) \right] \qquad \forall v\in V.
   \end{gather*}
-  Now we define the mapping $T_\omega:V\rightarrow V$ that maps $y\mapsto z$ and
+  Now we define the operator $T_\omega:V\rightarrow V$ that maps $y\mapsto z$ and
   define $A:V\rightarrow V$ such that
   \begin{gather*}
     \scal(Su,v) = a(u,v) \qquad \forall v\in V 
   \end{gather*}
   with $\norm{Au}_V \leq M \norm{u}_V$ for $M>0$.
-  Now consider $y-x$ instead of $y$.
   This leads for all $v\in V$ to
   \begin{gather*}
-    \scal(T_\omega y - T_\omega x,v)
-    = \scal(y-x,v) - \omega\left[a(y-x,v) \right]
-    = \scal(y-x,v) - \omega \scal(S(y-x),v).
+    \scal(T_\omega y,v)
+    = \scal(y,v) - \omega\left[a(y,v) \right]
+    = \scal(y,v) - \omega \scal(S(y),v).
   \end{gather*}
-  Thus, we can conclude that $T_\omega (y-x)=y-x-\omega A(y-x)$.
+  Thus, we can conclude that $T_\omega (y)=y-\omega A(y)$.
   Applying the norm and using the fact that it is induced by the inner product of $V$
   we get
   \begin{gather*}
@@ -478,9 +477,9 @@
     \end{aligned}
   \end{gather*}
   As we want to apply Banach fixed point theorem, we need $T_\omega$ to be a contraction.
-  Therefore, we need $1-2\omega\alpha + \omega^2 M^2 < 1$ which is given for
-  $\omega\in\left(0,\frac{2\alpha}{M^2}\right)$.
-  Hence, $T_\omega$ is a contraction and there exists a $u\in V$ such that $T_\omega u = u$
+  Therefore, we need $1-2\omega\alpha + \omega^2 M^2 < 1$.
+  Hence, if we choose $\omega\in\left(0,\frac{2\alpha}{M^2}\right)$, then $T_\omega$ is a
+  contraction and there exists a $u\in V$ such that $T_\omega u = u$
   and $\scal(T_\omega u,u) = \scal(u,u) - \omega\left[ a(u,v) - f(v) \right]$
   which implies $a(u,v)=f(v)$.
   Thus, there exists a solution $u$.
