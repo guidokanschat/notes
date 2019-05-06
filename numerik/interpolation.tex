@@ -217,9 +217,32 @@
   paarweise verschiedenen Stützpunkten $x_i,\dots,x_{i+k}$ gilt
   \begin{gather}
     p_{i,\dots,i+k}(x)
-    = \sum_{j=i}^{i+k} [x_i,\dots,x_{i+k}]f \frac{\omega_j(x)}{\omega_i(x)}.
+    = \sum_{j=i}^{i+k} [x_i,\dots,x_{i+k}]f\; \frac{\omega_j(x)}{\omega_i(x)}.
   \end{gather}
 \end{Satz}
+
+\begin{proof}
+  In der Newton-Darstellung gilt
+  \begin{gather}
+    p_{i,\dots,i+k}(x) = p_{i,\dots,i+k-1}(x)
+    + \alpha \frac{\omega_{i+k}(x)}{\omega_i(x)}.
+  \end{gather}
+  Zu zeigen ist also $\alpha = [x_i,\dots,x_{i+k}]$, was nach
+  \slideref{Lemma}{newton-basis} der Koeffizient vor $x^k$ ist. Nach
+  Induktionsannahme ist
+  \begin{gather}
+    \begin{split}
+      p_{i,\dots,i+k-1}(x) &= [x_i,\dots,x_{i+k-1}]f \,x^{k-1} +\bigo(x^{k-2})\\
+      p_{i+1,\dots,i+k}(x) &= [x_{i+1},\dots,x_{i+k}]f \,x^{k-1} +\bigo(x^{k-2})
+    \end{split}
+  \end{gather}
+  Nach dem Lemma von Aitken gilt
+  \begin{gather}
+    p_{i,\dots,i+k} = \frac{(x-x_i)p_{i+1,\dots,i+k}
+      - (x-x_{i+k})p_{i,\dots,i+k-1}}{x_{i+k} - x_i}.
+  \end{gather}
+  Dessen höchster Koeffizient ist aber gerade die dividierte Differenz.
+\end{proof}
 
 \begin{remark}
   Der Bruch im vorherigen Satz ist nicht problematisch, da
