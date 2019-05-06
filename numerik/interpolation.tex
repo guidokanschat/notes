@@ -1,5 +1,3 @@
-\section{Polynominterpolation}
-
 \subsection{Definition und Konditionsabschätzung}
 
 \begin{Definition}{lagrange-interpolation}
@@ -252,12 +250,11 @@
 \end{remark}
 
 \begin{Satz}{Lagrange-restglied}
-  Sei $x\in \R$ und $I$ das kleinste Intervall, das die Punkte $x$, $a$ und $b$
-  enthält.
-  Sei $f \in C^{n+1}(I)$ und $p\in \P_n$ die
+  Sei $f \in C^{n+1}[a,b]$ und $p\in \P_n$ die
   Lagrange-Interpolierende zu den Stützstellen
-  $x_0,\dots,x_n \in[a,b]$. Dann gibt es einen Punkt
-  $\xi\in I$, so dass
+  $a=x_0\neq\dots\neq x_n=b$. Dann gibt es zu jedem $x\in \R$ einen Punkt
+  $\xi$ im kleinsten Intervall $I$, das die Punkte $x$, $a$ und $b$
+  enthält, so dass
   \begin{gather}
     f(x)- p(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \omega_{0,\dots,n}(x).
   \end{gather}
@@ -302,6 +299,7 @@
   Punkt $x$ der Menge der Stützstellen hinzufügt.
 \end{proof}
 
+<<<<<<< HEAD
 \begin{Korollar}{Lagrange-fehler-1}
   Es gelten die Voraussetzungen von
   \slideref{Satz}{Lagrange-restglied}. Dann gibt es eine Konstante
@@ -446,7 +444,8 @@
     \le 2^{1-n} \left(\frac{b-a}2\right)^{n+1} \max_{x\in[a,b]}\abs{f^{(n+1)}(x)}.
   \end{gather}  
 \end{proof}
-\subsection{Hermite-Interpolation und dividierte Differenzen}
+
+\subsection{Hermite-Interpolation}
 
 \begin{Definition}{hermite-interpolation}
   Die \define{Hermite-Interpolation} benutzt neben Funktionswerten
@@ -462,7 +461,7 @@
     \sum_{i} n_i = n+1.
   \end{gather}
   Die definierenden Funktionale\footnote{Als Funktional bezeichnet man
-    eine Abbildung aus einem Vektorraum in den zugehörigen Körper}
+    eine Abbildung aus einem Vektorraum in den zugehörigen Körper} der Gestalt
   $\nicefrac{d^j}{dx^j} p(x_i)$ werden auch als \define{Knotenwerte}
   oder \define{Knotenfunktionale} bezeichnet.
 \end{Definition}
@@ -543,7 +542,97 @@
   \end{gather}
 \end{Beispiel}
 
+\begin{Satz}{Hermite-interpolation}
+  Das Hermite-Interpolationspolynom genügt der Darstellung
+  \begin{gather}
+    p_{0,\dots,n}(x) = \sum_{j=0}^n [x_0,\dots,x_j]f\;\omega_j(x)
+  \end{gather}
+  mit den verallgemeinerten dividierten Differenzen definiert durch
+  die Rekursion
+  \begin{gather}
+    [x_i,\dots,x_i+k]f =
+    \begin{cases}
+      \frac{f^{(k)}(x_i)}{k!} &x_i=x_{i+k}\\
+      \frac{[x_{i+1},\dots,x_{i+k}]f - [x_i,\dots,x_{i+k-1}]f}{x_{i+k}-x_i}
+      &x_i\neq x_{i+k}.
+    \end{cases}
+  \end{gather}
+\end{Satz}
 
+\begin{proof}
+  Der Beweis folgt im wesentlichen dem analogen
+  \slideref{Satz}{newton-lagrange}. Wir müssen dort nur die Argumente
+  anpassen, die auf paarweise verschiedenen Stützstellen beruhen.
+  
+  Zunächst benutzen wir \slideref{Korollar}{Lagrange-restglied},
+  wonach für $x_i < x_{i+1}< \dots < x_{i+k}$ gilt: es gibt ein
+  $\xi\in[x_i,x_{i+k}]$ mit
+  \begin{gather}
+    [x_i,\dots,x_{i+k}]f = \frac{f^{(k)}(\xi)}{k!}.
+  \end{gather}
+  Da diese Eigenschaft unabhängig vom Abstand der Stützstellen gilt,
+  können wir den Limes $x_j \to x_i$ für $j=1,\dots,k$ bilden, und es
+  gilt für $x_i=x_{i+k}$
+  \begin{gather}
+    [x_i,\dots,x_{i+k}]f \to \frac{f^{(k)}(x_i)}{k!},
+  \end{gather}
+  sowie
+  \begin{gather}
+    \omega_{i,\dots,i+k}(x) \to (x-x_i)^{k}.
+  \end{gather}
+  Für das zugehörige Interpolationspolynom gilt dann
+  \begin{gather}
+    \frac{d^j}{dx^j} p_{i,\dots,i+k}(x_i) = f^{j}(x_i)
+    \qquad j=0,\dots,k-1.
+  \end{gather}
+  Damit haben wir im Neville-Schema den Induktionsanfang geschafft. Es
+  bleibt zu zeigen, dass die Rekursionsformel von Aitken auch
+  weiterhin für $x_i \neq x_{i+k}$ gilt. Das ist unmittelbar
+  einsichtig, wenn $x_i \neq x_{i+1}$ und $x_{i+k-1} \neq x_{i+k}$, da
+  dann beide Polynome in der Rekursion alle Zwischenpunkte $x_j$
+  interpolieren.
+
+  Sei nun zunächst
+  $x_i=x_{i+1}= x_{i+r} < x_{r+1} \le \dots < x_{i+k}$. Es ist zu
+  zeigen, dass das Polynom
+  \begin{gather}
+    q(x) = \frac{(x-x_i) p_{i+1,\dots,i+k}(x)
+      - (x-x_k) p_{i,\dots,i+k-1}(x)}{x_{i+k}-x_i}
+  \end{gather}
+  alle Knotenfunktionale interpoliert. Für $x_j\neq x_i$ folgt dies
+  wie bei der Lagrange-Interpolation aus der Induktionsannahme. Doch
+  auch für $x_i$ gilt dies, da der erste Term in der Summe
+  verschwindet und $p_{i,\dots,i+k-1}$ bereits alle geforderten
+  Ableitungen interpoliert.
+\end{proof}
+
+\begin{Satz}{Hermite-restglied}
+    Sei $f \in C^{n+1}[a,b]$ und $p\in \P_n$ die
+  Hermite-Interpolierende zu den Stützstellen
+  $a=x_0\le\dots\le x_n=b$. Dann gibt es zu jedem $x\in \R$ einen Punkt
+  $\xi$ im kleinsten Intervall $I$, das die Punkte $x$, $a$ und $b$
+  enthält, so dass
+  \begin{gather}
+    f(x)- p(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \omega_{0,\dots,n}(x).
+  \end{gather}
+\end{Satz}
+
+\begin{proof}
+  Der Beweis folgt exakt denselben Argumenten wie der von
+  \slideref{Satz}{Lagrange-restglied}.
+\end{proof}
+
+\begin{Korollar}{Taylor-restglied}
+  Für das \define{Taylor-Polynom} zu $f\in C^{n+1}(a,b)$ in einem
+  Punkt $x_0\in(a,b)$,
+  \begin{gather}
+    p(x) = \sum_{i=0}^n \frac{f^{i}}(x_0){i!} (x-x_0)^i
+  \end{gather}
+  gilt die folgende Fehlerdarstellung: es gibt ein $\xi\in[x_0,x]$ so dass gilt
+  \begin{gather}
+    f(x) - p(x) = \frac{f^{n+1}}(x_0){(n+1)!} (x-x_0)^{n+1}.
+  \end{gather}
+\end{Korollar}
 
 %%% Local Variables:
 %%% mode: latex
