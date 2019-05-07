@@ -1,0 +1,30 @@
+\section{Interpolation mit Splines}
+
+\subsection{Interpolation auf Teilintervallen}
+
+\begin{Notation}{indices}
+  $\P_k$, $n$ Intervalle indiziert mit $i$
+\end{Notation}
+
+\begin{Lemma*}{scaling-interpolation}{Skalierungsargument}
+  Seit $\hat I$ ein fest gewähltes Intervall mit
+  Interpolations-Stützpunkten $\hat x_0,\dots,\hat x_n$. Sei das
+  Intervall $[a,b]$ unterteilt in Teilintervalle
+  $I_k = \Phi_k(\hat I)$ der Länge $h_k \le h$. Eine Funktion
+  $f\in C^{n+1[a,b]}$ werde in den Stützpunkten
+  $x_{ki} = \Phi_k(\hat x_i)$ durch eine Funktion $v\in S^{n,0}$
+  interpoliert.  Dann gibt es eine Konstante $C$, die nur von den
+  Punkten $\hat x_0,\dots,\hat x_n$ abhängt, so dass der
+  Interpolationsfehler beschränkt ist durch
+  \begin{gather}
+    \norm{f-v}_{\infty;[a,b]}
+    \le C \frac{h^{n+1}}{(n+1)!} \norm{f^{(n+1)}}_{\infty;[a,b]}.
+  \end{gather}
+\end{Lemma*}
+
+
+\subsection{Splines}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
