@@ -252,18 +252,21 @@
 \end{remark}
 
 \begin{Satz}{Lagrange-restglied}
-  Sei $f \in C^{n+1}[a,b]$ und $p\in \P_n$ die die
+  Sei $x\in \R$ und $I$ das kleinste Intervall, das die Punkte $x$, $a$ und $b$
+  enthält.
+  Sei $f \in C^{n+1}(I)$ und $p\in \P_n$ die
   Lagrange-Interpolierende zu den Stützstellen
-  $a=x_0,\dots,x_n=b$. Dann gibt es zu jedem $x\in \R$ einen Punkt
-  $\xi$ im kleinsten Intervall $I$, das die Punkte $x$, $a$ und $b$
-  enthält, so dass
+  $x_0,\dots,x_n \in[a,b]$. Dann gibt es einen Punkt
+  $\xi\in I$, so dass
   \begin{gather}
     f(x)- p(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \omega_{0,\dots,n}(x).
   \end{gather}
+  Wir bezeichnen diese Aussage als \define{Fehlerdarstellung}, die
+  rechte Seite auch als \define{Restglied}.
 \end{Satz}
 
 \begin{proof}
-  Der Beweis folgt \cite{Satz 2.1.4.1}[Stoer83].  Zunächst bemerken
+  Der Beweis folgt \cite[Satz 2.1.4.1]{Stoer83}.  Zunächst bemerken
   wir, dass für alle Stützstellen $x_i$ gilt, dass
   $f(x_i) - p(x_i) = 0$. Dort ist also nichts zu beweisen.
   Sei nun
@@ -299,6 +302,150 @@
   Punkt $x$ der Menge der Stützstellen hinzufügt.
 \end{proof}
 
+\begin{Korollar}{Lagrange-fehler-1}
+  Es gelten die Voraussetzungen von
+  \slideref{Satz}{Lagrange-restglied}. Dann gibt es eine Konstante
+  $C$, die nur von der Wahl der Stützstellen abhängt, so dass
+  \begin{gather}
+    \max_{x\in[a,b]} \abs{f(x)-p_{0,\dots,n}(x)}
+    \le \frac{C \abs{b-a}^{n+1}}{(n+1)!} \max_{x\in[a,b]} \abs{f^{(n+1)}(x)} 
+  \end{gather}
+\end{Korollar}
+
+\begin{remark}
+  Die Fehlerabschätzung in \slideref{Korollar}{Lagrange-fehler-1}
+  können wir auch kürzer schreiben als
+  \begin{gather}
+    \norm{f-p_{0,\dots,n}}_\infty \le \frac{C \abs{b-a}^{n+1}}{(n+1)!}
+    \norm{f^{(n+1)}}_{\infty}.
+  \end{gather}
+  Die rechte Seite besteht dabei aus dem Produkt aus einem Teil, der
+  nur von den Daten abhängt, $\norm{f^{(n+1)}}_{\infty}$ und einem
+  Anteil, der durch das Verfahren bestimmt ist.
+
+  Wir sehen, dass Interpolation auf einem Intervall um so genauer ist,
+  je kürzer das Intervall ist.
+\end{remark}
+
+\begin{intro}
+  Der Rest dieses Abschnitts befasst sich mit der Frage, wie die
+  Stützstellen $x_0,\dots,x_n$ gewählt werden können, damit die
+  Konstante $C$ in der Fehlerabschätzung optimal ist.  Aus der
+  Fehlerdarstellung in \slideref{Satz}{Lagrange-restglied} folgt, dass
+  wir dazu ein Polynom finden müssen, dessen führender Koeffizient 1
+  ist, und das minimalen Betrag auf dem Intervall $[a,b]$ hat.
+  Tatsächlich erlauben uns die Tschebyscheff-Polynome, diese
+  Optimalität zu erreichen.
+\end{intro}
+
+\begin{Lemma}{chebyshev-properties}
+  Die Tschebyscheff-Polynome, die der Rekursionsformel in
+  \slideref{Definition}{chebyshev-polynome} genügen, haben die
+  Darstellung
+  \begin{gather}
+    T_k = \cos(k \operatorname{arccos} x)
+  \end{gather}
+  Insbesondere gilt
+  \begin{alignat}3
+    T_k(1)&=1\\
+    T_k(-1) &= (-1)^k\\
+    \abs{T_k(x)} &\le 1, &\quad x&\in [-1,1]\\
+    T_k(x) &=(-1)^j,
+                   &\quad x&=\cos\left(\frac{j}{k}\pi\right),
+                   &\quad j&=0,\dots,k\\
+    T_k(x) &= 0,
+             &\quad x&=\cos\left(\frac{2j-1}{2k}\pi\right),
+             &\quad j&=1,\dots,k
+  \end{alignat}
+\end{Lemma}
+
+\begin{proof}
+  Hausaufgabe
+\end{proof}
+
+\begin{Satz}{chebyshev-minimal-1}
+  Jedes Polynom $p\in \P_n$ mit führendem Koeffizienten 1 nimmt im
+  Intervall $[-1,1]$ einen Wert $\abs{p(x)} \ge \nicefrac1{2^{n-1}}$
+  an und es gilt
+  \begin{gather}
+   \frac1{2^{n-1}} T_n(x)
+   = \operatorname*{arg min}_{\substack{p\in\P_n\\p = x^n+\cdots}}
+   \max_{x\in[-1,1]}\abs{p(x)}.
+  \end{gather}
+\end{Satz}
+
+\begin{proof}
+  Siehe auch \cite[Satz 7.19]{DeuflhardHohmann08}. Aus der
+  Rekursionsformel folgt sofort, dass der höchste Koeffizient von
+  $T_n$ den Wert $2^{n-1}$ annimmt. Sei nun als Widerspruchsannahme
+  $p\in \P_n$ ein weiteres Polynom mit höchstem Koeffizienten
+  $2^{n-1}$, so dass
+  \begin{gather}
+    \max_{x\in[-1,1]} \abs{p(x)} < 1.
+  \end{gather}
+  Dann ist $q_n = T_n-p \in \P_{n-1}$ und für die
+  \define{Tschebyscheff-Abszisse}n
+  $\tilde x_j = \cos(\nicefrac{j\pi}{n})$ mit $j=0,\dots,n$ gilt
+  \begin{xalignat}4
+    T_n(\tilde x_j) &= 1,
+    & p(\tilde x_j) &< 1
+    & q_n(\tilde x_j) &> 0,
+    & j&\text{ gerade}\\
+    T_n(\tilde x_j) &= -1,
+    & p(\tilde x_j) &> -1
+    & q_n(\tilde x_j) &< 0,
+    & j&\text{ ungerade}.
+  \end{xalignat}
+  $q_n$ wechselt also an mindestens $n$ Stellen das Vorzeichen und hat
+  damit als stetige Funktion mindestens ebensoviele Nullstellen. Aus
+  $q_n\in\P_{n-1}$ folgt damit im Widerspruch $q_n=0$ und $p=T_n$.
+  Damit gilt nach Skalierung um den Faktor $2^{n-1}$
+  \begin{gather}
+    \operatorname*{min}_{\substack{p\in\P_n\\p = x^n+\cdots}}
+   \max_{x\in[-1,1]}\abs{p(x)} \ge 1,
+  \end{gather}
+  und Gleichheit für das skalierte Tschebyscheff-Polynom.
+\end{proof}
+
+\begin{Korollar}{Lagrange-chebychev}
+  Wählt man als Stützstellen die Werte
+  \begin{gather}
+    x_i = \frac{a+b}2 + \frac{b-a}2 \cos\left(\frac{2i+1}{2n+2}\pi\right),
+    \qquad i=0,\dots,n,
+  \end{gather}
+  So gilt für den Fehler der Lagrange-Interpolation
+  \begin{gather}
+    \norm{f-p_{0,\dots,n}}_\infty \le \frac{\abs{b-a}^{n+1}}{2^{2n}(n+1)!}
+    \norm{f^{(n+1)}}_{\infty}.
+  \end{gather}
+\end{Korollar}
+
+\begin{proof}
+  Zunächst transformieren wir die Aufgabe vom Intervall $[a,b]$ auf
+  das Intervall $[-1,1]$ durch die Abbildung
+  \begin{gather}
+    x = \Phi(\xi) = \frac{a+b}2 + \frac{b-a}2 \xi.
+  \end{gather}
+  Es gilt $\Phi(-1) = a$, $\Phi(1)=b$ und di Punkte $x_i$ sind die
+  Bilder der Tschebyscheff-Abszissen $\xi_i$ zu $T_{n+1}$. Es gilt
+  $\Phi'(\xi) = (b-a)/2$ und für die Funktion $F(\xi) = f(\Phi(\xi))$
+  gilt
+  \begin{gather}
+    \frac{d^k}{d\xi^k} F(\xi) = \left(\frac{b-a}2\right)^k
+    \frac{d^k}{dx^k} f(x).
+  \end{gather}
+  Auf $[-1,1]$ folgern wir aus \slideref{Satz}{Lagrange-restglied} und
+  \slideref{Satz}{chebyshev-minimal-1}, dass für die Interpolation gilt
+  \begin{gather}
+    \max_{\xi\in[-1,1]} \abs{F(\xi) - P(\xi)}
+    \le 2^{1-n} \max_{\xi\in[-1,1]}\abs{F^{(n+1)}(\xi)},
+  \end{gather}
+  woraus folgt
+  \begin{gather}
+    \max_{x\in[a,b]} \abs{f(x) - p(x)}
+    \le 2^{1-n} \left(\frac{b-a}2\right)^{n+1} \max_{x\in[a,b]}\abs{f^{(n+1)}(x)}.
+  \end{gather}  
+\end{proof}
 \subsection{Hermite-Interpolation und dividierte Differenzen}
 
 \begin{Definition}{hermite-interpolation}
