@@ -1,29 +1,79 @@
-\section{Interpolation mit Splines}
+Dieser Abschnitt folgt recht eng der Darstellung in \cite[Abschnitt 2.3]{Rannacher17}.
 
 \subsection{Interpolation auf Teilintervallen}
 
 \begin{Notation}{indices}
-  $\P_k$, $n$ Intervalle indiziert mit $i$
+  In diesem Abschnitt bezeichne für die monotone Folge
+  \begin{gather}
+    a = x_0 < x_1 \dots < x_n = b
+  \end{gather}
+  stets
+  \begin{gather}
+    \mathcal I_h = \bigl\{ I_i = [x_{i-1},x_i] \big|
+    \; i=1,\dots,n\bigr\}
+  \end{gather}
+  eine \define{Zerlegung} des Intervalls $I=[a,b]$, also
+  \begin{gather}
+    [a,b] = \bigcup_{i=1}^n I_h.
+  \end{gather}
+  Die Länge der Teilintervalle bezeichnen wir mit
+  $h_i = \abs{I_i} = x_{i} - x_{i-1}$, mit $h=\max h_i$ die
+  \define{Feinheit} der Unterteilung.
 \end{Notation}
 
-\begin{Lemma*}{scaling-interpolation}{Skalierungsargument}
-  Seit $\hat I$ ein fest gewähltes Intervall mit
-  Interpolations-Stützpunkten $\hat x_0,\dots,\hat x_n$. Sei das
-  Intervall $[a,b]$ unterteilt in Teilintervalle
-  $I_k = \Phi_k(\hat I)$ der Länge $h_k \le h$. Eine Funktion
-  $f\in C^{n+1[a,b]}$ werde in den Stützpunkten
-  $x_{ki} = \Phi_k(\hat x_i)$ durch eine Funktion $v\in S^{n,0}$
-  interpoliert.  Dann gibt es eine Konstante $C$, die nur von den
-  Punkten $\hat x_0,\dots,\hat x_n$ abhängt, so dass der
-  Interpolationsfehler beschränkt ist durch
+\begin{Notation}{reference-interval}
+  Wir bezeichnen $\hat I = [-1,1]$ als Referenzintervall. Jedes
+  Intervall $I_i$ einer Zerlegung $\mathcal I_h$ ergibt sich als Bild
+  von $\hat I$ unter der affinen Abbildung
   \begin{gather}
-    \norm{f-v}_{\infty;[a,b]}
-    \le C \frac{h^{n+1}}{(n+1)!} \norm{f^{(n+1)}}_{\infty;[a,b]}.
+    \begin{split}
+      \Phi_i\colon \hat I &\to I_i\\
+      \hat x &\mapsto \tfrac{x_{i}+x_{i-1}}{2} + \tfrac{h_i}{2} \hat x.
+    \end{split}
+  \end{gather}
+\end{Notation}
+
+\begin{Definition*}{piecewise-interpolation}{Stückweise Interpolation}
+  Sei $\mathcal I_h$ eine Zerlegung von $[a,b]$. Auf dem
+  Referenzintervall $\hat I$ sei eine Interpolationsaufgabe durch die
+  Stützstellen $\hat x_0,\dots, \hat x_k$ definiert. Dann lautet die
+  Aufgabe der stückweisen Interpolation auf $\mathcal I_h$: finde eine
+  Funktion $s$ auf $[a,b]$, so dass für jedes $i=1,\dots,n$ die
+  Einschränkung $s_{|I_i} \in \P_k$ der Interpolationsaufgabe mit den
+  Stützstellen
+  \begin{gather}
+    x_{ij} = \Phi_i(\hat x_j),\qquad j=1,\dots,k
+  \end{gather}
+  genügt.
+\end{Definition*}
+
+\begin{Lemma}{piecewise-solvable}
+  Die stückweise Interpolationsaufgabe hat eine eindeutige Lösung,
+  wenn die Interpolationsaufgabe auf dem Referenzintervall eine solche
+  besitzt.
+\end{Lemma}
+
+\begin{Lemma*}{scaling-interpolation}{Skalierungsargument}
+  Für die Lösung $\hat p\in \P_k$ der Interpolationsaufgabe auf dem
+  Referenzintervall gelte mit einer Konstanten $C$ unabhängig von
+  $\hat f\in C^{k+1}(\hat I)$ die Fehlerabschätzung
+  \begin{gather}
+    \norm{\hat f- \hat p}_{\infty;\hat I} \le C \norm{\hat
+      f^{(k+1)}}_{\infty;\hat I}.
+  \end{gather}
+  Dann ist der Fehler der stückweisen Interpolation beschränkt ist durch
+  \begin{gather}
+    \norm{f-s}_{\infty;[a,b]}
+    \le C h^{k+1} \norm{f^{(k+1)}}_{\infty;[a,b]}.
   \end{gather}
 \end{Lemma*}
 
-
 \subsection{Splines}
+
+\begin{Definition}{cubic-spline}
+  Die Interpolationsaufgabe mit kubischen \define{Splines} lautet: finde eine Funktion $s\in S_h^{(3,2)}$
+\end{Definition}
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
