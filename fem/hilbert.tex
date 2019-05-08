@@ -448,7 +448,7 @@
     \scal(y,\cdot) - \omega\left[a(y,\cdot) -f(\cdot)\right] \in V^*
   \end{gather*}
   with $\omega>0$.
-  Due to Riesz representation theorem there exists an isomorphism $\rho:V\rightarrow V^*$
+  Due to Riesz representation theorem there exists an isomorphism $\rho:V^*\rightarrow V$
   that maps a given $\scal(y,\cdot) - \omega \left[ a(y,\cdot)-f(\cdot) \right]$
   to $z\in V$ such that
   \begin{gather*}
@@ -457,16 +457,16 @@
   Now we define the operator $T_\omega:V\rightarrow V$ that maps $y\mapsto z$ and
   define $A:V\rightarrow V$ such that
   \begin{gather*}
-    \scal(Su,v) = a(u,v) \qquad \forall v\in V 
+    \scal(Au,v) = a(u,v) \qquad \forall v\in V 
   \end{gather*}
   with $\norm{Au}_V \leq M \norm{u}_V$ for $M>0$.
   This leads for all $v\in V$ to
   \begin{gather*}
     \scal(T_\omega y,v)
     = \scal(y,v) - \omega\left[a(y,v) \right]
-    = \scal(y,v) - \omega \scal(S(y),v).
+    = \scal(y,v) - \omega \scal(Ay,v).
   \end{gather*}
-  Thus, we can conclude that $T_\omega (y)=y-\omega A(y)$.
+  Thus, we can conclude that $T_\omega (y)=y-\omega Ay$.
   Applying the norm and using the fact that it is induced by the inner product of $V$
   we get
   \begin{gather*}
