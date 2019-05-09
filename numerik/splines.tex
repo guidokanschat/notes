@@ -64,15 +64,169 @@ Dieser Abschnitt folgt recht eng der Darstellung in \cite[Abschnitt 2.3]{Rannach
   Dann ist der Fehler der stückweisen Interpolation beschränkt ist durch
   \begin{gather}
     \norm{f-s}_{\infty;[a,b]}
-    \le C h^{k+1} \norm{f^{(k+1)}}_{\infty;[a,b]}.
+    \le \frac{C}{2^{k+1}} h^{k+1} \norm{f^{(k+1)}}_{\infty;[a,b]}.
   \end{gather}
 \end{Lemma*}
 
+\begin{Bemerkung}{scaling-interpolation-local}
+  Genauere Betrachtung der Analyse ergibt die schärfere Abschätzung
+  \begin{gather}
+    \norm{f-s}_{\infty;[a,b]}
+    \le \frac{C}{2^{k+1}} \max_{i=1,\dots,n}
+    \Bigl(h_i^{k+1}\norm{f^{(k+1)}}_{\infty;I_i}\Bigr).
+  \end{gather}  
+\end{Bemerkung}
+
 \subsection{Splines}
 
-\begin{Definition}{cubic-spline}
-  Die Interpolationsaufgabe mit kubischen \define{Splines} lautet: finde eine Funktion $s\in S_h^{(3,2)}$
+\begin{Definition}{spline-raum}
+  Für stückweise Polynome auf dem Intervall $[a,b]$ mit einer
+  Zerlegung $\mathcal I_h$ definieren wir die
+  \textbf{Spline-Räume}\index{Spline-Raum}
+  \begin{gather}
+    S^{(k,m)}_h \ \bigl\{ s\in C^m[a,b]
+    \big| s_{|I_i} \in \P_k, i=1,\dots,n\bigr\}
+  \end{gather}
+  mit $m<k$.
 \end{Definition}
+
+\begin{Lemma}{spline-raum}
+  Die Dimension von $S^{(k,m)}_h$ ist
+  \begin{gather}
+    \operatorname{dim}S^{(k,m)}_h = (k-m)n + m+1
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  Betrachten wir die $n$ Wiederholungen des Raums $\P_k$, eine für
+  jedes Intervall $I_i$, so ergibt sich $(k+1)n$.  Die Bedingung
+  $s\in C^m[a,b]$ bedeutet, dass die Werte und die ersten $m$
+  Ableitungen der Funktionen in $S^{(k,m)}$ in jedem inneren Punkt
+  $x_i$ für die beiden Intervalle $I_i$ und $I_{i+1}$
+  übereinstimmen. Daraus ergeben sich $(n-1)(m+1)$ lineare
+  Beschränkungen, so dass die Dimension $(k+1)n - (n-1)(m+1)$ ist.
+\end{proof}
+
+\begin{Definition}{cubic-spline}
+  Die Interpolationsaufgabe mit kubischen \define{Splines} lautet:
+  finde eine Funktion $s\in S_h^{(3,2)}$, so dass
+  \begin{gather}
+    s(x_i) = f_i,\qquad i=0,\dots,n.
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{cubic-spline-bc}
+  Da die Anzahl der Interpolationsbedingungen um 2 geringer ist als
+  die Dimension des Raumes $S_h^{(3,2)}$ definieren wir folgende,
+  alternative Randbedingungen:
+  \begin{description}
+  \item[Natürlich]
+    \begin{gather}
+      s''(a) = s''(b) = 0
+    \end{gather}
+  \item[Periodisch]
+    \begin{gather}
+      s'(a) = s'(b) \quad \wedge \quad s''(a) = s''(b)
+    \end{gather}
+  \item[Eingespannt]
+    \begin{gather}
+      s'(a) = f'(a) \quad \wedge \quad s'(b) = f'(b)
+    \end{gather}
+  \end{description}
+\end{Definition}
+
+\begin{Satz}{cubic-spline}
+  Die stückweise kubische Spline-Interpolierende $s\in S_h^{(3,2)}$
+  mit natürlicher Randbedingung existiert und ist eindeutig bestimmt.
+\end{Satz}
+
+\begin{proof}
+  Wie meistens beginnen wir mit der Eindeutigkeit. Seinen $s_1$ und
+  $s_2$ zwei Interpolierende der Werte $f_i$ in den Punkten $x_i$,
+  $i=0,\dots,n$ und $s=s_2-s_1$. Dann gilt
+  \begin{gather}
+    \label{eq:splines:n}
+    s \in N_h = \bigl\{ w\in C^2[a,b]
+    \;\big|\; w(x_i) = 0, \quad i=0,\dots,n \bigr\}.
+  \end{gather}
+  Zusätzlich gilt $s_{| I_i}\in \P_3$ für alle Intervalle. Wir beobachten, dass für beliebiges $w\in N_h$ gilt
+  \begin{align}
+    \int_{I_i} s''(x) w''(x)\dx
+    &= s''w'\Bigr|^{x_i}_{x_{i-1}} - \int_{I_i} s^{(3)}(x) w'(x)\dx\\
+    &= s''w'\Bigr|^{x_i}_{x_{i-1}} - s^{(3)}w \Bigr|^{x_i}_{x_{i-1}}
+      + \int_{I_i} s^{(4)}(x) w(x)\dx\\
+    &= s''w'\Bigr|^{x_i}_{x_{i-1}}.
+  \end{align}
+  Summieren wir über alle Intervalle, so ergibt sich
+  \begin{gather}
+    \int_a^b s''(x) w''(x)\dx = \sum_{i=1}^n s''w'\Bigr|^{x_i}_{x_{i-1}}
+    = s''(b) w'(b) - s''(a)w'(a).
+  \end{gather}
+  Wegen der natürlichen Randbedingung ist dies aber null. Insbesondere
+  können wir $w=s$ einsetzen und erhalten
+  \begin{gather}
+    \int_a^b \abs{s''(x)}^2 \dx = 0
+  \end{gather}
+  und $s$ muss ein lineares Polynom sein. Aus $s(a) = s(b) = 0$ folgt
+  damit $s\equiv 0$ im Widerspruch zur Annahme, dass es zwei Lösungen
+  gebe.
+
+  Nach \slideref{Lemma}{spline-raum} hat $S_h^{(3,2)}$ die Dimension
+  $n+3$. Andererseits haben wir $n+1$ Interpolationsbedingungen und 2
+  Randbedingungen, so dass aus der Eindeutigkeit die Existenz folgt.
+\end{proof}
+
+\begin{Lemma}{spline-optimality}
+  Unter allen Funktionen $f\in C^2[a,b]$ mit vorgegebenen
+  Funktionswerten $f(x_i) = y_i$, $i=0,\dots,n$ ist der natürliche
+  Spline $s\in S_h^{(3,2)}$, der diese Punkte interpoliert, diejenige
+  mit der kleinsten mittleren zweiten Ableitung, es gilt also
+  \begin{gather}
+    \int_a^b \abs{s''(x)}^d\dx \le \int_a^b \abs{f(x)}^2 \dx
+    \qquad \forall f\in C^2[a,b].
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  Siehe \cite[Satz 2.9]{Rannacher17}
+\end{proof}
+
+\begin{Lemma}{splines-konkret}
+  Sind die Polynome auf den Teilintervallen $I_i$ dargestellt durch
+  \begin{gather}
+    s_{|I_i}(x) = a_{i0} + a_{i1} (x-x_i) + a_{i2}(x-x_i)^2 + a_{i3}(x-x_i)^3,
+  \end{gather}
+  so ergeben sich für $i=1,\dots,n$ die Koeffizienten $a_{i0}$,
+  $a_{i1}$ und $a_{i3}$ der natürlichen Splines aus den Gleichungen
+  \begin{gather}
+    a_{i0} = f_i,
+    \quad a_{i1} = \tfrac{f_i-f_{i-1}}{h_i}
+    + \tfrac{h_i(2 a_{i2} + a_{i-1,2})}{3} ,
+    \quad a_{i3} = \tfrac{a_{i2} - a_{i-1,2}}{3h_i}.
+  \end{gather}
+  Die Koeffizienten $a_{i2}$ für $i=1,\dots,n-1$ lösen das Gleichungssystem
+  
+  \begin{gather}
+    \begin{pmatrix}
+      \overline{h}_2 & h_2\\
+      h_2 & \overline{h}_3 & h_3\\
+      & \ddots& \ddots& \ddots\\
+      &&h_{n-2} & \overline{h}_{n-1} & h_{n-1}\\
+      &&&h_{n-1} & \overline{h}_n
+    \end{pmatrix}
+    \begin{pmatrix}
+      a_{12}\\\\\vdots\\\\a_{n-1,2}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      3\tfrac{f_2-f_1}{h_2} - 3\tfrac{f_1-f_0}{h_1}
+      \\\\\vdots\\\\
+      3\tfrac{f_{n}-f_{n-1}}{h_n} - 3\tfrac{f_{n-1}-f_{n-2}}{h_{n-1}}
+    \end{pmatrix}
+  \end{gather}
+  mit $\overline{h}_i = 2 (h_{i-1}+h_i)$ und es gilt
+  $a_{12} = 3a_{13}h_1$ sowie $a_{n2}=0$.
+\end{Lemma}
 
 %%% Local Variables:
 %%% mode: latex
