@@ -11,4 +11,9 @@ Rannacher, R. (2017).
 \newblock Lecture Notes Mathematik. Heidelberg University Publishing,
   Heidelberg.
 
+\bibitem[Stoer, 1983]{Stoer83}
+Stoer, J. (1983).
+\newblock {\em Einführung in die Numerische Mathematik I}.
+\newblock Springer, 4 edition.
+
 \end{thebibliography}
