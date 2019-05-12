@@ -1,0 +1,69 @@
+\begin{Definition}{quadratur}
+  Eine \define{Quadraturformel} $Q_{[a,b]}(f)$ ist eine Approximation
+  des Integrals
+  \begin{gather}
+    Q_{[a,b]}(f) \approx \int_a^b f(x)\dx
+  \end{gather}
+  in der Form
+  \begin{gather}
+    Q_{[a,b]}(f) = \sum_{i=0}^n \omega_i f(x_i).
+  \end{gather}
+  Die Stützstellen $x_i$ bezeichnen wir auch als
+  \define{Quadraturpunkte}, die Zahlen $\omega_i$ als
+  \define{Quadraturgewichte}.
+
+  Lässt sich die Quadraturormel bezüglich einer Zerlegung
+  $\mathcal I_h$ des Intervalls $[a,b]$ in der Form
+  \begin{gather}
+    Q_{[a,b]}(f) = \sum_{i=1}^n Q_{I_i} (f)
+  \end{gather}
+  schreiben, so sprechen wir von \textbf{summierter},
+  \textbf{iterierter} oder \textbf{stückweiser Quadratur}.
+\end{Definition}
+
+\begin{Satz}{summierte-quadratur}
+  Sei $\mathcal I_h$ eine Zerlegung von $[a,b]$ der Feinheit $h$ und
+  $c_q$ sei so gewählt, dass
+  \begin{gather}
+    c_q \min_{I_i\in \mathcal I_h} h_i \ge h.
+  \end{gather}
+  Gilt dann für die Formeln $Q_{I_i}$ und $f\in C^{k+1}[a,b]$ die
+  Fehlerabschätzung
+  \begin{gather}
+    \left|\int_{I_i} f(x)\dx - Q_{I_i}(f)\right|
+    \le c_k h_i^{k+1} \norm{f^{k+1}}_{\infty;I_i},
+  \end{gather}
+  so gilt für die summierte Quadratur $Q_{[a,b]}$ die Abschätzung
+  \begin{gather}
+    \left|\int_a^b f(x)\dx - Q_{[a,b]}(f)\right| \le (b-a) c_q c_k h_i^{k}
+    \norm{f^{k+1}}_{\infty;[a,b]}.
+  \end{gather}
+\end{Satz}
+
+\begin{proof}
+  Das kleinste Intervall hat die Länge $h/c_q$. Damit ist die Anzahl
+  der Intervalle beshränkt durch $n_{\max}=c_q (b-a)/h$. Nutzen wir weiter
+  $\norm{f^{k+1}}_{\infty;I_i} \le \norm{f^{k+1}}_{\infty;[a,b]}$, so gilt
+  \begin{align}
+    \left|\int_a^b f(x)\dx - Q_{[a,b]}(f)\right|
+    &= \sum_{I_i\in\mathcal I_h}  \left|\int_{I_i} f(x)\dx - Q_{I_i}(f)\right|\\
+    &\le \sum_{I_i\in\mathcal I_h} c_k h^{k+1} \norm{f^{k+1}}_{\infty;I_i}\\
+    & \le n_{\max} c_k h^{k+1} \norm{f^{k+1}}_{\infty;[a,b]}\\
+    & = (b-a) c_q c_k h^{k} \norm{f^{k+1}}_{\infty;[a,b]}
+  \end{align}
+\end{proof}
+
+% \begin{Definition}{quasi-uniform}
+%   Eine Zerlegung $\I_h$ des Intervalls $[a,b]$ in $n$ Teilintervalle
+%   heißt \define{uniform}, wenn $h_i = h_k$ für alle
+%   $i,k=1,\dots,n$. Insbesondere ist dann $h_i = (b-a)/n$.
+
+%   Eine Familie von Zerlegungen heißt \define{quasi-uniform}, wenn als schwächere
+%   Bedingung gilt:
+% \end{Definition}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
