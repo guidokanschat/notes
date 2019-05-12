@@ -52,9 +52,15 @@
 \end{Lemma}
 
 \begin{Korollar}{lagrange-interpolation}
+  Die Lösung der Interpolationsaufgabe nach Lagrange eerlauben die Darstellung
+  \begin{gather}
+    p(x;f;x_0,\dots,x_n) = \sum_{i=0}^n f_i L_i(x;x_0,\dots,x_n).
+  \end{gather}
+  
   Die Lagrange-Interpolation eingeschränkt auf den Raum $\P_n$ ist die
   Identität
 \end{Korollar}
+
 \begin{remark}
   Die Lagrangesche Interpolationsaufgabe kann auch als Gaußsche
   Ausgleichsrechnung mit dem obigen Skalarprodukt aufgefasst werden.
@@ -625,11 +631,11 @@
   Für das \define{Taylor-Polynom} zu $f\in C^{n+1}(a,b)$ in einem
   Punkt $x_0\in(a,b)$,
   \begin{gather}
-    p(x) = \sum_{i=0}^n \frac{f^{i}}(x_0){i!} (x-x_0)^i
+    p(x) = \sum_{i=0}^n \frac{f^{i}(x_0)}{i!} (x-x_0)^i
   \end{gather}
   gilt die folgende Fehlerdarstellung: es gibt ein $\xi\in[x_0,x]$ so dass gilt
   \begin{gather}
-    f(x) - p(x) = \frac{f^{n+1}}(x_0){(n+1)!} (x-x_0)^{n+1}.
+    f(x) - p(x) = \frac{f^{n+1}(\xi)}{(n+1)!} (x-x_0)^{n+1}.
   \end{gather}
 \end{Korollar}
 
