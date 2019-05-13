@@ -362,6 +362,7 @@ Dieser Abschnitt folgt recht eng der Darstellung in \cite[Abschnitt 2.3]{Rannach
   Dazu untersuchen wir den Vektor $r = A(M-g) = d-Ag$. Nach
   \slideref{Lemma}{spline-invertierbar} gilt
   \begin{gather}
+    \label{eq:splines:3a}
     \norm{M-g}_\infty \le \norm{r}_\infty.
   \end{gather}
   Wir betrachten den Punkt $x_0$ und nutzen die Taylor-Interpolation
@@ -390,10 +391,10 @@ Dieser Abschnitt folgt recht eng der Darstellung in \cite[Abschnitt 2.3]{Rannach
     \abs{r_0} \le \tfrac34 \norm{f^{(4)}}_\infty h^2.
   \end{gather}
   Dasselbe gilt für $r_n = d_n - f''(x_{n-1}) - 2 f''(x_n)$. Für die
-  anderen Punkte ist mit demselben Argument
+  anderen Punkte ist mit demselben Argument und mehr Rechenaufwand
   \begin{align}
     r_i &= d_i - \mu_i f''(x_{i-1}) - 2 f''(x_i) - \lambda_i f''(x_{i+1})
-    \\
+    \\\notag
     &= \frac1{h_i+h_{i+1}} \left[
       \frac{h_{i+1}^3}{4} f^{(4)}(\xi_1)
       +\frac{h_i^3}{4} f^{(4)}(\xi_2)
@@ -403,10 +404,98 @@ Dieser Abschnitt folgt recht eng der Darstellung in \cite[Abschnitt 2.3]{Rannach
   \end{align}
   Daher ist
   \begin{gather}
-    \abs{r_i} \le \tfrac34 \norm{f^{(4)}}_\infty h^2,
+    \abs{r_i} \le \tfrac34 \norm{f^{(4)}}_{\infty;[a,b]} h^2,
     \qquad i=1,\dots,n-1.
   \end{gather}
+  Aus~\eqref{eq:splines:3a} schließen wir
+  \begin{gather}
+    \label{eq:splines:3}
+    \norm{M-g}_{\infty} \le \norm{r}_\infty
+    \le \frac34 h^2\norm{f^{(4)}}_{\infty;[a,b]}.
+  \end{gather}
+  
+  Nun zeigen wir die Behauptung des Satzes für $\nu=3$. Sei
+  $e(x) = s(x) - f(x)$. Für $x\in I_i$ ist
+  \begin{multline}
+    \label{eq:splines:4}
+    e^{(3)}(x)
+    = \frac{M_i-M_{i-1}}{h_i} - f^{(3)}(x) \\
+    = \frac{M_i-f''(x_i)}{h_i} - \frac{M_{i-1}-f''(x_{i-1})}{h_i}
+    \\
+    + \frac{f''(x_i) - f''(x) -\bigl(f''(x_{i-1}) - f''(x)\bigr)}{h_i}
+    - f^{(3)}(x).
+  \end{multline}
+  Die Werte in den Stützpunkten schätzen wir nun durch
+  Taylor-Entwicklung um $x$ ab:
+  \begin{gather}
+    \begin{split}
+    f''(x_i) &= f''(x) + f^{(3)}(x)(x_i-x)
+    + \frac{f^{(4)}(\xi_1)}{2} (x_i-x)^2
+    \\
+    f''(x_{i-1}) &= f''(x) + f^{(3)}(x)(x_{i-1}-x)
+    + \frac{f^{(4)}(\xi_1)}{2} (x_{i-1}-x)^2.
+    \end{split}
+  \end{gather}
+  Setzen wir dies und~\eqref{eq:splines:3} in~\eqref{eq:splines:4}
+  ein, so erhalten wir
+  \begin{align}
+    \notag
+    \abs{s^{(3)}(x) - f(x)^{(3)}}
+    &\le \frac32 \frac{h^2}{h_i} \norm{f^{(4)}}_{\infty;[a,b]}
+      + \frac{h_i^2}{2h_i} \norm{f^{(4)}}_{\infty;[a,b]}
+    \\
+    \label{eq:splines:5}
+    &\le 2 c h \norm{f^{(4)}}_{\infty;[a,b]}
+  \end{align}
+  Nun $\nu=2$. Sei $\tilde x\in\{x_{i-1},x_i\}$ der nächste Stützpunkt zu $x$, so dass $\abs{x-\tilde x} \l \nicefrac h2$. Es gilt für die zweiten Ableitungen
+  \begin{gather}
+    e''(x) = e''(\tilde x) + \int_{\tilde x}^x e^{(3)}(t)\dt,
+  \end{gather}
+  so dass wir mit~\eqref{eq:splines:3} und~\eqref{eq:splines:5} folgern
+  \begin{align}
+    \notag
+    \abs{s''(x) - f''(x)} &\le \frac34 h^2 \norm{f^{(4)}}_{\infty;[a,b]}
+    + ch^2 \norm{f^{(4)}}_{\infty;[a,b]}\\
+    \label{eq:splines:6}
+    &\le \frac74 ch^2 \norm{f^{(4)}}_{\infty;[a,b]}
+    .
+  \end{align}
+  Aus den Interpolationsbedingungen folgt $e(x_i) = 0$ für
+  $i=0,\dots,n$.  Damit gibt es nach dem Satz von Rolle in jedem
+  Intervall $I_i$ ein $\xi_i$ mit $e'(\xi_i) = 0$. Somit gilt für $x\in I_i$
+  \begin{gather}
+    e'(x) = \int_{\xi_i}^x e''(t)\dt
+  \end{gather}
+  und daher mit~\eqref{eq:splines:6}
+  \begin{gather}
+    \abs{s'(x) - f'(x)} \le \frac74 ch^3 \norm{f^{(4)}}_{\infty;[a,b]}.
+  \end{gather}
+  Für $\nu=0$ können wir wieder $\tilde x$ wie oben wählen und erhalten aus
+  \begin{gather}
+    e(x) = \int_{\tilde x}^x e'(t)\dt
+  \end{gather}
+  die Abschätzung
+  \begin{gather}
+    \abs{s'(x) - f'(x)} \le \frac78 ch^4 \norm{f^{(4)}}_{\infty;[a,b]}.
+  \end{gather}  
 \end{proof}
+
+\begin{remark}
+  Werte wie $\nicefrac7/4$ oder $\nicefrac7/8$ in der obigen
+  Abschätzung suggerieren, dass sie sehr scharf ist. In der Tat ist
+  das aber nur so, wenn weder $f^{4}(x)$, noch $h_i$ stark
+  variieren. Wir haben mehrfach $\norm{f^{k+1}}_{\sup;I_i}$ durch
+  $\norm{f^{k+1}}_{\sup;[a,b]}$ sowie $h_i$ durch $h/c$
+  ersetzt. Jedesmal hat sih der Fehler erhöht.
+
+  Daraus ergibt sich, dass die wesentliche Aussage der Abschätzung ist: es gilt
+  \begin{gather}
+    \norm{f^{(\nu)}-s^{(\nu)}}_{\infty;[a,b]}
+    = \mathcal O(h^{4-\nu}),
+  \end{gather}
+  wobei die Konstante von der 4. Ableitung der Funktion und
+  der Gleichmäßigkeit des Gitters abhängt.
+\end{remark}
 
 %%% Local Variables:
 %%% mode: latex

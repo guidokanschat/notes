@@ -1,3 +1,4 @@
+\subsection{Summierte Quadratur}
 \begin{Definition}{quadratur}
   Eine \define{Quadraturformel} $Q_{[a,b]}(f)$ ist eine Approximation
   des Integrals
@@ -25,7 +26,7 @@
   Gilt bei einer summierten Quadraturformel die Abschätzung
   \begin{gather}
     \left|\int_{I_i} f(x)\dx - Q_{I_i}(f)\right|
-    \le c_k h_i^{k+1} \norm{f^{k+1}}_{\infty;I_i}
+    =\bigo\left(h_i^{k+1}\right)
   \end{gather}
   für jedes Teilintervall $I_i$ und Funktionen $f\in C^{k+1}[a,b]$, so
   sprechen wir von der \textbf{lokalen
@@ -38,28 +39,48 @@
   \begin{gather}
     c_q \min_{I_i\in \mathcal I_h} h_i \ge h.
   \end{gather}
-  Sind dann die Formeln $Q_{I_i}$ von lokaler Fehlerodrdung $k+1$ und
+  Sind dann die Formeln $Q_{I_i}$ von lokaler Fehlerordnung $k+1$ für
   $f\in C^{k+1}[a,b]$, so gilt für die summierte Quadratur $Q_{[a,b]}$
   die Abschätzung
   \begin{gather}
-    \left|\int_a^b f(x)\dx - Q_{[a,b]}(f)\right| \le (b-a) c_q c_k h^{k}
-    \norm{f^{k+1}}_{\infty;[a,b]}
+    \left|\int_a^b f(x)\dx - Q_{[a,b]}(f)\right|
+    = \mathcal O\left(h^{k}\right).
   \end{gather}
-  mit der Konstanten $c_k$ aus \slideref{Definition}{lokale-fehlerordnung}.
 \end{Satz}
 
 \begin{proof}
   Das kleinste Intervall hat die Länge $h/c_q$. Damit ist die Anzahl
-  der Intervalle beshränkt durch $n_{\max}=c_q (b-a)/h$. Nutzen wir weiter
-  $\norm{f^{k+1}}_{\infty;I_i} \le \norm{f^{k+1}}_{\infty;[a,b]}$, so gilt
+  der Intervalle beschränkt durch $n_{\max}=c_q (b-a)/h$. Aus der
+  lokalen Fehlerordnung ergibt sich die Existenz einer Konstanten $c$,
+  so dass
+  \begin{gather}
+    \left|\int_{I_i} f(x)\dx - Q_{I_i}(f)\right| \le c h_i^{k+1}.
+  \end{gather}
+  Damit schätzen wir ab
   \begin{align}
     \left|\int_a^b f(x)\dx - Q_{[a,b]}(f)\right|
     &= \sum_{I_i\in\mathcal I_h}  \left|\int_{I_i} f(x)\dx - Q_{I_i}(f)\right|\\
-    &\le \sum_{I_i\in\mathcal I_h} c_k h^{k+1} \norm{f^{k+1}}_{\infty;I_i}\\
-    & \le n_{\max} c_k h^{k+1} \norm{f^{k+1}}_{\infty;[a,b]}\\
-    & = (b-a) c_q c_k h^{k} \norm{f^{k+1}}_{\infty;[a,b]}
+    &\le \sum_{I_i\in\mathcal I_h} c h^{k+1}\\
+    & \le n_{\max} c h^{k+1} = \bigo\left(h^{k}\right).
   \end{align}
 \end{proof}
+
+\begin{Definition}{grad-exaktheit}
+  Eine Quadraturformel $Q_I$ heißt \define{exakt vom Grad $k$} und $k$
+  heißt der \define{Grad der Exaktheit} von $Q_I$, wenn sie exakt für
+  alle Polynome vom Grad bis zu $k$ ist, also
+  \begin{gather}
+    \int_I p(x)\dx - Q_{I}(p) = 0 \qquad \forall p\in \P_k.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{exakt-ordnung}
+  Seid die Quadraturformel $Q_I$ exakt vom Grad $k$ und
+  $\abs{I} \le h$. Dann gilt für $f\in C^{k+1}(I)$
+  \begin{gather}
+    \left|\int_{I} f(x)\dx - Q_{I}(f)\right| = \bigo\bigl(h^{k+2}\bigr)
+  \end{gather}
+\end{Lemma}
 
 % \begin{Definition}{quasi-uniform}
 %   Eine Zerlegung $\I_h$ des Intervalls $[a,b]$ in $n$ Teilintervalle
