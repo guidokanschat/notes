@@ -381,6 +381,7 @@
 \begin{Lemma}{neumann-weak}
   Let $u\in V=H^1(\domain)$ be a solution to the weak formulation
   \begin{gather}
+    \label{eq:neumann-weak-formulation}
     \int_{\domain} \nabla u\cdot\nabla v \dx
     = \int_{\domain} fv\dx, \qquad\forall v\in V(\domain).
   \end{gather}
@@ -393,6 +394,31 @@
     \end{aligned}
   \end{gather}
 \end{Lemma}
+
+\begin{proof}
+  Let us first consider test functions $v\in H^1_0(\domain)$.
+  Then we can add a boundary term to \eqref{eq:neumann-weak-formulation}:
+  \begin{align}
+    \label{eq:neumann-weak-with-boundary}
+    \int_\domain fv \dvx
+    = \int_\domain \nabla u \cdot \nabla v \dvx
+    = \int_\domain \nabla u \cdot \nabla v \dvx - \int_{\d\domain} \d_n u v \ds.
+  \end{align}
+  Applying integration by parts we get
+  \begin{align*}
+    - \int_\domain \Delta uv \dvx = \int_\domain fv \dvx.
+  \end{align*}
+  This gives us $-\Delta u = f$ in $\domain$ for $u\in H^1_0(\domain)$.
+  Subtracting equation \eqref{eq:neumann-weak-with-boundary} from
+  \eqref{eq:neumann-weak-formulation} we obtain
+  \begin{align*}
+    \int_{\d\domain} \d_n u v \ds = 0.
+  \end{align*}
+  As we actually wanted to solve in $H^1(\domain)$ we will test
+  the boundary term with functions $v\in H^1(\domain)$.
+  Hence, we have $\partial_n u = 0$ on $\d\domain$ and
+  $-\Delta u = f$ in $\domain$ for $u\in H^1(\domain)$.  
+\end{proof}
 
 \begin{Definition}{natural-bc}
   A boundary condition inherent in the weak formulation and not
@@ -410,23 +436,50 @@
   for essential and natural boundary conditions, respectively.
 \end{remark}
 
-\begin{Lemma}{mixed-bc-weak}
+\begin{Example}{mixed-bc-weak}
   The boundary value problem
   \begin{gather}
+    \label{eq:ex-ess-bc}
     \begin{aligned}
       -\Delta u &= f &\qquad \text{in } &\domain\\
       u &= 0 &\text{on } &\Gamma_D \subset \d\domain\\
       \d_n u + \alpha u &= g &\text{on } &\Gamma_R \subset \d\domain,
     \end{aligned}
   \end{gather}
-  has the weak form: find $u\in V$ such that
+  with $\Gamma_D\dot\cup\ \Gamma_R = \d\domain$ has the weak form: find $u\in V$ such that
   \begin{gather}
     \int_{\domain} \nabla u\cdot\nabla v \dx
     + \int_{\Gamma_R}\alpha u v \ds
     = \int_{\domain} f v\dx
     + \int_{\Gamma_R} g v \ds, \qquad\forall v\in V(\domain).    
   \end{gather}
-\end{Lemma}
+\end{Example}
+
+\begin{proof}
+  Let $v\in V(\Omega)$ be arbitrary. Multiply $-\Delta u = f$ by $v$ and
+  integrate, which yields
+  \begin{gather*}
+    \begin{aligned}
+      \int_\domain fv \dx &= \int_\domain -\Delta u v\dx = \int_\domain \nabla u \cdot \nabla v\dx - \int_{\d\domain} \d_n u v \ds \\
+      &= \int_\domain \nabla u \cdot \nabla v \dx - \underbrace{\int_{\Gamma_D} \d_n u v \ds}_{=0} - \int_{\Gamma_R} \d_n u \ds \\
+      &= \int_\domain \nabla u \cdot \nabla v \dx - \int_{\Gamma_R} (g - \alpha u) v\ds.
+      \end{aligned}
+  \end{gather*}
+  Reordering gives a symmetric right hand side and a left hand
+  side which is independent of $u$, that is
+  \begin{gather*}
+    \int_{\domain} \nabla u\cdot\nabla v \dx
+    + \int_{\Gamma_R}\alpha u v \ds
+    = \int_{\domain} f v\dx
+    + \int_{\Gamma_R} g v \ds, \qquad\forall v\in V(\domain).
+  \end{gather*}
+\end{proof}
+
+\begin{remark}
+  In \slideref{Example}{mixed-bc-weak} essential boundary conditions are shown
+  and \slideref{Lemma}{neumann-weak} can be understood as an example for natural
+  boundary conditions.
+\end{remark}
 
 %%% Local Variables: 
 %%% mode: latex
