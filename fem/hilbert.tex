@@ -2,7 +2,7 @@
  In this section we discuss important properties of Hilbert spaces and
  solvability of PDEs in Hilbert spaces. This will lead us to
   \slideref{Lemma}{weak-well-posed},
-  which describes a special case of elliptic PDEs.
+  which describes elliptic PDEs.
   As we will only consider elliptic PDEs in this lecture, this is
   one of the most important results.
 \end{intro}
@@ -529,7 +529,7 @@
 %% \end{proof}
 
 \begin{Lemma}{weak-well-posed}
-  Let $a_{ij},c\in L^\infty(\domain), b_i\in C^1(\overline{\domain})$ such
+  Let $a_{ij}, c\in L^\infty(\domain)$, $b_i \in C^1(\overline{\domain})$ such
   that there holds for a positive constant $\alpha$
   \begin{gather}
     \label{eq:hilbert:elliptic}
@@ -564,7 +564,7 @@
   \begin{align*}
     \int_\domain \vb(\vx)\cdot\nabla u v \dvx \le \int_\domain \abs{\vb(\vx)}\abs{\nabla u}v\dvx.
   \end{align*}
-  Now we can use $b_i\in C^2(\overline{\domain})$ and Bunyakovsky-Cauchy-Schwarz
+  Now we can use $b_i\in C^2(\overline{\domain})$ and the Bunyakovsky-Cauchy-Schwarz
   inequality which leads to
   \begin{align*}
     (\vb(\vx)\cdot\nabla u,v)_{L^2}&\le \int_\domain\abs{\vb(\vx)}\abs{\nabla u}v\dvx \\
