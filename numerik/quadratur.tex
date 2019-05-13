@@ -21,23 +21,31 @@
   \textbf{iterierter} oder \textbf{stückweiser Quadratur}.
 \end{Definition}
 
+\begin{Definition}{lokale-fehlerordnung}
+  Gilt bei einer summierten Quadraturformel die Abschätzung
+  \begin{gather}
+    \left|\int_{I_i} f(x)\dx - Q_{I_i}(f)\right|
+    \le c_k h_i^{k+1} \norm{f^{k+1}}_{\infty;I_i}
+  \end{gather}
+  für jedes Teilintervall $I_i$ und Funktionen $f\in C^{k+1}[a,b]$, so
+  sprechen wir von der \textbf{lokalen
+    Fehlerordnung}\index{Fehlerordnung|lokal} $k+1$.
+\end{Definition}
+
 \begin{Satz}{summierte-quadratur}
   Sei $\mathcal I_h$ eine Zerlegung von $[a,b]$ der Feinheit $h$ und
   $c_q$ sei so gewählt, dass
   \begin{gather}
     c_q \min_{I_i\in \mathcal I_h} h_i \ge h.
   \end{gather}
-  Gilt dann für die Formeln $Q_{I_i}$ und $f\in C^{k+1}[a,b]$ die
-  Fehlerabschätzung
+  Sind dann die Formeln $Q_{I_i}$ von lokaler Fehlerodrdung $k+1$ und
+  $f\in C^{k+1}[a,b]$, so gilt für die summierte Quadratur $Q_{[a,b]}$
+  die Abschätzung
   \begin{gather}
-    \left|\int_{I_i} f(x)\dx - Q_{I_i}(f)\right|
-    \le c_k h_i^{k+1} \norm{f^{k+1}}_{\infty;I_i},
+    \left|\int_a^b f(x)\dx - Q_{[a,b]}(f)\right| \le (b-a) c_q c_k h^{k}
+    \norm{f^{k+1}}_{\infty;[a,b]}
   \end{gather}
-  so gilt für die summierte Quadratur $Q_{[a,b]}$ die Abschätzung
-  \begin{gather}
-    \left|\int_a^b f(x)\dx - Q_{[a,b]}(f)\right| \le (b-a) c_q c_k h_i^{k}
-    \norm{f^{k+1}}_{\infty;[a,b]}.
-  \end{gather}
+  mit der Konstanten $c_k$ aus \slideref{Definition}{lokale-fehlerordnung}.
 \end{Satz}
 
 \begin{proof}
