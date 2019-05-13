@@ -487,22 +487,68 @@
   is implied.
 \end{Lemma}
 
-\begin{Lemma*}{cea}{Céa}
-  Let $a(.,.)$ be a bounded and elliptic bilinear form on the Hilbert
-  space $V$.  Let $u \in V$ and $u_n\in V_n \subset V$ be
-  the solution to the weak formulation and its Galerkin approximation
+\begin{proof}
+  Since coercivity and boundedness hold for all $u,v\in V$ they hold
+  in particular for all $u,v\in V_n$.
+\end{proof}
+
+\begin{Lemma}{galerkin-ortho}
+  Let $a(.,.)$ be a bilinear form on the Hilbert
+  space $V$.
+  Let $u \in V$ and $u_n\in V_n \subset V$ be the solution to the
+  weak formulation and its Galerkin approximation
   \begin{gather*}
     \begin{aligned}
       a(u,v) &= f(v) & \qquad\forall v&\in V,\\
       a(u_n,v_n) &= f(v_n) & \qquad\forall v_n&\in V_n,
     \end{aligned}
   \end{gather*}
+  respectively. Then, there holds the \define{Galerkin orthogonality}
+  \begin{align}
+    \label{eq:galerkin-ortho}
+    a(u-u_n,v_n) = 0 \qquad \forall v_n\in V_n.
+  \end{align}
+\end{Lemma}
+
+\begin{proof}
+  As $v_n\in V_n$ there holds $a(u,v_n)=f(v_n)$, too.
+  Then, there holds for an arbitrary $v_n\in V_n$
+  \begin{gather*}
+    a(u-u_n,v_n)=a(u,v_n)-a(u_n,v_n)=f(v_n)-f(v_n)=0.
+  \end{gather*}
+\end{proof}
+
+\begin{Lemma*}{cea}{Céa}
+  Let $a(.,.)$ be a bounded and elliptic bilinear form on the Hilbert
+  space $V$.  Let $u \in V$ and $u_n\in V_n \subset V$ be
+  the solution to the weak formulation and its Galerkin approximation
   respectively. Then, there holds
   \begin{gather}
     \norm{u-u_h}_V \le \frac{M}{\alpha}
     \inf_{v_n\in V_n}\norm{u-v_h}_V.
   \end{gather}
 \end{Lemma*}
+
+\begin{proof}
+  As $a(.,.)$ is coercive with $\alpha>0$ and bounded with $M>0$
+  we get for arbitrary $v_n\in V_n$
+  \begin{gather*}
+    \begin{aligned}
+      \alpha \norm{u-u_n}_V^2 &\le a(u-u_n,u-u_n) = a(u-u_n,u-v_n+v_n-u_n) \\
+      &= a(u-u_n,u-v_n) + \underbrace{a(u-u_n,v_n-u_n)}_{=0} \\
+      &\le M \norm{u-u_n}_V \norm{u-v_n}_V.
+    \end{aligned}
+  \end{gather*}
+  In the second line we applied the Galerkin orthogonality
+  as $v_n-u_n\in V_n$. Dividing by $\norm{u-u_n}_V$ there holds
+  \begin{gather*}
+    \norm{u-u_n}_V \leq \frac{M}{\alpha} \norm{u-v_n}_V.
+  \end{gather*}
+  As $v_n\in V_n$ was chosen arbitrary, we conclude
+  \begin{gather*}
+    \norm{u-u_n}_V \le \inf_{v_n\in V_n} \norm{u-v_n}_V.
+  \end{gather*}
+\end{proof}
 
 \begin{Lemma}{fe-matrix}
   For a finite element discretization of Poisson's equation with the
