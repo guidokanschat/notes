@@ -390,6 +390,12 @@
   \end{gather}
 \end{Definition}
 
+\begin{notation}
+  One often speaks of \define{$V$-elliptic} instead of elliptic to
+  point out that the ellipticity of the bilinear form indeed depends
+  on the scalarproduct inducing the $V$-norm.
+\end{notation}
+
 \begin{Lemma}{pde-bilinear}
   Let $a_{ij} \in C^1(\domain)$, $b_i, c\in C^0(\domain)$. A solution
   to the Dirichlet problem
@@ -443,54 +449,55 @@
   i.\,e. there holds $a(u_1,v)=f(v)$ and $a(u_2,v)=f(v)$ for all $v\in V$.
   Thus, $a(u_1-u_2,v)=0$ for all $v\in V$.
   Now choose $v=u_1-u_2\in V$.
-  Since $a(.,.)$ is coercive with $\alpha>0$ it holds
+  Since $a(.,.)$ is coercive with $\alpha>0$ there holds
   \begin{gather*}
     0 = a(u_1-u_2,u_1-u_2)\geq \alpha \norm{u_1-u_2}_{V}^2 
   \end{gather*}
   which implies $u_1-u_2=0$. Hence $u_1=u_2$.
 
   Let us now consider the existence of a solution.
-  We will define a linear functional to apply Riesz and Banach fixed point theorem.
-  For all $y\in V$ there holds
+  We will define a linear functional to apply Riesz representation theorem
+  and Banach fixed point theorem.
+  For all $y\in V$ define
   \begin{gather*}
     \scal(y,\cdot) - \omega\left[a(y,\cdot) -f(\cdot)\right] \in V^*
   \end{gather*}
   with $\omega>0$.
-  Due to Riesz there exists an isomorphism $\rho:V\rightarrow V^*$ that maps a given $z\in V$ to
-  $\scal(y,\cdot) - \omega \left[ a(y,\cdot)-f(\cdot) \right]$ such that
+  Due to Riesz representation theorem there exists an isomorphism $\rho:V^*\rightarrow V$
+  that maps a given $\scal(y,\cdot) - \omega \left[ a(y,\cdot)-f(\cdot) \right]$
+  to $z\in V$ such that
   \begin{gather*}
     \scal(v,z) = \scal(y,v) - \omega\left[a(y,v) - f(v) \right] \qquad \forall v\in V.
   \end{gather*}
-  Now we define the mapping $T_\omega:V\rightarrow V$ that maps $y\mapsto z$ and
-  define $S:V\rightarrow V$ such that
+  Now we define the operator $T_\omega:V\rightarrow V$ that maps $y\mapsto z$ and
+  define $A:V\rightarrow V$ such that
   \begin{gather*}
-    \scal(Su,v) = a(u,v) \qquad \forall v\in V 
+    \scal(Au,v) = a(u,v) \qquad \forall v\in V 
   \end{gather*}
-  with $\norm{Su}_V \leq M \norm{u}_V$ for $M>0$.
-  Now consider $y-x$ instead of $y$.
+  with $\norm{Au}_V \leq M \norm{u}_V$ for $M>0$.
   This leads for all $v\in V$ to
   \begin{gather*}
-    \scal(T_\omega y - T_\omega x,v)
-    = \scal(y-x,v) - \omega\left[a(y-x,v) \right]
-    = \scal(y-x,v) - \omega \scal(S(y-x),v).
+    \scal(T_\omega y,v)
+    = \scal(y,v) - \omega\left[a(y,v) \right]
+    = \scal(y,v) - \omega \scal(Ay,v).
   \end{gather*}
-  Thus, we can conclude that $T_\omega (y-x)=y-x-\omega S(y-x)$.
+  Thus, we can conclude that $T_\omega y=y-\omega Ay$.
   Applying the norm and using the fact that it is induced by the inner product of $V$
   we get
   \begin{gather*}
     \begin{aligned}
-      \norm{T_\omega y - T_\omega x}_V^2 &= \norm{y-x}_V^2 - 2 \omega \scal(S(y-x),y-x) + \omega^2 \norm{S(y-x)}^2 \\
+      \norm{T_\omega y - T_\omega x}_V^2 &= \norm{y-x}_V^2 - 2 \omega \scal(A(y-x),y-x) + \omega^2 \norm{A(y-x)}^2 \\
       &\leq \norm{y-x}^2 - 2\omega a(y-x,y-x) + \omega^2 M^2 \norm{y-x}^2 \\
       &\leq (1-2\omega\alpha + \omega^2 M^2) \norm{y-x}^2.
     \end{aligned}
   \end{gather*}
   As we want to apply Banach fixed point theorem, we need $T_\omega$ to be a contraction.
-  Therefore, we need $1-2\omega\alpha + \omega^2 M^2 < 1$ which is given for
-  $\omega\in\left(0,\frac{2\alpha}{M^2}\right)$.
-  Hence, $T_\omega$ is a contraction and there exists a $\nu\in V$ such that $T_\omega \nu = \nu$
-  and $\scal(T_\omega \nu,\nu) = \scal(\nu,\nu) - \omega\left[ a(\nu,v) - f(v) \right]$
-  which implies $a(\nu,v)=f(v)$.
-  Thus, there exists a solution $\nu$.
+  Therefore, we need $1-2\omega\alpha + \omega^2 M^2 < 1$.
+  Hence, if we choose $\omega\in\left(0,\frac{2\alpha}{M^2}\right)$, then $T_\omega$ is a
+  contraction and there exists a $u\in V$ such that $T_\omega u = u$
+  and $\scal(T_\omega u,u) = \scal(u,u) - \omega\left[ a(u,v) - f(v) \right]$
+  which implies $a(u,v)=f(v)$.
+  Thus, there exists a solution $u$.
 
   Now the stability estimate \eqref{eq:hilbert:lax-milgram-estimate} is left to prove.
   Using the coercivity of our bilinear form yields

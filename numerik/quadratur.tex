@@ -1,0 +1,98 @@
+\subsection{Summierte Quadratur}
+\begin{Definition}{quadratur}
+  Eine \define{Quadraturformel} $Q_{[a,b]}(f)$ ist eine Approximation
+  des Integrals
+  \begin{gather}
+    Q_{[a,b]}(f) \approx \int_a^b f(x)\dx
+  \end{gather}
+  in der Form
+  \begin{gather}
+    Q_{[a,b]}(f) = \sum_{i=0}^n \omega_i f(x_i).
+  \end{gather}
+  Die Stützstellen $x_i$ bezeichnen wir auch als
+  \define{Quadraturpunkte}, die Zahlen $\omega_i$ als
+  \define{Quadraturgewichte}.
+
+  Lässt sich die Quadraturormel bezüglich einer Zerlegung
+  $\mathcal I_h$ des Intervalls $[a,b]$ in der Form
+  \begin{gather}
+    Q_{[a,b]}(f) = \sum_{i=1}^n Q_{I_i} (f)
+  \end{gather}
+  schreiben, so sprechen wir von \textbf{summierter},
+  \textbf{iterierter} oder \textbf{stückweiser Quadratur}.
+\end{Definition}
+
+\begin{Definition}{lokale-fehlerordnung}
+  Gilt bei einer summierten Quadraturformel die Abschätzung
+  \begin{gather}
+    \left|\int_{I_i} f(x)\dx - Q_{I_i}(f)\right|
+    =\bigo\left(h_i^{k+1}\right)
+  \end{gather}
+  für jedes Teilintervall $I_i$ und Funktionen $f\in C^{k+1}[a,b]$, so
+  sprechen wir von der \textbf{lokalen
+    Fehlerordnung}\defindex{Fehlerordnung}\defindex{lokale Fehlerordnung} $k+1$.
+\end{Definition}
+
+\begin{Satz}{summierte-quadratur}
+  Sei $\mathcal I_h$ eine Zerlegung von $[a,b]$ der Feinheit $h$ und
+  $c_q$ sei so gewählt, dass
+  \begin{gather}
+    c_q \min_{I_i\in \mathcal I_h} h_i \ge h.
+  \end{gather}
+  Sind dann die Formeln $Q_{I_i}$ von lokaler Fehlerordnung $k+1$ für
+  $f\in C^{k+1}[a,b]$, so gilt für die summierte Quadratur $Q_{[a,b]}$
+  die Abschätzung
+  \begin{gather}
+    \left|\int_a^b f(x)\dx - Q_{[a,b]}(f)\right|
+    = \mathcal O\left(h^{k}\right).
+  \end{gather}
+\end{Satz}
+
+\begin{proof}
+  Das kleinste Intervall hat die Länge $h/c_q$. Damit ist die Anzahl
+  der Intervalle beschränkt durch $n_{\max}=c_q (b-a)/h$. Aus der
+  lokalen Fehlerordnung ergibt sich die Existenz einer Konstanten $c$,
+  so dass
+  \begin{gather}
+    \left|\int_{I_i} f(x)\dx - Q_{I_i}(f)\right| \le c h_i^{k+1}.
+  \end{gather}
+  Damit schätzen wir ab
+  \begin{align}
+    \left|\int_a^b f(x)\dx - Q_{[a,b]}(f)\right|
+    &= \sum_{I_i\in\mathcal I_h}  \left|\int_{I_i} f(x)\dx - Q_{I_i}(f)\right|\\
+    &\le \sum_{I_i\in\mathcal I_h} c h^{k+1}\\
+    & \le n_{\max} c h^{k+1} = \bigo\left(h^{k}\right).
+  \end{align}
+\end{proof}
+
+\begin{Definition}{grad-exaktheit}
+  Eine Quadraturformel $Q_I$ heißt \define{exakt vom Grad $k$} und $k$
+  heißt der \define{Grad der Exaktheit} von $Q_I$, wenn sie exakt für
+  alle Polynome vom Grad bis zu $k$ ist, also
+  \begin{gather}
+    \int_I p(x)\dx - Q_{I}(p) = 0 \qquad \forall p\in \P_k.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{exakt-ordnung}
+  Seid die Quadraturformel $Q_I$ exakt vom Grad $k$ und
+  $\abs{I} \le h$. Dann gilt für $f\in C^{k+1}(I)$
+  \begin{gather}
+    \left|\int_{I} f(x)\dx - Q_{I}(f)\right| = \bigo\bigl(h^{k+2}\bigr)
+  \end{gather}
+\end{Lemma}
+
+% \begin{Definition}{quasi-uniform}
+%   Eine Zerlegung $\I_h$ des Intervalls $[a,b]$ in $n$ Teilintervalle
+%   heißt \define{uniform}, wenn $h_i = h_k$ für alle
+%   $i,k=1,\dots,n$. Insbesondere ist dann $h_i = (b-a)/n$.
+
+%   Eine Familie von Zerlegungen heißt \define{quasi-uniform}, wenn als schwächere
+%   Bedingung gilt:
+% \end{Definition}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

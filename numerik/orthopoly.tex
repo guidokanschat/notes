@@ -1,0 +1,385 @@
+\section{Polynomräume}
+
+\begin{Satz}{nullstellen}
+  Ein reelles Polynom vom Grad $n$ hat höchstens $n$ Nullstellen oder es ist das Nullpolynom.
+\end{Satz}
+
+\begin{proof}
+  Für $n=1$ handelt es sich um ein lineares Polynom und die Aussage
+  des Satzes ist unmittelbar klar. Sei nun $p$ ein Polynom strikt vom
+  Grad $n>1$ mit Nullstelle $x_0$. Dann gibt es nach dem euklidischen
+  Algorithmus zur Division mit Rest ein Polynom $q$ vom Grad $n-1$ und
+  eine Konstante $c$, so dass
+  \begin{gather}
+    p(x) = (x-x_0)q(x)+c.
+  \end{gather}
+  Daraus folgt $p(x_0) = c$, so dass folgt $c=0$. Wir können dieses
+  Verfahren für alle weiteren Nullstellen $x_1,\dots,x_m$ wiederholen
+  und erhalten
+  \begin{gather}
+    p(x) =  r(x) \prod_{k=0}^m (x-x_i),
+  \end{gather}
+  wobei $r(x)$ ein Polynom vom Grad $n-m$ sein muss, da $p$ vom Grad
+  $n$ ist. Insbesondere muss gelten $m\le n$.
+\end{proof}
+
+\begin{Korollar}{monome-linear-unabhaengig}
+  Zwei reelle Polynome vom Grad $n$ sind identisch, wenn sie in
+  mindestens $n+1$ Punkten übereinstimmen. Insbesondere ist jede Menge
+  von Monomen $\{x^{k_0}, x^{k_1},\dots,x^{k_n}\}$ für paarweise
+  verschiedene Exponenten $k_i$ linear unabhängig.
+\end{Korollar}
+
+\begin{Satz}{polynomraum}
+  Die Polynome vom maximalen Grad $n$ bilden einen Vektorraum der
+  Dimension $n+1$.  Wir bezeichnen ihn mit $\P_n$.
+\end{Satz}
+
+\section{Skalarprodukt und Orthogonalität}
+\begin{Definition}{skalarprodukt}
+  Sei $V$ ein reeller Vektorraum. Eine Abbildung
+  $a\colon V \times V \to \R$ heißt \define{Bilinearform}, wenn für
+  $u,v,w\in V$ und $\alpha,\beta\in \R$ gilt
+  \begin{align}
+    a(\alpha u + \beta v,w) &= \alpha a(u,w) + \beta a(v,w)\\
+    a(w,\alpha u + \beta v) &= \alpha a(w,u) + \beta a(w,v).
+  \end{align}
+  Eine Bilinearform heißt \define{symmetrisch}, wenn für $u,v\in V$ gilt
+  \begin{gather}
+    a(u,v) = a(v,u).
+  \end{gather}
+  Sie heißt \define{positiv semi-definit}, wenn $a(u,u) \ge 0$ für alle
+  $u\in V$ und \define{positiv definit}, wenn zusätzlich
+  \begin{gather}
+    a(u,u) = 0 \quad \Longrightarrow \quad u=0.
+  \end{gather}
+  Eine symmetrische, positiv definite Bilinearform heißt
+  \define{Skalarprodukt}, in der Regel notiert als $\scal(\cdot,\cdot)$.
+\end{Definition}
+
+\begin{Lemma}{hilbertnorm}
+  Sei $V$ ein reeller Vectorraum mit Skalarprodukt
+  $\scal(\cdot,\cdot)$. Dann ist durch
+  \begin{gather}
+    \norm{u} = \sqrt{\scal(u,u)}
+  \end{gather}
+  auf $V$ eine Norm definiert. Ein reeller Vektorraum $V$ mit
+  Skalarprodukt und zugehöriger Norm heißt \define{euklidischer
+    Vektorraum}.
+\end{Lemma}
+
+\begin{Lemma*}{l2-norm}{$L^2$-Skalarprodukt}
+  Auf dem Raum $V=\P_n$ der reellen Polynome vom Grad bis zu $n$ ist durch
+  \begin{gather}
+    \scal(p,q) = \int_{-1}^1 p(x)q(x)\dx
+  \end{gather}
+  ein Skalarprodukt definiert.
+\end{Lemma*}
+
+\begin{Definition}{orthogonal}
+  Zwei Vektoren $u,v\in V$ heißen \define{orthogonal}, wenn
+  \begin{gather}
+    \scal(u,v) = 0.
+  \end{gather}
+  Ein Vektor $u\in V$ ist orthogonal zum Untervektorraum $W\subset V$, wenn
+  \begin{gather}
+    \scal(u,v) = 0\quad\forall v\in W.
+  \end{gather}
+\end{Definition}
+
+\begin{Notation}{euklidischer-vr}
+  Von nun an bezeichnet $V$ immer einen endlichdimensionalen, reellen,
+  euklidischen Vektorraum.
+\end{Notation}
+
+\begin{Lemma*}{bcs}{Bunjakowski-Cauchy-Schwarzsche Ungleichung}
+  Für zwei beliebige Elemente $u,v\in V$ gilt
+  \begin{gather}
+    \scal(u,v) \le \norm{u}\,\norm{v}.
+  \end{gather}
+  Gleichheit gilt genau dann, wenn $u$ und $v$ kollinear sind, also
+  $v=\alpha u$ mit einem skalaren Faktor $\alpha$.
+\end{Lemma*}
+
+\begin{proof}
+  Lineare Algebra, auch Wikipedia.
+\end{proof}
+
+\begin{Lemma*}{pythagoras}{Pythagoras}
+  Seien zwei Vektoren $u\in V$ und $v\in V$ orthogonal zueinander. Dann gilt
+  \begin{gather}
+    \norm{u+v}^2 = \norm{u}^2 + \norm{v}^2
+  \end{gather}
+\end{Lemma*}
+
+\begin{proof}
+  Hausaufgabe.
+\end{proof}
+
+\section{Bestapproximation und orthogonale Projektion}
+\begin{Definition}{bestapproximation}
+  Sei $A\subset V$ ein affiner Unterraum eines euklidischen
+  Vektorraums. Dann ist die Bestapproximation $u_b\in A$ eines Vektors
+  $u\in V$ in $A$ definiert durch die Beziehung
+  \begin{gather}
+    \norm{u-u_b} = \min_{v\in A} \norm{u-v}.
+  \end{gather}
+\end{Definition}
+
+\begin{Satz}{bestapproximation}
+  Sei $A=w+W$ ein nichtleerer, affiner Unterraum von $V$.  Dann
+  existiert die Bestapproximation nach
+  \slideref{Definition}{bestapproximation} und ist eindeutig
+  bestimmt. Es gilt die notwendige und hinreichende Bedingung
+  \begin{gather}
+    \scal(u-u_b,v) = 0 \quad \forall v\in W.
+  \end{gather}
+\end{Satz}
+
+\begin{proof}
+  Siehe \cite[Satz 2.14]{Rannacher17} oder \cite[Satz 3.4]{DeuflhardHohmann08}.
+\end{proof}
+
+\begin{Definition}{komplement-projektion}
+  Sei $W \subset V$ ein Untervektorraum. Dann gilt
+  $V = W \oplus W^\perp$, wobei das \define{orthogonale Komplement}
+  $W^\perp$ eindeutig definiert ist durch
+  \begin{gather}
+    W^\perp = \bigl\{ v\in V \big| \scal(v,w) = 0 \quad\forall w\in W\bigr\}.
+  \end{gather}
+  Die Lösung $\Pi_W u = u_b\in W$ der Bestaproximationsaufgabe nennen
+  wir die \define{orthogonale Projektion} von $u\in V$ auf $W$.
+\end{Definition}
+
+\begin{lemma}
+  Das orthogonale Komplement und die orthogonale Projektion sind wohldefiniert.
+\end{lemma}
+
+\begin{proof}
+  \slideref{Satz}{bestapproximation}.
+\end{proof}
+
+\begin{Beispiel}{polynom-bestapproximation}
+  Die Aufgabe der Gaußschen Ausgleichsrechnung lautet: finde zu einer
+  gegebenen Funktion $f$ das Polynom vom Grad höchstens $n$, das auf
+  dem Intervall $[-1,1]$ den mittleren quadratischen Abstand
+  minimiert, also $p\in \P_n$ mit
+  \begin{gather}
+    \int_{-1}^1 \bigl(f(x)-p(x)\bigr)^2 \dx
+    = \min_{q\in \P_n} \int_{-1}^1 \bigl(f(x)-q(x)\bigr)^2 \dx.
+  \end{gather}
+  Die Lösung erfüllt
+  \begin{gather}
+    \int_{-1}^1 p(x)q(x) \dx = \int_{-1}^1 f(x)q(x) \dx
+    \qquad\forall q\in \P_n.
+  \end{gather}
+\end{Beispiel}
+
+\section{Orthogonale Basen}
+
+\begin{Lemma}{gram-system}
+  Wählt man eine Basis $\{\phi_i\}$ für $W$, so transformiert wird die
+  Orthogonalitätsbedingung in \slideref{Satz}{bestapproximation} zum
+  linearen Gleichungssystem
+  \begin{gather}
+    \matg\vx = \vb.
+  \end{gather}
+  Hier sind $\vx$ der Koeffizientenvektor der Lösung $u_b$, $\matg$ die
+  \define{Gramsche Matrix} und $\vb$ die rechte Seite gegeben durch
+\begin{gather}
+  g_{ij} = \scal(\phi_i,\phi_j), \qquad
+  b_i = \scal(u,\phi_i).
+\end{gather}
+\end{Lemma}
+
+\begin{remark}
+  Das Gleichungssystem hängt nur von der Wahl einer Basis in $W$ ab,
+  nicht in $V$.
+\end{remark}
+
+\begin{Definition}{ortho-system}
+  Eine Menge von Vektoren $\{\phi_1,\dots,\phi_n\}\subset V$ bildet
+  ein \define{Orthogonalsystem}, wenn
+  \begin{gather*}
+    \scal(\phi_i,\phi_j) = 0
+    \qquad \forall 1\le i < j \le n.
+  \end{gather*}
+  Sie ist ein \define{Orthonormalsystem}, wenn zusätzlich
+  $\norm{\phi_i} = 1$ für alle Elemente gilt. Ein Orthonormalsystem, das eine Basis bildet, heißt \define{Orthonormalbasis} (\define{ONB}).
+\end{Definition}
+
+\begin{Lemma}{ortho-lu}
+  Jedes Orthogonalsystem ist linear unabhängig.
+\end{Lemma}
+
+\begin{Lemma*}{parseval}{Parsevalsche Gleichung}
+  Sei $\{\phi_i\}$ für $i=1,\dots,n$ eine ONB von $V$. dann gilt für
+  jedes $v\in V$ mit der Basisdarstellung
+  \begin{gather}
+    v = \sum_{i=1}^n x_i \phi_i
+  \end{gather}
+  die Identität
+  \begin{gather}
+    \norm{v}^2 = \sum_{i=1}^n x_i^2.
+  \end{gather}
+\end{Lemma*}
+\begin{Lemma}{least-squares-orthogonal}
+  Bezüglich einer ONB ist die Gramsche Matrix die
+  Einheitsmatrix. Damit berechnen sich die Einträge des
+  Koeffizientenvektors $\vx$ in \slideref{Lemma}{gram-system} durch
+  die einfache Formel
+  \begin{gather}
+    x_i = b_i = \scal(u,\phi_i).
+  \end{gather}
+\end{Lemma}
+
+\begin{Theorem*}{gram-schmidt}{Gram-Schmidt-Verfahren}
+  Jede linear unabhängige Menge von Vektoren
+  $\{v_1,\dots,v_n\}\subset V$ wird mit dem folgenden Verfahren in ein
+  Orthonormalsystem $\{\phi_1,\dots,\phi_n\}\subset V$ umgeformt:
+  \begin{gather}
+    \begin{aligned}
+      \phi_1 &= \tfrac1{\norm{v_1}} \,v_1\\
+      w_j &= v_j - \sum_{i=1}^{j-1} \scal(v_j,\phi_i)\,\phi_i
+      & \quad \phi_j &= \tfrac1{\norm{w_j}}\, w_j
+      &\quad j=2,\dots,n
+    \end{aligned}
+  \end{gather}
+  Für alle $1\le k \le n$ gilt
+  \begin{gather}
+    \operatorname{span}\{\phi_1,\dots,\phi_k\}
+    =
+    \operatorname{span}\{v_1,\dots,v_k\}
+  \end{gather}
+\end{Theorem*}
+
+\begin{proof}
+  Siehe \cite{Rannacher17}.
+\end{proof}
+
+\begin{Algorithmus*}{gram-schmidt}{Gram-Schmidt}
+  \lstinputlisting{code/gram-schmidt.py}
+\end{Algorithmus*}
+
+\begin{Beispiel}{gram-schmidt}
+  Wir wählen für Polynome das $L^2$-Skalarprodukt aus
+  \slideref{Lemma}{l2-norm} und die Basis $\{1,x,\dots,x^{n-1}\}$
+  für $\P_{n-1}$. Wir verwenden die Iplementation in
+  \slideref{Algorithmus}{gram-schmidt} und messen den Erfolg nach der
+  Größe der Nebendiagonaleinträge der Gramschen Matrix.
+  \begin{center}
+    \begin{tabular}{c|c}
+      $n$ & $\max_{i\neq j} \abs{g_{ij}}$ \\
+      \hline
+      5 & $8.9\cdot 10^{-16}$ \\
+      10 & $9.1\cdot 10^{-12}$ \\
+      15 & $1.2\cdot 10^{-7}$ \\
+      20 & $0.23$
+    \end{tabular}
+  \end{center}
+\end{Beispiel}
+
+\begin{Algorithmus*}{mgs}{Modifizierter Gram-Schmidt}
+  \lstinputlisting{code/modified-gram-schmidt.py}  
+\end{Algorithmus*}
+
+\begin{Beispiel}{gs-mgs}
+  In dieser Tabelle wiederholen wir die Zahlen
+  $\max_{i\neq j} \abs{g_{ij}}$ aus \slideref{Beispiel}{gram-schmidt}
+  und stellen sie den entsprechenden Ergebnissen des modifizierten
+  Verfahrens in \slideref{Algorithmus}{mgs} gegenüber.
+  \begin{center}
+    \begin{tabular}{c|cc}
+      $n$ &  Gram-Schmidt & modifiziert\\
+      \hline
+      5 & $8.9\cdot 10^{-16}$ & $1.3\cdot 10^{-16}$ \\
+      10 & $9.1\cdot 10^{-12}$ & $2.9\cdot 10^{-12}$ \\
+      15 & $1.2\cdot 10^{-7}$ & $2.7\cdot 10^{-9}$ \\
+      20 & $0.23$ & $3.9\cdot 10^{-5}$
+    \end{tabular}
+  \end{center}
+\end{Beispiel}
+
+\begin{remark}
+  Wir sehen, dass die Wahl der Implementation eines Rechenverfahrens
+  bei mathematischer Äquivalenz durchaus erheblichen Einfluss auf das
+  Ergebnis haben kann. Dieses Phänomen werden wir in
+  \Cref{sec:stability} näher untersuchen. Zunächst diskutieren wir
+  aber eine weitere Variante der Erzeugung orthogonaler Basen in
+  Polynomräumen.
+\end{remark}
+
+\section{Drei-Term-Rekursion}
+
+\begin{Satz*}{dreiterm}{Dreiterm-Rekursion}
+  Zu jedem Skalarprodukt $\scal(\cdot,\cdot)$ auf dem Raum der
+  stetigen Funktionen gibt es genau eine Folge von orthogonalen
+  Polynomen $p_k\in \P_k$ mit führendem Koeffizienten eins. Sie
+  genügen der Dreiterm-Rekursionsformel
+  \begin{gather}
+    p_k(x) = (x-a_k)p_{k-1}(x) - b_k p_{k-2}(x),
+    \qquad k=1,2,\ldots
+  \end{gather}
+  mit Startwerten $p_{-1} \equiv 0$ und $p_0 \equiv 1$. Die
+  Koeffizienten sind
+  \begin{gather}
+    a_k = \frac{\scal(x p_{k-1},p_{k-1})}{\scal(p_{k-1},p_{k-1})}
+    \qquad\text{und}\qquad
+    b_k = \frac{\scal(p_{k-1},p_{k-1})}{\scal(p_{k-2},p_{k-2})}.
+  \end{gather}
+\end{Satz*}
+
+\begin{proof}
+  Siehe \cite[Satz 6.2]{DeuflhardHohmann08}
+\end{proof}
+
+\begin{Bemerkung}{dreiterm-normierung}
+  Der Beweis ergibt, eigentlich die ``Eindeutigkeit einer Orthogonalfolge bis auf Normierung''. Tatsächlich werden in der Literatur immer wieder veschiedene Normierungen benutzt. Beispiele sind:
+  \begin{enumerate}
+  \item Führender Koeffizient eins, $p_k = x^k + \dots$
+  \item $\norm{p_k} = 1$
+  \item $p_k(1) = 1$
+  \end{enumerate}
+\end{Bemerkung}
+
+\begin{Definition}{legendre-polynome}
+  Die \define{Legendre-Polynome} $L_k$ sind definiert durch
+  die Dreiterm-Rekursion
+  \begin{gather}
+    L_{k} = \tfrac{2k-1}{k}x L_{k-1}(x) - \tfrac{k-1}{k} L_{k-2}(x).
+  \end{gather}
+  Sie sind orthogonal bezüglich des $L^2$-Skalarprodukts in
+  \slideref{Lemma}{l2-norm}.
+\end{Definition}
+
+\begin{Beispiel}{least-squares-legendre}
+  Das Problem der Gaußschen Ausgleichsrechnung war: zu einer gegebenen
+  Funktion $f$ finde $p\in \P_n$, so dass
+  \begin{gather}
+    \int_{-1}^1 (f-p)^2 \dx
+    = \min_{q\in\P_n} \int_{-1}^1 (f-q)^2 \dx.
+  \end{gather}
+  Mit Hilfe der Legendre-Polynome können wir nun die Lösung explizit angeben als
+  \begin{gather}
+    p(x) = \sum_{i=0}^n \alpha_i L_i(x)
+    \qquad\text{mit}\qquad
+    \alpha_i = \frac1{\norm{L_i}^2}\int_{-1}^1 f L_i(x)\dx.
+  \end{gather}
+\end{Beispiel}
+
+\begin{Definition}{chebyshev-polynome}
+  Die \define{Tschebyscheff-Polynome} $T_k$ sind definiert durch
+  die Dreiterm-Rekursion
+  \begin{gather}
+    T_{k} = 2x T_{k-1}(x) - T_{k-2}(x).
+  \end{gather}
+  Sie sind orthogonal bezüglich des Skalarprodukts
+  \begin{gather}
+    \scal(p,q) = \int_{-1}^1 \tfrac1{\sqrt{1-x^2}} \,p(x)q(x)\dx.
+  \end{gather}
+\end{Definition}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

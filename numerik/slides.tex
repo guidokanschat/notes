@@ -1,0 +1,185 @@
+\documentclass[german,ignorenonframetext,notheorems,aspectratio=1610]{beamer}
+\usetheme[compress]{Madrid}
+\usecolortheme{iwr}
+\usepackage{mathsim}
+\lstset{language=Python}
+\usetikzlibrary{snakes}
+\input{mixed/fig/tikzsettings}
+\def\restrict{r}
+\def\prolongate{p}
+
+\usepackage{times}
+\usepackage{xr}
+\externaldocument{main}
+\usepackage{mfirstuc}
+\usepackage{mathtools}  
+\mathtoolsset{showonlyrefs}
+
+\newcommand{\rd}{\operatorname{rd}}
+\newcommand{\eps}{\texttt{eps}}
+
+\def\footnote#1{}
+\def\putindex#1{#1}
+\title{Einführung in die Numerik}
+\author{Guido Kanschat}
+\date{\today}
+\begin{document}
+\frame{\maketitle}
+\frame{\frametitle{Inhalt}\tableofcontents[hideallsubsections]}
+\section{Orthogonale Projektionen}
+\frame{\sectoc}
+
+\subsection{Polynomräume}
+\frame {\input {blocks/Satz-nullstellen.tex}
+  \input {blocks/Korollar-monome-linear-unabhaengig.tex}
+  \input {blocks/Satz-polynomraum.tex}}
+
+\subsection{Skalarprodukt und Orthogonalität}
+\frame{\subtoc}
+\frame {\input {blocks/Definition-skalarprodukt.tex}}
+\frame {\input {blocks/Lemma-hilbertnorm.tex}}
+\frame {\input {blocks/Lemma-l2-norm.tex}}
+\frame {\input {blocks/Definition-orthogonal.tex}
+  \input {blocks/Notation-euklidischer-vr.tex}}
+\frame {\input {blocks/Lemma-bcs.tex}}
+\frame {\input {blocks/Lemma-pythagoras.tex}}
+
+\subsection{Bestapproximation und orthogonale Projektion}
+\frame{\subtoc}
+\frame {\input {blocks/Definition-bestapproximation.tex}
+  \input {blocks/Satz-bestapproximation.tex}}
+\frame {\input {blocks/Definition-komplement-projektion.tex}}
+\frame {\input {blocks/Beispiel-polynom-bestapproximation.tex}}
+
+\subsection{Orthogonale Basen}
+\frame{\subtoc}
+\frame {\input {blocks/Lemma-gram-system.tex}}
+\frame {\input {blocks/Definition-ortho-system.tex}
+  \input {blocks/Lemma-ortho-lu.tex}}
+\frame {\input {blocks/Lemma-parseval.tex}}
+\frame {\input {blocks/Lemma-gram-system.tex}
+  \input {blocks/Lemma-least-squares-orthogonal.tex}}
+\frame {\input {blocks/Theorem-gram-schmidt.tex}}
+\frame {\input {blocks/Algorithmus-gram-schmidt.tex}}
+\frame {\input {blocks/Beispiel-gram-schmidt.tex}}
+\frame {\input {blocks/Algorithmus-mgs.tex}}
+\frame {\input {blocks/Beispiel-gs-mgs.tex}}
+
+\subsection{Dreiterm-Rekursion}
+\frame{\subtoc}
+\frame {\input {blocks/Satz-dreiterm.tex}}
+\frame {\input {blocks/Bemerkung-dreiterm-normierung.tex}}
+\frame {\input {blocks/Definition-legendre-polynome.tex}}
+\frame {\input {blocks/Beispiel-least-squares-legendre.tex}}
+\frame {\input {blocks/Definition-chebyshev-polynome.tex}}
+
+\section{Konditionierung und Stabilität}
+\frame{\sectoc}
+\subsection{Fließkommazahlen}
+\frame{\subtoc}
+
+\frame {\input {blocks/Definition-fliesskomma.tex}}
+\frame {\input {blocks/Beispiel-ieee754-double.tex}}
+\frame {\input {blocks/Beispiel-ieee754-single.tex}
+  \input {blocks/Beispiel-ieee754-half.tex}}
+\frame {\input {blocks/Definition-runden.tex}}
+\frame {\input {blocks/Beispiel-eps-ieee.tex}}
+\frame {\input {blocks/Definition-maschinenoperationen.tex}
+  \input {blocks/Lemma-nichtassoziativ.tex}}
+\frame {\input {blocks/Beispiel-harmonisch.tex}}
+\frame {\input {blocks/Aufgabe-rundung.tex}}
+\frame {\input {blocks/Fazit-rundung.tex}}
+
+\subsection{Konditionierung einer Rechenaufgabe}
+\frame{\subtoc}
+\frame {\input {blocks/Definition-aufgabe.tex}}
+\frame {\input {blocks/Definition-datenfehler.tex}}
+\frame {\input {blocks/Definition-landau.tex}}
+\frame {\input {blocks/Beispiel-smallo-differential.tex}}
+\frame {\input {blocks/Beispiel-bigo-taylor.tex}}
+\frame {\input {blocks/Lemma-diff-fehler.tex}}
+\frame {\input {blocks/Beispiel-kond-mult.tex}}
+\frame {\input {blocks/Beispiel-kond-add.tex}}
+\frame {\input {blocks/Bemerkung-ausloeschung.tex}}
+
+\subsection{Stabilität eines Algorithmus}
+\frame{\subtoc}
+\frame {\input {blocks/Definition-algorithmus.tex}}
+\frame {\input {blocks/Bemerkung-algorithmuseigenschaften.tex}}
+\frame {\input {blocks/Definition-stabil.tex}
+  \input {blocks/Definition-vorwaertsanalyse.tex}
+  \input {blocks/Definition-rueckwaertsanalyse.tex}}
+
+\section{Interpolation und Quadratur}
+\subsection{Lagrange-Interpolation}
+\frame{\sectoc}
+\frame {\input {blocks/Definition-lagrange-interpolation.tex}}
+\frame {\input {blocks/Satz-lagrange-interpolation.tex}
+  \input {blocks/Korollar-lagrange-interpolation.tex}}
+\frame {\input {blocks/Lemma-lagrange-basis.tex}}
+\frame {\input {blocks/Lemma-linear-bounded.tex}}
+\frame {\input {blocks/Satz-lagrange-kondition.tex}}
+\frame {\input {blocks/Beispiel-lagrange-kondition-equi.tex}}
+\frame {\input {blocks/Lemma-Aitken.tex}}
+\frame {\input {blocks/Algorithmus-Neville.tex}}
+\frame {\input {blocks/Definition-newton-basis.tex}}
+\frame {\input {blocks/Lemma-newton-basis.tex}}
+\frame {\input {blocks/Definition-div-diff-1.tex}
+  \input {blocks/Satz-newton-lagrange.tex}}
+\frame {\input {blocks/Satz-Lagrange-restglied.tex}}
+\frame {\input {blocks/Korollar-Lagrange-restglied.tex}
+  \input {blocks/Korollar-Lagrange-fehler-1.tex}}
+\frame {\input {blocks/Definition-chebyshev-polynome.tex}}
+\frame {\input {blocks/Lemma-chebyshev-properties.tex}}
+\frame {\input {blocks/Satz-chebyshev-minimal-1.tex}}
+\frame {\input {blocks/Korollar-Lagrange-chebychev.tex}}
+
+\subsection{Hermite-Interpolation}
+\frame{\subtoc}
+\frame {\input {blocks/Definition-hermite-interpolation.tex}}
+\frame {\input {blocks/Satz-hermite-interpolation.tex}}
+\frame {\input {blocks/Notation-interpolation-ascending.tex}}
+\frame {\input {blocks/Beispiel-taylor-polynom.tex}}
+\frame {\input {blocks/Beispiel-hermite-kubisch.tex}}
+
+\subsection{Interpolation mit Splines}
+\frame{\subtoc}
+\frame {\input {blocks/Notation-indices.tex}}
+\frame {\input {blocks/Notation-reference-interval.tex}}
+\frame {\input {blocks/Definition-piecewise-interpolation.tex}}
+\frame {\input {blocks/Lemma-piecewise-solvable.tex}}
+\frame {\input {blocks/Lemma-scaling-interpolation.tex}}
+\frame {\input {blocks/Bemerkung-scaling-interpolation-local.tex}}
+
+\subsection{Splines}
+\frame{\subtoc}
+\frame {\input {blocks/Definition-spline-raum.tex}
+  \input {blocks/Lemma-spline-raum.tex}}
+\frame {\input {blocks/Definition-cubic-spline.tex}}
+\frame {\input {blocks/Definition-cubic-spline-bc.tex}}
+\frame {\input {blocks/Satz-cubic-spline.tex}
+  \input {blocks/Lemma-spline-optimality.tex}}
+\frame {\input {blocks/Lemma-splines-konkret.tex}}
+\frame {\input {blocks/Lemma-splines-momente.tex}}
+\frame {\input {blocks/Lemma-spline-invertierbar.tex}}
+\frame {\input {blocks/Satz-spline-approximation.tex}}
+
+\section{Quadratur}
+\frame{\sectoc}
+\subsection{Summierte Quadratur}
+
+\frame {\input {blocks/Definition-quadratur.tex}}
+\frame {\input {blocks/Definition-lokale-fehlerordnung.tex}}
+\frame {\input {blocks/Satz-summierte-quadratur.tex}}
+\frame {\input {blocks/Definition-grad-exaktheit.tex}
+\input {blocks/Lemma-exakt-ordnung.tex}}
+
+\section{Bibliography}
+\frame{\bibliographystyle{alpha}
+\bibliography{all}}
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

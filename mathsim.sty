@@ -9,7 +9,9 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{makeidx}
-\RequirePackage[USenglish]{babel}
+\RequirePackage{babel}
+%\RequirePackage[hidelinks]{hyperref}
+\RequirePackage{cleveref}
 \RequirePackage{stringstrings}
 \RequirePackage{xr}
 \RequirePackage{nicefrac}
@@ -18,6 +20,7 @@
 \RequirePackage{xcolor,framed}
 \RequirePackage{subfigure}
 \RequirePackage{comment}
+\RequirePackage{listings}
 \RequirePackage{tikz,tikzscale}
 \usetikzlibrary{calc}
 \usetikzlibrary{math}
@@ -61,7 +64,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\newtheorem{theorem}{\iflanguage{german}{Satz}{}\iflanguage{english}{Theorem}{}}[chapter]
 \newtheorem{lemma}[slidetheorem]{Lemma}
-\newtheorem{corollary}[slidetheorem]{Corollary}
+\newtheorem{corollary}[slidetheorem]{\iflanguage{german}{Korollar}{}\iflanguage{english}{Corollary}{}}
 \theoremstyle{definition}
 \newtheorem{assumption}[slidetheorem]{Assumption}
 \newtheorem{definition}[slidetheorem]{Definition}
@@ -77,6 +80,9 @@
 \newtheorem{problem}[slidetheorem]{\iflanguage{german}{Aufgabe}{}\iflanguage{english}{Problem}{}}
 \newslidetheorem{Remark}
 \newslidetheorem{Algorithm}
+\newslidetheorem{Bemerkung}
+\newslidetheorem{Algorithmus}
+\newslidetheorem{Fazit}
 
 % Definitions for index
 \def\defindex#1{\index{#1|textbf}}
@@ -120,6 +126,8 @@
 \let\domain\Omega
 \def\F{\mathbb F}
 \def\n{\mathbf n}
+\def\bigo{\mathcal O}
+\def\smallo{o}
 \def\P{\mathbb P}
 \def\Q{\mathbb Q}
 \def\Pol{\mathcal P}
@@ -136,6 +144,7 @@
 % Matrices
 \def\mata{\mathbf A}
 \def\matb{\mathbf B}
+\def\matg{\mathbf G}
 \def\matm{\mathbf M}
 \def\mats{\mathbf S}
 \def\identity{\mathbb I}

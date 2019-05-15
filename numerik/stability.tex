@@ -1,0 +1,558 @@
+\section{Fließkommazahlen}
+
+\begin{Definition}{fliesskomma}
+  Die Darstellung einer numerischen größe als \define{Fließkommazahl}
+  (auch \define{Gleitkommazahl}) beruht auf einer Basis $2 \le b \in \mathbb N$. Sie
+  besteht aus einer \define{Mantisse} $\nicefrac1b \le m < 1$ und einem
+  Exponenten $e$, so dass eine Zahl $x\neq 0$ die Gestalt
+  \begin{gather}
+    x=\pm m \cdot b^{e}
+  \end{gather}
+  hat. Diese Darstellung ist durch die Normierung von $m$
+  eindeutig. Sowohl die Mantisse, als auch der Exponent haben einen
+  endlichen Wertebereich, typischerweise eine feste Anzahl von
+  Stellen. Die endliche Menge der damit darstellbaren Zahlen
+  bezeichnen wir mit $\mathbb M$.
+\end{Definition}
+
+\begin{intro}
+  Die folgenden drei Beispiele beschreiben Teile der Implementation
+  von Fließkommazahlen nach dem IEE-Standard 754. Die Quelle ist
+  jeweils Wikipedia.
+\end{intro}
+\begin{Beispiel}{ieee754-double}
+  Im Fließkommaformat mit 64 Bit (NumPy: \texttt{float64}) nach dem Standard
+  \putindex{IEEE 754}, das auf Rechnern sehr weit verbreitet ist, wird
+  die Basis 2 verwendet. Es hat
+  \begin{itemize}
+  \item 1 Bit Vorzeichen,
+  \item 11 Bit Exponent und
+  \item 53 Bit Mantisse (das erste ist immer 1 und wird nicht gespeichert)
+  \end{itemize}
+  Der Wertebereich ist zunächst
+  \begin{gather}
+    \left.
+      \begin{matrix}
+        2^{-1022} \\ \approx 2.25 \cdot 10^{-308}
+      \end{matrix}
+    \right\}
+    \le x \le
+    \left\{
+      \begin{matrix}
+        2^{1023}(2-2^{-52}) \\
+        \approx 1.8 \cdot 10^{308}
+      \end{matrix}
+    \right.
+  \end{gather}
+  Tatsächlich liegt das Minimum durch Verkürzung der Mantisse bei
+  $2^{-1074}$. Zusätzlich gibt es Darstellungen für $\pm 0$,
+  unendlich, und illegale Zahlen.
+\end{Beispiel}
+
+\begin{Beispiel}{ieee754-single}
+  Das Format mit 32 Bit (NumPy: \texttt{float32}) nach \putindex{IEEE 754} hat
+  \begin{itemize}
+  \item 1 Bit Vorzeichen,
+  \item 8 Bit Exponent und
+  \item 24 Bit Mantisse.
+  \end{itemize}
+\end{Beispiel}
+
+\begin{Beispiel}{ieee754-half}
+  Das Format mit 16 Bit (NumPy: \texttt{float16}) nach \putindex{IEEE 754} hat
+  \begin{itemize}
+  \item 1 Bit Vorzeichen,
+  \item 5 Bit Exponent und
+  \item 11 Bit Mantisse.
+  \end{itemize}
+\end{Beispiel}
+
+\begin{Definition}{runden}
+  Zahlen, die durch die endliche Mantisse nicht dargestellt werden
+  können, unterliegen der \define{Rundung} auf eine benachbarte
+  Fließkommazahl, notiert als $\rd(x)$. Besitzt die Mantisse $r$
+  Stellen zum Exponenten $b$, so ist der relative Fehler, der dabei
+  entsteht beschränkt durch $b^{1-r}$ bei Rundung zur nächsten
+  Fließkommazahl sogar durch $\tfrac12 b^{1-r}$.
+
+  Wir bezeichnen das
+  Maximum des möglichen relativen Rundungsfehlers für ein
+  Fließkommaformat als \define{Maschinengenauigkeit}, abgekürzt mit
+  $\eps$. Es gild also per definitionem
+  \begin{gather}
+    \left\lvert\frac{x-\rd(x)}{x}\right\rvert
+    \le \eps.
+  \end{gather}
+\end{Definition}
+
+\begin{Beispiel}{eps-ieee}
+  Bei den Fließkommaformaten nach IEEE 754 gilt die Rundung zur
+  nächsten darstellbaren Zahl. Sollte eine Zahl exakt zwischen zwei
+  darstellbaren Zahlen liegen, so wird zur nächsten darstellbaren Zahl
+  mit gerader Mantisse gerundet.
+
+  Die Maschinengenauigkeit liegt bei
+  \begin{center}
+    \begin{tabular}[l]{l|ll}
+      Format & \multicolumn{2}{c}{\eps}\\\hline
+      \texttt{float64} & $2^{-53}$ & $\approx 1.11\cdot 10^{-16}$ \\
+      \texttt{float32} & $2^{-24}$ & $\approx 5.96\cdot 10^{-8}$ \\
+      \texttt{float16} & $2^{-11}$ & $\approx 4.88\cdot 10^{-4}$ \\
+    \end{tabular}
+  \end{center}
+\end{Beispiel}
+
+\begin{Definition}{maschinenoperationen}
+  Die Implementation der Grundrechenarten für Fließkommazahlen
+  beinhaltet immer eine Rundung, damit das Ergebnis darstellbar
+  ist. Wir kennzeichnen diese \define{Maschinenoperationen} für
+  $x,y\in \mathbb M$ mit den Symbolen
+  \begin{xalignat}2
+    x \oplus y &= \rd(x+y) & x \odot y &= \rd(xy)\\
+    x \ominus y &= \rd(x-y) & x \oslash y &= \rd(x/y).
+  \end{xalignat}
+\end{Definition}
+
+\begin{Lemma}{nichtassoziativ}
+  Die Maschinenoperation $\oplus$ und $\odot$ sind weder assoziativ
+  noch distributiv, wenn auch die Unterschiede nur in der Größenordnung der Maschinengenauigkeit $\eps$ liegen.
+\end{Lemma}
+
+\begin{proof}
+  Die Rundung am Ende einer Operation kann so verstanden werden, dass
+  jeweils ein unbekannter, relativer Fehler $\abs{\epsilon} \le \eps$
+  zum Ergebnis addiert wird. Damit gilt
+  \begin{gather}
+    \begin{split}
+      (x\oplus y) \oplus z
+      &= \bigl((x+y)(1+\epsilon_1)+z\bigr)(1+\epsilon_2)\\
+      &= (x+y+z + \epsilon_1x+\epsilon_1y)(1+\epsilon_2)\\
+      x\oplus (y \oplus z)
+      &= (x+y+z + \epsilon_3y+\epsilon_3z)(1+\epsilon_4).
+    \end{split}
+  \end{gather}
+  Selbst wenn die Werte der $\epsilon_i$ alle etwa gleich groß sind,
+  so differieren doch die Fehler, wenn $x$ und $z$ sehr verschieden
+  sind. Die Rechnungen für die Multiplikation und das
+  Distributivgesetz sind ähnlich.
+\end{proof}
+
+\begin{remark}
+  Das vorherige Lemma gibt einen ersten Hinweis, warum die beiden
+  Varianten des Gram-Schmidt-Verfahrens sich so verschieden verhalten.
+\end{remark}
+
+\begin{Beispiel*}{harmonisch}{Harmonische Reihe in Fließkommaarithmetik}
+  \lstinputlisting[frame=single]{code/harmonic.py}
+
+  Bricht das Programm ab? Warum?
+\end{Beispiel*}
+
+\begin{Aufgabe}{rundung}
+  Schreiben Sie ein Programm, das bis auf 10\% Genauigkeit die
+  kleinsten Zahlen $a$ und $b$ ermittelt, so dass $1.0+a=1.0$ und
+  $1.9+b=1.9$. Bestimmen Sie damit $\eps$ für mindestens eines der
+  IEEE 754 Fließkommaformate.
+\end{Aufgabe}
+
+\begin{Fazit}{rundung}
+  \begin{enumerate}
+  \item Fließkommazahlen haben endlichen Wertebereich
+  \item Die Eingabe reeller Zahlen sowie die Ergebnisse von
+    Rechenoperationen werden durch Rundung verfälscht.
+  \item Rundungsfehler sind relative Fehler beschränkt durch die
+    Maschinengenauigkeit $\eps$
+  \item Grundrechenarten mit Fließkommazahlen sind nicht assoziativ
+  \end{enumerate}
+\end{Fazit}
+
+\section{Konditionierung einer Rechenaufgabe}
+
+\begin{intro}
+  In diesem Abschnitt nehmen wir zunächst an, die Berechnungen seien
+  exakt und nur die Eingabedaten durch Rundung verfälscht. Daraufhin
+  untersuchen wir, wie stark sich die Lösung einer Rechenaufgabe
+  abhängig von Variationen der Eingabedaten verändert.
+\end{intro}
+
+\subsection{Einführung der Konditionierung}
+
+\begin{Definition}{aufgabe}
+  Eine \define{numerische Aufgabe} ist die Berechnung endlich vieler
+  \define{Ausgabedaten} $y_i$, $i=1,\dots,n$ aus ebenfalls endlich
+  vielen Eingabedaten $x_j$, $j=1,\dots,m$. Wir schreiben
+  \begin{gather}
+    y_i = f_i(x_1,\dots,x_m).
+  \end{gather}
+  Zur Lösung der Aufgabe verwenden wir als Rechenvorschrift einen
+  \define{Algorithmus}, bzw.\ seine Implementation $f$ auf einem Computer.
+\end{Definition}
+
+\begin{Definition}{datenfehler}
+  Aus der Verwendung fehlerhafter Eingabedaten $x+\delta x$ ergeben
+  sich fehlerhafte Resultate $y+\delta y$. Mit $\delta x$ und
+  $\delta y$ bezeichnen wir die \textbf{absoluten
+    Fehler}\index{Fehler!absolut}. Die
+  \textbf{relativen Fehler}\index{Fehler!relativ} sind
+  $\nicefrac{\delta x}{\norm{x}}$, und $\nicefrac{\delta y}{\norm{y}}$ bzw.\
+  $\nicefrac{\delta x_j}{\abs{x_j}}$ und $\nicefrac{\delta y_i}{\abs{y_i}}$.
+
+  Eine numerische Aufgabe heißt \define{gut konditioniert}, wenn es
+  eine moderate Konstante $\kappa$ bzw. Konstanten $\kappa_{ij}$ gibt, so dass die Abschätzung
+  \begin{gather}
+    \frac{\norm{\delta y}}{\norm{y}}
+    \le \kappa \frac{\norm{\delta x}}{\norm{x}}
+    \qquad\text{bzw.}\qquad
+    \frac{\abs{\delta y_i}}{\abs{y_i}}
+    \le \kappa_{ij} \frac{\abs{\delta x_j}}{\abs{x_j}}
+  \end{gather}
+  für den bestmöglichen Algorithmus zur Lösung der Aufgabe
+  gilt. Andernfalls heißt sie \define{schlecht konditioniert}.
+\end{Definition}
+
+\begin{remark}
+  Die Begriffe \glqq gut\grqq, bzw. \glqq schlecht
+  konditioniert\grqq{} sind nicht scharf definiert. In der Tat hängt
+  die Grenze, ab der die Konstante $\kappa$ nicht mehr als \glqq
+  moderat\grqq{} angesehen wird, von außermathematischen Faktoren wie
+  den Ansprüchen der Anwendung oder dem persönlichen Geschmack des
+  Anwenders ab. Dennoch werden wir uns nun um eine Quantifizierung der
+  Konditionierung bemühen, die bei der Entscheidung, ob eine Aufgabe
+  berechenbar ist, helfen kann.
+\end{remark}
+
+\begin{remark}
+  Von entscheidender Bedeutung ist, dass die Konditionierung einer
+  numerischen Aufgabe das Optimum über alle Algorithmen ist und damit
+  vom konkreten Algorithmus unabhängig. Die ungeschickte Wahl eines
+  Verfahrens führt natürlich zu einer schlechteren Konstanten in der
+  Konditionsabschätzung.
+\end{remark}
+
+\subsection{Differenzielle Fehleranalyse}
+
+\begin{intro}
+  Besonders einfach lassen sich die Relationen zwischen den Fehlern
+  der Eingabe- und Ausgabedaten über Ableitungen der Funktion $f$ in
+  \slideref{Definition}{aufgabe} beschreiben. Für diesen Fall stehen
+  uns alle Rechenregeln wie Ketten- und Produktregel oder der Satz von
+  Taylor zur Verfügung. Natürlich gelten die Aussagen dann nur
+  asymptotisch für $\eps \to 0$.
+
+  Andererseits ist $\eps$ in der Regel sehr klein, weshalb die
+  asymptotische Analyse oft hinreichend genau ist. Und schließlich
+  bemühen wir uns, wo immer möglich, gesicherte Scharanken einzubauen.
+\end{intro}
+
+\begin{Definition}{landau}
+  Zur quantitativen Beschreibung von Grenzprozessen dienen die
+  \define{Landauschen Symbole} $\bigo(\cdot)$ und
+  $\smallo(\cdot)$. Für Folgen/Funktionen $f(x)$ und $g(x)$ bedeuten
+  \begin{xalignat}3
+    f &= \smallo(g)
+    &:\Leftrightarrow&
+    & \lim\limits_{x\to a} \frac{\abs{f(x)}}{\abs{g(x)}} &= 0
+    \\
+    f &= \bigo(g)
+    &:\Leftrightarrow&
+    & \operatorname*{lim sup}_{x\to a} \frac{\abs{f(x)}}{\abs{g(x)}} & < \infty.
+  \end{xalignat}  
+  Dabei darf $a$ eine feste Zahl oder den Limes gegen $\pm\infty$
+  bezeichnen. Zusätzlich definieren wir \define{gleich in erster
+    Näherung}
+  \begin{xalignat}3
+    f &\doteq g
+    &:\Leftrightarrow&
+    & f(t) = g(t) + \smallo(1).
+  \end{xalignat}
+\end{Definition}
+
+\begin{remark}
+  Typischerweise wird bei der Schreibweise mit Landauschen Symbolen
+  implizit eine Konvergenz für $t\to 0$, $t\to\infty$ oder zum
+  Beispiel $h\to 0$ und $n\to\infty$ angenommen. Diese erschließt sich
+  aus dem Sinn.
+  
+  Die Definition von $\smallo(\cdot)$ impliziert, dass die Konvergenz
+  $f(t)\to 0$ durch
+  \begin{gather}
+    f(t) = \smallo(1)
+  \end{gather}
+  dargestellt wird. Hier insbesondere ist der Schluss aus dem Sinn
+  schwierig, da die unabhängige Variable nicht im $\smallo$-Ausdruck
+  erscheint.
+\end{remark}
+
+\begin{Beispiel}{smallo-differential}
+  Als Definition der Ableitung der Funktion $f$ im Punkt $x$ kennen wir
+  \begin{gather}
+    \lim\limits_{h\to 0}\frac{f(x+h)-f(x)}{h} = f'(x).
+  \end{gather}
+  In unserer Schreibweise
+  \begin{gather}
+    \begin{split}
+      f(x+h)-f(x) - h f'(x) &= \smallo(h)\\
+      \frac{f(x+h)-f(x)}{h} - f'(x) &= \smallo(1)
+      \qquad\text{für } h\to 0\\
+      \frac{f(x+h)-f(x)}{h}  &\doteq f'(x)
+      \qquad\text{für } h\to 0.
+    \end{split}
+  \end{gather}
+\end{Beispiel}
+
+\begin{Beispiel}{bigo-taylor}
+  Nach dem Satz von Taylor gilt für eine zweimal stetig
+  differenzierbare Funktion $f$ mit $\xi\in(x,x+h)$
+  \begin{gather}
+ f(x+h) = f(x) + h f'(x) + \tfrac{h^2}{2} f''(\xi)   
+\end{gather}
+Damit können wir schreiben
+\begin{gather}
+  \begin{split}
+    f(x+h)-f(x) &= \bigo(h)\\
+    f(x+h)-f(x) &=  h f'(x) + \bigo(h^2).
+  \end{split}
+\end{gather}
+Oder
+\begin{gather}
+  \begin{split}
+    \frac{f(x+h)-f(x)}h &\doteq f'(x),
+  \end{split}
+\end{gather}
+wobei wir im letzten Beispiel Information veschenkt haben.
+\end{Beispiel}
+
+\begin{Lemma}{diff-fehler}
+  Sei die Funktion $f$ in \slideref{Definition}{aufgabe} stetig
+  differenzierbar um das Datum $x$. Dann gilt für die relativen Fehler
+  \begin{gather*}
+    \frac{\delta y_i}{y_i}
+    \doteq \sum_{j=1}^m \kappa_{ij}\frac{\delta x_j}{x_j}
+  \end{gather*}
+  mit den \define{Konditionszahlen}
+  \begin{gather}
+    \kappa_{ij} = \frac{\d f_i}{\d x_j}(x)
+    \frac{x_j}{y_i}
+  \end{gather}
+\end{Lemma}
+
+\begin{Beispiel*}{kond-mult}{Konditionierung der Multiplikation}
+  Es gilt
+  \begin{gather}
+    y_1 = f(x_1,x_2) = x_1 x_2,
+    \quad \frac{\d f}{\d x_1} = x_2,
+    \quad \frac{\d f}{\d x_2} = x_1.
+  \end{gather}
+  Damit folgt
+  \begin{gather}
+    \kappa_{11} = \kappa_{12} = 1,
+  \end{gather}
+  die Multiplikation ist also gut konditioniert, da die relativen
+  Fehler der Ausgabedaten gleich denen der Eingabedaten sind.
+\end{Beispiel*}
+
+\begin{Beispiel*}{kond-add}{Konditionierung der Addition}
+  Es gilt
+  \begin{gather}
+    y_1 = f(x_1,x_2) = x_1 + x_2,
+    \quad \frac{\d f}{\d x_1} = 1,
+    \quad \frac{\d f}{\d x_2} = 1.
+  \end{gather}
+  Damit folgt
+  \begin{gather}
+    \kappa_{11} = \frac{1}{1+\frac{x_2}{x_1}},
+    \qquad\kappa_{12} = \frac{1}{1+\frac{x_1}{x_2}}.
+  \end{gather}
+  Für den Fall $x_1 \approx -x_2$ ist die Addition also schlecht konditioniert.
+\end{Beispiel*}
+
+\begin{Bemerkung}{ausloeschung}
+  Man nennt die schlechte Konditionierung der Subtraktion fast
+  gleicher Zahlen auch anschaulich \define{Auslöschung}, was wir an
+  folgendem Beispiel erklären:
+  \begin{center}
+    \begin{tabular}{r@{}l}
+      0.1234569&\\
+      -0.1234567&\\\hline
+      0.0000002&=0.2 $\cdot 10^{-6}$.
+    \end{tabular}
+  \end{center}
+  Bei der Subtraktion zweier Zahlen mit 7-stelliger Mantisse haben
+  sich 6 Stellen ausgelöscht und es bleibt nur eine einzige
+  signifikante Stelle.
+\end{Bemerkung}
+
+\section{Stabilität eines Algorithmus}
+
+\begin{intro}
+  Im letzten Abschnitt haben wir untersucht, wie sich die Fehler von
+  Eingabedaten bei der Anwendung eines mathematisch exakten
+  Algorithmus auf die Augabedaten auswirken. Hier nun beschäftigen wir
+  uns mit den Auswirkungen inexakter Rechnungen auf das Ergebnis.
+\end{intro}
+
+\begin{Definition}{algorithmus}
+  Ein \define{Algorithmus} ist eine eindeutige Handlungsvorschrift zur Lösung
+  eines Problems oder einer Klasse von Problemen. Algorithmen bestehen
+  aus endlich vielen, wohldefinierten Einzelschritten. Damit können
+  sie zur Ausführung in ein Computerprogramm implementiert, aber auch
+  in menschlicher Sprache formuliert werden. Bei der Problemlösung
+  wird eine bestimmte Eingabe in eine bestimmte Ausgabe überführt.
+
+  \hfill nach Wikipedia (22.4.2019)
+\end{Definition}
+
+\begin{Bemerkung*}{algorithmuseigenschaften}{Eigenschaften von Algorithmen}
+  \begin{description}
+  \item[Determiniertheit:] Gleiche Eingabe, gleiche Ausgabe
+  \item[Statische Finitheit:] Beschreibung endlicher Länge
+  \item[Dynamische Finitheit:] Endlicher Speicherplatz
+  \item[Terminiertheit:] Endet nach endlich vielen Schritten
+  \item[Effektivität:] Der Effekt jedes Schrittes ist eindeutig festgelegt
+  \end{description}
+\end{Bemerkung*}
+
+\begin{remark}
+  Wir betrachten Algorithmen auf verschiedenen Abstraktionsebenen. So
+  ist sowohl das Gram-Schmidt-Verfahren in
+  \slideref{Theorem}{gram-schmidt} ein Algorithmus, wie auch die
+  beiden Beschreibungen in Python in
+  \slideref{Algorithmus}{gram-schmidt} und
+  \slideref{Algorithmus}{mgs}. Zur genaueren Spezifikation bezeichnen
+  wir ersteren auch als \define{mathematisches Verfahren}, letztere
+  auch als \define{Implementation}.
+\end{remark}
+
+\begin{remark}
+  Mathematische Verfahren benutzen eine Formelsprache, in die die
+  Assoziativität der Grundoperationen bereits eingebaut ist. Während
+  wir eine Summe sequenziell denken mögen, so gibt die Formel keine
+  Reihenfolge strikt vor.
+\end{remark}
+
+\begin{Definition}{stabil}
+  Wir nennen einen Algorithmus, bzw.\ seine Implementation auf einem
+  Computer \define{stabil}, wenn die Akkumulation von Rundungsfehlern
+  bei der Durchführung den Fehler durch die Kondititionierung nicht
+  wesentlich verschlechtert.
+\end{Definition}
+
+\begin{remark}
+  Früher, als Fließkommazahlen mit 32 Bit der Standard waren, war die
+  Analyse der Fehler von Rechenverfahren ein zentrales Thema der
+  Numerik. Heute, im Zeitalter von 64 Bit hat sich das relativiert und
+  wir legen mehr Gewicht auf mathematische Eigenschaften der Algorithmen.
+
+  Andererseits bieten die modernsten Graphikkarten (GPU) sehr schnelle
+  Berechnung mit 16 Bit an, was sich in einer Implementation mit
+  verschiedenen Genauigkeiten nutzen lässt.
+
+  Der Sinn dieses Abschnitts liegt damit statt des rigorosen Studiums
+  der Fehleranalyse mehr darin, Bewusstsein für das Konzept der
+  Stabilität zu wecken. Bereits beim Gram-Schmidt-Verfahren haben wir
+  gesehen, dass es in der Tat Algorithmen gibt, bei denen Stabilität
+  ein Problem ist. Glücklicherweise sind das wenige und es genügt
+  zumeist, aus der Literatur die stabile Variante zu wählen.
+
+  Die Rundungsfehleranalyse ist aufwändig und nach Ansicht des Autors
+  nur dann anzuraten, wenn der Verdacht auf Instabilität
+  besteht. Daher werden wir hier nur exemplarisch vorgehen und sie an
+  einigen Beispielen erläutern.
+\end{remark}
+
+\begin{Definition}{vorwaertsanalyse}
+  Bei der \define{Vorwärtsanalyse} von Rundungsfehlern folgt man den
+  Elementaroperationen des Algorithmus und berücksichtigt in jedem
+  Schritt den Rundungsfehler.
+
+  Ein Algorithmus ist stabil im Sinne der Vorwärtsanalyse, wenn die
+  akkumulierten Rundungsfehler den Fehler durch die Konditionierung
+  nicht wesentlich überschreiten.
+\end{Definition}
+
+\begin{remark}
+  Graphisch ist die Vorwärtsanalyse in \cite[Abschnitt
+  2.3.1]{DeuflhardHohmann08} veranschaulicht
+\end{remark}
+
+\begin{example}
+  Exemplarisch führen wir die Rundungsfehleranalyse am Beispiel in
+  \cite[Abschnitt 1.3.2]{Rannacher17} durch.
+\end{example}
+
+\begin{Definition}{rueckwaertsanalyse}
+  Bei der \define{Rückwartsanalyse} des Rundungsfehlers bestimmt man
+  zur genäherten Lösung $\tilde y = \tilde f(x)$ einen Eingabewert
+  $\tilde x$, so dass $\tilde y = f(\tilde x)$ das Ergebnis des
+  exakten Algorithmus angewandt auf die fehlerhaften Daten $\tilde x$
+  ist.
+
+  Ein Algorithmus ist stabil im Sinne der Rückwärtsanalyse, wenn
+  $\norm{\tilde x-x}$ in derselben Größenordnung wie der erwartete
+  Eingabefehler ist.
+\end{Definition}
+
+\begin{example}
+  Exemplarisch führen wir die Rundungsfehleranalyse am Beispiel in
+  \cite[Lemma 2.30]{DeuflhardHohmann08} durch.
+\end{example}
+
+\section{Effizienz eines Algorithmus}
+
+\begin{remark}
+  Der aktuelle Entwicklungshorizont ist \define{Exascale computing},
+  das heißt, berechnungen mit $10^{18}$ Fließkommaoperationen
+  (\define{FLOP}) pro Sekunde. Das führt zu etwa $10^9$ gleichzeitigen
+  Operationen, deren zeitliche Abfolge nicht mehr festgelegt ist. Dies
+  steht wegen der fehlenden Assoziativität im Widerspruch zu
+  Determiniertheit und Effektivität.
+
+  Die Idee des Algorithmus als eine \glqq Abfolge von
+  Elementaroperationen\grqq{} stößt hier an ihre Grenzen, wie auch die
+  Idee der Turing-Maschine als Muster aller Computer.
+\end{remark}
+
+\begin{remark}
+  Eine wichtige Eigenschaft von Algorithmen fehlte in der Auflistung
+  \slideref{Bemerkung}{algorithmuseigenschaften}, die durch die
+  theoretische Informatik geprägt ist, nämlich die \define{Effizienz},
+  also die möglichst schnelle Abarbeitung auf einer gegebenen
+  Rechenmaschine.
+
+  Maße für Effizienz sind vielfältig und reichen von mathematischen
+  Eigenschaften zum Zusammenspiel von Mathematik und Maschine. Wir
+  listen hier die am häufigsten benutzen auf.
+
+  \begin{description}
+  \item[Aufwand:] Die Anzahl an Fließkommaoperationen, die insgesamt
+    zur Berechnung des Ergebnisses nötig sind
+  \item[Auslastung:] Anzahl der (sinnvollen) Fließkommaoperationen pro
+    Zeiteinheit verglichen mit dem maximal Möglichen des Computers in
+    \glqq\%-peak performance\grqq.
+  \item[Starke Skalierbarkeit:] Wie verringert sich die
+    Bearbeitungszeit, wenn mehr parallele Prozesse für dasselbe
+    Problem eingesetzt werden?
+  \item[Schwache Skalierbarkeit:] Wie verhält sich die
+    Bearbeitungszeit beim Einsatz von mehr parallelen Prozessen, wenn
+    die Problemgröße proportional zur Zahl der Prozesse wächst?
+  \item[Numerische Intensität:] Die Anzahl an Rechenoperationen pro
+    Speichertransfer
+  \end{description}
+\end{remark}
+
+\begin{remark}
+  Bei der \define{Vektorisierung} von Algorithmen nutzt man aus, dass
+  moderne Rechenwerke sehr effizient dieselbe Operation auf mehreren
+  Daten ausführen können. Dazu ist es wichtig, dass logische
+  Verzweigungen im Algorithmus auf möglichst hoher Ebene angesiedelt
+  sind. Damit ist der Algorithmus, den man sowohl in
+  \cite{Rannacher17} als auch in \cite{DeuflhardHohmann08} für die
+  Berechnung von Nullstellen quadratischer Polynome findet, für die
+  Vektorisierung ungeeignet.
+\end{remark}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

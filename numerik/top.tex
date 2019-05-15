@@ -1,0 +1,62 @@
+\usepackage[notref,notcite]{showkeys}
+\lstset{language=Python}
+\usetikzlibrary{svg.path}
+\excludecomment{solution}
+\input{mixed/fig/tikzsettings}
+
+\def\constref#1{C_{\text{\ref{#1}}}}
+\title{Einführung in die Numerik}
+\author{Guido Kanschat}
+\date{\today}
+
+\newcommand{\rd}{\operatorname{rd}}
+\newcommand{\eps}{\texttt{eps}}
+\begin{document}
+\maketitle
+\tableofcontents
+\chapter{Orthogonale Polynome}
+\input{orthopoly}
+
+\chapter{Konditionierung und Stabilität}
+\label{sec:stability}
+\input{stability}
+
+\chapter{Interpolation und Quadratur}
+
+\begin{intro}
+  Ziel dieses Kapitels ist die Herleitung von Methoden zur
+  Approximation des Integrals einer Funktion über ein Intervall
+  $[a,b]$. Diese Aufgabe wird in zwei Teile geteilt:
+  \begin{enumerate}
+  \item Wir unterteilen das Intervall in Subintervalle und summieren
+    die Teilintegrale
+    \begin{gather}
+      \int_a^b f \dx = \sum_{i=1}^n \int_{x_{i-1}}^{x_i} f \dx,
+      \qquad
+      a = x_0 < x_1 < \dots < x_n = b.
+    \end{gather}
+  \item Auf jedem Teilintervall finden wir Approximationen für das
+    lokale Integral.
+  \end{enumerate}
+  Da wir Polynome exakt integrieren können, nutzen wir wieder die
+  Approximation von Funktionen durch Polynome, um uns diesem Problem
+  zu nähern.
+\end{intro}
+
+\section{Polynominterpolation}
+\input{interpolation}
+
+\section{Interpolation mit Splines}
+\input{splines}
+
+\section{Interpolatorische Quadratur}
+\input{quadratur}
+
+\bibliographystyle{apalike}
+\bibliography{all}
+\printindex
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

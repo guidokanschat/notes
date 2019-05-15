@@ -1,9 +1,6 @@
 \usepackage[notref,notcite]{showkeys}
 \usepackage{varioref}
 \usepackage{nicefrac}
-\usepackage[backend=biber,style=alphabetic]{biblatex}
-\addbibresource{all.bib}
-\addbibresource{skript.bib}
   \usetikzlibrary{snakes}       % veraltet, sollte durch decorations ersetzt werden
   \usetikzlibrary{arrows.meta}  % Die brauche ich für die Visualisierung
                               % vom expliziten und impliziten Euler im Appendix
@@ -47,16 +44,16 @@
 
 \tableofcontents
 
-\input{awa}
-\input{explicit}
-\input{implicit}
-\input{newton}
-\input{lmm}
-\input{rwa}
-\input{fd}
+\input{ode/awa}
+\input{ode/explicit}
+\input{ode/implicit}
+\input{ode/newton}
+\input{ode/lmm}
+\input{ode/rwa}
+\input{ode/fd}
 \appendix
-\input{appendix}
-\input{postmatter}
+\input{ode/appendix}
+\input{ode/postmatter}
 
 %%% Local Variables: 
 %%% mode: latex
