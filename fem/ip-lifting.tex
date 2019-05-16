@@ -86,6 +86,8 @@
   and in lifting form (\slideref{Definition}{ip}) coincide on the
   discrete space $V_h$ if $\Sigma_h$ is chosen such that $\nabla V_h
   \subset \Sigma_h$.
+  
+  The lifting form is bounded on $H^1(\domain)+V_h$, but not consistent. The flux form is consistent for continuos solutions $u\in H^{\nicefrac32}(\domain)$ but not bounded on $H^1(\domain)+V_h$.
 \end{Lemma}
 
 \begin{proof}
@@ -97,6 +99,8 @@
     = 2\forme(\mvl{u_h\n},\mvl{\nabla v_h})_{\faces_h^i}
     + \forme(u_h,\d_n v_h)_{\faces_h^\d}.
   \end{gather*}
+  
+  The remaining statements of the lemma summarize and contextualize our analysis of the method in flux form and the application of \slideref{Lemma}{ip-lifting-bounded}.
 \end{proof}
 
 \begin{Definition}{ip-residual}
@@ -122,7 +126,7 @@
 \end{Definition}
 
 % This IS Strang's second lemma!
-\begin{Lemma}{ip-lifting-strang}
+\begin{Lemma*}{ip-lifting-strang}{Strang's 2nd Lemma}
   Let $a_h(.,.)$ be a bounded bilinear form on $V+V_h$ and elliptic on
   $V_h$ with norm $\norm{.}_{V_h}$ and constant $\ellipa$. Then, the error
   $u-u_h$ admits the estimate
@@ -133,7 +137,7 @@
     + \left(1+\frac{\norm{a_h}}{\ellipa}\right)
     \inf_{w_h\in V_h}\norm{u-w_h}
   \end{gather}
-\end{Lemma}
+\end{Lemma}*
 
 \begin{proof}
   First, by the definition of the residual, we have the error equation
@@ -189,7 +193,7 @@
   individual faces. Therefore,
   \begin{gather*}
     \sum_{\cell\in\mesh_h} \forme(\d_n u,v)_{\d\cell}
-    = 2\forme(\nabla u,\mvl{v\otimes n})_{\faces_h^i}
+    = 2\forme(\nabla u,\mvl{v \n})_{\faces_h^i}
     + \forme(\d_n u,v)_{\faces_h^\d}.
   \end{gather*}
   The proof concludes by collecting the results.
@@ -299,7 +303,7 @@
   \end{gather*}
   Testing with $v=u-u_h$ yields
   \begin{gather*}
-    \norm{u-u_h}^2 = a_h(u-u_h,u^*) - \Res^*(u^*,u-u^*).
+    \norm{u-u_h}^2 = a_h(u-u_h,u^*) - \Res^*(u^*,u-u_h).
   \end{gather*}
   Additionally, we us the error equation
   \begin{gather*}
@@ -325,15 +329,15 @@
   Finally, using $\jmp{u^*} = 0$, the same lemma yields
   \begin{align*}
     \abs{\Res(u, I_h u^*)}
-    &\le c h \snorm{u}_2
+    &\le c h^k \snorm{u}_{k+1}
       \bigl(\norm{\sqrt{\ipp_h}\jmp{I_h u^*}}_{\faces_h^i}
       + \norm{\sqrt{\ipp_h}I_h u^*}_{\faces_h^\d}\bigr)
     \\
-    & = c h \snorm{u}_2
+    & = c h^k \snorm{u}_{k+1}
       \bigl(\norm{\sqrt{\ipp_h}\jmp{u^*-I_h u^*}}_{\faces_h^i}
       + \norm{\sqrt{\ipp_h}(u^*-I_h u^*)}_{\faces_h^\d}\bigr)
     \\
-    & \le c h \snorm{u}_2 h^k \snorm{u^*}_{k+1}
+    & \le c h^k \snorm{u}_{k+1} h \snorm{u^*}_2
   \end{align*}
   Using the energy estimate in \slideref{Theorem}{ip-lifting-h1} we
   can conclude the prove.
