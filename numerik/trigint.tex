@@ -1,0 +1,22 @@
+\begin{Satz}{trigonometrische-interpolation}
+  Zu gegebenen Zahlen $f_0,\dots f_n\in \C$ gibt es genau eine
+  Funktion der Gestalt
+  \begin{gather}
+    t_n(x) = \sum_{k=0}^n c_k e^{ikx}.
+  \end{gather}
+  die den Interpolationsbedingungen
+  \begin{gather}
+    t_n(x_j) = = f_j, \quad x_j = \frac{2\pi k}{n+1}, j=0,\dots,n
+  \end{gather}
+  genügt. Ihre Koeffizienten sind
+  \begin{gather}
+    c_k = \frac{1}{n+1} \sum_{j=0}^n f_j e^{-ijx_k}.
+  \end{gather}
+\end{Satz}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
