@@ -4,8 +4,14 @@ slides.pdf: print.pdf
 	pdflatex slides
 	pdflatex slides
 
-print.pdf: print.tex top.tex orthopoly.tex stability.tex interpolation.tex splines.tex print.bbl
+print.pdf: print.tex top.tex orthopoly.tex stability.tex interpolation.tex splines.tex print.bbl ../mathsim.sty
 	-mkdir blocks
 	pdflatex print
 	makeindex print
 	pdflatex print
+
+scp: print.pdf
+	scp print.pdf simserv01:WWW/notes/einf.pdf
+
+clean:
+	-rm *~ *.aux *.toc *.log blocks/* *.idx *.ind *.ilg *.stm *.out *.nav

@@ -1,4 +1,5 @@
 \subsection{Summierte Quadratur}
+
 \begin{Definition}{quadratur}
   Eine \define{Quadraturformel} $Q_{[a,b]}(f)$ ist eine Approximation
   des Integrals
@@ -65,6 +66,22 @@
   \end{align}
 \end{proof}
 
+\subsection{Quadratur auf Einzelintervallen}
+
+\begin{Notation}{quadrature}
+  In diesem Abschnitt integrieren wir wieder über das Intervall
+  $I=[a,b]$, aber mit dem Gedanken, dass es sich eigentlich um die
+  Teilintervalle $I_i$ einer summierten Quadratur handelt.
+
+  Wir betrachten in der Regel Quadraturformeln mit $n$ Punkten
+  $x_1,\dots,x_n$. Oft benutzen wir Ergebnisse aus den Abschnitten
+  über Interpolation. Dabei ist jeweis darauf zu achten, dass die
+  Indizes dort bei null loslaufen. Der Grund für diesen wechsel ist,
+  dass wir bei der Interpolation den Grad der Polynome als führende
+  Größe angesehen haben, während hier die Anzahl der Quadraturpunkte
+  im Vordergrund steht.
+\end{Notation}
+
 \begin{Definition}{grad-exaktheit}
   Eine Quadraturformel $Q_I$ heißt \define{exakt vom Grad $k$} und $k$
   heißt der \define{Grad der Exaktheit} von $Q_I$, wenn sie exakt für
@@ -82,14 +99,45 @@
   \end{gather}
 \end{Lemma}
 
-% \begin{Definition}{quasi-uniform}
-%   Eine Zerlegung $\I_h$ des Intervalls $[a,b]$ in $n$ Teilintervalle
-%   heißt \define{uniform}, wenn $h_i = h_k$ für alle
-%   $i,k=1,\dots,n$. Insbesondere ist dann $h_i = (b-a)/n$.
+\begin{Definition}{interpolatorische-quadratur}
+  Eine \define{interpolatorische Quadraturformel} mit $n$
+  Quadraturpunkten $x_1,\dots,x_n$ approximiert das Integral einer
+  Funktion $f$ durch das exakte Integral ihres Interpolationspolynoms
+  $p\in \P_{n-1}$
+\end{Definition}
 
-%   Eine Familie von Zerlegungen heißt \define{quasi-uniform}, wenn als schwächere
-%   Bedingung gilt:
-% \end{Definition}
+\begin{Lemma}{interpolatorisch-omega}
+  Seien $x_1,\dots,x_n$ die Quadraturpunkte einer interpolatorischen
+  Quadraturformel $Q_I$. Dann sind die Gewichte gegeben durch
+  \begin{gather}
+    \omega_i = \int_I \plagrange_{i;x_1,\dots,x_n}(x)\dx,
+  \end{gather}
+  wobei $\plagrange_{i;x_1,\dots,x_n}$ das
+  Lagrange-Inerpolationspolynom zum Punkt $x_i$ ist.
+\end{Lemma}
+
+\begin{Lemma}{exakt-omega}
+  Eine $n$-Punkt-Quadraturformel $Q_n$ ist dann und nur dann exakt von
+  Ordnung $k$, wenn
+\end{Lemma}
+
+\begin{Definition}{newton-cotes}
+  Werden die Quadraturpunkte $x_1,\dots,x_n$ gleichmäßig im Intervall
+  $[a,b]$ verteit, so spricht man von einer
+  \define{Newton-Cotes-Formel}. Die ersten drei klassischen Formeln
+  sind auf dem Einheitsintervall $[0,1]$ gegeben durch
+  \begin{center}
+    \begin{tabular}{l|c|cccc|cccc}
+      & $n$ & \multicolumn{4}{|c}{$x_i$} & \multicolumn{4}{|c}{$\omega_i$}
+      \\\hline
+      Trapezregel & 2 & 0 & 1 &&& \nicefrac12 & \nicefrac12\\
+      Simpson-Regel & 3 & 0 & \nicefrac12 & 1 &
+                          & \nicefrac16& \nicefrac46& \nicefrac16\\
+      \nicefrac38-Regel & 4 & 0 & \nicefrac13 & \nicefrac13 & 1
+                          & \nicefrac18& \nicefrac38& \nicefrac38& \nicefrac18
+    \end{tabular}
+  \end{center}
+\end{Definition}
 
 
 %%% Local Variables:
