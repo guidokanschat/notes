@@ -108,18 +108,22 @@
 
 \begin{Lemma}{interpolatorisch-omega}
   Seien $x_1,\dots,x_n$ die Quadraturpunkte einer interpolatorischen
-  Quadraturformel $Q_I$. Dann sind die Gewichte gegeben durch
+  Quadraturformel $Q_I$, die exakt für Polynome vom Grad $n-1$
+  ist. Dann sind die Gewichte gegeben durch
   \begin{gather}
     \omega_i = \int_I \plagrange_{i;x_1,\dots,x_n}(x)\dx,
   \end{gather}
   wobei $\plagrange_{i;x_1,\dots,x_n}$ das
-  Lagrange-Inerpolationspolynom zum Punkt $x_i$ ist.
+  Lagrange-Interpolationspolynom zum Punkt $x_i$ ist.
 \end{Lemma}
 
-\begin{Lemma}{exakt-omega}
-  Eine $n$-Punkt-Quadraturformel $Q_n$ ist dann und nur dann exakt von
-  Ordnung $k$, wenn
-\end{Lemma}
+\begin{proof}
+  Die Lagrange-Polynome $\plagrange_i$ sind Polynome vom Grad
+  $n-1$. Es gilt daher
+  \begin{gather}
+    \int_I \plagrange_i = \sum_{k=1}^n \omega_k \plagrange_i(x_k) = \omega_i.
+  \end{gather}
+\end{proof}
 
 \begin{Definition}{newton-cotes}
   Werden die Quadraturpunkte $x_1,\dots,x_n$ gleichmäßig im Intervall
