@@ -638,6 +638,79 @@
   \end{gather}
 \end{Lemma}
 
+\begin{proof}
+  \begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \def\scale{3}
+    
+    %% reference cell
+    \def\mid{\scale*0.2928932188}
+    \def\outermid{\scale*0.5}
+    \def\outerrad{\scale*0.7071067811}
+    
+    \node (mid) at (\mid,\mid) {$\refvx_0$};
+    \coordinate (x1) at (\scale*1,0);
+    \node[right = \scale*0.01 of x1] (x1name) {$\refvx_1$};
+    \coordinate (x2) at (0,\scale*1);
+    \node[above = \scale*0.01 of x2] (x2name) {$\refvx_2$};
+    \coordinate (x3) at (0,0);
+    \node[left = \scale*0.01 of x3] (x3name) {$\refvx_3$};
+    \coordinate (xc) at (\outermid,\outermid);
+    \node[above = \scale*0.01 of xc] (xcname) {$\refvx_c$};
+    
+    \draw (x1)--(x2)--(x3)--(x1);
+    
+    % incircle
+    \draw (mid) circle (\mid);
+    \draw (mid) --  (\mid,0);
+    \node[below = \scale*0.01 of mid,xshift=0.5em] (rho) {$\refrho$};
+    
+    % circumcircle
+    \draw (xc) circle (\outerrad);
+    \draw (xc) -- (\outermid+\outerrad,\outermid);
+    \node[above right = \scale*0.01 and \scale*0.25 of xc] (R) {$\reference{R}$};
+    \end{tikzpicture}
+    \caption{Visualization of the inscribed and circumscribed circle of the reference cell $\refcell$.}
+  \end{figure}
+
+  Let us define $S_{\refrho}\coloneqq \{\refvy\in\R^d ~\mid~ \abs{\refvy}=\refrho \}$.
+  For $\refvy\in S_{\refrho}$ there holds
+  $\refvx\coloneqq \refvxo + \refvy\in \overline{\refcell}$
+  and $\vx=\matb\refvx + \vb = \matb(\refvxo+\refvy)+\vb$.
+  Additionally, we have $\vxo = \matb \refvxo + \vb$
+  which yields
+  \begin{align*}
+    \abs{\vx-\vxo} = \abs{\matb\refvy}\leq 2R.
+  \end{align*}
+  Now consider the operator norm of $\matb$
+  \begin{align*}
+    \norm{\matb} = \sup_{\refvy\in\R^d} \frac{\abs{\matb\refvy}}{\abs{\refvy}}
+    = \sup_{\abs{\refvy}=1} \abs{\matb\refvy}
+    = \sup_{\refvy\in S_{\refrho}} \frac{\abs{\matb\refvy}}{\refrho}
+    \leq \frac{2R}{\refrho}.
+  \end{align*}
+  $\refrho$ is a constant only depending on $\refcell$ but
+  not on $\cell$. Hence, we get $\norm{\matb}\leq cR$ with $c$ depending
+  on $\refrho$.
+
+  The same argument can be applied for the second estimate.
+  We now define $S_\rho\coloneqq \{\vy\in\R^d~\mid~\abs{\vy}=\rho \}$.
+  For $\vy\in S_\rho$ there holds $\vx\coloneqq\vxo+\vy\in\overline{\cell}$
+  and let $\refvx=\matb^{-1}\vx-\vb,~\refvxo=\matb^{-1} \vxo - \vb$ which yields
+  \begin{align*}
+    \abs{\refvx - \refvxo} = \abs{\matb^{-1} \vy}\leq 2\reference{R}.
+  \end{align*}
+  Analogous to the first estimate we obtain
+  \begin{align*}
+    \norm{\matb^{-1}} = \sup_{\vy\in S_\rho} \frac{\abs{\matb^{-1} \vy}}{\rho}
+    \leq \frac{2\reference{R}}{\rho}.
+  \end{align*}
+  Now $\reference{R}$ is only depending on $\refcell$ but not on $\cell$.
+  Hence, we have $\norm{\matb^{-1}}\leq c\rho^{-1}$ where $c$ depends
+  on $\reference{R}$.
+\end{proof}
+
 \begin{Assumption}{mapping-decomposition}
   For more general mappings $\Phi\colon \refcell\to \cell$, we
   make the assumption, that they can be decomposed into three factors,

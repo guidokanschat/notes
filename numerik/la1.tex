@@ -1,0 +1,75 @@
+
+\subsection{Vektor- und Matrixnormen}
+
+\begin{Definition}{norm}
+  Eine \define{Norm} $\norm{\cdot}$ auf dem Vektorraum $V$ ist eine Abbildung
+  \begin{gather}
+    \begin{split}
+      \norm{\cdot}\colon V &\to \R\\
+      x&\mapsto \norm{x}
+    \end{split}
+  \end{gather}
+  mit den Eigenschaften
+  \begin{enumerate}
+  \item Homogenität
+  \item Dreiecksungleichung
+  \item Definitheit
+  \end{enumerate}
+\end{Definition}
+
+\begin{Definition}{norm-aequivalenz}
+  Sei $V$ ein reeller Vektorraum. Zwei Normen $\norm{\cdot}_X$ und
+  $\norm{\cdot}_Y$ auf $V$ heißen äquivalent, wenn es Konstanten $c>0$
+  und $C>0$ gibt, so dass
+  \begin{gather}
+    c \norm{v}_X \le \norm{v}_Y \le C \norm{v}_X
+    \qquad\forall v\in V.
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{rn-konvergenz}
+  Eine Folge $\{x^{(k)}\}\subset \R^n$ für $k=1,2,\dots$ heißt
+  \textbf{komponentenweise konvergent} gegen $x\in \R^n$, wenn gilt
+  \begin{gather}
+    \forall \epsilon>0\;
+    \exists k_0\in \mathbb N\;
+    \forall k\ge k_0, i=1,\dots,n
+    : \abs{x^{(k)}_i - x_i} < \epsilon.
+  \end{gather}
+  Die Folge heißt konvergent unter der Norm $\norm{\cdot}$ wenn gilt
+  \begin{gather}
+    \forall \epsilon>0\;
+    \exists k_0\in \mathbb N\;
+    \forall k\ge k_0
+    : \norm{x^{(k)} - x} < \epsilon.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{norm-stetig}
+  Sei $\norm{\cdot}$ eine Norm auf $\R_n$. Dann ist die Abbildung
+  \begin{gather}
+    f\colon x \mapsto \norm{x}
+  \end{gather}
+  stetig bezüglich der komponentenweisen
+  Konvergenz.
+
+  Komponentenweise Konvergenz und Normkonvergenz sind äquivalent auf
+  $\R^n$ .
+\end{Lemma}
+
+\begin{proof}
+  
+\end{proof}
+
+
+\begin{Satz}{norm-aequivalenz}
+  
+\end{Satz}
+
+\subsection{Konditionierung der Lösung}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

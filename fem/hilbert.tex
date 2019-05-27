@@ -1,3 +1,12 @@
+\begin{intro}
+ In this section we discuss important properties of Hilbert spaces and
+ solvability of PDEs in Hilbert spaces. This will lead us to
+  \slideref{Lemma}{weak-well-posed},
+  which describes elliptic PDEs.
+  As we will only consider elliptic PDEs in this lecture, this is
+  one of the most important results.
+\end{intro}
+
 \begin{Definition}{inner-product}
   Let $V$ be a vector space over $\R$. An \define{inner product} on $V$ is a mapping
   $\scal(.,.): V\times V \to \R$ with the properties
@@ -381,12 +390,6 @@
   \end{gather}
 \end{Definition}
 
-\begin{notation}
-  One often speaks of \define{$V$-elliptic} instead of elliptic to
-  point out that the ellipticity of the bilinear form indeed depends
-  on the scalarproduct inducing the $V$-norm.
-\end{notation}
-
 \begin{Lemma}{pde-bilinear}
   Let $a_{ij} \in C^1(\domain)$, $b_i, c\in C^0(\domain)$. A solution
   to the Dirichlet problem
@@ -497,6 +500,35 @@
   \end{gather*}
 \end{proof}
 
+\begin{Lemma}{divergence-equality}
+  For $b_i \in C^2(\domain)$ and $u\in H^1_0(\domain)$ there holds
+  \begin{align}
+    (\vb\cdot\nabla u,u)_{L^2} = -\frac12 (\nabla \cdot\vb,u^2)_{L^2}.
+  \end{align}
+\end{Lemma}
+
+\begin{Problem}{divergence-equality}
+  Prove \slideref{Lemma}{divergence-equality}.
+\end{Problem}
+
+%% \begin{proof}
+%%   Starting with the right hand side, integration by parts yields
+%%   \begin{gather*}
+%%     -\frac12 (\nabla\cdot \vb,u^2)_{L^2} = -\frac12 \int_\domain \nabla\cdot\vb~ u^2 \dx
+%%     = \frac12 \int_\domain \vb\cdot\nabla(u^2)\dx - \frac12 \int_{\d\domain} \vb~ u^2\dx
+%%   \end{gather*}
+%%   where the boundary term vanishes as our solution space is $H^1_0(\domain)$.
+%%   Then, there holds
+%%   \begin{gather*}
+%%     \begin{split}
+%%       -\frac12 (\nabla\cdot \vb,u^2)_{L^2} &= \frac12 \int_\domain \vb\cdot\nabla(u^2)\dx
+%%       = \frac12 \int_\domain \vb\cdot\nabla u~ 2u\dx
+%%       \\
+%%       &= \int_\domain \vb\cdot\nabla u u\dx = (\vb\cdot\nabla u,u)_{L^2}.
+%%     \end{split}
+%%   \end{gather*}
+%% \end{proof}
+
 \begin{Lemma}{weak-well-posed}
   Let $a_{ij}, c\in L^\infty(\domain)$, $b_i \in C^1(\overline{\domain})$ such
   that there holds for a positive constant $\alpha$
@@ -506,7 +538,7 @@
     \alpha\abs{\xi}^2 &\le \xi^T \mathbf A(\vx) \xi,
     \qquad \forall \xi \in \R^d,
     \\
-    0 &\le c + \div \mathbf b.
+    0 &\le c - \frac12 \nabla\cdot \vb.
     \end{split}
   \end{gather}
   Then, the associated bilinear form is coercive and bounded on
@@ -514,11 +546,63 @@
   solution.
 \end{Lemma}
 
+\begin{proof}
+  We will prove boundedness of the individual terms and coercivity
+  for the whole bilinear form.
+  
+  We start with the boundedness of the $\mathbf A$-term.
+  Due to the Bunyakovsky-Cauchy-Schwarz inequality there holds
+  \begin{align*}
+    (\mathbf A(\vx) \nabla u,\nabla v)_{L^2} &= \int_\domain \mathbf A(\vx) \nabla u \cdot \nabla v \dvx
+    \leq \norm{\mathbf A(\vx) \nabla u}_{L^2} \norm{\nabla v}_{L^2}
+    \intertext{and as $a_{ij}\in L^\infty(\domain)$ there holds for $M:=\max_{ij} \norm{a_{ij}(\vx)}_\infty>0$}
+    &\leq \max_{ij} \norm{a_{ij}(\vx)}_\infty \norm{\nabla u}_{L^2} \norm{\nabla v}_{L^2} = M \abs{u}_1 \abs{v}_1.
+  \end{align*}
+  
+  Let us now consider boundedness for the $\vb$-term.
+  For the standard dot product there holds
+  $\vx\cdot \vy\leq \abs{\vx}\abs{\vy}$, which yields
+  \begin{align*}
+    \int_\domain \vb(\vx)\cdot\nabla u v \dvx \le \int_\domain \abs{\vb(\vx)}\abs{\nabla u}v\dvx.
+  \end{align*}
+  Now we can use $b_i\in C^2(\overline{\domain})$ and the Bunyakovsky-Cauchy-Schwarz
+  inequality which leads to
+  \begin{align*}
+    (\vb(\vx)\cdot\nabla u,v)_{L^2}&\le \int_\domain\abs{\vb(\vx)}\abs{\nabla u}v\dvx \\
+    &\le \max_i \norm{b_i(\vx)}_\infty \norm{\nabla u}_{L^2} \norm{v}_{L^2}  \\
+    &\le \max_i \norm{b_i(\vx)}_\infty \abs{u}_1 \abs{v}_1.
+  \end{align*}
+  In the last step we used Friedrich's inequality for $v\in H^1_0$.
+  
+  Now, we prove boundedness for the $c$-term.
+  Using the Bunyakovsky-Cauchy-Schwarz and Friedrich's inequality and
+  $M:=\lambda(\domain)^2 \max_{\vx\in\domain}\abs{c(\vx)}>0$, there holds
+  \begin{align*}
+    (c(\vx)u,v)_{L^2} = \int_\domain c(\vx)uv\dvx \le \abs{c(\vx)} \norm{u}_{L^2} \norm{v}_{L^2} \le M \abs{u}_1 \abs{v}_1.
+  \end{align*}
+  Hence, our bilinear form is bounded.
+
+  There is only the coercivity of our bilinear
+  form left to prove.
+  As $c\in L^\infty(\domain)$ and $b_i\in C^1(\overline{\domain})$ the
+  expression $C\coloneqq \min_{\vx\in\domain}(c(\vx)-\frac12 \nabla\cdot \vb(\vx))$ is
+  well-defined and $C>0$ by assumption.
+  Now consider the whole bilinear form, where we already used
+  \slideref{Lemma}{divergence-equality}:
+  \begin{align*}
+    a(u,u) &= (\mathbf A(\vx)\nabla u,\nabla u)_{L^2} - \frac12 (\nabla \cdot \vb(\vx) u ,u)_{L^2} + (c(\vx)u,u)_{L^2} \\
+    &\ge \alpha \int_\domain \abs{\nabla u}^2 \d\vx + \int_\domain (c(\vx)-\frac12 \nabla \cdot \vb(\vx))\abs{u}^2 \dvx \\
+    &\ge \alpha \int_\domain \abs{\nabla u}^2 \dvx + C \int_\domain \abs{u}^2 \dvx \\
+    &\ge \underbrace{\min\{\alpha,C \}}_{\ge 0}\norm{u}_1^2 \ge \min\{\alpha,C \} \abs{u}_1^2
+  \end{align*}
+  Thus, the bilinear form is coercive.
+\end{proof}
+
 \begin{Definition}{elliptic}
   A differential equation of second order in divergence
-  form~(\ref{eq:hilbert:div-eq}) such that~(\ref{eq:hilbert:elliptic})
-  holds is called \define{elliptic}. The lower bound $\alpha$ is the
-  ellipticity constant.
+  form~\eqref{eq:hilbert:div-eq} with associated coercive
+  and bounded bilinear form is called \define{elliptic}.
+  The lower bound $\alpha$ is the ellipticity constant.
 \end{Definition}
 
 %%% Local Variables: 

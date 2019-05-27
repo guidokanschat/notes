@@ -36,12 +36,12 @@
   Seien die Punkte $x_0,\dots,x_n$ paarweise verschieden. Dann gilt
   für die \define{Lagrange-Polynome}
   \begin{gather}
-    L_i(x) = L_{i;n}(x) = L_{i}(x;x_0,\dots,x_n)
+    \plagrange_i(x) = \plagrange_{i;n}(x) = \plagrange_{i;x_0,\dots,x_n}(x)
     = \prod_{\substack{j=0\\j\neq i}}^n \frac{x-x_j}{x_i-x_j}
   \end{gather}
   die Eigenschaft
   \begin{gather}
-    L_i(x_j) = \delta_{ij},\qquad 0 \le i,j \le n.
+    \plagrange_i(x_j) = \delta_{ij},\qquad 0 \le i,j \le n.
   \end{gather}
   Die Lagrange-Polynome sind \putindex{orthonormal} bezüglich des
   Skalarprodukts
@@ -52,9 +52,15 @@
 \end{Lemma}
 
 \begin{Korollar}{lagrange-interpolation}
+  Die Lösung der Interpolationsaufgabe nach Lagrange eerlauben die Darstellung
+  \begin{gather}
+    p(x;f;x_0,\dots,x_n) = \sum_{i=0}^n f_i \plagrange_{i;x_0,\dots,x_n}(x).
+  \end{gather}
+  
   Die Lagrange-Interpolation eingeschränkt auf den Raum $\P_n$ ist die
   Identität
 \end{Korollar}
+
 \begin{remark}
   Die Lagrangesche Interpolationsaufgabe kann auch als Gaußsche
   Ausgleichsrechnung mit dem obigen Skalarprodukt aufgefasst werden.
@@ -95,7 +101,7 @@
   ist die \define{Lebesgue-Konstante}
   \begin{gather}
     \Lambda_{x_0,\dots,x_n} = \max_{x\in [a,b]}
-    \sum_{i=0}^n \abs{L_i(x;x_0,\dots,x_n)}.
+    \sum_{i=0}^n \abs{\plagrange_{i;x_0,\dots,x_n}(x)}.
   \end{gather}
   Es gilt also
   \begin{gather}
@@ -181,7 +187,7 @@
     = \prod_{j=0}^{i-1} (x-x_j),
     \qquad i=0,\dots,n
   \end{gather}
-  wobei die leere Summe für $i=0$ den Wert 1 annehme.
+  wobei das leere Produkt für $i=0$ den Wert 1 annehme.
 \end{Definition}
 
 \begin{Lemma}{newton-basis}
@@ -625,11 +631,11 @@
   Für das \define{Taylor-Polynom} zu $f\in C^{n+1}(a,b)$ in einem
   Punkt $x_0\in(a,b)$,
   \begin{gather}
-    p(x) = \sum_{i=0}^n \frac{f^{i}}(x_0){i!} (x-x_0)^i
+    p(x) = \sum_{i=0}^n \frac{f^{i}(x_0)}{i!} (x-x_0)^i
   \end{gather}
   gilt die folgende Fehlerdarstellung: es gibt ein $\xi\in[x_0,x]$ so dass gilt
   \begin{gather}
-    f(x) - p(x) = \frac{f^{n+1}}(x_0){(n+1)!} (x-x_0)^{n+1}.
+    f(x) - p(x) = \frac{f^{n+1}(\xi)}{(n+1)!} (x-x_0)^{n+1}.
   \end{gather}
 \end{Korollar}
 
