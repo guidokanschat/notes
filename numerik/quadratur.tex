@@ -143,6 +143,220 @@
   \end{center}
 \end{Definition}
 
+\begin{Satz}{newton-cotes-error}
+  Die Fehler der Newton-Cotes-Formeln auf dem Intervall $I$ der Länge
+  $h$ lassen sich wie folgt abschätzen
+  \begin{gather}
+    \left|\int_I f\dx - Q_I(f)\right| \le
+    \begin{cases}
+      \dfrac{h^3}{12}\max\limits_{\xi\in I}\abs{f''(\xi)}
+      &\text{Trapezregel}\\
+      \dfrac{h^5}{2880}\max\limits_{\xi\in I}\abs{f^{(4)}(\xi)}
+      &\text{Simpson-Regel}\\
+      \dfrac{h^5}{6480}\max\limits_{\xi\in I}\abs{f^{(4)}(\xi)}
+      &\text{\nicefrac38-Regel}
+    \end{cases}
+  \end{gather}
+\end{Satz}
+
+\begin{proof}
+  Der Beweis für die Trapezregel und die \nicefrac38-Regel benutzt
+  Interpolation in den Quadraturpunkten und die Fehlerdarstellung des
+  Interpolationsfehlers. Für die Trapezregel ist er als Hausaufgabe
+  gestellt.
+
+  Hier führen wir nur den Beweis für die Simpson-Regel. Nachdem man
+  experimentell beobachtet, dass die Formel exakt vom Grad 3 ist,
+  nicht vom erwarteten Grad 2, konstruieren wir eine Interpolation auf
+  $I=[x_1,x_3]$ mit Mittelpunkt $x_2$ wie folgt:
+  \begin{xalignat}2
+    p(x_1) &= f(x_1) & p(x_2) &= f(x_2) \\
+    p(x_3) &= f(x_3) & p'(x_2) &= f'(x_3).
+  \end{xalignat}
+  Die letzte Bedingung ist aus der Quadraturformel nicht
+  ersichtlich. Folgen wir jedoch der Basiskonstruktion im
+  \slideref{Satz}{hermite-interpolation} über die Wohlgestelltheit der
+  Hermite-Interpolationsaufgabe, so erhalten wir
+  \begin{xalignat}2
+    H_{10}(x) &= \tfrac{4(x-x_2)^2(x_3-x)}{h^3}&
+    H_{20}(x) &= \tfrac{4(x-x_1)(x-x_3)}{h^2}\\
+    H_{30}(x) &= \tfrac{4(x-x_2)^2(x-x_1)}{h^3}&
+    H_{21}(x) &= \tfrac{4(x-x_2)(x-x_1)(x-x_3)}{h^2}
+  \end{xalignat}
+
+  \begin{figure}[tp]
+    \centering
+    \includegraphics[width=.8\textwidth]{graph/interpolation/simpson}
+    \caption{Basisfunktionen für die Simpsonregel. Beachte, dass $H_21$ in allen Quadraturpunkten verschwindet und auch das Integral null ist.}
+    \label{fig:simpson}
+  \end{figure}
+  Die Funktion $H_{21}(x)$ ist das Produkt der Parabel
+  $(x-x_1)(x-x_3)$, die symmetrisch zur Intervallmitte ist mit einer
+  linearen Funktion mit Nullstelle in der Intervallmitte. Daher
+  verschwindet ihr Integral und das zugehörige Integrationsgewicht ist
+  null. Die Simpson-Regel lässt sich also schreiben als
+  \begin{gather}
+    Q_I = \frac h6f(x_1)+\frac{4h}6f(x_2) + \frac h6f(x_3) + 0 f'(x_2).
+  \end{gather}
+  Für die obige Interpolation gilt nach
+  \slideref{Satz}{Hermite-restglied} die Fehlerdarstellung
+  \begin{gather}
+    f(x) - p(x) = \frac{f^{4}(\xi(x)}{4!} \pnewton_{x_1,x_2,x_2,x_3}(x).
+  \end{gather}
+  Integration ergibt
+  \begin{align}
+    \left|\int_I f\dx - Q_I(f)\right|
+    &= \left|\int_I \bigl(f(x) - p(x)\bigr)\dx\right|\\
+    &\le \max_{\xi\in I} \frac{f^{4}(\xi}{4!}
+      \int_I \pnewton_{x_1,x_2,x_2,x_3}(x) \dx.
+  \end{align}
+  Schließlich berechnen wir
+  \begin{gather}
+    \int_I \pnewton_{x_1,x_2,x_2,x_3}(x) \dx
+    = \int_I (x-x_1)(x-x_2)^2(x-x_3)
+    = \frac1{120}
+  \end{gather}
+\end{proof}
+
+\begin{remark}
+  Ab Grad ??? haben die Newton-Cotes-Formeln negative Gewichte...
+\end{remark}
+
+\subsection{Gauß-Quadratur}
+
+\begin{Lemma}{quadratur-exakt-max}
+  Sei $Q_n$ eine Quadraturformel auf einem Intervall $I$ mit $n$
+  Quadraturpunkten. Dann ist $Q_n$ maximal exakt vom Grad $2n-1$.
+\end{Lemma}
+
+\begin{proof}
+  Siehe \cite[Satz 3.1]{Rannacher17}
+\end{proof}
+
+\begin{Definition}{Gauss-Legendre}
+  Die $n$-Punkt-\define{Gauß-Legendre-Formel} auf dem Intervall
+  $I=[-1,1]$ benutzt als Stützstellen $x_1,\dots,x_n$ die Nullstellen
+  des Legendre-Polynoms $\plegendre(x)$ vom Grad $n$. Ihre
+  Quadraturgewichte sind die Integrale der Lagrange-Polynome
+  \begin{gather}
+    \omega_i = \int_I \plagrange_{i;x_1,\dots,x_n}(x)\dx.
+  \end{gather}
+\end{Definition}
+
+\begin{Satz}{gauss-legendre}
+  Die $n$-Punkt-Gauß-Legendre-Formel ist wohldefiniert und exakt für
+  beliebige Polynome vom Grad $2n-1$.
+\end{Satz}
+
+\begin{Satz}{gauss-legendre-eindeutig}
+  Seien die Quadraturformeln $Q_k$ mit Quadraturpunkten
+  $x_1^{(k)},\dots,x_k^{(k)}$ für $k=1,\dots,n$ auf dem Intervall
+  $I=[-1,1]$ exakt für beliebige $p\in \P_{2k-1}$. Dann sind die
+  Polynome
+  \begin{gather}
+    p_k(x) = \prod_{i=1}^k (x-x_i^{(k)}) \in \P_k
+  \end{gather}
+  und $p_0(x) = 1 \in \P_0$ paarweise orthogonal bezüglich des
+  $L^2$-Skalarprodukts. Insbesondere sind sie damit Vielfache der
+  Legendre-Polynome $\plegendre_k$ und die
+  $n$-Punkt-Gauss-Legendre-Formel ist die einzige Formel mit $n$
+  Punkten, deren Grad der Exaktheit $2n-1$ ist.
+\end{Satz}
+
+\begin{Lemma}{gauss-legendre-gewichte}
+  Die Gewichte der Gauss-Legendre-Formeln sind positiv und genügen der
+  Darstellung
+  \begin{gather}
+    \omega_i = \int_{-1}^1 \prod_{j\neq i}
+    \left(\frac{x-x_j}{x_i-x_j}\right)^2\dx.
+  \end{gather}
+\end{Lemma}
+
+\begin{Lemma}{gauss-legendre-fehler}
+  Für die Gauss-Legendre-Formel mit $n$ Quadraturpunkten auf
+  $I=[-1,1]$ gilt die Fehlerabschätzung
+  \begin{gather}
+    \left|\int_I f\dx - Q_n(f)\right|
+    \le \max_{\xi\in I}\frac{f^{(2n)}(\xi)}{(2n)!}
+    \int_{-1}^1 \prod_{i=1}^n(x-x_i)^2.
+  \end{gather}
+\end{Lemma}
+
+\begin{remark}
+  Alle Resultate dieses Abschnitts gelten für Skalarprodukte der Form
+  \begin{gather}
+    \scal(p,q) = \int_I \omega(x)p(x)q(x)\dx
+  \end{gather}
+  mit einer positiven Gewichtsfunktion $\omega(x)$, wenn man die
+  Legendre-Polynome durch die entsprechenden orthogonalen Polynome
+  ersetzt.
+\end{remark}
+
+\subsection{Richardson-Extrapolation und Romberg-Quadratur}
+
+\begin{Definition}{richardson-extrapolation}
+  Sei $T(h)$ eine numerische Methode zur Approximation des
+  tatsächlichen Wertes $T(0)$ mit Diskretisierungsparameter $h$ und
+  Fehlerabschätzung $\abs{T(h)-T(0)} = \bigo(h^p)$. Zur
+  \define{Richardson-Extrapolation} wertet man diese Methode mit einer
+  Schrittfolge $h_1, h_2,\ldots,h_n$ aus, so dass die Schrittweite
+  (theoretisch) gegen null geht. Wertet man dann das
+  Interpolationspolynom $p(h^p)$ an der Stelle $h=0$ aus, so bekommt
+  man unter stärkeren Voraussetzungen die verbesserte Approximation
+  \begin{gather}
+    \abs{T(0)-p(0)} = \bigo(h^{np}).
+  \end{gather}
+\end{Definition}
+
+\begin{remark}
+  Tatsächlich genügt die einfache Fehlerabschätzung
+  $\abs{T(h)-T(0)} = \bigo(h^p)$ nicht, um die behauptete
+  Konvergenzordnung zu beweisen. Man benötigt eine asymptotische
+  Fehlerentwicklung der Form
+  \begin{gather}
+    T(h)-T(0) = \tau_1 h^p + \tau_2 h^{2p} + \dots \tau_n h^{np}
+    + \bigo(h^{(n+1)p}).
+  \end{gather}
+\end{remark}
+
+\begin{Definition}{Romberg-quadratur}
+  Die \define{Romberg-Quadratur} beruht auf einer summierten
+  Quadraturformel $Q_h$ der Ordnung $h^p$, die für eine Folge von
+  Schrittweiten $h_1,\dots, h_n$ angewandt wird. Aus diesen berechnet
+  man mit dem \putindex{Neville}-Algorithmus Approximationen für
+  $Q_0$.
+\end{Definition}
+
+\begin{Algorithmus*}{romberg}{Romberg-Quadratur}
+  \lstinputlisting{code/romberg.py}
+\end{Algorithmus*}
+
+\subsection{Praktische Aspekte}
+
+\begin{remark}
+  Die Konvergenzabschätzungen der Form
+  \begin{gather}
+    \left|\int_I f\dx - Q_h(f)\right| \le c h^p \norm{f^{p+1}}_{\infty;I}
+  \end{gather}
+  verlieren ihren Nutzen für große $h$, wenn die Ableitungen von $f$
+  wachsen. Schlimmstenfalls bekommt man dann aus der
+  Interpolationseigenschaft noch immer
+  \begin{gather}
+    \left|\int_I f\dx - Q_h(f)\right| \le c \norm{f}_{\infty;I}.
+  \end{gather}
+  Es gibt aber keine Garantie, dass der Fehler bei feinerer
+  Unterteilung schrumpft.
+  
+  Ist aber $f\in C^{p+1}(I)$, so gilt die obige Abschätzung für
+  hinreichend kleine $h_1>h_2$ in der stärkeren Form
+  \begin{gather}
+    \left|\int_I f\dx - Q_{h_2}(f)\right|
+    \approx \left(\frac{h_2}{h_1}\right)^p
+    \left|\int_I f\dx - Q_{h_1}(f)\right|.
+  \end{gather}
+  Man spricht hier vom asymptotischen Bereich, für größere $h$ vom
+  präasymptotischen Bereich.
+\end{remark}
 
 %%% Local Variables:
 %%% mode: latex
