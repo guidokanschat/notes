@@ -1,5 +1,5 @@
 
-\subsection{Vektor- und Matrixnormen}
+\subsection{Vektor- und Matrixnormen, Eigenwerte}
 
 \begin{Definition}{norm}
   Eine \define{Norm} $\norm{\cdot}$ auf dem Vektorraum $V$ ist eine Abbildung
@@ -248,6 +248,58 @@ ie \glqq{}Einheitssphäre\grqq{}
     \end{split}
   \end{gather}
 \end{proof}
+
+\begin{Definition}{matrix-norm}
+  Auf dem Vektorraum der Matrizen $\R^{m\times n}$ ist durch
+  \slideref{Definition}{norm} eine Norm definiert. Gilt zusätzlich
+  \begin{gather}
+    \norm{Ax} \le \norm{A}\norm{x}
+    \qquad\forall A\in \R^{m\times n}, x\in \R^n,
+  \end{gather}
+  so heißt die Norm $\norm.$ der Matrix \define{verträglich} mit der
+  Vektornorm $\norm.$. Wir sprechen von einer \define{Matrixnorm},
+  wenn sie zusätzlich \define{submultiplikativ} ist, dass heißt,
+  für alle Matrizen $A,B$ passender Dimensionen gilt
+  \begin{gather}
+    \norm{AB} \le \norm{A}\norm{B}.
+  \end{gather}
+  Ferner definieren wir die \define{Operatornorm} oder \define{natürliche Norm}
+  \begin{gather}
+    \norm{A} = \sup_{\substack{x\in\R^n\\x\neq0}} \frac{\norm{Ax}}{\norm{x}}
+    = \sup_{\norm{x}=1}\norm{Ax}.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{operator-norm}
+  Die Operatornorm ist verträglich und submultiplikativ.
+\end{Lemma}
+
+\begin{Beispiel}{Zeilensummen}
+  Die Operatornormen zu den Vektornormen $\norm._1$ und
+  $\norm._\infty$ sind die \define{Spaltensummennorm} und die
+  \define{Zeilensummennorm}
+  \begin{align}
+    \norm{A}_1 &= \max_{i=1,\dots,n} \sum_{j=1}^n \abs{a_{ji}}\\
+    \norm{A}_\infty &= \max_{i=1,\dots,n} \sum_{j=1}^n \abs{a_{ij}}
+  \end{align}
+\end{Beispiel}
+
+\begin{Definition}{eigenwert}
+  Sei $A\in \R^{n\times n}$. Gilt für einen Vektor $0\neq x\in \R^n$
+  \begin{gather}
+    Ax = \lambda x,
+  \end{gather}
+  so nennen wir $\lambda$ \define{Eigenwert} von $A$ und $x$ einen
+  zugehörigen \define{Eigenvektor}.
+\end{Definition}
+
+\begin{Lemma}{ew-norm}
+  Für alle Eigenwerte $\lambda\in\C$ einer Matrix $A\in\R^{n\times n}$ gilt
+  \begin{gather}
+    \abs{\lambda} \le \norm{A}
+  \end{gather}
+  für jede zu einer beliebigen Vektornorm verträglichen Norm.
+\end{Lemma}
 
 \subsection{Konditionierung der Lösung}
 
