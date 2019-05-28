@@ -12,7 +12,7 @@
   mit den Eigenschaften
     \begin{xalignat}3
     &\text{Homogenität:}
-    &\norm{\alpha x} &\le \abs{\alpha}\norm{x}
+    &\norm{\alpha x} &= \abs{\alpha}\norm{x}
     &\forall \alpha&\in\R,x\in V
     \\
     &\text{Dreiecksungleichung:}
@@ -20,10 +20,10 @@
     &\forall x,y&\in V
     \\
     &\text{Definitheit:}
-    &\norm{x,x} & \ge 0
+    &\norm{x} & \ge 0
     &\forall x&\in V
     \\
-    &&&\norm{x} &\neq 0
+    &&\norm{x} &\neq 0
     &\forall x&\neq0
     \end{xalignat}
   Verzichtet man auf die zweite Definitheitsbedingung, so erhält man eine \define{Seminorm}.
@@ -87,7 +87,7 @@
   Hiermit haben wir bereits bewiesen, dass komponentenweise Konvergenz
   auch Normkonvergenz impliziert.
 
-Die \glqq{}Einheitssphäre\grqq{}
+  Die \glqq{}Einheitssphäre\grqq{}
    \begin{gather}
      S = \bigl\{ x\in \R^n \big| \norm{x}_\infty = 1 \bigr\}
    \end{gather}
@@ -122,132 +122,6 @@ Die \glqq{}Einheitssphäre\grqq{}
   \end{gather}
 \end{proof}
 
-\subsection{Vektor- und Matrixnormen}
-
-\begin{Definition}{norm}
-  Eine \define{Norm} $\norm{\cdot}$ auf dem Vektorraum $V$ ist eine Abbildung
-  \begin{gather}
-    \begin{split}
-      \norm{\cdot}\colon V &\to \R\\
-      x&\mapsto \norm{x}
-    \end{split}
-  \end{gather}
-  mit den Eigenschaften
-    \begin{xalignat}3
-    &\text{Homogenität:}
-    &\norm{\alpha x} &\le \abs{\alpha}\norm{x}
-    &\forall \alpha&\in\R,x\in V
-    \\
-    &\text{Dreiecksungleichung:}
-    &\norm{x+y} &\le \norm{x}+\norm{y}
-    &\forall x,y&\in V
-    \\
-    &\text{Definitheit:}
-    &\norm{x,x} & \ge 0
-    &\forall x&\in V
-    \\
-    &&&\norm{x} &\neq 0
-    &\forall x&\neq0
-    \end{xalignat}
-  Verzichtet man auf die zweite Definitheitsbedingung, so erhält man eine \define{Seminorm}.
-\end{Definition}
-
-\begin{Definition}{norm-aequivalenz}
-  Sei $V$ ein reeller Vektorraum. Zwei Normen $\norm{\cdot}_X$ und
-  $\norm{\cdot}_Y$ auf $V$ heißen äquivalent, wenn es Konstanten $c>0$
-  und $C>0$ gibt, so dass
-  \begin{gather}
-    c \norm{v}_X \le \norm{v}_Y \le C \norm{v}_X
-    \qquad\forall v\in V.
-  \end{gather}
-\end{Definition}
-
-\begin{Definition}{rn-konvergenz}
-  Eine Folge $\{x^{(k)}\}\subset \R^n$ für $k=1,2,\dots$ heißt
-  \textbf{komponentenweise konvergent} gegen $x\in \R^n$, wenn gilt
-  \begin{gather}
-    \forall \epsilon>0\;
-    \exists k_0\in \mathbb N\;
-    \forall k\ge k_0, i=1,\dots,n
-    : \abs{x^{(k)}_i - x_i} < \epsilon.
-  \end{gather}
-  Die Folge heißt konvergent unter der Norm $\norm{\cdot}$ wenn gilt
-  \begin{gather}
-    \forall \epsilon>0\;
-    \exists k_0\in \mathbb N\;
-    \forall k\ge k_0
-    : \norm{x^{(k)} - x} < \epsilon.
-  \end{gather}
-\end{Definition}
-
-\begin{Lemma}{norm-aequivalenz}
-  Sei $\norm{\cdot}$ eine beliebige Norm auf $\R_n$. Dann ist die Abbildung
-  \begin{gather}
-    f\colon x \mapsto \norm{x}
-  \end{gather}
-  stetig bezüglich der komponentenweisen Konvergenz. Ferner ist die
-  Norm $\norm{\cdot}$ äquivalent zur Maximumsnorm.
-\end{Lemma}
-
-\begin{proof}
-  Für den ersten Teil ist zu zeigen, dass zu einer komponentenweise
-  konvergenten Folge von Vektoren auch deren Norm konvergiert. Sei
-  $\{x^{(k)}\}$ eine solche Folge und dazu $k_0$ so gewählt, dass
-  \begin{gather}
-    \max_{i=1,\dots,n}\left\lvert\left(x_i^{(k)}-x_i\right) \norm{e_i}\right\rvert
-      < \frac\epsilon n
-    \qquad \forall k\ge k_0.
-  \end{gather}
-  Hier ist $e_i$ der $i$-te Einheitsvektor. Dann folgt
-  \begin{align}
-    \norm{x^{(k)}-x}
-    &= \left\lVert\sum_{i=1}^n \left(x_i^{(k)}-x_i\right) e_i\right\rVert
-    \\
-    &\le \sum_{i=1}^n \left\lVert\left(x_i^{(k)}-x_i\right) e_i\right\rVert
-    \\
-    & < n \frac\epsilon n = \epsilon.
-  \end{align}
-  Hiermit haben wir bereits bewiesen, dass komponentenweise Konvergenz
-  auch Normkonvergenz impliziert.
-
-<<<<<<< mas\begin{Satz}{norm-aequivalenz}
-  Alle Normen auf $\R^n$ sind äquivalent.
->>>>>>>+master
-ie \glqq{}Einheitssphäre\grqq{}
-   \begin{gather}
-     S = \bigl\{ x\in \R^n \big| \norm{x}_\infty = 1 \bigr\}
-   \end{gather}
-   ist beschränkt und bezüglich der komponentenweisen Konvergenz
-   abgeschlossen. Die Norm $\norm.$ nimmt dort als stetige Funktion
-   ihr Minimum $c$ und ihr Maximum $C$ an. Insbesondere gilt aber
-   wegen der Definitheit $c > 0$. Für einen beliebigen Vektor
-   $x\in \R^n$ ist $x/\norm{x}_\infty \in S$, so dass gilt
-   \begin{gather}
-     c \norm{x}_\infty \le \norm{x} \le C \norm{x}_\infty.
-   \end{gather}
-\end{proof}
-
-\begin{Satz}{norm-aequivalenz}
-  Auf $\R^n$ sind zwei beliebige Normen $\norm._X$ und $\norm._Y$ äquivalent.
->>>>>>> origin/master
-\end{Satz}
-
-\begin{proof}
-  Nach dem vorherigen Lemma sind beide Normen äquivalent zur Maximumsnorm. Es gibt also Konstanten $c_X, c_Y, C_X, C_y>0$ mit
-  \begin{gather}
-    \begin{aligned}
-     c_X \norm{x}_\infty &\le &\norm{x}_X \;&\le C_X \norm{x}_\infty\\
-     c_Y \norm{x}_\infty &\le &\norm{x}_Y \;&\le C_Y \norm{x}_\infty.
-    \end{aligned}
-  \end{gather}
-  Daher gilt
-  \begin{gather}
-    \begin{split}
-      \norm{x}_Y \le C_Y\norm{x}_\infty &\le \frac{C_Y}{c_X} \norm{x}_X\\
-      \norm{x}_X \le C_X\norm{x}_\infty &\le \frac{C_X}{c_y} \norm{x}_Y
-    \end{split}
-  \end{gather}
-\end{proof}
 
 \begin{Definition}{matrix-norm}
   Auf dem Vektorraum der Matrizen $\R^{m\times n}$ ist durch
