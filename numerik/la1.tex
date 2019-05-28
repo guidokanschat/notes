@@ -10,11 +10,23 @@
     \end{split}
   \end{gather}
   mit den Eigenschaften
-  \begin{enumerate}
-  \item Homogenität
-  \item Dreiecksungleichung
-  \item Definitheit
-  \end{enumerate}
+    \begin{xalignat}3
+    &\text{Homogenität:}
+    &\norm{\alpha x} &\le \abs{\alpha}\norm{x}
+    &\forall \alpha&\in\R,x\in V
+    \\
+    &\text{Dreiecksungleichung:}
+    &\norm{x+y} &\le \norm{x}+\norm{y}
+    &\forall x,y&\in V
+    \\
+    &\text{Definitheit:}
+    &\norm{x,x} & \ge 0
+    &\forall x&\in V
+    \\
+    &&&\norm{x} &\neq 0
+    &\forall x&\neq0
+    \end{xalignat}
+  Verzichtet man auf die zweite Definitheitsbedingung, so erhält man eine \define{Seminorm}.
 \end{Definition}
 
 \begin{Definition}{norm-aequivalenz}
@@ -61,9 +73,8 @@
   
 \end{proof}
 
-
 \begin{Satz}{norm-aequivalenz}
-  
+  Alle Normen auf $\R^n$ sind äquivalent.
 \end{Satz}
 
 \subsection{Konditionierung der Lösung}
