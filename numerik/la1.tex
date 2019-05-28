@@ -45,26 +45,70 @@
   \end{gather}
 \end{Definition}
 
-\begin{Lemma}{norm-stetig}
-  Sei $\norm{\cdot}$ eine Norm auf $\R_n$. Dann ist die Abbildung
+\begin{Lemma}{norm-aequivalenz}
+  Sei $\norm{\cdot}$ eine beliebige Norm auf $\R_n$. Dann ist die Abbildung
   \begin{gather}
     f\colon x \mapsto \norm{x}
   \end{gather}
-  stetig bezüglich der komponentenweisen
-  Konvergenz.
-
-  Komponentenweise Konvergenz und Normkonvergenz sind äquivalent auf
-  $\R^n$ .
+  stetig bezüglich der komponentenweisen Konvergenz. Ferner ist die
+  Norm $\norm{\cdot}$ äquivalent zur Maximumsnorm.
 \end{Lemma}
 
 \begin{proof}
-  
+  Für den ersten Teil ist zu zeigen, dass zu einer komponentenweise
+  konvergenten Folge von Vektoren auch deren Norm konvergiert. Sei
+  $\{x^{(k)}\}$ eine solche Folge und dazu $k_0$ so gewählt, dass
+  \begin{gather}
+    \max_{i=1,\dots,n}\left\lvert\left(x_i^{(k)}-x_i\right) \norm{e_i}\right\rvert
+      < \frac\epsilon n
+    \qquad \forall k\ge k_0.
+  \end{gather}
+  Hier ist $e_i$ der $i$-te Einheitsvektor. Dann folgt
+  \begin{align}
+    \norm{x^{(k)}-x}
+    &= \left\lVert\sum_{i=1}^n \left(x_i^{(k)}-x_i\right) e_i\right\rVert
+    \\
+    &\le \sum_{i=1}^n \left\lVert\left(x_i^{(k)}-x_i\right) e_i\right\rVert
+    \\
+    & < n \frac\epsilon n = \epsilon.
+  \end{align}
+  Hiermit haben wir bereits bewiesen, dass komponentenweise Konvergenz
+  auch Normkonvergenz impliziert.
+
+   Die \glqq{}Einheitssphäre\grqq{}
+   \begin{gather}
+     S = \bigl\{ x\in \R^n \big| \norm{x}_\infty = 1 \bigr\}
+   \end{gather}
+   ist beschränkt und bezüglich der komponentenweisen Konvergenz
+   abgeschlossen. Die Norm $\norm.$ nimmt dort als stetige Funktion
+   ihr Minimum $c$ und ihr Maximum $C$ an. Insbesondere gilt aber
+   wegen der Definitheit $c > 0$. Für einen beliebigen Vektor
+   $x\in \R^n$ ist $x/\norm{x}_\infty \in S$, so dass gilt
+   \begin{gather}
+     c \norm{x}_\infty \le \norm{x} \le C \norm{x}_\infty.
+   \end{gather}
 \end{proof}
 
-
 \begin{Satz}{norm-aequivalenz}
-  
+  Auf $\R^n$ sind zwei beliebige Normen $\norm._X$ und $\norm._Y$ äquivalent.
 \end{Satz}
+
+\begin{proof}
+  Nach dem vorherigen Lemma sind beide Normen äquivalent zur Maximumsnorm. Es gibt also Konstanten $c_X, c_Y, C_X, C_y>0$ mit
+  \begin{gather}
+    \begin{aligned}
+     c_X \norm{x}_\infty &\le &\norm{x}_X \;&\le C_X \norm{x}_\infty\\
+     c_Y \norm{x}_\infty &\le &\norm{x}_Y \;&\le C_Y \norm{x}_\infty.
+    \end{aligned}
+  \end{gather}
+  Daher gilt
+  \begin{gather}
+    \begin{split}
+      \norm{x}_Y \le C_Y\norm{x}_\infty &\le \frac{C_Y}{c_X} \norm{x}_X\\
+      \norm{x}_X \le C_X\norm{x}_\infty &\le \frac{C_X}{c_y} \norm{x}_Y
+    \end{split}
+  \end{gather}
+\end{proof}
 
 \subsection{Konditionierung der Lösung}
 
