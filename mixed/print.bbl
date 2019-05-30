@@ -1,539 +1,104 @@
-% $ biblatex auxiliary file $
-% $ biblatex bbl format version 2.6 $
-% Do not modify the above lines!
-%
-% This is an auxiliary file used by the 'biblatex' package.
-% This file may safely be deleted. It will be recreated by
-% biber as required.
-%
-\begingroup
-\makeatletter
-\@ifundefined{ver@biblatex.sty}
-  {\@latex@error
-     {Missing 'biblatex' package}
-     {The bibliography requires the 'biblatex' package.}
-      \aftergroup\endinput}
-  {}
-\endgroup
+\begin{thebibliography}{}
 
+\bibitem[Adams and Fournier, 2003]{AdamsFournier03}
+Adams, R.~A. and Fournier, J. J.~F. (2003).
+\newblock {\em Sobolev Spaces}, volume 140 of {\em Pure and Applied
+  Mathematics}.
+\newblock Academic Press, 2nd edition edition.
 
-\refsection{0}
-  \sortlist[entry]{anyt/global}
-    \entry{ArnoldBoffiFalk02}{article}{}
-      \name{author}{3}{}{%
-        {{hash=1aa33e9ad2ae0cd49c0a8ea9b0776d35}{%
-           family={Arnold},
-           family_i={A\bibinitperiod},
-           given={D.\bibnamedelimi N.},
-           given_i={D\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
-        {{hash=00b973532085159941732a25bbfb2a7a}{%
-           family={Boffi},
-           family_i={B\bibinitperiod},
-           given={D.},
-           given_i={D\bibinitperiod}}}%
-        {{hash=0972113e7ecb0944fc699f886d8a7fa9}{%
-           family={Falk},
-           family_i={F\bibinitperiod},
-           given={R.\bibnamedelimi S.},
-           given_i={R\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
-      }
-      \strng{namehash}{aa644f808a63f4f8145d92f68cfd2f7d}
-      \strng{fullhash}{aa644f808a63f4f8145d92f68cfd2f7d}
-      \field{labelalpha}{ABF02}
-      \field{sortinit}{A}
-      \field{sortinithash}{b685c7856330eaee22789815b49de9bb}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Math. Comput.}
-      \field{title}{Approximation by quadrilateral finite elements}
-      \field{volume}{71}
-      \field{year}{2002}
-      \field{pages}{909\bibrangedash 922}
-      \range{pages}{14}
-    \endentry
-    \entry{ArnoldBoffiFalk05}{article}{}
-      \name{author}{3}{}{%
-        {{hash=1aa33e9ad2ae0cd49c0a8ea9b0776d35}{%
-           family={Arnold},
-           family_i={A\bibinitperiod},
-           given={D.\bibnamedelimi N.},
-           given_i={D\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
-        {{hash=00b973532085159941732a25bbfb2a7a}{%
-           family={Boffi},
-           family_i={B\bibinitperiod},
-           given={D.},
-           given_i={D\bibinitperiod}}}%
-        {{hash=0972113e7ecb0944fc699f886d8a7fa9}{%
-           family={Falk},
-           family_i={F\bibinitperiod},
-           given={R.\bibnamedelimi S.},
-           given_i={R\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
-      }
-      \strng{namehash}{aa644f808a63f4f8145d92f68cfd2f7d}
-      \strng{fullhash}{aa644f808a63f4f8145d92f68cfd2f7d}
-      \field{labelalpha}{ABF05}
-      \field{sortinit}{A}
-      \field{sortinithash}{b685c7856330eaee22789815b49de9bb}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{SIAM J. Numer. Anal.}
-      \field{number}{6}
-      \field{title}{Quadrilateral ${H}(div)$ finite elements}
-      \field{volume}{42}
-      \field{year}{2005}
-      \field{pages}{2429\bibrangedash 2451}
-      \range{pages}{23}
-    \endentry
-    \entry{AdamsFournier03}{book}{}
-      \name{author}{2}{}{%
-        {{hash=47d7d907fce9dfd3b2c252182d24ac03}{%
-           family={Adams},
-           family_i={A\bibinitperiod},
-           given={R.\bibnamedelimi A.},
-           given_i={R\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
-        {{hash=620e4e6f688a7a6f4d4abe0af7c3595b}{%
-           family={Fournier},
-           family_i={F\bibinitperiod},
-           given={J.\bibnamedelimi J.\bibnamedelimi F.},
-           given_i={J\bibinitperiod\bibinitdelim J\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {Academic Press}%
-      }
-      \strng{namehash}{b17de23d3f4a9d6c362088677937675e}
-      \strng{fullhash}{b17de23d3f4a9d6c362088677937675e}
-      \field{labelalpha}{AF03}
-      \field{sortinit}{A}
-      \field{sortinithash}{b685c7856330eaee22789815b49de9bb}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{edition}{2nd edition}
-      \field{series}{Pure and Applied Mathematics}
-      \field{title}{Sobolev Spaces}
-      \field{volume}{140}
-      \field{year}{2003}
-    \endentry
-    \entry{ArnoldFalkWinther06acta}{article}{}
-      \name{author}{3}{}{%
-        {{hash=630284ba6980b7b4409c8ea87efed7d8}{%
-           family={Arnold},
-           family_i={A\bibinitperiod},
-           given={Douglas\bibnamedelima N.},
-           given_i={D\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
-        {{hash=a38deb813bc1b2c6bf97ded731061229}{%
-           family={Falk},
-           family_i={F\bibinitperiod},
-           given={Richard\bibnamedelima S.},
-           given_i={R\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
-        {{hash=94a4fd4da337a1d51e2e55b3ddb54002}{%
-           family={Winther},
-           family_i={W\bibinitperiod},
-           given={Ragnar},
-           given_i={R\bibinitperiod}}}%
-      }
-      \strng{namehash}{e462f9b1c4f638b32e9bd5dcfd0aae3c}
-      \strng{fullhash}{e462f9b1c4f638b32e9bd5dcfd0aae3c}
-      \field{labelalpha}{AFW06}
-      \field{sortinit}{A}
-      \field{sortinithash}{b685c7856330eaee22789815b49de9bb}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Acta Numerica}
-      \field{title}{Finite element exterior calculus, homological techniques, and applications}
-      \field{volume}{15}
-      \field{year}{2006}
-      \field{pages}{1\bibrangedash 155}
-      \range{pages}{155}
-      \verb{doi}
-      \verb 10.1017/S0962492906210018
-      \endverb
-    \endentry
-    \entry{ArnoldFalkWinther10}{article}{}
-      \name{author}{3}{}{%
-        {{hash=630284ba6980b7b4409c8ea87efed7d8}{%
-           family={Arnold},
-           family_i={A\bibinitperiod},
-           given={Douglas\bibnamedelima N.},
-           given_i={D\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
-        {{hash=a38deb813bc1b2c6bf97ded731061229}{%
-           family={Falk},
-           family_i={F\bibinitperiod},
-           given={Richard\bibnamedelima S.},
-           given_i={R\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
-        {{hash=94a4fd4da337a1d51e2e55b3ddb54002}{%
-           family={Winther},
-           family_i={W\bibinitperiod},
-           given={Ragnar},
-           given_i={R\bibinitperiod}}}%
-      }
-      \strng{namehash}{e462f9b1c4f638b32e9bd5dcfd0aae3c}
-      \strng{fullhash}{e462f9b1c4f638b32e9bd5dcfd0aae3c}
-      \field{labelalpha}{AFW10}
-      \field{sortinit}{A}
-      \field{sortinithash}{b685c7856330eaee22789815b49de9bb}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{issn}{0273-0979}
-      \field{journaltitle}{Bull. Amer. Math. Soc. (N.S.)}
-      \field{number}{2}
-      \field{title}{Finite element exterior calculus: from {H}odge theory to numerical stability}
-      \field{volume}{47}
-      \field{year}{2010}
-      \field{pages}{281\bibrangedash 354}
-      \range{pages}{74}
-      \verb{doi}
-      \verb 10.1090/S0273-0979-10-01278-4
-      \endverb
-      \verb{url}
-      \verb http://dx.doi.org/10.1090/S0273-0979-10-01278-4
-      \endverb
-    \endentry
-    \entry{BoffiBrezziFortin13}{book}{}
-      \name{author}{3}{}{%
-        {{hash=00b973532085159941732a25bbfb2a7a}{%
-           family={Boffi},
-           family_i={B\bibinitperiod},
-           given={D.},
-           given_i={D\bibinitperiod}}}%
-        {{hash=084bdce81d62891f7985da25900062a3}{%
-           family={Fortin},
-           family_i={F\bibinitperiod},
-           given={M.},
-           given_i={M\bibinitperiod}}}%
-        {{hash=2e56fe23e6d9829e83782092d53d8948}{%
-           family={Brezzi},
-           family_i={B\bibinitperiod},
-           given={F.},
-           given_i={F\bibinitperiod}}}%
-      }
-      \list{location}{1}{%
-        {Berlin, Heidelberg}%
-      }
-      \list{publisher}{1}{%
-        {Springer}%
-      }
-      \strng{namehash}{ce3dcdd9a09238e1a163959d021185dc}
-      \strng{fullhash}{ce3dcdd9a09238e1a163959d021185dc}
-      \field{labelalpha}{BFB13}
-      \field{sortinit}{B}
-      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{series}{Springer series in computational mathematics}
-      \field{title}{Mixed finite element methods and applications}
-      \field{year}{2013}
-    \endentry
-    \entry{Braess13}{book}{}
-      \name{author}{1}{}{%
-        {{hash=69540326d1902ae6bd40ca0e866f964d}{%
-           family={Braess},
-           family_i={B\bibinitperiod},
-           given={D.},
-           given_i={D\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {Springer}%
-      }
-      \strng{namehash}{69540326d1902ae6bd40ca0e866f964d}
-      \strng{fullhash}{69540326d1902ae6bd40ca0e866f964d}
-      \field{labelalpha}{Bra13}
-      \field{sortinit}{B}
-      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{edition}{5. Aufl.}
-      \field{title}{Finite Elemente}
-      \field{year}{2013}
-    \endentry
-    \entry{Braess97}{book}{}
-      \name{author}{1}{}{%
-        {{hash=69540326d1902ae6bd40ca0e866f964d}{%
-           family={Braess},
-           family_i={B\bibinitperiod},
-           given={D.},
-           given_i={D\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {Cambridge University Press}%
-      }
-      \strng{namehash}{69540326d1902ae6bd40ca0e866f964d}
-      \strng{fullhash}{69540326d1902ae6bd40ca0e866f964d}
-      \field{labelalpha}{Bra97}
-      \field{sortinit}{B}
-      \field{sortinithash}{4ecbea03efd0532989d3836d1a048c32}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Finite elements}
-      \field{year}{1997}
-    \endentry
-    \entry{Ciarlet88}{book}{}
-      \name{author}{1}{}{%
-        {{hash=ca046172796029ebc9b10c6ec1b285fa}{%
-           family={Ciarlet},
-           family_i={C\bibinitperiod},
-           given={Ph.\bibnamedelimi G.},
-           given_i={P\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {North-Holland}%
-      }
-      \strng{namehash}{ca046172796029ebc9b10c6ec1b285fa}
-      \strng{fullhash}{ca046172796029ebc9b10c6ec1b285fa}
-      \field{labelalpha}{Cia88}
-      \field{sortinit}{C}
-      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{series}{Studies in mathematics and its applications}
-      \field{title}{Mathematical Elasticity. Vol. I: Three-dimensional Elasticity}
-      \field{volume}{20}
-      \field{year}{1988}
-    \endentry
-    \entry{DuvautLions76}{book}{}
-      \name{author}{2}{}{%
-        {{hash=2ea70d4281032c419318056860cc63f7}{%
-           family={Duvaut},
-           family_i={D\bibinitperiod},
-           given={G.},
-           given_i={G\bibinitperiod}}}%
-        {{hash=0c04499f1a4cabe24a568be86323be9c}{%
-           family={Lions},
-           family_i={L\bibinitperiod},
-           given={J.\bibnamedelimi L.},
-           given_i={J\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {Springer}%
-      }
-      \strng{namehash}{171c0aff5151de49dccefccbd3974f63}
-      \strng{fullhash}{171c0aff5151de49dccefccbd3974f63}
-      \field{labelalpha}{DL76}
-      \field{sortinit}{D}
-      \field{sortinithash}{78f7c4753a2004675f316a80bdb31742}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Inequalities in Mechanics and Physics}
-      \field{year}{1976}
-    \endentry
-    \entry{ErnGuermond04}{book}{}
-      \name{author}{2}{}{%
-        {{hash=b9cec1917562876ca4f1506ab9e29897}{%
-           family={Ern},
-           family_i={E\bibinitperiod},
-           given={A.},
-           given_i={A\bibinitperiod}}}%
-        {{hash=738d289c17901be746c2025611df6ac8}{%
-           family={Guermond},
-           family_i={G\bibinitperiod},
-           given={J.-L.},
-           given_i={J\bibinithyphendelim L\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {Springer-Verlag, New York}%
-      }
-      \strng{namehash}{0f2d372a6a72e5cb96d71fddacfb434a}
-      \strng{fullhash}{0f2d372a6a72e5cb96d71fddacfb434a}
-      \field{labelalpha}{EG04}
-      \field{sortinit}{E}
-      \field{sortinithash}{fefc5210ef4721525b2a478df41efcd4}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{series}{Applied Mathematical Sciences}
-      \field{title}{Theory and practice of finite elements}
-      \field{volume}{159}
-      \field{year}{2004}
-      \verb{doi}
-      \verb 10.1007/978-1-4757-4355-5
-      \endverb
-    \endentry
-    \entry{GiraultKanschatRiviere14}{article}{}
-      \name{author}{3}{}{%
-        {{hash=329f5e92716ad3763f720128ba76a4e7}{%
-           family={Girault},
-           family_i={G\bibinitperiod},
-           given={V.},
-           given_i={V\bibinitperiod}}}%
-        {{hash=a3846815fb94fa352f770d2373e72152}{%
-           family={Kanschat},
-           family_i={K\bibinitperiod},
-           given={G.},
-           given_i={G\bibinitperiod}}}%
-        {{hash=25ff3b23cb579c3d297811974adeb301}{%
-           family={Rivière},
-           family_i={R\bibinitperiod},
-           given={B.},
-           given_i={B\bibinitperiod}}}%
-      }
-      \strng{namehash}{7a11ab8fbe4b741db21aaf40046e7afa}
-      \strng{fullhash}{7a11ab8fbe4b741db21aaf40046e7afa}
-      \field{labelalpha}{GKR14}
-      \field{sortinit}{G}
-      \field{sortinithash}{1c854ef9177a91bf894e66485bdbd3ed}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{J. Numer. Math.}
-      \field{number}{2}
-      \field{title}{Error analysis for a monolithic discretization of coupled {D}arcy and {S}tokes problems}
-      \field{volume}{22}
-      \field{year}{2014}
-      \field{pages}{109\bibrangedash 142}
-      \range{pages}{34}
-      \verb{doi}
-      \verb 10.1515/jnma-2014-0005
-      \endverb
-    \endentry
-    \entry{GiraultRaviart86}{book}{}
-      \name{author}{2}{}{%
-        {{hash=329f5e92716ad3763f720128ba76a4e7}{%
-           family={Girault},
-           family_i={G\bibinitperiod},
-           given={V.},
-           given_i={V\bibinitperiod}}}%
-        {{hash=e08909fe8b1da6d7482f6d3ea25ed2d0}{%
-           family={Raviart},
-           family_i={R\bibinitperiod},
-           given={P.-A.},
-           given_i={P\bibinithyphendelim A\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {Springer}%
-      }
-      \strng{namehash}{1c52931074420bee31c15d6609bdefb8}
-      \strng{fullhash}{1c52931074420bee31c15d6609bdefb8}
-      \field{labelalpha}{GR86}
-      \field{sortinit}{G}
-      \field{sortinithash}{1c854ef9177a91bf894e66485bdbd3ed}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Finite element approximations of the {N}avier-{S}tokes equations}
-      \field{year}{1986}
-    \endentry
-    \entry{Monk03}{book}{}
-      \name{author}{1}{}{%
-        {{hash=058f68af508e522d3b373e04f0c5dd1d}{%
-           family={Monk},
-           family_i={M\bibinitperiod},
-           given={P.},
-           given_i={P\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {Oxford}%
-      }
-      \strng{namehash}{058f68af508e522d3b373e04f0c5dd1d}
-      \strng{fullhash}{058f68af508e522d3b373e04f0c5dd1d}
-      \field{labelalpha}{Mon03}
-      \field{sortinit}{M}
-      \field{sortinithash}{2684bec41e9697b92699b46491061da2}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Finite Element Methods for {M}axwell's Equations}
-      \field{year}{2003}
-    \endentry
-    \entry{StenbergSuri96}{article}{}
-      \name{author}{2}{}{%
-        {{hash=1ebe8c02d75a83cab722ef98e3e41fcd}{%
-           family={Stenberg},
-           family_i={S\bibinitperiod},
-           given={R.},
-           given_i={R\bibinitperiod}}}%
-        {{hash=7b5bbd2e1bee2f8eb4fe5bfd3c33bd83}{%
-           family={Suri},
-           family_i={S\bibinitperiod},
-           given={M.},
-           given_i={M\bibinitperiod}}}%
-      }
-      \strng{namehash}{1d9b30562630cddb3cb5f73c2c3e1c72}
-      \strng{fullhash}{1d9b30562630cddb3cb5f73c2c3e1c72}
-      \field{labelalpha}{SS96}
-      \field{sortinit}{S}
-      \field{sortinithash}{fd1e7c5ab79596b13dbbb67f8d70fb5a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Numer. Math.}
-      \field{number}{3}
-      \field{title}{Mixed $hp$ finite element methods for problems in elasticity and {S}tokes flow}
-      \field{volume}{72}
-      \field{year}{1996}
-      \field{pages}{367\bibrangedash 389}
-      \range{pages}{23}
-      \verb{doi}
-      \verb 10.1007/s002110050174
-      \endverb
-    \endentry
-    \entry{Stenberg90}{article}{}
-      \name{author}{1}{}{%
-        {{hash=1ebe8c02d75a83cab722ef98e3e41fcd}{%
-           family={Stenberg},
-           family_i={S\bibinitperiod},
-           given={R.},
-           given_i={R\bibinitperiod}}}%
-      }
-      \strng{namehash}{1ebe8c02d75a83cab722ef98e3e41fcd}
-      \strng{fullhash}{1ebe8c02d75a83cab722ef98e3e41fcd}
-      \field{labelalpha}{Ste90}
-      \field{sortinit}{S}
-      \field{sortinithash}{fd1e7c5ab79596b13dbbb67f8d70fb5a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Int. J. Numer. Methods Fluids}
-      \field{number}{6}
-      \field{title}{A technique for analysing finite element methods for viscous incompressible flow}
-      \field{volume}{11}
-      \field{year}{1990}
-      \field{pages}{935\bibrangedash 948}
-      \range{pages}{14}
-      \verb{doi}
-      \verb 10.1002/fld.1650110615
-      \endverb
-    \endentry
-    \entry{Verfuerth84}{article}{}
-      \name{author}{1}{}{%
-        {{hash=771a9f476607eeca94ebfde4ed0c3a02}{%
-           family={Verfürth},
-           family_i={V\bibinitperiod},
-           given={R.},
-           given_i={R\bibinitperiod}}}%
-      }
-      \strng{namehash}{771a9f476607eeca94ebfde4ed0c3a02}
-      \strng{fullhash}{771a9f476607eeca94ebfde4ed0c3a02}
-      \field{labelalpha}{Ver84}
-      \field{sortinit}{V}
-      \field{sortinithash}{d18f5ce25ce0b5ca7f924e3f6c04870e}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{RAIRO Anal. Numer.}
-      \field{number}{2}
-      \field{title}{Error estimates for a mixed finite element approximation of {S}tokes problem}
-      \field{volume}{18}
-      \field{year}{1984}
-      \field{pages}{175\bibrangedash 182}
-      \range{pages}{8}
-      \verb{doi}
-      \verb 10.1051/m2an/1984180201751
-      \endverb
-    \endentry
-    \entry{Yosida80}{book}{}
-      \name{author}{1}{}{%
-        {{hash=38ba0c3323f05f0399370a0aa462b96c}{%
-           family={Yosida},
-           family_i={Y\bibinitperiod},
-           given={K.},
-           given_i={K\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {Springer}%
-      }
-      \strng{namehash}{38ba0c3323f05f0399370a0aa462b96c}
-      \strng{fullhash}{38ba0c3323f05f0399370a0aa462b96c}
-      \field{labelalpha}{Yos80}
-      \field{sortinit}{Y}
-      \field{sortinithash}{3cbc1e3d286284cedb5e5218a3248f94}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Functional Analysis}
-      \field{year}{1980}
-    \endentry
-  \endsortlist
-\endrefsection
-\endinput
+\bibitem[Arnold et~al., 2002]{ArnoldBoffiFalk02}
+Arnold, D.~N., Boffi, D., and Falk, R.~S. (2002).
+\newblock Approximation by quadrilateral finite elements.
+\newblock {\em Math. Comput.}, 71:909--922.
 
+\bibitem[Arnold et~al., 2005]{ArnoldBoffiFalk05}
+Arnold, D.~N., Boffi, D., and Falk, R.~S. (2005).
+\newblock Quadrilateral {H}(div) finite elements.
+\newblock {\em SIAM J. Numer. Anal.}, 42(6):2429--2451.
+
+\bibitem[Arnold et~al., 2006]{ArnoldFalkWinther06acta}
+Arnold, D.~N., Falk, R.~S., and Winther, R. (2006).
+\newblock Finite element exterior calculus, homological techniques, and
+  applications.
+\newblock {\em Acta Numerica}, 15:1--155.
+
+\bibitem[Arnold et~al., 2010]{ArnoldFalkWinther10}
+Arnold, D.~N., Falk, R.~S., and Winther, R. (2010).
+\newblock Finite element exterior calculus: from {H}odge theory to numerical
+  stability.
+\newblock {\em Bull. Amer. Math. Soc. (N.S.)}, 47(2):281--354.
+
+\bibitem[Boffi et~al., 2013]{BoffiBrezziFortin13}
+Boffi, D., Brezzi, F., and Fortin, M. (2013).
+\newblock {\em Mixed finite element methods and applications}.
+\newblock Springer series in computational mathematics. Springer, Berlin,
+  Heidelberg.
+
+\bibitem[Braess, 1997]{Braess97}
+Braess, D. (1997).
+\newblock {\em Finite elements}.
+\newblock Cambridge University Press.
+
+\bibitem[Braess, 2013]{Braess13}
+Braess, D. (2013).
+\newblock {\em Finite Elemente}.
+\newblock Springer, 5. aufl. edition.
+
+\bibitem[Ciarlet, 1988]{Ciarlet88}
+Ciarlet, P.~G. (1988).
+\newblock {\em Mathematical Elasticity. Vol. I: Three-dimensional Elasticity},
+  volume~20 of {\em Studies in mathematics and its applications}.
+\newblock North-Holland.
+
+\bibitem[Duvaut and Lions, 1976]{DuvautLions76}
+Duvaut, G. and Lions, J.~L. (1976).
+\newblock {\em Inequalities in Mechanics and Physics}.
+\newblock Springer.
+
+\bibitem[Ern and Guermond, 2004]{ErnGuermond04}
+Ern, A. and Guermond, J.-L. (2004).
+\newblock {\em Theory and practice of finite elements}, volume 159 of {\em
+  Applied Mathematical Sciences}.
+\newblock Springer-Verlag, New York.
+
+\bibitem[Girault et~al., 2014]{GiraultKanschatRiviere14}
+Girault, V., Kanschat, G., and Rivière, B. (2014).
+\newblock Error analysis for a monolithic discretization of coupled {D}arcy and
+  {S}tokes problems.
+\newblock {\em J. Numer. Math.}, 22(2):109--142.
+
+\bibitem[Girault and Raviart, 1986]{GiraultRaviart86}
+Girault, V. and Raviart, P.-A. (1986).
+\newblock {\em Finite element approximations of the {N}avier-{S}tokes
+  equations}.
+\newblock Springer.
+
+\bibitem[Monk, 2003]{Monk03}
+Monk, P. (2003).
+\newblock {\em Finite Element Methods for {M}axwell's Equations}.
+\newblock Oxford.
+
+\bibitem[Stenberg, 1990]{Stenberg90}
+Stenberg, R. (1990).
+\newblock A technique for analysing finite element methods for viscous
+  incompressible flow.
+\newblock {\em Int. J. Numer. Methods Fluids}, 11(6):935--948.
+
+\bibitem[Stenberg and Suri, 1996]{StenbergSuri96}
+Stenberg, R. and Suri, M. (1996).
+\newblock Mixed $hp$ finite element methods for problems in elasticity and
+  {S}tokes flow.
+\newblock {\em Numer. Math.}, 72(3):367--389.
+
+\bibitem[Verfürth, 1984]{Verfuerth84}
+Verfürth, R. (1984).
+\newblock Error estimates for a mixed finite element approximation of {S}tokes
+  problem.
+\newblock {\em RAIRO Anal. Numer.}, 18(2):175--182.
+
+\bibitem[Yosida, 1980]{Yosida80}
+Yosida, K. (1980).
+\newblock {\em Functional Analysis}.
+\newblock Springer.
+
+\end{thebibliography}
