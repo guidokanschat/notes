@@ -1,3 +1,9 @@
+\begin{Notation}{quadratische-matrizen}
+  Da wir uns in diesem Abschnitt mit der Lösung quadraischer
+  Gleichungssysteme beschäftigen, gelte für alle Matrizen, soweit
+  nicht anders vermerkt, dass ihre Dimension $n\times n$ sei.
+\end{Notation}
+
 \subsection{Dreiecksmatrizen}
 
 \begin{Definition}{dreiecksmatrix}
@@ -7,13 +13,115 @@
   \end{gather}
   Für eine \define{obere Dreiecksmatrix} $R \in \R^{n\times n}$ gilt
   \begin{gather}
-    \r_{ij} = 0,\qquad j<i.
+    r_{ij} = 0,\qquad j<i.
   \end{gather}
 \end{Definition}
 
+\begin{Satz}{dreieck-gruppe}
+  Die Mengen der invertierbaren oberen und unteren Dreiecksmatrizen
+  bilden jeweils eine multiplikative Gruppe. Die Determinante einer
+  Dreiecksmatrix ist das Produkt ihrer Diagonalelemente.
+\end{Satz}
+
+\begin{proof}
+  Hausaufgabe
+\end{proof}
+
+\begin{Korollar}{dreieck-inverse}
+  Eine Dreiecksmatrix ist invertierbar genau dann, wenn alle ihre
+  Diagonalelemente von null verschieden sind.
+\end{Korollar}
+
+\begin{Algorithmus}{vorwaerts-rueckwaerts}
+  Die Lösung der linearen Gleichungssysteme
+  \begin{gather}
+    Lx = b \qquad Rx = b
+  \end{gather}
+  mit einer unteren Dreiecksmatrix $L$ und einer oberen Dreiecksmatrix
+  $R$ lässt sich sukzessive durch Vorwärts- bzw.\ Rückwärtseinsetzen
+  berechnen.
+  \begin{minipage}[t]{.45\linewidth}
+    \lstinputlisting[basicstyle=\footnotesize]{code/forsub.py}    
+  \end{minipage}
+  \begin{minipage}[t]{.45\linewidth}
+    \lstinputlisting[basicstyle=\footnotesize]{code/backsub.py}    
+  \end{minipage}
+\end{Algorithmus}
 
 \subsection{Konstruktion der LR-Zerlegung}
 
+\begin{Definition}{frobenius-matrix}
+  Eine Matrix der Gestalt
+  \begin{gather}
+    G_k=\begin{bmatrix}
+      1 & & & & & \\
+      &\ddots & & & & \\
+      &   & 1& & &\\
+      &   & g_{k+1,k}&1 & &\\
+      &   & \vdots& &\ddots &\\
+      &   & g_{nk}& & &1
+    \end{bmatrix}
+  \end{gather}
+  mit von null verschiedenen Subdiagonaleinträgen nur in Spalte $k$
+  heißt \define{Frobenius-Matrix}.
+\end{Definition}
+
+\begin{Lemma}{frobenius-matrix}
+  Für Frobenius-Matrizen gilt
+  \begin{gather}
+    G_k^{-1} = 2\identity-G_k.
+  \end{gather}
+  Das Ergebnis des Produktes $G_kA$ einer Frobeniusmatrix mit einer
+  beliebigen Matrix ergibt sich aus $A$ dadurch, dass auf die $j$-te
+  Zeile das $g_{jk}$-fache der $k$-ten Zeile addiert wird.
+
+  Sei $k_1<\dots<k_m$ eine aufsteigende Folge von Indizes. Dann ist
+  \begin{gather}
+    G_{k_1}\dots G_{k_m} = \sum_{i=1}^m G_i - (m-1) \identity.
+  \end{gather}
+  Insbesondere gilt
+  \begin{gather}
+    G_1\dots G_n =
+    \begin{bmatrix}
+      1\\
+      g_{21} & 1 \\
+      \vdots & \ddots & \ddots \\
+      g_{n1}  & \dots & g_{n,n-1} & 1
+    \end{bmatrix}
+  \end{gather}
+\end{Lemma}
+
+\begin{Lemma}{elimination-1}
+  Bei der Gauß-Elimination lässt sich die Elimination der
+  Subdiagonalelemente der $k$-ten Spalte als Matrix-Produkt
+  \begin{gather}
+    A^{(k+1)} = L^{-1}_k A^{(k)},
+    \qquad b^{(k+1)} = L^{-1}_k b^{(k)},
+    \qquad k=1,\dots,n-1
+  \end{gather}
+  mit $A^{(1)}=A$, $b^{(1)}=b$ und den Frobenius-Matrizen
+  \begin{gather}
+    L_k =\begin{bmatrix}
+      1 & & & & & \\
+      &\ddots & & & & \\
+      &   & 1& & &\\
+      &   & \ell_{k+1,k}&1 & &\\
+      &   & \vdots& &\ddots &\\
+      &   & \ell_{nk}& & &1
+    \end{bmatrix},
+    \qquad
+    \ell_{ik} = \frac{a_{ik}^{(k)}}{a_{kk}^{(k)}}
+  \end{gather}
+  schreiben.
+\end{Lemma}
+
+\begin{Lemma}{elimination-2}
+  Nach $n-1$ Schritten der Gauß-Elminiation erhält man das transformierte lineare Gleichungssystem
+  \begin{gather}
+    R x = y,\qquad R = L^{-1}A, \qquad y=L^{-1}b,
+    \qquad L = L_1^{-1}\cdot L_{n-1}^{-1} A
+  \end{gather}
+\end{Lemma}
 \subsection{Fehleranalyse}
 
 

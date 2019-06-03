@@ -1,4 +1,4 @@
-def forward_substitution(A,b):
+def forward_subst(A,b):
     (m,n) = A.shape
     x = np.zeros(n)
     for i in range(0,n):

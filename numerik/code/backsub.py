@@ -1,4 +1,4 @@
-def backward_substitution(A,b):
+def backward_subst(A,b):
     (m,n) = A.shape
     x = np.zeros(n)
     for i in range(n-1,-1):

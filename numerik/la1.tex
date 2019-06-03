@@ -188,7 +188,7 @@
 \end{proof}
 
 \begin{Satz}{spektralnorm}
-  Die Operatornorm zur euklidischen Norm\index{Norm|euklidisch} ist
+  Die Operatornorm zur euklidischen Norm\index{Norm!euklidisch} ist
   die \define{Spektralnorm}
   \begin{gather}
     \norm{A}_2 = \max_{\substack{x\in\R^n\\x\neq0}}
@@ -276,13 +276,14 @@
 \begin{Satz}{kondition-lgs}
   Sei die Matrix $A\in\R^{n\times n}$ invertierbar und
   \begin{gather}
-    \norm{\delta A} < \norm{A}^{-1}.
+    \label{eq:la1:1}
+    \norm{\delta A} < \frac1{\norm{A^{-1}}}.
   \end{gather}
   Dann ist die gestörte Matrix $A+\delta A$ ebenfalls invertierbar und
   es gilt die Fehlerabschätzung
   \begin{gather}
     \frac{\norm{\delta x}}{\norm{x}}
-    \le \frac{\cond(A)}{1-\cond(A)\nicefrac{\norm{\delta A}}{\norm{A}}}
+    \le \frac{\cond(A)}{1-\cond(A)\nicefrac{\norm{\delta A}}{{\norm{A}}}}
     \left[\frac{\norm{\delta A}}{\norm{A}}
       +\frac{\norm{\delta b}}{\norm{b}}\right].
   \end{gather}
@@ -296,6 +297,43 @@
 \begin{proof}
   Siehe \cite[Satz 4.1]{Rannacher17}.
 \end{proof}
+
+\begin{remark}
+  Die Bedingung~\eqref{eq:la1:1} wurde benutzt, um die
+  Invertierbarkeit der gestörten Matrix zu sichern. Daraus lässt sich
+  ableiten, dass Nichtsingularität einer Matrix $A$ in der Regel nicht
+  hinreicht, um auch numerisch ein Gleichungssystem lösen zu
+  können. Man benötigt vielmehr, dass eine Matrix nicht nur
+  invertierbar ist, sondern dass die Inverse auch hinreichend
+  beschränkt werden kann. Insbesondere sehen wir am Nenner der
+  Abschätzung, dass bei sehr großer Norm der Inversen schon sehr
+  kleine Störungen der Matrix zu einer erheblichen Vergrößerung des
+  Fehlers führen.
+
+  Damit tritt neben die rein qualitative Aussage eine Matrix sei
+  \putindex{singulär} oder \putindex{invertierbar} die quantitative
+  Aussage, dass eine Matrix schlecht invertierbar sei, weil sich
+  Datenfehler sehr stark verstärken.
+
+  Zerlegen wir die Konditionszahl in
+  \begin{gather}
+    \kappa = \frac{\cond(A)}{1-\cond(A)\nicefrac{\norm{\delta A}}{\norm{A}}}
+    =\cond(A)\frac{1}{1-\norm{\delta A}{\norm{A^{-1}}}},
+  \end{gather}
+  so sehen wir, dass auch bei exakter Repräsentation der Matrix die
+  Verstärkung von Fehlern der rechten Seite schon durch die
+  Konditionszahl bestimmt ist. Da die Konditionszahl nie besser als
+  eins ist, gibt es grundsätzlich keine Dämpfung der relativen Fehler.
+\end{remark}
+
+\begin{remark}
+  Ohne Einschränkung der Allgemeinheit ist das Resultat von
+  \slideref{Satz}{kondition-lgs} scharf. Dennoch ist es in der Praxis
+  oft zu pessimistisch. Für eine Verbesserung benötigt man jedoch mehr
+  Struktureigenschaften der Matrix.
+\end{remark}
+
+
 
 %%% Local Variables:
 %%% mode: latex
