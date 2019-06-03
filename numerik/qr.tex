@@ -1,5 +1,60 @@
 \subsection{Orthogonale Matrizen}
 
+\begin{Definition}{ortho-matrix}
+  Eine \define{orthogonale Matrix} ist eine quadratische Matrix, deren
+  Spaltenvektoren bzw. deren Zeilenvektoren eine Orthonormalbasis des
+  $\R^n$ bilden.
+\end{Definition}
+
+\begin{Satz}{ortho-matrix}
+  Für eine orthogonale Matrix $Q$ gilt
+  \begin{gather}
+    \label{eq:qr:1}
+    Q^{-1} = Q^T.
+  \end{gather}
+  Umgekehrt folgt aus dieser Beziehung die Orthogonalität der
+  Zeilenvektoren und Spaltenvektoren.
+\end{Satz}
+
+\begin{proof}
+  Nehmen wir an, die Spaltenvektoren $q^{(1)},\dots,q^{(n)}$ von $Q$
+  seinen eine ONB. Dann gilt für die Matrix $A = Q^TQ$:
+  \begin{gather}
+    a_{ij} = \sum_{k=1}^n q_{ki}q_{kj}
+    = \sum_{k=1}^n q^{(i)}_k q^{(j)}_k
+    = \bigl(q^{(i)}\bigr)^T q^{(j)} = \delta_{ij}.
+  \end{gather}
+  Daher gilt $Q^TQ=I$.  Multiplizieren wir diese Gleichung von rechts
+  mit $Q^{-1}$, so erhalten wir~\eqref{eq:qr:1}. Setzen wir umgekehrt
+  $Q^TQ=I$, so ergibt obige Rechnung die Orthogonalität der
+  Spaltenvektoren.
+
+  Aus $Q^T = Q^{-1}$ folgt aber durch Transponieren
+  \begin{gather}
+    Q = Q^{-T},
+  \end{gather}
+  wobei $Q^{-T}$ die Inverse von $Q^T$ ist. Multiplizieren wir die
+  letzte Gleichung von rechts mit $Q^T$, so erhalten wir $QQ^T = I$,
+  was äquivalent zur Orthonormalität der Zeilenvektoren ist.
+
+  Wir hätten diesen Beweis auch mit den Zeilenvektoren beginnen können
+  und $QQ^T=I$ folgern. Der Rest verläuft dann analog.
+\end{proof}
+
+\begin{example}
+  Die Rotationsmatrix
+  \begin{gather}
+    Q = \begin{bmatrix}
+      \cos \phi & \sin \phi\\-\sin\phi\cos\phi
+    \end{bmatrix}
+  \end{gather}
+  ist orthogonal. Dasselbe gilt für die Reflexionsmatrix an einem
+  normierten Vektor $w\in \R^n$,
+  \begin{gather}
+    Q = I-ww^T
+  \end{gather}
+\end{example}
+
 \subsection{Konstruktion der QR-Zerlegung}
 
 \subsection{Fehleranalyse}

@@ -234,8 +234,6 @@
   Eine symmetrische Matrix $A\in\R^{n\times n}$ ist positiv definit genau dann, wenn ihre Eigenwerte alle positiv sind.
 \end{Satz}
 
-\section{Fehleranalyse}
-
 \subsection{Konditionierung der Lösung}
 
 \begin{Definition}{aufgabe-loesung}
@@ -299,6 +297,16 @@
 \end{proof}
 
 \begin{remark}
+  \slideref{Satz}{kondition-lgs} gilt unabhängig von der Wahl der
+  Norm, sobald die Konditionszahl der Matrix konsistent definiert
+  ist. Es ist dabei durchaus möglich, dass die
+  Bedingung~\eqref{eq:la1:1} bezüglich einer Norm verletzt, bezüglich
+  einer anderen erfüllt ist. Die Invertierbarkeit der gestörten Matrix
+  hängt dabei nicht von der Wahl einer Norm ab. Es genügt also, die
+  Bedingung bezüglich einer geeigneten Norm zu überprüfen.
+\end{remark}
+
+\begin{remark}
   Die Bedingung~\eqref{eq:la1:1} wurde benutzt, um die
   Invertierbarkeit der gestörten Matrix zu sichern. Daraus lässt sich
   ableiten, dass Nichtsingularität einer Matrix $A$ in der Regel nicht
@@ -330,7 +338,8 @@
   Ohne Einschränkung der Allgemeinheit ist das Resultat von
   \slideref{Satz}{kondition-lgs} scharf. Dennoch ist es in der Praxis
   oft zu pessimistisch. Für eine Verbesserung benötigt man jedoch mehr
-  Struktureigenschaften der Matrix.
+  Struktureigenschaften der Matrix, zum Beispiel Symmetrie oder die
+  Untersuchung invarianter Unterräume.
 \end{remark}
 
 

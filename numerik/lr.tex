@@ -4,7 +4,7 @@
   nicht anders vermerkt, dass ihre Dimension $n\times n$ sei.
 \end{Notation}
 
-\subsection{Dreiecksmatrizen}
+\subsection{Dreiecksmatrizen und Frobeniusmatrizen}
 
 \begin{Definition}{dreiecksmatrix}
   Für eine \define{untere Dreiecksmatrix} $L \in \R^{n\times n}$ gilt
@@ -48,8 +48,6 @@
   \end{minipage}
 \end{Algorithmus}
 
-\subsection{Konstruktion der LR-Zerlegung}
-
 \begin{Definition}{frobenius-matrix}
   Eine Matrix der Gestalt
   \begin{gather}
@@ -77,7 +75,7 @@
 
   Sei $k_1<\dots<k_m$ eine aufsteigende Folge von Indizes. Dann ist
   \begin{gather}
-    G_{k_1}\dots G_{k_m} = \sum_{i=1}^m G_i - (m-1) \identity.
+    G_{k_1}\cdots G_{k_m} = \sum_{i=1}^m G_i - (m-1) \identity.
   \end{gather}
   Insbesondere gilt
   \begin{gather}
@@ -90,6 +88,8 @@
     \end{bmatrix}
   \end{gather}
 \end{Lemma}
+
+\subsection{Konstruktion der LR-Zerlegung}
 
 \begin{Lemma}{elimination-1}
   Bei der Gauß-Elimination lässt sich die Elimination der
@@ -115,13 +115,58 @@
   schreiben.
 \end{Lemma}
 
-\begin{Lemma}{elimination-2}
+\begin{Satz}{elimination-2}
   Nach $n-1$ Schritten der Gauß-Elminiation erhält man das transformierte lineare Gleichungssystem
   \begin{gather}
     R x = y,\qquad R = L^{-1}A, \qquad y=L^{-1}b,
-    \qquad L = L_1^{-1}\cdot L_{n-1}^{-1} A
+    \qquad L = L_1\cdots L_{n-1},
+  \end{gather}
+  und die LR-Zerlegung
+  \begin{gather}
+    A = LR
+  \end{gather}
+  mit einer oberen Dreiecksmatrix $R$ und einer unteren Dreiecksmatrix
+  $L$, deren Diagonale aus Einsen besteht.
+\end{Satz}
+
+\begin{Lemma}{aufwand-LR}
+  Der Aufwand der LR-Zerlegung einer $n\times n$-Matrix ist
+  \begin{gather}
+    \tfrac13 n^3 + \bigo(n^2).
   \end{gather}
 \end{Lemma}
+
+\begin{Satz}{existenz-LR}
+  Ist die Matrix $A$ invertierbar, dann ist im $k$-ten Schritt der
+  Gauß-elimination wenigstens eins der Elemente $a^{(k)}_{jk}$ mit
+  $j\ge k$ von null verschieden. für den Fall, dass
+  $a^{(k)}_{kk} = 0$, kann damit die Elimination nach Vertauschen der
+  Zeilen $j$ und $k$ fortgesetzt werden.
+\end{Satz}
+
+\begin{Definition}{spalten-pivot}
+  Führt man im $k$-ten Schritt der Gauß-Elimination eine
+  Zeilenvertauschung durch, so dass
+  \begin{gather}
+    \abs{a^{(k)}_{kk}} = max_{j\ge k} \abs{a^{(k)}_{jk}},
+  \end{gather}
+  so spricht man von Gauß-Elimination mit
+  \define{Spalten-Pivotierung}. Vertauscht man sogar die verbleibenden
+  Zeilen und spalten, so dass
+  \begin{gather}
+    \abs{a^{(k)}_{kk}} = max_{i,j\ge k} \abs{a^{(k)}_{ij}},
+  \end{gather}
+  handelt es sich um \define{vollständige Pivotierung}.
+\end{Definition}
+
+\begin{Lemma}{spalten-pivot}
+  Führt man die Gauß-Elimination mit Spalten-Pivotierung durch, so gilt
+  für die Matrix $L$:
+  \begin{gather}
+    \abs{\ell_{ij}} \le 1,\qquad1\le i,j\le n.
+  \end{gather}
+\end{Lemma}
+
 \subsection{Fehleranalyse}
 
 
