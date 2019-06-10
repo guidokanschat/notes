@@ -129,6 +129,14 @@
   $L$, deren Diagonale aus Einsen besteht.
 \end{Satz}
 
+\begin{Algorithmus*}{lr}{LR-Zerlegung}
+  \lstinputlisting{code/lu.py}
+\end{Algorithmus*}
+
+\begin{Algorithmus*}{for-back}{Vorwärts-Rückwärts-Einsetzen}
+  \lstinputlisting{code/forward_backward.py}
+\end{Algorithmus*}
+
 \begin{Lemma}{aufwand-LR}
   Der Aufwand der LR-Zerlegung einer $n\times n$-Matrix ist
   \begin{gather}
@@ -138,7 +146,7 @@
 
 \begin{Satz}{existenz-LR}
   Ist die Matrix $A$ invertierbar, dann ist im $k$-ten Schritt der
-  Gauß-elimination wenigstens eins der Elemente $a^{(k)}_{jk}$ mit
+  Gauß-Elimination wenigstens eins der Elemente $a^{(k)}_{jk}$ mit
   $j\ge k$ von null verschieden. für den Fall, dass
   $a^{(k)}_{kk} = 0$, kann damit die Elimination nach Vertauschen der
   Zeilen $j$ und $k$ fortgesetzt werden.
@@ -167,7 +175,90 @@
   \end{gather}
 \end{Lemma}
 
+\begin{Lemma}{l-p-vertauschung}
+  Sei $\pi$ eine Permutation der Zahlen $1,\dots,n$, so dass die
+  Zahlen $1,\dots,k$ unverändert bleiben, und $P_{\pi}$ die Matrix der
+  entsprechenden Zeilenvertauschungen. Dann ist
+  \begin{gather}
+    P_\pi L_k P_\pi^{-1} =
+    \begin{bmatrix}
+      1 & & & & & \\
+      &\ddots & & & & \\
+      &   & 1& & &\\
+      &   & \ell_{\pi(k+1),k}&1 & &\\
+      &   & \vdots& &\ddots &\\
+      &   & \ell_{\pi(n)k}& & &1
+    \end{bmatrix}
+  \end{gather}
+  wieder eine Frobenius-Matrix gleicher Struktur wier $L_k$.
+\end{Lemma}
+
+\begin{proof}
+  Jede Permutation ist das Produkt von Transpositionen. Für solche
+  wird die Aussage in der Hausaufgabe gezeigt.
+\end{proof}
+
+\begin{Satz}{lr-pivot}
+  Nach $n-1$ Schritten der Gauß-Elimination mit Spalten-Pivotierung
+  erhält man die Zerlegung
+  \begin{gather}
+    PA = LR
+  \end{gather}
+  mit einer Permutationsmatrix $P$ und den Dreiecksmatrizen $L$ und $R$.
+\end{Satz}
+
+\begin{proof}
+  Siehe \cite[Abschnitt 1.3]{DeuflhardHohmann08}.
+\end{proof}
+
+\begin{remark}
+  Die Funktionsbibliothek LAPACK zur linearen Algebrawird heute als
+  Standardimplementation für viele der hier diskutierten Algorithmen
+  benutzt. Sie enthält viele Optimierungen und benutzt auch
+  automatisch Spaltenpivotierung.
+\end{remark}
+
 \subsection{Fehleranalyse}
+
+Ohne Beweis geben wir die folgenden Resultate zur
+Rundungsfehleranalyse der Lösung linearer
+Gleichungssysteme mit der LR-Zerlegung an.
+
+\begin{Lemma}{rundung-vor-rueck}
+  Die Realisierung des Vorwärtseinsetzens für das Gleichungssystem
+  $LX = b$ in Fließkommaarithmetik berechnet die Lösung $\hat x$ des
+  gestörten Systems $\hat L \hat x = b$ mit
+  \begin{gather}
+    \abs{\ell_{ij} - \hat\ell_{ij}}
+    \lessdot n \abs{l_{ij}} \eps.
+  \end{gather}
+\end{Lemma}
+
+\begin{Lemma}{rundung-lr-1}
+  Die Matrix $A$ besitze eine LR-Zerlegung. Dann berechnet das
+  Gaußsche Eliminationsverfahren für das Gleichungssystem $AX=b$ die
+  Lösung $\hat x$ des Systems $(A+\delta A) \hat x = b$ für eine Matrix
+  $A+\delta A$ mit
+  \begin{gather}
+    \abs{\delta a_{ij}} \lessdot 2n \abs{\hat \ell_{ij}}
+    \abs{\hat r_{ij}}\eps.
+  \end{gather}
+\end{Lemma}
+
+\begin{Satz*}{rundung-lr-2}{Wilkinson}
+  Das Gaußsche Eliminationsverfahren mit Spaltenpivotierung für das
+  Gleichungssystem $Ax=b$ berechnet die Lösung $\hat x$ des Systems
+  $\hat A \hat x = b$ für eine Matrix $\hat A$ mit
+  \begin{gather}
+    \frac{\norm{\delta A}_\infty}{\norm{A}_\infty}
+    \lessdot 2 n^3 \frac{\alpha_{\max}}{\max \abs{a_{ij}}} \eps,
+  \end{gather}
+  wobei
+  \begin{gather}
+    \alpha_{\max} = \max_{1\le k,i,j\le n} \abs{a^{(k)}_{ij}}.
+  \end{gather}
+\end{Satz*}
+
 
 
 %%% Local Variables:
