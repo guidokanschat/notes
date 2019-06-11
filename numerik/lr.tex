@@ -211,13 +211,6 @@
   Siehe \cite[Abschnitt 1.3]{DeuflhardHohmann08}.
 \end{proof}
 
-\begin{remark}
-  Die Funktionsbibliothek LAPACK zur linearen Algebrawird heute als
-  Standardimplementation für viele der hier diskutierten Algorithmen
-  benutzt. Sie enthält viele Optimierungen und benutzt auch
-  automatisch Spaltenpivotierung.
-\end{remark}
-
 \subsection{Fehleranalyse}
 
 Ohne Beweis geben wir die folgenden Resultate zur
@@ -258,6 +251,40 @@ Gleichungssysteme mit der LR-Zerlegung an.
     \alpha_{\max} = \max_{1\le k,i,j\le n} \abs{a^{(k)}_{ij}}.
   \end{gather}
 \end{Satz*}
+
+\subsection{Anmerkungen zur LR-Zerlegung}
+
+\begin{remark}
+  Es gibt einige Aussagen über die LR-Zerlegung von Matrizen mit
+  spezielleren Strukturen. So gilt
+  \begin{enumerate}
+  \item Ist die Matrix $A$ invertierbar und schwach diagonaldominant,
+    das heißt,
+    \begin{gather}
+      \abs{a_{ii}} \ge \sum_{j\neq i} \abs{a_{ij}},
+      \qquad i=1,\dots,n,
+    \end{gather}
+    so kann die LR-Zerlegung ohne Pivotierung durchgeführt werden.
+  \item Ist die Matrix $A$ positiv definit, so kann die LR-Zerlegung
+    ohne Pivotierung durchgeführrt werden und alle Diagonalelemente
+    $a_{kk}^{(k)}$ sind positiv (siehe \cite[Satz 4.7]{Rannacher17}).
+  \item Für symmetrisch positiv definite Matrizen führt man die
+    Gauß-Elimination in der Variante des
+    \putindex{Choleski-Verfahren}s durch, das eine $LL^T$-Zerlegung
+    mit dem halben Aufwand der LR-Zerlegung produziert.
+  \item Hat die Matrix eine Struktur, bei der sich alle von null
+    verschiedenen Einträge um die Diagonale konzentrieren, man spricht
+    von Band- und Skyline-Matrizen, so kann man bei der LR-Zerlegung
+    diese Struktur ausnutzen und erheblich an Operationen sparen.
+  \end{enumerate}
+\end{remark}
+
+\begin{remark}
+  Die Funktionsbibliothek LAPACK zur linearen Algebra wird heute als
+  Standardimplementation für viele der hier diskutierten Algorithmen
+  benutzt, zum Beispiel die LR-Zerlegung. Sie enthält viele
+  Optimierungen und benutzt auch automatisch Spaltenpivotierung.
+\end{remark}
 
 
 
