@@ -1,3 +1,46 @@
+\begin{intro}
+  Betrachten wir die Konstruktion der LR-Zerlegung als Folge von
+  Operationen auf Matrizen, so ergibt sich das Bild
+  \begin{gather}
+    \begin{split}
+      A^{(1)} & \mapsto L_{1}^{-1} A^{(2)} \\
+      A^{(2)} & \mapsto L_{2}^{-1} A^{(3)} \\
+      A^{(n-1)} & \mapsto L_{n-1}^{-1} R.
+    \end{split}
+  \end{gather}
+  Es findet also in jedem Schritt eine Umformung der Matrix des
+  aktuellen Schritts mit einer Frobeniusmatrix statt.
+
+  In der Fehlerabschätzung steht der Faktor
+  \begin{gather}
+    \rho = \frac{\alpha_{\max}}{\max \abs{a_{ij}}}
+    = \frac{\max \abs{a^{(k)}_{ij}}}{\max \abs{a_{ij}}},
+  \end{gather}
+  wobei das Wachstum der Zähler von den Eigenschaften der
+  Frobeniusmatrizen abhängt. Aus \cite{DeuflhardHohmann08} zitieren
+  wir dazu folgende Werte abhängig von der Struktur der Matrix
+  \begin{center}
+    \begin{tabular}{l|c}
+      Matrix & $\rho$\\\hline
+      invertierbar & $2^{n-1}$ \\
+      diagonaldominant & 2 \\
+      s.p.d. & 1
+    \end{tabular}
+  \end{center}
+  Hierbei wird für allgemein invertierbare Matrizen Spaltenpivotierung
+  angewandt, für die anderen nicht. Für allgemeine Matrizen kann
+  dieser Faktor also sehr schnell anwachsen und der Algorithmus
+  instabil werden.
+
+  Dieser Abschnitt beschäftigt sich nun mit alternativen
+  Transformationen, die immer zu einer stabilen Zerlegung
+  führen. Gesucht werden dazu Matrizen so dass
+  \begin{gather}
+    \norm{A^{(n-1)}} = \dots = \norm{A^{(k)}} = \dots = \norm{A^{(1)}}
+  \end{gather}
+  für eine geeignete Norm gilt.
+\end{intro}
+
 \subsection{Orthogonale Matrizen}
 
 \begin{Definition}{ortho-matrix}
@@ -45,55 +88,108 @@
   Die Rotationsmatrix
   \begin{gather}
     Q = \begin{bmatrix}
-      \cos \phi & \sin \phi\\-\sin\phi\cos\phi
+      \cos \phi & \sin \phi\\-\sin\phi&\cos\phi
     \end{bmatrix}
   \end{gather}
   ist orthogonal. Dasselbe gilt für die Reflexionsmatrix an einem
-  normierten Vektor $w\in \R^n$,
+  Vektor $w\in \R^n$,
   \begin{gather}
-    Q = I-2ww^T
+    Q = I-2\frac{ww^T}{w^Tw}
   \end{gather}
 \end{example}
 
-\subsection{Existenz und Konstruktion}
-
-\begin{Satz*}{qr}{QR-Zerlegung für quadratische Matrizen}
-  Sei $A\in \R^{n\times n}$ invertierbar. Dann gibt es eine obere
-  Dreiecksmatrix $R\in\R^{n\times n}$ und eine orthogonale Matrix
-  $Q\in\R^{n\times n}$ so dass
+\begin{Lemma}{qr-norm}
+  Für jede orthogonale Matrix $Q\in \R^{n\times n}$, jeden Vektor
+  $x\in\R^n$ und jede beliebige Matrix $A\in \R^{n\times n}$ gilt
   \begin{gather}
-    A=QR.
+    \norm{Qx}_2 = \norm{x}_2,
+    \qquad \norm{QA}_2 = \norm{A}_2.
   \end{gather}
-  Die Zerlegung ist eindeutig mit der zusätzlichen Forderung $r_{ii}>0$ für $i=1,\dots,n$.
-\end{Satz*}
-
-\begin{Lemma}{qr-spalten}
-  Seien $q^{(1)},\dots, q^{(n)} \in\R^n$ die Spaltenvektoren von $Q$
-  und $a^{(1)},\dots, a^{(n)} \in\R^n$ die Spaltenvektoren von
-  $A$. Dann gilt für $k=1,\dots,n$
-  \begin{gather}
-    \operatorname{span}\left\{q^{(1)},\dots, q^{(k)}\right\}
-    =
-    \operatorname{span}\left\{a^{(1)},\dots, a^{(k)}\right\}.
-  \end{gather}
-  Die ersten $k$ Spalten von $Q$ sind also die orthonormierten ersten
-  $k$ Spalten von $A$.
 \end{Lemma}
 
-\begin{proof}
-  Aufgrund der Eigenschaften des Matrixprodukts gilt
+\subsection{Existenz und Konstruktion}
+
+\begin{Definition}{qr}
+  Bei der \define{QR-Zerlegung} wird die Matrix $A\in \R^{n\times n}$
+  in das Produkt
+  \begin{gather}
+    A = QR
+  \end{gather}
+  aus einer orthogonalen Matrix $Q$ und einer oberen Dreiecksmatrix
+  $R$ zerlegt.
+\end{Definition}
+
+\begin{Lemma}{qr-spalten}
+  Seien $q^{(1)},\dots,q^{(n)}$ die Spaltenvektoren von $Q$ und
+  $a^{(1)},\dots,a^{(n)}$ die Spaltenvektoren von $A$.
+  Dann gilt
+  \begin{gather}
+    \label{eq:qr:2}
+    a^{(k)} = \sum_{i=1}^k r_{ik} q^{(i)}.
+  \end{gather}
+  Gilt $r_{ii}\neq 0$ für $i=1,\dots,k$ so ist die Beziehung eindeutig
+  umkehrbar.  Insbesondere besteht die Folge der Spaltenvektoren von
+  $Q$ aus den orthogonalisierten Spaltenvektoren von $A$ mit
   \begin{align}
-    a^{(1)} &= r_{11} q^{(1)},\\
-    a^{(2)} &= r_{12} q^{(1)} + r_{22} q^{(2)},\\
-    &\vdots
+    \operatorname{span}\bigl\{q^{(1)},\dots,q^{(k)}\bigr\}
+    = \operatorname{span}\bigl\{a^{(1)},\dots,a^{(k)}\bigr\}
+    \qquad k=1,\dots,n.
   \end{align}
+\end{Lemma}
+
+\begin{Satz}{qr}
+  Zu jeder invertierbaren quadratischen Matrix $A\in \R^{n\times n}$
+  gibt es eine QR-Zerlegung. Unter der Zusatzbedingung $r_{ii}>0$ ist
+  diese eindeutig.
+\end{Satz}
+
+\begin{proof}
+  Nach dem vorigen Lemma können die Spaltenvektoren $q^{(i)}$ der
+  Matrix $Q$ mit dem Gram-Schmidt-Verfahren aus den Spaltenvektoren
+  $a^{(i)}$ von $A$ gewonnen werden. Da die Spalten von $A$ linear
+  unabhängig sind, bricht das Verfahren nicht ab.
+
+  Daraus folgt insbesondere
+  Gleichung~\eqref{eq:qr:2} mit $r_{ij} = \scal(a^{(j)},q^{(i)})$.
+
+  Zur Eindeutigkeit nehmen wir an, es gelte $A = Q_1 R_1 = Q_2
+  R_2$. Es gilt dann für die Hilfsmatrix $P = Q_2^T Q_1$
+  \begin{gather}
+    P = Q_2^{-1}Q_1 = R_2A^{-1}A R_1^{-1}
+  \end{gather}
+  und ebenso $P^T = R_1R_2^{-1}$. Beide Produkte auf der rechten Seite
+  sind opere Dreiecksmatrizen, woraus folgt, dass $P$ diagonal sein
+  muss. Wegen der Orthogonalität gilt $\abs{p_{ii}} = 1$ für
+  $i=1,\dots,n$. Schließlich benutzen wir
+  \begin{gather}
+    PR_1 = Q_2^T Q_1 R_1 = Q_2^{T}A = Q_2^{T}Q_2R_2,
+  \end{gather}
+  woraus folgt $p_{ii} r_{1;ii} = r_{2;ii}$. Wegen der Positivität der
+  Diagonalelemente von $R_1$ und $R_2$ ist damit $p_{ii}=1$ und
+  $P=\id$. Aus $R_2R_1^{-1} = \id$ folgt dann $R_1 = R_2$ und
+  \begin{gather}
+    Q_1 = AR_1^{-1} = AR_2^{-1} = Q_2.
+  \end{gather}
 \end{proof}
 
-\begin{proof}[\slideref{Satz}{qr}]
-  Aufgrund des vorherigen Lemmas können die Spalten von $Q$ durch den
-  Gram-Schmidt-Algorithmus aus denen von $A$ gewonnen werden. Zur
-  Eindeutigkeit siehe z.B. \cite{Rannacher17}.
-\end{proof}
+\begin{Definition}{givens}
+  Die \define{Givens-Rotation} $\Omega_{jk}$ zum Winkel $\theta$ bildet ab
+  \begin{align}
+    \Omega_{jk}\colon \R^n &\to \R^n\\
+    x & \mapsto y
+  \end{align}
+  mit
+  \begin{gather}
+    y_i =
+    \begin{cases}
+      c x_j + s x_k & i=j\\
+      -s x_j + c x_k & i=k\\
+      x_i &\text{sonst}
+    \end{cases}
+  \end{gather}
+  mit $c = \cos\theta$ und $s = \sin\theta$.
+\end{Definition}
+
 \begin{Algorithmus*}{givens-1}{Givens-Rotation}
   
 \end{Algorithmus*}
@@ -164,8 +260,6 @@
 \begin{Algorithmus*}{householder-2}{QR-Zerlegung mit Householder-Reflexion}
   
 \end{Algorithmus*}
-
-%\subsection{Fehleranalyse}
 
 
 %%% Local Variables:

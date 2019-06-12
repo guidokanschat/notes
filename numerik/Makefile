@@ -4,7 +4,7 @@ slides.pdf: print.pdf
 	pdflatex slides
 	pdflatex slides
 
-print.pdf: print.tex top.tex orthopoly.tex stability.tex interpolation.tex splines.tex quadratur.tex print.bbl ../mathsim.sty
+print.pdf: print.tex top.tex orthopoly.tex stability.tex interpolation.tex splines.tex quadratur.tex lr.tex qr.tex print.bbl ../mathsim.sty
 	-mkdir blocks
 	pdflatex print
 	makeindex print

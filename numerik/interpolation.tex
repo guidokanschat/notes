@@ -459,7 +459,7 @@
   Bedingungen
   \begin{gather}
     \frac{d^j p}{dx^j}(x_i) = f_i^{j},
-    \qquad i = 0,\dots, m, \quad j=0,\dots,n_i,
+    \qquad i = 0,\dots, m, \quad j=0,\dots,n_i-1,
   \end{gather}
   und es gilt
   \begin{gather}
@@ -482,21 +482,21 @@
   Interpolationsbedingungen orthogonal ist. Damit stellen wir das
   Interpolationspolynom dar als
   \begin{gather}
-    p(x) = \sum_{i=1}^m \sum_{j=0}^{n_i-1} f_i^j H_{ij}(x).
+    p(x) = \sum_{i=0}^m \sum_{j=0}^{n_i-1} f_i^j H_{ij}(x).
   \end{gather}
   Zunächst führen wir die Hilfspolynome
   \begin{gather}
     q_{ij}(x) = \frac{(x-x_i)^j}{j!}\prod_{k\neq i}
-    \left(\frac{x-x_k}{x_i-x_k}\right)^{n_i}
+    \left(\frac{x-x_k}{x_i-x_k}\right)^{n_k}
   \end{gather}
   ein. Es gilt
   \begin{gather}
     \begin{aligned}
-      \frac{d^j q_i}{d x^j} (x_k) &=0,
+      \frac{d^j q_{i,n_i-1}}{d x^j} (x_k) &=0,
       \quad &k\neq i,&\quad& j&=0,\dots,n_{k}-1,\\
-      \frac{d^j q_i}{d x^j} (x_i) &=0,
-      \qquad &&& j&=0,\dots,n_{i}-1,\\   
-      \frac{d^{n_{i}-1} q_i}{d x^{n_{i}-1}} (x_i) &=1.
+      \frac{d^j q_{i,n_i-1}}{d x^j} (x_i) &=0,
+      \qquad &&& j&=0,\dots,n_{i}-2,\\   
+      \frac{d^{n_{i}-1} q_{i,n_i-1}}{d x^{n_{i}-1}} (x_i) &=1.
       \qquad &&&& 
     \end{aligned}
   \end{gather}
@@ -504,8 +504,8 @@
   \begin{gather}
     \begin{aligned}
       H_{i,n_i-1}(x) &= q_{i,n_i-1}(x)
-      & i&= 1,\dots,m\\
-      H_{ij}(x) &= q_{ij}(x) - \sum_{k=j+1}^{n_i-1} q_{ij}^{(k)}(x_i) q_{ik}(x),
+      & i&= 0,\dots,m\\
+      H_{ij}(x) &= q_{ij}(x) - \sum_{k=j+1}^{n_i-1} q_{ij}^{(k)}(x_i) H_{ik}(x),
     \end{aligned}
   \end{gather}
   wobei die letzte Zeile die Anwendung des Gram-Schmidt-Verfahrens
@@ -555,7 +555,7 @@
   mit den verallgemeinerten dividierten Differenzen definiert durch
   die Rekursion
   \begin{gather}
-    [x_i,\dots,x_i+k]f =
+    [x_i,\dots,x_{i+k}]f =
     \begin{cases}
       \frac{f^{(k)}(x_i)}{k!} &x_i=x_{i+k}\\
       \frac{[x_{i+1},\dots,x_{i+k}]f - [x_i,\dots,x_{i+k-1}]f}{x_{i+k}-x_i}
