@@ -1,0 +1,25 @@
+\begin{intro}
+  Die Methode der kleinsten Fehlerquadrate führt auf die Minimierungsaufgabe
+  \begin{gather}
+    \norm{Ax-b}_2 = \min.
+  \end{gather}
+\end{intro}
+
+\begin{Satz}{normalengleichungen}
+  Sei $A\in \R^{m\times n}$ mit $m\ge n$ und $b\in \R^m$. Dann ist
+  $x\in\R^n$ genau dann eine Lösung des linearen Ausgleichsproblems
+  \begin{gather}
+    \norm{Ax-b}_2 = \min,
+  \end{gather}
+  wenn $x$ Lösung der \define{Normalengleichungen}
+  \begin{gather}
+    A^TA x = A^Tb
+  \end{gather}
+  ist. Insbesondere ist die Minimierungsaufgabe eindeutig lösbar, wenn
+  $A$ vollen Rang hat.
+\end{Satz}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

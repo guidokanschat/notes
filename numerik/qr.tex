@@ -55,9 +55,117 @@
   \end{gather}
 \end{example}
 
-\subsection{Konstruktion der QR-Zerlegung}
+\subsection{Existenz und Konstruktion}
 
-\subsection{Fehleranalyse}
+\begin{Satz*}{qr}{QR-Zerlegung für quadratische Matrizen}
+  Sei $A\in \R^{n\times n}$ invertierbar. Dann gibt es eine obere
+  Dreiecksmatrix $R\in\R^{n\times n}$ und eine orthogonale Matrix
+  $Q\in\R^{n\times n}$ so dass
+  \begin{gather}
+    A=QR.
+  \end{gather}
+  Die Zerlegung ist eindeutig mit der zusätzlichen Forderung $r_{ii}>0$ für $i=1,\dots,n$.
+\end{Satz*}
+
+\begin{Lemma}{qr-spalten}
+  Seien $q^{(1)},\dots, q^{(n)} \in\R^n$ die Spaltenvektoren von $Q$
+  und $a^{(1)},\dots, a^{(n)} \in\R^n$ die Spaltenvektoren von
+  $A$. Dann gilt für $k=1,\dots,n$
+  \begin{gather}
+    \operatorname{span}\left\{q^{(1)},\dots, q^{(k)}\right\}
+    =
+    \operatorname{span}\left\{a^{(1)},\dots, a^{(k)}\right\}.
+  \end{gather}
+  Die ersten $k$ Spalten von $Q$ sind also die orthonormierten ersten
+  $k$ Spalten von $A$.
+\end{Lemma}
+
+\begin{proof}
+  Aufgrund der Eigenschaften des Matrixprodukts gilt
+  \begin{align}
+    a^{(1)} &= r_{11} q^{(1)},\\
+    a^{(2)} &= r_{12} q^{(1)} + r_{22} q^{(2)},\\
+    &\vdots
+  \end{align}
+\end{proof}
+
+\begin{proof}[\slideref{Satz}{qr}]
+  Aufgrund des vorherigen Lemmas können die Spalten von $Q$ durch den
+  Gram-Schmidt-Algorithmus aus denen von $A$ gewonnen werden. Zur
+  Eindeutigkeit siehe z.B. \cite{Rannacher17}.
+\end{proof}
+\begin{Algorithmus*}{givens-1}{Givens-Rotation}
+  
+\end{Algorithmus*}
+
+\begin{Algorithmus*}{givens-2}{QR-Zerlegung mit Givens-Rotation}
+  
+\end{Algorithmus*}
+
+\begin{Definition*}{householder-reflexion}{Householder-Reflexion}
+  Ist ein Vektor $w\in \R^n$ gegeben, so beschreibt die Matrix
+  \begin{gather}
+    Q_w = \identity - 2\frac{ww^T}{w^Tw}
+  \end{gather}
+  die Abbildung, die einen Vektor $y$ an der Hyperebene senkrecht zu
+  $w$ spiegelt.
+\end{Definition*}
+
+\begin{Lemma}{householder-konstruktion}
+  Sei $y\in\R^n$ gegeben. Dann gibt es zwei Vektoren $w^+,w^-\in\R^n$
+  und eine Zahl $\alpha\in \R$, so dass
+  \begin{gather}
+    \label{eq:qr:2}
+    Q_{w^\pm} y = \pm \alpha e_1 =
+    \begin{pmatrix}
+      \pm \alpha\\0\\\vdots\\0
+    \end{pmatrix}.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  Orthogonale Abbildungen sind normerhaltend. Daher muss gelten
+  \begin{gather}
+    \abs{\alpha} = \norm{y}_2.
+  \end{gather}
+  oder $\alpha = \pm\norm{y}_2$.  Ferner gilt
+  wegen~\eqref{eq:qr:2} für einen geeigneten Reflexionsvektor $w$:
+  \begin{gather}
+    Q_{w} y = y-2 \frac{ww^Ty}{w^Tw} = y-2\frac{w^Ty}{w^Tw}w = \alpha e_1.
+  \end{gather}
+  Daher ist $w$ ein Vielfaches von $y - \alpha e_1$. Da durch die Norm
+  von $w$ geteit wird, wählen wir damit
+  \begin{gather}
+    w^{\pm} = y\mp \norm{y}_2 e_1.
+  \end{gather}
+\end{proof}
+
+\begin{remark}
+  Zur vermeidung von Auslöschung in der ersten Stelle von $w$
+  verwendet man in der QR-Zerlegung den Faktor $\alpha$ so dass
+  \begin{gather}
+    \operatorname{sign} (\alpha) = -\operatorname{sign} (y_1)
+  \end{gather}
+  und damit
+  \begin{gather}
+    w = y + \operatorname{sign} (y_1) \norm{y}_2 e_1
+    =
+    \begin{pmatrix}
+      y_1 + \operatorname{sign} (y_1) \norm{y}_2\\
+      y_2\\\vdots\\y_n
+    \end{pmatrix}.
+  \end{gather}
+\end{remark}
+
+\begin{Algorithmus*}{householder-1}{Householder-Reflexion}
+  
+\end{Algorithmus*}
+
+\begin{Algorithmus*}{householder-2}{QR-Zerlegung mit Householder-Reflexion}
+  
+\end{Algorithmus*}
+
+%\subsection{Fehleranalyse}
 
 
 %%% Local Variables:
