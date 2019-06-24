@@ -25,13 +25,45 @@
   Das Lemma nach der nächsten Definition legt nahe, dass das keine gute Idee ist, da sich die Konditionszahl durch das Matrixprodukt quadriert und damit die Lösungsgenauigkeit leidet.  
 \end{remark}
 
-\begin{Definition}
+\begin{Definition}{condition-rectangular}
   Die Konditionszahl einer rechteckigen Matrix maximalen Rangs bezüglich der Operatornorm zur Vektornorm $\norm{\cdot}$ ist
   \begin{gather}
-    \operatorname{cond}(A) = \frac{\sup_{\norm{x}=1}\norm{Ax}}{\inf_{\norm{x}=1}\norm{Ax}}.
+    \cond(A) = \frac{\sup_{\norm{x}=1}\norm{Ax}}{\inf_{\norm{x}=1}\norm{Ax}}.
     \end{gather}
   Die Definition ist konsistent zur Definition für invertierbare, quadratische Matrizen.
 \end{Definition}
+
+\begin{Lemma}{condition-squared}
+  Für eine Matrix $A\in\R^{m\times n}$ maximalen Rangs mit $m\ge n$ gilt
+  \begin{gather}
+  \cond(A^TA) = \cond(A)^2.
+\end{Lemma}
+
+\begin{Lemma}{qr-rectangular}
+  Zu jeder Matrix $A\in \R^{m\times n}$ maximalen Rangs mit $m\le n$
+  gibt es eine QR-Zerlegung
+  \begin{gather}
+  A = QR
+  \end{gather}
+  mit einer oberen Dreiecksmatrix $R\in\R^{n\times n}$ und einer Matrix $Q\in\R^{m\times n}$, deren Spalten ein Orthonormalsystem bilden.
+  Unter der Zusatzbedingung $r_{ii}>0$ ist
+  diese Zerlegung eindeutig.
+\end{Lemma}
+
+\begin{Satz}
+  Sei $QR=A$ eine QR-Zerlegung. Dann kann die Lösung der Normalengleichungenvberechnet werden durch die Lösung des Systems
+  \begin{gather}
+    Rx = Q^Tb.
+  \end{gather}
+\end{Satz
+
+\begin{proof}
+  Einsetzen der QR-Zerlegung in die Normalengleichungen ergibt
+  \begin{gather}
+  R^TQ^TQR x = R^T R x = R^TQ^T b.
+  \end{gather}
+  Da $R^T$ invertierbar ist, können wir die Inverse von links anwenden und erhalten das Resultat.
+\end{proof}
 
 %%% Local Variables:
 %%% mode: latex
