@@ -19,6 +19,20 @@
   $A$ vollen Rang hat.
 \end{Satz}
 
+\begin{remark}
+  Wir können die Normalengleichungen lösen, indem wir die symmetrische Matrix $C = A^TA\in \R^{n\times n}$ berechnen und dann eines der Verfahren der vorigen Abschnitte auf diese Matrix anwenden.
+  
+  Das Lemma nach der nächsten Definition legt nahe, dass das keine gute Idee ist, da sich die Konditionszahl durch das Matrixprodukt quadriert und damit die Lösungsgenauigkeit leidet.  
+\end{remark}
+
+\begin{Definition}
+  Die Konditionszahl einer rechteckigen Matrix maximalen Rangs bezüglich der Operatornorm zur Vektornorm $\norm{\cdot}$ ist
+  \begin{gather}
+    \operatorname{cond}(A) = \frac{\sup_{\norm{x}=1}\norm{Ax}}{\inf_{\norm{x}=1}\norm{Ax}}.
+    \end{gather}
+  Die Definition ist konsistent zur Definition für invertierbare, quadratische Matrizen.
+\end{Definition}
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
