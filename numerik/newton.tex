@@ -1,0 +1,14 @@
+\begin{Definition}{kontraktion}
+  Sei $M\subset\R^n$. Eine Abbildung $f\colon M\to M$ ist eine \define{Kontraktion} auf $M$, wenn es eine Konstante $\rho < 1$ gibt, so dass
+  \begin{gather}
+    \norm{f(x) - f(y)} \le \rho \norm{x-y} \qquad\forall x,y\in M.
+  \end{gather}
+\end{Definition}
+
+\begin{Satz*}{bfs}{Banachscher Fixpunktsatz}
+  Sei $f$ eine Kontraktion auf der abgeschlossenen Menge $M\subset\R^n$. Dann gibt es genau einen \define{Fixpunkt} $x\in M$, also
+  \begin{gather}
+    x = f(x).
+  \end{gather}
+\end{Satz*}
+
