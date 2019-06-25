@@ -128,7 +128,7 @@
     a^{(k)} = \sum_{i=1}^k r_{ik} q^{(i)}.
   \end{gather}
   Gilt $r_{ii}\neq 0$ für $i=1,\dots,k$ so ist die Beziehung eindeutig
-  umkehrbar.  Insbesondere besteht die Folge der Spaltenvektoren von
+  umkehrbar.  Insbesondere besteht dann die Folge der Spaltenvektoren von
   $Q$ aus den orthogonalisierten Spaltenvektoren von $A$ mit
   \begin{align}
     \operatorname{span}\bigl\{q^{(1)},\dots,q^{(k)}\bigr\}
@@ -211,7 +211,7 @@
   Sei $y\in\R^n$ gegeben. Dann gibt es zwei Vektoren $w^+,w^-\in\R^n$
   und eine Zahl $\alpha\in \R$, so dass
   \begin{gather}
-    \label{eq:qr:2}
+    \label{eq:qr:3}
     Q_{w^\pm} y = \pm \alpha e_1 =
     \begin{pmatrix}
       \pm \alpha\\0\\\vdots\\0
@@ -225,12 +225,12 @@
     \abs{\alpha} = \norm{y}_2.
   \end{gather}
   oder $\alpha = \pm\norm{y}_2$.  Ferner gilt
-  wegen~\eqref{eq:qr:2} für einen geeigneten Reflexionsvektor $w$:
+  wegen~\eqref{eq:qr:3} für einen geeigneten Reflexionsvektor $w$:
   \begin{gather}
     Q_{w} y = y-2 \frac{ww^Ty}{w^Tw} = y-2\frac{w^Ty}{w^Tw}w = \alpha e_1.
   \end{gather}
   Daher ist $w$ ein Vielfaches von $y - \alpha e_1$. Da durch die Norm
-  von $w$ geteit wird, wählen wir damit
+  von $w$ geteilt wird, wählen wir
   \begin{gather}
     w^{\pm} = y\mp \norm{y}_2 e_1.
   \end{gather}
