@@ -36,7 +36,8 @@
 \begin{Lemma}{condition-squared}
   Für eine Matrix $A\in\R^{m\times n}$ maximalen Rangs mit $m\ge n$ gilt
   \begin{gather}
-  \cond(A^TA) = \cond(A)^2.
+    \cond(A^TA) = \cond(A)^2.
+  \end{gather}
 \end{Lemma}
 
 \begin{Lemma}{qr-rectangular}
@@ -55,7 +56,7 @@
   \begin{gather}
     Rx = Q^Tb.
   \end{gather}
-\end{Satz
+\end{Satz}
 
 \begin{proof}
   Einsetzen der QR-Zerlegung in die Normalengleichungen ergibt
@@ -64,6 +65,10 @@
   \end{gather}
   Da $R^T$ invertierbar ist, können wir die Inverse von links anwenden und erhalten das Resultat.
 \end{proof}
+
+% \begin{Definition}{pseudo-inverse}
+%   Die \define{Pseudoinverse} $A^\dagger\in \R^{n\times m}$ einer Matrix $A\in\R^{m\times n}$ ist definiert dadurch, dass $x=a^\dagger b$ die Lösung des Minimierungsproblems 
+% \end{Definition}
 
 %%% Local Variables:
 %%% mode: latex
