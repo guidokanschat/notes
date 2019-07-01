@@ -1,14 +1,197 @@
-\begin{Definition}{kontraktion}
-  Sei $M\subset\R^n$. Eine Abbildung $f\colon M\to M$ ist eine \define{Kontraktion} auf $M$, wenn es eine Konstante $\rho < 1$ gibt, so dass
+\begin{Definition}{newton-verfahren}
+  Das \define{Newton-Verfahren} ist ein Iterationsverfahren zum
+  Auffinden einer Nullstelle einer Funktion $f\colon \R^n\to \R^n$. Zu
+  einem Startwert $x^{(0)} \in \R^n$ berechnen sich die weiteren
+  Iterierten durch
   \begin{gather}
-    \norm{f(x) - f(y)} \le \rho \norm{x-y} \qquad\forall x,y\in M.
+    \label{eq:newton:1}
+    x^{(k+1)} = x^{(k)} - \bigl(\nabla f(x^{(k)})\bigr)^{-1} f(x^{(k)}).
   \end{gather}
 \end{Definition}
 
-\begin{Satz*}{bfs}{Banachscher Fixpunktsatz}
-  Sei $f$ eine Kontraktion auf der abgeschlossenen Menge $M\subset\R^n$. Dann gibt es genau einen \define{Fixpunkt} $x\in M$, also
+\begin{Lemma}{newton-1}
+  Sei $M\subset \R^n$ konvex. Sei $f\colon M\to \R^n$ stetig differenzierbar auf $M$ und die Ableitung genüge der Lipschitz-Abschätzung
   \begin{gather}
-    x = f(x).
+    \norm{\nabla f(x) - \nabla f(y)} \le \gamma \norm{x-y}
+    \qquad \forall x,y\in M.
   \end{gather}
-\end{Satz*}
+  mit einer Konstanten $\gamma$. Dann gilt für alle $x,y\in M$
+  \begin{gather}
+    \norm{f(x)-f(y) - \nabla f(y)(x-y)}
+    \le \frac\gamma2 \norm{x-y}^2.
+  \end{gather}
+\end{Lemma}
 
+\begin{proof}
+  Wir folgen~\cite[Hilfssatz 5.3.1]{Stoer83}.
+  Sei $\phi\colon[0,1] \to \R^n$ die Hilfsfunktion definiert durch
+  \begin{gather}
+    \phi(t) = f\bigl(y+t(x-y)\bigr),
+  \end{gather}
+  so dass
+  \begin{gather}
+    f(x)-f(y) - \nabla f(y)(x-y) = \phi(1) - \phi(0) + \phi'(0)
+    = \int_0^1 (\phi'(t)-\phi'(0))\dt,
+  \end{gather}
+  denn nach der Kettenregel gilt
+  \begin{gather}
+    \phi'(t) = \nabla f\bigl(y+t(x-y)\bigr)(x-y).
+  \end{gather}
+  Den Integranden schätzen wir ab durch
+  \begin{align}
+    \norm{\phi'(t)-\phi'(0)}
+    & = \norm{\Bigl(\nabla f\bigl(y-t(x-y)\bigr) - \nabla f(y)\Bigr)(x-y)}
+    \\
+    & \le \norm{\nabla f\bigl(y-t(x-y)\bigr) - \nabla f(y)}\norm{(x-y)}
+    \\
+    & \le \gamma\,t\norm{x-y}^2.
+  \end{align}
+  Einsetzen ins Integral ergibt
+  \begin{gather}
+    \norm{f(x)-f(y) - \nabla f(y)(x-y)}
+    \le \frac\gamma2 \norm{x-y}^2.
+  \end{gather}
+\end{proof}
+
+\begin{Satz}{newton-konvergenz}
+  Sei $M\subset \R^n$ eine offene, konvexe Menge und
+  $f\colon \overline{M} \to \R^n$ stetig differenzierbar in $M$ und
+  stetig auf $\overline{M}$. Die \define{Jacobi-Matrix} $\nabla f(x)$
+  sei auf ganz $M$ invertierbar und es gebe Konstanten $\beta$ und
+  $\gamma$, so dass für $x,y\in M$ gilt
+  \begin{gather}
+    \label{eq:newton:2}
+    \norm{\nabla f(x) - \nabla f(y)} \le \gamma \norm{x-y},
+    \qquad \norm{\bigl(\nabla f(x)\bigr)^{-1}} \le \beta.
+  \end{gather}
+  Gibt es dann eine Konstante $\alpha$, so dass
+  \begin{align}
+    \label{eq:newton:3}
+    \norm{\bigl(\nabla f(x^{(0)})\bigr)^{-1} f(x^{(0)})}
+    &\le \alpha\\
+    h := \frac{\alpha\beta\gamma}2 &<1\\
+    B_r(x^{(0)}) &\subseteq M, \qquad\text{mit } r=\frac{\alpha}{1-h},
+  \end{align}
+  So ist die Folge $x^{(k)}$ des Newton-Verfahrens für alle
+  $k=1,\dots$ wohldefiniert und liegt in $B_r(x^{(0)})$. Ferner
+  konvergiert sie quadratisch gegen einen Wert
+  $x^*\in\overline{B_r(x^{(0)})}$ und es gilt
+  \begin{gather}
+    \label{eq:newton:4}
+    \norm{x^{(k)}-x^*} \le \alpha\frac{h^{2^k-1}}{1-h^{2^k}}.
+  \end{gather}
+\end{Satz}
+
+\begin{proof}
+  Wir folgen~\cite[Satz 5.3.2]{Stoer83}.
+  Wir zeigen zunächst induktiv für alle $k=1,\dots$, dass das
+  Folgenglied $x^{(k)}$ in $B_r(x^{(0)}) \subseteq M$ liegt. Damit
+  existiert dann nach Voraussetzung
+  $\bigl(\nabla f(x^{(k)})\bigr)^{-1}$ und $x^{(k+1)}$ ist
+  wohldefiniert. Zur Verankerung bemerken wir, dass offensichtlich
+  $x^{(0)}\in B_r(x^{(0)})$ und $x^{(1)}$ nach
+  Voraussetzung~\eqref{eq:newton:3}. Nach der Verfahrensvorschrift
+  können wir abschätzen:
+  \begin{align}
+    \norm{x^{(k+1)} - x^{(k)}}
+    & = \norm{\bigl(\nabla f(x^{(k)})\bigr)^{-1} f(x^{(k)})}\\
+    & \le \beta \norm{f(x^{(k)})}\\
+    & = \beta \norm{f(x^{(k)}) - f(x^{(k-1)}) - \nabla f(x^{(k)})(x^{(k)}-x^{(k-1)})},
+  \end{align}
+  wobei wir die letzte Zeile aus der Multiplikation der
+  Verfahrensvorschrift mit $\nabla f$ gewonnen haben. Hierauf wenden
+  wir nun \slideref{Lemma}{newton-1} an und bekommen die quadratische
+  Konvergenz, wenn der Abstand zweier Folgenglieder einmal klein genug
+  ist:
+  \begin{gather}
+    \label{eq:newton:5}
+    \norm{x^{(k+1)} - x^{(k)}}
+    \le \frac{\beta\gamma}2 \norm{x^{(k)} - x^{(k-1)}}^2.
+  \end{gather}
+  Es bleibt zu zeigen, dass die Folge in $B_r(x^{(0)})$ bleibt. Dazu
+  zeigen wir per Induktion, dass
+  \begin{gather}
+    \label{eq:newton:6}
+    \norm{x^{(k+1)} - x^{(k)}} \le \alpha h^{2^k-1}.
+  \end{gather}
+  Für $k=0$ folgt $\norm{x^{(1)} - x^{(0)}} \le \alpha$ direkt
+  aus~\eqref{eq:newton:3}. Für den Induktionsschritt benutzen wir
+  unsere Konvergenzabschätzung~\eqref{eq:newton:5}:
+  \begin{gather}
+    \norm{x^{(k+1)} - x^{(k)}}
+    \le \frac{\beta\gamma}2 \norm{x^{(k)} - x^{(k-1)}}^2
+    \le \frac{\beta\gamma}2 (\alpha h^{2^{k-1}-1})^2
+    = \frac{\alpha\beta\gamma}2 \alpha h^{2^k-2}
+    = \alpha h^{2^k-1}.
+  \end{gather}
+  Nun können wir mit einer Teleskopsumme abschätzen
+  \begin{align}
+    \norm{x^{(k+1)} - x^{(0)}}
+    &\le \sum_{j=0}^k \norm{x^{(j+1)} - x^{(j)}}\\
+    & \le \alpha (1+h+h^3+h^7+\dots+h^{2^k-1})\\
+    &<\frac\alpha{1-h} = r,
+  \end{align}
+  Aus~\eqref{eq:newton:6} folgt mit dieser Abschätzung, dass $x^{(k)}$
+  Cauchy Folge ist und durch Grenzübergang die
+  Abschätzung~\eqref{eq:newton:4}.
+\end{proof}
+
+\begin{Definition}{anstiegskegel}
+  Sei $g\colon \R^n\to \R$ stetig differenzierbar. Dann definieren wir
+  den Kegel positiven Anstiegs zum Parameter $\gamma$ als
+  \begin{gather}
+    S_\gamma(x) = \bigl\{ s\in\R^n \big|
+    \norm{s} = 1 \;\wedge \;
+    \nabla g(x)s \ge \gamma\norm{\nabla g(x)}
+    \bigr\}.
+  \end{gather}  
+\end{Definition}
+
+\begin{Lemma}{abstieg-reduktion}
+  Sei $g\colon\R^n\to\R$ stetig differenzierbar und in einem Punkt
+  $y\in\R^n$ gelte $\nabla g(y) \neq 0$. Dann gibt es eine Umgebung
+  $U(y)$ und $\lambda>0$, so dass für alle $x\in U(y)$,
+  $s\in S_\gamma(x)$ und $\mu\in [0,\lambda]$ gilt
+  \begin{gather}
+    h(x-\mu s) \le h(x) - \frac{\mu\gamma}4 \norm{\nabla g(y)}.
+  \end{gather}
+\end{Lemma}
+
+\begin{Definition}{abstiegsverfahren}
+  Ein \define{Abstiegsverfahren} für eine stetig differenzierbare
+  Funktion $g\colon \R^n\to\R$ ist eine Iterationsvorschrift aus den
+  folgenden Schritten: gegeben $x^{(k)}$,
+  \begin{enumerate}
+  \item wähle $\gamma_k>\gamma>0$ und eine Abstiegsrichtung
+    $s^{(k)} \in S_{\gamma_k}(x^{(k)})$.
+  \item Wähle eine Schrittweite $\alpha_k>0$ und setze
+    \begin{gather}
+      x^{(k+1)} = x^{(k)} - \alpha_k s^{(k)},
+    \end{gather}
+    so dass
+    \begin{gather}
+      g(x^{(k+1)})
+      \le g(x^{(k)}) - \frac{\gamma_k\alpha_k}{4}\norm{\nabla g(x^{(k)}}.
+    \end{gather}
+  \end{enumerate}
+\end{Definition}
+
+\begin{Beispiel*}{steepest-descent}{Das Verfahren des steilsten Abstiegs}
+  
+\end{Beispiel*}
+
+\begin{Satz}{abstieg-haeufung}
+  Sei $g\colon \R^n\to \R$ und $x^{(0)} \in\R^n$ so gewählt, dass die Menge
+  \begin{gather}
+    K = \bigl\{x\in\R^n \big| g(x) \le g(x^{(0)}) \bigr\}
+  \end{gather}
+  kompakt und $g$ stetig differenzierbar auf einer Umgebung von $K$
+  ist. Dann besitzt die Folge $\{x^{(k+1)}\}$ des Abstiegsverfahrens
+  mindestens einen Häufungspunkt in $K$ und jeder Häufungspunkt ist
+  ein stationärer Punkt von $g$.
+\end{Satz}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

@@ -12,3 +12,24 @@
   \end{gather}
 \end{Satz*}
 
+\begin{Satz}{optimize-solve}
+  Sei $g\colon \R^n\to \R$. Dann gilt für eine Minimalstelle $x^*$ von $g$,
+  also
+  \begin{gather}
+    x^* = \operatorname{argmin}_{x\in\R^n} g(x),
+  \end{gather}
+  notwendig
+  \begin{gather}
+    \nabla g(x^*) = 0.
+  \end{gather}
+  Das Minimierungsproblem lässt sich also auf das Finden einer
+  Nullstelle von $f\colon \R^n\to \R^n$ mit $f(x) = \nabla g(x)$
+  reduzieren. Umgekehrt lässt sich die Aufgabe, eine Nullstelle einer
+  Funktion $f\colon \R^n \to \R^n$ zu finden, durch die Minimierung
+  des Funktionals $g(x) = \norm{f(x)}$ darstellen.
+\end{Satz}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
