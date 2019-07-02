@@ -177,7 +177,17 @@
 \end{Definition}
 
 \begin{Beispiel*}{steepest-descent}{Das Verfahren des steilsten Abstiegs}
-  
+  Sei der Vektor $x^{(k)} \in\R^n$ gegeben, dann wähle
+  $s^{(k)} = \nabla g(x^{(k)})$. Die Schrittweite $\alpha_k$ wird aus
+  der eindimensionalen Minimierungsaufgabe
+  \begin{gather}
+    \alpha_k = \operatorname{argmin}_{\alpha>0}
+    g\bigl(x^{(k)} - \alpha s^{(k)}\bigr)
+  \end{gather}
+  bestimmt. Danach setze
+  \begin{gather}
+    x^{(k+1)} = x^{(k)} - \alpha_k s^{(k)}.
+  \end{gather}
 \end{Beispiel*}
 
 \begin{Satz}{abstieg-haeufung}
@@ -190,6 +200,8 @@
   mindestens einen Häufungspunkt in $K$ und jeder Häufungspunkt ist
   ein stationärer Punkt von $g$.
 \end{Satz}
+
+
 
 %%% Local Variables:
 %%% mode: latex
