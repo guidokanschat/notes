@@ -183,7 +183,7 @@
   erfüllt.
 \end{remark}
 
-\begin{Beispiel*}{steepest-descent}{Das Verfahren des steilsten Abstiegs}
+\begin{Beispiel*}{steepest-descent}{Verfahren des steilsten Abstiegs}
   Sei der Vektor $x^{(k)} \in\R^n$ gegeben, dann wähle
   $s^{(k)} = \nabla g(x^{(k)})$. Die Schrittweite $\alpha_k$ wird aus
   der eindimensionalen Minimierungsaufgabe
@@ -230,11 +230,12 @@
   \begin{enumerate}
   \item Berechne $d^{(k)} = \bigl(\nabla f(x^{(k)})\bigr)^{-1}f(x^{(k)})$
   \item Berechne die kleinste ganze Zahl $j$, so dass
-    \begin{gather}
-      \norm{f(x^{(k)}-2^{-j} d^{(k)})}_2^2
-      \le \norm{f(x^{(k)})}_2^2 - 2^{-j}
-      \tfrac{1}{4\cond_2(\nabla f(x^{(k)}))} \norm{\nabla g(x^{(k)})}_2
-    \end{gather}
+    \begin{multline}
+      \norm*{f(x^{(k)}-2^{-j} d^{(k)})}_2^2
+      \le \norm*{f(x^{(k)})}_2^2
+      \\- 2^{-j} \frac{1}{4\cond_2(\nabla f(x^{(k)}))}
+      \norm*{f^T\bigl(x^{(k)}\nabla f(x^{(k)}\bigr)}_2
+    \end{multline}
     \item Setze $x^{(k+1)}=x^{(k)}-2^{-j} d^{(k)}$
   \end{enumerate}
 \end{Definition}
@@ -255,7 +256,7 @@
   ersetzen daher die komplizierte Bedingung durch die wesentlich
   einfachere: sei $j$ die kleinste nichtnegative ganze Zahl, so dass
   \begin{gather}
-    g\bigl(x^{k} - 2^{-j} d^{(k)}\bigr) < g\bigl(x^{k}\bigr).
+    \norm*{f\bigl(x^{k} - 2^{-j} d^{(k)}\bigr)}_2^2 < \norm*{f\bigl(x^{k}\bigr)}_2^2.
   \end{gather}
   Es gibt in der Literatur weitere Heuristiken zur Wahl der
   Schrittweite im Newton-Verfahren, die man unter dem Stichwort \glqq
