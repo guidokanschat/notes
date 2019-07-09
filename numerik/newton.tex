@@ -220,7 +220,7 @@
   \begin{gather}
     s^{(k)} \in S_\gamma\bigl(x^{(k)}\bigr),
     \qquad
-    \gamma = \frac{1}{\cond_2(\nabla f(x^{(k)})}
+    \gamma = \frac{1}{\cond_2(\nabla f(x^{(k)}))}
   \end{gather}
 \end{Lemma}
 
@@ -231,9 +231,9 @@
   \item Berechne $d^{(k)} = \bigl(\nabla f(x^{(k)})\bigr)^{-1}f(x^{(k)})$
   \item Berechne die kleinste ganze Zahl $j$, so dass
     \begin{gather}
-      \norm{f(x^{(k)}-2^{-j} d^{(k)}}_2^2
-      \le \norm{f(x^{(k)}}_2^2 - 2^{-j}
-      \tfrac{1}{4\cond_2(\nabla f(x^{(k)})} \norm{\nabla g(x^{(k)})}_2
+      \norm{f(x^{(k)}-2^{-j} d^{(k)})}_2^2
+      \le \norm{f(x^{(k)})}_2^2 - 2^{-j}
+      \tfrac{1}{4\cond_2(\nabla f(x^{(k)}))} \norm{\nabla g(x^{(k)})}_2
     \end{gather}
     \item Setze $x^{(k+1)}=x^{(k)}-2^{-j} d^{(k)}$
   \end{enumerate}
