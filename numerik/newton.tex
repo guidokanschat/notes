@@ -70,7 +70,7 @@
     \norm{\bigl(\nabla f(x^{(0)})\bigr)^{-1} f(x^{(0)})}
     &\le \alpha\\
     h := \frac{\alpha\beta\gamma}2 &<1\\
-    B_r(x^{(0)}) &\subseteq M, \qquad\text{mit } r=\frac{\alpha}{1-h},
+    \overline{B_r(x^{(0)})} &\subseteq M, \qquad\text{mit } r=\frac{\alpha}{1-h},
   \end{align}
   So ist die Folge $x^{(k)}$ des Newton-Verfahrens für alle
   $k=1,\dots$ wohldefiniert und liegt in $B_r(x^{(0)})$. Ferner
@@ -170,18 +170,25 @@
     \end{gather}
     so dass
     \begin{gather}
-      g(x^{(k+1)})
-      \le g(x^{(k)}) - \frac{\gamma_k\alpha_k}{4}\norm{\nabla g(x^{(k)}}.
+      \label{eq:newton:7}
+      g\bigl(x^{(k+1)}\bigr)
+      \le g\bigl(x^{(k)}\bigr) - \frac{\gamma_k\alpha_k}{4}\norm{\nabla g(x^{(k)}}.
     \end{gather}
   \end{enumerate}
 \end{Definition}
+
+\begin{remark}
+  Lemma \slideref{Lemma:abstieg-reduktion} stellt sicher, dass es in
+  jedem Schritt ein positives $\alpha_k$ gibt, das die Bedingung
+  erfüllt.
+\end{remark}
 
 \begin{Beispiel*}{steepest-descent}{Das Verfahren des steilsten Abstiegs}
   Sei der Vektor $x^{(k)} \in\R^n$ gegeben, dann wähle
   $s^{(k)} = \nabla g(x^{(k)})$. Die Schrittweite $\alpha_k$ wird aus
   der eindimensionalen Minimierungsaufgabe
   \begin{gather}
-    \alpha_k = \operatorname{argmin}_{\alpha>0}
+    \alpha_k = \operatorname*{argmin}_{\alpha>0}
     g\bigl(x^{(k)} - \alpha s^{(k)}\bigr)
   \end{gather}
   bestimmt. Danach setze
@@ -193,15 +200,72 @@
 \begin{Satz}{abstieg-haeufung}
   Sei $g\colon \R^n\to \R$ und $x^{(0)} \in\R^n$ so gewählt, dass die Menge
   \begin{gather}
-    K = \bigl\{x\in\R^n \big| g(x) \le g(x^{(0)}) \bigr\}
+    K = \Bigl\{x\in\R^n \; \Big| \; g(x) \le g\bigl(x^{(0)}\bigr) \Bigr\}
   \end{gather}
   kompakt und $g$ stetig differenzierbar auf einer Umgebung von $K$
   ist. Dann besitzt die Folge $\{x^{(k+1)}\}$ des Abstiegsverfahrens
-  mindestens einen Häufungspunkt in $K$ und jeder Häufungspunkt ist
+  mindestens einen Häufungspunkt in $K$. Gilt zusätzlich in der
+  Umgebung eines Häufungspunkts $\alpha_k \ge \alpha>0$, so ist er
   ein stationärer Punkt von $g$.
 \end{Satz}
 
+\begin{Lemma}{newton-abstieg}
+  Sei $f\colon \R^n\to \R^n$ stetig differenzierbar und
+  $g(x) = \norm{f(x)}_2^2$.  Dann sind die Suchrichtungen
+  \begin{gather}
+    s^{(k)} = \frac1{\norm{d^{(k)}}_2},
+    \qquad d^{(k)} = \bigl(\nabla f(x^{(k)})\bigr)^{-1}f(x^{(k)})
+  \end{gather}
+  Abstiegsrichtungen für $g(x)$ und es gilt
+  \begin{gather}
+    s^{(k)} \in S_\gamma\bigl(x^{(k)}\bigr),
+    \qquad
+    \gamma = \frac{1}{\cond_2(\nabla f(x^{(k)})}
+  \end{gather}
+\end{Lemma}
 
+\begin{Definition}{newton-stepsize}
+  Das Newton-Verfahren mit \define{Schrittweitensteuerung} berechnet iterativ
+  $x^{(k+1)}\in \R^n$ aus $x^{(k)}\in \R^n$ in folgenden Schritten
+  \begin{enumerate}
+  \item Berechne $d^{(k)} = \bigl(\nabla f(x^{(k)})\bigr)^{-1}f(x^{(k)})$
+  \item Berechne die kleinste ganze Zahl $j$, so dass
+    \begin{gather}
+      \norm{f(x^{(k)}-2^{-j} d^{(k)}}_2^2
+      \le \norm{f(x^{(k)}}_2^2 - 2^{-j}
+      \tfrac{1}{4\cond_2(\nabla f(x^{(k)})} \norm{\nabla g(x^{(k)})}_2
+    \end{gather}
+    \item Setze $x^{(k+1)}=x^{(k)}-2^{-j} d^{(k)}$
+  \end{enumerate}
+\end{Definition}
+
+\begin{remark}
+  Der Algorithmus benötigt viele zusätzliche Berechnungen, wie die von
+  $\gamma_k$ oder $\nabla g$. Für die praktische Anwendung lässt er
+  sich vereinfachen. Dazu beobachten wir zunächst, dass
+  Bedingung~\eqref{eq:newton:7} dazu dient, eine hinreichende
+  Kontraktion in der Nähe eines Häufungspunkts sicherzustellen. Die
+  Existenz eines solchen kann bereits aus
+  \begin{gather}
+    g\bigl(x^{k+1}\bigr) < g\bigl(x^{k}\bigr)
+  \end{gather}
+  gefolgert werden. Umgekehrt wird, wenn die Funktion $f$ die
+  Bedingungen des Konvergenzsatzes \slideref{Satz}{newton-konvergenz}
+  erfüllt, in der Nähe eines Fixpunktes ohnehin $j=0$ gelten. Wir
+  ersetzen daher die komplizierte Bedingung durch die wesentlich
+  einfachere: sei $j$ die kleinste nichtnegative ganze Zahl, so dass
+  \begin{gather}
+    g\bigl(x^{k} - 2^{-j} d^{(k)}\bigr) < g\bigl(x^{k}\bigr).
+  \end{gather}
+  Es gibt in der Literatur weitere Heuristiken zur Wahl der
+  Schrittweite im Newton-Verfahren, die man unter dem Stichwort \glqq
+  Globalisierung\grqq{} findet. Hier wollen wir uns mit dieser
+  besonders einfachen und gleichzeitig effektiven Variante begnügen.
+\end{remark}
+
+\begin{Algorithmus*}{newton-stepsize}{Newton-Verfahren mit Schrittweitensteuerung}
+  
+\end{Algorithmus*}
 
 %%% Local Variables:
 %%% mode: latex
