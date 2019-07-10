@@ -1,0 +1,285 @@
+\begin{intro}
+  Bei vielen Aufgaben zur approximativne Simulation physikalischer
+  Vorgänge, zum Beispiel bei der Diskretisierung partieller
+  Differentialgleichungen, treten sehr große ($n=10^6$ oder gar
+  $n=10^9$) Gleichungssysteme auf. Die Matrizen zeichnen sich dadurch
+  aus, dass sie \textbf{dünn besetzt}\index{Matrix!dünn besetzt} ist,
+  das heißt, in jeder Zeile und Spalte sind nur wenige Einträge von
+  null verschieden. Diese Einträge sind aber nicht in einem schmalen
+  Band angeordnet. Für solche Matrizen ist die Berechnung einer LR-
+  oder QR-Zerelgung unverhältnismäßig aufwendig, da die Zerlegungen
+  die Struktur nicht erhalten und Nullen innerhalb des Bandes
+  auffüllen. Die Multiplikation einer solchen Matrix mit einem Vektor
+  hingegen kann in $\bigo(n)$ Operationen durchgeführt werden.
+
+  Für solche Matrizen leiten wir hier iterative Lösungsverfahren her,
+  die nur auf der Multiplikation beruhen.
+\end{intro}
+
+\begin{Lemma}{lgs-minimierung}
+  Sei $A\in\R^{n\times n}$ symmetrisch positiv definit. Ein Vektor
+  $x\in\R^n$ minimiert die Funktion
+  \begin{gather}
+    F(x) = \tfrac12 x^TAx - x^Tb
+  \end{gather}
+  genau dann, wenn
+  \begin{gather}
+    Ax=b.
+  \end{gather}
+\end{Lemma}
+
+\begin{Definition}{steepest-descent-linear}
+  Das \define{Verfahren des steilsten Abstiegs} zur Lösung linearer
+  Gleichungssysteme lautet: gegeben ein Vektor $x^{(0)} \in \R^n$,
+  berechne die Folge $\{x^{(k)}\}$ durch die Iterationsvorschrift
+  \begin{gather}
+    x^{(k+1)} = x^{(k)} + \alpha_k r^{(k)},
+  \end{gather}
+  wobei $r^{(k)} = b-A x^{(k)}$ das Residuum von $x^{(k)}$ ist und
+  \begin{gather}
+    \alpha_k = \operatorname*{argmin}_{\alpha>0}
+    F\bigl(x^{(k)} + \alpha r^{(k)}\bigr).
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{steepest-descent-alpha}
+  Der Parameter $\alpha_k$ im Verfahren des steilsten Abstiegs kann
+  durch den Ausdruck
+  \begin{gather}
+    \alpha_k = \frac{\scal(r^{(k)},r^{(k)})}{\scal(Ar^{(k)},r^{(k)})}
+  \end{gather}
+  berechnet werden.
+\end{Lemma}
+
+\begin{proof}
+  Durch Einsetzen erhalten wir (unter Weglassen der Indizes $k$)
+  \begin{align}
+    F(x+\alpha r)
+    &= \tfrac12\scal(A(x+\alpha r),x+\alpha r)
+      - \scal(x+\alpha r,b)\\
+    &= \tfrac12\scal(Ax,x)
+      + \alpha \scal(Ax,r)
+      + \frac{\alpha^2}2\scal(Ar,r)
+      - \scal(x,b)
+      - \alpha \scal(r,b).
+  \end{align}
+  Dieser Ausdruck lässt sich nun leicht ableiten:
+  \begin{align}
+    \tfrac{d}{d\alpha}F(x+\alpha r)
+    &= \scal(Ax,r)
+      + \alpha\scal(Ar,r)
+      -\scal(b,r),
+    \\
+    &= \alpha\scal(Ar,r) - \scal(r,r)\\
+    \tfrac{d^2}{d\alpha^2}F(x+\alpha r)
+    &= \scal(Ar,r).
+  \end{align}
+  Da $A$ s.p.d sehen wir, dass eine Nullstelle der ersten Ableitung
+  nur ein Minimum sein kann. Nullsetzen der ersten Ableitung ergibt
+  die behauptete Formel.
+\end{proof}
+
+\begin{Lemma}{steepest-descent-orthogonality}
+  Für den Fehler $e^{(k)} = x - x^{(k)}$ im Verfahren des steilsten
+  Abstiegs gilt
+  \begin{gather}
+    \scal(A e^{(k+1)},r^{(k)}) = 0,
+  \end{gather}
+  der Fehler nach einem Schritt ist also bezüglich des
+  $A$-Skalarprodukts orthogonal zum Residuum des vorigen Schritts,
+  \begin{gather}
+    \scal(e^{(k+1)},r^{(k)})_A = 0
+  \end{gather}
+  und $x^{(k+1)}$ ist die \putindex{orthogonale Projektion} von $x$
+  auf den von $r^{(k)}$ aufgespannten Raum.
+\end{Lemma}
+
+\begin{proof}
+  Zunächst bemerken wir:
+  \begin{gather}
+    x^{(k+1)} = x^{(k)} + \alpha_k r^{(k)}
+    \qquad\Rightarrow\qquad
+    r^{(k+1)} = r^{(k)} - \alpha_k A r^{(k)}
+  \end{gather}
+  und $r^{(k+1)} = A e^{(k+1)}$. Aus
+  \begin{gather}
+    \scal(r^{(k+1)},r^{(k)})
+    = \scal(r^{(k)},r^{(k)})
+    - \frac{\scal(r^{(k)},r^{(k)})}{\scal(Ar^{(k)},r^{(k)})} \scal(A r^{(k)},r^{(k)}) = 0
+  \end{gather}
+  folgt damit die Orthogonalität.
+\end{proof}
+
+\begin{Lemma*}{kantorovich-ungleichung}{Kantorowitsch-Ungleichung}
+  Für eine symmetrisch positiv definite Matrix $A\in \R^{n\times n}$
+  gilt
+\end{Lemma*}
+
+\begin{Satz}{steepest-descent-konvergenz}
+  Für das Verfahren des steilsten Abstiegs gilt die Fehlerabschätzung
+\end{Satz}
+
+\begin{Definition}{cg}
+  Das \define{cg-Verfahren} (Verfahren der konjugierten Gradianten,
+  conjugate gradient method) berechnet zu einer symmetrisch positiv
+  definiten Matrix $A\in \R^{n\times n}$, einer rechten Seite
+  $b\in \R^n$ und einem Startvektor $x^{(0)}\in\R^n$ eine Folge
+  $\{x^{(k)}\}$ nach folgender Vorschrift:
+  \begin{enumerate}
+  \item Initialisierung:
+    \begin{align}
+      \tag{CG-I1}
+      \label{eq:cg:step0a}
+      r^{(0)} &= b-Ax^{(0)}\\
+      \tag{CG-I2}
+      \label{eq:cg:step0b}
+      p^{(0)} &= r^{(0)}
+    \end{align}
+  \item Iteration: für $k=0,1,\ldots$ berechne falls $p^{(k)}\neq 0$
+    \begin{align}
+      \tag{CG1}
+      \label{eq:cg:step1}
+      \alpha_k &= \frac{\scal(r^{(k)},r^{(k)})}{\scal(Ap^{(k)},p^{(k)})}\\
+      \tag{CG2}
+      \label{eq:cg:step2}
+      x^{(k+1)} &= x^{(k)} + \alpha_k p^{(k)}\\
+      \tag{CG3}
+      \label{eq:cg:step3}
+      r^{(k+1)} &= r^{(k)} - \alpha_k Ap^{(k)}\\
+      \tag{CG4}
+      \label{eq:cg:step4}
+      \beta_k &= \frac{\scal(r^{(k+1)},r^{(k+1)})}{\scal(r^{(k)},r^{(k)})}\\
+      \tag{CG5}
+      \label{eq:cg:step5}
+      p^{(k+1)} &= r^{(k+1)} + \beta_k p^{(k)}
+    \end{align}
+  \end{enumerate}
+\end{Definition}
+
+\begin{Lemma}{cg-orthogonality}
+  Sei $k$ gewählt so dass $p^{(j)} \neq 0$ für $j\le k$. Dann gilt für
+  die Vektoren des cg-Verfahrens
+  \begin{xalignat}{2}
+    \label{eq:cg:ortho1}
+    \scal(r^{(k)},p^{(j)}) &= 0 & 0 &\le j < k\\
+    \label{eq:cg:ortho2}
+    \scal(r^{(k)},p^{(k)}) &= \scal(r^{(k)},r^{(k)})\\
+    \label{eq:cg:ortho3}
+    \scal(Ap^{(j)},p^{(k)}) &= 0 & 0 & \le j < k\\
+    \label{eq:cg:ortho4}
+    \scal(r^{(j)},r^{(k)}) &= 0 & 0 & \le j < k\\
+    \label{eq:cg:ortho5}
+    r^{(k)} &= b-Ax^{(k)}
+  \end{xalignat}
+\end{Lemma}
+
+\begin{proof}
+  Für $k=0$ sind diese Beziehungen offensichtlich erfüllt, einige,
+  weil sie leere Bedingungen sind. Wir nehmen nun also an, dass sie
+  für $k$ bewiesen sind und schließen auf $k+1$. Zunächst ist
+  $\alpha_k$ wohldefiniert, da $p^{(k)} \neq 0$ und $A$ positiv
+  definit. Damit beweisen wir~\eqref{eq:cg:ortho1}:
+  nach~\eqref{eq:cg:step1}, \eqref{eq:cg:step3}
+  und~\eqref{eq:cg:ortho2} gilt
+  \begin{align}
+    \scal(r^{(k+1)},p^{(k)})
+    &= \scal(r^{(k)} - \alpha A p^{(k)},p^{(k)})
+    \\&= \scal(r^{(k)},p^{(k)})
+    - \frac{\scal(r^{(k)},r^{(k)})}{\scal(Ap^{(k)},p^{(k)})}
+    \scal(Ap^{(k)},p^{(k)})
+    \\&=0.
+  \end{align}
+  Direkter folgt aus~\eqref{eq:cg:ortho1} und~\eqref{eq:cg:ortho3} für $j<k$
+  \begin{gather}
+    \scal(r^{(k+1)},p^{(j)})
+    = \scal(r^{(k)},p^{(j)}) - \alpha \scal(A p^{(k)},p^{(j)})
+    = 0.
+  \end{gather}
+  Zum Beweis von~\eqref{eq:cg:ortho2} beweisen wir zunächst, dass
+  $\beta_k$ wohldefiniert ist, also $r^{(k)} \neq 0$. Für $k=0$ würde
+  dies nach~\eqref{eq:cg:step0b} bedeuten, dass $p^{(0)} = 0$, was der
+  Annahme widerspricht. Für $k>0$ ergäbe sich aus~\eqref{eq:cg:step5}
+  $p^{(k)}= \beta_{k-1} p^{(k-1)}$ und damit der Widerspruch
+  \begin{gather}
+    0 < \scal(A p^{(k)},p^{(k)}) = \beta_{k-1} \scal(A p^{(k-1)},p^{(k)}) = 0.
+  \end{gather}
+  Nun gilt, da wir~\eqref{eq:cg:ortho1} schon bewiesen haben
+  \begin{gather}
+    \scal(r^{(k+1)},p^{(k+1)})
+    = \scal(r^{(k+1)},r^{(k+1)})
+    -\beta_k \scal(r^{(k+1)},p^{(k)})
+    = \scal(r^{(k+1)},r^{(k+1)}).
+  \end{gather}
+  Nun zum Beweis von~\eqref{eq:cg:ortho3}. Nach~\eqref{eq:cg:step5} ist
+  \begin{gather}
+    \scal(p^{(k+1)},Ap^{(j)})
+    = \scal(r^{(k+1)},Ap^{(j)})
+    - \beta_k \scal(p^{(k)},Ap^{(j)}).
+  \end{gather}
+  Für den ersten Term nutzen wir~\eqref{eq:cg:step3} und lösen nach
+  $Ap^{(j)}$ auf:
+  \begin{gather}
+    \alpha_kAp^{(j)} = r^{(j)}-r^{(j+1)}
+    = p^{(j)} - \beta_{j-1}p^{(j-1)} - p^{(j+1)} + \beta_j p^{(j)} =: y.
+  \end{gather}
+  Für $j<k$ ist $\scal(p^{(k)},Ap^{(j)})=0$ und
+  nach bereits für $k+1$ bewiesenem~\eqref{eq:cg:ortho1}
+  \begin{gather}
+    \scal(r^{(k+1)},Ap^{(j)}) = \scal(r^{(k+1)}, y) = 0.
+  \end{gather}
+  Es bleibt der Beweis für $j=k$, der die bereits für $k+1$
+  bewiesenen~\eqref{eq:cg:ortho1} und~\eqref{eq:cg:ortho2} mit den
+  Definitionen von $\alpha_k$ und $\beta_k$ verbindet:
+  \begin{align}
+    \alpha_k \scal(p^{(k+1)},Ap^{(k)})
+    =& \scal(r^{(k+1)}, p^{(k)} - \beta_{j-1}p^{(k-1)}
+       - p^{(k+1)} + \beta_j p^{(k)})
+    \\
+     &+ \alpha_k\beta_k\scal(p^{(k)},Ap^{(k)})
+    \\
+    =& - \scal(r^{(k+1)},p^{(k+1)})+ \alpha_k\beta_k\scal(p^{(k)},Ap^{(k)})
+    \\
+    =&  \frac{\scal(r^{(k)},r^{(k)})}{\scal(p^{(k)},Ap^{(k)})}
+       \frac{\scal(r^{(k+1)},r^{(k+1)})}{\scal(r^{(k)},r^{(k)})}
+       \scal(p^{(k)},Ap^{(k)})
+    \\
+    &-\scal(r^{(k+1)},r^{(k+1)}).
+  \end{align}
+  Zum Beweis von~\eqref{eq:cg:ortho4} lösen wir~\eqref{eq:cg:step5}
+  nach $r^{(j)}$ auf und erhalten ???
+  \begin{gather}
+    \scal(r^{(j)},r^{(k+1)})
+    = \scal(p^{(j)}-\beta_{j-1}p^{(j-1)},r^{(k+1)})
+    = 0.
+  \end{gather}
+  Schließlich gilt
+  \begin{gather}
+    b-Ax^{(k+1)} = b - A (x^{(k)} + \alpha_k p^{(k)})
+    = r^{(k)} - \alpha_k A p^{(k)} = r^{(k+1)}.
+  \end{gather}
+\end{proof}
+
+\begin{Korollar}{cg-breakdown}
+  Der Fall $p^{(k)} = 0$ tritt genau dann ein, wenn $x^{(k)}$ die
+  Lösung des Gleichungssystems ist. Damit ist das Verfahren in jedem
+  Punkt außer der Lösung durchführbar.
+\end{Korollar}
+
+\begin{Korollar}{cg2}
+  Die Suchrichtungen $p^{(j)}$ für $j=1,\dots,k-1$ des cg-Verfahrens
+  bilden eine $A$-orthogonale (auch konjugiert genannte) Basis des
+  sogenannten \define{Krylov-Raum}s
+  \begin{gather}
+    \mathcal K_k(A,r^{(0)}) = \operatorname{span}\bigl\{
+    r^{(0)}, Ar^{(0)}, A^2r^{(0)},\dots,A^{k-1}r^{(0)}\bigr\}.
+  \end{gather}
+  Der Fehler $e^{(k)}$ ist $A$-orthogonal zu $\mathcal K_k$ und
+  $x^{(k)}$ ist die Bestapproximation von $x$ in
+  $x^{(0)}+\mathcal K_k$ bzgl. der $A$-Norm. Das Verfahren bricht
+  nach spätestens $n$ Schritten mit der exakten Lösung ab.
+\end{Korollar}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
