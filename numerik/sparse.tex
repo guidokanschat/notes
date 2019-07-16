@@ -112,11 +112,29 @@
 
 \begin{Lemma*}{kantorovich-ungleichung}{Kantorowitsch-Ungleichung}
   Für eine symmetrisch positiv definite Matrix $A\in \R^{n\times n}$
-  gilt
+  mit minimalen und maximalen Eigenwerten $\lambda_{\min}$ und
+  $\lambda_{\max}$. Dann gilt
+  \begin{gather}
+    \frac{\scal(Ax,x)\scal(A^{-1}x,x)}{\scal(x,x)^2}
+    \le \frac{(\lambda_{\max}+\lambda_{\min})^2}{4\lambda_{\min}\lambda_{\max}}.
+  \end{gather}
 \end{Lemma*}
 
 \begin{Satz}{steepest-descent-konvergenz}
-  Für das Verfahren des steilsten Abstiegs gilt die Fehlerabschätzung
+  Für den Fehler $e^{(k)} = x-x^{(k)}$ des Verfahrens des steilsten
+  Abstiegs gilt die Abschätzung
+  \begin{gather}
+    \norm{e^{(k+1)}}_A \le \rho \norm{e^{(k)}}_A
+  \end{gather}
+  mit
+  \begin{align}
+    \rho &= \frac{\lambda_{\max} - \lambda_{\min}}{\lambda_{\max} - \lambda_{\min}}
+           = \frac{\cond_2(A)-1}{\cond_2(A)+1}
+    \\
+    &= 1-\frac2{\cond_2(A)} + \bigo(\cond_2(A)^{-2}).
+  \end{align}
+  Das Verfahren ist eine Kontraktion und konvergiert mit jedem
+  Startwert $x^{(0)}\in\R^n$ gegen die Lösung $x = A^{-1}b$.
 \end{Satz}
 
 \begin{Definition}{cg}
@@ -128,28 +146,28 @@
   \begin{enumerate}
   \item Initialisierung:
     \begin{align}
-      \tag{CG-I1}
+%      \tag{cg-i1}
       \label{eq:cg:step0a}
       r^{(0)} &= b-Ax^{(0)}\\
-      \tag{CG-I2}
+      \tag{cg0}
       \label{eq:cg:step0b}
       p^{(0)} &= r^{(0)}
     \end{align}
   \item Iteration: für $k=0,1,\ldots$ berechne falls $p^{(k)}\neq 0$
     \begin{align}
-      \tag{CG1}
+      \tag{cg1}
       \label{eq:cg:step1}
       \alpha_k &= \frac{\scal(r^{(k)},r^{(k)})}{\scal(Ap^{(k)},p^{(k)})}\\
-      \tag{CG2}
+      \tag{cg2}
       \label{eq:cg:step2}
       x^{(k+1)} &= x^{(k)} + \alpha_k p^{(k)}\\
-      \tag{CG3}
+      \tag{cg3}
       \label{eq:cg:step3}
       r^{(k+1)} &= r^{(k)} - \alpha_k Ap^{(k)}\\
-      \tag{CG4}
+      \tag{cg4}
       \label{eq:cg:step4}
       \beta_k &= \frac{\scal(r^{(k+1)},r^{(k+1)})}{\scal(r^{(k)},r^{(k)})}\\
-      \tag{CG5}
+      \tag{cg5}
       \label{eq:cg:step5}
       p^{(k+1)} &= r^{(k+1)} + \beta_k p^{(k)}
     \end{align}
@@ -160,16 +178,21 @@
   Sei $k$ gewählt so dass $p^{(j)} \neq 0$ für $j\le k$. Dann gilt für
   die Vektoren des cg-Verfahrens
   \begin{xalignat}{2}
+%    \tag{cg-o1}
+    \label{eq:cg:ortho5}
+    r^{(k)} &= b-Ax^{(k)} \neq 0\\
+    \tag{cg-o1}
     \label{eq:cg:ortho1}
     \scal(r^{(k)},p^{(j)}) &= 0 & 0 &\le j < k\\
+    \tag{cg-o2}
     \label{eq:cg:ortho2}
     \scal(r^{(k)},p^{(k)}) &= \scal(r^{(k)},r^{(k)})\\
+    \tag{cg-o3}
     \label{eq:cg:ortho3}
     \scal(Ap^{(j)},p^{(k)}) &= 0 & 0 & \le j < k\\
+    \tag{cg-o4}
     \label{eq:cg:ortho4}
-    \scal(r^{(j)},r^{(k)}) &= 0 & 0 & \le j < k\\
-    \label{eq:cg:ortho5}
-    r^{(k)} &= b-Ax^{(k)}
+    \scal(r^{(j)},r^{(k)}) &= 0 & 0 & \le j < k
   \end{xalignat}
 \end{Lemma}
 
@@ -178,7 +201,22 @@
   weil sie leere Bedingungen sind. Wir nehmen nun also an, dass sie
   für $k$ bewiesen sind und schließen auf $k+1$. Zunächst ist
   $\alpha_k$ wohldefiniert, da $p^{(k)} \neq 0$ und $A$ positiv
-  definit. Damit beweisen wir~\eqref{eq:cg:ortho1}:
+  definit. Es gilt
+  \begin{gather}
+    b-Ax^{(k+1)} = b - A (x^{(k)} + \alpha_k p^{(k)})
+    = r^{(k)} - \alpha_k A p^{(k)} = r^{(k+1)},
+  \end{gather}
+  und damit der erste Teil von~\eqref{eq:cg:ortho5} bewiesen. Bleibt
+  zu zeigen, dass $r^{(k)} \neq 0$.
+  Für $k=0$ würde
+  dies nach~\eqref{eq:cg:step0b} bedeuten, dass $p^{(0)} = 0$, was der
+  Annahme widerspricht. Für $k>0$ ergäbe sich aus~\eqref{eq:cg:step5}
+  $p^{(k)}= \beta_{k-1} p^{(k-1)}$ und damit der Widerspruch
+  \begin{gather}
+    0 < \scal(A p^{(k)},p^{(k)}) = \beta_{k-1} \scal(A p^{(k-1)},p^{(k)}) = 0.
+  \end{gather}
+  
+  Nun beweisen wir~\eqref{eq:cg:ortho1}:
   nach~\eqref{eq:cg:step1}, \eqref{eq:cg:step3}
   und~\eqref{eq:cg:ortho2} gilt
   \begin{align}
@@ -195,14 +233,8 @@
     = \scal(r^{(k)},p^{(j)}) - \alpha \scal(A p^{(k)},p^{(j)})
     = 0.
   \end{gather}
-  Zum Beweis von~\eqref{eq:cg:ortho2} beweisen wir zunächst, dass
-  $\beta_k$ wohldefiniert ist, also $r^{(k)} \neq 0$. Für $k=0$ würde
-  dies nach~\eqref{eq:cg:step0b} bedeuten, dass $p^{(0)} = 0$, was der
-  Annahme widerspricht. Für $k>0$ ergäbe sich aus~\eqref{eq:cg:step5}
-  $p^{(k)}= \beta_{k-1} p^{(k-1)}$ und damit der Widerspruch
-  \begin{gather}
-    0 < \scal(A p^{(k)},p^{(k)}) = \beta_{k-1} \scal(A p^{(k-1)},p^{(k)}) = 0.
-  \end{gather}
+  Zum Beweis von~\eqref{eq:cg:ortho2} bemerken wir zunächst, dass
+  $\beta_k$ wohldefiniert ist, da $r^{(k)} \neq 0$.
   Nun gilt, da wir~\eqref{eq:cg:ortho1} schon bewiesen haben
   \begin{gather}
     \scal(r^{(k+1)},p^{(k+1)})
@@ -246,16 +278,11 @@
     &-\scal(r^{(k+1)},r^{(k+1)}).
   \end{align}
   Zum Beweis von~\eqref{eq:cg:ortho4} lösen wir~\eqref{eq:cg:step5}
-  nach $r^{(j)}$ auf und erhalten ???
+  nach $r^{(j)}$ auf und erhalten
   \begin{gather}
     \scal(r^{(j)},r^{(k+1)})
     = \scal(p^{(j)}-\beta_{j-1}p^{(j-1)},r^{(k+1)})
     = 0.
-  \end{gather}
-  Schließlich gilt
-  \begin{gather}
-    b-Ax^{(k+1)} = b - A (x^{(k)} + \alpha_k p^{(k)})
-    = r^{(k)} - \alpha_k A p^{(k)} = r^{(k+1)}.
   \end{gather}
 \end{proof}
 
@@ -264,6 +291,15 @@
   Lösung des Gleichungssystems ist. Damit ist das Verfahren in jedem
   Punkt außer der Lösung durchführbar.
 \end{Korollar}
+
+\begin{Korollar}{cg-alpha}
+  Der Parameter $\alpha_k$ des cg-Verfahrens ist so gewählt, dass
+  \begin{gather}
+        \alpha_k = \operatorname*{argmin}_{\alpha>0}
+    F\bigl(x^{(k)} + \alpha p^{(k)}\bigr).
+  \end{gather}
+\end{Korollar}
+
 
 \begin{Korollar}{cg2}
   Die Suchrichtungen $p^{(j)}$ für $j=1,\dots,k-1$ des cg-Verfahrens
@@ -278,6 +314,158 @@
   $x^{(0)}+\mathcal K_k$ bzgl. der $A$-Norm. Das Verfahren bricht
   nach spätestens $n$ Schritten mit der exakten Lösung ab.
 \end{Korollar}
+
+\begin{Satz}{cg-polynom}
+  Für den Fehler des cg-Verfahrens gilt bezüglich der Eigenwerte
+  $\lambda_i$ der Matrix $A$ die Optimalitätseigenschaft
+  \begin{gather}
+    \norm{e^{(k)}}_A = \min_{\substack{p\in\P_k\\p(0) = 1}}
+    \max_{\lambda_i} \abs{p(\lambda_i)} \norm{e^{(0)}}_A
+  \end{gather}
+\end{Satz}
+
+\begin{proof}
+  Für den Krylov-Raum der Dimension $k$ gilt
+  \begin{align}
+    \mathcal K_k(A,r^{(0)})
+    &= \operatorname{span}\bigl\{
+      r^{(0)}, Ar^{(0)}, A^2r^{(0)},\dots,A^{k-1}r^{(0)}\bigr\}
+    \\
+    &= \operatorname{span}\bigl\{
+      Ae^{(0)}, A^2e^{(0)}, A^3e^{(0)},\dots,A^{k}e^{(0)}\bigr\}.
+  \end{align}
+  Daher kann jeder Vektor $y\in \mathcal K_k(A,r^{(0)})$ mit einem
+  Polynom $q\in\P_{k-1}$ dargestellt werden als
+  \begin{gather}
+    y = q(A) r^{(0)} = Aq(A) e^{(0)}.
+  \end{gather}
+  Nach den Rekursionsformeln für $r^{(k+1)}$ und $p^{(k+1)}$ folgt,
+  dass beide in $\mathcal K_k(A,r^{(0)})$ liegen. Seien nun
+  $q_0,\dots q_{k}$ die Polynome, so dass $p^{(j)} = Aq_j(A)
+  e^{(0)}$. Dann gilt
+  \begin{gather}
+    \begin{alignat}3
+      e^{(1)} &= x - x^{(0)} - \alpha_0 p^{(0)}
+      &&= e^{(0)} - \alpha_0 A e^{(0)}
+      &&= (\identity-\alpha_0 Aq_0(A)) e^{(0)}\\
+      \vdots\notag\\
+      e^{(k+1)} &= x - x^{(k)} - \alpha_k p^{(k)}
+      &&= e^{(k)} - \alpha_k Aq_k(A) e^{(k)}
+      &&= (\identity-\alpha_k Aq_k(A)) e^{(k)}.
+    \end{alignat}
+  \end{gather}
+  Daher gilt dann:
+  \begin{gather}
+    e^{(k+1)} =  Q(A) e^{(0)},\qquad
+    Q(x) = \prod_{j=0}^k (1-\alpha_k xq_k(x)).
+  \end{gather}
+  Wir sehen, dass $Q\in\P_{k+1}$ und $Q(0) = 1$.
+  Nun benutzen wir die Spektraldarstellung
+  \begin{gather}
+    e^{(0)} = \sum_{i=1}^n \eta_i v^i,
+    \qquad A e^{(0)} = \sum_{i=1}^n \lambda_i \eta_i v^i,
+  \end{gather}
+  wobei $\lambda_i>0$ die Eigenwerte von $A$ mit zugehörigen
+  orthonormalen Eigenvektoren $v^i$ sind. Es gilt dann
+  \begin{gather}
+    e^{(k+1)} = \sum_{i=1}^n Q(\lambda_i) \eta_i v^i.
+  \end{gather}
+  Damit reduziert sich jede Komponente um den Faktor $Q(\lambda_i)$
+  und dich schlechteste um $\max\abs{Q(\lambda_i)}$. Es gilt damit auch
+  \begin{align}
+    \norm{e^{(k+1)}}_A^2
+    &= \sum_{i=1}^n \lambda_i Q(\lambda_i)^2 \eta_i^2\\
+    &\le \max_i \abs{Q(\lambda_i)} \sum_{i=1}^n \lambda_i \eta_i^2\\
+    &= \max_i \abs{Q(\lambda_i)} \norm{e^{(0)}}_A^2.
+  \end{align}
+\end{proof}
+
+\begin{Lemma}{chebyshev-growth}
+  Unter allen Polynomen $p \in \P_n$ aus der Menge
+  \begin{gather}
+    K = \bigl\{ p\in \P_n \;\big|\; \max_{x\in[-1,1]} \abs{p(x)} =1 \bigr\}
+  \end{gather}
+  ist das Tschebyscheff-Polynom $\pchebyshev_n$ dasjenige, das
+  außerhalb des Intervalls $[-1,1]$ am schnellsten wächst, also
+  \begin{gather}
+    \abs{T(x)} \ge p(x) \qquad \forall p\in K, \quad \forall \abs{x} > 1.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  Der Beweis verläuft ähnlich zu
+  \slideref{Satz}{chebyshev-minimal-1}. Wir führen ihn für $x>1$, wo
+  gilt $\pchebyshev_n(x) > 0$. Sei $\tilde p\in K$ mit
+  $\abs{\tilde p(y)} \ge \pchebyshev_n(y)$ for some $y>1$. Dann gilt mit
+  $\gamma = \pchebyshev_n(y)/\tilde p(y)$ und
+  $p(x) = \tilde p(x)\gamma$, dass die Differenz
+  $q(x) = p(x) - \pchebyshev_n(x) \in \P_n$ in $y$ eine Nullstelle hat.
+  Ferner gilt
+  \begin{gather}
+    \max_{x\in[-1,1]} \abs{p(x)} =\gamma < 1
+  \end{gather}
+  In den $n+1$ \putindex{Tschebyscheff-Abszisse}n
+  $\tilde x_j\in[-1,1]$ hat damit $q(x)$ alternierendes Vorzeichen,
+  und nach dem Zwischenwertsatz $n$ Nullstellen im Intervall
+  $(-1,1)$. Damit hat es insgesamt $n+1$ Nullstellen und es gilt
+  $q \equiv 0$, woraus folgt $p \equiv \pchebyshev_n$ und, da bereits
+  $\norm{p}_{\infty;[0,1]} = 1$ gilt, auch $\tilde p = p$.
+\end{proof}
+
+\begin{Korollar}{chebyshev-minimal-2}
+  Sei $[a,b]$ ein Intervall und $0 < a$. Dann löst das
+  Polynom
+  \begin{gather}
+    \widehat \pchebyshev_n(x)
+    = \frac{\pchebyshev_n\left(\frac{a+b-2t}{b-a}\right)}%
+    {\pchebyshev_n\left(\frac{a+b}{b-a}\right)}
+  \end{gather}
+  die Minimierungsaufgabe
+  \begin{gather}
+    \widehat \pchebyshev_n(x)
+    = \operatorname*{argmin}_{\substack{p\in\P_n\\p(0) = 1}}
+    \max_{x\in[a,b]}{\abs{p(x)}}.
+  \end{gather}
+  Es gilt
+  \begin{gather}
+    \label{eq:chebyshev-cg1}
+    \max_{x\in[a,b]}{\abs{\widehat \pchebyshev_n(x)}}
+    = \left(\pchebyshev_n\left(\frac{a+b}{b-a}\right)\right)^{-1}
+  \end{gather}
+\end{Korollar}
+
+\begin{Satz}{cg-kondition}
+  Der Fehler des cg-Verfahrens genügt der Abschätzung
+  \begin{gather}
+    \norm{e^{(k)}}_A \le 2 \left(
+      \frac{\sqrt{\cond_2(A)}-1}{\sqrt{\cond_2(A)}+1}\right)^k
+    \norm{e^{(0)}}_A
+  \end{gather}
+\end{Satz}
+
+\begin{proof}
+  Für die Tschebyscheff-Polynome gilt die Darstellung
+  \begin{gather}
+    \pchebyshev_k = \frac12
+    \left(
+      \left(x-\sqrt{x^2-1}\right)^k
+      +
+      \left(x+\sqrt{x^2-1}\right)^k
+    \right),\qquad\abs{x}\ge 1.
+  \end{gather}
+  Es gilt
+  \begin{gather}
+    \frac{\lambda_{\max}+\lambda_{\min}}{\lambda_{\max}-\lambda_{\min}}
+    = \frac{\cond_2(A)+1}{\cond_2(A)-1}.
+  \end{gather}
+  Einsetzen in~\eqref{eq:chebyshev-cg1} mit $a=\lambda_{\min}$ und $b=\lambda_{\max}$ ergibt
+  \begin{gather}
+    \pchebyshev_k\left(\frac{\cond_2(A)+1}{\cond_2(A)-1}\right)
+    = 
+  \end{gather}
+\end{proof}
+
+\section{Abbruchkriterien}
 
 %%% Local Variables:
 %%% mode: latex

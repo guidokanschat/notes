@@ -1,3 +1,31 @@
+\begin{Definition}{iteration}
+  Ein \define{Iterationsverfahren} berechnet schrittweise
+  Approximationen an die Lösung $x$ einer Aufgabe aus einem Startwert
+  $x^{(0)}$ mit der Verfahrensvorschrift der Form
+  \begin{gather}
+    x^{(k+1)} = G(x^{(k)}), \qquad k=0,1,2,\dots.
+  \end{gather}
+  Das Verfahren heißt \define{konvergent}, wenn gilt $x^{(k)} \to x$.
+\end{Definition}
+
+\begin{Definition}{iteration-ordnung}
+  Ein Iterationsverfahren
+  \index{Konvergenzordnung!Iterationsverfahren} ist konvergent
+  mindestens von Ordnung $p>1$ zum Grenzwert $x$, wenn es eine
+  Konstante $c>0$ gibt, so dass
+  \begin{gather}
+    \norm*{x^{(k+1)} - x} \le  c \norm*{x^{(k)} - x}^p
+  \end{gather}
+  gilt. Es ist linear konvergent, wenn
+  \begin{gather}
+    \norm*{x^{(k+1)} - x} \le  c \norm*{x^{(k)} - x}
+  \end{gather}
+  mit einer Konstanten $c<1$. Wir sprechen von superlinearer Konvergenz, wenn
+  \begin{gather}
+    \norm*{x^{(k+1)} - x} = \smallo\left(\norm*{x^{(k)} - x}\right)
+  \end{gather}
+\end{Definition}
+
 \begin{Definition}{kontraktion}
   Sei $M\subset\R^n$. Eine Abbildung $f\colon M\to M$ ist eine \define{Kontraktion} auf $M$, wenn es eine Konstante $\rho < 1$ gibt, so dass
   \begin{gather}
