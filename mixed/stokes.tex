@@ -985,14 +985,18 @@ where $c\not=0$.
     & \forall E &\text{ is edge of } \cell
   \end{xalignat}
   This is true, since~\eqref{eq:stokes:22} implies the right hand side
-  of~\eqref{eq:stokes:23}. It remains to show the $H^1$-stability of
+  of~\eqref{eq:stokes:23}. It remains to show $H^1$-stability of
   $\Pi_2(\identity-\Pi_1)$. Let us first observe that the
   interpolation operator only involves edge integrals of $u$, which
-  are well-defined on $H^1$. Thus, we have by the standard scaling
+  are bounded functionals on $H^1$. Second, the condition on $\Pi_2 u$
+  at the vertices implies a Poincaré-Friedrichs type inequality on the
+  reference cell.
+  Thus, we have by the standard scaling
   argument
   \begin{gather*}
     \snorm{\Pi_2 v}_{1,\cell}
     =\snorm{\widehat{\Pi_2 v}}_{1,\widehat\cell}
+    \le c \snorm{\widehat{\Pi_2 v}}_{0,\widehat\cell}
     \le c \norm{\widehat v}_{1,\widehat\cell}
     \le c \bigl(h_\cell^{-1} \norm{v}_{0,\cell} + \snorm{v}_{1,\cell}\bigr).
   \end{gather*}
