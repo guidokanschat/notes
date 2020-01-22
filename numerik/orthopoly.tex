@@ -39,10 +39,10 @@
 \begin{Definition}{skalarprodukt}
   Sei $V$ ein reeller Vektorraum. Eine Abbildung
   $a\colon V \times V \to \R$ heißt \define{Bilinearform}, wenn für
-  $u,v,w\in V$ und $\alpha,\beta\in \R$ gilt
+  $u,v,w\in V$ und $\lambda,\mu\in \R$ gilt
   \begin{align}
-    a(\alpha u + \beta v,w) &= \alpha a(u,w) + \beta a(v,w)\\
-    a(w,\alpha u + \beta v) &= \alpha a(w,u) + \beta a(w,v).
+    a(\lambda u + \mu v,w) &= \lambda a(u,w) + \mu a(v,w)\\
+    a(w,\lambda u + \mu v) &= \lambda (w,u) + \mu a(w,v).
   \end{align}
   Eine Bilinearform heißt \define{symmetrisch}, wenn für $u,v\in V$ gilt
   \begin{gather}
@@ -68,6 +68,50 @@
     Vektorraum}.
 \end{Lemma}
 
+\begin{proof}
+  Das Skalarprodukt ist wohldefiniert, das gilt also ebenso für die Abbildung.
+  Wir müssen nun die Normeigenschaften nachrechnen.\\
+  Seien $u,v \in V$.\\
+  1)Nichtnegativität
+  \begin{gather}
+    \norm {u} = \sqrt{\scal(u,u)} \ge 0 \quad\text{da\,postitv-definit}
+    \end{gather}
+  2) Definitheit
+  \begin{gather}
+    0 = \norm{u} =\sqrt{\scal(u,u)}\\
+    \Rightarrow 0 = \scal(u,u)\\
+    \Rightarrow u = 0
+  \end{gather}
+  3)Homogenität
+  \begin{gather}
+    \norm{\lambda u} = \sqrt{\scal(\lambda u,\lambda u)}
+    =\sqrt{\lambda^{2}\scal(u,u)}\\
+    = \abs{\lambda}\sqrt{\scal(u,u)}
+    =\abs{\lambda}\norm{u}
+  \end{gather}
+  4)Deiecksungleichung
+  \begin{gather}
+    \begin{aligned}
+      \norm{u+v}^{2}
+      &= \scal(u+v,u+v)\\
+      &= \scal(u,u)+ 2 \scal(u,v) + \scal(v,v)\\
+      &\le \scal(u,u)+ 2 \norm{u} \cdot \norm{v} + \scal(v,v)\\
+      &=\norm{u}^{2}+ 2 \norm{u} \cdot \norm{v}+ \norm{v}^{2}\\
+      & =(\norm{u}+\norm{v})^{2}\\
+    \end{aligned}
+  \end{gather}
+  Daraus folgt $\norm{u+v} \le \norm{u}+\norm{v}$\\
+  Die Ungleichung, die in 4) verwendet wird ist die
+  Cauchy-Schwartz-Ungleichung und wird noch unter $\cite{bcs}$ behandelt.
+  
+\end{proof}
+
+\begin{remark}
+  Ein reeller Vektorraum $V$ mit
+  Skalarprodukt und zugehöriger Norm heißt \define{euklidischer
+    Vektorraum}.
+\end{remark}
+
 \begin{Lemma*}{l2-norm}{$L^2$-Skalarprodukt}
   Auf dem Raum $V=\P_n$ der reellen Polynome vom Grad bis zu $n$ ist durch
   \begin{gather}
@@ -76,6 +120,45 @@
   ein Skalarprodukt definiert.
 \end{Lemma*}
 
+\begin{proof}
+  Hier gilt es zu prüfen, ob die Abbildung auch die vier Eigenschaften eines
+  Skalarprodukts erfüllt.\\
+  Seien  $p,q,g \in \P_n$ in diesem Beweis.\\
+  Da wir schon von einem Skalarprodukt ausgehen, empfiehlt es sich
+  zuerst die Symmetrie zu zeigen.
+  \begin{gather}
+    \scal(p,q) =  \int_{-1}^1 p(x)q(x)\dx = \int_{-1}^1 q(x)p(x)\dx
+    =\scal(q,p)
+  \end{gather}
+  Wenn wir nun zeigen, dass es eine Bilinearform ist müssen wir nur noch eine
+  Identität zeigen, da wir schon wissen, dass die Symmetrieeigenschaft
+  erfüllt ist.
+  \begin{gather}
+    \begin{aligned}
+    \scal(\lambda p + \mu q, g)
+    &= \int_{-1}^1 (\lambda p(x)+ \mu q(x))g(x)\dx\\
+   & = \int_{-1}^1 \lambda p(x)g(x)+ \mu q(x)g(x)\dx \\
+   &= \int_{-1}^1 \lambda  p(x)g(x)\dx + \int_{-1}^1 \mu q(x)g(x)\dx \\
+   &= \lambda \int_{-1}^1 p(x)g(x)\dx + \mu  \int_{-1}^1 q(x)g(x)\dx \\
+   &= \lambda \scal(p,g) + \mu \scal(q,g)
+    \end{aligned}
+  \end{gather}
+  Da wir die Symmetrie vorher gezeigt haben, gilt Linearität auch
+  im zweiten Argument.\\
+  
+  Als letztes zeigen wir, dass die Abbildung positiv definit ist.
+  \begin{gather}
+    0 = \scal(p,p) = \int_{-1}^1 p(x)p(x)\dx =\int_{-1}^1 p(x)^{2}\dx
+  \end{gather}
+  Aus den Integraleigenschaften folgt
+  \begin {gather}
+    0 = p(x)^{2} \quad \forall x
+  \end{gather}
+  Dies kann nur der Fall sein, wenn $p \equiv 0$ ist.\\
+  Somit haben wir nachgerechnet, dass es sich um Skalarprodukt handelt.
+  \end{proof}
+    
+  
 \begin{Definition}{orthogonal}
   Zwei Vektoren $u,v\in V$ heißen \define{orthogonal}, wenn
   \begin{gather}
@@ -95,25 +178,89 @@
 \begin{Lemma*}{bcs}{Bunjakowski-Cauchy-Schwarzsche Ungleichung}
   Für zwei beliebige Elemente $u,v\in V$ gilt
   \begin{gather}
-    \scal(u,v) \le \norm{u}\,\norm{v}.
+    \scal(u,v) \le \norm{u} \cdot \norm{v}
   \end{gather}
   Gleichheit gilt genau dann, wenn $u$ und $v$ kollinear sind, also
   $v=\alpha u$ mit einem skalaren Faktor $\alpha$.
 \end{Lemma*}
 
 \begin{proof}
-  Lineare Algebra, auch Wikipedia.
+  Zunächst zeigen wir nur die Ungleichung:
+  Für $v=0_V$ klar. Hier ist anzumerken, dass $0_V$ aus dem Vektorraum stammt
+  und nicht zwangsläufig die Zahl Null ist.\\
+  
+   Seien $v,u \in V$ und $ v \neq 0, u\neq 0$. Für $\mu, \lambda \in \R$
+  gilt in Bilinearform folgendes  
+  \begin{gather}
+   0 \le \scal(\lambda u + \mu v,\lambda u +  \mu v)
+    = \lambda^{2} \scal(u,u)+2 \mu \lambda \scal(u,v) +\mu^{2} \scal(v,v)
+  \end{gather}
+  Setze $\lambda := \scal(v,v) \neq 0$
+  \begin{gather}
+   0 \le \scal(v,v)^{2} \scal(u,u) + 2\mu \scal(v,v)\scal(u,v) +\mu^{2}\scal(v,v)
+  \end{gather}
+  Dividiere durch$\scal(v,v)$
+  \begin{gather}
+   0 \le \scal(v,v) \scal(u,u) + 2\mu \scal(u,v) +\mu^{2}
+  \end{gather}
+  Setze nun $\mu := -\scal(u,v)$
+  \begin{gather}
+    0 \le \scal(v,v) \scal(u,u) -2\scal(u,v)^{2}+\scal(u,v)^{2}
+  \end{gather}
+  Daraus folgt
+  \begin{gather}
+    \scal(u,v)^{2} \le \scal(u,u) \scal(v,v)
+    \Rightarrow \scal(u,v) \le \norm u \cdot \norm v
+  \end{gather}
+
+  Nun bleibt die Äquivalenz für die Gleichheit zu zeigen.\\
+  Für $v=0$ ist die Äquivalenz klar. Sei also $v\neq 0$ und $u\neq 0$. \\\\
+  $\glqq \Rightarrow \grqq$ Seien u,v linear abhängig.Das heißt $u=av$.\\
+  Dann gilt
+  \begin{gather}
+    \abs{\scal(u,v)} = \abs{a \scal(v,v)}
+    = \abs{a} \cdot \norm v \cdot \norm v
+    = \norm{av} \cdot \norm v =\norm u \cdot \norm v  
+  \end{gather}
+  
+  $ \glqq \Leftarrow  \grqq$ Es gilt die Gleichheit.\\
+  $\mu = \scal(u,v)\neq 0 $ sowie
+  $\lambda = \scal(v,v)\neq 0$. Dann erhält man
+  \begin{gather}
+   \scal(u,v) = \norm u \cdot \norm v\\
+   \scal(u,v)^{2} = \scal(u,u) \scal(v,v)\\
+   0 = \scal(v,v) \scal(u,u) -2\scal(u,v)^{2}+\scal(u,v)^{2}
+  \end{gather}
+  Setze nun $\mu = -\scal(u,v)$ und multipliziere mit $\scal(v,v)$
+  \begin{gather}
+    0 =\scal(v,v)^{2} \scal(u,u)+2\mu \scal(u,v)\scal(v,v) +\mu^{2}\scal(v,v)
+  \end{gather}
+  Setze $\lambda = \scal(v,v)$ und erhalte
+  \begin{gather}
+    0=\lambda^{2} \scal(u,u)+2 \mu \lambda \scal(u,v) +\mu^{2} \scal(v,v)\\
+    0=\scal(\lambda+\mu v,\lambda u+\mu v)
+  \end{gtaher}
+  
+  Da es sich um eine Bilinearform handelt folgt nun
+  $\lambda u + \mu v = 0$ und da $\mu$ und $\lambda$ ungleich Null sind gilt,
+  dass $ u,v$ linear abhängig sind
 \end{proof}
 
 \begin{Lemma*}{pythagoras}{Pythagoras}
   Seien zwei Vektoren $u\in V$ und $v\in V$ orthogonal zueinander. Dann gilt
   \begin{gather}
-    \norm{u+v}^2 = \norm{u}^2 + \norm{v}^2
+    \norm{u+v}^{2} = \norm{u}^{2} + \norm{v}^{2}
   \end{gather}
 \end{Lemma*}
 
 \begin{proof}
-  Hausaufgabe.
+  Seien $u,v \in V$. Es gilt $ 0 = \scal(u,v)$
+   \begin{gather}
+    \norm{u+v}^{2} = \scal(u+v,u+v)
+    %=\scal(u+v,u)+\scal(u+v,v)
+    %=\scal(u,u)+\scal(v,u)+\scal(u,v)+\scal(v,v)
+    =\norm{u}^{2} + \norm{v}^{2} +2\scal(u,v) = \norm{u}^{2} + \norm{v}^{2}
+  \end{gather}
 \end{proof}
 
 \section{Bestapproximation und orthogonale Projektion}
@@ -127,17 +274,97 @@
 \end{Definition}
 
 \begin{Satz}{bestapproximation}
-  Sei $A=w+W$ ein nichtleerer, affiner Unterraum von $V$.  Dann
+  Sei $w \in V$ und $W \subset V$.
+  Sei $A=w+W$ ein nichtleerer, affiner Unterraum von $V$. Dann
   existiert die Bestapproximation nach
   \slideref{Definition}{bestapproximation} und ist eindeutig
   bestimmt. Es gilt die notwendige und hinreichende Bedingung
   \begin{gather}
     \scal(u-u_b,v) = 0 \quad \forall v\in W.
   \end{gather}
+  Das heißt $ u_b$ ist Bestapproximation genau dann wenn $u-u_b$
+  orthogonal zu $W$ bzgl. des Skalarprodukts $\scal(\cdot,\cdot)$ ist.
 \end{Satz}
 
 \begin{proof}
-  Siehe \cite[Satz 2.14]{Rannacher17} oder \cite[Satz 3.4]{DeuflhardHohmann08}.
+  Der Beweis gliedert sich in drei Teile. Zuert wird die Äquivalenz
+  gezeigt danach zeigen wir die Eindeutigkeit und zum Schluss
+  erst die Existenz.\\ \\
+ $\glqq \Rightarrow \glqq$
+  Sei $ u_b \in A$ die Bestapproximation des Vektors $ u \in V$\\
+  Wir defnieren nun eine Funktion:
+  \begin{gather}
+    F_v(x):= \norm{u-u_b-xv}^{2}, x \in \R,  v\in A
+  \end{gather}
+
+  Diese Funktion besitzt ein Minimum bei x=0. Folglich gilt
+  \begin{gather}
+    \left. \frac{d}{dx} F(x) \right|_{x=0}
+    =\left. \frac{d}{dx}\norm{u-u_b-xv}^{2} \right|_{x=0}=0
+  \end{gather}
+    
+  Dies kann weiter umgeformt werden zu
+  $\scal(u-u_b-xv,v)|_{x=0}=0 \ \forall v\in A$ und folglich zu
+  \begin{gather}
+   \scal(u-u_b,v)=0 \ \forall v\in A
+  \end{gather}
+
+  $\grqq \Leftarrow \glqq$
+  Nun erfüllt $u_b\in A$ die Bedingung.\\
+  Dann gilt mit einem beliebigen $v\in A$:
+  \begin{gather}
+   \norm{u-u_b}^{2}=\scal(u-u_b,u-u_b)\\
+   = \scal(u-u_b,u-v)+\scal(u-u_b,v-u_b)\\
+   \le \norm{u-u_b}\cdot\norm{u-v}\\
+  \end{gather}
+  Daraus folgt $\norm{u-u_b} \le \inf_{v\in A}{\norm{u-v}}$\\
+  Damit erfüllt $u_b$ eben die Definiton der Bestapproximation\\ \\
+  Nun zur Eindeutigkeit:\\
+  Seien $u_b$ und $u_d \in$ A zwei Bestapproximationen.
+  Dann gilt notwendigerweise
+  \begin{gather}
+   \scal(u-u_b,v) = 0 = \scal(u-u_d,v) \quad \forall v\in A
+  \end{gather}
+  Dies wird umgeformt zu
+  \begin{gather}
+  \scal(u-u_d,v)-\scal(u-u_b,v)=0 \quad  \forall v\in A \\
+  \scal(u_b-u_d,v) = 0 \quad \forall v \in A
+  \end{gather}
+  Wähle nun $v:=u_b-u_d \in A$. Dies ergibt
+  $\norm{u_b-u_d}^{2} =0$ und somit folgt $u_b = u_d$\\
+  Die Existenz:\\
+  Der endliche dimensionale Teilraum A$\subseteq$V besitzt eine Basis
+  $(b_1,\dots, b_n)$ mit $n:=dim V$. Die gesuchte Approximation
+  $u_b\in A$ lässt sich
+  durch die Basis in folgender Form darstellen
+  \begin{gather}
+   u_b = \sum_{k=1}^n a_k b_k
+  \end{gather}
+  Dies wird in die notwendige Orthogonalitätsbedingung
+  \slideref{Satz}{bestapproximation} eingesetzt.
+  \begin{gather}
+   \scal(u-\sum_{k=1}^n a_k b_k,v)=\scal(u,v)-\sum_{k=1}^n a_k\scal(b_k,v)=0
+   \quad \forall v\in A
+   \end{gather}
+ Dies ist bei der Wahl von $v:=b_i \quad i=1,\dots,n$ äquivalent zu dem
+ linearen $n$x$n$ Gleichungssystem.
+ \begin{gather}
+   \sum_{k=1}^n\scal(b_k,b_i) a_k= \scal(u,b_i) \quad i=1,\dots,n
+ \end{gather}
+ Definiere nun $A,x,b$ wie folgt
+ \begin{gather}
+  A:=(\scal(b_k,b_i))_{i,k=1}^n \quad x:=(a_k)_{k=1}^n\quad b:=(\scal(u,b_i))_{i=1}^n
+ \end{gather}
+ Dadurch lässt sich das LGS in der Form $Ax=b$ schreiben.
+ Betrachte nun folgendes
+ \begin{gather}
+  x^{T}Ax =\sum_{i,k=1}^n a_i a_k\scal(b_k,b_i)=\scal(u_b,u_b)\ge 0
+ \end{gather}
+ $A$ ist folglich positiv definit. Das Gleichungssystem $Ax=b$ ist also für
+ jede rechte Seite $b$, das heißt für jedes $u \in V$ eindeutig lösbar.
+ Folglich bestimmt die Orthogonalitätsbedingung eindeutig ein Element
+ $u_b \in A$, welches dann die Bestapproximation von $u$ ist.
+ 
 \end{proof}
 
 \begin{Definition}{komplement-projektion}
@@ -147,13 +374,16 @@
   \begin{gather}
     W^\perp = \bigl\{ v\in V \big| \scal(v,w) = 0 \quad\forall w\in W\bigr\}.
   \end{gather}
-  Die Lösung $\Pi_W u = u_b\in W$ der Bestaproximationsaufgabe nennen
-  wir die \define{orthogonale Projektion} von $u\in V$ auf $W$.
+  Die Lösung der Bestapproximationsaufgabe bezeichnen wir mit
+  \begin{gather}
+    $\Pi_W u = u_b\in W$ nennen
+  \end{gather}
+  und nennen es die \define{orthogonale Projektion} von $u\in V$ auf $W$.
 \end{Definition}
 
-\begin{lemma}
+\begin{Lemma}{komp-projekt-wohldefiniert}
   Das orthogonale Komplement und die orthogonale Projektion sind wohldefiniert.
-\end{lemma}
+\end{Lemma}
 
 \begin{proof}
   \slideref{Satz}{bestapproximation}.
@@ -254,7 +484,32 @@
 \end{Theorem*}
 
 \begin{proof}
-  Siehe \cite{Rannacher17}.
+  Per Induktion über $n$ zeigen wir Orthogonalität und Normierung.\\
+
+  $Indukionsanfang$ Sei $n=1$.\\
+  Wird nur ein Vektor aus dem Raum gewählt, so erfüllt dieser
+  die Orthogonalitätsbedingung, da er der einzige Vektor im System ist.
+  Wird dieser Vektor zusätzlich normiert erhält man ein Orthonormalsystem.\\
+  
+  $Induktionsschritt$ Das Verfahren gelte
+  für $\{v_1,\dots,v_{n-1}\}$ Vektoren aus V. \\
+  $n-1 \rightarrow n$\\
+  Sei $(\phi_1,\dots,\phi_{n-1})$ ein Orthonormalsystem\\
+  Annahme $w_n$ nicht wohldefiniert. Dann gilt
+  \begin{gather}
+    w_n = v_n -\sum_{i=1}^{n-1}\scal(v_n,\phi_i)\,\phi_i = 0
+  \end{gather}
+  In diesem Fall sind $(v_1,\dots,v_n)$ linear abhängig.
+  Das ist ein Widerspruch zur Voraussetzung,
+  dass $(v_1,\dots,v_n)$ linear unabhängig sind.\\
+  $w_n$ wird nun normiert über $\frac{1}{\norm{w_n}} \cdot w_n =\phi_n $.
+  Nun zur Orthogonalität:
+  \begin{gather}
+    \scal(\phi_n,\phi_j)=\scal(v_n,v_j)-
+    \sum_{i=1}^{n-1}\scal(v_n,\phi_i)
+    \,\underbrace{\scal(\phi_i,\phi_j)}_{=\delta_{ij}}  = 0
+    \quad j=1,\dots,n-1
+  \end{gather}
 \end{proof}
 
 \begin{Algorithmus*}{gram-schmidt}{Gram-Schmidt}
