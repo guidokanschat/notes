@@ -1,39 +1,77 @@
 \section{Polynomräume}
 
-\begin{Satz}{nullstellen}
-  Ein reelles Polynom vom Grad $n$ hat höchstens $n$ Nullstellen oder es ist das Nullpolynom.
-\end{Satz}
+% \begin{Satz}{nullstellen}
+%   Ein reelles Polynom vom Grad $n$ hat höchstens $n$ Nullstellen oder es ist das Nullpolynom.
+% \end{Satz}
+
+% \begin{proof}
+%   Für $n=1$ handelt es sich um ein lineares Polynom und die Aussage
+%   des Satzes ist unmittelbar klar. Sei nun $p$ ein Polynom strikt vom
+%   Grad $n>1$ mit Nullstelle $x_0$. Dann gibt es nach dem euklidischen
+%   Algorithmus zur Division mit Rest ein Polynom $q$ vom Grad $n-1$ und
+%   eine Konstante $c$, so dass
+%   \begin{gather}
+%     p(x) = (x-x_0)q(x)+c.
+%   \end{gather}
+%   Daraus folgt $p(x_0) = c$, so dass folgt $c=0$. Wir können dieses
+%   Verfahren für alle weiteren Nullstellen $x_1,\dots,x_m$ wiederholen
+%   und erhalten
+%   \begin{gather}
+%     p(x) =  r(x) \prod_{k=0}^m (x-x_i),
+%   \end{gather}
+%   wobei $r(x)$ ein Polynom vom Grad $n-m$ sein muss, da $p$ vom Grad
+%   $n$ ist. Insbesondere muss gelten $m\le n$.
+% \end{proof}
+
+% \begin{Korollar}{polynome-identisch}
+%   Zwei reelle Polynome vom Grad $n$ sind identisch, wenn sie in
+%   mindestens $n+1$ Punkten übereinstimmen. 
+% \end{Korollar}
+
+
+\begin{Lemma}{monome-linear-unabhaengig}
+  Die Menge der Monome $\{x^0, x^1,\dots,x^n\}$ ist linear unabhängig.
+\end{Lemma}
 
 \begin{proof}
-  Für $n=1$ handelt es sich um ein lineares Polynom und die Aussage
-  des Satzes ist unmittelbar klar. Sei nun $p$ ein Polynom strikt vom
-  Grad $n>1$ mit Nullstelle $x_0$. Dann gibt es nach dem euklidischen
-  Algorithmus zur Division mit Rest ein Polynom $q$ vom Grad $n-1$ und
-  eine Konstante $c$, so dass
+  Sei $p$ ein Polynom vom Grad $n$, also
   \begin{gather}
-    p(x) = (x-x_0)q(x)+c.
-  \end{gather}
-  Daraus folgt $p(x_0) = c$, so dass folgt $c=0$. Wir können dieses
-  Verfahren für alle weiteren Nullstellen $x_1,\dots,x_m$ wiederholen
-  und erhalten
+     p(x) = a_nx^n+a_{n-1}x^{n-1}+\dots+a_1x+a_0
+   \end{gather}
+   $p$ ist also gerade eine Linearkombination der Monome.  Zu zeigen
+   ist, dass aus der Eigenschaft $p \equiv 0$ folgt, dass alle
+   Koeffizienten verschwinden, also
   \begin{gather}
-    p(x) =  r(x) \prod_{k=0}^m (x-x_i),
+    p(x) \equiv 0
+    \quad\Rightarrow\quad a_n = \dots = a_0 = 0.
   \end{gather}
-  wobei $r(x)$ ein Polynom vom Grad $n-m$ sein muss, da $p$ vom Grad
-  $n$ ist. Insbesondere muss gelten $m\le n$.
+  Zu diesem Zweck berechnen wir die $n$-te Ableitung von $p$ und
+  erhalten, da mit $p$ auch alle seine Ableitungen identisch
+  verschwinden,
+  \begin{gather}
+    n! a_n = 0.
+  \end{gather}
+  Daraus schließen wir $a_n = 0$. Nun gilt für die $(n-1)$-te Ableitung
+  \begin{gather}
+    n! a_n x + (n-1)! a_{n-1} = (n-1)! a_{n-1} = 0.
+  \end{gather}
+  Auf diese Weise schließen wir rekursiv bis $a_0$, dass alle Koeffizienten verschwinden. Damit ist das Lemma bewiesen.
 \end{proof}
-
-\begin{Korollar}{monome-linear-unabhaengig}
-  Zwei reelle Polynome vom Grad $n$ sind identisch, wenn sie in
-  mindestens $n+1$ Punkten übereinstimmen. Insbesondere ist jede Menge
-  von Monomen $\{x^{k_0}, x^{k_1},\dots,x^{k_n}\}$ für paarweise
-  verschiedene Exponenten $k_i$ linear unabhängig.
-\end{Korollar}
 
 \begin{Satz}{polynomraum}
   Die Polynome vom maximalen Grad $n$ bilden einen Vektorraum der
   Dimension $n+1$.  Wir bezeichnen ihn mit $\P_n$.
 \end{Satz}
+
+\begin{proof}
+  Es ist leicht nachzurechnen, dass sowohl die Summe, als auch reelle
+  Vielfache von Polynomen wieder Polynome sind. Insbesondere erhöhen
+  beide Operationen den Grad nicht. Damit ist $\P_n$ ein
+  Vektorraum. Er wird per definitionem von den Monomen vom Grad bis zu
+  $n$ erzeugt. Da diese nach
+  \slideref{Lemma}{monome-linear-unabhaengig} linear unabhängig sind,
+  bilden sie eine Basis und die Dimension von $\P_n$ ist $n+1$.
+\end{proof}
 
 \section{Skalarprodukt und Orthogonalität}
 \begin{Definition}{skalarprodukt}
@@ -57,6 +95,74 @@
   \define{Skalarprodukt}, in der Regel notiert als $\scal(\cdot,\cdot)$.
 \end{Definition}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{Lemma*}{bcs}{Bunjakowski-Cauchy-Schwarzsche Ungleichung}
+  Sei $\scal(\cdot,\cdot)$ ein Skalarprodukt auf $V$.  Für zwei beliebige Elemente $u,v\in V$ gilt
+  \begin{gather}
+    \abs{\scal(u,v)} \le \sqrt{\scal(u,u)} \, \sqrt{\scal(v,v)}.
+  \end{gather}
+  Gleichheit gilt genau dann, wenn $u$ und $v$ kollinear sind, also
+  $v=\alpha u$ mit einem skalaren Faktor $\alpha$.
+\end{Lemma*}
+
+\begin{proof}
+  Zunächst zeigen wir nur die Ungleichung: Für $v=0\in V$ ist sie
+  offensichtlich.
+  
+  Seien nun $v,u \in V$ keine Nullvektoren. Für beliebige $\mu, \lambda \in \R$
+  gilt wegen der Bilinearität 
+  \begin{gather}
+   0 \le \scal(\lambda u + \mu v,\lambda u +  \mu v)
+    = \lambda^{2} \scal(u,u)+2 \mu \lambda \scal(u,v) +\mu^{2} \scal(v,v)
+  \end{gather}
+  Setze $\lambda := \scal(v,v) \neq 0$
+  \begin{gather}
+   0 \le \scal(v,v)^{2} \scal(u,u) + 2\mu \scal(v,v)\scal(u,v) +\mu^{2}\scal(v,v)
+  \end{gather}
+  Dividiere durch$\scal(v,v)$
+  \begin{gather}
+   0 \le \scal(v,v) \scal(u,u) + 2\mu \scal(u,v) +\mu^{2}
+  \end{gather}
+  Setze nun $\mu := -\scal(u,v)$
+  \begin{gather}
+    0 \le \scal(v,v) \scal(u,u) -2\scal(u,v)^{2}+\scal(u,v)^{2}
+  \end{gather}
+  Daraus folgt
+  \begin{gather}
+    \scal(u,v)^{2} \le \scal(u,u) \scal(v,v)
+  \end{gather}
+  und mit der Monotonie der Quadratfunktion die Ungleichung.
+
+  Nun bleibt die Äquivalenz für die Gleichheit zu zeigen.
+  Für $v=0$ ist dies wieder trivial erfüllt. Seien zunächst $u,v$ linear abhängig, also zum Beispiel $u=av$.
+  Dann gilt mit der Abkürzung $f(v) = \sqrt{\scal(v,v)}$
+  \begin{gather}
+    \abs{\scal(u,v)} = \abs{\scal(av,v)}
+    = \abs{a} \cdot f(v) \cdot f(v)
+    = f(av) \cdot f(v) =f(u) \cdot f(v).
+  \end{gather}
+
+  Gelte nun umgekehrt $\scal(u,v) = \sqrt{\scal(u,u)}\sqrt{\scal(v,v)}$.
+  Es folgt
+  \begin{gather}
+     \scal(v,v) \scal(u,u) -2\scal(u,v)^{2}+\scal(u,v)^{2} = 0.
+  \end{gather}
+  Setze $\mu = \scal(u,v)\neq 0 $ und
+  $\lambda = \scal(v,v)\neq 0$. Dann erhält man
+  \begin{gather}
+    \lambda \scal(u,u) - 2 \mu \scal(u,v) + \mu^2 = 0.
+  \end{gather}
+  Multipliplikation mit $\scal(v,v)$ ergibt
+  \begin{gather}
+   \lambda^2 \scal(u,u)+2\mu \scal(u,v)\scal(v,v) +\mu^{2}\scal(v,v) = 0 = \scal(\lambda u-\mu v,\lambda u-\mu v).
+  \end{gather}
+  
+  Wegen der Definitheit folgt nun
+  $\lambda u + \mu v = 0$ und da $\mu$ und $\lambda$ ungleich Null sind gilt,
+  dass $ u,v$ linear abhängig sind
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{Lemma}{hilbertnorm}
   Sei $V$ ein reeller Vektorraum mit Skalarprodukt
   $\scal(\cdot,\cdot)$. Dann ist durch
@@ -69,41 +175,33 @@
 \end{Lemma}
 
 \begin{proof}
-  Das Skalarprodukt ist wohldefiniert, das gilt also ebenso für die Abbildung.
-  Wir müssen nun die Normeigenschaften nachrechnen.\\
-  Seien $u,v \in V$.\\
-  1)Nichtnegativität
-  \begin{gather}
-    \norm {u} = \sqrt{\scal(u,u)} \ge 0 \quad\text{da\,postitv-definit}
-    \end{gather}
-  2) Definitheit
-  \begin{gather}
-    0 = \norm{u} =\sqrt{\scal(u,u)}\\
-    \Rightarrow 0 = \scal(u,u)\\
-    \Rightarrow u = 0
-  \end{gather}
-  3)Homogenität
+  Das Skalarprodukt ist nicht negativ, daher ist die Abbildung $\norm{\cdot}\colon V \to \R$ wohldefiniert.
+  Wir müssen nun die Normeigenschaften nachrechnen. Sei dazu $u \in V$. Es gilt
+  \begin{enumerate}
+  \item Nichtnegativität und Definitheit folgen sofort aus den entsprechenden Eigenschaften des Skalarprodukts.
+  \item Homogenität
   \begin{gather}
     \norm{\lambda u} = \sqrt{\scal(\lambda u,\lambda u)}
-    =\sqrt{\lambda^{2}\scal(u,u)}\\
+    =\sqrt{\lambda^{2}\scal(u,u)}
     = \abs{\lambda}\sqrt{\scal(u,u)}
     =\abs{\lambda}\norm{u}
   \end{gather}
-  4)Deiecksungleichung
+  \item Deiecksungleichung
   \begin{gather}
     \begin{aligned}
       \norm{u+v}^{2}
       &= \scal(u+v,u+v)\\
       &= \scal(u,u)+ 2 \scal(u,v) + \scal(v,v)\\
-      &\le \scal(u,u)+ 2 \norm{u} \cdot \norm{v} + \scal(v,v)\\
-      &=\norm{u}^{2}+ 2 \norm{u} \cdot \norm{v}+ \norm{v}^{2}\\
+      \label{eq:orthopoly:1}
+      &\le \scal(u,u)+ 2 \norm{u} \, \norm{v} + \scal(v,v)\\
+      &=\norm{u}^{2}+ 2 \norm{u} \, \norm{v}+ \norm{v}^{2}\\
       & =(\norm{u}+\norm{v})^{2}\\
     \end{aligned}
   \end{gather}
-  Daraus folgt $\norm{u+v} \le \norm{u}+\norm{v}$\\
-  Die Ungleichung, die in 4) verwendet wird ist die
-  Cauchy-Schwartz-Ungleichung und wird noch unter $\cite{bcs}$ behandelt.
-  
+  Daraus folgt durch Wurzelziehen auf beiden Seiten $\norm{u+v} \le \norm{u}+\norm{v}$.
+  Für die Abschätzung in Zeile~\eqref{eq:orthopoly:1} haben wir die
+  Bunyakovsky-Cauchy-Schwarz-Ungleichung aus \slideref{Lemma}{bcs} verwendet.
+  \end{enumerate}
 \end{proof}
 
 \begin{remark}
@@ -174,77 +272,6 @@
   Von nun an bezeichnet $V$ immer einen endlichdimensionalen, reellen,
   euklidischen Vektorraum.
 \end{Notation}
-
-\begin{Lemma*}{bcs}{Bunjakowski-Cauchy-Schwarzsche Ungleichung}
-  Für zwei beliebige Elemente $u,v\in V$ gilt
-  \begin{gather}
-    \scal(u,v) \le \norm{u} \cdot \norm{v}
-  \end{gather}
-  Gleichheit gilt genau dann, wenn $u$ und $v$ kollinear sind, also
-  $v=\alpha u$ mit einem skalaren Faktor $\alpha$.
-\end{Lemma*}
-
-\begin{proof}
-  Zunächst zeigen wir nur die Ungleichung:
-  Für $v=0_V$ klar. Hier ist anzumerken, dass $0_V$ aus dem Vektorraum stammt
-  und nicht zwangsläufig die Zahl Null ist.\\
-  
-   Seien $v,u \in V$ und $ v \neq 0, u\neq 0$. Für $\mu, \lambda \in \R$
-  gilt in Bilinearform folgendes  
-  \begin{gather}
-   0 \le \scal(\lambda u + \mu v,\lambda u +  \mu v)
-    = \lambda^{2} \scal(u,u)+2 \mu \lambda \scal(u,v) +\mu^{2} \scal(v,v)
-  \end{gather}
-  Setze $\lambda := \scal(v,v) \neq 0$
-  \begin{gather}
-   0 \le \scal(v,v)^{2} \scal(u,u) + 2\mu \scal(v,v)\scal(u,v) +\mu^{2}\scal(v,v)
-  \end{gather}
-  Dividiere durch$\scal(v,v)$
-  \begin{gather}
-   0 \le \scal(v,v) \scal(u,u) + 2\mu \scal(u,v) +\mu^{2}
-  \end{gather}
-  Setze nun $\mu := -\scal(u,v)$
-  \begin{gather}
-    0 \le \scal(v,v) \scal(u,u) -2\scal(u,v)^{2}+\scal(u,v)^{2}
-  \end{gather}
-  Daraus folgt
-  \begin{gather}
-    \scal(u,v)^{2} \le \scal(u,u) \scal(v,v)
-    \Rightarrow \scal(u,v) \le \norm u \cdot \norm v
-  \end{gather}
-
-  Nun bleibt die Äquivalenz für die Gleichheit zu zeigen.\\
-  Für $v=0$ ist die Äquivalenz klar. Sei also $v\neq 0$ und $u\neq 0$. \\\\
-  $\glqq \Rightarrow \grqq$ Seien u,v linear abhängig.Das heißt $u=av$.\\
-  Dann gilt
-  \begin{gather}
-    \abs{\scal(u,v)} = \abs{a \scal(v,v)}
-    = \abs{a} \cdot \norm v \cdot \norm v
-    = \norm{av} \cdot \norm v =\norm u \cdot \norm v  
-  \end{gather}
-  
-  $ \glqq \Leftarrow  \grqq$ Es gilt die Gleichheit.\\
-  $\mu = \scal(u,v)\neq 0 $ sowie
-  $\lambda = \scal(v,v)\neq 0$. Dann erhält man
-  \begin{gather}
-   \scal(u,v) = \norm u \cdot \norm v\\
-   \scal(u,v)^{2} = \scal(u,u) \scal(v,v)\\
-   0 = \scal(v,v) \scal(u,u) -2\scal(u,v)^{2}+\scal(u,v)^{2}
-  \end{gather}
-  Setze nun $\mu = -\scal(u,v)$ und multipliziere mit $\scal(v,v)$
-  \begin{gather}
-    0 =\scal(v,v)^{2} \scal(u,u)+2\mu \scal(u,v)\scal(v,v) +\mu^{2}\scal(v,v)
-  \end{gather}
-  Setze $\lambda = \scal(v,v)$ und erhalte
-  \begin{gather}
-    0=\lambda^{2} \scal(u,u)+2 \mu \lambda \scal(u,v) +\mu^{2} \scal(v,v)\\
-    0=\scal(\lambda+\mu v,\lambda u+\mu v)
-  \end{gtaher}
-  
-  Da es sich um eine Bilinearform handelt folgt nun
-  $\lambda u + \mu v = 0$ und da $\mu$ und $\lambda$ ungleich Null sind gilt,
-  dass $ u,v$ linear abhängig sind
-\end{proof}
 
 \begin{Lemma*}{pythagoras}{Pythagoras}
   Seien zwei Vektoren $u\in V$ und $v\in V$ orthogonal zueinander. Dann gilt
