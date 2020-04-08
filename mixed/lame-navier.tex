@@ -1,0 +1,215 @@
+In this section, we study the simplest mathematical model for elastic
+deformation of solids based on Hooke's law. For comparison,
+consider~\cite{Braess97,Braess13}. For the full nonlinear model in all
+mathematical detail refer to~\cite{Ciarlet88}.
+
+\begin{intro}
+  The deformation of a solid body is described as a mapping $\Phi$
+  from the \define{reference configuration} $\domain\subset \R^d$ to a
+  deformed configuration $\deformed\domain \subset \R^d$, such that
+  each undeformed point $x\in\domain$ is mapped to the point
+  $\deformed x$ after deformation. The domain $d$ is 3 for physically
+  relevant models, but we investigate two-dimensional problems in
+  order to study mathematical properties and numerical methods more
+  easily.
+
+  Actually, we are not quite interested in this mapping $\Phi$, since
+  it depends on the position of the points $x$. On the other hand, a
+  basic principle of physical laws is frame invariance, namely, if we
+  change from one Cartesian coordinate system to another, the physical
+  law may only change by the same coordinate transformation, not in
+  its physical implications. Therefore, only the differences
+  $\deformed x-x$ should matter. Thus, we introduce the
+  \define{displacement} $u$, such that
+  \begin{gather*}
+    \Phi = \id + u.
+  \end{gather*}
+  The symbol $\id$ will refer to all occurrences of identical mappings
+  and their matrices.
+
+  So far, by the introduction of $u$, we divide translations of the
+  reference configuration out of our model. But, in addition, we have
+  to eliminate the influence of rigid body rotations. These are
+  operations, which leave all distances and angles unchanged. Thus, we
+  investigate the change of the distance between $x$ and $x+z$ under
+  the mapping $\Phi$. By definition of the derivative, we have
+  \begin{align*}
+    \abs{\Phi(x+z) - \Phi(x)}^2 &= \norm{\nabla\Phi z}^2 + o(\abs{z}^4)
+    \\
+                              &= z^T\nabla\Phi^T\nabla\Phi z + o(\abs{z}^4)
+    \\
+    &= z^T(I + \nabla u^T + \nabla u + \nabla u^T \nabla u) z + o(\abs{z}^4)
+    \\
+    &= \abs{z}^2 + 2 z^T\strain u z + o(\abs{z}^4),
+  \end{align*}
+  where
+  \begin{gather}
+    \tilde\epsilon(u) = \tfrac12
+    \bigl(\nabla u^T + \nabla u + \nabla u^T \nabla u\bigr)
+  \end{gather}
+  is the \textbf{strain tensor}. From linear algebra, we know that a
+  linear mapping which preserves all distances is orthogonal and thus
+  also preserves angles. Thus, every deformation with $\strain u=0$
+  is a rigid body transformation, namely a combination of translation
+  and rotation.
+
+  In this class we are concerned only with linear problems, which can
+  be justified by the notion of infinitely small deformations
+  $u$. Then, we only study first order effects in $u$, which implies
+  that we are going to neglect the quadratic term in
+  $\strain u$. This is justified by the fact that we obtain a model,
+  which is sufficiently accurate for small deformations.
+\end{intro}
+
+\begin{Definition}{strain-tensor}
+  The linearized \define{strain tensor} or \define{symmetric gradient}
+  of $u$ is
+  \begin{gather}
+    \strain u = \frac{\nabla u + \nabla u^T}2.
+  \end{gather}
+\end{Definition}
+
+\begin{intro}
+  Next, we have to consider the interplay of forces and
+  deformations. The basic principle is Newton's axiom of force
+  balance. If a body force $f$ acts on a small volume $V$, there have
+  to be surface forces acting against $f$ in order to keep $V$ at
+  rest. Similarly, if a torque is applied inside this volume, there
+  must be tangential forces on the surface balancing this torque. Due
+  to Euler, we model these forces as a mapping $t$, which at each
+  point $x$ maps a direction vector $n$ to a force vector
+  $t(x,n)$. Thus, the balance of forces is written as
+  \begin{alignat*}2
+    \int_V f \dx &+ \int_{\d V} t(x,n) \ds &=&0\\
+    \int_V x\times f \dx &+ \int_{\d V} x\times t(x,n) \ds &=&0.
+  \end{alignat*}
+  Due to Euler and Cauchy, this mapping $t(x,n)$ can be expressed as
+  $\sigma(x)n$ by the \define{stress tensor} $\sigma$. Without proof,
+  we note that the balance of torque implies that $\sigma$ is
+  symmetric, while the force balance equation after integration by
+  parts becomes
+  \begin{gather}
+    \label{eq:mixedintro:3}
+    f + \div \sigma = 0.
+  \end{gather}
+  What is missing now is a relation between the displacement $u$ and
+  the stress $\sigma$, which is not the result of fundamental
+  principles, but of material properties.
+\end{intro}
+
+\begin{remark}
+  At this point, we play again the card of small deformations, such
+  that we do not have to distinguish whether equations are formulated
+  on the reference domain $\domain$ or on the deformed domain
+  $\deformed\domain$. Such a discussion becomes confusing easily and
+  thus remains a subject for a more specialized class.
+\end{remark}
+
+\begin{Definition}{hooke}
+  \define{Hooke's law} states that the stress depends linearly on the
+  strain. Together with frame invariance, this implies the relation
+  \begin{gather}
+    \label{eq:mixedintro:4}
+    \sigma = 2\mu \strain u + \lambda \operatorname{tr} \strain u \id,
+  \end{gather}
+  where $\lambda\ge 0$ and $\mu> 0$ are material properties called
+  \define{Lamé-Navier parameters}.
+\end{Definition}
+
+\begin{remark}
+  The trace of the strain operator is equal to the trace of the
+  gradient. Thus, we have
+  \begin{gather}
+    \label{eq:mixedintro:5}
+    \operatorname{tr} \strain u = \div u \,\id.
+  \end{gather}
+\end{remark}
+
+\begin{intro}
+  Equations~\eqref{eq:mixedintro:3} and~\eqref{eq:mixedintro:4}
+  together define a second order partial differential equation, for
+  which we have to impose boundary conditions. A natural choice, which
+  keeps the mathematical analysis simple is the \define{Dirichlet
+    boundary condition} $u=0$, corresponding to an elastic body whose
+  boundary is fixed. The alternative is the traction free boundary
+  condition $\sigma n=0$ with vanishing normal traces. Combinations
+  are possible, for instance $u\cdot n=0$ for a boundary that allows
+  sliding but no penetration. Constraining ourselves to Dirichlet
+  condition on $\Gamma_D\subset \d\domain$ and traction free on
+  $\gamma_N = \d\domain\setminus\Gamma_D$, we obtain the
+  boundary value problem
+  \begin{gather}
+    \label{eq:mixedintro:lame-navier-bvp}
+    \begin{aligned}
+      -\div \sigma(x) &= f(x) & x&\in\domain,\\
+      u(x) &= 0 & x&\in\Gamma_D, \\
+      \sigma(x)n &=0& x&\in\Gamma_N,
+    \end{aligned}
+  \end{gather}
+  together with the material law~\eqref{eq:mixedintro:4}.  Once we
+  test and integrate by parts to obtain our weak formulation, we
+  obtain
+  \begin{gather*}
+    \int_{\domain} -(\div \sigma) \cdot v\dx
+    = \int_{\domain} \sigma : \nabla v\dx
+    - \int_{\Gamma_N} \sigma n\cdot v\ds,
+  \end{gather*}
+  such that traction free is actually the natural boundary condition
+  comparable to the Neumann condition for the Laplacian. Note that $:$
+  is the double contraction or Frobenius product (see
+  Problem~\ref{Problem:frobenius} below) of the two tensors.
+\end{intro}
+
+\begin{intro}
+  We now walk the missing steps to obtain a weak formulation. first,
+  we enter Hooke's law for $\sigma$ to obtain:
+  \begin{gather*}
+    \int_\domain \bigl[2\mu \strain u : \nabla v
+    + \lambda (\div u \id) : \nabla v
+    \bigr]\dx = \int_\domain f\cdot v\dx.
+  \end{gather*}
+  Then, we choose the space
+  \begin{gather}
+    V = H^1_{\Gamma_D}(\domain; \R^d) = \bigl\{v\in H^1(\domain;\R^d) \big\vert
+    v_{|\Gamma_D} = 0 \bigr\}.
+  \end{gather}
+  We notice for the second term that
+  \begin{gather*}
+    \id : \nabla v = \sum_{i=1}^d \d_i v_i = \div v.
+  \end{gather*}
+  Furthermore, we use the result of Problem~\ref{Problem:frobenius} to
+  obtain
+  \begin{gather*}
+    \strain u:\nabla v = \strain u : \strain v.
+  \end{gather*}
+\end{intro}
+
+\begin{Definition}{lame-navier-equations}
+  The \define{Lamé-Navier equations} of \putindex{linear elasticity} read
+  \begin{subequations}
+    \begin{gather}
+      \begin{aligned}
+        -\div \sigma(x) &= f(x) & x&\in\domain,\\
+        \sigma(x) &= 2\mu \strain u(x) + \lambda \operatorname{tr} \strain u(x) \id.
+      \end{aligned}
+    \end{gather}
+    They are usually complemented with boundary conditions
+    \begin{gather}
+      \begin{aligned}
+        u(x) &= u^D & x&\in\Gamma_D, \\
+        \sigma(x)n &=\sigma^N& x&\in\Gamma_N.
+      \end{aligned}
+    \end{gather}
+  \end{subequations}
+  Here $\Gamma_D$ is a subset of $\d\domain$ and
+  $\Gamma_N = \d\domain\setminus\Gamma_D$.  We refer to the boundary
+  conditions on $\Gamma_D$ and $\Gamma_N$ as \define{displacement boundary}
+  and \define{traction boundary} conditions, respectively.
+  The function $f$ describes \define{body forces}, for instance gravity.
+\end{Definition}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

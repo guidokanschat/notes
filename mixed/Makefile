@@ -37,6 +37,8 @@ print.pdf: *.tex
 slides.pdf: main.pdf
 problems.pdf: main.pdf
 solutions.pdf: main.pdf
+	perl -ni ../problem-fix.pl blocks/Problem*.tex
+	pdflatex solutions
 
 %.pdf: %.tex
 	mkdir -p blocks

@@ -1,0 +1,54 @@
+\begin{Notation}{vector-diff-operators}
+  Differential operators for vector fields $u:\R^d\to\R^d$
+  are defined as follows:
+  \begin{xalignat}2
+    \nabla \vu &=
+    \begin{pmatrix}
+      \d_1 u_1 & \cdots & \d_d u_1\\
+      \vdots && \vdots \\
+      \d_1 u_d & \cdots & \d_d u_d
+    \end{pmatrix}
+    &&\text{(gradient)}
+    \\
+    \div \vu &= \sum_{i=1}^d \d_i u_i
+    &&\text{(divergence)}
+  \end{xalignat}
+
+  For a tensor field $\sigma: \R^d\to \R^{d\times d}$, the divergence
+  is a vector defined column-wise as
+  \begin{gather}
+    \div\sigma = \left(\sum_{i=1}^d \d_i \sigma_{ij}\right)_{j=1,\dots,d}
+  \end{gather}
+\end{Notation}
+
+\begin{Notation}{sobolev-spaces}
+  For a domain $\domain\in\R^d$, we denote by $L^2(\domain)$\index{L2@$L^2(\domain)$} the space
+  of square integrable ``functions'' on $\domain$ with its norm\index{norm!Hk@$\norm{\cdot}_{L^2}=\norm{\cdot}_0$}
+  \begin{gather*}
+    \norm{u} = \norm{u}_0 = \norm{u}_{L^2(\domain)}.
+  \end{gather*}
+  By $H^k(\domain)$\index{Hk@$H^k(\domain)$} we denote the
+  \define{Sobolev space} of square integrable functions on $\domain$
+  with square integrable distributional derivatives up to order
+  $k$. Its norm is\index{norm!Hk@$\norm{\cdot}_{H^k}=\norm{\cdot}_{k}$}
+  \begin{gather*}
+    \norm{u}_k = \norm{u}_{H^k(\domain)} = \sum_{\abs{\alpha} \le k}
+    \norm{\d^\alpha u}_{L^2(\domain)}.
+  \end{gather*}
+  We also use the $H^k$-seminorm\index{seminorm!Hk@$\abs{\cdot}_{H^k}$}
+  \begin{gather*}
+    \abs{u}_k = \norm{u}_{H^k(\domain)} = \sum_{\abs{\alpha} \le k}
+    \norm{\d^\alpha u}_{L^2(\domain)}.
+  \end{gather*}
+  By $H^1_0(\domain)$\index{H10@$H^1_0(\domain)$} we denote the
+  completion of $C^\infty_0(\domain)$ with respect to the norm
+  $\norm{\cdot}_{H^1(\domain)}$. Similarly,
+  $H^1_{\Gamma}(\domain)$\index{H1gamma@$H^1_\Gamma(\domain)$} for any
+  $\Gamma\subset\d\domain$ is the completion of all functions in
+  $C^\infty(\domain)$ vanishing on $\gamma$.
+\end{Notation}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
