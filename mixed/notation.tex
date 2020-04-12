@@ -1,3 +1,14 @@
+\begin{Notation}{domain}
+  By $\domain$ we denote a \define{domain} in $\R^d$, that is, an
+  open, connected subset. The boundary of $\domain$ is denoted by
+  $\d\domain$.
+
+  Unless stated otherwise, we will always assume that the boundary of
+  the domain consists of finitely many smooth surfaces meeting in
+  ridges. Actually, we will often assume polygonal domains, such that
+  the finite element mesh covers it exactly.
+\end{Notation}
+
 \begin{Notation}{vector-diff-operators}
   Differential operators for vector fields $u:\R^d\to\R^d$
   are defined as follows:
@@ -11,22 +22,31 @@
     &&\text{(gradient)}
     \\
     \div \vu &= \sum_{i=1}^d \d_i u_i
-    &&\text{(divergence)}
+    &&\text{(divergence)}\\
+    \strain u &= \frac{\nabla u + (\nabla u)^T}{2}
+    &&\text{(symmetric gradient)}
   \end{xalignat}
 
   For a tensor field $\sigma: \R^d\to \R^{d\times d}$, the divergence
-  is a vector defined column-wise as
+  is a vector defined row-wise as
   \begin{gather}
-    \div\sigma = \left(\sum_{i=1}^d \d_i \sigma_{ij}\right)_{j=1,\dots,d}
+    \div\sigma = \left(\sum_{j=1}^d \d_j \sigma_{ij}\right)_{i=1,\dots,d}
+  \end{gather}
+\end{Notation}
+
+\begin{Notation}{lebesgue-spaces}
+  For a domain $\domain\in\R^d$, we denote by $L^2(\domain)$\index{L2@$L^2(\domain)$} the \define{Lebesgue-space}
+  of square integrable ``functions'' on $\domain$ with its norm\index{norm!L2@$\norm{\cdot}_{L^2}=\norm{\cdot}_0$}
+  \begin{gather*}
+    \norm{u} = \norm{u}_0 = \norm{u}_{L^2(\domain)}.
+  \end{gather*}
+  We denote the inner product of $L^2(\domain)$ by
+  \begin{gather}
+    \scal(u,v)_{L^2(\domain} = \form(u,v) = \int_\domain u v \dvx.
   \end{gather}
 \end{Notation}
 
 \begin{Notation}{sobolev-spaces}
-  For a domain $\domain\in\R^d$, we denote by $L^2(\domain)$\index{L2@$L^2(\domain)$} the space
-  of square integrable ``functions'' on $\domain$ with its norm\index{norm!Hk@$\norm{\cdot}_{L^2}=\norm{\cdot}_0$}
-  \begin{gather*}
-    \norm{u} = \norm{u}_0 = \norm{u}_{L^2(\domain)}.
-  \end{gather*}
   By $H^k(\domain)$\index{Hk@$H^k(\domain)$} we denote the
   \define{Sobolev space} of square integrable functions on $\domain$
   with square integrable distributional derivatives up to order
@@ -40,13 +60,31 @@
     \abs{u}_k = \norm{u}_{H^k(\domain)} = \sum_{\abs{\alpha} \le k}
     \norm{\d^\alpha u}_{L^2(\domain)}.
   \end{gather*}
+\end{Notation}
+
+\begin{Notation}{sobolev-spaces-2}
   By $H^1_0(\domain)$\index{H10@$H^1_0(\domain)$} we denote the
   completion of $C^\infty_0(\domain)$ with respect to the norm
   $\norm{\cdot}_{H^1(\domain)}$. Similarly,
   $H^1_{\Gamma}(\domain)$\index{H1gamma@$H^1_\Gamma(\domain)$} for any
   $\Gamma\subset\d\domain$ is the completion of all functions in
   $C^\infty(\domain)$ vanishing on $\gamma$.
+
+  By $H^{-1}(\domain)$\index{H1m@$H^{-1}(\domain)$}, we denote the
+  normed dual of $H^1_0(\domain)$, that is the space of bounded linear
+  functionals on this space.
 \end{Notation}
+
+\begin{Notation}{vector-valued}
+  We denote vector valued quantities by boldface letters like $\vx$,
+  $\vu$, $\vv$. Lebesgue spaces of vector valued functions
+  are denoted either by $L^2(\domain;\R^d)$ or by $\vL(\domain)$. The inner product of these is
+  \begin{gather}
+    \form(u,v) = \int_\domain \vu \cdot \vv \dx.
+  \end{gather}
+  Vector valued Sobolev spaces $\vH^k(\domain)$ are defined accordingly.
+\end{Notation}
+
 
 %%% Local Variables: 
 %%% mode: latex

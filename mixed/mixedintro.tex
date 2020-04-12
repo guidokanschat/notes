@@ -18,19 +18,20 @@ consider~\cite{Braess97,Braess13}.
   \begin{gather}
     \label{eq:mixedintro:lame1}
     \begin{aligned}
-      -\div \sigma(x) &= f(x) & x&\in\domain,\\
-      \sigma(x) &= 2\mu \strain u(x) + \lambda \operatorname{tr} \strain u(x) \id\\
-      u(x) &= 0 & x&\in\Gamma_D,
+      -\div \sigma(\vx) &= \vf(\vx) & \vx&\in\domain,\\
+      \sigma(\vx) &= 2\mu \strain \vu(\vx) + \lambda \operatorname{tr} \strain \vu(\vx) \id\\
+%      \vu(\vx) &= 0 & x&\in\Gamma_D,
     \end{aligned}
   \end{gather}
-  is: find $u\in V = H^1_{0}(\domain;\R^d)$ such that
+  is: find $\vu\in \vV = \vH^1_{0}(\domain;\R^d)$ such that
   \begin{gather}
     \label{eq:mixedintro:lame2}
-    a(u,v) \equiv 2\mu\form(\strain u, \strain v)
-    + \lambda \form(\div u, \div v)
-    = \form(f,v)
-    \quad\forall v\in V.
+    a(\vu,\vv) \equiv 2\mu\form(\strain \vu, \strain \vv)
+    + \lambda \form(\div \vu, \div \vv)
+    = \form(\vf,\vv)
+    \quad\forall \vv\in \vV.
   \end{gather}
+    Here, $\strain \vu = \nicefrac12\bigl(\nabla u + (\nabla u)^T\bigr)$ is the symmetric gradient.
 \end{Definition}
 
 \begin{Problem}{frobenius}
@@ -85,23 +86,21 @@ consider~\cite{Braess97,Braess13}.
   The \define{conforming} \define{Galerkin approximation} of the weak
   formulation in \slideref{Definition}{weak-lame-navier} consists of the following steps:
   \begin{enumerate}
-  \item Choose a finite dimensional subspace $V_h\subset V$
-  \item Find $u_h \in V_h$, such that
+  \item Choose a finite dimensional subspace $\vV_h\subset \vV$
+  \item Find $\vu_h \in \vV_h$, such that for all $v\in \vV_h$ there holds
   \begin{gather}
     \label{eq:mixedintro:lame3}
-    a(u_h,v_h) \equiv 2\mu\form(\strain{u_h}, \strain{v_h})
-    + \lambda \form(\div{u_h}, \div{v_h})
-    = \form(f,v_h)
-    \quad\forall v_h\in V_h.
+    a(\vu_h,\vv_h) \equiv 2\mu\form(\strain{\vu_h}, \strain{\vv_h})
+    + \lambda \form(\div{\vu_h}, \div{\vv_h})
+    = \form(\vf,\vv_h).
   \end{gather}
   \end{enumerate}
 \end{Definition}
 
 \begin{Problem}{weak-lame-well-posedness}
-  Without reading any further in the notes or watching the solution
-  videos, try to remember the means of analyzing the well-posedness of
-  this weak formulation. What are the assumptions on the weak
-  formulation?
+  Without reading any further in the notes, try to remember the means
+  of analyzing the well-posedness of this weak formulation. What are
+  the assumptions on the weak formulation?
 
   Also, try to remember the means of analyzing well-posedness and
   approximation properties for the conforming Galerkin
@@ -112,6 +111,21 @@ consider~\cite{Braess97,Braess13}.
 
 We review the abstract setting of Galerkin approximations and the
 finite element method and apply those to the Lamé-Navier equations.
+
+\begin{Notation}{vh-finite}
+  Spaces with subscript $h$ in these notes always denote finite
+  dimensional spaces used for discretization.
+
+  If nothing else is stated, we denote the solution of the PDE
+  boundary value problem by $u$\index{u@$u, \vu$} or $\vu$, while
+  $u_h$ or $\vu_h$ \index{uh@$u_h, \vu_h$} denote its finite element
+  discretization.
+
+  The index $h$ is related to a finite element mesh $\mesh_h$, where
+  $h$ indicates the mesh size. We use this notation even for adaptive
+  and high order finite elements, where there is no single mesh size
+  characterizing the discretization.
+\end{Notation}
 
 \begin{Definition}{elliptic-abstract-weak}
   The \define{weak formulation} of a \define{boundary value problem}
@@ -147,13 +161,16 @@ present here.
   constant $\ellipa > 0$ such that
   \begin{gather}
     \label{eq:infsup:elliptic}
-    a(u,u) \ge \ellipa \norm{u}_V^2.
+    a(u,u) \ge \ellipa \norm{u}_V^2 \qquad \forall u\in V.
   \end{gather}
 \end{Assumption}
 
+Note that typically the space $V$ and its inner product are chosen
+such that the assumption holds, not the other way round.
+
 The analytical results can be summarized by
 
-\begin{Theorem*}{fem-toolbox}{The finite element toolbox}
+\begin{Theorem*}{fem-toolbox}{The finite element toolbox (elliptic)}
   Let \slideref{Assumption}{coercive} hold. Let furthermore
   $V_h\subset V$. Then, there holds
   \begin{enumerate}
@@ -170,7 +187,7 @@ The analytical results can be summarized by
   \item (\putindex{Céa's lemma}) The error of the Galerkin
     approximation admits the estimate (\putindex{quasi-optimality})
     \begin{gather}
-      \norm{u-u_h}_V \le \tfrac{M}{\ellipa}\inf_{v_h\in V_h}\norm{u-v_h}.
+      \norm{u-u_h}_V \le \tfrac{M}{\ellipa}\inf_{v_h\in V_h}\norm{u-v_h}_V.
     \end{gather}
   \end{enumerate}
 \end{Theorem*}
@@ -196,51 +213,144 @@ The analytical results can be summarized by
   There is a constant $c_K>0$ such that
   \begin{gather}
     \label{eq:mixedintro:korn}
-    c_K^2 \norm{v}_{H^1(\domain;\R^d)}^2
-    \le \norm{\strain v}_{L^2(\Omega;\R^d)}^2
-    \qquad\forall v\in H^1_0(\domain).
+    c_K^2 \norm{\vv}_{\vH^1(\domain)}^2
+    \le \norm{\strain \vv}_{\vL^2(\Omega)}^2
+    \qquad\forall \vv\in \vH^1_0(\domain).
   \end{gather}
 \end{Lemma*}
 
-\begin{proof}
-  While the inequality is of high importance in the mathematical
-  and numerical analysis of problems in continuum mechanics, it a
-  peripheral topic to this class. Therefore, we omit the proof and
-  refer to Theorem 3.3 in~\cite[Section III.3.3]{DuvautLions76}.
-\end{proof}
+While the inequality is of high importance in the mathematical and
+numerical analysis of problems in continuum mechanics, it a peripheral
+topic to this class. Therefore, we omit the proof and refer to Theorem
+3.3 in~\cite[Section III.3.3]{DuvautLions76}. We point out though,
+that there is a whole family of Korn inequalities ensuring the
+definiteness of the strain bilinear form on certain
+spaces. See~\cite{DesvillettesVillani02} for some indepth analysis.
 
-\begin{Problem}{elasticity-standard}
-  Let the space $V=H^1_0(\domain;\R^d)$ be equipped with the inner
-  product $\scal(u,v) = a(u,v)$ with the bilinear form of the
-  Lamé-Navier equations and the corresponding norm $\norm{.}_V$.
+\begin{Problem}{elasticity-standard-h1}
+  Let the space $V=H^1_0(\domain;\R^d)$ be equipped with its standard inner
+  product $\scal(\vu,\vv)$ with the bilinear form of the
+  Lamé-Navier equations and the corresponding norm $\norm{.}_{\vH^1}$.
 
-  Show using techniques from the standard theory of elliptic partial
-  differential equations:
+  Show using the elliptic finite element toolbox in \slideref{Theorem}{fem-toolbox}
   \begin{enumerate}
   \item The weak formulation has a unique solution for which there holds
     \begin{gather*}
-      \norm{u}_V \le \norm{f}_{V^*}.
+      \norm{\vu}_{\vH^1} \le \frac1{2c_K\mu} \norm{\vf}_{\vH^{-1}}.
+    \end{gather*}
+  \item There holds the error estimate
+    \begin{gather}
+      \norm{\vu-\vu_h}_{\vH^1}
+      \le \frac{2\mu+d\lambda}{2c_K\mu}
+      \inf_{\vv_h\in V_h} \norm{\vu-\vv_h}_{\vH^1}.
+    \end{gather}
+    Hint: there are divergence-free functions ($\div \vv=0$) and others.
+  \end{enumerate}
+  \begin{solution}
+    \begin{itemize}
+    \item For well-posedness, we want to apply the Lax-Milgram
+      lemma. Thus, we have to show that the bilinear form is bounded
+      and elliptic.\marginpar{Todo}
+   \item For the $H^1$-error estimate we make use of Korn's inequality to note\marginpar{Todo: this is outdated}
+   \begin{align*}
+    \norm{u}_V^2=2\mu\norm{\strain u}_0^2+ \lambda \norm{\div u}_0^2\geq
+    2\mu(c_K^2\norm{u}_1^2-\norm{u}_0^2)
+   \end{align*}
+   and on the other hand
+   \begin{align*}
+    \norm{u}_V^2=2\mu\norm{\strain u}_0^2+ \lambda \norm{\div u}_0^2\leq
+    (2\mu+\lambda d^2)\norm{u}_1^2
+   \end{align*}
+   where we used
+   \begin{align*}
+    \norm{\nabla \cdot u}_0^2 = \norm{\sum_i \partial_i u_i}_0^2 &\leq (\sum_{i,j} \norm{\partial_j u_i}_0\delta_{i,j})^2\\
+    & \leq \sum_{i,j} \left(\norm{\partial_j u_i}_0^2\right) d^2 \leq \norm{u}_1^2 d^2.
+   \end{align*}
+   Using Poincaré's inequality
+   \begin{align*}
+    \norm{u}_0\leq C_P |u|_1
+   \end{align*}
+   we further notice
+   \begin{align*}
+    \norm{u}_V^2+2\mu\norm{u}_0^2\leq (1+C_P^2) \norm{u}_V^2.
+   \end{align*}
+   Combining these estimates gives
+   \begin{align*}
+   2\mu c_K^2\norm{u}_1^2\leq
+    \norm{u}_V^2+2\mu \norm{u}_0^2\leq
+    (1+C_P^2)\norm{u}_V^2\leq
+    (1+C_P^2)(2\mu+\lambda d^2)\norm{u}_1^2.
+   \end{align*}
+   and therefore
+   \begin{align*}
+    \norm{u-u_h}_1^2\leq \inf_{v\in V_h} \frac{(1+C_P^2)(2\mu+\lambda d^2)}{2\mu c_K^2}\norm{u-v_h}_1^2.
+   \end{align*}
+   If the solution is even $H_0^1(\Omega)$-regular, we can improve the estimate to
+   \begin{align*}
+    \norm{u}_1^2\leq \inf_{v\in V_h}\frac{(\mu+(\lambda+\mu) d^2)}{\mu}\norm{u-v_h}_1^2.
+   \end{align*}
+   by using the identity
+   \begin{align*}
+    (\strain u, \strain v) = (\nabla u, \nabla v) + (\nabla \cdot u, \nabla \cdot v).
+   \end{align*}
+
+   \item A more refined estimate would be
+   \begin{align*}
+    \norm{u-u_h}_1^2\leq \inf_{v\in V_h}\frac{(1+C_P^2)}{2\mu c_K^2}\left(2\mu\norm{u-v_h}_1^2+\lambda \norm{\nabla\cdot (u-v_h)}_0^2\right).
+   \end{align*}
+   Choosing a divergence-preserving interpolation operator, the second term vanishes.
+  \end{enumerate}
+\end{solution}
+\end{Problem}
+
+If the bilinear form is symmetric, there is an even more elegant way of
+doing the analysis: we can use the bilinear form as an inner product
+itself. This leads to our second, albeit somewhat more restricted toolbox.
+
+\begin{Theorem*}{fem-toolbox-riesz}{The finite element toolbox (symmetric)}
+  Let $a(\cdot,\cdot)$ be a symmetric, positive definite bilinear form
+  on a space $V$. We equip $V$ with this bilinear form and the \define{energy norm}:
+  \begin{gather}
+    \scal(u,v)_V = a(u,v)
+    ,\qquad \norm{v}_V = \sqrt{a(v,v)} \qquad \forall u,v\in V.
+  \end{gather}
+  Let furthermore $V_h\subset V$. Then, there holds
+  \begin{enumerate}
+  \item (Riesz representation theorem) There is a unique solution to
+    the continuous and discrete weak formulations in
+    \slideref{Definition}{elliptic-abstract-weak}, respectively. There holds
+    \begin{gather}
+      \norm{u}_V = \norm{f}_{V^*},
+      \qquad
+      \norm{u_h}_V = \norm{f}_{V^*}.
+    \end{gather}
+  \item (\putindex{Céa's lemma}) The approximation error admits the
+    estimate
+    \begin{gather}
+      \norm{u-u_h}_V \le \inf_{v_h\in V_h}\norm{u-v_h}_V.
+    \end{gather}
+  \end{enumerate}
+\end{Theorem*}
+
+\begin{Problem}{elasticity-standard}
+  Let the space $V=H^1_0(\domain;\R^d)$ be equipped with the inner
+  product $\scal(\vu,\vv) = a(\vu,\vv)$, the bilinear form of the
+  Lamé-Navier equations and the corresponding norm $\norm{.}_\vV$.
+
+  Show using the symmetric finite element toolbox \slideref{Theorem}{fem-toolbox-riesz}
+  \begin{enumerate}
+  \item The weak formulation has a unique solution for which there holds
+    \begin{gather*}
+      \norm{\vu}_\vV \le \norm{\vf}_{\vV^*}.
     \end{gather*}
   \item The ``energy estimate'' for conforming finite element
-    approximation with a space $V_h\subset V$
+    approximation with a space $\vV_h\subset \vV$
     \begin{gather*}
-      \norm{u-u_h}_V = \inf_{v_h\in V_h} \norm{u-v_h}_V.
+      \norm{\vu-\vu_h}_\vV = \inf_{\vv_h\in \vV_h} \norm{\vu-\vv_h}_\vV.
     \end{gather*}
-  \item The $H^1$-error estimate
-    \begin{gather}
-      \norm{u-u_h}_{H^1}
-      \le \frac{2\mu+d\lambda}{2c_K\mu}
-      \inf_{v_h\in V_h} \norm{u-v_h}_{H^1}.
-    \end{gather}
-    Use the fact that the space $V$ can be composed into the space
-    $V^0$ of divergence-free functions ($\div v=0$) and its
-    complement.
-  \item For $\lambda \gg \mu$, the previous estimate is useless. Can
-    it be improved easily? In view of the ``energy estimate'', can you
-    think of conditions?
   \end{enumerate}
 \begin{solution}
-We consider the problem:\\
+We consider the problem:
   Find $u\in V = H^1_{\Gamma_D}(\domain;\R^d)$ such that
   \begin{gather*}
     a(u,v) \equiv 2\mu\form(\strain u, \strain v)
@@ -314,6 +424,7 @@ We consider the problem:\\
 \end{solution}
 \end{Problem}
 
+\subsection{Where things go wrong}
 \begin{example}
   We study the finite element approximation of the following problem:
   a square sheet of elastic material is hanging from the top, subject
@@ -327,6 +438,7 @@ We consider the problem:\\
   was discovered early in finite element history and is called
   ``locking''.
 \end{example}
+
 \begin{figure}[tp]
   \centering
   \subfigure[{$\lambda = 1$}]{\includegraphics[width=.45\textwidth]{./graph/elasticity/stalactite-0}}
@@ -342,15 +454,19 @@ We consider the problem:\\
 \end{figure}
 
 \begin{intro}
-  As we could see in the preceding problem and example, approximation of the
-  solution to the Lamé-Navier equations becomes difficult, if
+  As we could see in the preceding problem and example, approximation
+  of the solution to the Lamé-Navier equations becomes difficult, if
   $\lambda \gg \mu$. In this case, the material is called almost
   incompressible, since the divergence measures compression or
   dilation and the dominating divergence term forces the divergence of
   the solution to be small. These cases are important in engineering
   and they initiated a lot of the research that resulted in the topics
-  of this class.
+  of this class. The phenomenon observed here, that the approximation
+  of the solution to an elasticity problem deteriorates with
+  increasing $\lambda$ is called \define{locking}.
 \end{intro}
+
+
 
 \begin{intro}
   A way to approach this problem is the introduction of an auxiliary variable

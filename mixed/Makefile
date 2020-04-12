@@ -35,6 +35,11 @@ print.pdf: *.tex
 	pdfcrop print.pdf
 
 slides.pdf: main.pdf
+
+allslides.pdf: main.pdf
+	perl ../aux2slides.pl main.aux > iallslides.tex
+	pdflatex allslides
+
 problems.pdf: main.pdf
 solutions.pdf: main.pdf
 	perl -ni ../problem-fix.pl blocks/Problem*.tex

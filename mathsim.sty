@@ -52,7 +52,8 @@
 % Commands for beamer
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\sectoc{\tableofcontents[currentsection,hideothersubsections]}
-\def\subtoc{\tableofcontents[currentsection,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/show/hide/hide]}
+\def\subtoc{\tableofcontents[sectionstyle=shaded/hide,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/show/hide/hide]}
+\def\subsubtoc{\tableofcontents[sectionstyle=shaded/hide,subsectionstyle=shaded/shaded/hide,subsubsectionstyle=show/shaded/hide/hide]}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Counters and their representation
@@ -172,6 +173,9 @@
 \def\vu{\mathbf u}
 \def\vv{\mathbf v}
 \def\vecx{\vec x}
+\def\vH{\mathbf H}
+\def\vL{\mathbf L}
+\def\vV{\mathbf V}
 \def\vlambda{\boldsymbol\lambda}
 
 % Spaces, norms, and forms
@@ -181,8 +185,8 @@
 \def\spann#1{\operatorname{span}\left\{#1\right\}}
 \def\polar#1{#1^0}
 \def\ortho#1{#1^\perp}
-\def\Hcurl{H^{\text{curl}}}
-\def\Hdiv{H^{\text{div}}}
+\def\Hcurl{\vH^{\text{curl}}}
+\def\Hdiv{\vH^{\text{div}}}
 
 % Polynomials
 \def\pol{\mathbb P} % polynomial space P_n
