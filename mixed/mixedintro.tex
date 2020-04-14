@@ -7,10 +7,12 @@ in mind, to the Lamé-Navier-equations of linear elasticity. While this
 is expected to be knowledge you already bring into this class, it will
 help us putting the analysis of mixed finite element methods into
 perspective.  A short derivation of the Lamé-Navier equations is in
-\cref{sec:lame-navier} in the appendix. For comparison,
+\Cref{sec:lame-navier}. For comparison,
 consider~\cite{Braess97,Braess13}.
 
 \subsection{Example: weak form of the Lamé-Navier equations}
+Notations and definitions like the symmetric gradient $\strain u$ are introduced
+in \Cref{sec:lame-navier}.
 \begin{Definition}{weak-lame-navier}
   The weak formulation of the Lamé-Navier boundary value problem in
   linear elasticity with homogeneous displacement boundary conditions,
@@ -75,7 +77,7 @@ consider~\cite{Braess97,Braess13}.
 
 \begin{Problem}{weak-lame-navier}
   Show that the weak formulation equation~\eqref{eq:mixedintro:lame2}
-  in \slideref{Definition}{weak-lame-navier} indeed is indeed obtained
+  in \slideref{Definition}{weak-lame-navier} is indeed obtained
   from the classical formulation ~\eqref{eq:mixedintro:lame2} in that
   definition by integration by parts and the application of boundary
   conditions.
@@ -170,7 +172,7 @@ The analytical results can be summarized by
   \item (\putindex{Céa's lemma}) The error of the Galerkin
     approximation admits the estimate (\putindex{quasi-optimality})
     \begin{gather}
-      \norm{u-u_h}_V \le \tfrac{M}{\ellipa}\inf_{v_h\in V_h}\norm{u-v_h}.
+      \norm{u-u_h}_V \le \tfrac{M}{\ellipa}\inf_{v_h\in V_h}\norm{u-v_h}_V.
     \end{gather}
   \end{enumerate}
 \end{Theorem*}
@@ -186,25 +188,25 @@ The analytical results can be summarized by
   translations and rotations $\strain u = 0$. Therefore, the Dirichlet
   boundary conditions must exclude such solutions.
   
-  The condition needed for well-posedness is called Korn inequality,
+  The condition needed for well-posedness is called Korn's inequality,
   and it will be posed as an assumption. We will give a proof for a
   simple case and refer the readers to a plethora of articles on more
   complicated cases.
 \end{intro}
 
-\begin{Lemma*}{korn-inequality}{Korn inequality}
+\begin{Lemma*}{korn-inequality}{Korn's inequality}
   There is a constant $c_K>0$ such that
   \begin{gather}
     \label{eq:mixedintro:korn}
     c_K^2 \norm{v}_{H^1(\domain;\R^d)}^2
-    \le \norm{\strain v}_{L^2(\Omega;\R^d)}^2
+    \le \norm{\strain v}_{L^2(\Omega;\R^{d \times d})}^2
     \qquad\forall v\in H^1_0(\domain).
   \end{gather}
 \end{Lemma*}
 
 \begin{proof}
   While the inequality is of high importance in the mathematical
-  and numerical analysis of problems in continuum mechanics, it a
+  and numerical analysis of problems in continuum mechanics, it is a
   peripheral topic to this class. Therefore, we omit the proof and
   refer to Theorem 3.3 in~\cite[Section III.3.3]{DuvautLions76}.
 \end{proof}
@@ -399,8 +401,8 @@ We consider the problem:\\
   function. The second and third stress the fact that we now have a
   bilinear form on the product space $X=V\times Q$.
   
-  The second form is symmetric, but we will see later that is
-  indefinite. Thus, non of our tools from functional analysis
+  The second form is symmetric, but indefinite as we will see later.
+  Thus, none of our tools from functional analysis
   apply. In contrast, the third form is nonsymmetric, but we have
   \begin{multline*}
     2\mu\form(\strain u, \strain u) + \form(p,\div u)
@@ -642,7 +644,7 @@ We consider the problem:\\
   In order to simplify subsequent discussion, it is customary to use
   the previous lemma to simplify the Stokes equations and to replace
   the strain tensor by the gradient. As a result, we can avoid the use
-  of a Korn inequality and operate directly with the inner product of
+  of a Korn's inequality and operate directly with the inner product of
   $H^1$. We note though that this formulation, while mathematically
   simpler, is physically wrong if $u\neq H^1_0(\domain;\R^d)$.
 \end{intro}
