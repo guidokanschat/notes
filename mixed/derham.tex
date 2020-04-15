@@ -197,9 +197,9 @@ theorem on $\Hdiv$.
 
   On the other hand, we could have replaced the right end of the
   complex by
-  \begin{gather*}
+  \begin{gather}
     L^2(\domain) \xrightarrow{\frac1{\abs{\domain}}\int} \R,
-  \end{gather*}
+  \end{gather}
   where the arror is the mean value operator.
 \end{remark}
 
@@ -211,11 +211,11 @@ theorem on $\Hdiv$.
 \begin{proof}
   We have to show the inf-sup condition and the ellipticity of the
   curl-curl bilinear form. Let us introduce
-  \begin{gather*}
+  \begin{gather}
     a(u,v) = \form(\curl u, \curl v),
     \qquad
     b(v,q) = \form(v,\nabla q).
-  \end{gather*}
+  \end{gather}
   From the fact that the de Rham complex starts with zero, we obtain
   that the kernel of the gradient is zero. Thus, for any $q\in
   H^1_0(\domain)\setminus\{0\}$, we have $v = \nabla q \neq 0$ and
@@ -246,14 +246,14 @@ we deduce $L_0^2(\Omega)=\range{\nabla\cdot}$. In particular, this means
 that for all $q\in L_0^2(\Omega)$ there exists $v\in H_0^{\text{div}}$ such that
 $\nabla \cdot v=q$ and $\norm{v}_{H^{\text{div}}}\leq C \norm{q}_0$.
 Hence, it holds the estimate
-\begin{align*}
+\begin{align}
 \inf_{q\in Q}\sup_{v\in V}\frac{(\nabla \cdot v, q)}{\norm{q}_Q\norm{v}_V}
   \geq \inf_{q\in Q} \frac{\norm{q}_0}{\norm{v}_{H^{\text{div}}}}\geq C.
-\end{align*}
+\end{align}
 where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
-\begin{align*}
+\begin{align}
   \norm{u}_{H^{\text{div}}}=\norm{u}_0 \quad \forall u\in \ker B.
-\end{align*}
+\end{align}
 \end{solution}
 \end{Problem}
 
@@ -297,9 +297,9 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
 
 \begin{remark}
   Since the polynomial space $\P_r$ is the direct sum
-  \begin{gather*}
+  \begin{gather}
     \P_r = \bigoplus_{s=0}^r \breve\P_s,
-  \end{gather*}
+  \end{gather}
   the homogeneous polynomial complex above can be extended to a
   general polynomial complex in a straightforward way.
 \end{remark}
@@ -352,33 +352,33 @@ usual differential $d$.
   Since we are not using differential form technology, we prove this
   for each $k$ directly. For $k=0$, we have $\kappa\omega = 0$, thus
   we have to show
-  \begin{gather*}
+  \begin{gather}
     \kappa d\omega = r\omega.
-  \end{gather*}
+  \end{gather}
   Due to linearity of $\kappa$ and $d$, it suffices to prove the
   result for $\omega = p=x_1^ax_2^bx_3^c$. We note that $dp/d_{x_1} =
   a/x_1 p$ and $d(x_1 p)/d_{x_1} = (a+1) p$ and analogue for the other
   coordinates.
-  \begin{gather*}
+  \begin{gather}
     \kappa_1 d_0\omega = x\cdot \nabla p = x\cdot
     \begin{pmatrix}
       a/x_1\\b/x_2\\c/x_3
     \end{pmatrix}p
     = (a+b+c)p.
-  \end{gather*}
+  \end{gather}
   The second easy case is $k=3$ such that $d\omega = 0$. Let again
   $\omega = p$ to obtain
-  \begin{gather*}
+  \begin{gather}
     d_2\kappa_3 \omega = \div(xp) = \div
     \begin{pmatrix}
       x_1 p \\x_2 p \\x_3 p
     \end{pmatrix}
     = (a+1+b+1+c+1) p = (r+3) \omega.
-  \end{gather*}
+  \end{gather}
   For the two vector valued cases, we note that it suffices to prove
   the result for $\omega = (p,0,0)^T$ and to note that the results for
   nonzero second and third component follow suite. Thus, for $k=1$
-  \begin{multline*}
+  \begin{multline}
     \nabla (x\cdot \omega) - x\times \curl \omega
     = \nabla(x_1 p) - x\times
     \begin{pmatrix}
@@ -398,9 +398,9 @@ usual differential $d$.
       a+b+c+1 \\0\\0
     \end{pmatrix}p
     = (r+1)\omega.
-  \end{multline*}
+  \end{multline}
   Finally, for $k=2$
-  \begin{multline*}
+  \begin{multline}
     \curl(-x\times \omega) + x \div \omega
     = \curl
     \begin{pmatrix}
@@ -423,7 +423,7 @@ usual differential $d$.
       a+b+c+2\\0\\0
     \end{pmatrix}p
     = (r+2)\omega.
-  \end{multline*}
+  \end{multline}
 \end{proof}
 
 \begin{Lemma}{d-kappa-injective}
@@ -443,11 +443,11 @@ usual differential $d$.
   If $r=k=0$, then $\kappa\omega = d\omega = 0$, such that the lemma
   holds trivially. For $r+k\neq 0$, we apply $\kappa$ to
   equation~\eqref{eq:derham:15} to obtain
-  \begin{gather*}
+  \begin{gather}
     \kappa\omega = \frac1{r+k}
     \bigl(\kappa d\kappa\omega + \kappa^2d\omega\bigr)
     = \frac1{r+k}\kappa d\kappa\omega.
-  \end{gather*}
+  \end{gather}
   Thus, we have proven $d\kappa\omega=0$ implies $\kappa\omega=0$. The
   second implication is proven by applying $d$ to~\eqref{eq:derham:15}.
 \end{proof}
@@ -466,30 +466,30 @@ usual differential $d$.
   We already know $\range{\kappa_{k-1}} \subset \ker{\kappa_k}$. Thus,
   it remains to show the opposite inclusion. Let therefore $\omega\in
   \breve \P_r\Lambda^k$ such that $\kappa\omega=0$. Then,
-  \begin{gather*}
+  \begin{gather}
     \omega = \frac1{r+k} (d\kappa\omega+\kappa d\omega)
     = \frac1{r+k} \kappa d\omega =: \kappa\eta
-  \end{gather*}
+  \end{gather}
   with $\eta \in \breve\P_{r-1}\Lambda^{k+1}$. Thus,
   $\omega\in \range{\kappa_{k-1}}$. Again, the proof for the de Rham
   complex is obtained by replacing $\kappa$ by $d$.
 
   In order to see that $\breve \P_r\Lambda^k$ is the sum of the two
   spaces, we let for arbitrary $\omega\in \breve \P_r\Lambda^k$
-  \begin{gather*}
+  \begin{gather}
     \eta = \frac1{r+k} d\omega \in \breve\P_{r-1}\Lambda^{k+1},
     \qquad
     \mu = \frac1{r+k} \kappa\omega \in \breve\P_{k+1}\Lambda^{k-1}.
-  \end{gather*}
+  \end{gather}
   By equation~\eqref{eq:derham:15}, we have
   $\omega = \kappa\eta + d\mu$. It remains to show that the
   intersection of the spaces is zero. Therefore, let $\omega$ be
   chosen from the intersection. Then, $\omega = \kappa\eta = d \mu$
   and
-  \begin{gather*}
+  \begin{gather}
     (r+k)\omega = d\kappa \omega + \kappa d \omega
     = d \kappa^2 \eta + \kappa d^2 \mu = 0.
-  \end{gather*}
+  \end{gather}
 \end{proof}
 
 \begin{Corollary}{pk-complexes}
@@ -529,26 +529,26 @@ usual differential $d$.
     \P_r^+\Lambda^k = \P_r\Lambda^k \oplus \kappa \P_r\Lambda^{k+1}.
   \end{gather}
   It is also referred to as $\P_{r+1}^-\Lambda^k$. Furthermore,
-  \begin{gather*}
+  \begin{gather}
     \P_r^+\Lambda^0 = \P_{r+1}\Lambda^0,
     \qquad
     \P_r^+\Lambda^d = \P_r\Lambda^d.
-  \end{gather*}
+  \end{gather}
 \end{Definition}
 
 \begin{remark}
   We have used the construction principle
-  \begin{gather*}
+  \begin{gather}
     \P_r\Lambda^k = \P_{r-1}\Lambda^k \oplus \breve \P_r\Lambda^k.
-  \end{gather*}
+  \end{gather}
   Using its decomposition, we obtain
-  \begin{gather*}
+  \begin{gather}
     \P_r\Lambda^k =
     \bigoplus_{s=1}^{r-1}\kappa \breve\P_{s-1}\Lambda^{k+1}
     \bigoplus_{s=1}^{r-1} d\breve\P_{s+1}\Lambda^{k-1}
     \oplus \kappa \breve\P_{r-1}\Lambda^{k+1}
     \oplus d\breve\P_{r+1}\Lambda^{k-1}.
-  \end{gather*}
+  \end{gather}
   If we leave out the last factor, we get the new space
   $\P_{r-1}^+\Lambda^k$.
 \end{remark}
@@ -608,9 +608,9 @@ usual differential $d$.
   from \slideref{Lemma}{pk-plus-d}. The vertical identities from the
   decomposition~\eqref{eq:derham:17}. For the last set of identities,
   we observe that by construction
-  \begin{gather*}
+  \begin{gather}
     \P_r\Lambda^k = \P_{r-1}^+\Lambda^k \oplus d \P_{r+1}\Lambda^{k-1}.
-  \end{gather*}
+  \end{gather}
   Thus, $d\P_r\Lambda^k = d\P_{r-1}^+\Lambda^k\subset \P_{r-1}\Lambda^{k+1}$.
 \end{proof}
 
@@ -629,10 +629,10 @@ usual differential $d$.
 \begin{proof}
   First, we prove the equality of the two dimensions by applying $\kappa$
   to equation~\eqref{eq:derham:17}, yielding
-  \begin{gather*}
+  \begin{gather}
     \kappa \breve P_r\Lambda^k(\R^d)
     = \kappa d \breve P_{r+1}\Lambda^{k-1}(\R^d).
-  \end{gather*}
+  \end{gather}
   By \slideref{Lemma}{d-kappa-injective}, the two spaces are
   isomorphic and the equality holds.
 
@@ -643,29 +643,29 @@ usual differential $d$.
 
   For all other combinations of $r$ and $k$ it is proven by induction
   over $k$. For $k=d$,
-  \begin{gather*}
+  \begin{gather}
     \dim \breve\P_r\Lambda^d(\R^d) = \dim\breve\P_r(\R^d)
     = \binom{d+r-1}{d-1}.
-  \end{gather*}
+  \end{gather}
   For $k<d$, we assume the formula proven for $k+1$. We have
 % Move this to an earlier point or an appendix
-  \begin{gather*}
+  \begin{gather}
     \breve P_r\Lambda^k(\R^d) = \binom{d+r-1}{d-1}\binom{d}{k}.
-  \end{gather*}
+  \end{gather}
   Now, the dimension formula
-  \begin{gather*}
+  \begin{gather}
     \dim \range \phi = \dim V - \dim ker \phi,
-  \end{gather*}
+  \end{gather}
   yields
-  \begin{gather*}
+  \begin{gather}
     \dim\kappa\breve \P_r\Lambda^k(\R^d) =
     \dim\breve \P_r\Lambda^k(\R^d)
     - \dim\kappa\breve \P_{r-1}\Lambda^{k+1}(\R^d),
-  \end{gather*}
+  \end{gather}
   where we have used the exactness of the Koszul complex.
   Using the induction hypothesis yields by the binomial identity
 % Olkhovskiy
-  \begin{align*}
+  \begin{align}
     \dim\kappa\breve \P_r\Lambda^k(\R^d) 
     &= \binom{d+r-1}{d-1}\binom{d}{k} - \binom{d+r-1}{d-k-1}\binom{r+k-1}{k}
     \\
@@ -682,7 +682,7 @@ usual differential $d$.
     &= \frac{(d+r)!}{r!(k-1)!(d-k)!(r+k)}
     \\
     &= \binom{d+r}{d-k}\binom{r+k-1}{k-1}.
-  \end{align*}
+  \end{align}
 \end{proof}
 
 \subsection{Degrees of freedom and bases for simplicial meshes}
@@ -762,14 +762,14 @@ usual differential $d$.
 \begin{remark}
   For a simplex $\cell\subset\R^d$, the barycentric coordinates are
   the uniquely determined linear interpolating polynomials such that
-  \begin{gather*}
+  \begin{gather}
     \lambda_i(x_j) = \delta_{ij}.
-  \end{gather*}
+  \end{gather}
   Then,
-  \begin{gather*}
+  \begin{gather}
     \cell = \biggl\{ x = \sum_{i=0}^d\lambda_i\bigg\vert
     \lambda_i \ge 0,\quad\sum_{i=0}^d\lambda_i = 1\biggr\}.
-  \end{gather*}
+  \end{gather}
 
   Let $f=f_\sigma$ be the $k$-dimensional subsimplex spanned by the
   points $x_{\sigma_0},\dots,x_{\sigma_k}$. Then, the linear
@@ -797,9 +797,9 @@ usual differential $d$.
   \end{gather}
   which reads: for every $p\in \P_k(\R^d)$ there is
   $q\in\breve\P_k(\R^{d+1})$ such that
-  \begin{gather*}
+  \begin{gather}
     p(x_1,\dots,x_d) = q(\lambda_0,\dots,\lambda_d).
-  \end{gather*}
+  \end{gather}
 % Argue why isomorphism: count?
 \end{remark}
 
@@ -847,13 +847,13 @@ usual differential $d$.
   and the two spaces are isomorphic.
 
   Let $g$ be a subsimplex that is disjoint from $f$.
-  \begin{align*}
+  \begin{align}
       f_\sigma &= \bigl\{x\in\cell \big\vert
       \lambda_j=0 \text{ for } j\not\in\sigma\bigr\}.
       \\
       &= \biggl\{ x = \sum_{i\in\sigma}\lambda_i\bigg\vert
     \lambda_i \ge 0,\quad\sum_{i\in\sigma}\lambda_i = 1\biggr\}.
-  \end{align*}
+  \end{align}
   Then $\sigma_f$ and $\sigma_g$ are disjoint and in particular
   $\lambda_i = 0$ for all $i\in \sigma_f$ in the decomposition
   $g \ni x = \sum_i \lambda_i(x)$. Thus, $p\in \P_r(f)$
@@ -928,9 +928,9 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
 
 \begin{proof}
   We begin to show that
-  \begin{gather*}
+  \begin{gather}
     \P_r(\cell) = \bigoplus_{f\in\Delta(\cell)}V(f).
-  \end{gather*}
+  \end{gather}
   First, we note that for any $f\in\Delta(\cell)$ every function in $V(f)$
   is also in $\P_r(\cell)$.  For $\dim f=0$, that is, $f=\{x_i\}$ for some
   vertex $x_i$, the only homogeneous polynomial of order $r$ is $\lambda_i^r$.
@@ -940,27 +940,27 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
   where $f$ is a vertex are disjoint. By the second statement of the
   same lemma, the spaces $V(f)$ for all $f$ with equal dimension are
   disjoint. Therefore, the sum
-  \begin{gather*}
+  \begin{gather}
     V_d(\cell) = \sum_{k=0}^{d-1} \sum_{f\in \Delta_k(\cell)} V(f),
-  \end{gather*}
+  \end{gather}
   is direct. But, $V(\cell) \cap V_d(\cell) = \{0\}$, since all elements in
   $V(\cell)$ contain a bubble function factor. Therefore,
-  \begin{gather*}
+  \begin{gather}
     \bigoplus_{f\in\Delta(\cell)}V(f) \subset \P_r(\cell).
-  \end{gather*}
+  \end{gather}
   We conclude by showing that dimensions on both sides are equal.
   On the right, we use
-  \begin{gather*}
+  \begin{gather}
     \dim \P_r(\R^d) = \binom{r+d}{r} = \frac{(r+d)!}{d!r!}
-  \end{gather*}
+  \end{gather}
   On the left, we have
-  \begin{multline*}
+  \begin{multline}
     \dim \bigoplus_{f\in\Delta(\cell)}V(f) =
     \sum_{k=0}^{d} \binom{d+1}{k+1} \binom{r+k}{k}
     \\
     = \frac{(d+1)!}{r!}
     \sum_{k=0}^{d} \frac{1}{(k+1)!(d-k)!} \frac{(r+k)!}{k!}.
-  \end{multline*}
+  \end{multline}
 
 % Finish this!
 
@@ -968,25 +968,25 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
   end, we first notice that for any $f\in\Delta(\cell)$ there holds
   $\dim W(f) = \dim V(f)$ by their definition. Furthermore, for
   $p\in V(f)$ there holds
-  \begin{gather*}
+  \begin{gather}
     \Bigl(\phi(p) = 0 \quad\forall \phi\in W(f)\Bigr)
     \quad\Rightarrow\quad
     p=0.
-  \end{gather*}
+  \end{gather}
   Thus, for $p\in \P_r(\cell)$ there holds
-  \begin{gather*}
+  \begin{gather}
     \Bigl(\phi(p) = 0 \quad\forall \phi\in \sum W(f)\Bigr)
     \quad\Rightarrow\quad
     p=0.
-  \end{gather*}
+  \end{gather}
   Consequently,
-  \begin{gather*}
+  \begin{gather}
     \P_r(\cell)^* = \sum W(f).
-  \end{gather*}
+  \end{gather}
   since we have already proven that
-  \begin{gather*}
+  \begin{gather}
     \dim \P_r(\cell)^* = \sum \dim W(f),
-  \end{gather*}
+  \end{gather}
   the sum on the right must be direct.
 \end{proof}
 
@@ -1084,7 +1084,7 @@ and $\Hcurl$.
 
 \begin{Lemma}{qr-complex}
   Tensor product polynomials form the exact sequence
-  \begin{gather*}
+  \begin{gather}
     \R
     \overset{\subset}{\longrightarrow} \Q_r
     \overset{\nabla}{\longrightarrow}
@@ -1098,14 +1098,14 @@ and $\Hcurl$.
     \overset{\div}{\longrightarrow}
     \Q_r
     \longrightarrow 0,    
-  \end{gather*}
+  \end{gather}
 \end{Lemma}
 
 \begin{proof}
   First, we show that the differential operators map into the right
   spaces. Let $q\in\Q_{r+1}$ such that
   $q(x) = q_1(x_1) q_2(x_2)q_3(x_3)$ with $q_i\in\Q_{r+1}$. Then
-  \begin{gather*}
+  \begin{gather}
     \nabla q =
     \begin{pmatrix}
       q_1'q_2q_3\\q_1q_2'q_3\\q_1q_2q_3'
@@ -1114,12 +1114,12 @@ and $\Hcurl$.
     \begin{pmatrix}
       \Q_{r,r+1,r+1}\\\Q_{r+1,r,r+1}\\\Q_{r+1,r+1,r}
     \end{pmatrix}.
-  \end{gather*}
+  \end{gather}
   Similarly, we can compute this directly for $\curl$ and
   $\div$. Since polynomials are differentiable, we have $d^2=0$. It
   remains to show that the sequence is exact, which we will prove at
   the example of $\Hcurl$. Let $u\in \ker{\curl}$,
-  \begin{gather*}
+  \begin{gather}
     u=
     \begin{pmatrix}
       \phi_1\phi_2\phi_3\\
@@ -1133,30 +1133,30 @@ and $\Hcurl$.
       \phi_1\phi_2\phi_3' - \pi_1'\pi_2\pi_3\\
       \psi_1'\psi_2\psi_3 - \phi_1\phi_2'\phi_3
     \end{pmatrix},
-  \end{gather*}
+  \end{gather}
   where each polynomial with index $i$ only depends on
   $x_i$. Furthermore, $\phi_1,\psi_2,\pi_3\in\P_r$ and all other in
   $\P_{r+1}$.  From the continuous de Rham complex, we know that there
   is a function $p$ such that $u=\nabla p$. It remains to show that
   $p\in\Q_{r+1}$. There holds
-  \begin{gather*}
+  \begin{gather}
     \d_1 p = \phi_1\phi_2\phi_3.
-  \end{gather*}
+  \end{gather}
   Thus, we make the ansatz
-  \begin{gather*}
+  \begin{gather}
     p = \Phi_1\phi_2\phi_3,
-  \end{gather*}
+  \end{gather}
   where $\Phi_1\in\P_{r+1}$ is the antiderivative of $\phi_1$. Thus,
   $p\in\Q_{r+1}$ It remains to show that this ansatz is consistent
   with the other two derivatives, thus,
-  \begin{gather*}
+  \begin{gather}
     p = \Phi_1\phi_2\phi_3 = \psi_1\Psi_2\psi_3 = \pi_1\pi_2\Pi_3.
-  \end{gather*}
+  \end{gather}
   Integrating the first component of $\curl u$ with respect to $x_2$
   and $x_3$, we obtain
-  \begin{gather*}
+  \begin{gather}
     \pi_1\pi_2\Pi_3 = \psi_1\Psi_2\psi_3.
-  \end{gather*}
+  \end{gather}
   Doing the same with the second component, we see indeed that the
   function $p$ is consistently defined and thus $u=\nabla p$.
 \end{proof}
@@ -1254,20 +1254,20 @@ and $\Hcurl$.
   $\{\phi_i\}$ and $\{\psi_j\}$ be the basis dual to the degrees of
   freedom of $\P_{r+1}\Lambda^0$ or $\P_r \Lambda^1$,
   respectively. Then, (renumbering the degrees of freedom)
-  \begin{gather*}
+  \begin{gather}
     \nodal_k\otimes\nodal_l(\phi_i\otimes\psi_j) = \delta_{ik}\delta_{jl}.
-  \end{gather*}
+  \end{gather}
   Thus, the mapping between tensorized degrees of freedom and
   tensorized basis functions is one-to-one.
 
   For the Raviart-Thomas element $RT_r$, the normal component is
   $\P_r\Lambda^1$. Take for instance the face $x_1 = \chi_0$. Then,
   the degrees of freedom associated to this face are
-  \begin{gather*}
+  \begin{gather}
     \nodal_{0,0} \otimes \nodal{1,q} p
     = \int_I p_1(\chi_1) p_2(x_2) q(x_2) \dx_2
     \quad\forall q\in \P_r.
-  \end{gather*}
+  \end{gather}
   Since the trace of $p$ on this face is $p_2 \in \P_r$, this
   polynomial is uniquely determined by the degree of freedom.
 

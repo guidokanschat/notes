@@ -37,30 +37,30 @@
   $A^TA=0$ and thus $A=0$ and $\Sigma=0$. Now assume $\sigma_1^2 >
   0$. Choose $x_1$ as an eigenvector to the eigenvalue $\sigma_1^2$ of
   $A^TA$ and
-  \begin{gather*}
+  \begin{gather}
     y_1 = \frac1{\sigma_1} A x_1.
-  \end{gather*}
+  \end{gather}
   We can complete both $x_1$ and $y_1$ to an orthonormal basis $X$ and
   $Y$, respectively. Then, there holds for $e_1 \in \R^n$ and
   $\bar e_1\in \R^m$:
-  \begin{align*}
+  \begin{align}
     Y^TAX e_1 &= Y^T A x_1 = \sigma_1 Y^Ty_1 = \sigma_1 \bar e_1\\
     (Y^TAX)^T \bar e_1 = X^TA^TY\bar e_1,
               &= X^TA^T y_1 =  \tfrac1{\sigma_1} X^TA^TA x_1
                 = \sigma_1 X^Tx_1 = \sigma_1 e_1.
-  \end{align*}
+  \end{align}
   Thus,
-  \begin{gather*}
+  \begin{gather}
     Y^TAX =
     \begin{bmatrix}
       \sigma_1 & 0 \\ 0 & \tilde A
     \end{bmatrix}
-  \end{gather*}
+  \end{gather}
   with $\tilde A\in \R^{(m-1)\times (n-1)}$. By induction, there holds
   $\tilde A = \tilde U \tilde \Sigma \tilde V^T$ with orthogonal
   matrices $U$ and $V$ and $\tilde\Sigma$ of the same form as $\Sigma$
   and both dimensions reduced by 1. Now let
-  \begin{gather*}
+  \begin{gather}
     U = Y
     \begin{bmatrix}
       1 & 0\\ 0& \tilde U
@@ -75,7 +75,7 @@
     \begin{bmatrix}
       \sigma_1 & 0 \\ 0 & \tilde\Sigma
     \end{bmatrix}
-  \end{gather*}
+  \end{gather}
   $U$ and $V$ as the product of orthogonal matrices are orthogonal,
   $\sigma$ has the claimed structure and there holds $A=U\Sigma V^T$.
 \end{proof}

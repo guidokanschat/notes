@@ -24,12 +24,14 @@ main.bbl: *.tex
 main.pdf: *.tex
 	mkdir -p blocks
 	pdflatex main
+	bibtex main
 	makeindex main
 	pdflatex main
 
 print.pdf: *.tex
 	mkdir -p blocks
 	pdflatex print
+	bibtex print
 	makeindex print
 	pdflatex print
 	pdfcrop print.pdf
@@ -40,6 +42,11 @@ allslides.pdf: main.pdf
 	perl ../aux2slides.pl main.aux > iallslides.tex
 	pdflatex allslides
 
+png:
+	mkdir -p png
+	convert -density 300 -scale 960x720 -antialias allslides.pdf ./png/slide-%003d.png
+
+
 problems.pdf: main.pdf
 solutions.pdf: main.pdf
 	perl -ni ../problem-fix.pl blocks/Problem*.tex
@@ -48,3 +55,5 @@ solutions.pdf: main.pdf
 %.pdf: %.tex
 	mkdir -p blocks
 	pdflatex $<
+
+.PHONY: png

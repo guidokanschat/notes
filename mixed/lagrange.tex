@@ -21,20 +21,20 @@
   \end{align}
   has a unique solution, which then is a minimum. It is determined by
   the first order necessary condition
-  \begin{gather*}
+  \begin{gather}
     a(u,v) = f(v) \quad\forall v\in V.
-  \end{gather*}
+  \end{gather}
 \end{Theorem}
 
 \begin{intro}
   In the next step, we constrain the solution $u$ to a subspace of $V$
   defined as the kernel of the linear operator $B: V\to Q^*$. Hence,
   we consider the minimization problem
-  \begin{gather*}
+  \begin{gather}
     J(u) =\min J(v) \quad
     \text{subject to}\quad
     Bu = 0.
-  \end{gather*}
+  \end{gather}
   Going back to formulations with bilinear forms, the constraint
   translates to
   \begin{gather}
@@ -84,10 +84,10 @@
 
 \begin{Theorem}{lagrange-multiplier}
   If $u\in V$ is a solution of the constrained minimization problem
-  \begin{gather*}
+  \begin{gather}
     J(u) = \min_{v\in V} J(v), \quad\qquad
     b(u,q) = 0 \quad\forall q\in Q,
-  \end{gather*}
+  \end{gather}
   the pair $(u,p)\in V\times Q$ is a stationary point of
   the \define{Lagrange functional}
   \begin{gather}
@@ -99,43 +99,43 @@
 \begin{Problem}{lagrange-multiplier}
   Verify: the first order necessary conditions of the Lagrange
   multiplier rule are
-  \begin{gather*}
+  \begin{gather}
     \arraycolsep.1em
     \begin{matrix}
       a(u,v) &+& b(v,p) &=& f(v) &\quad&\forall v\in V, \\
       b(u,q) && &=& 0 &&\forall q\in Q.
     \end{matrix}
-  \end{gather*}
+  \end{gather}
   To this end, recall the type of objects that derivatives of linear
   functionals are and compute the derivatives of $\mathscr{L}$.
 \begin{solution}
 Remember the Lagrange functional
-\begin{align*}
+\begin{align}
  \mathscr{L}(v,q) = \tfrac12 a(v,v) - f(v) + b(v,q).
-\end{align*}
+\end{align}
 For an extremal point $u$ of the constrained problem,
 there has to exist an $p\in Q$ such that
-\begin{align*}
+\begin{align}
   \mathscr{L}(u,p) = \min_{(v,q)\in V\times Q} \mathscr{L}(v,q).
-\end{align*}
+\end{align}
 In particular, it has to hold
-\begin{align*}
+\begin{align}
   \mathscr{L}(u+\epsilon_v v,p+\epsilon_q q) -\mathscr{L}(u,p)\in\mathcal{O}(\epsilon_v\epsilon_q+\epsilon_v^2+\epsilon_q^2).
-\end{align*}
+\end{align}
 for all $(v,q)\in\{(v,q)\in V\times Q: \norm{v}_V=1, \norm{q}_Q=1\}$.
 In fact,
-\begin{align*}
+\begin{align}
  &\mathscr{L}(u+\epsilon_v v,p+\epsilon_q q) - \mathscr{L}(u,p)\\
  &=\tfrac12 a(u+\epsilon_v,u+\epsilon_v) - f(u+\epsilon_v) + b(u+\epsilon_v,p+\epsilon_q q)\\&\quad
    -\tfrac12 a(u,u) + f(u) - b(u,p)\\
    &=\tfrac12 a(\epsilon_v v,u)+a(u,\epsilon_v v)+a(\epsilon_v,\epsilon_v) - f(\epsilon_v v)\\&\quad + b(\epsilon_v,p )+b(u,\epsilon_q q)+b(\epsilon_v v,\epsilon_q q)\\
    &=a(u, \epsilon_v v)-f(\epsilon_v v) + b(\epsilon_v,p )+b(u,\epsilon_q q)+\mathcal{O}(\epsilon_v\epsilon_q+\epsilon_v^2+\epsilon_q^2).
-\end{align*}
+\end{align}
 and this implies
-\begin{align*}
+\begin{align}
       a(u,v) + b(v,p)  &= f(v) &&\forall v\in V, \\
                b(u,q)  &= 0    &&\forall q\in Q.
-\end{align*}
+\end{align}
 \end{solution}
 \end{Problem}
 
@@ -143,10 +143,10 @@ and this implies
   The Stokes equations with no-slip boundary conditiond are the first
   order necessary conditions for the constrained minimization problem:
   find a velocity $u\in V = H^1_0(\domain)$ such that
-  \begin{align*}
+  \begin{align}
     \tfrac12\form(\nabla u,\nabla u) - f(u) &= \min,\\
     \form(\div u,q) &= 0 \qquad\forall q\in Q.
-  \end{align*}
+  \end{align}
   The pressure $p$ assumes the role of a \putindex{Lagrange multiplier}.
 \end{Corollary}
 

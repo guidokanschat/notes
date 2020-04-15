@@ -67,16 +67,16 @@
 \begin{proof}
   Let $u_h^g \in V_h^g$ arbitrary. By the ellipticity assumption,
   there is a unique function $u_h^0\in \ker{B_h}$ such that
-  \begin{gather*}
+  \begin{gather}
     a(u_h^0,v_h) = f(v_h) - a(u_h^g,v_h),
     \qquad\forall v_h\in \ker{B_h}.
-  \end{gather*}
+  \end{gather}
   Hence, $u_h = u_h^g + u_h^0$ is the unique solution
   to~\eqref{eq:galerkin:4}. Choose now $w_h\in V_h^g$
   arbitrarily. Then, $v_h = u_h-w_h\in \ker{B_h}$ and using
-  \begin{gather*}
+  \begin{gather}
     f(v_h) = a(u, v_h) - b(v_h, p),
-  \end{gather*}
+  \end{gather}
   we obtain
   \begin{gather}
     \begin{split}
@@ -88,19 +88,19 @@
     \end{split}
   \end{gather}
   for any $q_h\in Q_h$, yielding
-  \begin{gather*}
+  \begin{gather}
     \gamma_h\norm{v_h}^2_V
     \le \abs{a(v_h, v_h)}
     \le \norm a \norm{u-w_h}_V \norm{v_h}_V
       + \norm b \norm{p-q_h}_Q \norm{v_h}_V.
-  \end{gather*}
+  \end{gather}
   We conclude by the standard triangle inequality argument
-  \begin{multline*}
+  \begin{multline}
     \norm{u-u_h}_V \le \norm{u-w_h}_V + \norm{u_h-w_h}_V
     \\
     \le \norm{u-w_h}_V + \frac{\norm a}{\gamma_h} \norm{u-w_h}_V
     + \frac{\norm b}{\gamma_h} \norm{p-q_h}_Q.
-  \end{multline*}
+  \end{multline}
   The estimate follows since $w_h\in V_h^g$ and $q_h\in Q_h$ were
   chosen arbitrarily.
 \end{proof}
@@ -175,25 +175,25 @@
   By the third condition in
   \slideref{Theorem}{infsup-well-equivalence}, there is a unique
   $z_h\in \ortho{\ker{B_h}}$ such that
-  \begin{gather*}
+  \begin{gather}
     B_h z_h = B_h(u-v_h),\qquad \forall v_h\in V_h,
-  \end{gather*}
+  \end{gather}
   and
-  \begin{gather*}
+  \begin{gather}
     \norm{z_h}_V \le \frac1{\beta_h}\norm{B_h(u-v_h)}_{Q_h^*}
     \le\frac{\norm b}{\beta_h} \norm{u-v_h}_V.
-  \end{gather*}
+  \end{gather}
   Let $w_h = z_h+v_h$. Then, $w_h\in V_h^g$ since
-  \begin{gather*}
+  \begin{gather}
     b(w_h, q_h) = b(u-v_h, q_h) = b(u, q_h) = g(q_h),
     \qquad\forall q_h\in Q_h.
-  \end{gather*}
+  \end{gather}
   Furthermore,
-  \begin{gather*}
+  \begin{gather}
     \norm{u-w_h}_V \le \norm{u-v_h}_V + \norm{z_h}_V
     \le \left(1+\frac{\norm b}{\beta_h}\right)
     \norm{u-v_h}_V.
-  \end{gather*}
+  \end{gather}
   Since $v_h \in V_h$ was chosen arbitrarily, we have
   proven~\eqref{eq:galerkin:12} and thus by
   \slideref{Theorem}{galerkin-mixed-u-kerbh} the estimate for
@@ -213,12 +213,12 @@
   \end{gather}
   Hence, for any $q_h\in Q_h$ there is by the inf-sup condition
   $v_h\in V_h$ with $\norm{v_h}_V=1$ such that
-  \begin{align*}
+  \begin{align}
     \beta_h \norm{p_h-q_h}_Q
     &\le b(v_h, p_h-q_h)\\
     & = a(u-u_h, v_h) + b(v_h, p-q_h)\\
     &\le \norm a \norm{u-u_h}_V + \norm b \norm{p-q_h}_Q.
-  \end{align*}
+  \end{align}
   Again, the estimate for $\norm{p-p_h}_Q$ follows by triangle
   inequality.
 \end{proof}
@@ -241,11 +241,11 @@
 
 \begin{Problem}{infsup-uniform}
   Let the following interpolation estimates hold:
-  \begin{gather*}
+  \begin{gather}
     \inf_{v_h\in V_h}\norm{u-v_h}_V = \mathcal O(h^k),
     \qquad
     \inf_{q_h\in Q_h}\norm{p-q_h}_V = \mathcal O(h^k).
-  \end{gather*}
+  \end{gather}
   Then, the estimates in \slideref{Theorem}{galerkin-mixed-p}
   are asymptotically optimal if and only if there are
   constants $\tilde \gamma>0$ and $\tilde \beta>0$ independent of
@@ -257,27 +257,27 @@
   independent of $h$.
 \begin{solution}
   The estimates in \slideref{Theorem}{galerkin-mixed-p} state
-  \begin{align*}
+  \begin{align}
     \norm{u-u_h}_V &\le c_h^{(1)} \inf_{v_h\in V_h^g}\norm{u-v_h}_V
 	      + c_h^{(2)} \inf_{q_h\in Q_h}\norm{p-q_h}_Q \\
     \norm{p-p_h}_Q &\le c_h^{(3)} \inf_{v_h\in V_h}\norm{u-v_h}_V
 	      + c_h^{(4)} \inf_{q_h\in Q_h}\norm{p-q_h}_Q.
-  \end{align*}
+  \end{align}
   such that the additional assumptions imply
-  \begin{align*}
+  \begin{align}
     \norm{u-u_h}_V &\le c_h^{(1)} C h^k + c_h^{(2)} C h^k \\
     \norm{p-p_h}_Q &\le c_h^{(3)} C h^k + c_h^{(4)} C h^k.
-  \end{align*}
+  \end{align}
     where the first constants are given by
-  \begin{align*}
+  \begin{align}
     c_h^{(1)} = \left(1+\frac{\norm b}{\beta_h}\right)
     \left(1+\frac{\norm a}{\gamma_h}\right),
     \qquad
     c_h^{(2)} = \left(1+\frac{\norm b}{\beta_h}\right)
     \frac{\norm b}{\gamma_h}.
-  \end{align*}
+  \end{align}
   For the last two estimates, the relevant estimates read
-  \begin{align*}
+  \begin{align}
     \beta_h \norm{p_h-q_h}_Q
     &\le b(v_h,p_h-q_h)\\
     & = a(u-u_h, v_h) + b(v_h, p-q_h)\\
@@ -285,24 +285,24 @@
     \Rightarrow \norm{p-p_h}_Q
     &\le \norm{p-q_h} + \norm{p_h-q_h}_Q \\
     &\le \frac{\norm a}{\beta_h} \norm{u-u_h}_V + \left(1+\frac{\norm b}{\beta_h}\right) \norm{p-q_h}_Q.
-  \end{align*}
+  \end{align}
   Therefore, the remaining constants are
-  \begin{align*}
+  \begin{align}
     c_h^{(3)} = \frac{\norm a}{\beta_h}c_h^{(1)}, \qquad
     c_h^{(4)} = \frac{\norm a}{\beta_h}c_h^{(2)}+\left(1+\frac{\norm b}{\beta}\right).
-  \end{align*}
+  \end{align}
 \end{solution}
 \end{Problem}
 
 \begin{intro}
   As we can see from the form
-  \begin{gather*}
+  \begin{gather}
     \forall q_h\in Q_h \;
     \exists v_h\in V_h\colon
     \quad B_h v_h = q_h
     \quad\wedge\quad
     \norm{v_h}_V \le \norm{q_h}_Q,
-  \end{gather*}
+  \end{gather}
   the uniform, discrete inf-sup condition introduces a compatibility
   condition between the spaces $V_h$ and $Q_h$. An immediate necessary
   condition is
@@ -313,9 +313,9 @@
   functions in $Q_h$. Obviously, counting dimensions is not
   sufficient, since we could have added basis functions in
   $\ker{B_h}$. Even the condition
-  \begin{gather*}
+  \begin{gather}
     \dim\ortho{\ker{B_h}} = \dim Q_h
-  \end{gather*}
+  \end{gather}
   is necessary and sufficient only for the existence of an inf-sup
   constant $\beta_h$ depending on $h$. Therefore, we need a stronger
   argument in order to ensure compatibility of the discrete
@@ -343,28 +343,28 @@
 \begin{proof}
   Assume first that $\Pi_{V_h}$ exists. then, there holds for any
   $q_h\in Q_h$
-  \begin{gather*}
+  \begin{gather}
     \sup_{v_h\in V_h} \frac{b(v_h, q_h)}{\norm{v_h}_V}
     \ge
     \sup_{v\in V} \frac{b(\Pi_{V_h}v_h, q_h)}{\norm{\Pi_{V_h} v_h}_V}
     =
     \sup_{v\in V} \frac{b(v, q_h)}{\norm{\Pi_{V_h} v_h}_V}
     \ge \frac{\beta}{c} \norm{q_h}_Q.
-  \end{gather*}
+  \end{gather}
   Conversely, we assume the existence of a uniform, discrete inf-sup
   constant $\tilde\beta>0$. Then, for any $v\in V$ let
   $g(.) = b(v,.) \in Q_h^*$. By
   \slideref{Theorem}{infsup-well-equivalence}, there is a unique
   element $\Pi_{V_h} v \in \ortho{\ker{B_h}}$ such that
-  \begin{gather*}
+  \begin{gather}
     b(\Pi_{V_h}v,q_h) = b(v, q_h),\qquad\forall q_h\in Q_h
-  \end{gather*}
+  \end{gather}
   and
-  \begin{gather*}
+  \begin{gather}
     \norm{\Pi_{V_h}v}_V
     \le \frac1{\tilde\beta}\norm{B_h v}_{Q_H^*}
     \le \frac{\norm b}{\tilde\beta} \norm{v}_V.
-  \end{gather*}
+  \end{gather}
   Thus, $\Pi_{V_h}$ is bounded and~\eqref{eq:galerkin:15} holds with
   $c=\norm b/\tilde\beta$.
 \end{proof}
@@ -387,53 +387,53 @@ Consider the problem
 \item Prove that then $S := BA^{-1}B^*$ is symmetric and positive definite, too.
 How can this matrix be used to solve (\ref{problem9-stokes})?
 \item Show that
-\begin{align*}
+\begin{align}
  P := I - B^*(BB^*)^{-1}B.
-\end{align*}
+\end{align}
 is a projector on the kernel of $B$ with $\norm{P}_2=1$.
 \item Show for the case $G = 0$ that $x$ is a solution of
-\begin{align*}
+\begin{align}
 PAPx = PF
-\end{align*}
+\end{align}
 if $(x,y)$ is a solution of (\ref{problem9-stokes}).
 \end{enumerate}
 \begin{solution}
 \begin{enumerate}
  \item Let's first consider the symmetry:
-  \begin{align*}
+  \begin{align}
     S^*=(BA^{-1}B^*)^*=B(A^*)^{-1}B^*=BA^{-1}B^*=S
-  \end{align*}
+  \end{align}
   We further observe
-  \begin{align*}
+  \begin{align}
    \norm{v}_S^2 &= v^*Sv = v^*BA^{-1}B^*v = (B^*v)^*A^{-1}B^*v \leq 0 \\
    \norm{v}_S^2 &\Longleftrightarrow B^*v = 0 \Longleftrightarrow v=0
-  \end{align*}
+  \end{align}
   since $A$ and $B$ have full rank.
 
   The first equation implies
-  \begin{align*}
+  \begin{align}
    x=A^{-1} (F-B^* y)
-  \end{align*}
+  \end{align}
   and eliminating $x$ in the second equation yields
-  \begin{align*}
+  \begin{align}
    BA^{-1} (F-B^* y)=G \Longleftrightarrow BA^{-1} B^* y=BA^{-1} F-G.
-   \end{align*}
+   \end{align}
 
-  \item \begin{align*}P^2&=(I - B^*(BB^*)^{-1}B)(I - B^*(BB^*)^{-1}B)\\
+  \item \begin{align}P^2&=(I - B^*(BB^*)^{-1}B)(I - B^*(BB^*)^{-1}B)\\
             &=I - 2B^*(BB^*)^{-1}B+ B^*(BB^*)^{-1}BB^*(BB^*)^{-1}B\\
             &= I-B^*(BB^*)^{-1}B=P
-        \end{align*}
+        \end{align}
         Therefore, $\norm{P}_2=1$ if $\operatorname{ker} B\not=\{0\}$.
         Note that $k<n$ implies this.
 
         Further, $Px=x$ for all $x\in \operatorname{ker} B$ and $BPy=0$ for all $y$.
   \item Let $x$ be a solution of (\ref{problem9-stokes}) for $G=0$.
-  \begin{align*}
+  \begin{align}
 PAPx &= (I-B^*(BB^*)^{-1}B) A (I-B^*(BB^*)^{-1}B) x\\
 &= (I-B^*(BB^*)^{-1}B) Ax\\
 &= (I-B^*(BB^*)^{-1}B) (F-B^* y)\\
 &= (I-B^*(BB^*)^{-1}B) F = PF
-        \end{align*}
+        \end{align}
 \end{enumerate}
 \end{solution}
 \end{Problem}

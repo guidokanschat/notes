@@ -21,9 +21,9 @@ mathematical detail refer to~\cite{Ciarlet88}.
   its physical implications. Therefore, only the differences
   $\deformed x-x$ should matter. Thus, we introduce the
   \define{displacement} $u$, such that
-  \begin{gather*}
+  \begin{gather}
     \Phi = \id + u.
-  \end{gather*}
+  \end{gather}
   The symbol $\id$ will refer to all occurrences of identical mappings
   and their matrices.
 
@@ -33,7 +33,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
   operations, which leave all distances and angles unchanged. Thus, we
   investigate the change of the distance between $x$ and $x+z$ under
   the mapping $\Phi$. By definition of the derivative, we have
-  \begin{align*}
+  \begin{align}
     \abs{\Phi(x+z) - \Phi(x)}^2 &= \norm{\nabla\Phi z}^2 + o(\abs{z}^4)
     \\
                               &= z^T\nabla\Phi^T\nabla\Phi z + o(\abs{z}^4)
@@ -41,7 +41,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
     &= z^T(I + \nabla u^T + \nabla u + \nabla u^T \nabla u) z + o(\abs{z}^4)
     \\
     &= \abs{z}^2 + 2 z^T\strain u z + o(\abs{z}^4),
-  \end{align*}
+  \end{align}
   where
   \begin{gather}
     \tilde\epsilon(u) = \tfrac12
@@ -149,11 +149,11 @@ mathematical detail refer to~\cite{Ciarlet88}.
   together with the material law~\eqref{eq:mixedintro:4}.  Once we
   test and integrate by parts to obtain our weak formulation, we
   obtain
-  \begin{gather*}
+  \begin{gather}
     \int_{\domain} -(\div \sigma) \cdot v\dx
     = \int_{\domain} \sigma : \nabla v\dx
     - \int_{\Gamma_N} \sigma n\cdot v\ds,
-  \end{gather*}
+  \end{gather}
   such that traction free is actually the natural boundary condition
   comparable to the Neumann condition for the Laplacian. Note that $:$
   is the double contraction or Frobenius product (see
@@ -163,25 +163,25 @@ mathematical detail refer to~\cite{Ciarlet88}.
 \begin{intro}
   We now walk the missing steps to obtain a weak formulation. first,
   we enter Hooke's law for $\sigma$ to obtain:
-  \begin{gather*}
+  \begin{gather}
     \int_\domain \bigl[2\mu \strain u : \nabla v
     + \lambda (\div u \id) : \nabla v
     \bigr]\dx = \int_\domain f\cdot v\dx.
-  \end{gather*}
+  \end{gather}
   Then, we choose the space
   \begin{gather}
     V = H^1_{\Gamma_D}(\domain; \R^d) = \bigl\{v\in H^1(\domain;\R^d) \big\vert
     v_{|\Gamma_D} = 0 \bigr\}.
   \end{gather}
   We notice for the second term that
-  \begin{gather*}
+  \begin{gather}
     \id : \nabla v = \sum_{i=1}^d \d_i v_i = \div v.
-  \end{gather*}
+  \end{gather}
   Furthermore, we use the result of Problem~\ref{Problem:frobenius} to
   obtain
-  \begin{gather*}
+  \begin{gather}
     \strain u:\nabla v = \strain u : \strain v.
-  \end{gather*}
+  \end{gather}
 \end{intro}
 
 \begin{Definition}{lame-navier-equations}

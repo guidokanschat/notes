@@ -48,9 +48,9 @@ consider~\cite{Braess97,Braess13}.
 \begin{enumerate}
 \item 
   First, we note that for every matrix $A$, there holds
-  \begin{gather*}
+  \begin{gather}
     A = A_S + A_A, \quad A_S = \frac{A+A^T}2, \quad A_A = \frac{A-A^T}2.
-  \end{gather*}
+  \end{gather}
   Furthermore, we see that $A_S$ is symmetric and $A_A$ is
   skew-symmetric. The sum of two symmetric matrices is symmetric,
   the same for skew-symmetric. Thus, the sets $X_S$ and $X_A$ of
@@ -64,12 +64,12 @@ consider~\cite{Braess97,Braess13}.
   that for any skew-symmetric matrix $A$, there holds $a_{ii}=0$
   for all diagonal elements. Thus, the inner product of $A$ with a
   symmetric matrix $S$ is
-  \begin{align*}
+  \begin{align}
     \scal(A,S) &= \sum_{i\neq j} a_{ij}s_{ij}\\
                &= \sum_{i<j} (a_{ij}s_{ij} + a_{ji}s_{ji})\\
                &= \sum_{i<j} (a_{ij}-a_{ji})s_{ij}\\
                &= 0.
-  \end{align*}
+  \end{align}
 \end{enumerate}
 \end{solution}
 \end{Problem}
@@ -87,7 +87,7 @@ consider~\cite{Braess97,Braess13}.
   formulation in \slideref{Definition}{weak-lame-navier} consists of the following steps:
   \begin{enumerate}
   \item Choose a finite dimensional subspace $\vV_h\subset \vV$
-  \item Find $\vu_h \in \vV_h$, such that for all $v\in \vV_h$ there holds
+  \item Find $\vu_h \in \vV_h$, such that for all $\vv\in \vV_h$ there holds
   \begin{gather}
     \label{eq:mixedintro:lame3}
     a(\vu_h,\vv_h) \equiv 2\mu\form(\strain{\vu_h}, \strain{\vv_h})
@@ -209,23 +209,44 @@ The analytical results can be summarized by
   complicated cases.
 \end{intro}
 
-\begin{Lemma*}{korn-inequality}{Korn inequality}
-  There is a constant $c_K>0$ such that
+% \begin{Lemma*}{korn-inequality}{Korn inequality}
+%   There is a constant $c_K>0$ such that
+%   \begin{gather}
+%     \label{eq:mixedintro:korn}
+%     c_K \norm{\vv}_{\vH^1(\domain)}
+%     \le \norm{\strain \vv}_{\vL^2(\Omega)}
+%     \qquad\forall \vv\in \vH^1_0(\domain) \cap \vH^2(\domain).
+%   \end{gather}
+% \end{Lemma*}
+
+\begin{Problem*}{korn-inequality}{Korn inequality}
+  Prove that the inequality
   \begin{gather}
     \label{eq:mixedintro:korn}
-    c_K^2 \norm{\vv}_{\vH^1(\domain)}^2
-    \le \norm{\strain \vv}_{\vL^2(\Omega)}^2
-    \qquad\forall \vv\in \vH^1_0(\domain).
+    c_K \norm{\vv}_{\vH^1(\domain)}
+    \le \norm{\strain \vv}_{\vL^2(\Omega)}
+    \qquad\forall \vv\in \vH^1_0(\domain) \cap \vH^2(\domain).
   \end{gather}
-\end{Lemma*}
+  holds with a constant
+  \begin{gather}
+    c_K = \frac1{\sqrt2(1+c_P)},
+  \end{gather}
+  where $c_P$ is the constant of the \putindex{Poincaré-Friedrichs inequality}.
+  Use the intermediate result
+  \begin{gather}
+    2 \norm{\strain u}^2_{L^2(\domain)} = \norm{\nabla u}_{L^2(\domain)}^2
+    + \norm{\div u}_{L^2(\domain)}^2,
+  \end{gather}
+  and prove it by integration by parts.
+\end{Problem*}
 
 While the inequality is of high importance in the mathematical and
 numerical analysis of problems in continuum mechanics, it a peripheral
-topic to this class. Therefore, we omit the proof and refer to Theorem
-3.3 in~\cite[Section III.3.3]{DuvautLions76}. We point out though,
-that there is a whole family of Korn inequalities ensuring the
-definiteness of the strain bilinear form on certain
-spaces. See~\cite{DesvillettesVillani02} for some indepth analysis.
+topic to this class. We point out, that there is a whole family of
+Korn inequalities ensuring the definiteness of the strain bilinear
+form on certain spaces. We have only stated the simplest version
+here. See~\cite{DuvautLions76,DesvillettesVillani02} for some indepth
+analysis.
 
 \begin{Problem}{elasticity-standard-h1}
   Let the space $V=H^1_0(\domain;\R^d)$ be equipped with its standard inner
@@ -235,9 +256,9 @@ spaces. See~\cite{DesvillettesVillani02} for some indepth analysis.
   Show using the elliptic finite element toolbox in \slideref{Theorem}{fem-toolbox}
   \begin{enumerate}
   \item The weak formulation has a unique solution for which there holds
-    \begin{gather*}
+    \begin{gather}
       \norm{\vu}_{\vH^1} \le \frac1{2c_K\mu} \norm{\vf}_{\vH^{-1}}.
-    \end{gather*}
+    \end{gather}
   \item There holds the error estimate
     \begin{gather}
       \norm{\vu-\vu_h}_{\vH^1}
@@ -252,52 +273,52 @@ spaces. See~\cite{DesvillettesVillani02} for some indepth analysis.
       lemma. Thus, we have to show that the bilinear form is bounded
       and elliptic.\marginpar{Todo}
    \item For the $H^1$-error estimate we make use of Korn's inequality to note\marginpar{Todo: this is outdated}
-   \begin{align*}
+   \begin{align}
     \norm{u}_V^2=2\mu\norm{\strain u}_0^2+ \lambda \norm{\div u}_0^2\geq
     2\mu(c_K^2\norm{u}_1^2-\norm{u}_0^2)
-   \end{align*}
+   \end{align}
    and on the other hand
-   \begin{align*}
+   \begin{align}
     \norm{u}_V^2=2\mu\norm{\strain u}_0^2+ \lambda \norm{\div u}_0^2\leq
     (2\mu+\lambda d^2)\norm{u}_1^2
-   \end{align*}
+   \end{align}
    where we used
-   \begin{align*}
+   \begin{align}
     \norm{\nabla \cdot u}_0^2 = \norm{\sum_i \partial_i u_i}_0^2 &\leq (\sum_{i,j} \norm{\partial_j u_i}_0\delta_{i,j})^2\\
     & \leq \sum_{i,j} \left(\norm{\partial_j u_i}_0^2\right) d^2 \leq \norm{u}_1^2 d^2.
-   \end{align*}
+   \end{align}
    Using Poincaré's inequality
-   \begin{align*}
+   \begin{align}
     \norm{u}_0\leq C_P |u|_1
-   \end{align*}
+   \end{align}
    we further notice
-   \begin{align*}
+   \begin{align}
     \norm{u}_V^2+2\mu\norm{u}_0^2\leq (1+C_P^2) \norm{u}_V^2.
-   \end{align*}
+   \end{align}
    Combining these estimates gives
-   \begin{align*}
+   \begin{align}
    2\mu c_K^2\norm{u}_1^2\leq
     \norm{u}_V^2+2\mu \norm{u}_0^2\leq
     (1+C_P^2)\norm{u}_V^2\leq
     (1+C_P^2)(2\mu+\lambda d^2)\norm{u}_1^2.
-   \end{align*}
+   \end{align}
    and therefore
-   \begin{align*}
+   \begin{align}
     \norm{u-u_h}_1^2\leq \inf_{v\in V_h} \frac{(1+C_P^2)(2\mu+\lambda d^2)}{2\mu c_K^2}\norm{u-v_h}_1^2.
-   \end{align*}
+   \end{align}
    If the solution is even $H_0^1(\Omega)$-regular, we can improve the estimate to
-   \begin{align*}
+   \begin{align}
     \norm{u}_1^2\leq \inf_{v\in V_h}\frac{(\mu+(\lambda+\mu) d^2)}{\mu}\norm{u-v_h}_1^2.
-   \end{align*}
+   \end{align}
    by using the identity
-   \begin{align*}
+   \begin{align}
     (\strain u, \strain v) = (\nabla u, \nabla v) + (\nabla \cdot u, \nabla \cdot v).
-   \end{align*}
+   \end{align}
 
    \item A more refined estimate would be
-   \begin{align*}
+   \begin{align}
     \norm{u-u_h}_1^2\leq \inf_{v\in V_h}\frac{(1+C_P^2)}{2\mu c_K^2}\left(2\mu\norm{u-v_h}_1^2+\lambda \norm{\nabla\cdot (u-v_h)}_0^2\right).
-   \end{align*}
+   \end{align}
    Choosing a divergence-preserving interpolation operator, the second term vanishes.
   \end{enumerate}
 \end{solution}
@@ -340,89 +361,119 @@ itself. This leads to our second, albeit somewhat more restricted toolbox.
   Show using the symmetric finite element toolbox \slideref{Theorem}{fem-toolbox-riesz}
   \begin{enumerate}
   \item The weak formulation has a unique solution for which there holds
-    \begin{gather*}
+    \begin{gather}
       \norm{\vu}_\vV \le \norm{\vf}_{\vV^*}.
-    \end{gather*}
+    \end{gather}
   \item The ``energy estimate'' for conforming finite element
     approximation with a space $\vV_h\subset \vV$
-    \begin{gather*}
+    \begin{gather}
       \norm{\vu-\vu_h}_\vV = \inf_{\vv_h\in \vV_h} \norm{\vu-\vv_h}_\vV.
-    \end{gather*}
+    \end{gather}
   \end{enumerate}
 \begin{solution}
 We consider the problem:
   Find $u\in V = H^1_{\Gamma_D}(\domain;\R^d)$ such that
-  \begin{gather*}
+  \begin{gather}
     a(u,v) \equiv 2\mu\form(\strain u, \strain v)
     + \lambda \form(\div u, \div v)
     = \form(f,v)
     \quad\forall v\in V.
-  \end{gather*}
+  \end{gather}
   where the norm on $V$ is given through $a$ as
-  \begin{align*}
+  \begin{align}
     \norm{u}_V^2=a(u,u)=2\mu\norm{\strain u}_0^2+ \lambda \norm{\div u}_0^2
-    \end{align*}
+    \end{align}
   \begin{enumerate}
    \item Testing symmetrically ($v=u$) gives
-   \begin{align*}
+   \begin{align}
    \norm{u}_V=\frac{a(u,u)}{\norm{u}_V}= \frac{\form(f,u)}{\norm{u}_V} \leq \norm{f}_{V^*}.
-   \end{align*}
+   \end{align}
    \item Applying Céa's lemma gives
-   \begin{align*}
+   \begin{align}
    \norm{u-u_h}_V&=\frac{a(u-u_h, u-u_h)}{\norm{u-u_h}_V}\\
                &=\frac{a(u-u_h, u-v_h)}{\norm{u-u_h}_V}\leq \norm{u-v_h}_V\quad \forall v_h \in V_h
-   \end{align*} and hence $\norm{u-u_h}_V = \inf_{v_h\in V_h} \norm{u-v_h}_V$.
+   \end{align} and hence $\norm{u-u_h}_V = \inf_{v_h\in V_h} \norm{u-v_h}_V$.
    \item For the $H^1$-error estimate we make use of Korn's inequality to note
-   \begin{align*}
+   \begin{align}
     \norm{u}_V^2=2\mu\norm{\strain u}_0^2+ \lambda \norm{\div u}_0^2\geq
     2\mu(c_K^2\norm{u}_1^2-\norm{u}_0^2)
-   \end{align*}
+   \end{align}
    and on the other hand
-   \begin{align*}
+   \begin{align}
     \norm{u}_V^2=2\mu\norm{\strain u}_0^2+ \lambda \norm{\div u}_0^2\leq
     (2\mu+\lambda d^2)\norm{u}_1^2
-   \end{align*}
+   \end{align}
    where we used
-   \begin{align*}
+   \begin{align}
     \norm{\nabla \cdot u}_0^2 = \norm{\sum_i \partial_i u_i}_0^2 &\leq (\sum_{i,j} \norm{\partial_j u_i}_0\delta_{i,j})^2\\
     & \leq \sum_{i,j} \left(\norm{\partial_j u_i}_0^2\right) d^2 \leq \norm{u}_1^2 d^2.
-   \end{align*}
+   \end{align}
    Using Poincaré's inequality
-   \begin{align*}
+   \begin{align}
     \norm{u}_0\leq C_P |u|_1
-   \end{align*}
+   \end{align}
    we further notice
-   \begin{align*}
+   \begin{align}
     \norm{u}_V^2+2\mu\norm{u}_0^2\leq (1+C_P^2) \norm{u}_V^2.
-   \end{align*}
+   \end{align}
    Combining these estimates gives
-   \begin{align*}
+   \begin{align}
    2\mu c_K^2\norm{u}_1^2\leq
     \norm{u}_V^2+2\mu \norm{u}_0^2\leq
     (1+C_P^2)\norm{u}_V^2\leq
     (1+C_P^2)(2\mu+\lambda d^2)\norm{u}_1^2.
-   \end{align*}
+   \end{align}
    and therefore
-   \begin{align*}
+   \begin{align}
     \norm{u-u_h}_1^2\leq \inf_{v\in V_h} \frac{(1+C_P^2)(2\mu+\lambda d^2)}{2\mu c_K^2}\norm{u-v_h}_1^2.
-   \end{align*}
+   \end{align}
    If the solution is even $H_0^1(\Omega)$-regular, we can improve the estimate to
-   \begin{align*}
+   \begin{align}
     \norm{u}_1^2\leq \inf_{v\in V_h}\frac{(\mu+(\lambda+\mu) d^2)}{\mu}\norm{u-v_h}_1^2.
-   \end{align*}
+   \end{align}
    by using the identity
-   \begin{align*}
+   \begin{align}
     (\strain u, \strain v) = (\nabla u, \nabla v) + (\nabla \cdot u, \nabla \cdot v).
-   \end{align*}
+   \end{align}
 
    \item A more refined estimate would be
-   \begin{align*}
+   \begin{align}
     \norm{u-u_h}_1^2\leq \inf_{v\in V_h}\frac{(1+C_P^2)}{2\mu c_K^2}\left(2\mu\norm{u-v_h}_1^2+\lambda \norm{\nabla\cdot (u-v_h)}_0^2\right).
-   \end{align*}
+   \end{align}
    Choosing a divergence-preserving interpolation operator, the second term vanishes.
   \end{enumerate}
 \end{solution}
 \end{Problem}
+
+\begin{Theorem*}{interpolation-elliptic}{Interpolation estimate}
+  Let $\mesh_h$ be a finite element mesh of size $h$, that is, the
+  maximal diameter of a mesh cell is $h$. Let the finite element space
+  be chosen piecewise polynomial such that
+  \begin{gather}
+    V_h = \bigl\{ v \in H^1_0(\domain) \;\big|\;
+    v_{|\cell} \in \mathcal P(\cell) \;\forall \cell\in\mesh_h \bigr\}.
+  \end{gather}
+  For each cell $\cell\in\mesh_h$, let $\mathcal P(\cell)$ be a
+  polynomial space containing $\P_k$. Then, there is an interpolation
+  operator $I_h\colon H^1_0(\domain)\cap H^{k+1}(\domain)\to V_h$,
+  such that for $m\le k$ there holds
+  \begin{gather}
+    \abs{u-I_h u}_{m} \le c_I h^{k+1-m}\abs{u}_{k+1},
+  \end{gather}
+  with an \define{interpolation constant} $c_I$ independent of $h$ and
+  $u$, but depending on $k$, $m$, and \putindex{shape regularity} of the mesh.
+\end{Theorem*}
+
+\begin{Theorem}{elliptic-convergence}
+  On a sequence of meshes $\mesh_h$ with $h\to 0$ and uniform shape
+  regularity, the error of the finite element solution $\vu_h$ of the
+  Lamé-Navier equations is bounded by
+  \begin{gather}
+    \norm{\vu-\vu_h}_{1} \le c_I h^k \frac{2\mu+d\lambda}{2c_K\mu}
+    \abs{\vu}_{k+1},
+  \end{gather}
+  if the true solution $\vu$ is sufficiently regular.
+\end{Theorem}
 
 \subsection{Where things go wrong}
 \begin{example}
@@ -466,20 +517,19 @@ We consider the problem:
   increasing $\lambda$ is called \define{locking}.
 \end{intro}
 
+\subsection{A first mixed formulation}
 
-
-\begin{intro}
-  A way to approach this problem is the introduction of an auxiliary variable
-  \begin{gather*}
-    p = -\lambda \div u.
-  \end{gather*}
-  Entering this definition into the Lamé-Navier equations, we obtain
-  the following weak formulation.
-\end{intro}
+A way to approach this problem is the introduction of an auxiliary variable
+\begin{gather}
+  p = -\lambda \div u.
+\end{gather}
+Entering this definition into the Lamé-Navier equations, we obtain
+the following weak formulation.
 
 \begin{Definition}{displacement-pressure}
   The \define{displacement-pressure formulation} of the Lamé-Navier
   equations reads: find a pair $(u,p) \in V\times Q$ such that
+  \begin{subequations}
   \begin{gather}
     \label{eq:lame-navier-mixed}
     \begin{aligned}
@@ -504,7 +554,8 @@ We consider the problem:
     = \form(f,v)
     \\
     \qquad\forall v\in V, q\in Q,
-  \end{multline}
+  \end{multline}    
+  \end{subequations}
   Here, $V$ is as before and $Q=L^2(\domain)$.
 \end{Definition}
 
@@ -518,13 +569,13 @@ We consider the problem:
   The second form is symmetric, but we will see later that is
   indefinite. Thus, non of our tools from functional analysis
   apply. In contrast, the third form is nonsymmetric, but we have
-  \begin{multline*}
+  \begin{multline}
     2\mu\form(\strain u, \strain u) + \form(p,\div u)
     - \form(p,\div u) +\tfrac1\lambda \form(p,p)
     \\
     = 2\mu\form(\strain u, \strain u) + \tfrac1\lambda \form(p,p)
     \ge \tfrac{2\mu}{c_K} \norm{u}_{H^1}^2 + \tfrac1\lambda \form(p,p).
-  \end{multline*}
+  \end{multline}
   Thus, we have ellipticity with respect to the norm
   \begin{gather}
     \norm{(u,p)}_X^2 = \norm{u}_{H^1}^2 + \norm{p}_{L^2}^2.
@@ -641,26 +692,26 @@ We consider the problem:
 
 \begin{proof}
   First, we note that because of ellipticity of $a(\cdot,\cdot)$
-  \begin{gather*}
+  \begin{gather}
     \mathcal A\mixedform(u,0,u,0) = a(u,u) \ge \gamma \norm{u}_V^2,
-  \end{gather*}
+  \end{gather}
   for some positive constant $\gamma$. Furthermore, $A$ is invertible
   and its inverse is positive definite. Furthermore,
   $A^{-1}B^T\colon Q\to V$. Then, choosing $v=-A^{-1}B^T p$ yields
-  \begin{align*}
+  \begin{align}
     \mathcal A\mixedform(v,p,v,p)
     &= a(A^{-1}B^T p,A^{-1}B^T p) - 2b(A^{-1}B^T p,p) - c(p,p) \\
     &= \scal(B^T p,A^{-1}B^T p) - 2\scal(A^{-1}B^T p,B^T p) - c(p,p)\\
     &= -\scal(B^T p,A^{-1}B^T p) - c(p,p).
-  \end{align*}
+  \end{align}
   The first term is a quadratic term with the bilinear form associated
   with $A^{-T}$, which is positive definite. Since $b(\cdot,\cdot)$ is not the
   zero form, there is some $p$ such that $v\neq 0$. Therefore, with
   the minus sign and the semi-definiteness of $c(\cdot,\cdot)$ we have found a
   vector such that
-  \begin{gather*}
+  \begin{gather}
     \mathcal A\mixedform(v,p,v,p) < 0.
-  \end{gather*}
+  \end{gather}
 \end{proof}
 
 \begin{remark}
@@ -712,9 +763,9 @@ We consider the problem:
 \begin{Definition}{solenoidal}
   A vector-valued function $u$ is called \define{divergence-free} or
   \define{solenoidal}, if there holds
-  \begin{gather*}
+  \begin{gather}
     \div u = 0.
-  \end{gather*}
+  \end{gather}
   Flow described by a solenoidal function is called
   \define{incompressible}.
 \end{Definition}
@@ -731,27 +782,27 @@ We consider the problem:
 
 \begin{proof}
   We have
-  \begin{align*}
+  \begin{align}
     \strain u: \strain v
     &= \frac14\sum_{i,j=1}^d\left[ (\d_i u_j+\d_j u_i) (\d_i v_j+\d_j v_i)
       \right]
     \\
     &= \frac12\sum_{i,j=1}^d\left[ \d_i u_j\d_iv_j + \d_i u_j\d_j v_i\right].
-  \end{align*}
+  \end{align}
   The first term is the desired result, thus we have to eliminate the
   other one. We integrate by parts to obtain
-  \begin{align*}
+  \begin{align}
     \int_\domain \d_i u_j\d_j v_i \dx
     &= - \int_\domain \d_{ij}u_j v_i \dx
 %     \\ &
     = \int_\domain \d_j u_j \d_i v_i \dx 
-  \end{align*}
+  \end{align}
   Entering in the
   previous equation and summing over $i$ and $j$, we obtain
-  \begin{gather*}
+  \begin{gather}
     2(\strain u,\strain v) = (\nabla u,\nabla v)+(\nabla\cdot u,\nabla\cdot v)
                            = (\nabla u,\nabla v).
-  \end{gather*}
+  \end{gather}
 \end{proof}
 
 \begin{intro}
@@ -840,17 +891,17 @@ We consider the problem:
 
 \begin{proof}
   The first statement is simple application of the Gauss theorem
-  \begin{gather*}
+  \begin{gather}
     \int_{\domain} \div u\dx = \int_{\d\domain} u\cdot n\ds.
-  \end{gather*}
+  \end{gather}
   For the second statement, we note that the only term in the
   equations which determines the pressure is $\form(\div v,
   p)$. Integrating by parts and using the boundary condition, we
   obtain
-  \begin{gather*}
+  \begin{gather}
     \int_\domain \div vp\dx = -\int_\domain v\nabla p\dx +
     \int_{\d\domain} v\cdot n p\ds = -\int_\domain v\nabla p\dx.
-  \end{gather*}
+  \end{gather}
   Since the gradient of a constant is zero, we can add any constant
   function to a given solution $p$ without changing the term
   $\form(\div v,p)$, thus leaving $p$ determined only up to a

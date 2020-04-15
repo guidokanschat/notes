@@ -11,18 +11,18 @@
 \begin{intro}
   Let $\rho$ be the density of a conserved quantity. Then, for any given
   volume we have the ``mass''
-  \begin{gather*}
+  \begin{gather}
     m = \int_V \rho\dx.
-  \end{gather*}
+  \end{gather}
   Changes of this mass can be due to two processes:
   \begin{enumerate}
   \item Generation of additional mass by a source $g$,
   \item Flow of mass over the boundary of $V$ at a velocity $v$.
   \end{enumerate}
   In formulas, we have
-  \begin{gather*}
+  \begin{gather}
     \tfrac{d}{d t} m = \int_V g\dx - \oint_{\d V} J\cdot \n \ds,
-  \end{gather*}
+  \end{gather}
   also known as \define{Reynolds transport theorem}. Here, $J$ is the
   \define{flux}. The exact form of the flux will be modeled later.
   The formula above is somewhat unwieldy, since it combines volume and
@@ -57,27 +57,27 @@
     density $\rho$, but the temperature $T$. \define{Fourier's law}
     states that the flux is proportional to the gradient of the
     temperature, pointing in opposite direction:
-    \begin{gather*}
+    \begin{gather}
       J = -k\nabla T.
-    \end{gather*}
+    \end{gather}
     The constant of proportionality $k$ is the heat conductivity.
   \item[Porous media flow:] The conserved quantity is the amount of
     fluid, represented by the hydraulic head or pressure
     $p$. \define{Darcy's law} says that the flux is the product of the
     hydraulic \define{permeability} of the media and the gradient of the
     pressure:
-    \begin{gather*}
+    \begin{gather}
       J = -K\nabla p.
-    \end{gather*}
+    \end{gather}
     Here, the permeability $K$ is either a positive scalar function or
     a symmetric, positive definite matrix. Note that in the latter
     case, $J$ and $\nabla p$ do not point in the same direction.
     \item[General diffusion processes:] \define{Fick's law} states,
       that the flux of a diffusion process is determined by the
       gradient of the diffusing quantity $p$ by the relation
-    \begin{gather*}
+    \begin{gather}
       J = -D\nabla p.
-    \end{gather*}
+    \end{gather}
     $D$ is the symmetric, positive definite \define{diffusion tensor}.
   \end{description}
 \end{example}
@@ -127,10 +127,10 @@
   On the other hand, we can integrate by parts in the second equation,
   leaving all derivatives on $p$ and $q$. In the second case,
   we obtain the equation
-  \begin{gather*}
+  \begin{gather}
     -\int_\domain u\cdot\nabla q\dx + \int_{\d\domain} u\cdot\n q \ds
     = \int_\domain f q\dx.
-  \end{gather*}
+  \end{gather}
   Applying the boundary condition, we first follow the recipe of
   elliptic partial differential equations and implement $p=p^D$ as an
   \putindex{essential boundary condition}, that is, the test function
@@ -170,15 +170,15 @@
   in all terms, we can eliminate this equation and there holds
   $u= K\nabla p$ in $L^2(\domain;\R^d)$. Entering this into the second
   equation, we obtain the well-known \putindex{primal formulation}
-  \begin{gather*}
+  \begin{gather}
     \form(K \nabla p,\nabla q) = \form(f,q)
     - \forme(u^N\cdot\n, q)_{\Gamma_N}.
-  \end{gather*}
+  \end{gather}
   Just keep in mind that the ``\putindex{natural boundary condition}''
   in this case is
-  \begin{gather*}
+  \begin{gather}
     K\nabla p\cdot n = 0.
-  \end{gather*}
+  \end{gather}
   Hence, the primal mixed formulation does not provide any advantages
   compared to the primal formulation, and we are not going to pursue
   it further.
@@ -187,10 +187,10 @@
 \begin{intro}
   Now we return to the first alternative, namely integrating by parts
   in the first equation of~\eqref{eq:darcy:7}:
-  \begin{gather*}
+  \begin{gather}
     \int_\domain K^{-1} u \cdot v \dx - \int_\domain p \div v\dx
     + \int_{\d\domain} v\cdot \n p\ds = 0.
-  \end{gather*}
+  \end{gather}
   Ensuing is a formulation multiplying and integrating the divergences
   of $u$ and $v$, respectively, with functions in $Q$. In order to fit
   this into our standard framework, we have to introduce a new Sobolev
@@ -265,17 +265,17 @@ write down our second weak formulation of the mixed diffusion problem:
   % $V$. Therefore, let $L \in \Hdiv(\domain)^*$. By the
   % \putindex{Riesz representation theorem}, there is
   % $u\in\Hdiv(\domain)$ such that
-  % \begin{gather*}
+  % \begin{gather}
   %   L(v) = \scal(u,v)_{\Hdiv} = \sum_{i=1}^d \scal(u_i,v_i)_0
   %   + \scal(\div u,\div v)_0
   %   \quad\forall v\in \Hdiv(\domain).
-  % \end{gather*}
+  % \end{gather}
   % Now assume $L(\phi) = 0$ for all $\phi\in
   % C^\infty(\overline\domain;\R^d)$. Let us extend $u$ and $\div u$ outside
   % of the domain $\domain$ by zero. Then, there holds
-  % \begin{gather*}
+  % \begin{gather}
   %   \int_{\R^d} u\cdot \phi \dx + \int_{\R^d}
-  % \end{gather*}
+  % \end{gather}
   Either by a standard mollifier argument~\cite{AdamsFournier03} or
   following~\cite[Theorem 2.4]{GiraultRaviart86}
 \end{proof}
@@ -303,16 +303,16 @@ write down our second weak formulation of the mixed diffusion problem:
   Let $q\in C^\infty(\overline\domain)$ and
   $v\in C^\infty(\overline\domain;\R^d)$. Then, there holds
   \putindex{Green's formula}
-  \begin{gather*}
+  \begin{gather}
     \form(v,\nabla q)_\domain
     + \form(\div v,q)_\domain
     = \forme(v\cdot\n,q)_{\d\domain}.
-  \end{gather*}
+  \end{gather}
   Hence,
-  \begin{gather*}
+  \begin{gather}
     \left\vert\int_{\d\domain} v\cdot \n q \ds \right\vert
     \le \norm{v}_{\Hdiv} \norm{q}_{H^1}.
-  \end{gather*}
+  \end{gather}
   Applying the density of $C^\infty(\overline\domain)$ in
   $H^1(\domain)$ and of $C^\infty(\overline\domain;\R^d)$ in
   $\Hdiv(\domain)$, we can let $q$ and $v$ pass to a limit, but the
@@ -322,17 +322,17 @@ write down our second weak formulation of the mixed diffusion problem:
   $H^1(\domain)$. Therefore, for any $g\in H^{1/2}(\d\domain)$, there
   is a $q\in H^1(\domain)$ such that $q_{|\d\domain} = g$ and
   $\norm{q}_{1;\domain} \le \norm{g}_{1/2;\d\domain}$. We obtain
-  \begin{gather*}
+  \begin{gather}
     \left\vert\int_{\d\domain} v\cdot \n g \ds \right\vert
     \le \norm{v}_{\Hdiv(\domain)} \norm{g}_{H^{1/2}(\d\domain)}
     \qquad\forall v\in \Hdiv(\domain), g\in H^{1/2}(\d\domain).
-  \end{gather*}
+  \end{gather}
   Hence,
-  \begin{gather*}
+  \begin{gather}
     \norm{v\cdot\n}_{H^{-1/2}(\d\domain)} \le
     \norm{v}_{\Hdiv(\domain)}
     \qquad\forall v\in \Hdiv(\domain).
-  \end{gather*}
+  \end{gather}
   Thus, we have proven the continuity of the extension of $\gamma_n$
   to $\Hdiv(\domain)$.
 \end{proof}
@@ -350,24 +350,24 @@ write down our second weak formulation of the mixed diffusion problem:
   Show the following result. Let $p\in H^1(\domain)$ and
   $\Delta p \in L^2(\domain)$. Then, $\d_n p\in H^{-1/2}(\d\domain)$
   and
-  \begin{gather*}
+  \begin{gather}
     \form(\nabla p,\nabla q) = -\form(\Delta p,q) + \forme(\d_n
     p,q)_{\d\domain} \quad\forall q\in H^1(\domain).
-  \end{gather*}
+  \end{gather}
 \begin{solution}
 Since $p, q \in H^1(\domain)$ we can perform integration by parts to obtain
-\begin{align*}
+\begin{align}
  (\Delta p,q)=-(\nabla p,\nabla q)+\forme(\d_n p, q)_{\d\domain}.
-\end{align*}
+\end{align}
 Now, we can use the continuity of the trace operator as follows
-\begin{align*}
+\begin{align}
  \norm{\d_n p}_{-1/2,\d\domain}
  &=\sup_{q\in H^{1/2}(\domain)\setminus\{0\}}\frac{\langle\d_n p,q\rangle_{\d\domain}}{\norm{q}_{H^{1/2}(\d\domain)}}\\
  &\leq
   \sup_{q\in H^{1/2}(\domain)\setminus\{0\}}\frac{\norm{\nabla p}_0 \norm{\nabla q}_0 +\norm{\Delta p}_0\norm{q}_0}
   {\norm{q}_{1/2,\d\domain}}\\
   &\leq C (\norm{\nabla p}_0+\norm{\Delta p}_0).
-\end{align*}
+\end{align}
 Therefore, $\d_n p\in H^{-1/2}(\d\domain)$.
 \end{solution}
 \end{Problem}
@@ -381,11 +381,11 @@ Therefore, $\d_n p\in H^{-1/2}(\d\domain)$.
 \begin{proof}
   Let $\mu \in H^{-1/2}(\d\domain)$. We have to show that there exists
   $v\in \Hdiv(\domain)$ such that
-  \begin{gather*}
+  \begin{gather}
     v\cdot\n = \mu \quad\text{on } \d\domain
     \qquad\text{and}\qquad
     \norm{v}_{\Hdiv(\domain)} \le \norm{\mu}_{H^{-1/2}(\d\domain)}.
-  \end{gather*}
+  \end{gather}
 
   We know that the problem
   \begin{xalignat*}2
@@ -393,16 +393,16 @@ Therefore, $\d_n p\in H^{-1/2}(\d\domain)$.
     \d_n \phi &= \mu &\text{on }&\d\domain,
   \end{xalignat*}
   has a unique solution $\phi\in H^1(\domain)$ with
-  \begin{gather*}
+  \begin{gather}
     \norm{\phi}_{H^1(\domain)}^2 = \forme(\mu,\phi)_{\d\domain}
     \le \norm{\mu}_{H^{-1/2}(\d\domain)}\norm{\phi}_{H^1(\domain)}.
-  \end{gather*}
+  \end{gather}
   The first equation then implies $\Delta\phi\in L^2(\domain)$ and
   thus $v=\nabla \phi\in \Hdiv(\domain)$. Since from this equation
   there even holds $\div v=\phi$, we obtain
-  \begin{gather*}
+  \begin{gather}
     \norm{v}_{\Hdiv(\domain)} \le \norm{\mu}_{H^{-1/2}(\d\domain)}.
-  \end{gather*}
+  \end{gather}
 \end{proof}
 
 \begin{Theorem}{Hdiv-trace-kernel}
@@ -422,22 +422,22 @@ Therefore, $\d_n p\in H^{-1/2}(\d\domain)$.
   $V$. Choose $u\in\ker{\gamma_n}$ and use the \putindex{Riesz
     representation theorem} to associate with it
   $L\in \ker{\gamma_n}^*$ by
-  \begin{gather*}
+  \begin{gather}
     L(v) = \scal(u,v)_{\Hdiv} \qquad\forall v\in \ker{\gamma_n}.
-  \end{gather*}
+  \end{gather}
   Assume now that $L(\phi) = 0$ for all $\phi\in
   C^\infty_{00}(\domain;\R^d)$. This implies by
-  \begin{gather*}
+  \begin{gather}
     0 = L(\phi) = \form(u,\phi)_{L^2} + \form(\div u, \div \phi),
-  \end{gather*}
+  \end{gather}
   that $u=\nabla \div u$ in distributional sense, and by taking limits
   of $\phi$ in $H^1$ that $\div u\in H^1(\domain)$. Hence, Green's
   formula yields
-  \begin{gather*}
+  \begin{gather}
     L(v) = \form(\nabla\div u,v)+\form(\div u,\div v)
     = \forme(v\cdot\n,\div u)_{\d\domain} = 0
     \qquad\forall v\in \ker{\gamma_n}.
-  \end{gather*}
+  \end{gather}
   Thus, $L$ vanishes on all elements of $\ker{\gamma_n}$ and the
   theorem is proven.
 \end{proof}
@@ -455,70 +455,70 @@ Therefore, $\d_n p\in H^{-1/2}(\d\domain)$.
 %   2.5.1]{BoffiBrezziFortin13}) of this phenomenon.  On the disc
 %   $\mathcal D$ around the origin of radius $e^{-1}$ consider the
 %   function
-%   \begin{gather*}
+%   \begin{gather}
 %     u(x,y) = \ln\Bigl(-\ln\bigl(\sqrt{x^2+y^2}\bigr)\Bigr).
-%   \end{gather*}
+%   \end{gather}
 %   There holds $u\in H^1_0(\mathcal D)$.\marginpar{Volunteers computing
 %     the derivative?} Now, consider the domain $\domain$ consisting
 %   only of the upper half circle:
-%   \begin{align*}
+%   \begin{align}
 %     \domain &= \bigl\{(x,y)\in \R^2 \big\vert
 %               x^2+y^2<e^{-2} \text{ and } y>0 \bigr\}
 %     \\
 %     \d\domain &= [-e^{-1},e^{-1}]
 %                 \cup \bigl\{ (x,\sqrt{e^{-2}-x^2}) \big\vert
 %                 x\in (-e^{-1},e^{-1}) \bigr\}
-%   \end{align*}
+%   \end{align}
 %   Thus, the trace of $u$ on the boundary is in
 %   $H^{1/2}(\d\domain)$. We now define $\mu\in H^{-1/2}(\d\domain)$ as
 %   the distributional derivative in tangential direction, say
 %   counter-clockwise,
-%   \begin{gather*}
+%   \begin{gather}
 %     \scal(\mu,\phi) = - \int_{\d\domain} u \d_{\tau} \phi
 %     \qquad\forall \phi\in C^1(\d\domain).
-%   \end{gather*}
+%   \end{gather}
 
 %   Computation yields
-%   \begin{gather*}
+%   \begin{gather}
 %     \mu(x) = \frac1{x\ln \abs{x}} \times
 %     \begin{cases}
 %       1 & x\in (-e^{-1},0) \\
 %       -1& x\in (0,e^{-1}).
 %     \end{cases}
-%   \end{gather*}
+%   \end{gather}
 %   Both integrals
-%   \begin{gather*}
+%   \begin{gather}
 %     \int_{-e^{-1}}^0 \mu(x)\dx
 %     \qquad
 %     \int^{e^{-1}}_0 \mu(x)\dx,
-%   \end{gather*}
+%   \end{gather}
 %   are not bounded, such that on these parts of the boundary, $\mu$
 %   cannot even be tested with a constant function.
 %   Now, we consider the integral
-%   \begin{gather*}
+%   \begin{gather}
 %     \forme(\mu,\phi) = \int_{-e^{-1}}^{e^{-1}} \ln(-\ln\abs x) \d_\tau \phi \dx.
-%   \end{gather*}
+%   \end{gather}
 %   If we split $\phi$ into an odd and an even part, the intgral with
 %   the even part vanishes, since $\ln(-\ln\abs x)$ is even and the
 %   derivative is odd. Therefore,
-%   \begin{gather*}
+%   \begin{gather}
 %     \forme(\mu,\phi)
 %     = \int_{-e^{-1}}^{e^{-1}}
 %     \frac{\phi_{\text{odd}}(x)}{x\ln\abs x} \dx
-%   \end{gather*}
+%   \end{gather}
 %   Finally, we use the fact that $\phi_{\text{odd}}(0) = 0$ and that
 %   it's growth is limited by its regularity. In order to be square
 %   integrable, the groth of $\phi_{\text{odd}}$ must be limited by a
 %   positive, fractional power,
-%   \begin{gather*}
+%   \begin{gather}
 %     \abs{\phi_{\text{odd}}(x)} \le c \abs x^\alpha,
 %     \qquad \alpha>0.
-%   \end{gather*}
+%   \end{gather}
 %   Then,
-%   \begin{gather*}
+%   \begin{gather}
 %     \int_0^{e^{-1}} \frac{\abs{\phi_{\text{odd}}(x)}}{x\ln\abs x} \dx
 %     \le \frac{x^{\alpha-1}}{\ln\abs x} \dx < \infty.
-%   \end{gather*}
+%   \end{gather}
 % \end{example}
 
 \begin{Theorem}{Hdiv-helmholtz}
@@ -543,13 +543,13 @@ Therefore, $\d_n p\in H^{-1/2}(\d\domain)$.
   Let $X=\{ v= \nabla q \vert q\in H^1(\domain)\}$. we have to show
   $\ortho V = X$. Observe that $X$ is closed in $L^2$ since $H^1$ is
   complete. We show that $V_0 = \ortho X$ and thus
-  \begin{gather*}
+  \begin{gather}
     \ortho {V_0} = \ortho{(\ortho{V_0})} = \overline X = X.
-  \end{gather*}
+  \end{gather}
   First, let $u\in V_0$. Then, Green's formula reduces to
-  \begin{gather*}
+  \begin{gather}
     \form(u,\nabla q) = 0 \qquad\forall q\in H^1(\domain).
-  \end{gather*}
+  \end{gather}
   Hence, $V_0\subset \ortho X$. Let now conversely
   $u\in L^2(\domain;\R^d)$ such that the previous identity
   holds. Choosing $q\in C^\infty_{00}(\domain)$ yields $\div u=0$,
@@ -565,10 +565,10 @@ Therefore, $\d_n p\in H^{-1/2}(\d\domain)$.
   Chapter~\ref{sec:mixed-wellposedness}, we have to define the
   abstract bilinear forms $a(.,.)$ and $b(.,.)$. We read from the dual
   mixed formulation
-  \begin{align*}
+  \begin{align}
     a(u,v) &= \form(K^{-1}u,v) \\
     b(v,q) &= \form(\div v,q).
-  \end{align*}
+  \end{align}
 \end{intro}
 
 
@@ -579,26 +579,26 @@ Therefore, $\d_n p\in H^{-1/2}(\d\domain)$.
   spaces needed for the liftings.
 \begin{solution}
 The inhomogeneous problem reads in strong form:\\
-\begin{align*}
+\begin{align}
 K^{-1} {\mathbf u} + \nabla p &= 0 && \textrm{ in } \Omega,\\
 -{\textrm{div}}\ {\mathbf u} &= -f && \textrm{ in } \Omega,\\
 p &= p^D && \textrm{ on } \Gamma_D, \\
 u\cdot n &=  u^N \cdot n && \textrm{ on } \Gamma_N.
-\end{align*}
+\end{align}
 
 The corresponding primal weak form is then given as: \\
 Find $(u,q)\in V\times Q=L^2(\domain)\times H_{\Gamma_D}^1(\domain)$ such that
-\begin{align*}
+\begin{align}
 A(\{{\mathbf u},p\},\{{\mathbf v},q\}) &= F(\{{\mathbf v},q\}), \\
 A(\{{\mathbf u},p\},\{{\mathbf v},q\}) &= ({\mathbf v}, K^{-1}{\mathbf u})_\Omega +({\mathbf v}, \nabla p)_\Omega + (\nabla q,{\mathbf u})_\Omega \\
 F(\{{\mathbf v},q\}) &= (q, {\mathbf u}^N\cdot {\mathbf n})_{\Gamma_N} - (f,q)_\Omega.
-\end{align*}
+\end{align}
 Treating the Dirichlet boundary condition $p = p^D$ strongly requires us to
 split into $p=p_{hom} + p_{inhom}$ where $p_{inhom}$ fulfills the inhomogeneous
 boundary conditions. Provided $g\in H^{1/2}(\Omega)$ the trace operator acts
 as a lifting operator here to construct $p_{inhom}$.
 For $p_{hom}$ we then have to solve
-\begin{align*}
+\begin{align}
 A(\{{\mathbf u},p_{hom}\},\{{\mathbf v},q\}) &= F(\{{\mathbf v},q\}), \\
 A(\{{\mathbf u},p_{hom}\},\{{\mathbf v},q\})
   &= ({\mathbf v}, K^{-1}{\mathbf u})_\Omega +({\mathbf v}, \nabla p_{hom})_\Omega
@@ -606,28 +606,28 @@ A(\{{\mathbf u},p_{hom}\},\{{\mathbf v},q\})
 F(\{{\mathbf v},q\})
   &= (q, {\mathbf u}^N\cdot {\mathbf n})_{\Gamma_N}-
      ({\mathbf v}, \nabla p_{inhom})_\Omega - (f,q)_\Omega.
-\end{align*}
+\end{align}
 
 There doesn't exist a continuous trace operator
-\begin{align*}
+\begin{align}
  \Vert T f \Vert_{L^2(\partial \Omega)}\le C \Vert f \Vert_{L^2(\Omega)}
-\end{align*}
+\end{align}
 in $L^2(\Omega)$.
 
 
 The corresponding dual weak form is then given as: \\
 Find $(u,q)\in V\times Q=H^\textrm{div}(\domain)\times L^2(\domain)$ such that
-\begin{align*}
+\begin{align}
 A(\{{\mathbf u},p\},\{{\mathbf v},q\}) &= F(\{{\mathbf v},q\}), \\
 A(\{{\mathbf u},p\},\{{\mathbf v},q\}) &=
   ({\mathbf v}, K^{-1}{\mathbf u})_\Omega - ({\textrm{div}}\ {\mathbf v}, p)_\Omega
   - (q,{\textrm{div}}\ {\mathbf u})_\Omega \\
 F(\{{\mathbf v},q\}) &= -(p^D,{\mathbf v}\cdot {\mathbf n})_{\partial\Omega} -(f,q)_\Omega
-\end{align*}
+\end{align}
 where $V_0$ and $Q_0$ are the homogeneous spaces corresponding to $V$ and $Q$.
 Here, we are enforcing $u\cdot n = u^N \cdot n$ strongly. Again, the trace operator can be used
 for the lifting and the equations for the homogeneous part read
-\begin{align*}
+\begin{align}
 A(\{{\mathbf u}_{hom},\},\{{\mathbf v},q\}) &= F(\{{\mathbf v},q\}), \\
 A(\{{\mathbf u}_{hom},p\},\{{\mathbf v},q\})
   &= ({\mathbf v}, K^{-1}{\mathbf u}_{hom})_\Omega
@@ -636,7 +636,7 @@ F(\{{\mathbf v},q\})
   &= -(p^D,{\mathbf v}\cdot {\mathbf n})_{\partial\Omega}
      -({\mathbf v}, K^{-1}{\mathbf u}_{inhom})_\Omega\\
      &\quad+ (q,{\textrm{div}}\ {\mathbf u}_{inhom})_\Omega - (f,q)_\Omega
-\end{align*}
+\end{align}
 \end{solution}
 \end{Problem}
 
@@ -733,10 +733,10 @@ Combining these lemmas yields the assumptions of
   C^\infty_{00}(\domain)$ be a test function such that its support
   does not have a nonempty intersection with any face except
   $\face$. Then, we have by Green's formula for $u\in V_h$
-  \begin{gather*}
+  \begin{gather}
     \form(\div u,\phi) = -\form(u,\nabla \phi)
     + \forme(u_1 \cdot \n_1 + u_2 \cdot\n_2, \phi)_F
-  \end{gather*}
+  \end{gather}
   We have $\div u \in L^2(\domain)$ if and only if the face term
   vanishes.
 \end{proof}
@@ -749,10 +749,10 @@ Combining these lemmas yields the assumptions of
   Let $\phi\in (C^\infty_{00}(\domain))^d$ be a test function such that its support
   does not have a nonempty intersection with any face except
   $\face$. Then, we have by Green's formula for $u\in V_h$
-  \begin{gather*}
+  \begin{gather}
     \form(\nabla u,\phi) = -\form(u,\nabla \cdot \phi)
     + \forme(u_1 - u_2,n_1 \cdot \phi)_F
-  \end{gather*}
+  \end{gather}
   and thus require $\forme(u_1 - u_2, \phi)_F = 0$ for all $\phi\in C^\infty_{00}(\domain)$.
   This implies $u_1=u_2$ and in particular continuity at the vertices.
 \end{solution}
@@ -774,17 +774,17 @@ Combining these lemmas yields the assumptions of
   bilinear form $a(.,.)$ is elliptic only on the kernel of
   $B$. Indeed, for the simplest case with $K\equiv 1$, we conclude
   that the uniform estimate for $v_h\in \ker{B_h}$
-  \begin{gather*}
+  \begin{gather}
     \norm{v_h}^2_{L^2}
     \ge \ellipa \norm{v_h}^2_{\Hdiv}
     = \ellipa \bigl(\norm{v_h}^2_{L^2} + \norm{\div v_h}^2_{L^2}\bigr),
-  \end{gather*}
+  \end{gather}
   necessary for quasi-bestapproximation requires a constant $c$
   independent of $h$ such that
-  \begin{gather*}
+  \begin{gather}
     \norm{\div v_h}^2_{L^2} \le c \norm{v_h}^2_{L^2}
     \qquad\forall v_h\in\ker{B_h}.
-  \end{gather*}
+  \end{gather}
   The inverse estimate is insufficient by two powers of $h$, such that
   this is actually a hard condition. Therefore, we focus on
   methods where
@@ -902,9 +902,9 @@ Combining these lemmas yields the assumptions of
   We write an arbitrary element $v\in RT_k$ as $v=v_0+x p_k$ where
   $v_0\in \P_k^d$ and $p_k\in \P_k$. Clearly, $\div v_0 \in
   \P_{k-1}$. On the other hand,
-  \begin{gather*}
+  \begin{gather}
     \div (x p_k) = \div x p_k + x\nabla p_k = d p_k + x q,
-  \end{gather*}
+  \end{gather}
   where $q\in \P_{k-1}^d$. Therefore, $\div(x p_k) \in \P_k$ and so is
   $\div v$.
 
@@ -912,10 +912,10 @@ Combining these lemmas yields the assumptions of
   $x\in \F$ can be represented as $x=x_0+ \tau$, where $\tau$ is a
   vector tangential to $\face$. Therefore, using the same splitting of
   $v$ as above
-  \begin{gather*}
+  \begin{gather}
     v\cdot\n = v_0\cdot\n + p_k (x\cdot\n)
     = v_0\cdot\n + p_k (x_0\cdot\n + \tau\cdot\n).
-  \end{gather*}
+  \end{gather}
   The last term vanishes by definition of $\tau$ and $\n$ and the two
   other terms are both in $\P_k$.
 
@@ -927,14 +927,14 @@ Combining these lemmas yields the assumptions of
   same dimension. Therefore, it is sufficient to show that the
   divergence is injective. For simplicity, we assume $x_c=0$. Then,
   for any $p\in \P_k$
-  \begin{align*}
+  \begin{align}
     \int_\cell \div (x p)p \dx
     &= d \int_\cell p^2\dx + \int_\cell x \cdot\nabla p p\dx
     \\
     &= d \int_\cell p^2 + \frac12 \int_\cell x \cdot\nabla(p^2)\dx
     \\
     &= \frac d2 \int_\cell p^2 + \frac12 \int_{\d\cell} (x\cdot\n) p^2\ds.
-  \end{align*}
+  \end{align}
   Thus, $\div(x p) = 0$ implies $p=0$ and thus $x p=0$, which proves the
   injectivity. Using the same idea, we see that $\div v=0$ for
   $v=v_0+x p$ implies $x p=0$ and thus $v=v_0\in\P_k^d$.
@@ -965,20 +965,20 @@ Combining these lemmas yields the assumptions of
 
 \begin{proof}
   First, we observe that
-  \begin{gather*}
+  \begin{gather}
     RT_k = \P_k^d \oplus x\breve\P_k,
-  \end{gather*}
+  \end{gather}
   where $\breve \P_k$ is the space of \putindex{homogeneous
     polynomials} of degree $k$, that is, those strictly of degree
   $k$. There also holds
-  \begin{gather*}
+  \begin{gather}
     \P_{k} = \P_{k-1} \oplus \breve \P_k.
-  \end{gather*}
+  \end{gather}
   Hence,
-  \begin{gather*}
+  \begin{gather}
     \dim RT_k = d \dim \P_k + \dim\breve\P_k = d \dim \P_k + \dim \P_k
     - \dim \P_{k-1},
-  \end{gather*}
+  \end{gather}
   which proves the general formula. Using
   \begin{gather}
     \dim\P_k
@@ -1008,17 +1008,17 @@ Combining these lemmas yields the assumptions of
     = \frac{k+d}d \dim \P_k(\R^{d-1}).
   \end{gather}
   The number of node functionals is
-  \begin{align*}
+  \begin{align}
     N &= (d+1) \dim \P_k(\R^{d-1}) + d \dim \P_{k-1}(\R^d)
     \\
     &= (d+1)\frac{(k+d-1)!}{(d-1)!k!}
       + d\frac{(k+d-1)!}{d! (k-1)!}\\
     &= (d^2+d+k d)\frac{(k+d-1)!}{d!k!}
-  \end{align*}
+  \end{align}
   Thus, the number of node functionals is equal to the dimension of
   $RT_k$. Therefore, every element in $RT_k$ is uniquely determined
   by the node functionals if and only if for $v\in RT_k$
-  \begin{gather*}
+  \begin{gather}
     \left\{
       \begin{array}{r@{\,}ll}
         \nodal_{1,i,j}(v) &=0 &\forall i,j
@@ -1028,15 +1028,15 @@ Combining these lemmas yields the assumptions of
       \right\}
       \quad\Longrightarrow\quad
       v=0.
-  \end{gather*}
+  \end{gather}
   To this end, we first observe that due to~\eqref{eq:darcy:26} the
   node functionals $\nodal_{1,i,j}$ for $j=1,\dots,\dim \P_k(\face_i)$
  uniquely determine $v$ on each face $\face_i$. Therefore,
- \begin{gather*}
+ \begin{gather}
    \bigl\{\nodal_{1,i,j}(v) =0 \quad\forall i,j\bigr\}
    \quad\Longrightarrow\quad
    v\in \Hdiv_0(\cell).
- \end{gather*}
+ \end{gather}
  Next, we test~\eqref{eq:darcy:20} with $w=\nabla q$ and $q\in
  \P_k$ arbitrary. After integration by parts, this implies $v\in
  RT_{k,0} \cap \Hdiv_0(\cell) \subset \P_k^d$.
@@ -1062,15 +1062,15 @@ Combining these lemmas yields the assumptions of
  choose $\phi \in H^1_0(\cell)$. Finally, since $v\in RT_{k,0}$, we
  have $\phi\in\P_{k+1}$. Any function $\phi$ with these properties can
  be expressed by the cubic bubble function as
- \begin{gather*}
+ \begin{gather}
    \phi = b_\cell \psi \qquad\psi\in \P_{k-2}.
- \end{gather*}
+ \end{gather}
 We conclude the proof with
-\begin{gather*}
+\begin{gather}
   0 = \int_\cell v\cdot w \dx = \int_\cell
   \curl\phi \cdot w\dx
   = \int_\cell b_\cell \psi (\d_2 w - \d_1 w)\dx.
-\end{gather*}
+\end{gather}
 Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
 \end{proof}
 
@@ -1169,10 +1169,10 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   $\mathcal P_\cell$ and the \putindex{node functionals} $\nodal_i$
   for $i=1,\dots,n$ where $n=\dim\mathcal P_\cell$. Let $\{\phi_j\}$
   be the basis of $\mathcal P_\cell$ such that
-  \begin{gather*}
+  \begin{gather}
     \nodal_i(\phi_j) = \delta_{ij}
     \qquad i,j=1,\dots,n.
-  \end{gather*}
+  \end{gather}
   Then, the operator $I_h\colon C^\infty(\cell)\to \mathcal P_\cell$
   defined for any $f\in C^\infty(\cell)$ by
   \begin{gather}
@@ -1186,18 +1186,18 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
 \begin{remark}
   For a vector polynomial space $\mathcal V_\cell$, we define its
   divergence space
-  \begin{gather*}
+  \begin{gather}
     \mathcal P_\cell = \div \mathcal V_\cell.
-  \end{gather*}
+  \end{gather}
   From \slideref{Lemma}{rt-simplex-1}, we obtain
   \begin{gather}
     \label{eq:darcy:37}
     \div RT_k = \P_k.
   \end{gather}
   For the BDM family, it is easy to verify
-  \begin{gather*}
+  \begin{gather}
     \div BDM_k = \P_{k-1}.
-  \end{gather*}
+  \end{gather}
 \end{remark}
 
 \begin{Lemma}{commuting-diagram-hdiv}
@@ -1225,15 +1225,15 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
 \begin{proof}
   Let $v\in C^\infty(\cell;\R^d)$ and $q\in C^\infty(\domain)$ be
   chosen arbitrarily. Then,
-  \begin{gather*}
+  \begin{gather}
     \int_\cell q(\div (I_h v) - \div v)\dx
     = \int_\cell(v-I_h v) \cdot \nabla q\dx
     - \int_{\d\cell} (v-I_h v)\cdot\n q \ds
-  \end{gather*}
+  \end{gather}
   Let now $q\in \mathcal P_\cell$ chosen as
-  \begin{gather*}
+  \begin{gather}
     q = \Pi_h (\div (I_h v) - \div v).
-  \end{gather*}
+  \end{gather}
   Then, the left hand side of the equation above becomes
   $\norm{\div(I_h v) - \Pi_h(\div v)}_\cell^2$. The first integral on
   the right vanishes by testing~\eqref{eq:darcy:20} with
@@ -1252,10 +1252,10 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   well-defined on the space $\tilde V=\Hdiv(\domain) \cap H^s(\domain;\R^d)$
   for any $s>0$. Thus, if the domain allows for an inf-sup condition
   of the form
-  \begin{gather*}
+  \begin{gather}
     \inf_{q\in Q}\sup_{v\in \tilde V} \frac{(\div
       v,q)}{\norm{v}_{\tilde V}\norm{q}_Q} \ge \beta > 0,
-  \end{gather*}
+  \end{gather}
   then we are done here. The case of minimal regularity will require
   us to extend the ideas of the Clément interpolant to commuting
   interpolation operators, which will be done in
@@ -1275,70 +1275,70 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   2.5.1]{BoffiBrezziFortin13}) of this phenomenon.  On the disc
   $\mathcal D$ around the origin of radius $e^{-1}$ consider the
   function
-  \begin{gather*}
+  \begin{gather}
     u(x,y) = \ln\Bigl(-\ln\bigl(\sqrt{x^2+y^2}\bigr)\Bigr).
-  \end{gather*}
+  \end{gather}
   There holds $u\in H^1_0(\mathcal D)$. Now, consider the domain
   $\domain$ consisting only of the upper half circle:
-  \begin{align*}
+  \begin{align}
     \domain &= \bigl\{(x,y)\in \R^2 \big\vert
               x^2+y^2<e^{-2} \text{ and } y>0 \bigr\}
     \\
     \d\domain &= [-e^{-1},e^{-1}] \times \{0\}
                 \cup \bigl\{ (x,\sqrt{e^{-2}-x^2}) \big\vert
                 x\in (-e^{-1},e^{-1}) \bigr\}
-  \end{align*}
+  \end{align}
   Thus, the trace of $u$ on the boundary is in
   $H^{1/2}(\d\domain)$. We now define $\mu\in H^{-1/2}(\d\domain)$ as
   the distributional derivative in tangential direction, say
   counter-clockwise,
-  \begin{gather*}
+  \begin{gather}
     \scal(\mu,\phi) = - \int_{\d\domain} u \d_{\tau} \phi
     \qquad\forall \phi\in C^1(\d\domain).
-  \end{gather*}
+  \end{gather}
 
   Computation yields
-  \begin{gather*}
+  \begin{gather}
     \mu(x) = \frac1{x\ln \abs{x}} \times
     \begin{cases}
       1 & x\in (-e^{-1},0) \\
       -1& x\in (0,e^{-1})\\
        0& x\not\in (-e^{-1},e^{-1}).
     \end{cases}
-  \end{gather*}
+  \end{gather}
   Both integrals
-  \begin{gather*}
+  \begin{gather}
     \int_{-e^{-1}}^0 \mu(x)\dx
     \qquad
     \int^{e^{-1}}_0 \mu(x)\dx,
-  \end{gather*}
+  \end{gather}
   are not bounded, such that on these parts of the boundary, $\mu$
   cannot even be tested with a constant function.
   Now, we consider the integral
-  \begin{gather*}
+  \begin{gather}
     \forme(\mu,\phi) = \int_{-e^{-1}}^{e^{-1}} \ln(-\ln\abs x) \d_\tau \phi \dx.
-  \end{gather*}
+  \end{gather}
   If we split $\phi$ into an odd and an even part, the integral with
   the even part vanishes, since $\ln(-\ln\abs x)$ is even and the
   derivative is odd. Therefore,
-  \begin{gather*}
+  \begin{gather}
     \forme(\mu,\phi)
     = \int_{-e^{-1}}^{e^{-1}}
     \frac{\phi_{\text{odd}}(x)}{x\ln\abs x} \dx
-  \end{gather*}
+  \end{gather}
   Finally, we use the fact that $\phi_{\text{odd}}(0) = 0$ and that
   it's growth is limited by its regularity. In order to be square
   integrable, the growth of $\phi_{\text{odd}}$ must be limited by a
   positive, fractional power,
-  \begin{gather*}
+  \begin{gather}
     \abs{\phi_{\text{odd}}(x)} \le c \abs x^\alpha,
     \qquad \alpha>0.
-  \end{gather*}
+  \end{gather}
   Then,
-  \begin{gather*}
+  \begin{gather}
     \int_0^{e^{-1}} \frac{\abs{\phi_{\text{odd}}(x)}}{x\ln\abs x} \dx
     \le \frac{x^{\alpha-1}}{\ln\abs x} \dx < \infty.
-  \end{gather*}
+  \end{gather}
 \end{example}
 
 \begin{intro}
@@ -1493,7 +1493,7 @@ theory, in particular \slideref{Corollary}{galerkin-mixed-u-kerb} and
   Verify \slideref{Lemma}{Piola-transform-integrals}.
 \begin{solution}
   We use the definitions
-  \begin{align*}
+  \begin{align}
     p(x) &= \widehat p(\widehat x),&
     \nabla p(x) &= \mathrm D\Phi^{-T}
     \bigl[\widehat\nabla\widehat p(\widehat x)\bigr], \\
@@ -1502,27 +1502,27 @@ theory, in particular \slideref{Corollary}{galerkin-mixed-u-kerb} and
     \bigl[\widehat\nabla \widehat v(\widehat x)\bigr] \mathrm D\Phi^{-1}, &
     \div v(x) &= \tfrac1{\mathrm J} \widehat\nabla \cdot
     \widehat v(\widehat x).
-  \end{align*}
+  \end{align}
 For the first claim we compute
-  \begin{align*}
+  \begin{align}
     \int_{\cell} v \cdot \nabla q \dx
     &= \int_{\refcell}
        \tfrac1{\mathrm J} \mathrm D\Phi \widehat v(\widehat x) \cdot
        \mathrm D\Phi^{-T}\bigl[\widehat\nabla\widehat q(\widehat x)\bigr]
        J \dxref
     = \int_{\refcell} \widehat v \cdot \widehat \nabla \widehat q \dxref.
-  \end{align*}
+  \end{align}
   For the second we get
-  \begin{align*}
+  \begin{align}
     \int_{\cell} q \div v \dx
     &= \int_{\refcell}
        \widehat q(\widehat x)
        \tfrac1{\mathrm J} \widehat\nabla \cdot \widehat v(\widehat x)
        J \dxref
     = \int_{\refcell} \widehat q \widehat \nabla\!\cdot\! \widehat v \dxref,
-  \end{align*}
+  \end{align}
   Finally, the last equality holds due to
-  \begin{align*}
+  \begin{align}
     \int_{\d\cell} q v\cdot\n \ds
     &= \int_{\cell} \nabla \cdot(q v) \dx
     = \int_{\cell} v\cdot \nabla q + q\nabla \cdot v \dx \\
@@ -1530,7 +1530,7 @@ For the first claim we compute
                       + \widehat q \widehat \nabla \cdot \widehat v \dxref
     = \int_{\refcell}\widehat \nabla \cdot(\widehat q \widehat v) \dxref
     = \int_{\d\refcell} \widehat q \widehat v\cdot\widehat \n \dsref.
-  \end{align*}
+  \end{align}
 
 \end{solution}
 \end{Problem}
@@ -1690,33 +1690,33 @@ cubes.
   Prove \slideref{Lemma}{bdm-quad}.
 \begin{solution}
  The dimension of the space is by definition
- \begin{align*}
+ \begin{align}
     \dim BDM_{[k]} = d\binom{k+d}{d}+2=2\frac{(k+2)(k+1)}{2}+2=(k+1)(k+2)+2.
- \end{align*}
+ \end{align}
  The number of functionals is
- \begin{align*}
+ \begin{align}
   2^d \binom{k+d-1}{d-1}+d \binom{k+d-2}{d} &= 4 \frac{k+1}{1}+2\frac{k(k-1)}{2}
   = 4k+4+k^2-k+4\\
   &= k^2-3k+4 = (k+2)(k+1)+2.
- \end{align*}
+ \end{align}
  Now we only have to check the unisolvence, i.e.
- \begin{align*}
+ \begin{align}
 p\in BDM_{[k]}, \nodal_* (p) = 0 \Rightarrow p \equiv 0.
-\end{align*}
+\end{align}
  An arbitrary element $p\in BDM_{[k]}$ can be written as
- \begin{align*}
+ \begin{align}
   p_1 (x,y) &= a x^{k+1} +b (k+1) x y^k+ q_{k,1}(x,y) \\
   p_2 (x,y) &= -a (k+1) y x^k-b y^{k+1}+ q_{k,2}(x,y)
- \end{align*}
+ \end{align}
  where $q_{k,1},q_{k,2}\in \mathbb{P}_k$. Now consider the evaluation of the first component for $x=\pm1$:
- \begin{align*}
+ \begin{align}
   p_1 (\pm1,y) &= a (\pm1)^{k+1} \pm b (k+1) y^k+ q_{k,1}(\pm1,y)\in \mathbb{P}_k(e_i)
- \end{align*}
+ \end{align}
  and the first condition requires $p_1 (\pm1,y)\equiv 0$ which implies $\pm b(k+1)+c_{0,k}=0$ and hence $b=0$.
  Similarly, evaluating the second component for $y=\pm1$ gives
- \begin{align*}
+ \begin{align}
   p_2 (x,\pm1) &= \pm a (k+1) x^k+ q_{k,2}(x,\pm1)\in \mathbb{P}_k(e_i)
- \end{align*}
+ \end{align}
  and the first condition requires $p_3 (x,\pm1)\equiv 0$ which implies $\pm a(k+1)+c_{k,0}=0$ and hence $a=0$.
  In combination, the first condition requires $p_1,p_2\in \mathbb{P}_k$. Furthermore, the first component vanishes
  at $x=\pm1$ and the second component at $y=\pm1$ implying $p_1=(1-x^2) \hat{p}_1, p_2=(1-y^2) \hat{p}_2$
@@ -1734,9 +1734,9 @@ p\in BDM_{[k]}, \nodal_* (p) = 0 \Rightarrow p \equiv 0.
 
 \begin{remark}
   If the mapping of the cells is not affine, we do not have
-  \begin{gather*}
+  \begin{gather}
     \div V_h = Q_h.
-  \end{gather*}
+  \end{gather}
   Indeed, on each cell, we have
   \begin{gather}
     \div V_h = \tfrac1{J} Q_h,
@@ -1749,10 +1749,10 @@ p\in BDM_{[k]}, \nodal_* (p) = 0 \Rightarrow p \equiv 0.
   is shown there that for the $RT_{[k]}$ on general
   quadrilateral meshes, which do \emph{not} converge to affine meshes
   as $h\to0$, there holds
-  \begin{align*}
+  \begin{align}
     \inf_{v_h\in V_h}\norm{u-v_h} &= \mathcal O(h^{k+1}), \\
     \inf_{v_h\in V_h}\norm{\div u-\div v_h} &= \mathcal O(h^{k}).
-  \end{align*}
+  \end{align}
   The optimal approximation of the divergence can be recovered by
   enriching the space like the Arnold-Boffi-Falk element below.
 \end{remark}
@@ -1792,10 +1792,10 @@ p\in BDM_{[k]}, \nodal_* (p) = 0 \Rightarrow p \equiv 0.
 
   In one dimension, for instance for the integration over edges, we
   realize that
-  \begin{gather*}
+  \begin{gather}
     \nodal_{1,i,j} (v) = \int_{\face} v\cdot\n \,q_j \ds
     = \sum_{\ell=1}^{k+1} \omega_\ell v(x_\ell)\cdot\n\,q(x_\ell),
-  \end{gather*}
+  \end{gather}
   for any Gauss-Legendre or Gauss-Lobatto quadrature rule on
   $\face$. What was left unspecified in the definition of the element
   was the choice of a basis $\{q_j\}$ for $\P_k$. From the point of
