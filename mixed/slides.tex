@@ -1,6 +1,47 @@
-\documentclass[american,ignorenonframetext,notheorems,aspectratio=1610]{beamer}
-\usetheme[compress]{JuanLesPins}
-%\useoutertheme{infolines}
+\documentclass[american,ignorenonframetext,notheorems]{beamer}
+\usetheme{Antibes}
+\useinnertheme[shadow]{rounded}
+\makeatletter
+\defbeamertemplate*{headline}{subtree theme}
+{%
+    \begin{beamercolorbox}[wd=\paperwidth,colsep=1.5pt]{upper separation line head}
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}
+      \usebeamerfont{title in head/foot}\insertsectionnumber \hskip.5em \insertsectionhead
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{section in head/foot}
+      \usebeamerfont{section in head/foot}%
+      \ifbeamer@tree@showhooks
+        \setbox\beamer@tempbox=\hbox{\insertsubsectionhead}%
+        \ifdim\wd\beamer@tempbox>1pt%
+          \hskip2pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}%
+          \hskip1pt%
+        \fi%
+      \else%  
+        \hskip6pt%
+      \fi%
+      \insertsubsectionhead
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{subsection in head/foot}
+      \usebeamerfont{subsection in head/foot}%
+      \ifbeamer@tree@showhooks
+        \setbox\beamer@tempbox=\hbox{\insertsubsubsectionhead}%
+        \ifdim\wd\beamer@tempbox>1pt%
+          \hskip9.4pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}%
+          \hskip1pt%
+        \fi%
+      \else%  
+        \hskip12pt%
+      \fi%
+      \insertsubsubsectionhead
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=\paperwidth,colsep=1.5pt]{lower separation line head}
+    \end{beamercolorbox}
+}
+\makeatother
 \usecolortheme{iwr}
 \usepackage{../mathsim}
 \input{./fig/tikzsettings}
@@ -19,115 +60,89 @@
 \renewcommand{\eqref}[1]{(\ref{#1})}
 \renewcommand{\define}[1]{\textbf{#1}}
 \begin{document}
-\frame{\tableofcontents[hideallsubsections]}
-\section{From elliptic to mixed problems}
-\frame{\tableofcontents[currentsection,hideothersubsections]}
-% \frame {\input {blocks/Notation-vector-diff-operators.tex}}
-\frame {\input {blocks/Definition-strain-tensor.tex}}
-\frame {\input {blocks/Definition-hooke.tex}}
-\frame {\input {blocks/Definition-weak-lame-navier.tex}}
-\frame {\input {blocks/Problem-frobenius.tex}}
-\frame {\input {blocks/Assumption-korn-inequality.tex}
-  \input {blocks/Lemma-korn.tex}}
-\frame {\small\input {blocks/Problem-elasticity-standard.tex}}
+\section{Introduction: from elliptic to mixed problems}
+\subsection{Elliptic systems: linear elasticity}
+\subsubsection{Example: weak form of the Lamé-Navier equations}
+\subsubsection{The finite element toolbox}
+\subsubsection{Where things go wrong}
+
+\begin{frame}
+  \frametitle{Example: hanging sheet}
+  \begin{itemize}
+  \item $\domain = (-1,1)^2$
+  \item $\vf = (0,-1)^T$
+  \item $\vu = 0$ at $(x,1)$
+  \item $\strain u \n = 0$ on remaining boundary
+  \item $\mu=1$ and $\lambda$ varies
+  \item Two different finite element methods
+    \begin{itemize}
+    \item Red: bilinear elements
+    \item Blue: Hdiv-DG (later in this class)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Example: hanging sheet}
+  \centering
+  \begin{tabular}{cc}
+    \includegraphics[width=.45\textwidth]{./graph/elasticity/stalactite-0}
+    &\includegraphics[width=.45\textwidth]{./graph/elasticity/stalactite-1}
+    \\
+    $\lambda = 1$&$\lambda = 10$
+  \end{tabular}
+\end{frame}
 
 \begin{frame}
   \frametitle{Example: hanging sheet}
   \centering
   \begin{tabular}{ccc}
-    \includegraphics[width=.25\textwidth]{./graph/elasticity/stalactite-0}
-    &\includegraphics[width=.25\textwidth]{./graph/elasticity/stalactite-1}
-    &\includegraphics[width=.25\textwidth]{./graph/elasticity/stalactite-2}
+    \includegraphics[width=.45\textwidth]{./graph/elasticity/stalactite-2}
+    &\includegraphics[width=.45\textwidth]{./graph/elasticity/stalactite-3}
     \\
-    $\lambda = 1$&$\lambda = 10$&$\lambda = 100$
-    \\\\
-    \includegraphics[width=.25\textwidth]{./graph/elasticity/stalactite-3}
-    &\includegraphics[width=.25\textwidth]{./graph/elasticity/stalactite-4}
-    &\includegraphics[width=.25\textwidth]{./graph/elasticity/stalactite-5}
-    \\
-    $\lambda = 1000$&$\lambda = 10000$&$\lambda = 100000$
+    $\lambda = 100$&$\lambda = 1000$
   \end{tabular}
 \end{frame}
-\frame {\input {blocks/Definition-displacement-pressure.tex}}
-\frame {\input {blocks/Definition-lame-navier-strong.tex}}
-\frame {\input {blocks/Definition-saddle-point-operators.tex}}
-\frame {\input {blocks/Definition-saddle-point-abstract.tex}}
-\frame {\input {blocks/Notation-saddle-point-form.tex}}
-\frame {\input {blocks/Definition-schur-complement.tex}
-  \input {blocks/Lemma-schur-complement1.tex}}
-\frame {\input {blocks/Lemma-schur-definiteness.tex}}
-\frame {\input {blocks/Definition-stokes-eq1.tex}}
-\frame {\input {blocks/Definition-solenoidal.tex}}
-\frame {\input {blocks/Lemma-stokes-equivalence.tex}}
-\frame {\input {blocks/Definition-stokes-eq2.tex}}
-\frame {\input {blocks/Definition-stokes-boundary2.tex}}
-\frame {\input {blocks/Lemma-divergence-compatibility.tex}
-\input {blocks/Notation-pressure-constant.tex}}
-\frame {\input {blocks/Theorem-minimization.tex}}
-\frame {\input {blocks/Definition-reduced-problem.tex}
-\input {blocks/Lemma-reduced-wellposedness.tex}}
-\frame {\input {blocks/Theorem-lagrange-multiplier.tex}}
-\frame {\input {blocks/Problem-lagrange-multiplier.tex}}
-\frame {\input {blocks/Corollary-stokes-lagrange.tex}}
-\end{document}
-\section{Conditions for well-posedness}
-\frame{\tableofcontents[currentsection,hideothersubsections]}
-\frame {\input {blocks/Problem-unbounded-inverse.tex}}
-\frame {\input {blocks/Problem-lax-milgram-not-applicable.tex}}
-\frame {\input {blocks/Theorem-la-invertible.tex}}
-\frame {\input {blocks/Theorem-svd.tex}}
-\frame {\input {blocks/Corollary-svd-order.tex}}
-\frame {\input {blocks/Definition-ker-range-rn.tex}
-\input {blocks/Definition-orthogonal1.tex}}
-\frame {\input {blocks/Lemma-ker-coker-rn.tex}
-\input {blocks/Corollary-ker-coker-iso.tex}
-\input {blocks/Corollary-svd-infsup.tex}}
-\frame {\input {blocks/Definition-infsup1.tex}
-\input {blocks/Lemma-infsup2.tex}
-\input {blocks/Problem-inf-sup-equivalence.tex}}
-\frame {\input {blocks/Definition-polar-orthogonal.tex}
-\input {blocks/Lemma-orthogonal-closed.tex}
-\input {blocks/Theorem-orthogonal-complement.tex}}
-\frame {\input {blocks/Definition-orthogonal-projection.tex}}
-\frame {\input {blocks/Lemma-polar-orthogonal-hilbert.tex}}
-\frame {\input {blocks/Theorem-closed-range.tex}}
-\frame {\input {blocks/Theorem-open-mapping.tex}
-\input {blocks/Lemma-closed-infsup.tex}}
-\frame {\input {blocks/Theorem-infsup-well-equivalence.tex}}
-\frame {\input {blocks/Corollary-infsup-well-posedness1.tex}}
-\frame {\input {blocks/Theorem-infsup-well-posedness2.tex}}
-\frame {\input {blocks/Theorem-infsup-mixed1.tex}}
-\frame {\input {blocks/Theorem-infsup-mixed2.tex}}
-\frame {\input {blocks/Problem-inhomogeneous-continuity.tex}}
-\frame {\input {blocks/Assumption-mixed-elliptic.tex}}
 
-\subsection{Galerkin approximation of mixed problems}
+\begin{frame}
+  \frametitle{Example: hanging sheet}
+  \centering
+  \begin{tabular}{ccc}
+    \includegraphics[width=.45\textwidth]{./graph/elasticity/stalactite-4}
+    &\includegraphics[width=.45\textwidth]{./graph/elasticity/stalactite-5}
+    \\
+    $\lambda = 10000$&$\lambda = 100000$
+  \end{tabular}
+\end{frame}
 
-\frame {\input {blocks/Definition-kerbh.tex}}
-\frame {\input {blocks/Definition-mixed-galerkin.tex}}
-\frame {\input {blocks/Theorem-galerkin-mixed-u-kerbh.tex}}
-\frame {\input {blocks/Corollary-galerkin-mixed-u-kerb.tex}}
-\frame {\input {blocks/Theorem-galerkin-mixed-existence-p.tex}}
-\frame {\input {blocks/Problem-infsup-uniform.tex}}
-\frame {\input {blocks/Lemma-fortin.tex}}
-\frame {\input {blocks/Assumption-mixed-elliptic-stabilized.tex}}
-\frame {\input {blocks/Theorem-mixed-stabilized-well-posed.tex}}
-\frame {\input {blocks/Definition-mixed-residual.tex}}
-\frame {\input {blocks/Corollary-mixed-residual-bounded.tex}}
-\frame {\input {blocks/Lemma-stabilized-mixed-approximation.tex}}
-\frame {\input {blocks/Corollary-stabilized-mixed-convergence.tex}}
+\begin{frame}
+  \frametitle{Example: hanging sheet}
+  \centering
+  \begin{tabular}{ccc}
+    \includegraphics[width=.45\textwidth]{./graph/elasticity/stalactite-0}
+    &\includegraphics[width=.45\textwidth]{./graph/elasticity/stalactite-5}
+    \\
+    $\lambda = 1$&$\lambda = 100000$
+  \end{tabular}
+\end{frame}
 
-\section{Stokes equations}
-\frame{\tableofcontents[currentsection,hideothersubsections]}
+\begin{frame}
+  \frametitle{Manufactured setting}
+  \begin{itemize}
+  \item $\domain = (-1,1)^2$
+  \item $\vu = 0$ on $\d\domain$
+  \item Right hand side computed from known solution
+  \item $\mu=1$ and $\lambda$ varies
+  \end{itemize}
+\end{frame}
 
-\frame {\input {blocks/Lemma-stokes-a-elliptic.tex}}
-\frame {\input {blocks/Lemma-stokes-helmholtz.tex}
-  \input {blocks/Lemma-stokes-grad.tex}}
-\frame {\input {blocks/Corollary-stokes-iso.tex}
-  \input {blocks/Theorem-stokes-infsup.tex}}
-\frame {\input {blocks/Theorem-stokes-convergence.tex}}
-\frame {\input {blocks/Corollary-stokes-convergence2.tex}}
-\frame {\input {blocks/Problem-checker-board.tex}}
+\begin{frame}
+  \frametitle{Errors for a manufactured setting}
+  \centering
+  \includegraphics[width=.8\textwidth]{./graph/elasticity/locking}
+\end{frame}
+
+\subsection{Abstract saddle-point systems}
 
 \begin{frame}
   \frametitle{Example: one-dimensional $P_1-P_1$ elements}
@@ -153,7 +168,6 @@
 \end{frame}
 
 \subsection{MINI element}
-\frame {\input {blocks/Definition-barycentric-coordinates.tex}}
 
 \begin{frame}
   \frametitle{The $P_1$ element in barycentric coordinates}
@@ -210,215 +224,6 @@
     \end{column}
   \end{columns}
 \end{frame}
-
-\frame {\input {blocks/Notation-piecewise-polynomial-spaces.tex}}
-\frame {\input {blocks/Definition-h1-bubble-space.tex}}
-\frame {\input {blocks/Definition-mini-element-p.tex}}
-\frame {\input {blocks/Lemma-fortin-construction-1.tex}}
-\frame {\input {blocks/Assumption-h1-stable-interpolation.tex}}
-\frame {\input {blocks/Definition-locally-quasi-uniform.tex}
-  \input {blocks/Assumption-locally-quasi-uniform.tex}}
-\frame {\input {blocks/Theorem-mini-stability.tex}}
-\frame {\input {blocks/Notation-broken-bilinear-form.tex}}
-\frame {\input {blocks/Lemma-mini-stabilized.tex}}
-\frame {\input {blocks/Problem-quadrilateral-mini.tex}}
-\frame {\input {blocks/Problem-mini-3d.tex}}
-\frame {\input {blocks/Definition-higher-order-bubble.tex}}
-\frame {\input {blocks/Theorem-higher-order-bubble.tex}
-  \input {blocks/Corollary-pk-bubble.tex}}
-
-\subsection{P2-P0}
-
-\frame {\input {blocks/Definition-p2-p0-element.tex}
-  \input {blocks/Lemma-p2-p0-stability.tex}}
-\frame {\input {blocks/Theorem-p2-p0-convergence.tex}}
-\frame {\input {blocks/Problem-q2-q0.tex}}
-\frame {\input {blocks/Lemma-bubble-discontinuous.tex}}
-\frame {\input {blocks/Corollary-bubble-p2.tex}
-  \input {blocks/Corollary-pk-pk2.tex}}
-
-\frame {\input {blocks/Theorem-discontinuous-pressure-normal-velocity.tex}}
-\frame {\input {blocks/Corollary-qk-pk1.tex}}
-\frame {\input {blocks/Definition-moment-dofs-qk-2d.tex}}
-\frame {\input {blocks/Definition-moment-dofs-qk-3d.tex}}
-\frame {\input {blocks/Example-qk-pk1.tex}}
-
-\subsection{The Hood-Taylor elements}
-
-\frame {\input {blocks/Definition-hood-taylor.tex}}
-\frame {\input {blocks/Example-hood-taylor-triangle.tex}}
-\frame {\input {blocks/Example-hood-taylor-quad.tex}}
-\frame {\input {blocks/Definition-macro-equivalence.tex}}
-\frame {\input {blocks/Problem-reference-macros.tex}}
-\frame {\input {blocks/Definition-macro-spaces.tex}}
-\frame {\input {blocks/Definition-verfuerth-norm.tex}}
-\frame {\input {blocks/Definition-macro-seminorm.tex}}
-\frame {\input {blocks/Lemma-macro1.tex}}
-\frame {\input {blocks/Lemma-macro-local.tex}}
-\frame {\input {blocks/Problem-macro-local.tex}}
-\frame {\input {blocks/Lemma-verfuerth1.tex}}
-\frame {\input {blocks/Lemma-verfuerth2.tex}}
-\frame {\input {blocks/Theorem-hood-taylor-stability.tex}}
-
-\frame {\input {blocks/Lemma-patch-test-triangle.tex}}
-\frame {\input {blocks/Lemma-patch-test-quad.tex}}
-
-\subsection{Almost incompressible elasticity}
-
-\frame {\input {blocks/Lemma-reduced integration.tex}}
-\frame {\input {blocks/Theorem-mixed-stabilized-well-posed.tex}}
-\frame {\input {blocks/Corollary-stabilized-mixed-convergence.tex}}
-
-\section{Mixed formulation of elliptic problems}
-\frame{\tableofcontents[currentsection,hideothersubsections]}
-
-\frame {\input {blocks/Definition-primal-mixed.tex}}
-\frame {\input {blocks/Definition-hdiv.tex}}
-\frame {\input {blocks/Definition-dual-mixed.tex}}
-\frame {\input {blocks/Theorem-Hdiv-separable.tex}
-  \input {blocks/Theorem-Hdiv-trace.tex}}
-\frame {\input {blocks/Problem-trace-dnu.tex}}
-\frame {\input {blocks/Theorem-Hdiv-trace-surjective.tex}
-  \input {blocks/Theorem-Hdiv-trace-kernel.tex}}
-\frame {\input {blocks/Theorem-Hdiv-helmholtz.tex}}
-\frame {\input {blocks/Problem-mixed-inhomogeneous-bc.tex}}
-\frame {\input {blocks/Lemma-darcy-reduced-wellposed.tex}}
-\frame {\input {blocks/Lemma-darcy-infsup.tex}
-  \input {blocks/Theorem-darcy-well-posed.tex}}
-\frame {\small\input {blocks/Theorem-infsup-mixed2.tex}}
-
-\subsection{Discretization of dual mixed problems}
-
-\frame {\input {blocks/Lemma-normal-continuity.tex}}
-\frame {\input {blocks/Definition-rt-simplex.tex}}
-\frame {\input {blocks/Example-rt-simplex.tex}}
-\frame {\input {blocks/Lemma-rt-simplex-1.tex}}
-\frame {\input {blocks/Lemma-rt-simplex-dimension.tex}}
-\frame {\input {blocks/Lemma-rt-simplex-unisolvence.tex}}
-
-\frame {\input {blocks/Definition-bdm-simplex.tex}}
-\frame {\input {blocks/Example-bdm-simplex.tex}}
-\frame {\input {blocks/Lemma-bdm-simplex-unisolvence.tex}}
-\frame {\input {blocks/Definition-canonical-interpolation.tex}}
-\frame {\input {blocks/Lemma-commuting-diagram-hdiv.tex}}
-
-\subsection{Quarilaterals and hexahedra}
-
-\frame {\input {blocks/Notation-recap-reference-transform.tex}}
-\frame {\input {blocks/Definition-Piola-transform.tex}}
-\frame {\input {blocks/Lemma-Piola-transform-integrals.tex}
-  \input {blocks/Problem-Piola-transform-integrals.tex}}
-\frame {\input {blocks/Notation-tensor-product-polynomials.tex}}
-\frame {\input {blocks/Definition-rt-quad.tex}}
-\frame {\input {blocks/Example-rt-quad.tex}}
-\frame {\input {blocks/Lemma-rt-quad-1.tex}}
-\frame {\input {blocks/Definition-bdm-quad.tex}}
-\frame {\input {blocks/Example-bdm-quad.tex}}
-\frame {\input {blocks/Lemma-bdm-quad.tex}
-  \input {blocks/Problem-bdm-quad.tex}}
-\frame {\input {blocks/Corollary-darcy-convergence-affine.tex}}
-\frame {\input {blocks/Definition-abf-quad.tex}}
-
-\section{Divergence conforming DG}
-\frame{\tableofcontents[currentsection,hideothersubsections]}
-
-\subsection{The interior penalty method}
-\frame {\input {blocks/Definition-dg-faces.tex}
-  \input {blocks/Definition-dg-spaces.tex}}
-\frame {\input {blocks/Definition-broken-integrals.tex}}
-\frame {\input {blocks/Notation-dg-operators.tex}}
-\frame {\input {blocks/Definition-ip.tex}}
-\frame {\input {blocks/Definition-ip-norm.tex}
-  \input {blocks/Problem-ip-norm.tex}}
-\frame {\input {blocks/Lemma-ip-stability.tex}
-  \input {blocks/Problem-ip-stability.tex}}
-\frame {\input {blocks/Lemma-ip-consistence.tex}}
-%\frame {\input {blocks/Theorem-ip-convergence.tex}}
-
-\subsection{Formulation with lifting operators}
-
-\frame {\input {blocks/Definition-dg-lifting.tex}
-  \input {blocks/Lemma-ip-lifting-bounded.tex}}
-\frame {\input {blocks/Definition-ip-lifting.tex}
-  \input {blocks/Lemma-ip-equivalence.tex}}
-\frame {\input {blocks/Definition-ip-residual.tex}}
-\frame {\input {blocks/Lemma-ip-lifting-strang.tex}}
-\frame {\input {blocks/Lemma-ip-lifting-residual-2.tex}}
-\frame {\input {blocks/Lemma-ip-lifting-residual-1.tex}}
-\frame {\input {blocks/Theorem-ip-lifting-h1.tex}}
-\frame {\input {blocks/Theorem-ip-lifting-l2.tex}}
-
-\subsection{Divergence conforming IP}
-
-\frame {\input {blocks/Definition-hdiv-ip.tex}}
-\frame {\input {blocks/Lemma-dg-fortin.tex}}
-\frame {\input {blocks/Corollary-hdivdg-infsup.tex}}
-\frame {\input {blocks/Theorem-hdivdg-convergence.tex}}
-
-\subsection{Duality}
-
-\frame {\input {blocks/Definition-dual-stokes.tex}
-  \input {blocks/Assumption-stokes-regularity.tex}}
-\frame {\input {blocks/Definition-hdivdg-residual-operators.tex}}
-\frame {\input {blocks/Lemma-hdivdg-residual-1.tex}
-  \input {blocks/Corollary-hdivdg-residual-2.tex}}
-\frame {\input {blocks/Theorem-hdivdg-l2.tex}
-  \input {blocks/Problem-hdivdg-l2.tex}}
-
-\section{Maxwell}
-\frame {\input {blocks/Notation-curl.tex}}
-\frame {\input {blocks/Lemma-curl-green.tex}}
-\frame {\input {blocks/Definition-Maxwell-boundary.tex}}
-\frame {\input {blocks/Definition-curl-traces.tex}}
-\frame {\input {blocks/Theorem-curl-traces.tex}}
-\frame {\input {blocks/Definition-Maxwell-mixed-0.tex}}
-
-\section{The de Rham complex}
-\frame{\tableofcontents[currentsection,hideothersubsections]}
-
-\frame {\input {blocks/Notation-hlambda.tex}}
-\frame {\input {blocks/Notation-hlambda-2d.tex}}
-\frame {\input {blocks/Notation-hlambda-norm.tex}}
-\frame {\input {blocks/Theorem-de-rham.tex}}
-\frame {\input {blocks/Lemma-hlambda-0.tex}}
-
-\frame {\input {blocks/Theorem-div-curl-well-posed.tex}
-  \input {blocks/Problem-darcy-derham.tex}}
-
-\subsection{Polynomial complexes for simplicial meshes}
-
-\frame {\input {blocks/Notation-pk-complex.tex}}
-\frame {\input {blocks/Definition-Koszul-complex.tex}}
-\frame {\input {blocks/Lemma-kd-plus-dk.tex}
-  \input {blocks/Lemma-d-kappa-injective.tex}}
-\frame {\input {blocks/Theorem-polynomial-exact.tex}
-  \input {blocks/Corollary-pk-complexes.tex}}
-\frame {\input {blocks/Definition-pk-plus.tex}}
-\frame {\input {blocks/Lemma-pk-plus-d.tex}}
-\frame {\input {blocks/Lemma-pr-pr-plus.tex}}
-\frame {\input {blocks/Theorem-dimension-pr-lambda.tex}}
-
-\subsection{Degrees of freedom and bases for simplicial meshes}
-
-\frame {\input {blocks/Definition-mesh-pk.tex}
-  \input {blocks/Definition-spanned-simplex.tex}
-  \input {blocks/Definition-subsimplices.tex}}
-\frame {\input {blocks/Definition-pr-f.tex}}
-\frame {\input {blocks/Lemma-subsimplex-polynomials.tex}
-  \input {blocks/Problem-subsimplex-polynomials.tex}}
-\frame {\input {blocks/Example-h1-moment-dofs.tex}}
-\frame {\input {blocks/Definition-v-of-f.tex}
-  \input {blocks/Definition-w-of-f.tex}}
-\frame {\input {blocks/Lemma-pr-geometric.tex}}
-\frame {\input {blocks/Theorem-decomp-pr-plus.tex}}
-\frame {\input {blocks/Example-rt-complex-decomp.tex}}
-\frame {\input {blocks/Theorem-decomp-pr.tex}}
-\frame {\input {blocks/Example-bdm-complex-decomp.tex}}
-\frame {\input {blocks/Lemma-qr-complex.tex}}
-\frame {\input {blocks/Definition-pr-complex-1d.tex}}
-\frame {\input {blocks/Definition-tensor-dofs.tex}}
-\frame {\input {blocks/Lemma-2d-tensor-rt-nedelec.tex}}
-
 
 \end{document}
 

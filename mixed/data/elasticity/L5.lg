@@ -1,0 +1,173 @@
+JobId simhome Wed Apr 15 21:24:53 2020
+DEAL:parameters::Curl factor: 1.
+DEAL:parameters::Grad factor: 0.
+DEAL:parameters::Lambda: 10000.
+DEAL:parameters::Linear: true
+DEAL:parameters::Mu: 1.
+DEAL:parameters::Steps: 8
+DEAL:parameters:Arpack::Max steps: 100
+DEAL:parameters:Arpack::Min Arnoldi vectors: 20
+DEAL:parameters:Arpack::Symmetric: false
+DEAL:parameters:Arpack::Tolerance: 1.e-10
+DEAL:parameters:Discretization::FE: FESystem[FESystem[FE_Q(1)^d]]
+DEAL:parameters:Discretization::Local refinement: false
+DEAL:parameters:Discretization::Refinement: 0
+DEAL:parameters:Linear Solver::Log frequency: 1
+DEAL:parameters:Linear Solver::Log history: false
+DEAL:parameters:Linear Solver::Log result: true
+DEAL:parameters:Linear Solver::Max steps: 100
+DEAL:parameters:Linear Solver::Reduction: 1.e-10
+DEAL:parameters:Linear Solver::Tolerance: 1.e-10
+DEAL:parameters:Linear Solver::Use Default Residual: true
+DEAL:parameters:Linear Solver::Use Right Preconditioning: true
+DEAL:parameters:Multigrid::Include exterior smoothing on blocks: 
+DEAL:parameters:Multigrid::Interior smoothing: true
+DEAL:parameters:Multigrid::Log Smoother Statistics: false
+DEAL:parameters:Multigrid::Smoother Relaxation: 1.0
+DEAL:parameters:Multigrid::Smoothing steps on leaves: 1
+DEAL:parameters:Multigrid::Sort: false
+DEAL:parameters:Multigrid::Variable smoothing steps: false
+DEAL:parameters:Newton::Assemble threshold: 0.2
+DEAL:parameters:Newton::Debug level: 0
+DEAL:parameters:Newton::Debug vectors: false
+DEAL:parameters:Newton::Log frequency: 1
+DEAL:parameters:Newton::Log history: true
+DEAL:parameters:Newton::Log result: true
+DEAL:parameters:Newton::Max steps: 100
+DEAL:parameters:Newton::Reduction: 1.e-14
+DEAL:parameters:Newton::Stepsize iterations: 21
+DEAL:parameters:Newton::Tolerance: 1.e-7
+DEAL:parameters:Output::Output format: gnuplot
+DEAL:parameters:Output::Subdivisions: 4
+DEAL:parameters:Output:DX output parameters::Coordinates format: ascii
+DEAL:parameters:Output:DX output parameters::Data format: ascii
+DEAL:parameters:Output:DX output parameters::Integer format: ascii
+DEAL:parameters:Output:DX output parameters::Write neighbors: true
+DEAL:parameters:Output:Eps output parameters::Azimut angle: 60
+DEAL:parameters:Output:Eps output parameters::Color function: default
+DEAL:parameters:Output:Eps output parameters::Color shading of interior of cells: true
+DEAL:parameters:Output:Eps output parameters::Draw mesh lines: true
+DEAL:parameters:Output:Eps output parameters::Fill interior of cells: true
+DEAL:parameters:Output:Eps output parameters::Index of vector for color: 0
+DEAL:parameters:Output:Eps output parameters::Index of vector for height: 0
+DEAL:parameters:Output:Eps output parameters::Line widths in eps units: 0.5
+DEAL:parameters:Output:Eps output parameters::Scale to width or height: width
+DEAL:parameters:Output:Eps output parameters::Scaling for z-axis: 1
+DEAL:parameters:Output:Eps output parameters::Size (width or height) in eps units: 300
+DEAL:parameters:Output:Eps output parameters::Turn angle: 30
+DEAL:parameters:Output:Povray output parameters::Include external file: true
+DEAL:parameters:Output:Povray output parameters::Use bicubic patches: false
+DEAL:parameters:Output:Povray output parameters::Use smooth triangles: false
+DEAL:parameters:Output:UCD output parameters::Write preamble: true
+DEAL:parameters:ThetaTimestepping::Adaptive: false
+DEAL:parameters:ThetaTimestepping::Final: 1.
+DEAL:parameters:ThetaTimestepping::First step: 1.e-2
+DEAL:parameters:ThetaTimestepping::Max step: 1.
+DEAL:parameters:ThetaTimestepping::Print step: -1.
+DEAL:parameters:ThetaTimestepping::Start: 0.
+DEAL:parameters:ThetaTimestepping::Strategy: uniform
+DEAL:parameters:ThetaTimestepping::Theta: .5
+DEAL:parameters:ThetaTimestepping::Tolerance: 1.e-2
+DEAL::Finite element: FESystem<2>[FESystem<2>[FE_Q<2>(1)^2]]
+DEAL::Output types vv
+DEAL::Step 0
+DEAL::DoFHandler: 8
+DEAL::Hanging nodes 0
+DEAL::Constrained 8 dofs
+DEAL::Residual 0.00000
+DEAL::Assemble matrices
+DEAL:GMRES::Convergence step 0 value 0.00000
+DEAL::Error(u): 1.76951
+DEAL::Error(gradu): 7.26587
+DEAL::Error(divu): 1.20680
+DEAL::Writing solution-000.gnuplot
+DEAL::Step 1
+DEAL::Triangulation 4 cells, 2 levels
+DEAL::DoFHandler: 18
+DEAL::Hanging nodes 0
+DEAL::Constrained 16 dofs
+DEAL::Residual 0.00000
+DEAL::Assemble matrices
+DEAL:GMRES::Convergence step 0 value 0.00000
+DEAL::Error(u): 1.98303
+DEAL::Error(gradu): 7.29810
+DEAL::Error(divu): 0.301699
+DEAL::Writing solution-001.gnuplot
+DEAL::Step 2
+DEAL::Triangulation 16 cells, 3 levels
+DEAL::DoFHandler: 50
+DEAL::Hanging nodes 0
+DEAL::Constrained 32 dofs
+DEAL::Residual 9.24171
+DEAL::Assemble matrices
+DEAL:GMRES::Starting value 9.24171
+DEAL:GMRES::Convergence step 1 value 1.55395e-14
+DEAL::Error(u): 1.98735
+DEAL::Error(gradu): 7.30325
+DEAL::Error(divu): 0.904865
+DEAL::Writing solution-002.gnuplot
+DEAL::Step 3
+DEAL::Triangulation 64 cells, 4 levels
+DEAL::DoFHandler: 162
+DEAL::Hanging nodes 0
+DEAL::Constrained 64 dofs
+DEAL::Residual 6.39879
+DEAL::Assemble matrices
+DEAL:GMRES::Starting value 6.39879
+DEAL:GMRES::Convergence step 1 value 1.94982e-13
+DEAL::Error(u): 1.97537
+DEAL::Error(gradu): 7.25895
+DEAL::Error(divu): 0.947274
+DEAL::Writing solution-003.gnuplot
+DEAL::Step 4
+DEAL::Triangulation 256 cells, 5 levels
+DEAL::DoFHandler: 578
+DEAL::Hanging nodes 0
+DEAL::Constrained 128 dofs
+DEAL::Residual 3.60381
+DEAL::Assemble matrices
+DEAL:GMRES::Starting value 3.60381
+DEAL:GMRES::Convergence step 1 value 1.20568e-12
+DEAL::Error(u): 1.92834
+DEAL::Error(gradu): 7.08468
+DEAL::Error(divu): 0.927993
+DEAL::Writing solution-004.gnuplot
+DEAL::Step 5
+DEAL::Triangulation 1024 cells, 6 levels
+DEAL::DoFHandler: 2178
+DEAL::Hanging nodes 0
+DEAL::Constrained 256 dofs
+DEAL::Residual 1.89294
+DEAL::Assemble matrices
+DEAL:GMRES::Starting value 1.89294
+DEAL:GMRES::Convergence step 1 value 8.25695e-12
+DEAL::Error(u): 1.76079
+DEAL::Error(gradu): 6.46409
+DEAL::Error(divu): 0.848061
+DEAL::Writing solution-005.gnuplot
+DEAL::Step 6
+DEAL::Triangulation 4096 cells, 7 levels
+DEAL::DoFHandler: 8450
+DEAL::Hanging nodes 0
+DEAL::Constrained 512 dofs
+DEAL::Residual 0.967614
+DEAL::Assemble matrices
+DEAL:GMRES::Starting value 0.967614
+DEAL:GMRES::Convergence step 1 value 4.87641e-11
+DEAL::Error(u): 1.30732
+DEAL::Error(gradu): 4.78940
+DEAL::Error(divu): 0.630708
+DEAL::Writing solution-006.gnuplot
+DEAL::Step 7
+DEAL::Triangulation 16384 cells, 8 levels
+DEAL::DoFHandler: 33282
+DEAL::Hanging nodes 0
+DEAL::Constrained 1024 dofs
+DEAL::Residual 0.488868
+DEAL::Assemble matrices
+DEAL:GMRES::Starting value 0.488868
+DEAL:GMRES::Convergence step 2 value 2.13545e-17
+DEAL::Error(u): 0.645016
+DEAL::Error(gradu): 2.35670
+DEAL::Error(divu): 0.311913
+DEAL::Writing solution-007.gnuplot

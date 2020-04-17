@@ -504,8 +504,34 @@ We consider the problem:
   \label{fig:elasticity-compressibility}
 \end{figure}
 
+\begin{example}
+  In a second example, we cook up a right hand side function $\vf$
+  such that we know the solution to the Lamé-Navier equations. Indeed,
+  we take a given solution $\vu$ and apply the differential operator
+  to compute $\vf$.
+
+  The \cref{fig:elasticity-locking} shows the $H^1$-seminorm of the
+  error over the mesh size (represented by its negative dyadic
+  logarithm). The black triangle denotes the convergence order $h$,
+  the expected convergence of the bilinear finite elements used in
+  this example.
+
+  We see that for $\lambda=1$ and $\lambda=10$, we get the expected
+  curves with the correct convergence rate. For larger values of
+  $\lambda$ things seem to go wrong. There is no convergence in the
+  beginning, but it seems that the expected rates are recovered on
+  finer meshes.
+\end{example}
+
+\begin{figure}[tp]
+  \centering
+  \includegraphics[width=.9\textwidth]{mixed/graph/elasticity/locking}
+  \caption{Errors for a manufactured solution with different values of $\lambda$.}
+  \label{fig:elasticity-locking}
+\end{figure}
+
 \begin{intro}
-  As we could see in the preceding problem and example, approximation
+  As we could see in the preceding examples, approximation
   of the solution to the Lamé-Navier equations becomes difficult, if
   $\lambda \gg \mu$. In this case, the material is called almost
   incompressible, since the divergence measures compression or
@@ -585,8 +611,9 @@ the following weak formulation.
 \end{remark}
 
 \begin{Definition}{lame-navier-strong}
-  Integrating the first equation by parts, we
-  obtain the \textbf{strong form} of the Lamé-Navier equations
+  Integrating the first equation by parts, we obtain the
+  \textbf{strong form} of the \putindex{displacement-pressure
+    formulation}
   \begin{gather}
     \arraycolsep.2ex
     \begin{matrix}
@@ -723,10 +750,10 @@ the following weak formulation.
 \section{Stokes equations}
 
 \begin{intro}
-  When we write the Lamé-Navier equations in mixed form according to
-  Definition~\ref{Definition:displacement-pressure}, there is no
+  When we write the Lamé-Navier equations in \putindex{displacement-rpessure formulation} according to
+  \slideref{Definition}{displacement-pressure}, there is no
   parameter $\lambda$ tending to infinity when the material becomes
-  more and more compressible. Instead, there is the parameter
+  less and less compressible. Instead, there is the parameter
   $1/\lambda$ tending to zero. Thus, we can simply consider the case
   of incompressible material by setting $1/\lambda=0$ or, in our
   abstract framework~\eqref{eq:mixedintro:1} setting $c(\cdot,\cdot) = 0$. The
