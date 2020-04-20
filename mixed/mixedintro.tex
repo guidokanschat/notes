@@ -543,7 +543,34 @@ We consider the problem:
   increasing $\lambda$ is called \define{locking}.
 \end{intro}
 
-\subsection{A first mixed formulation}
+\begin{Problem}{divergence-q1}
+  On $\domain = (-1,1)^2$ use the finite element mesh
+  \begin{center}
+  \includegraphics[width=.3\textwidth]{./fig/patch1m.tikz}, 
+  \end{center}
+  and on each cell the bilinear shape function space $\Q_1$, that is
+  \begin{gather}
+    \vV_h = \bigl\{ \vv\in \vH^1_0(\domain) \;\big|\;
+    \vv_{|\cell_i} \in \Q_1\quad i=1,2,3,4\bigr\}.
+  \end{gather}
+  Show that for functions in $\vV_h$ there holds
+  \begin{gather}
+    \norm{\div \vv_h}_{L^2(\domain)} = 0
+    \qquad\Rightarrow\qquad
+    \vv_h = 0.
+  \end{gather}
+\end{Problem}
+\subsection{A mixed formulation}
+
+\begin{Definition}{robust-discretization}
+  We call a discretization of a parameterized (system of) PDE robust
+  with respect to the parameters or simply \define{robust}, if in an
+  error estimate of the abstract form
+  \begin{gather}
+    \norm{u-u_h}_X \le c h^\alpha \norm{u}_Y
+  \end{gather}
+  the constant $c$ is independent of the parameters.
+\end{Definition}
 
 A way to approach this problem is the introduction of an auxiliary variable
 \begin{gather}
@@ -560,11 +587,12 @@ the following weak formulation.
     \label{eq:lame-navier-mixed}
     \begin{aligned}
       2\mu\form(\strain u, \strain v) &- \form(p,\div v) &=&\form(f,v)
-      &\forall v&\in V\\
+      &\forall v&\in V = \vH^1_0(\domain)\\
       -\form(q,\div u) &-\tfrac1\lambda \form(p,q) &=&0
-      &\forall q&\in Q.\\      
+      &\forall q&\in Q \subset L^2(\domain).\\
     \end{aligned}
   \end{gather}
+  \pause
   Equivalently, we write this in a single equation as
   \begin{multline}
     2\mu\form(\strain u, \strain v) - \form(p,\div v)
@@ -573,6 +601,7 @@ the following weak formulation.
     \\
     \qquad\forall v\in V, q\in Q,
   \end{multline}
+  \pause
   or in the nonsymmetric, (semi-)definite version
   \begin{multline}
     2\mu\form(\strain u, \strain v) + \form(p,\div v)
@@ -582,7 +611,6 @@ the following weak formulation.
     \qquad\forall v\in V, q\in Q,
   \end{multline}    
   \end{subequations}
-  Here, $V$ is as before and $Q=L^2(\domain)$.
 \end{Definition}
 
 \begin{remark}
@@ -624,133 +652,13 @@ the following weak formulation.
   \end{gather}
 \end{Definition}
 
-\section{Abstract saddle-point systems}
-%\subsection{Notation and basic properties}
-
-\begin{intro}
-  In order to study the mathematics not only of the Lamé-Navier
-  equations but of more general systems of the form of
-  equation~\eqref{eq:lame-navier-mixed}, we introduce abstract
-  bilinear forms
-  \begin{gather}
-    \label{eq:mixedintro:1}
-    \begin{aligned}
-      a(u,v) &= 2\mu\form(\strain u, \strain u), &u,v&\in V \\
-      b(u,p) &=  -\form(p,\div u), & u&\in V, p\in Q\\
-      c(p,q) &= \tfrac1\lambda \form(p,q) & p,q&\in Q.
-    \end{aligned}
-  \end{gather}
-\end{intro}
-
-\begin{Definition}{saddle-point-operators}
-  For each of the bilinear forms, we define associated operators
-  \begin{gather}
-    \begin{aligned}
-      A&\colon V \to V^* & \scal(Au,v) &= a(u,v), \\
-      B&\colon V \to Q^* & \scal(Bu,q) &= b(u,q), \\
-      B^T&\colon Q \to V^* & \scal(B^T p,v) &= b(v,p), \\
-      C&\colon Q\to Q^* & \scal(C p,q) &= c(p,q).
-    \end{aligned}
-  \end{gather}
-  Here, $\scal(\cdot,\cdot)$ is the canonical pairing between an element of
-  the dual space and the space itself.
-\end{Definition}
-
-\begin{Definition}{saddle-point-abstract}
-  The abstract saddle-point problem in weak form reads: find a pair
-  $(u,p)\in V\times Q$ such that
-  \begin{gather}
-    \label{eq:saddle-point-weak}
-    \arraycolsep.1em
-    \begin{matrix}
-      a(u,v) &+& b(v,p) &=& f(v) &\quad&\forall v\in V, \\
-      b(u,q) &-& c(p,q) &=& g(q) &&\forall q\in Q.
-    \end{matrix}
-  \end{gather}
-  In operator notation, it reads
-  \begin{gather}
-    \label{eq:saddle-point-operator}
-    \arraycolsep.1em
-    \begin{matrix}
-      Au &+& B^T p &=& f &\quad&\text{in } V^*, \\
-      Bu &-& C p &=& g &&\text{in } Q^*.
-    \end{matrix}
-  \end{gather}  
-\end{Definition}
-
-\begin{Notation}{saddle-point-form}
-  In order to consider the whole bilinear form of the saddle-point
-  system on the space $X = V\times Q$, we introduce
-  \begin{gather}
-    \mathcal A\mixedform(u,p,v,q)
-      = a(u,v) + b(v,p) + b(u,q) - c(p,q)
-  \end{gather}
-\end{Notation}
-
-\begin{Definition}{schur-complement}
-  Let the operator $A:V\to V^*$ in the saddle-point system be
-  invertible. Then, we define the \define{Schur complement} operator
-  $S\colon Q\to Q^*$ of the system as
-  \begin{gather}
-      S= -B A^{-1} B^T - C.
-  \end{gather}
-\end{Definition}
-
-\begin{Lemma}{schur-complement1}
-  Formally, the saddle-point system~\eqref{eq:saddle-point-operator}
-  can be solved in two steps by solving
-  \begin{align}
-    S p &= g - B A^{-1} f,\\
-    A u &= f-B^T p.
-  \end{align}
-\end{Lemma}
-
-\begin{proof}
-  Formally solve the first equation
-  of~\eqref{eq:saddle-point-operator} for $u$ and enter into the
-  second.
-\end{proof}
-
-\begin{Lemma}{schur-definiteness}
-  Let $a(\cdot,\cdot)$ be elliptic and $c(\cdot,\cdot)$ be positive semi-definite, and
-  let $\ker B^T\cap\ker C \neq \{0\}$. Then, the bilinear form
-  $\mathcal A(\cdot,\cdot)$ is indefinite.
-\end{Lemma}
-
-\begin{proof}
-  First, we note that because of ellipticity of $a(\cdot,\cdot)$
-  \begin{gather}
-    \mathcal A\mixedform(u,0,u,0) = a(u,u) \ge \gamma \norm{u}_V^2,
-  \end{gather}
-  for some positive constant $\gamma$. Furthermore, $A$ is invertible
-  and its inverse is positive definite. Furthermore,
-  $A^{-1}B^T\colon Q\to V$. Then, choosing $v=-A^{-1}B^T p$ yields
-  \begin{align}
-    \mathcal A\mixedform(v,p,v,p)
-    &= a(A^{-1}B^T p,A^{-1}B^T p) - 2b(A^{-1}B^T p,p) - c(p,p) \\
-    &= \scal(B^T p,A^{-1}B^T p) - 2\scal(A^{-1}B^T p,B^T p) - c(p,p)\\
-    &= -\scal(B^T p,A^{-1}B^T p) - c(p,p).
-  \end{align}
-  The first term is a quadratic term with the bilinear form associated
-  with $A^{-T}$, which is positive definite. Since $b(\cdot,\cdot)$ is not the
-  zero form, there is some $p$ such that $v\neq 0$. Therefore, with
-  the minus sign and the semi-definiteness of $c(\cdot,\cdot)$ we have found a
-  vector such that
-  \begin{gather}
-    \mathcal A\mixedform(v,p,v,p) < 0.
-  \end{gather}
-\end{proof}
-
-\begin{remark}
-  The previous result holds in particular for $c(\cdot,\cdot) \equiv 0$.
-\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Stokes equations}
 
 \begin{intro}
-  When we write the Lamé-Navier equations in \putindex{displacement-rpessure formulation} according to
+  When we write the Lamé-Navier equations in \putindex{displacement-pressure formulation} according to
   \slideref{Definition}{displacement-pressure}, there is no
   parameter $\lambda$ tending to infinity when the material becomes
   less and less compressible. Instead, there is the parameter
@@ -768,49 +676,50 @@ the following weak formulation.
       \label{eq:mixedintro:stokes-strong1}
       \arraycolsep.2ex
       \begin{matrix}
-        -2\mu \div \strain u &+& \nabla p &=& f \\
-        \div u && &=& 0.
+        -2\mu \div \strain \vu &+& \nabla p &=& \vf \\
+        \div \vu && &=& 0.
       \end{matrix}
     \end{gather}
-    In weak form, they are: find $u\in V \subset H^1(\domain;\R^d)$
+    In weak form, they are: find $\vu\in \vV \subset \vH^1(\domain)$
     and $p\in Q \subset L^2(\domain)$ such that
   \begin{gather}
     \label{eq:mixedintro:stokes-weak1}
     \begin{aligned}
-      2\mu\form(\strain u, \strain v) &- \form(\div v,p) &=&\form(f,v)
+      2\mu\form(\strain \vu, \strain \vv) &- \form(\div \vv,p) &=&\form(\vf,\vv)
       + \text{bdry}
-      &\forall v&\in V\\
-      -\form(\div u,q) & &=&0+ \text{bdry}
+      &\forall \vv&\in \vV\\
+      -\form(\div \vu,q) & &=&0+ \text{bdry}
       &\forall q&\in Q.\\      
     \end{aligned}
   \end{gather}
-  The subspaces $V$ and $Q$ are determined by boundary conditions.
+  The subspaces $\vV$ and $Q$ are determined by boundary conditions.
 \end{Definition}
 
 \begin{Definition}{solenoidal}
-  A vector-valued function $u$ is called \define{divergence-free} or
+  A vector-valued function $\vu$ is called \define{divergence-free} or
   \define{solenoidal}, if there holds
   \begin{gather}
-    \div u = 0.
+    \div \vu = 0.
   \end{gather}
   Flow described by a solenoidal function is called
   \define{incompressible}.
 \end{Definition}
 
 \begin{Lemma}{stokes-equivalence}
-  Let $V=H^1_0(\domain;\R^d)$. Then, for any solenoidal function $u\in
-  V$ there holds
+  Let $\vV=\vH^1_0(\domain)\cap \vH^2(\domain)$. Then, for any
+  solenoidal function $\vu\in vV$ there holds
   \begin{gather}
     \label{eq:mixedintro:6}
-    2\mu\form(\strain u, \strain v) = \mu\form(\nabla u, \nabla v)
-    \qquad\forall v\in V.
+    2\mu\form(\strain \vu, \strain \vv) = \mu\form(\nabla \vu, \nabla \vv)
+    \qquad\forall \vv\in \vV.
   \end{gather}
 \end{Lemma}
 
 \begin{proof}
-  We have
+  We have ('$:$' denoting the \putindex{double contraction} of
+  \putindex{Frobenius inner product})
   \begin{align}
-    \strain u: \strain v
+    \strain \vu: \strain \vv
     &= \frac14\sum_{i,j=1}^d\left[ (\d_i u_j+\d_j u_i) (\d_i v_j+\d_j v_i)
       \right]
     \\
@@ -827,8 +736,9 @@ the following weak formulation.
   Entering in the
   previous equation and summing over $i$ and $j$, we obtain
   \begin{gather}
-    2(\strain u,\strain v) = (\nabla u,\nabla v)+(\nabla\cdot u,\nabla\cdot v)
-                           = (\nabla u,\nabla v).
+    2(\strain \vu,\strain \vv)
+    = (\nabla \vu,\nabla \vv)+(\div \vu,\div \vv)
+                           = (\nabla \vu,\nabla \vv).
   \end{gather}
 \end{proof}
 
@@ -837,8 +747,9 @@ the following weak formulation.
   the previous lemma to simplify the Stokes equations and to replace
   the strain tensor by the gradient. As a result, we can avoid the use
   of a Korn inequality and operate directly with the inner product of
-  $H^1$. We note though that this formulation, while mathematically
-  simpler, is physically wrong if $u\neq H^1_0(\domain;\R^d)$.
+  $\vH^1$. We note though that this formulation, while mathematically
+  simpler, is physically wrong if $\vu\neq \vH^1_0(\domain)$, that is,
+  having nonzero boundary values.
 \end{intro}
 
 \begin{Definition}{stokes-eq2}
@@ -847,19 +758,19 @@ the following weak formulation.
       \label{eq:mixedintro:stokes-strong2}
       \arraycolsep.2ex
       \begin{matrix}
-        - \nu \Delta u &+& \nabla p &=& f \\
-        \div u && &=& 0.
+        - \nu \Delta \vu &+& \nabla p &=& \vf \\
+        \div \vu && &=& 0.
       \end{matrix}
     \end{gather}
-    In weak form, they are: find $u\in V \subset H^1(\domain;\R^d)$
+    In weak form, they are: find $\vu\in V \subset \vH^1(\domain)$
     and $p\in Q \subset L^2(\domain)$ such that
   \begin{gather}
     \label{eq:mixedintro:stokes-weak2}
     \begin{aligned}
-      \nu\form(\nabla u, \nabla v) &- \form(\div v,p) &=&\form(f,v)
+      \nu\form(\nabla \vu, \nabla \vv) &- \form(\div \vv,p) &=&\form(\vf,\vv)
       + \text{bdry}
-      &\forall v&\in V\\
-      -\form(\div u,q) & &=&0+ \text{bdry}
+      &\forall \vv&\in \vV\\
+      -\form(\div \vu,q) & &=&0+ \text{bdry}
       &\forall q&\in Q.\\      
     \end{aligned}
   \end{gather}
@@ -869,20 +780,20 @@ the following weak formulation.
 \begin{Definition}{stokes-boundary2}
   Typical boundary conditions for the Stokes problem are
   \begin{xalignat}3
-    \text{no-slip:}&& u &= 0,\\
-    \text{free:}&& \d_n u + p n &= 0 ,\\
-    \text{slip:}&& u_n &= 0 & \d_n u_\tau = 0,\\
-    \text{friction:}&& u_n &= 0 & \d_n u_\tau = \alpha u_\tau.
+    \text{no-slip:}&& \vu &= 0,\\
+    \text{free:}&& \d_n \vu + p \n &= 0 ,\\
+    \text{slip:}&& \vu_n &= 0 & \d_n \vu_\tau &= 0,\\
+    \text{friction:}&& \vu_n &= 0 & \d_n \vu_\tau &= \alpha \vu_\tau.
   \end{xalignat}
-  Here, $u_n$ and $u_\tau$ are the normal and tangential components of
-  $u$ at the boundary.
+  Here, $\vu_n$ and $\vu_\tau$ are the normal and tangential components of
+  $\vu$ at the boundary.
 \end{Definition}
 
 \begin{remark}
   Very much the same way as for elliptic equations, boundary
-  conditions on the function $u$ itself are essential boundary
+  conditions on the function $\vu$ itself are essential boundary
   conditions which have to be incorporated into the space $V$, while
-  those on the normal derivatives are the result of integration by
+  those involving normal derivatives are the result of integration by
   parts and thus of the type of natural boundary conditions.
 
   All of the conditions above can also be imposed with nonzero data,
@@ -895,7 +806,7 @@ the following weak formulation.
 \end{remark}
 
 \begin{remark}
-  Physically, the condition $u_n=0$ models an impermeable wall. It
+  Physically, the condition $\vu_n=0$ models an impermeable wall. It
   says in particular, that no mass is lost through this boundary and
   is thus related to the first principle of mass conservation.
 
@@ -907,11 +818,11 @@ the following weak formulation.
 \end{remark}
 
 \begin{Lemma}{divergence-compatibility}
-  For any solenoidal $u$ function there holds
+  For any solenoidal $\vu$ function there holds
   \begin{gather}
-    \int_{\d\domain} u\cdot n\ds = 0.
+    \int_{\d\domain} \vu\cdot \n\ds = 0.
   \end{gather}
-  Furthermore, if the boundary condition $u_n=0$ holds on the whole
+  Furthermore, if the space $\vV$ in the Stokes equations is chosen such that for any $\vv\in \vV$ there holds $\vv_n=0$ on the whole
   boundary $\d\domain$, then the pressure $p$ is determined by the
   Stokes equations only up to a constant.
 \end{Lemma}
@@ -919,25 +830,27 @@ the following weak formulation.
 \begin{proof}
   The first statement is simple application of the Gauss theorem
   \begin{gather}
-    \int_{\domain} \div u\dx = \int_{\d\domain} u\cdot n\ds.
+    \int_{\domain} \div \vu\dx = \int_{\d\domain} \vu\cdot \n\ds.
   \end{gather}
   For the second statement, we note that the only term in the
-  equations which determines the pressure is $\form(\div v,
+  equations which determines the pressure is $\form(\div \vv,
   p)$. Integrating by parts and using the boundary condition, we
   obtain
   \begin{gather}
-    \int_\domain \div vp\dx = -\int_\domain v\nabla p\dx +
-    \int_{\d\domain} v\cdot n p\ds = -\int_\domain v\nabla p\dx.
+    \int_\domain \div \vv\,p\dx
+    = -\int_\domain \vv\cdot\nabla p\dx +
+    \int_{\d\domain} \vv\cdot \n \,p\ds
+    = -\int_\domain \vv\cdot \nabla p\dx.
   \end{gather}
   Since the gradient of a constant is zero, we can add any constant
   function to a given solution $p$ without changing the term
-  $\form(\div v,p)$, thus leaving $p$ determined only up to a
+  $\form(\div \vv,p)$, thus leaving $p$ determined only up to a
   constant.
 \end{proof}
 
 \begin{Notation}{pressure-constant}
-  If in Definition~\ref{Definition:stokes-eq2} the space $V$ is chosen
-  such that for all $v\in V$ there holds $v\cdot n =0$ on the whole
+  If in Definition~\ref{Definition:stokes-eq2} the space $\vV$ is chosen
+  such that for all $\vv\in \vV$ there holds $\vv\cdot \n =0$ on the whole
   boundary $\d\domain$, then the pressure solution $p$ cannot be
   determined uniquely in $L^2(\domain)$. In such cases, we choose the
   pressure space
@@ -950,11 +863,12 @@ the following weak formulation.
 \begin{remark}
   As we could see from the preceding lemma, solvability of
   equation~\eqref{eq:mixedintro:stokes-weak2} depends on some
-  compatibility of the spaces $V$ and $Q$ we had not seen in the
+  compatibility of the spaces $\vV$ and $Q$ we had not seen in the
   elliptic case. Indeed, we need a whole new tool from functional
   analysis to replace the Lax-Milgram lemma. This tool will be studied
   in Chapter~\ref{sec:mixed-wellposedness}.
 \end{remark}
+
 
 %%% Local Variables: 
 %%% mode: latex

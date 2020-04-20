@@ -1,12 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Relation to constrained minimization}
 
 \begin{intro}
   We end our introduction by relating the Stokes equations to a
   constrained minimization problem very much like we had considered
   the solution of the Poisson equation as a minimization problem on
-  the space $V$.
+  the space $V$. There, we had proven the following theorem.
 \end{intro}
 
 \begin{Theorem}{minimization}
@@ -31,7 +30,7 @@
   defined as the kernel of the linear operator $B: V\to Q^*$. Hence,
   we consider the minimization problem
   \begin{gather}
-    J(u) =\min J(v) \quad
+    J(u) =\inf_{v\in V} J(v) \quad
     \text{subject to}\quad
     Bu = 0.
   \end{gather}
@@ -47,16 +46,16 @@
 \end{intro}
 
 \begin{Definition}{reduced-problem}
-  The \define{reduced problem} of the constrained minimization problem
-  above is: find $u\in \ker B$, such that
+  The \define{reduced problem} of constrained minimization
+  is: find $u\in \ker B$, such that
   \begin{gather}
     J(u) =\inf_{v\in \ker B} J(v).
   \end{gather}
 \end{Definition}
 
 \begin{Lemma}{reduced-wellposedness}
-  If under the assumptions of \slideref{Theorem}{minimization} there
-  holds in addition that $\ker B$ is a closed subspace of $V$, then
+  Let the assumptions of \slideref{Theorem}{minimization} hold.
+  Furthermore, assume that $\ker B$ is a closed subspace of $V$. Then,
   the reduced problem in \slideref{Definition}{reduced-problem} has a
   unique solution.
 \end{Lemma}
@@ -68,18 +67,19 @@
   for the first order necessary condition on $\ker B$.
 \end{proof}
 
-\begin{remark}
-  Here we already note that $V$-ellipticity of $a(\cdot,\cdot)$ is sufficient,
-  but not necessary. Indeed, ellipticity on $\ker B$ would have been
-  sufficient for well-posedness of the reduced problem.
-\end{remark}
+% \begin{remark}
+%   Here we already note that $V$-ellipticity of $a(\cdot,\cdot)$ is sufficient,
+%   but not necessary. Indeed, ellipticity on $\ker B$ would have been
+%   sufficient for well-posedness of the reduced problem.
+% \end{remark}
 
 \begin{intro}
   While the solution theory for the reduced problem is particularly
   simple and purely elliptic, the actual solution requires a
   representation of functions in $\ker B$, for instance a basis of
   these functions. In practice, this is often inconvenient, and we
-  seek a method that solves a problem on the whole space.
+  seek a method that solves a problem on the whole space. This is
+  achieved by introducing a \define{Lagrange multiplier}.
 \end{intro}
 
 \begin{Theorem}{lagrange-multiplier}
@@ -139,8 +139,9 @@ and this implies
 \end{solution}
 \end{Problem}
 
-\begin{Corollary}{stokes-lagrange}
-  The Stokes equations with no-slip boundary conditiond are the first
+\begin{Problem}{stokes-lagrange}
+  Verify:
+  the Stokes equations with no-slip boundary conditiond are the first
   order necessary conditions for the constrained minimization problem:
   find a velocity $u\in V = H^1_0(\domain)$ such that
   \begin{align}
@@ -148,7 +149,7 @@ and this implies
     \form(\div u,q) &= 0 \qquad\forall q\in Q.
   \end{align}
   The pressure $p$ assumes the role of a \putindex{Lagrange multiplier}.
-\end{Corollary}
+\end{Problem}
 
 %%% Local Variables: 
 %%% mode: latex
