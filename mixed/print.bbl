@@ -50,6 +50,12 @@ Ciarlet, P.~G. (1988).
   volume~20 of {\em Studies in mathematics and its applications}.
 \newblock North-Holland.
 
+\bibitem[Desvillettes and Villani, 2002]{DesvillettesVillani02}
+Desvillettes, L. and Villani, C. (2002).
+\newblock On a variant of korn's inequality arising in statistical mechanics.
+\newblock {\em ESAIM: Control, Optimisation and Calculus of Variations},
+  8:603--619.
+
 \bibitem[Duvaut and Lions, 1976]{DuvautLions76}
 Duvaut, G. and Lions, J.~L. (1976).
 \newblock {\em Inequalities in Mechanics and Physics}.

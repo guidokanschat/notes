@@ -34,7 +34,12 @@ print.pdf: *.tex
 	bibtex print
 	makeindex print
 	pdflatex print
+
+crop.pdf: print.pdf
 	pdfcrop print.pdf
+
+chapters: print.pdf
+	perl ../chapters.pl print
 
 slides.pdf: main.pdf
 
@@ -56,4 +61,4 @@ solutions.pdf: main.pdf
 	mkdir -p blocks
 	pdflatex $<
 
-.PHONY: png
+.PHONY: png chapters
