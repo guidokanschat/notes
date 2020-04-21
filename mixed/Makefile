@@ -47,12 +47,16 @@ allslides.pdf: main.pdf
 	perl ../aux2slides.pl main.aux > iallslides.tex
 	pdflatex allslides
 
-png:
+png:	allslides.pdf
 	mkdir -p png
-	convert -density 300 -scale 960x720 -antialias allslides.pdf ./png/slide-%003d.png
+	convert -density 300 -scale 960x720 -antialias allslides.pdf ./png/slide-%03d.png
 
 
-problems.pdf: main.pdf
+problems.pdf: allslides.pdf
+	grep Problem iallslides.tex > listprobs.tex
+	pdflatex problems
+	convert -density 300 -scale 960x720 -antialias problems.pdf ./png/problem-%02d.png
+
 solutions.pdf: main.pdf
 	perl -ni ../problem-fix.pl blocks/Problem*.tex
 	pdflatex solutions

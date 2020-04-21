@@ -1,25 +1,70 @@
-\documentclass[USenglish]{report}
+\documentclass[american,ignorenonframetext,notheorems]{beamer}
+\usetheme{Antibes}
+\useinnertheme[shadow]{rounded}
+\makeatletter
+\defbeamertemplate*{headline}{subtree theme}
+{%
+    \begin{beamercolorbox}[wd=\paperwidth,colsep=1.5pt]{upper separation line head}
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}
+      \usebeamerfont{title in head/foot}\insertsectionnumber \hskip.5em \insertsectionhead
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{section in head/foot}
+      \usebeamerfont{section in head/foot}%
+      \ifbeamer@tree@showhooks
+        \setbox\beamer@tempbox=\hbox{\insertsubsectionhead}%
+        \ifdim\wd\beamer@tempbox>1pt%
+          \hskip2pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}%
+          \hskip1pt%
+        \fi%
+      \else%  
+        \hskip6pt%
+      \fi%
+      \insertsubsectionhead
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{subsection in head/foot}
+      \usebeamerfont{subsection in head/foot}%
+      \ifbeamer@tree@showhooks
+        \setbox\beamer@tempbox=\hbox{\insertsubsubsectionhead}%
+        \ifdim\wd\beamer@tempbox>1pt%
+          \hskip9.4pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}%
+          \hskip1pt%
+        \fi%
+      \else%  
+        \hskip12pt%
+      \fi%
+      \insertsubsubsectionhead
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=\paperwidth,colsep=1.5pt]{lower separation line head}
+    \end{beamercolorbox}
+}
+\makeatother
+%\useoutertheme{infolines}
+\usecolortheme{iwr}
 \usepackage{../mathsim}
-\usetikzlibrary{svg.path}
+\input{./fig/tikzsettings}
+\mathtoolsset{showonlyrefs}
 \excludecomment{solution}
 \externaldocument{main}
 
 \makeatletter
-\def\BT@without#1(#2){%
-    \textbf{#2 \capitalizewords{#1}:}}
-\def\BT@with[#1]#2(#3){%
-    \textbf{#3 \capitalizewords{#2} (#1):}}
-\def\endblocktheorem{\vfill}
+\def\blocktheorem#1#2(#3){\begin{block}{#3 \capitalizewords{#1}%
+      \def\tmp{#2}\ifx\tmp\empty{}\else (#2)\fi}}
+\def\endblocktheorem{\end{block}}
 \makeatother
-
+\def\mylabel#1{}
+\let\label\mylabel
+%\renewcommand{\label}[1]{}
+\renewcommand{\eqref}[1]{(\ref{#1})}
+\renewcommand{\define}[1]{\textbf{#1}}
+\title{Mixed Finite Elements}
+\author{Guido Kanschat}
 \begin{document}
-\input{./fig/tikzsettings}
-\pagestyle{empty}
-\input{listprobs}
+\frame{\maketitle}
+\frame{\frametitle{Overview}\tableofcontents[hideallsubsections]}
+\mode<all>
+\input{mixed/listprobs.tex}
 \end{document}
-
-
-%%% Local Variables: 
-%%% mode: latex
-%%% TeX-master: "main"
-%%% End: 

@@ -19,7 +19,7 @@
     \begin{aligned}
       A&\colon V \to V^* & \scal(Au,v) &= a(u,v), \\
       B&\colon V \to Q^* & \scal(Bu,q) &= b(u,q), \\
-      B^T&\colon Q \to V^* & \scal(B^T p,v) &= b(v,p), \\
+      B^\transpose&\colon Q \to V^* & \scal(B^\transpose p,v) &= b(v,p), \\
       C&\colon Q\to Q^* & \scal(C p,q) &= c(p,q).
     \end{aligned}
   \end{gather}
@@ -43,7 +43,7 @@
     \label{eq:saddle-point-operator}
     \arraycolsep.1em
     \begin{matrix}
-      Au &+& B^T p &=& f &\quad&\text{in } V^*, \\
+      Au &+& B^\transpose p &=& f &\quad&\text{in } V^*, \\
       Bu &-& C p &=& g &&\text{in } Q^*.
     \end{matrix}
   \end{gather}  
@@ -84,9 +84,9 @@
   \end{gather}
   Simple computation yields that $\vx\in \R^2$ solves this system if
   and only if $\vx$ is a stationary point of the \putindex{energy}
-  $\nicefrac12\vx^T\mata\vx$, namely
+  $\nicefrac12\vx^\transpose\mata\vx$, namely
   \begin{gather}
-    \nabla \left(\tfrac12\vx^T\mata\vx\right) = 0.
+    \nabla \left(\tfrac12\vx^\transpose\mata\vx\right) = 0.
   \end{gather}
   The shape of this energy as a function of $\vx$ is displayed in
   \cref{fig:saddle}. It resembles a saddle as known from horse riding
@@ -104,7 +104,7 @@
   invertible. Then, we define the \define{Schur complement} operator
   $S\colon Q\to Q^*$ of the system as
   \begin{gather}
-      S= -B A^{-1} B^T - C.
+      S= -B A^{-1} B^\transpose - C.
   \end{gather}
 \end{Definition}
 
@@ -113,7 +113,7 @@
   can be solved in two steps by solving
   \begin{align}
     S p &= g - B A^{-1} f,\\
-    A u &= f-B^T p.
+    A u &= f-B^\transpose p.
   \end{align}
 \end{Lemma}
 
@@ -124,8 +124,10 @@
 \end{proof}
 
 \begin{Lemma}{schur-definiteness}
-  Let $a(\cdot,\cdot)$ be elliptic and $c(\cdot,\cdot)$ be positive semi-definite, and
-  let $\ker B^T\cap\ker C \neq \{0\}$. Then, the bilinear form
+  Let $a(\cdot,\cdot)$ be symmetric, positive definite such that
+  $\tilde a(\cdot,\cdot) = \scal(A^{-1}\cdot,\cdot)$ is positive
+  definite. Let $c(\cdot,\cdot)$ be positive semi-definite.  If
+  $\ker{B^\transpose} + \ker C \neq Q$, then, the bilinear form
   $\mathcal A(\cdot,\cdot)$ is indefinite.
 \end{Lemma}
 
@@ -136,17 +138,19 @@
   \end{gather}
   for some positive constant $\gamma$. Furthermore, $A$ is invertible
   and its inverse is positive definite. Furthermore,
-  $A^{-1}B^T\colon Q\to V$. Then, choosing $v=-A^{-1}B^T p$ yields
+  $A^{-1}B^\transpose\colon Q\to V$. Then, choosing $v=-A^{-1}B^\transpose p$ yields
   \begin{align}
     \mathcal A\mixedform(v,p,v,p)
-    &= a(A^{-1}B^T p,A^{-1}B^T p) - 2b(A^{-1}B^T p,p) - c(p,p) \\
-    &= \scal(B^T p,A^{-1}B^T p) - 2\scal(B^T p,A^{-1}B^T p) - c(p,p)\\
-    &= -\scal(B^T p,A^{-1}B^T p) - c(p,p).
+    &= a(A^{-1}B^\transpose p,A^{-1}B^\transpose p) - 2b(A^{-1}B^\transpose p,p) - c(p,p) \\
+    &= \scal(B^\transpose p,A^{-1}B^\transpose p) - 2\scal(B^\transpose p,A^{-1}B^\transpose p) - c(p,p)\\
+    &= -\scal(B^\transpose p,A^{-1}B^\transpose p) - c(p,p).
   \end{align}
   The first term is a quadratic term with the bilinear form associated
-  with $A^{-T}$, which is positive definite. Since $b(\cdot,\cdot)$ is not the
-  zero form, there is some $p$ such that $v\neq 0$. Therefore, with
-  the minus sign and the semi-definiteness of $c(\cdot,\cdot)$ we have found a
+  with $A^{-1}$, which is positive definite. Thus, it is zero
+  if and only if $B^\transpose p=0$, otherwise it is negative. The
+  second term is negative unless $Cp=0$. By the assumption on the
+  kernels of $B^\transpose$ and $C$ there exists $p$ such that at
+  least one of the terms is nonzero. Therefore, we have found a
   vector such that
   \begin{gather}
     \mathcal A\mixedform(v,p,v,p) < 0.
@@ -155,8 +159,35 @@
 
 \begin{remark}
   The previous result holds in particular for
-  $c(\cdot,\cdot) \equiv 0$, if $B^T$ is injective.
+  $c(\cdot,\cdot) \equiv 0$, if $B^\transpose$ is injective.
 \end{remark}
+
+\begin{Problem}{saddle-unique-solution}
+  Let $\mata \in \R^{n\times n}$ be a symmetric, positive definite
+  matrix, $C\in \R^{m\times m}$ symmetric, positive
+  semi-definite. Furthermore, let $B \in \R^{m\times n}$. Define the matrix
+  \begin{gather}
+    \mathscr A= 
+    \begin{pmatrix}
+      \mata & \matb^\transpose \\ \matb & -\matc
+    \end{pmatrix}
+    \in \R^{(m+n)\times (m+n)}
+  \end{gather}
+  \begin{enumerate}
+  \item Show that the system $\mathscr A \vx = \vy$ has a unique
+    solution for each $\vy$ (and thus $\mathscr A$ is invertible) if
+    and only if
+    \begin{gather}
+      \ker{\matb^\transpose} \cap \ker \matc = \{0\}.
+    \end{gather}
+    Hint: consider the eigenvalues of the Schur complement.
+  \item Let $\matc = 0$. Show that $\mathscr A$ is invertible if and
+    only if $\matb$ is onto (surjective). Hint: theorem from linear
+    algebra.
+  \item Show that both hold if you relax the definiteness of $\mata$ to
+    positive definite on $\ker \matb$.
+  \end{enumerate}
+\end{Problem}
 
 %%% Local Variables: 
 %%% mode: latex
