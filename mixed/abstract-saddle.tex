@@ -165,7 +165,7 @@
 \begin{Problem}{saddle-unique-solution}
   Let $\mata \in \R^{n\times n}$ be a symmetric, positive definite
   matrix, $C\in \R^{m\times m}$ symmetric, positive
-  semi-definite. Furthermore, let $B \in \R^{m\times n}$. Define the matrix
+  semi-definite. Furthermore, let $B \in \R^{m\times n}$ and
   \begin{gather}
     \mathscr A= 
     \begin{pmatrix}
@@ -180,10 +180,8 @@
     \begin{gather}
       \ker{\matb^\transpose} \cap \ker \matc = \{0\}.
     \end{gather}
-    Hint: consider the eigenvalues of the Schur complement.
   \item Let $\matc = 0$. Show that $\mathscr A$ is invertible if and
-    only if $\matb$ is onto (surjective). Hint: theorem from linear
-    algebra.
+    only if $\matb$ is onto (surjective).
   \item Show that both hold if you relax the definiteness of $\mata$ to
     positive definite on $\ker \matb$.
   \end{enumerate}
