@@ -32,7 +32,7 @@
   the kernel of the discrete, local gradient operator
   \begin{gather}
     \label{eq:macroelement:29}
-    \ker{B^T_M} = \bigl\{q\in Q_M \big\vert 
+    \ker{B^\transpose_M} = \bigl\{q\in Q_M \big\vert 
     \;\forall v\in V_M\colon \form(\div v,q) = 0\bigr\}.
   \end{gather}
   For a mesh $\mesh_h$ which is subdivided into a nonoverlapping set
@@ -45,7 +45,7 @@
   Let $\{M\}$ with $M\subset \mesh_h$ be a set of macroelements
   equivalent to the same reference macroelement $\widehat M$. Let the
   family $\{\mesh_h\}$ be shape regular and assume
-  $\ker{B^T_{M}} = \{0\}$. Then, there is a constant
+  $\ker{B^\transpose_{M}} = \{0\}$. Then, there is a constant
   $\beta_M>0$ independent of $h$ such that for all $M$ there holds
   \begin{gather}
     \label{eq:macroelement:31}
@@ -76,7 +76,7 @@
 \begin{Lemma}{macro-projection}
   Let $\mesh_h$ be subdivided into a nonoverlapping set of
   macroelements $M$ such that there is a finite set of reference macro
-  elements $\widehat M$, and let $\ker{B^T_M} = \{0\}$. Then, there is
+  elements $\widehat M$, and let $\ker{B^\transpose_M} = \{0\}$. Then, there is
   a constant $c_1>0$ such that for all $q_h\in Q_h$ exists $v_h\in V_h$
   satisfying
   \begin{gather}

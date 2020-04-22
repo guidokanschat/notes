@@ -31,7 +31,7 @@ consider~\cite{Braess97,Braess13}.
     = \form(\vf,\vv)
     \quad\forall \vv\in \vV.
   \end{gather}
-    Here, $\strain \vu = \nicefrac12\bigl(\nabla u + (\nabla u)^T\bigr)$ is the symmetric gradient.
+    Here, $\strain \vu = \nicefrac12\bigl(\nabla u + (\nabla u)^\transpose\bigr)$ is the symmetric gradient.
 \end{Definition}
 
 \begin{Problem}{frobenius}
@@ -49,7 +49,7 @@ consider~\cite{Braess97,Braess13}.
 \item 
   First, we note that for every matrix $A$, there holds
   \begin{gather}
-    A = A_S + A_A, \quad A_S = \frac{A+A^T}2, \quad A_A = \frac{A-A^T}2.
+    A = A_S + A_A, \quad A_S = \frac{A+A^\transpose}2, \quad A_A = \frac{A-A^\transpose}2.
   \end{gather}
   Furthermore, we see that $A_S$ is symmetric and $A_A$ is
   skew-symmetric. The sum of two symmetric matrices is symmetric,

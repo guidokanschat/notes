@@ -36,16 +36,16 @@ mathematical detail refer to~\cite{Ciarlet88}.
   \begin{align}
     \abs{\Phi(x+z) - \Phi(x)}^2 &= \norm{\nabla\Phi z}^2 + o(\abs{z}^4)
     \\
-                              &= z^T\nabla\Phi^T\nabla\Phi z + o(\abs{z}^4)
+                              &= z^\transpose\nabla\Phi^\transpose\nabla\Phi z + o(\abs{z}^4)
     \\
-    &= z^T(I + \nabla u^T + \nabla u + \nabla u^T \nabla u) z + o(\abs{z}^4)
+    &= z^\transpose(I + \nabla u^\transpose + \nabla u + \nabla u^\transpose \nabla u) z + o(\abs{z}^4)
     \\
-    &= \abs{z}^2 + 2 z^T\strain u z + o(\abs{z}^4),
+    &= \abs{z}^2 + 2 z^\transpose\strain u z + o(\abs{z}^4),
   \end{align}
   where
   \begin{gather}
     \tilde\epsilon(u) = \tfrac12
-    \bigl(\nabla u^T + \nabla u + \nabla u^T \nabla u\bigr)
+    \bigl(\nabla u^\transpose + \nabla u + \nabla u^\transpose \nabla u\bigr)
   \end{gather}
   is the \textbf{strain tensor}. From linear algebra, we know that a
   linear mapping which preserves all distances is orthogonal and thus
@@ -65,7 +65,7 @@ mathematical detail refer to~\cite{Ciarlet88}.
   The linearized \define{strain tensor} or \define{symmetric gradient}
   of $u$ is
   \begin{gather}
-    \strain u = \frac{\nabla u + \nabla u^T}2.
+    \strain u = \frac{\nabla u + \nabla u^\transpose}2.
   \end{gather}
 \end{Definition}
 

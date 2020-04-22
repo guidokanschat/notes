@@ -5,7 +5,7 @@
   that
   \begin{gather}
     \label{eq:svd:1}
-    A = U \Sigma V^T,
+    A = U \Sigma V^\transpose,
     \qquad\text{and }
     \Sigma =
     \begin{cases}
@@ -32,11 +32,11 @@
   We prove constructively for the real case by induction. For $m=1$ or
   $n=1$ the theorem is obvious. Let now $m,n>1$ and assume the theorem
   has been proven for $A\in \R^{(m-1)\times (n-1)}$. Let $\sigma_1^2$
-  be the largest eigenvalue of $A^TA$, which due to the symmetry of
-  $A^TA$ is real and nonnegative. Actually, if it is zero, then
-  $A^TA=0$ and thus $A=0$ and $\Sigma=0$. Now assume $\sigma_1^2 >
+  be the largest eigenvalue of $A^\transpose A$, which due to the symmetry of
+  $A^\transpose A$ is real and nonnegative. Actually, if it is zero, then
+  $A^\transpose A=0$ and thus $A=0$ and $\Sigma=0$. Now assume $\sigma_1^2 >
   0$. Choose $x_1$ as an eigenvector to the eigenvalue $\sigma_1^2$ of
-  $A^TA$ and
+  $A^\transpose A$ and
   \begin{gather}
     y_1 = \frac1{\sigma_1} A x_1.
   \end{gather}
@@ -44,20 +44,20 @@
   $Y$, respectively. Then, there holds for $e_1 \in \R^n$ and
   $\bar e_1\in \R^m$:
   \begin{align}
-    Y^TAX e_1 &= Y^T A x_1 = \sigma_1 Y^Ty_1 = \sigma_1 \bar e_1\\
-    (Y^TAX)^T \bar e_1 = X^TA^TY\bar e_1,
-              &= X^TA^T y_1 =  \tfrac1{\sigma_1} X^TA^TA x_1
-                = \sigma_1 X^Tx_1 = \sigma_1 e_1.
+    Y^\transpose AX e_1 &= Y^\transpose A x_1 = \sigma_1 Y^\transpose y_1 = \sigma_1 \bar e_1\\
+    (Y^\transpose AX)^\transpose \bar e_1 = X^\transpose A^\transpose Y\bar e_1,
+              &= X^\transpose A^\transpose y_1 =  \tfrac1{\sigma_1} X^\transpose A^\transpose A x_1
+                = \sigma_1 X^\transpose x_1 = \sigma_1 e_1.
   \end{align}
   Thus,
   \begin{gather}
-    Y^TAX =
+    Y^\transpose AX =
     \begin{bmatrix}
       \sigma_1 & 0 \\ 0 & \tilde A
     \end{bmatrix}
   \end{gather}
   with $\tilde A\in \R^{(m-1)\times (n-1)}$. By induction, there holds
-  $\tilde A = \tilde U \tilde \Sigma \tilde V^T$ with orthogonal
+  $\tilde A = \tilde U \tilde \Sigma \tilde V^\transpose$ with orthogonal
   matrices $U$ and $V$ and $\tilde\Sigma$ of the same form as $\Sigma$
   and both dimensions reduced by 1. Now let
   \begin{gather}
@@ -77,7 +77,7 @@
     \end{bmatrix}
   \end{gather}
   $U$ and $V$ as the product of orthogonal matrices are orthogonal,
-  $\sigma$ has the claimed structure and there holds $A=U\Sigma V^T$.
+  $\sigma$ has the claimed structure and there holds $A=U\Sigma V^\transpose$.
 \end{proof}
 
 \begin{Corollary}{svd-order}

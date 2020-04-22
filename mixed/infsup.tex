@@ -17,7 +17,7 @@
   \begin{gather}
     a(u,v) = f(v)
     \qquad\text{to}\qquad
-    v^TA u = v^T f,
+    v^\transpose A u = v^\transpose f,
   \end{gather}
   where $A\in \R^{n\times n}$ is the matrix associated with the
   bilinear form. The bound for the Rayleigh quotient means nothing but
@@ -59,7 +59,7 @@
   \begin{gather}
     \arraycolsep0.1em
     \begin{array}{cccccccc}
-      e_k =(0&,\ldots,&0&,&1&,&0&,\ldots)^T.\\
+      e_k =(0&,\ldots,&0&,&1&,&0&,\ldots)^\transpose.\\
       &&&&\uparrow\\
       &&&&k
     \end{array}
@@ -112,7 +112,7 @@
 
 \begin{Problem}{lax-milgram-not-applicable}
   Find an invertible, symmetric matrix $A\in \R^{2\times 2}$ and a
-  vector $v\in \R^2$ such that $v^T A v=0$ and thus the Lax-Milgram
+  vector $v\in \R^2$ such that $v^\transpose A v=0$ and thus the Lax-Milgram
   lemma is inconclusive.
 \begin{solution}
   \begin{gather}
@@ -172,14 +172,14 @@ The question of well-posedness in finite dimensions can be answered by:
 \end{Definition}
 
 \begin{Lemma}{ker-coker-rn}
-  Let $A\in \R^{m\times n}$ and $A^T$ its transpose. Then, there holds
+  Let $A\in \R^{m\times n}$ and $A^\transpose$ its transpose. Then, there holds
   \begin{gather}
     \label{eq:infsup:5}
     \begin{split}
-      \ker A &= \ortho{\range{A^T}}\\
-      \range A &= \ortho{\ker{A^T}}\\
-      \ker{A^T} &= \ortho{\range A}\\
-      \range{A^T} &= \ortho{\ker{A}}
+      \ker A &= \ortho{\range{A^\transpose}}\\
+      \range A &= \ortho{\ker{A^\transpose}}\\
+      \ker{A^\transpose} &= \ortho{\range A}\\
+      \range{A^\transpose} &= \ortho{\ker{A}}
     \end{split}
   \end{gather}
 \end{Lemma}
@@ -189,38 +189,38 @@ The question of well-posedness in finite dimensions can be answered by:
   % \begin{gather}
   %   \R^n = \ker A \oplus \ortho{\ker A},
   %   \qquad
-  %   \R^m = \ker{A^T} \oplus \ortho{\ker{A^T}}.
+  %   \R^m = \ker{A^\transpose} \oplus \ortho{\ker{A^\transpose}}.
   % \end{gather}
-  Let $A=U\Sigma V^T$ be the singular value decomposition of $A$ and
+  Let $A=U\Sigma V^\transpose$ be the singular value decomposition of $A$ and
   $r$ be the number of nonzero singular values. Then, the first $r$
   vectors of $U$ span the range of $A$ and the last $n-r$ vectors of
   $V$ span its kernel. Furthermore,
   \begin{gather}
-    A^T = \bigl(U\Sigma V^T\bigr)^T = V \Sigma U^T.
+    A^\transpose = \bigl(U\Sigma V^\transpose\bigr)^\transpose = V \Sigma U^\transpose.
   \end{gather}
-  Therefore, the first $r$ vectors of V span the range of $A^T$ and
+  Therefore, the first $r$ vectors of V span the range of $A^\transpose$ and
   the last $n-r$ vectors of $U$ span its kernel.
 \end{proof}
 
 \begin{Corollary}{ker-coker-iso}
-  Let $A\in \R^{m\times n}$ and $A^T$ its transpose. Then, the
-  restrictions $A\colon \ortho{\ker A} \to \range A$ and $A^T\colon
-  \ortho{\ker{A^T}} \to \range{A^T}$ are isomorphisms.
+  Let $A\in \R^{m\times n}$ and $A^\transpose$ its transpose. Then, the
+  restrictions $A\colon \ortho{\ker A} \to \range A$ and $A^\transpose\colon
+  \ortho{\ker{A^\transpose}} \to \range{A^\transpose}$ are isomorphisms.
 \end{Corollary}
 
 \begin{proof}
-  We note that $\dim \range A = \dim \range{A^T}$. Thus, by
+  We note that $\dim \range A = \dim \range{A^\transpose}$. Thus, by
   \slideref{Lemma}{ker-coker-rn} the dimensions of domain and range of
   each of the restricted operators are equal, say $\dim \range A =
   r$. The singular value decomposition of the operators is
   \begin{gather}
-    A = U\Sigma V^T \qquad A^T = V\Sigma U^T,
+    A = U\Sigma V^\transpose \qquad A^\transpose = V\Sigma U^\transpose,
   \end{gather}
   where all matrices are in $\R^{r\times r}$ and
   \begin{gather}
     \Sigma = \diag(\sigma_1,\dots,\sigma_r),
   \end{gather}
-  and all singular values are positive. Thus, $A$ and $A^T$ are invertible.
+  and all singular values are positive. Thus, $A$ and $A^\transpose$ are invertible.
 \end{proof}
 
 \begin{Corollary}{svd-infsup}
@@ -229,8 +229,8 @@ The question of well-posedness in finite dimensions can be answered by:
   \begin{gather}
     \label{eq:infsup:6}
     \sigma_r
-    = \inf_{v\in \ortho{\ker A}} \sup_{w\in \R^m} \frac{w^T A v}{\abs{v}\abs{w}}
-    = \inf_{w\in \ortho{\ker{A^T}}} \sup_{v\in \R^n} \frac{w^T A v}{\abs{v}\abs{w}}.
+    = \inf_{v\in \ortho{\ker A}} \sup_{w\in \R^m} \frac{w^\transpose A v}{\abs{v}\abs{w}}
+    = \inf_{w\in \ortho{\ker{A^\transpose}}} \sup_{v\in \R^n} \frac{w^\transpose A v}{\abs{v}\abs{w}}.
   \end{gather}
 \end{Corollary}
 
@@ -238,12 +238,12 @@ The question of well-posedness in finite dimensions can be answered by:
   Since the Cauchy-Schwarz inequality turns into an equation if and
   only if the two vectors are coaligned, there holds for any $v\in \R^n$:
   \begin{gather}
-    \sup_{w\in\R^m}\frac{w^T A v}{\abs{w}} = \frac{v^T A^T A v}{\abs{Av}}.
+    \sup_{w\in\R^m}\frac{w^\transpose A v}{\abs{w}} = \frac{v^\transpose A^\transpose A v}{\abs{Av}}.
   \end{gather}
   Therefore,
   \begin{gather}
     \inf_{v\in \ortho{\ker A}} \sup_{w\in \R^m}
-    \frac{w^T A v}{\abs{v}\abs{w}}
+    \frac{w^\transpose A v}{\abs{v}\abs{w}}
     = \inf_{v\in \ortho{\ker A}} \frac{\abs{Av}}{\abs{v}}.
   \end{gather}
   Now, let $v = \sum \alpha_i v_i$ where $v_i$ are the columns of $V$
@@ -562,9 +562,9 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
     \label{eq:infsup:9}
     \begin{split}
       \range A &\text{ is closed in } W,\\
-      \range{A^T} &\text{ is closed in } V^*,\\
-      \range A &= \polar{\ker{A^T}},\\
-      \range{A^T} &= \polar{\ker A}.
+      \range{A^\transpose} &\text{ is closed in } V^*,\\
+      \range A &= \polar{\ker{A^\transpose}},\\
+      \range{A^\transpose} &= \polar{\ker A}.
     \end{split}
   \end{gather}
 \end{Theorem}
@@ -642,10 +642,10 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
       \frac{a(v,w)}{\norm{v}_V\norm{w}_W}
       \ge \ellipa.
     \end{gather}
-  \item The operator $A^T\colon W\to \polar{\ker A}$ is an isomorphism and
+  \item The operator $A^\transpose\colon W\to \polar{\ker A}$ is an isomorphism and
     \begin{gather}
       \label{eq:infsup:12}
-      \norm{A^T w}_{V^*} \ge \ellipa \norm{w}_{W} \qquad\forall w\in W.
+      \norm{A^\transpose w}_{V^*} \ge \ellipa \norm{w}_{W} \qquad\forall w\in W.
     \end{gather}
   \item The operator $A\colon \ortho{\ker A}\to W^*$ is an isomorphism
     and
@@ -660,29 +660,29 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   First, we show the equivalence of the first two statements. Let us
   rephrase the inf-sup condition to
   \begin{gather}
-    \norm{A^T w}_{V^*}
-    = \sup_{v\in V}\frac{\scal(A^T w,v)}{\norm{v}_V}
+    \norm{A^\transpose w}_{V^*}
+    = \sup_{v\in V}\frac{\scal(A^\transpose w,v)}{\norm{v}_V}
     = \sup_{v\in V}\frac{a(v,w)}{\norm{v}_V}
     \ge \ellipa\norm{w} \qquad
     \forall w\in W.
   \end{gather}
   Thus, equations~\eqref{eq:infsup:11} and~\eqref{eq:infsup:12} are
   equivalent and we have already proven that the second statement
-  implies the first. It remains to show the $A^T$ is an isomorphism
+  implies the first. It remains to show the $A^\transpose$ is an isomorphism
   from $W$ onto $\polar{\ker A}$. Equation~\eqref{eq:infsup:12} implies that
-  $A^T\colon W \to \range{A^T}$ is an isomorphism and its inverse is
+  $A^\transpose\colon W \to \range{A^\transpose}$ is an isomorphism and its inverse is
   bounded by $1/\ellipa$ (multiply both sides by $A^{-1}$). Using
-  \slideref{Lemma}{closed-infsup}, we obtain that $\range{A^T}$ is
+  \slideref{Lemma}{closed-infsup}, we obtain that $\range{A^\transpose}$ is
   closed in $V^*$ and the \putindex{closed range theorem} settles the
   issue.
 
   In order to prove equivalence of the second and third statement, we
   use \slideref{Lemma}{polar-orthogonal-hilbert} to isometrically
   identify $(\ortho{\ker A})^*$ with $\polar{\ker A}$. Thus, $A$ is an
-  isomorphism from $\ortho{\ker A}$ onto $W^*$ if and only if $A^T$ is an
+  isomorphism from $\ortho{\ker A}$ onto $W^*$ if and only if $A^\transpose$ is an
   isomorphism from $W$ onto $(\ortho{\ker A})^* = \polar{\ker A}$. and
   \begin{gather}
-    \norm{A}_{W^*\to \ortho{\ker A}} = \norm{A^T}_{\polar{\ker A}\to W}.
+    \norm{A}_{W^*\to \ortho{\ker A}} = \norm{A^\transpose}_{\polar{\ker A}\to W}.
   \end{gather}
 \end{proof}
 
@@ -710,14 +710,14 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \begin{remark}
   \slideref{Corollary}{infsup-well-posedness1} exhibits an asymmetry
   between the left and right argument. In particular, we obtain a
-  unique solution only for the adjoint operator $A^T$, which is
+  unique solution only for the adjoint operator $A^\transpose$, which is
   exactly what we need, when we compute say a pressure from the
   divergence of a velocity field. In general, we consider the
   restriction of $f$ to the polar set of the kernel in the above
   well-posedness result detrimental and would prefer a result that
   holds for all $f\in V^*$. This on the other hand requires
-  $\ker A=\{0\}$, or $\overline{\range{A^T}} = W^*$. Then, on the
-  other hand, we see that $\range{A^T}$ is closed since $\range{A}$ is
+  $\ker A=\{0\}$, or $\overline{\range{A^\transpose}} = W^*$. Then, on the
+  other hand, we see that $\range{A^\transpose}$ is closed since $\range{A}$ is
   closed and the closed range theorem holds. Therefore, we obtain the
   following theorem for the case that we require a unique solution for
   all right hand sides.
@@ -751,7 +751,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   If we compare \slideref{Theorem}{infsup-well-posedness2} with
   \slideref{Corollary}{infsup-well-posedness1}, we see that the only
   difference lies in the fact that the second inf-sup condition
-  ensures surjectivity of $A$ by injectivity of $A^T$. In some cases
+  ensures surjectivity of $A$ by injectivity of $A^\transpose$. In some cases
   it may be difficult to prove both inf-sup conditions. Then, it is
   sufficient to prove one inf-sup condition, say the first, and then
   only
@@ -759,10 +759,10 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
      \inf_{v\in V}\sup_{w\in W}
     \frac{a(v,w)}{\norm{v}_V\norm{w}_W} > 0,
   \end{gather}
-  thus, injectivity of $A^T$. Although we verify less than the
+  thus, injectivity of $A^\transpose$. Although we verify less than the
   assumptions of \slideref{Theorem}{infsup-well-posedness2}, the
   closed range theorem saves us from the additional work. We further
-  note that this notion is symmetric between $A$ and $A^T$, that is,
+  note that this notion is symmetric between $A$ and $A^\transpose$, that is,
   it is sufficient to prove inf-sup for either operator and
   injectivity for the other.
 \end{remark}
@@ -929,13 +929,13 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
     \qquad
     b(v,q) \le \norm b \norm{v}_V \norm{q}_Q.
   \end{gather}
-  With these forms, we associate bounded operators $A$, $B$, and $B^T$
+  With these forms, we associate bounded operators $A$, $B$, and $B^\transpose$
   according to \slideref{Definition}{saddle-point-operators}. With
   $b(.,.)$ we associate the spaces
   \begin{gather}
     \begin{split}
       \ker B &= \bigl\{v\in V \big| b(v,q) = 0 \;\forall q\in Q\bigr\},\\
-      \ker B^T &= \bigl\{q\in Q \big| b(v,q) = 0 \;\forall v\in V\bigr\}.
+      \ker B^\transpose &= \bigl\{q\in Q \big| b(v,q) = 0 \;\forall v\in V\bigr\}.
     \end{split}
   \end{gather}
   Furthermore, we assume that $a(.,.)$ is positive semi-definite on
@@ -985,11 +985,11 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 
 \begin{Assumption}{mixed-elliptic-stabilized}
   In addition to \slideref{Assumption}{mixed-elliptic}, let $c(.,.)$
-  be positive semi-definite and elliptic on $\ker{B^T}$,
+  be positive semi-definite and elliptic on $\ker{B^\transpose}$,
   \begin{gather}
     c(q,q) \ge u\quad\forall q\in Q,
     \qquad
-    c(q,q) \ge \ellipc \norm{q}_Q^2 \quad\forall q\in \ker{B^T}.
+    c(q,q) \ge \ellipc \norm{q}_Q^2 \quad\forall q\in \ker{B^\transpose}.
   \end{gather}
 \end{Assumption}
 
@@ -1007,7 +1007,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   $\beta>0$ such that
   \begin{gather}
     \begin{split}
-      \inf_{q\in \ortho{\ker{B^T}}}  \sup_{v\in V}
+      \inf_{q\in \ortho{\ker{B^\transpose}}}  \sup_{v\in V}
       \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} &\ge \beta\\
       \inf_{v\in \ortho{\ker{B}}}  \sup_{q\in Q}
       \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} &\ge \beta
@@ -1037,7 +1037,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   linearity.
   
   We note that by the inf-sup conditions both $\range B$ and
-  $\range{B^T}$ are closed. Thus, we can decompose $u=u^0+u^\perp$
+  $\range{B^\transpose}$ are closed. Thus, we can decompose $u=u^0+u^\perp$
   with $u^0\in\ker B$ and $u^\perp$ in its orthogonal
   complement. Assuming $f=0$ and testing with $q=0$ we obtain the
   equation
@@ -1064,7 +1064,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   \begin{gather}
     a(u,u)+c(p,p) \le g(p) = g^0(p^0) + g^\perp(p^\perp),
   \end{gather}
-  where $p^0\in \ker{B^T}$, $g^\perp\in \polar{\ker{B^T}}$ and the
+  where $p^0\in \ker{B^\transpose}$, $g^\perp\in \polar{\ker{B^\transpose}}$ and the
   other two are defined by orthogonality in $Q$ and $Q^*$,
   respectively. Let first $g^0=0$. Then, by~\eqref{eq:infsup:14} and
   the inf-sup condition for $p$, there is $v\in V$ with $\norm{v}_V = 1$

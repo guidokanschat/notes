@@ -223,7 +223,7 @@
   We begin with a one-dimensional example. Piecewise linear velocity
   and piecewise linear pressure ($P_1-P_1$). Both continuous. Then, $\div v_h$ is
   piecewise constant. Consequently, a pressure function which has zero
-  mean value on each cell is in the kernel of $B_h^T$.
+  mean value on each cell is in the kernel of $B_h^\transpose$.
   \begin{figure}[tp]
     \centering
     \includegraphics[width=.6\textwidth]{./fig/p1-p1-1d.tikz}
@@ -297,7 +297,7 @@ inf-sup stable?
   of Cartesian squares of side length $1/n$. Choose $V_h \subset V$
   based on bilinear shape functions. Show that the piecewise constant
   pressure function $p_c=\pm 1$ in a checkerboard fashion is in the
-  kernel of $B_h^T$, that is
+  kernel of $B_h^\transpose$, that is
   \begin{gather}
     b(v_h, p_c) = 0 \quad\forall v_h\in V_h.
   \end{gather}
@@ -1039,7 +1039,7 @@ where $c\not=0$.
 \begin{remark}
   Let us review the construction principles behind the \putindex{MINI
     element} and the $P_2-P_0$ element. The uncontrolled pressure
-  modes in $\ker B_h^T$ of the $P_1-P_1$ element in
+  modes in $\ker B_h^\transpose$ of the $P_1-P_1$ element in
   Example~\ref{ex:p1-p1} were those pressures
   with alternating signs at neighboring vertices, such that the mean
   value of $p_h$ is zero on each cell. Therefore, $p_h$ is orthogonal
@@ -1047,7 +1047,7 @@ where $c\not=0$.
   add a local function on each cell with nonconstant gradient, and the
   mean value of the pressure can be controlled.
 
-  The kernel of $B_h^T$ for the element $H^1(\P_1)^2 - H^0(\P_0)$ on
+  The kernel of $B_h^\transpose$ for the element $H^1(\P_1)^2 - H^0(\P_0)$ on
   the other hand contains functions that are constant on each cell,
   but jump over cell boundaries. By integration by parts, we have
   \begin{gather}
@@ -1559,7 +1559,7 @@ where $c\not=0$.
   the kernel of the discrete, local gradient operator
   \begin{gather}
     \label{eq:stokes:29}
-    \ker{B^T_M} = \bigl\{q\in Q_M \big\vert
+    \ker{B^\transpose_M} = \bigl\{q\in Q_M \big\vert
     \;\forall v\in V_M\colon \form(\div v,q) = 0\bigr\}.
   \end{gather}
 \end{Definition}
@@ -1654,7 +1654,7 @@ where $c\not=0$.
   Let $\{M\}$ with $M\subset \mesh_h$ be a set of macro elements
   equivalent to the same reference macro element $\widehat M$. Let the
   family $\{\mesh_h\}$ be shape regular and assume that on each macro
-  $M$ the set $\ker{B^T_{M}}$ only contains the constant functions. Then,
+  $M$ the set $\ker{B^\transpose_{M}}$ only contains the constant functions. Then,
   there is a constant $\beta_M>0$ independent of $h$ such that for all
   $M$ there holds
   \begin{gather}
@@ -1675,7 +1675,7 @@ where $c\not=0$.
   For each $M$, the existence of such a constant $\beta_{M}$ is
   equivalent to the fact that the smallest nonzero singular value is
   strictly greater than zero in finite dimensional
-  spaces. Furthermore, the kernel of the seminorm and of $B_M^T$
+  spaces. Furthermore, the kernel of the seminorm and of $B_M^\transpose$
   coincide.
 
   Next, we observe that $\nabla \Phi_{M}$ is bounded by the
@@ -1791,7 +1791,7 @@ where $c\not=0$.
 \begin{proof}
   Summarizing all results of this section, the only thing that is left
   is defining a covering of $\mesh_h$ with macro elements, such that
-  $\ker{B_M^T}$ contains only the constant functions. We do this
+  $\ker{B_M^\transpose}$ contains only the constant functions. We do this
   at the example of the lowest order elements on quadrilaterals and
   triangles in the lemmas below. Both kinds of patches can be used to
   cover the whole mesh, such that we can use \slideref{Lemma}{macro1}
@@ -1809,7 +1809,7 @@ where $c\not=0$.
   Then,
   \begin{gather}
     \label{eq:stokes:32}
-    \ker{B_M^T} = \bigl\{ q\in Q_M \big\vert
+    \ker{B_M^\transpose} = \bigl\{ q\in Q_M \big\vert
     \;\forall v\in V_M\colon b(v,q) = 0 \bigr\}
     = \P_0.
   \end{gather}
@@ -1819,7 +1819,7 @@ where $c\not=0$.
   First, we observe that $\nabla q_h$ is constant on each cell and
   that the tangential derivatives $t_i\cdot\nabla q_h$ coincide for
   both adjacent cells due to the continuity of $q_h$. Now, we will
-  derive conditions for $\ker{B_M^T}$ by choosing special test
+  derive conditions for $\ker{B_M^\transpose}$ by choosing special test
   functions in $V_M$ defined through interpolation in the points $x_1$
   and $x_2$.
 
@@ -1840,7 +1840,7 @@ where $c\not=0$.
     \form(\div u,q_h)_M = -\form(u,\nabla q_h)_M
     = -(w_1+w_2) \nabla q_h\cdot t_1.
   \end{gather}
-  Hence, $q_h\in \ker{B_M^T}$ implies $\nabla q_h\cdot t_1 = 0$ in
+  Hence, $q_h\in \ker{B_M^\transpose}$ implies $\nabla q_h\cdot t_1 = 0$ in
   $\cell_1$ and $\cell_2$.
 
   Exchanging $x_2$ for $x_1$, there holds  $\nabla q_h\cdot t_2 = 0$ in
@@ -1873,7 +1873,7 @@ where $c\not=0$.
   \end{center}
   Then,
   \begin{gather}
-    \ker{B_M^T} = \bigl\{ q\in Q_M \big\vert
+    \ker{B_M^\transpose} = \bigl\{ q\in Q_M \big\vert
     \;\forall v\in V_M\colon b(v,q) = 0 \bigr\}
     = \P_0.
   \end{gather}
@@ -1897,7 +1897,7 @@ where $c\not=0$.
   \end{gather}
   We first test with velocites such that $u(x_3)=0$ and one of
   $u_{1/2}(x_{1/2})$ is equal to one. Take for instance $u_1(x_1) =
-  1$. Then, the equation above implies for $q\in \ker{B^T_M}$ that
+  1$. Then, the equation above implies for $q\in \ker{B^\transpose_M}$ that
   $\d_1 q(x_1) = 0$. Traversing through all four coimbinations, we
   obtain
   \begin{gather}
@@ -1923,7 +1923,7 @@ where $c\not=0$.
       q(b) &=& q(d) &=& q(f) &=& \beta
     \end{matrix}
   \end{gather}
-  The kernel of $B^T_M$ is a subspace of the space generated by
+  The kernel of $B^\transpose_M$ is a subspace of the space generated by
   $\alpha$ and $\beta$. Now we choose $u_2(x_3)=1$ and all other
   degrees of freedom zero. Again by simpson rule, we have
   \begin{gather}
@@ -1932,14 +1932,14 @@ where $c\not=0$.
   \end{gather}
   Hence, $\alpha = q(e) = q(b) = \beta$ and
   \begin{gather}
-    q\in \ker{B^T_M} \quad\Rightarrow\quad
+    q\in \ker{B^\transpose_M} \quad\Rightarrow\quad
     q\in \P_0.
   \end{gather}
   For a patch $M$ equivalent to $\widehat M$, we observe that
   \begin{gather}
     -\form(\div u,q)_M = \form(u,\nabla q)_M
     = \sum_{i=1,2}
-    \int_{\widehat{\cell_i}} \hat u^T (\nabla\Phi)^{-T} \nabla
+    \int_{\widehat{\cell_i}} \hat u^\transpose (\nabla\Phi)^{-T} \nabla
     \widehat q \;\det(\nabla\Phi) \,d\widehat x.
   \end{gather}
   Cramer's rule implies
