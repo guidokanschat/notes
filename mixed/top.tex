@@ -44,6 +44,30 @@ for constrained minimization problems.
 \section{Relation to constrained minimization}
 \input{mixed/lagrange}
 
+\section{Additional problems and experiments}
+
+\begin{Problem}{elasticity-locking-convergence}
+  The graph for $\lambda=100$ in \cref{fig:elasticity-locking}
+  suggests the following behavior: on very coarse meshes, the solution
+  is badly approximated. Eventually, the approximation cathes up and
+  is even faster than orer $h^{-1}$ until it approximates
+  asymptotically the straight line for $\lambda=1$. The curve for
+  $\lambda=1000$ seems to show the beginning of this behavior.
+
+  \begin{enumerate}
+  \item Compute on finer meshes to see if this is actually true. If
+    such a behavior is confirmed, this implies that the part of the
+    bilinear form with $\lambda$ is less important on finer meshes,
+    something which cannot be covered by Céa's lemma from the elliptic
+    toolbox.
+  \item Compute the energy norm of the error as in the symmetric
+    finite element toolbox. What do those curves look like? There, the
+    constant in Céa's lemma is 1.
+  \item Can we draw any conclusions on the best approximation in the
+    energy norm?
+  \end{enumerate}
+\end{Problem}
+
 \chapter{Conditions for well-posedness}
 \label{sec:mixed-wellposedness}
 In this chapter, we will first modify conditions for well-posedness in
