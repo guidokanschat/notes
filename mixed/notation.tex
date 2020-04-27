@@ -85,6 +85,21 @@
   Vector valued Sobolev spaces $\vH^k(\domain)$ are defined accordingly.
 \end{Notation}
 
+\begin{Notation}{transpose}
+  Given two Hilbert spaces $V$ and $W$ and a mapping $A\colon V\to W^*$,
+  we define the \define{adjoint} of $A$ by
+  \begin{gather}
+    \begin{split}
+      A^\transpose\colon W &\to V^* \\
+      \scal(Av,w)_{W^*\times W} &= \scal(v,A^\transpose w)_{V\times V^*}
+      \qquad \forall v\in V, w\in W.
+    \end{split}
+  \end{gather}
+  The adjoint with respect to the Euclidean inner product is called
+  the \define{transpose} of $A$, denoted by $A^\transpose$ as
+  well. This notation is used consistently for real and complex
+  Hilbert spaces.
+\end{Notation}
 
 %%% Local Variables: 
 %%% mode: latex

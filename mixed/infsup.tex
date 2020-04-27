@@ -1,52 +1,6 @@
 
-\section{Finite-dimensional problems}
-\begin{intro}
-  So far, our power horse for well-posedness was the Lax-Milgram
-  lemma, which can be applied under the conditions
-  \begin{xalignat}2
-    a(u,v) &\le M \norm{u}\norm{v} & \forall u,v&\in V\\
-    a(u,u) &\ge \ellipa \norm{u}^2 & \forall u&\in V.
-  \end{xalignat}
-  The second condition can also be rewritten in terms of the
-  \putindex{Rayleigh quotient} as
-  \begin{gather}
-    0 < \ellipa = \inf_{u\in V}\frac{a(u,u)}{\norm{u}^2}.
-  \end{gather}
-  Restricting this to a finite dimensional space, the notation usually
-  changes from
-  \begin{gather}
-    a(u,v) = f(v)
-    \qquad\text{to}\qquad
-    v^\transpose A u = v^\transpose f,
-  \end{gather}
-  where $A\in \R^{n\times n}$ is the matrix associated with the
-  bilinear form. The bound for the Rayleigh quotient means nothing but
-  that the real parts of all eigenvalues of $A$ are bounded from below
-  by $\ellipa$. Thus, a matrix $A$ for which we can apply the
-  Lax-Milgram lemma is positive definite. And the statement of the
-  lemma in finite dimension is, that a positive definite matrix is
-  invertible. We know from linear algebra that this is true, but we
-  also know that the condition is all but necessary.
-\end{intro}
-
-\begin{intro}
-  Why did we replace this clear theorem by the weaker Lax-Milgram
-  lemma, when we studied elliptic partial differential equations?  For
-  the first condition, it should be noted that spectral properties of
-  operators between spaces of infinite dimension are much harder to
-  obtain. Further, we do not need information on the whole spectrum,
-  but only on the eigenvalue closest to zero. Therefore, we used a
-  simple estimate in order to avoid discussing the spectrum at
-  all. But, there is an important difference between
-  Theorem~\ref{Theorem:la-invertible} and the
-  estimate~\eqref{eq:infsup:elliptic}: the assumption of the theorem
-  is qualitative, $\lambda \neq 0$, while the assumption of Lax-Milgram
-  is quantitative,
-  \begin{gather}
-    \Re\lambda \ge \ellipa> 0.
-  \end{gather}
-  The following problem shows why such a change is necessary.
-\end{intro}
+Let us begin with a simple example, displaying some of the
+difficulties we may have.
 
 \begin{Problem}{unbounded-inverse}
   On the space $\ell_2(\R)$ define the operator $A$ by its eigenvalue
@@ -109,6 +63,56 @@
   \end{enumerate}
 \end{solution}
 \end{Problem}
+
+\section{Finite-dimensional problems}
+\begin{intro}
+  So far, our power horse for well-posedness was the Lax-Milgram
+  lemma, which can be applied under the conditions
+  \begin{xalignat}2
+    a(u,v) &\le M \norm{u}\norm{v} & \forall u,v&\in V\\
+    a(u,u) &\ge \ellipa \norm{u}^2 & \forall u&\in V.
+  \end{xalignat}
+  The second condition can also be rewritten in terms of the
+  \putindex{Rayleigh quotient} as
+  \begin{gather}
+    0 < \ellipa = \inf_{u\in V}\frac{a(u,u)}{\norm{u}^2}.
+  \end{gather}
+  Restricting this to a finite dimensional space, the notation usually
+  changes from
+  \begin{gather}
+    a(u,v) = f(v)
+    \qquad\text{to}\qquad
+    v^\transpose A u = v^\transpose f,
+  \end{gather}
+  where $A\in \R^{n\times n}$ is the matrix associated with the
+  bilinear form. The bound for the Rayleigh quotient means nothing but
+  that the real parts of all eigenvalues of $A$ are bounded from below
+  by $\ellipa$. Thus, a matrix $A$ for which we can apply the
+  Lax-Milgram lemma is positive definite. And the statement of the
+  lemma in finite dimension is, that a positive definite matrix is
+  invertible. We know from linear algebra that this is true, but we
+  also know that the condition is all but necessary.
+\end{intro}
+
+\begin{intro}
+  Why did we replace this clear theorem by the weaker Lax-Milgram
+  lemma, when we studied elliptic partial differential equations?  For
+  the first condition, it should be noted that spectral properties of
+  operators between spaces of infinite dimension are much harder to
+  obtain. Further, we do not need information on the whole spectrum,
+  but only on the eigenvalue closest to zero. Therefore, we used a
+  simple estimate in order to avoid discussing the spectrum at
+  all. But, there is an important difference between
+  Theorem~\ref{Theorem:la-invertible} and the
+  estimate~\eqref{eq:infsup:elliptic}: the assumption of the theorem
+  is qualitative, $\lambda \neq 0$, while the assumption of Lax-Milgram
+  is quantitative,
+  \begin{gather}
+    \Re\lambda \ge \ellipa> 0.
+  \end{gather}
+  The following problem shows why such a change is necessary.
+\end{intro}
+
 
 \begin{Problem}{lax-milgram-not-applicable}
   Find an invertible, symmetric matrix $A\in \R^{2\times 2}$ and a
@@ -198,14 +202,19 @@ The question of well-posedness in finite dimensions can be answered by:
   \begin{gather}
     A^\transpose = \bigl(U\Sigma V^\transpose\bigr)^\transpose = V \Sigma U^\transpose.
   \end{gather}
-  Therefore, the first $r$ vectors of V span the range of $A^\transpose$ and
-  the last $n-r$ vectors of $U$ span its kernel.
+  Therefore, the first $r$ vectors of V span the range of
+  $A^\transpose$ and the last $n-r$ vectors of $U$ span its
+  kernel. The lemma follows since $U$ and $V$ are orthogonal.
 \end{proof}
 
 \begin{Corollary}{ker-coker-iso}
   Let $A\in \R^{m\times n}$ and $A^\transpose$ its transpose. Then, the
   restrictions $A\colon \ortho{\ker A} \to \range A$ and $A^\transpose\colon
   \ortho{\ker{A^\transpose}} \to \range{A^\transpose}$ are isomorphisms.
+  
+  The linear system $Ax=f\in\R^m$ has at least one solution if and
+  only if $f\in \range A$. If $x\in\R^n$ is such a solution, then
+  every $y\in\R^n$ with $y-x\in\ker A$ is a solution as well.
 \end{Corollary}
 
 \begin{proof}
@@ -229,8 +238,8 @@ The question of well-posedness in finite dimensions can be answered by:
   \begin{gather}
     \label{eq:infsup:6}
     \sigma_r
-    = \inf_{v\in \ortho{\ker A}} \sup_{w\in \R^m} \frac{w^\transpose A v}{\abs{v}\abs{w}}
-    = \inf_{w\in \ortho{\ker{A^\transpose}}} \sup_{v\in \R^n} \frac{w^\transpose A v}{\abs{v}\abs{w}}.
+    = \inf_{v\in \ortho{\ker A}} \sup_{w\in \R^m} \frac{w^\transpose A v}{\norm{v}\norm{w}}
+    = \inf_{w\in \ortho{\ker{A^\transpose}}} \sup_{v\in \R^n} \frac{w^\transpose A v}{\norm{v}\norm{w}}.
   \end{gather}
 \end{Corollary}
 
@@ -238,19 +247,19 @@ The question of well-posedness in finite dimensions can be answered by:
   Since the Cauchy-Schwarz inequality turns into an equation if and
   only if the two vectors are coaligned, there holds for any $v\in \R^n$:
   \begin{gather}
-    \sup_{w\in\R^m}\frac{w^\transpose A v}{\abs{w}} = \frac{v^\transpose A^\transpose A v}{\abs{Av}}.
+    \sup_{w\in\R^m}\frac{w^\transpose A v}{\norm{w}} = \frac{v^\transpose A^\transpose A v}{\norm{Av}} = \frac{\norm{Av}^2}{\norm{Av}}.
   \end{gather}
   Therefore,
   \begin{gather}
     \inf_{v\in \ortho{\ker A}} \sup_{w\in \R^m}
-    \frac{w^\transpose A v}{\abs{v}\abs{w}}
-    = \inf_{v\in \ortho{\ker A}} \frac{\abs{Av}}{\abs{v}}.
+    \frac{w^\transpose A v}{\norm{v}\norm{w}}
+    = \inf_{v\in \ortho{\ker A}} \frac{\norm{Av}}{\norm{v}}.
   \end{gather}
   Now, let $v = \sum \alpha_i v_i$ where $v_i$ are the columns of $V$
   in the SVD of $A$. Then,
   \begin{gather}
-    \abs{Av}^2 = \abs*{A\sum_{i=1}^r \alpha_i v_i}^2
-    = \abs*{\sum_{i=1}^r \sigma_i \alpha_i u_i}^2
+    \norm{Av}^2 = \norm*{A\sum_{i=1}^r \alpha_i v_i}^2
+    = \norm*{\sum_{i=1}^r \sigma_i \alpha_i u_i}^2
     = \sum_{i=1}^r \sigma_i^2 \alpha_i^2.
   \end{gather}
   The quotient
@@ -419,6 +428,15 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
     \quad\forall\,u\in U\bigr\}
   \end{gather}
 \end{Definition}
+
+\begin{Problem}{polar-orthogonal}
+  Show that $\polar{W} = I_\sharp \ortho{W}$, where
+  $I_\sharp\colon V\to V^*$ is the isomorphism defined by the
+  \putindex{Riesz representation theorem}.
+
+  Similarly, show that $\polar{U} = I_\flat \ortho{U} \subset V^*$,
+  where $I_\flat$ is the inverse of $I_\sharp$.
+\end{Problem}
 
 \begin{Lemma}{orthogonal-closed}
   The polar space $\polar{W}$ and the orthogonal complement $\ortho{W}$ of a
