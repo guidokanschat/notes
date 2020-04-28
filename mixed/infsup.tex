@@ -406,41 +406,92 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   that most notions of linear algebra related to orthogonality can be
   maintained in Hilbert spaces if closed subspaces are considered.
   We begin by citing the most important results.
+
+  The presentation here is neither complete nor self-contained. It
+  just highlights some of the important facts. In particular, we
+  assume the validity of the \putindex{Riesz representation theorem}
+  and the existence of a \putindex{Schauder basis} a priori.
 \end{intro}
+
+\begin{Notation}{musical-isomorphisms}
+  The \putindex{Riesz representation theorem} induces isomorphisms
+  between a Hilbert space $V$ and its dual $V^*$. Following custom in
+  differential geometry, we denote them as \define{musical
+    isomorphism}s
+  \begin{xalignat}2
+    I_\sharp\colon V&\to V^*
+    &I_\flat\colon V^*&\to V\\
+    v&\mapsto v^\sharp
+    &\phi&\mapsto \phi^\flat.
+  \end{xalignat}
+  \index{sharp@$\sharp$}\index{flat@$\flat$}
+\end{Notation}
+
+\begin{Problem}{riesz-h10}
+  Let $V=H^1_0(\domain)$ with $\domain=(0,1)$ be equipped with the
+  inner product
+  \begin{gather}
+    \scal(u,v)_V = \int_0^1 u'v'\dt.
+  \end{gather}
+  \begin{enumerate}
+  \item Show that for any function $f\in L^2(\domain)$ the functional
+    $\phi_f$ defined by
+    \begin{gather}
+      \phi_f(v) = \int_0^1 f v \dt
+    \end{gather}
+    is in $V^*$, albeit $f\not\in V$.
+  \item Compute $f^\flat$.
+  \end{enumerate}
+\end{Problem}
+
+\begin{Example}{solution-pressure}
+  When we look at computing the pressure in Stokes' equations, we have
+  to solve a weak formulation of the form: find $p\in Q$ such that
+  \begin{gather}
+    \form(\div v,p) = g(v) \qquad \forall v\in V.
+  \end{gather}
+  Here $g\in V^*$ consists of the parts of the momentum equation not
+  containing the pressure. If we define $B^\transpose$ by
+  \begin{gather}
+    \scal(B^\transpose q,v)_{V^*\times V} = \form(\div v,q)
+    \qquad \forall v\in V, q \in Q,
+  \end{gather}
+  then the operator form of the problem posed in $V^*$ is
+  \begin{gather}
+    B^\transpose p = g
+  \end{gather}
+  Since this equation involves two different spaces, we require an
+  extension of \slideref{Lemma}{ker-coker-rn}.
+\end{Example}
 
 \begin{Definition}{polar-orthogonal}
   Let $W\subset V$ be a subspace of a Hilbert space $V$. We define its
-  \define{polar space} $\polar{W}\subset V^*$ and its
-  \define{orthogonal complement} $\ortho{W}\subset V$ by
+  \define{orthogonal complement} $\ortho{W}\subset V$ and its
+  \define{polar space} $\polar{W}\subset V^*$ by
   \begin{gather}
     \label{eq:infsup:7}
-    \begin{split}
-    \polar{W} &= \bigl\{f\in V^* \big| \scal(f,w)_{V^*\times V} = 0
-    \quad\forall\,w\in W\bigr\},
+    \begin{aligned}
+    \ortho{W} &= \bigl\{v\in V &\big|&& \scal(v,w)_{V} &= 0
+    &\forall\,w&\in W\bigr\},
     \\
-    \ortho{W} &= \bigl\{v\in V \big| \scal(v,w)_{V} = 0
-    \quad\forall\,w\in W\bigr\}.
-    \end{split}
+    \polar{W} &= \bigl\{f\in V^* &\big|&& \scal(f,w)_{V^*\times V} &= 0
+    &\forall\,w&\in W\bigr\}.
+    \end{aligned}
   \end{gather}
   For a subspace $U\subset V^*$, we define its polar space
   \begin{gather}
-    \polar{U} = \bigl\{v\in V \big| \scal(u,v)_{V^*\times V} = 0
+    \dualpolar{U} = \bigl\{v\in V \quad\big|\quad \scal(u,v)_{V^*\times V} = 0
     \quad\forall\,u\in U\bigr\}
   \end{gather}
 \end{Definition}
 
 \begin{Problem}{polar-orthogonal}
-  Show that $\polar{W} = I_\sharp \ortho{W}$, where
-  $I_\sharp\colon V\to V^*$ is the isomorphism defined by the
-  \putindex{Riesz representation theorem}.
-
-  Similarly, show that $\polar{U} = I_\flat \ortho{U} \subset V^*$,
-  where $I_\flat$ is the inverse of $I_\sharp$.
+  Show that $\polar{W} = I_\sharp \ortho{W}$ and $\dualpolar{U} = I_\flat \ortho{U}$.
 \end{Problem}
 
 \begin{Lemma}{orthogonal-closed}
   The polar space $\polar{W}$ and the orthogonal complement $\ortho{W}$ of a
-  subspace $W\subset V$ are both closed. So is the polar space $\polar{U}$
+  subspace $W\subset V$ are both closed. So is the polar space $\dualpolar{U}$
   of a subspace $U\subset V^*$.
 \end{Lemma}
 
@@ -448,25 +499,30 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   Consider the mapping
   \begin{align}
     \Phi_w\colon V^* &\to \R,\\
-    v&\mapsto \scal(v,w)_{V^*\times V}.
+    \phi&\mapsto \scal(\phi,w)_{V^*\times V}.
   \end{align}
-  For any $w$, the kernel of $\Phi$ is closed as
+  For any $w$, the kernel of $\Phi_w$ is closed as
   the pre-image of a closed set. $\polar{W}$ is closed since it is the
   intersection of these kernels for all $w\in W$.
 
   The inner product is continuous on $V\times V$. Therefore, the
   mapping
   \begin{align}
-    \phi_w\colon V &\to \R,\\
+    \Psi_w\colon V &\to \R,\\
     v&\mapsto \scal(v,w),
   \end{align}
-  is continuous. The argument continues as above. Similar for $\polar{U}$.
+  is continuous. The argument continues as above. Similar for $\dualpolar{U}$.
 \end{proof}
 
 \begin{Theorem}{orthogonal-complement}
   Let $W$ be a subspace of a Hilbert space $V$ and $\ortho{W}$ its
-  orthogonal complement. Then, $\ortho{W} = \ortho{\overline{W}}$. Further,
-  $V = W \oplus \ortho{W}$ if and only if $W$ is closed.
+  orthogonal complement. Then, $\ortho{W} =
+  \ortho{\overline{W}}$. Furthermore, there holds
+  \begin{gather}
+    V = W \oplus \ortho{W}
+    \qquad\Longleftrightarrow\qquad
+    \text{$W$ is closed.}
+  \end{gather}
 \end{Theorem}
 
 \begin{proof}
@@ -547,26 +603,26 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   $u$ the \define{orthogonal projection}s of $v$ into $W$ and $\ortho{W}$,
   respectively. We write
   \begin{gather}
-    \Pi_W = w, \qquad \Pi_{\ortho{W}} = u.
+    \Pi_W v = w, \qquad \Pi_{\ortho{W}} v = u.
   \end{gather}
 \end{Definition}
 
-\begin{Lemma}{polar-orthogonal-hilbert}
-  Let $V$ be a Hilbert space and $W\subset V$ be a closed
-  subspace. Then, the polar space $\polar{W}\subset V^*$ and the orthogonal
-  space $\ortho{W}$ can be isometrically identified by \putindex{Riesz
-    representation}.
-\end{Lemma}
+% \begin{Lemma}{polar-orthogonal-hilbert}
+%   Let $V$ be a Hilbert space and $W\subset V$ be a closed
+%   subspace. Then, the polar space $\polar{W}\subset V^*$ and the orthogonal
+%   space $\ortho{W}$ can be isometrically identified by \putindex{Riesz
+%     representation}.
+% \end{Lemma}
 
-\begin{proof}
-  For every $f$ in the
-  dual of $\ortho{W}$, define $g\in V^*$ by
-  \begin{gather}
-    \scal(g,v)_{V^*\times V} =
-    \scal(f,\Pi_{\ortho{V}}v)_{(\ortho{V})^*\times \ortho{V}}.
-  \end{gather}
-  Clearly, $g(v)=0$ for $v\in W$, therefore $g\in \polar{W}$.
-\end{proof}
+% \begin{proof}
+%   For every $f$ in the
+%   dual of $\ortho{W}$, define $g\in V^*$ by
+%   \begin{gather}
+%     \scal(g,v)_{V^*\times V} =
+%     \scal(f,\Pi_{\ortho{V}}v)_{(\ortho{V})^*\times \ortho{V}}.
+%   \end{gather}
+%   Clearly, $g(v)=0$ for $v\in W$, therefore $g\in \polar{W}$.
+% \end{proof}
 
 % \begin{Corollary}
 
