@@ -415,20 +415,20 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 
 \begin{Notation}{musical-isomorphisms}
   The \putindex{Riesz representation theorem} induces isomorphisms
-  between a Hilbert space $V$ and its dual $V^*$. Following custom in
-  differential geometry, we denote them as \define{musical
-    isomorphism}s
+  between a Hilbert space $V$ and its dual $V^*$. We call them
+  \define{Riesz isomorphism}s. Following custom in differential
+  geometry, we denote them as \define{musical isomorphism}s
   \begin{xalignat}2
-    I_\sharp\colon V&\to V^*
-    &I_\flat\colon V^*&\to V\\
-    v&\mapsto v^\sharp
-    &\phi&\mapsto \phi^\flat.
+    I_\flat\colon V&\to V^*
+    &I_\sharp\colon V^*&\to V\\
+    v&\mapsto v^\flat
+    &\phi&\mapsto \phi^\sharp.
   \end{xalignat}
-  \index{sharp@$\sharp$}\index{flat@$\flat$}
+  \index{sharp@$\flat$}\index{flat@$\sharp$}
 \end{Notation}
 
-\begin{Problem}{riesz-h10}
-  Let $V=H^1_0(\domain)$ with $\domain=(0,1)$ be equipped with the
+\begin{Problem*}{riesz-h10}{Riesz Isomorphisms}
+  Let $V=H^1_0(\domain)$ on the domain $\domain=(0,1)$ be equipped with the
   inner product
   \begin{gather}
     \scal(u,v)_V = \int_0^1 u'v'\dt.
@@ -439,10 +439,10 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
     \begin{gather}
       \phi_f(v) = \int_0^1 f v \dt
     \end{gather}
-    is in $V^*$, albeit $f\not\in V$.
-  \item Compute $f^\flat$.
+    is in $V^*$, even if $f\not\in V$.
+  \item Discuss this for the function $f\equiv 1$ and compute $f^\sharp$.
   \end{enumerate}
-\end{Problem}
+\end{Problem*}
 
 \begin{Example}{solution-pressure}
   When we look at computing the pressure in Stokes' equations, we have
@@ -486,7 +486,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \end{Definition}
 
 \begin{Problem}{polar-orthogonal}
-  Show that $\polar{W} = I_\sharp \ortho{W}$ and $\dualpolar{U} = I_\flat \ortho{U}$.
+  Show that $\polar{W} = I_\flat \ortho{W}$ and $\dualpolar{U} = I_\sharp \ortho{U}$.
 \end{Problem}
 
 \begin{Lemma}{orthogonal-closed}
@@ -676,13 +676,14 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \begin{proof}
   We first show that the inf-sup condition~\eqref{eq:infsup:10}
   implies $\range A$ closed. To this end, let $\{w_n\}$ be a Cauchy
-  sequence in $\range A$ converging to a point $w\in W$. Thus, there
+  sequence in $\range A$ converging to a point $w\in W$. By the assumption,
+  there
   is a sequence $\{v_n\}$ in $V$ such that $Av_n = w_n$ and
-  $\ellipa \norm{v_n} \le \norm{w_n}$. Hence,
+  $\ellipa \norm{v_n} \le \norm{w_n}$. Hence, using
   \begin{gather}
     \norm{v_m-v_n}_V \le \frac1\ellipa \norm{w_m-w_n}_W,
   \end{gather}
-  and $\{v_n\}$ is a Cauchy sequence in $V$. Therefore, $v_n\to v\in
+  we realize that $\{v_n\}$ is a Cauchy sequence in $V$. Therefore, $v_n\to v\in
   V$ and due to continuity of $A$ we obtain $Av=w$ and thus $w\in
   \range A$.
 
@@ -695,17 +696,18 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 
   Let $w\in\range A$. Then,
   \begin{gather}
-    \tilde w\frac\delta2 \frac{w}{\norm{w}} \in B_\delta(0) \subset A(B_1(0)).
+    \tilde w = \frac\delta2 \frac{w}{\norm{w}}
+    \in B_\delta(0) \subset A(B_1(0)).
   \end{gather}
   Hence, there is $v\in V$ with $\norm{v}<1$ such that $Av=\tilde w$,
   which proves the lemma.
 \end{proof}
 
 \begin{Theorem}{infsup-well-equivalence}
-  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form such that
-  \begin{gather}
-    a(v,w) \le M \norm{v}_V \norm{w}_W,
-  \end{gather}
+  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form % such that
+%  \begin{gather}
+%    a(v,w) \le M \norm{v}_V \norm{w}_W,
+%  \end{gather}
   and $A\colon V\to W^*$ its associated operator.
   Then, the following statements are equivalent:
   \begin{enumerate}
@@ -732,7 +734,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 
 \begin{proof}
   First, we show the equivalence of the first two statements. Let us
-  rephrase the inf-sup condition to
+  use equivalently to the inf-sup condition~\eqref{eq:infsup:11}
   \begin{gather}
     \norm{A^\transpose w}_{V^*}
     = \sup_{v\in V}\frac{\scal(A^\transpose w,v)}{\norm{v}_V}
@@ -751,7 +753,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   issue.
 
   In order to prove equivalence of the second and third statement, we
-  use \slideref{Lemma}{polar-orthogonal-hilbert} to isometrically
+  use the result of \slideref{Problem}{polar-orthogonal} to isometrically
   identify $(\ortho{\ker A})^*$ with $\polar{\ker A}$. Thus, $A$ is an
   isomorphism from $\ortho{\ker A}$ onto $W^*$ if and only if $A^\transpose$ is an
   isomorphism from $W$ onto $(\ortho{\ker A})^* = \polar{\ker A}$. and
@@ -761,10 +763,10 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \end{proof}
 
 \begin{Corollary}{infsup-well-posedness1}
-  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form such that
-  \begin{gather}
-    a(v,w) \le M \norm{v}_V \norm{w}_W.
-  \end{gather}
+  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form. %such that
+  %\begin{gather}
+  %  a(v,w) \le M \norm{v}_V \norm{w}_W.
+  %\end{gather}
   Let the inf-sup-condition
   \begin{gather}
     \inf_{w\in W}\sup_{v\in V}
