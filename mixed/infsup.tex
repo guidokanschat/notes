@@ -629,7 +629,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 % \end{Corollary}
 
 
-\begin{Theorem}{closed-range}
+\begin{Theorem*}{closed-range}{Closed Range Theorem}
   Let $V,W$ be Hilbert spaces and $A\colon V\to W$ a continuous linear
   operator. Then, the following statements are equivalent:
   \begin{gather}
@@ -637,11 +637,11 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
     \begin{split}
       \range A &\text{ is closed in } W,\\
       \range{A^\transpose} &\text{ is closed in } V^*,\\
-      \range A &= \polar{\ker{A^\transpose}},\\
+      \range A &= \dualpolar{\ker{A^\transpose}},\\
       \range{A^\transpose} &= \polar{\ker A}.
     \end{split}
   \end{gather}
-\end{Theorem}
+\end{Theorem*}
 
 \begin{remark}
   This is the famous \emph{\putindex{closed range theorem}} by Banach.
@@ -650,10 +650,10 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   in~\cite[p.~205--209]{Yosida80}.
 \end{remark}
 
-\begin{Theorem}{open-mapping}
+\begin{Theorem*}{open-mapping}{Open Mapping Theorem}
   Let $A\colon V\to W$ be continuous and surjective. Then, the image
   $A(U)\subset W$ of any open set $U\subset V$ is open.
-\end{Theorem}
+\end{Theorem*}
 
 \begin{remark}
   This is the \emph{\putindex{open mapping theorem}} by Banach. The
@@ -781,6 +781,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   \begin{gather}
     \norm{w}_W \le \frac1\ellipa \norm{f}_{V^*}.
   \end{gather}
+  The opposite implication holds true.
 \end{Corollary}
 
 \begin{remark}
@@ -800,10 +801,10 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \end{remark}
 
 \begin{Theorem}{infsup-well-posedness2}
-  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form such that
-  \begin{gather}
-    a(v,w) \le M \norm{v}_V \norm{w}_W.
-  \end{gather}
+  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form. % such that
+%  \begin{gather}
+%    a(v,w) \le M \norm{v}_V \norm{w}_W.
+%  \end{gather}
   Let for some $\ellipa>0$ the inf-sup-conditions
   \begin{align}
     \inf_{w\in W}\sup_{v\in V}
@@ -823,19 +824,33 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   \end{gather}
 \end{Theorem}
 
+\begin{Problem}{closed-range}
+  Assume for $A\colon V\to W^*$ that $\range A$ is closed. Show
+  \begin{enumerate}
+  \item $A:V\to W^*$ is surjective if and only if $A^\transpose$ is
+    injective.
+  \item Show that with all other assumptions unchanged, the second
+    inf-sup condition in \slideref{Theorem}{infsup-well-posedness2} is
+    equivalent to $A^*$ injective.
+  \item \slideref{Theorem}{infsup-well-posedness2} seems excessive if
+    we only want on of the statements
+    \begin{xalignat}3
+      \forall f&\in W^*& \exists u&\in V& a(u,w) &= f(w)\\
+      \forall g&\in V^*& \exists u&\in W& a(v,u) &= g(v)
+    \end{xalignat}
+    Is this true or is there equivalence of both inf-sup conditions
+    with only one of these statements?
+  \end{enumerate}
+\end{Problem}
+
 \begin{remark}
   If we compare \slideref{Theorem}{infsup-well-posedness2} with
   \slideref{Corollary}{infsup-well-posedness1}, we see that the only
   difference lies in the fact that the second inf-sup condition
   ensures surjectivity of $A$ by injectivity of $A^\transpose$. In some cases
-  it may be difficult to prove both inf-sup conditions. Then, it is
+  it may be impossible difficult to prove both inf-sup conditions. Then, it is
   sufficient to prove one inf-sup condition, say the first, and then
-  only
-  \begin{gather}
-     \inf_{v\in V}\sup_{w\in W}
-    \frac{a(v,w)}{\norm{v}_V\norm{w}_W} > 0,
-  \end{gather}
-  thus, injectivity of $A^\transpose$. Although we verify less than the
+  only injectivity of $A^\transpose$. Although we verify less than the
   assumptions of \slideref{Theorem}{infsup-well-posedness2}, the
   closed range theorem saves us from the additional work. We further
   note that this notion is symmetric between $A$ and $A^\transpose$, that is,
@@ -861,41 +876,61 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   theorems.
 \end{intro}
 
+\begin{Definition}{mixed-weak}
+  The abstract saddle-point problem in weak form reads:
+  find $(u,p)\in V\times Q$ such that
+  \begin{gather}
+    \label{eq:saddle-point-weak}
+    \arraycolsep.1em
+    \begin{matrix}
+      a(u,v) &+& b(v,p) &=& f(v) &\quad&\forall v\in V, \\
+      b(u,q) && &=& g(q) &&\forall q\in Q.
+    \end{matrix}
+  \end{gather}
+  Here, $V$ and $Q$ are Hilbert spaces chosen, such that $a(.,.)$ and
+  $b(.,.)$ are bounded bilinear forms on $V\times V$ and $V\times Q$,
+  respectively. The bounds $\bounda$ and $\boundb$ are such that
+  \begin{gather}
+    \label{eq:saddle-point-bounds}
+    \sup_{u,v\in V}\frac{a(u,v)}{\norm{u}_V\norm{v}_V} = \bounda,
+    \qquad
+    \sup_{\substack{v\in V\\q\in Q}}\frac{b(v,q)}{\norm{v}_V\norm{q}_G} = \boundb.
+  \end{gather}
+\end{Definition}
+
+
 \begin{Theorem}{infsup-mixed1}
-  Let $V$ and $Q$ be Hilbert spaces and let the mixed bilinear form
-  \begin{gather}
-        \mathcal A\mixedform(u,p,v,q)
-      = a(u,v) + b(v,p) + b(u,q)
-  \end{gather}
-  be defined and bounded for any $u,v\in V$ and $p,q\in Q$.
-  Then, the problem
-  \begin{gather}
-    \mathcal A\mixedform(u,p,v,q) = \scal(f,v)+\scal(g,q)
+  Let $V$ and $Q$ be Hilbert spaces. Let $a(\cdot,\cdot)$ and
+  $b(\cdot,\cdot)$ be bounded bilinear forms. Then, the weak
+  formulation find $u\in V$ and $p\in Q$ such that
+  \begin{multline}
+    \mathcal A\mixedform(u,p,v,q)
+    \equiv a(u,v) + b(v,p) + b(u,q)
+    \\
+    = \scal(f,v)+\scal(g,q)
     \quad\forall v\in V, q\in Q,
-  \end{gather}
+  \end{multline}
   has a unique solution for any $f\in V^*$ and any $g\in Q^*$ if and
   only if there exists $\ellipa>0$ such that
   \begin{gather}
-    \forall
-    \begin{bmatrix}
-      u\in V\\p\in Q
-    \end{bmatrix}
-    \;
-    \exists
-    \begin{bmatrix}
-      v\in V\\q\in Q
-    \end{bmatrix}
-    \colon
-    \quad
-    \mathcal A\mixedform(u,p,v,q) \ge \ellipa
-    \norm{(u,p)}_{V\times Q}\norm{(v,q)}_{V\times Q},
+    \label{eq:infsup:system-infsup}
+    \inf_{\substack{u\in V\\p\in Q}}
+    \sup_{\substack{v\in V\\q\in Q}}
+    \quad \frac{\mathcal A\mixedform(u,p,v,q)}{\norm{(u,p)}_{V\times
+        Q}\norm{(v,q)}_{V\times Q}} \ge \ellipa.
   \end{gather}
-  and vice versa.
 \end{Theorem}
 
 \begin{proof}
   Straight application of \slideref{Theorem}{infsup-well-posedness2}.
 \end{proof}
+
+Often, like in the case of Stokes' equations, the properties of the
+form $a(\cdot,\cdot)$ or the form $b(\cdot,\cdot)$ are already known
+and you want to combine them to a mixed formulation. Thus, the theorem
+above is unwieldy, since it requires to do the analysis from
+scratch. We thus provide an equivalence theorem, which allows us to
+separate the properties of the bilinear forms.
 
 \begin{Theorem}{infsup-mixed2}
   Let $V$ and $Q$ be Hilbert spaces and let
@@ -904,55 +939,64 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
       \ker B &= \bigl\{v\in V \big| b(v,q) = 0 \;\forall q\in Q\bigr\}.
     \end{split}
   \end{gather}
-  Then, the problem finding $(u,p)\in V\times Q$ such that
+  Then, the mixed problem finding $(u,p)\in V\times Q$ such that
   \begin{gather}
     a(u,v) + b(v,p) + b(u,q) = f(v) \quad\forall v\in V, q\in Q,
   \end{gather}
-  is well-posed if and only if the problem finding $u\in \ker B$ such that
+  is well-posed if and only if the reduced problem
+  finding $u\in \ker B$ such that
     \begin{gather}
       a(u,v) = f(v) \quad\forall v\in \ker B
     \end{gather}
     is well-posed for any $f\in V^*$ and there is a positive constant
-    $\beta$ such that
+    $\infsupc$ such that
     \begin{gather}
-      \inf_{q\in Q}\sup_{v\in V} \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} \ge \beta.
+      \inf_{q\in Q}\sup_{v\in V} \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} \ge \infsupc.
     \end{gather}
 \end{Theorem}
 
 \begin{proof}
-  By requiring well-posedness of the reduced problem, $u\in V$ is
-  well-determined and bounded by the data $f\in V^*$ without knowledge
-  of the Lagrange multiplier. Hence, with $u\in V$ given and
-  $b(u,q) = 0$, the problem of determining the Lagrange multiplier $p$
-  reduces to
+  In order to show the ``if'', we note that by well-posedness of the
+  reduced problem, $u\in V$ is well-determined and bounded by the data
+  $f\in V^*$ without knowledge of the Lagrange
+  multiplier. Furthermore, there holds $b(u,q) = 0$.
+  
+  Entering this into the mixed formulation, the Lagrange multiplier
+  $p$ is determined by
   \begin{gather}
     b(v,p) = f(v) - a(u,v), \qquad\forall v\in V.
   \end{gather}
   Applying \slideref{Corollary}{infsup-well-posedness1} to the
   bilinear form $b(.,.)$, we deduce that this equation has a unique
-  solution $p\in Q$ if and only if $f(v)-a(u,v) \in \ker B^0$, which
-  is the reduced problem.
+  solution $p\in Q$ if and only if $f(v)-a(u,v) \in \polar{\ker B}$, which
+  is true due to the statement of the reduced problem.
+
+  For the only if, we note that choosing $v=0$ in the mixed problem,
+  we see that there holds
+  \begin{gather}
+    b(u,q) = 0 \qquad \forall q\in Q,
+  \end{gather}
+  and thus $u\in \ker B$. for such $u$ holds in the mixed formulation
+  \begin{gather}
+    f(v) = a(u,v) + b(v,p) = a(u,v) \qquad \forall v \in V.
+  \end{gather}
+  In order to deduce the inf-sup condition, we note that
+  well-posedness of the mixed problem implies the inf-sup
+  condition~\eqref{eq:infsup:system-infsup}. Since the infimum will
+  not decrease by taking a subset, we confine the set to $u=0$ and
+  obtain
+  \begin{align}
+    &\inf_{p\in Q}\sup_{v\in V} \frac{b(v,p)}{\norm{v}_V\norm{q}_Q}
+    \\ = &
+           \inf_{p\in Q}
+           \sup_{\substack{v\in V\\q\in Q}}
+    \frac{a(0,v) + b(v,p) + b(0,q)}{\norm{(0,p)}_{V\times Q} \norm{(v,q)}_{V\times Q}}
+    \\ \ge&
+            \inf_{\substack{u\in U\\p\in Q}}
+    \sup_{\substack{v\in V\\q\in Q}}
+    \frac{a(u,v) + b(v,p) + b(u,q)}{\norm{(u,p)}_{V\times Q} \norm{(v,q)}_{V\times Q}} \\\ge& \ellipa > 0
+  \end{align}
 \end{proof}
-
-\begin{remark}
-  Since $V$ is a Hilbert space, the decomposition
-  $V = \ker B \oplus \ker B^\perp$ is uniquely determined and there is
-  a corresponding decomposition $V^* = \ker B^0+(\ker B^\perp)^0$,
-  such that $f = f^0+f^\perp$ above. The way we solve the reduced
-  problem first and then compute the Lagrange multiplier implies that
-  the solution $u$ only depends on $f^\perp$, while the Lagrange
-  multiplier $p$ only depends on $f^0$.
-\end{remark}
-
-\begin{remark}
-  We have imposed well-posedness of the reduced problem only in an
-  abstract way. Depending on $a(.,.)$ we can formulate two conditions:
-  ellipticity on $\ker B$ or inf-sup stability on $\ker B$. Indeed,
-  most problems considered in this class will have symmetric bilinear
-  forms $a(.,.)$, such that ellipticity serves as our usual
-  assumption.  In these cases, note that $V$-ellipticity already
-  implies the well-posedness on $\ker B$.
-\end{remark}
 
 \begin{Problem}{inhomogeneous-continuity}
   Show that \slideref{Theorem}{infsup-mixed2} can be extended to the
@@ -978,7 +1022,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
       a(u_0+u_g,v) + b(v,p) + b(u_0+u_g,q) = f(v)+g(q) \quad\forall v\in V, q\in Q\\
       \Leftrightarrow a(u_0,v) + b(v,p) + b(u_0,q) = f(v)-a(u_g,v) \quad\forall v\in V, q\in Q
     \end{align}
-  \item Due to $a(u_g,v) \leq \norm{a}\norm{u_g}_V\norm{v}_V$,
+  \item Due to $a(u_g,v) \leq \bounda \norm{u_g}_V\norm{v}_V$,
     the right-hand side $f(\cdot)-a(u_g,\cdot)$ is in $V^*$
     and we are in the setting of
     \slideref{Theorem}{infsup-mixed2}.
@@ -986,42 +1030,71 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \end{solution}
 \end{Problem}
 
-\begin{intro}
-  We summarize the result of this section in an assumption for
-  well-posedness which will be the basis for further results in this
-  course. We know from the discussion above that this assumption is
-  only sufficient and weaker conditions may be imposed on
-  $a(.,.)$. But indeed, it helps us through a lot of problems and is a
-  good compromise between generality and ease of use.
-\end{intro}
+\begin{remark}
+  Since $V$ is a Hilbert space, the decomposition
+  $V = \ker B \oplus \ker B^\perp$ is uniquely determined and there is
+  a corresponding decomposition $V^* = \polar{(\ker B^\perp)} \oplus \polar{\ker B} = I_\flat\ker B \oplus I_\flat \ortho{\ker B} $,
+  such that $f = f^0+f^\perp$ above. The way we solve the reduced
+  problem first and then compute the Lagrange multiplier implies that
+  the solution $u$ only depends on $f^\perp$ only.
+\end{remark}
 
-\begin{Assumption}{mixed-elliptic}
-  Let $V$ and $Q$ be Hilbert spaces and let $a(.,.)$ and $b(.,.)$ be
-  bounded bilinear forms on $V\times V$ and $V\times Q$,
-  respectively. We define their norms as the smallest constants such
-  that for all arguments there holds
-  \begin{gather}
-    a(u,v) \le \norm a \norm{u}_V \norm{v}_V,
-    \qquad
-    b(v,q) \le \norm b \norm{v}_V \norm{q}_Q.
-  \end{gather}
-  With these forms, we associate bounded operators $A$, $B$, and $B^\transpose$
-  according to \slideref{Definition}{saddle-point-operators}. With
-  $b(.,.)$ we associate the spaces
+\begin{remark}
+  We have imposed well-posedness of the reduced problem only in an
+  abstract way. Depending on $a(.,.)$ we can formulate two conditions:
+  ellipticity on $\ker B$ or inf-sup stability on $\ker B$. Indeed,
+  most problems considered in this class will have symmetric bilinear
+  forms $a(.,.)$, such that ellipticity serves as our usual
+  assumption.  In these cases, note that $V$-ellipticity already
+  implies the well-posedness on $\ker B$.
+\end{remark}
+
+\begin{Notation}{v0-kernel}
+  Since the kernels of the bilinear form $b(\cdot,\cdot)$ play an
+  important role, we abbreviate
   \begin{gather}
     \begin{split}
-      \ker B &= \bigl\{v\in V \big| b(v,q) = 0 \;\forall q\in Q\bigr\},\\
-      \ker B^\transpose &= \bigl\{q\in Q \big| b(v,q) = 0 \;\forall v\in V\bigr\}.
+      V^0 = \ker B &= \bigl\{v\in V \;\big|\; b(v,q) = 0 \quad\forall q\in Q\bigr\},\\
+      Q^0 = \ker{B^\transpose} &= \bigl\{q\in Q \;\big|\; b(v,q) = 0 \quad\forall v\in V\bigr\}.
     \end{split}
   \end{gather}
-  Furthermore, we assume that $a(.,.)$ is positive semi-definite on
-  $V$ and elliptic on $\ker B$,
+  We als define for $g\in Q^*$ and for $f\in V^*$ the affine spaces
   \begin{gather}
-    a(u,u) \ge 0 \quad\forall u\in V,
-    \qquad
-    a(u,u) \ge \ellipa \norm{u}_V^2 \quad\forall u\in \ker B.
+    \begin{split}
+      V^g &= \bigl\{v\in V \;\big|\; b(v,q) = g(q) \quad\forall q\in Q\bigr\},\\
+      Q^f &= \bigl\{q\in Q \;\big|\; b(v,q) = f(v) \quad\forall v\in V\bigr\}.
+    \end{split}
   \end{gather}
-\end{Assumption}
+\end{Notation}
+
+\begin{intro}
+  We summarize the results of this section i theorem for
+  well-posedness of the mixed formulation in
+  \slideref{Definition}{mixed-weak} with simplified assumptions.  It
+  will be the basis for further results in this course. We know from
+  the discussion above that this assumption is only sufficient and
+  weaker conditions may be imposed on $a(.,.)$. But indeed, it helps
+  us through a lot of problems and is a good compromise between
+  generality and ease of use.
+\end{intro}
+
+\begin{Theorem}{mixed-elliptic}
+  Let the bilinear form $a(.,.)$ be positive semi-definite on $V$ and
+  elliptic on $V^0 = \ker B$. Let the bilinear form $b(\cdot,\cdot)$
+  be inf-sup stable. Thus, there are constants $\ellipa>0$ and
+  $\infsupc>0$
+  \begin{gather}
+    \inf_{v\in V^0} \frac{a(v,v)}{\norm{u}_V^2} = \ellipa,  \qquad
+    \inf_{q\in Q}\sup_{v\in V} \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} = \infsupc.
+  \end{gather}
+  Then, the abstract mixed proble in \slideref{Definition}{mixed-weak}
+  has a unique solution.
+\end{Theorem}
+
+\begin{Problem}{mixed-elliptic}
+  Derive bounds for the solutions $u\in V$ and $p\in Q$ using the
+  assumptions of the previous theorem.
+\end{Problem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1080,13 +1153,13 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \begin{Theorem}{mixed-stabilized-well-posed}
   Let \slideref{Assumption}{mixed-elliptic-stabilized} hold and
   let $a(.,.)$ and $c(.,)$ be symmetric. In addition, let there be
-  $\beta>0$ such that
+  $\infsupc>0$ such that
   \begin{gather}
     \begin{split}
       \inf_{q\in \ortho{\ker{B^\transpose}}}  \sup_{v\in V}
-      \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} &\ge \beta\\
+      \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} &\ge \infsupc\\
       \inf_{v\in \ortho{\ker{B}}}  \sup_{q\in Q}
-      \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} &\ge \beta
+      \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} &\ge \infsupc
     \end{split}
   \end{gather}
   Then, the problem finding $(u,p)\in V\times Q$ such that
@@ -1129,12 +1202,12 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   \begin{gather}
     \ellipa \norm{u^0}^2_V \le a(u^0,u^0)
     = -a(u^\perp,u^0)
-    \le \norm a \norm{u^\perp}\norm{u^0},
+    \le \bounda \norm{u^\perp}\norm{u^0},
   \end{gather}
   which implies
   \begin{gather}
     \label{eq:infsup:15}
-    \norm{u^0}_V \le \frac{\norm a}{\ellipa} \norm{u^\perp}_V.
+    \norm{u^0}_V \le \frac{\bounda}{\ellipa} \norm{u^\perp}_V.
   \end{gather}
   Testing with $v=u$ and $q=-p$ yields
   \begin{gather}
@@ -1146,7 +1219,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   the inf-sup condition for $p$, there is $v\in V$ with $\norm{v}_V = 1$
   such that
   \begin{gather}
-    \beta \norm{p^\perp} \le
+    \infsupc \norm{p^\perp} \le
     \abs{b(v,p^\perp)} = \abs{b(v,p)} = \abs{a(u,v)}
     \le \sqrt{a(u,u)}\sqrt{a(v,v)},
   \end{gather}
@@ -1154,7 +1227,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   forms.  Therefore, squaring and using the definition of the operator
   norm of $g^\perp$ yields
   \begin{gather}
-    \norm{p^\perp}_Q \le \frac{\norm a}{\beta^2}\norm{g^\perp}_{Q^*}.
+    \norm{p^\perp}_Q \le \frac{\bounda}{\infsupc^2}\norm{g^\perp}_{Q^*}.
   \end{gather}
   Furthermore, we have
   \begin{gather}
@@ -1168,7 +1241,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   concluding
   \begin{gather}
     \norm{p^0}_Q
-    \le \frac{\norm a \norm c}{\ellipc\beta^2}
+    \le \frac{\bounda \norm c}{\ellipc\infsupc^2}
     \norm{g^\perp}_{Q^*}.
   \end{gather}
 
@@ -1189,13 +1262,13 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   $p^\perp$ is estimated as before by
   \begin{align}
     \norm{p^\perp}_Q^2
-    &\le \frac{\norm a}{\beta^2}\norm{g^0}_{Q^*} \norm{p^0}_Q \\
-    &\le \frac{\norm a}{\ellipc\beta^2} \norm{g^0}_{Q^*}^2
-      + \frac{\norm a\norm c}{\ellipc\beta^2}
+    &\le \frac{\bounda}{\infsupc^2}\norm{g^0}_{Q^*} \norm{p^0}_Q \\
+    &\le \frac{\bounda}{\ellipc\infsupc^2} \norm{g^0}_{Q^*}^2
+      + \frac{\bounda\norm c}{\ellipc\infsupc^2}
       \norm{g^0}_{Q^*}\norm{p^\perp}_Q\\
-    &\le \frac{\norm a}{\ellipc\beta^2} \norm{g^0}_{Q^*}^2
+    &\le \frac{\bounda}{\ellipc\infsupc^2} \norm{g^0}_{Q^*}^2
       + \frac12 \norm{p^\perp}_Q^2
-      + \frac{\norm a^2 \norm c^2}{2{\ellipc}^2\beta^4} \norm{g^0}_{Q^*}^2.
+      + \frac{\bounda^2 \norm c^2}{2{\ellipc}^2\infsupc^4} \norm{g^0}_{Q^*}^2.
   \end{align}
   We conclude that $p^\perp$ and $p^0$ are bounded by $g^0$. Summing
   up, we obtain for $f=0$ and $g\in Q^*$ the estimate
@@ -1207,7 +1280,7 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   $u^\perp$ by the inf-sup condition, choosing $q\in Q$ with
   $\norm{q}_Q = 1$ such that
   \begin{gather}
-    \beta\norm{u^\perp} = b(u,q) = c(p,q) + g(q)
+    \infsupc\norm{u^\perp} = b(u,q) = c(p,q) + g(q)
     \le \norm{c}\norm{p}_Q +  \norm{g}_{Q^*}.
   \end{gather}
   Thus, we have estimated all components of the solution by the norm
@@ -1244,11 +1317,11 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   \begin{gather}
     \begin{split}
       \abs{R_f(v_h)}
-      &\le \bigl(\norm a \norm{u-w_h}_V + \norm b \norm{p-r_h}\bigr)
+      &\le \bigl(\bounda \norm{u-w_h}_V + \boundb \norm{p-r_h}\bigr)
       \norm{v_h}_V
       \\
       \abs{R_g(q_h)}
-      &\le \bigl(\norm b \norm{u-w_h}_V + \norm c \norm{p-r_h}\bigr)
+      &\le \bigl(\boundb \norm{u-w_h}_V + \norm c \norm{p-r_h}\bigr)
       \norm{q_h}_Q.
     \end{split}
   \end{gather}

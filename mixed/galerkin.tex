@@ -44,7 +44,7 @@
 
 \begin{Theorem}{galerkin-mixed-u-kerbh}
   Let $V_h^g$ be nonempty and let $a(.,.)$ and $b(.,.)$ be bounded
-  with norms $\norm a$ and $\norm b$, respectively, and let there be constant and $\gamma_h$
+  with $\bounda$ and $\boundb$, respectively, and let there be constant and $\gamma_h$
   such that
   \begin{gather}
     \label{eq:galerkin:5}
@@ -57,9 +57,9 @@
   unique solution and there holds
   \begin{gather}
     \label{eq:galerkin:8}
-    \norm{u-u_h}_V \le \left(1+\frac{\norm a}{\gamma_h}\right)
+    \norm{u-u_h}_V \le \left(1+\frac{\bounda}{\gamma_h}\right)
     \inf_{w_h\in V_h^g}\norm{u-w_h}_V
-    + \frac{\norm b}{\gamma_h}
+    + \frac{\boundb}{\gamma_h}
     \inf_{q_h\in Q_h}\norm{p-q_h}_Q
   \end{gather}
 \end{Theorem}
@@ -91,15 +91,15 @@
   \begin{gather}
     \gamma_h\norm{v_h}^2_V
     \le \abs{a(v_h, v_h)}
-    \le \norm a \norm{u-w_h}_V \norm{v_h}_V
-      + \norm b \norm{p-q_h}_Q \norm{v_h}_V.
+    \le \bounda \norm{u-w_h}_V \norm{v_h}_V
+      + \boundb \norm{p-q_h}_Q \norm{v_h}_V.
   \end{gather}
   We conclude by the standard triangle inequality argument
   \begin{multline}
     \norm{u-u_h}_V \le \norm{u-w_h}_V + \norm{u_h-w_h}_V
     \\
-    \le \norm{u-w_h}_V + \frac{\norm a}{\gamma_h} \norm{u-w_h}_V
-    + \frac{\norm b}{\gamma_h} \norm{p-q_h}_Q.
+    \le \norm{u-w_h}_V + \frac{\bounda}{\gamma_h} \norm{u-w_h}_V
+    + \frac{\boundb}{\gamma_h} \norm{p-q_h}_Q.
   \end{multline}
   The estimate follows since $w_h\in V_h^g$ and $q_h\in Q_h$ were
   chosen arbitrarily.
@@ -108,11 +108,13 @@
 \begin{remark}
   Note that we only used ellipticity of $a(.,.)$ on the subspace
   $\ker{B_h}$ for the discrete problem and on $\ker B$ for the
-  continuous problem. Since the union of two vector spaces is not a
-  vector space, this is a strange condition. In practice, we will
-  encounter two situations: either ellipticity holds on the whole
-  space $V$ or $\ker{B_h}\subset\ker{B}$, where the latter is again a
-  vector space.
+  continuous problem. If $\ker{B_h}\not\subset\ker{B}$, then
+  \slideref{Assmuption}{mixed-elliptic} is not sufficient for
+  well-posedness of the discrete problem.
+  
+  In practice, we will encounter two situations: either ellipticity
+  holds on the whole space $V$ (Stokes equations) or
+  $\ker{B_h}\subset\ker{B}$ (the other examples in these notes).
 \end{remark}
 
 \begin{Corollary}{galerkin-mixed-u-kerb}
@@ -125,7 +127,7 @@
   then
   \begin{gather}
     \label{eq:galerkin:7}
-    \norm{u-u_h}_V \le \left(1+\frac{\norm a}{\gamma_h}\right)
+    \norm{u-u_h}_V \le \left(1+\frac{\bounda}{\gamma_h}\right)
     \inf_{w_h\in V_h^g}\norm{u-w_h}_V
   \end{gather}
 \end{Corollary}
@@ -138,17 +140,17 @@
 \begin{Theorem}{galerkin-mixed-p}
   Assume in addition the assumptions of
   \slideref{Theorem}{galerkin-mixed-u-kerbh} that there are constants
-  $\beta_h$, possibly depending on the parameter $h$, such that
+  $\infsupc_h$, possibly depending on the parameter $h$, such that
   \begin{gather}
     \label{eq:galerkin:10}
     \inf_{q_h\in Q_h} \sup_{v_h\in V_h}
     \frac{b(v_h, q_h)}{\norm{v_h}_V\norm{q_h}_Q}
-    \ge \beta_h.
+    \ge \infsupc_h.
   \end{gather}
   Then, there is a unique solution $p_h\in Q_h$ such that $(u_h, p_h)$
   is the unique solution to the discrete mixed
   problem~\eqref{eq:galerkin:3}. There are a constants $c_h^{(i)}$
-  only depending on $\norm a$, $\norm b$, $\gamma_h$ and $\beta_h$
+  only depending on $\bounda$, $\boundb$, $\gamma_h$ and $\infsupc_h$
   such that
   \begin{align}
     \label{eq:galerkin:11}
@@ -169,7 +171,7 @@
   \begin{gather}
     \label{eq:galerkin:12}
     \inf_{w_h\in V_h^g} \norm{u-w_h}_V
-    \le \left(1+\frac{\norm b}{\beta_h}\right)
+    \le \left(1+\frac{\boundb}{\infsupc_h}\right)
     \inf_{v_h\in V_h} \norm{u-v_h}_V.
   \end{gather}
   By the third condition in
@@ -180,8 +182,8 @@
   \end{gather}
   and
   \begin{gather}
-    \norm{z_h}_V \le \frac1{\beta_h}\norm{B_h(u-v_h)}_{Q_h^*}
-    \le\frac{\norm b}{\beta_h} \norm{u-v_h}_V.
+    \norm{z_h}_V \le \frac1{\infsupc_h}\norm{B_h(u-v_h)}_{Q_h^*}
+    \le\frac{\boundb}{\infsupc_h} \norm{u-v_h}_V.
   \end{gather}
   Let $w_h = z_h+v_h$. Then, $w_h\in V_h^g$ since
   \begin{gather}
@@ -191,7 +193,7 @@
   Furthermore,
   \begin{gather}
     \norm{u-w_h}_V \le \norm{u-v_h}_V + \norm{z_h}_V
-    \le \left(1+\frac{\norm b}{\beta_h}\right)
+    \le \left(1+\frac{\boundb}{\infsupc_h}\right)
     \norm{u-v_h}_V.
   \end{gather}
   Since $v_h \in V_h$ was chosen arbitrarily, we have
@@ -199,11 +201,11 @@
   \slideref{Theorem}{galerkin-mixed-u-kerbh} the estimate for
   $\norm{u-u_h}_V$ with
   \begin{gather}
-    c_h^{(1)} = \left(1+\frac{\norm b}{\beta_h}\right)
-    \left(1+\frac{\norm a}{\gamma_h}\right),
+    c_h^{(1)} = \left(1+\frac{\boundb}{\infsupc_h}\right)
+    \left(1+\frac{\bounda}{\gamma_h}\right),
     \qquad
-    c_h^{(2)} = \left(1+\frac{\norm b}{\beta_h}\right)
-    \frac{\norm b}{\gamma_h}.
+    c_h^{(2)} = \left(1+\frac{\boundb}{\infsupc_h}\right)
+    \frac{\boundb}{\gamma_h}.
   \end{gather}
   It remains to prove the estimate for $\norm{p-p_h}_Q$. Using Galerkin
   orthogonality for the test function $v_h$, we obtain
@@ -214,10 +216,10 @@
   Hence, for any $q_h\in Q_h$ there is by the inf-sup condition
   $v_h\in V_h$ with $\norm{v_h}_V=1$ such that
   \begin{align}
-    \beta_h \norm{p_h-q_h}_Q
+    \infsupc_h \norm{p_h-q_h}_Q
     &\le b(v_h, p_h-q_h)\\
     & = a(u-u_h, v_h) + b(v_h, p-q_h)\\
-    &\le \norm a \norm{u-u_h}_V + \norm b \norm{p-q_h}_Q.
+    &\le \bounda \norm{u-u_h}_V + \boundb \norm{p-q_h}_Q.
   \end{align}
   Again, the estimate for $\norm{p-p_h}_Q$ follows by triangle
   inequality.
@@ -231,7 +233,7 @@
 
 \begin{remark}
   We purposely proved the preceding theorems with $\gamma_h$ and
-  $\beta_h$ depending on the parameter $h$, typically the mesh
+  $\infsupc_h$ depending on the parameter $h$, typically the mesh
   size. This is the minimal condition for well-posedness of the
   discrete problems. Nevertheless, this well-posedness is not uniform
   in $h$, which causes loss of approximation, as the following problem
@@ -248,11 +250,11 @@
   \end{gather}
   Then, the estimates in \slideref{Theorem}{galerkin-mixed-p}
   are asymptotically optimal if and only if there are
-  constants $\tilde \gamma>0$ and $\tilde \beta>0$ independent of
+  constants $\tilde \gamma>0$ and $\tilde \infsupc>0$ independent of
   $h$ such that
   \begin{gather}
     \label{eq:galerkin:14}
-    \gamma_h\ge \tilde\gamma,\quad\beta_h\ge\tilde\beta,
+    \gamma_h\ge \tilde\gamma,\quad\infsupc_h\ge\tilde\infsupc,
   \end{gather}
   independent of $h$.
 \begin{solution}
@@ -270,26 +272,26 @@
   \end{align}
     where the first constants are given by
   \begin{align}
-    c_h^{(1)} = \left(1+\frac{\norm b}{\beta_h}\right)
-    \left(1+\frac{\norm a}{\gamma_h}\right),
+    c_h^{(1)} = \left(1+\frac{\boundb}{\infsupc_h}\right)
+    \left(1+\frac{\bounda}{\gamma_h}\right),
     \qquad
-    c_h^{(2)} = \left(1+\frac{\norm b}{\beta_h}\right)
-    \frac{\norm b}{\gamma_h}.
+    c_h^{(2)} = \left(1+\frac{\boundb}{\infsupc_h}\right)
+    \frac{\boundb}{\gamma_h}.
   \end{align}
   For the last two estimates, the relevant estimates read
   \begin{align}
-    \beta_h \norm{p_h-q_h}_Q
+    \infsupc_h \norm{p_h-q_h}_Q
     &\le b(v_h,p_h-q_h)\\
     & = a(u-u_h, v_h) + b(v_h, p-q_h)\\
-    &\le \norm a \norm{u-u_h}_V + \norm b \norm{p-q_h}_Q\\
+    &\le \bounda \norm{u-u_h}_V + \boundb \norm{p-q_h}_Q\\
     \Rightarrow \norm{p-p_h}_Q
     &\le \norm{p-q_h} + \norm{p_h-q_h}_Q \\
-    &\le \frac{\norm a}{\beta_h} \norm{u-u_h}_V + \left(1+\frac{\norm b}{\beta_h}\right) \norm{p-q_h}_Q.
+    &\le \frac{\bounda}{\infsupc_h} \norm{u-u_h}_V + \left(1+\frac{\boundb}{\infsupc_h}\right) \norm{p-q_h}_Q.
   \end{align}
   Therefore, the remaining constants are
   \begin{align}
-    c_h^{(3)} = \frac{\norm a}{\beta_h}c_h^{(1)}, \qquad
-    c_h^{(4)} = \frac{\norm a}{\beta_h}c_h^{(2)}+\left(1+\frac{\norm b}{\beta}\right).
+    c_h^{(3)} = \frac{\bounda}{\infsupc_h}c_h^{(1)}, \qquad
+    c_h^{(4)} = \frac{\bounda}{\infsupc_h}c_h^{(2)}+\left(1+\frac{\boundb}{\infsupc}\right).
   \end{align}
 \end{solution}
 \end{Problem}
@@ -317,7 +319,7 @@
     \dim\ortho{\ker{B_h}} = \dim Q_h
   \end{gather}
   is necessary and sufficient only for the existence of an inf-sup
-  constant $\beta_h$ depending on $h$. Therefore, we need a stronger
+  constant $\infsupc_h$ depending on $h$. Therefore, we need a stronger
   argument in order to ensure compatibility of the discrete
   spaces. Such an argument is the following lemma by Fortin. The
   projection operator $\Pi_{V_h}$ introduced there is usually referred
@@ -327,8 +329,8 @@
 \begin{Lemma}{fortin}
   Let the inf-sup condition for the bilinear form $b(.,.)$
   hold on $V\times Q$ with a constant
-  $\beta>0$. Then, it holds on $V_h\times Q_h$ uniformly with a
-  constant $\tilde\beta>0$ if and only if there exists a linear
+  $\infsupc>0$. Then, it holds on $V_h\times Q_h$ uniformly with a
+  constant $\tilde\infsupc>0$ if and only if there exists a linear
   operator $\Pi_{V_h}\colon V\to V_h$ satisfying for any $v\in V$
   \begin{align}
     \label{eq:galerkin:15}
@@ -337,7 +339,7 @@
     \label{eq:galerkin:16}
     \norm{\Pi_{V_h}v}_V \le c \norm{v}_V,
   \end{align}
-  with $c$ independent of $h$. There holds $\tilde\beta = \beta/c$.
+  with $c$ independent of $h$. There holds $\tilde\infsupc = \infsupc/c$.
 \end{Lemma}
 
 \begin{proof}
@@ -349,10 +351,10 @@
     \sup_{v\in V} \frac{b(\Pi_{V_h}v_h, q_h)}{\norm{\Pi_{V_h} v_h}_V}
     =
     \sup_{v\in V} \frac{b(v, q_h)}{\norm{\Pi_{V_h} v_h}_V}
-    \ge \frac{\beta}{c} \norm{q_h}_Q.
+    \ge \frac{\infsupc}{c} \norm{q_h}_Q.
   \end{gather}
   Conversely, we assume the existence of a uniform, discrete inf-sup
-  constant $\tilde\beta>0$. Then, for any $v\in V$ let
+  constant $\tilde\infsupc>0$. Then, for any $v\in V$ let
   $g(.) = b(v,.) \in Q_h^*$. By
   \slideref{Theorem}{infsup-well-equivalence}, there is a unique
   element $\Pi_{V_h} v \in \ortho{\ker{B_h}}$ such that
@@ -362,11 +364,11 @@
   and
   \begin{gather}
     \norm{\Pi_{V_h}v}_V
-    \le \frac1{\tilde\beta}\norm{B_h v}_{Q_H^*}
-    \le \frac{\norm b}{\tilde\beta} \norm{v}_V.
+    \le \frac1{\tilde\infsupc}\norm{B_h v}_{Q_H^*}
+    \le \frac{\boundb}{\tilde\infsupc} \norm{v}_V.
   \end{gather}
   Thus, $\Pi_{V_h}$ is bounded and~\eqref{eq:galerkin:15} holds with
-  $c=\norm b/\tilde\beta$.
+  $c=\boundb/\tilde\infsupc$.
 \end{proof}
 
 \begin{Problem}{schur-complement}
