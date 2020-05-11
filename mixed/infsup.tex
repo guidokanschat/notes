@@ -448,15 +448,15 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   When we look at computing the pressure in Stokes' equations, we have
   to solve a weak formulation of the form: find $p\in Q$ such that
   \begin{gather}
-    \form(\div v,p) = g(v) \qquad \forall v\in V.
+    \form(\div \vv,p) = g(v) \qquad \forall \vv\in \vV.
   \end{gather}
-  Here $g\in V^*$ consists of the parts of the momentum equation not
+  Here $\vg\in \vV^*$ consists of the parts of the momentum equation not
   containing the pressure. If we define $B^\transpose$ by
   \begin{gather}
-    \scal(B^\transpose q,v)_{V^*\times V} = \form(\div v,q)
-    \qquad \forall v\in V, q \in Q,
+    \scal(B^\transpose q,\vv)_{V^*\times V} = \form(\div \vv,q)
+    \qquad \forall \vv\in \vV, q \in Q,
   \end{gather}
-  then the operator form of the problem posed in $V^*$ is
+  then the operator form of the problem posed in $\vV^*$ is
   \begin{gather}
     B^\transpose p = g
   \end{gather}
@@ -831,9 +831,9 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
     injective.
   \item Show that with all other assumptions unchanged, the second
     inf-sup condition in \slideref{Theorem}{infsup-well-posedness2} is
-    equivalent to $A^*$ injective.
+    not only sufficient, but equivalent to $A$ injective.
   \item \slideref{Theorem}{infsup-well-posedness2} seems excessive if
-    we only want on of the statements
+    we only want to establish one of the statements
     \begin{xalignat}3
       \forall f&\in W^*& \exists u&\in V& a(u,w) &= f(w)\\
       \forall g&\in V^*& \exists u&\in W& a(v,u) &= g(v)
