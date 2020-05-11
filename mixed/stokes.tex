@@ -6,23 +6,23 @@
   the well-posedness of the continuous problem. This is particularly
   simple, since we have
   \begin{gather}
-    a(u,v) = \form(\strain u,\strain v)
+    a(\vu,\vv) = \form(\strain \vu,\strain \vv)
   \end{gather}
   for the original Stokes problem in \slideref{Definition}{stokes-eq1}
   and
   \begin{gather}
-    a(u,v) = \form(\nabla u,\nabla v)
+    a(\vu,\vv) = \form(\nabla \vu,\nabla \vv)
   \end{gather}
   for the simplified \putindex{Stokes equations} in
   \slideref{Definition}{stokes-eq2}. From the standard theory for the
-  Laplacian, we know that the second one is $V$-elliptic on
-  $V=H^1_0(\domain;\R^d)$. For the first one, we conclude this by using a
+  Laplacian, we know that the second one is $\vV$-elliptic on
+  $\vV=H^1_0(\domain;\R^d)$. For the first one, we conclude this by using a
   \putindex{Korn inequality}. Therefore, we can already conclude a
   first result:
 \end{intro}
 
 \begin{Lemma}{stokes-a-elliptic}
-  Let $V=H^1_0(\domain, \R^d)$ and $V_h\subset V$ a finite dimensional
+  Let $\vV=H^1_0(\domain; \R^d)$ and $\vV_h\subset \vV$ a finite dimensional
   subspace. Then, $a(.,.)$ is elliptic on $\ker B$ and on $\ker{B_h}$
   independent of the choices of $Q$ and $Q_h$.
 \end{Lemma}
@@ -31,16 +31,16 @@
   We focus here on no-slip boundary condition on the whole boundary as
   the exemplary case. Other boundary conditions are possible, but as
   soon as the Dirichlet boundary for one velocity component becomes
-  too small, the ellipticity of $a(.,.)$ on $V$ must be established by
+  too small, the ellipticity of $a(.,.)$ on $\vV$ must be established by
   new arguments known for instance for Robin boundary conditions. In
-  the extreme case of natural boundary conditions all around, $V$ is
-  the subspace of $H^1(\domain, \R^d)$ obtained by dividing by the
+  the extreme case of natural boundary conditions all around, $\vV$ is
+  the subspace of $H^1(\domain; \R^d)$ obtained by dividing by the
   space of all translations for the simplified form and by the space
   of all rigid body movements.
 
   Note that we have established already in
   \slideref{Lemma}{divergence-compatibility} that the condition
-  $V=H^1_0(\domain, \R^d)$ implies the reduction of the pressure to
+  $\vV=H^1_0(\domain; \R^d)$ implies the reduction of the pressure to
   the space $Q = L^2_0(\domain)$ from
   \slideref{Notation}{pressure-constant}.
 \end{remark}
@@ -54,29 +54,29 @@
 \end{intro}
 
 \begin{Lemma}{stokes-helmholtz}
-  Let $V=H^1_0(\domain,\R^d)$. Then, the divergence operator
-  $\div\colon V \to L^2(\domain)$ is continuous and the subspace
+  Let $\vV=H^1_0(\domain;\R^d)$. Then, the divergence operator
+  $\div\colon \vV \to L^2(\domain)$ is continuous and the subspace
   \begin{gather}
-    V^0 = \ker \div
-    = \bigl\{v\in V \big|
-    \div v = 0 \text{ a.e.} \bigr\}
+    \vV^0 = \ker \div
+    = \bigl\{\vv\in \vV \big|
+    \div \vv = 0 \text{ a.e.} \bigr\}
   \end{gather}
-  is closed in $V$ and $V$ admits the orthogonal decomposition
+  is closed in $\vV$ and $\vV$ admits the orthogonal decomposition
   \begin{gather}
-    V = V^0\oplus V^\perp.
+    \vV = \vV^0\oplus \vV^\perp.
   \end{gather}
 \end{Lemma}
 
 \begin{proof}
   We have that
   \begin{gather}
-    \norm{\div v}_{L^2(\domain)}^2
+    \norm{\div \vv}_{L^2(\domain)}^2
     = \int_\domain \left(\sum \d_iv_i\right)^2\dx
     \le d \int_\domain \sum \abs{\d_iv_i}^2\dx
-    \le d \norm{v}_{H^1(\domain;\R^d)}^2.
+    \le d \norm{\vv}_{H^1(\domain;\R^d)}^2.
   \end{gather}
-  Thus, the divergence operator is a continuous mapping from $V$ to
-  $L^2(\domain)$. The definition of $V^0$ is equivalent to the
+  Thus, the divergence operator is a continuous mapping from $\vV$ to
+  $L^2(\domain)$. The definition of $\vV^0$ is equivalent to the
   definition of zero in $L^2(\domain)$. Finally, since the kernel is
   the pre-image of a closed set under a continuous map, it is
   closed. The existence of the decomposition follows from
@@ -84,13 +84,13 @@
 \end{proof}
 
 \begin{Lemma}{stokes-grad}
-  If $f\in V^* = H^{-1}(\domain;\R^d)$ satisfies
+  If $\vf\in \vV^* = H^{-1}(\domain;\R^d)$ satisfies
   \begin{gather}
-    f(v) = 0 \quad\forall v\in V^0,
+    \vf(\vv) = 0 \quad\forall \vv\in \vV^0,
   \end{gather}
   then, there exists $p\in L^2(\domain)$ such that
   \begin{gather}
-    f = \nabla p.
+    \vf = \nabla p.
   \end{gather}
   If $\domain$ is connected, then $p$ is unique up to an additive
   constant.
@@ -99,19 +99,19 @@
 \begin{proof}
   First, we identify $L^2(\domain)$ with its dual. Then, by
   \begin{gather}
-    \scal(-\nabla p, v)_{V^*\times V}
-    = \scal(p, \div v)_{L^2(\domain)},
-    \qquad\forall v\in V,
+    \scal(-\nabla p, \vv)_{\vV^*\times \vV}
+    = \scal(p, \div \vv)_{L^2(\domain)},
+    \qquad\forall \vv\in \vV,
   \end{gather}
-  we see that $-\nabla\colon L^2(\domain)\to V^*$ is the dual to the
+  we see that $-\nabla\colon L^2(\domain)\to \vV^*$ is the dual to the
   divergence operator. Using the Cauchy-sequence argument, we see that
   $\range{\div}$ is closed in $L^2(\domain)$ and the closed range
-  theorem applies. Thus, $\range{-\nabla}$ is closed in $V^*$ and
+  theorem applies. Thus, $\range{-\nabla}$ is closed in $\vV^*$ and
   \begin{gather}
-    \range{\nabla} = \polar{(V^0)} \cong V^\perp
+    \range{\nabla} = \polar{(\vV^0)} \cong \ortho{\vV}
   \end{gather}
-  is the polar set of the kernel $V^0$. This implies the statement
-  that there is a $p$ for every $f$. Uniqueness follows by the fact
+  is the polar set of the kernel $\vV^0$. This implies the statement
+  that there is a $p$ for every $\vf$. Uniqueness follows by the fact
   that the only differentiable functions on a connected domain with
   $\nabla p=0$ are the constant functions, and by density of such
   functions in $L^2(\domain)$.
@@ -120,28 +120,28 @@
 \begin{Corollary}{stokes-iso}
   Let $\domain$ be connected. Then,
   \begin{enumerate}
-  \item $\nabla\colon L^2_0(\domain) \to V^0$ is an isomorphism
-  \item $\div\colon V^\perp \to L^2_0(\domain)$ is an isomorphism
+  \item $\nabla\colon L^2_0(\domain) \to \vV^0$ is an isomorphism
+  \item $\div\colon \vV^\perp \to L^2_0(\domain)$ is an isomorphism
   \end{enumerate}
 \end{Corollary}
 
 \begin{Theorem}{stokes-infsup}
   Let $\domain\subset \R^d$ be a Lipschitz-domain,
-  $V=H^1_0(\domain,\R^d)$ and $Q=L^2_0(\domain)$. Then, there is a
+  $\vV=H^1_0(\domain;\R^d)$ and $Q=L^2_0(\domain)$. Then, there is a
   constant $\beta>0$ depending only on the geometry of $\domain$ such
   that
   \begin{gather}
     \label{eq:stokes:1}
-    \inf_{q\in Q}\sup_{v\in V}\frac{\form(\div
-      v,q)}{\norm{v}_V\norm{q}_Q} \ge \beta.
+    \inf_{q\in Q}\sup_{\vv\in \vV}\frac{\form(\div
+      \vv,q)}{\norm{\vv}_\vV\norm{q}_Q} \ge \beta.
   \end{gather}
-  Furthermore, the problem finding $(u,p)\in V\times Q$ such that
+  Furthermore, the problem finding $(\vu,p)\in \vV\times Q$ such that
   \begin{gather}
     \label{eq:stokes:3}
-    a(u,v)+\form(\div v,p)+\form(\div u,q) = f(v)+g(q)
-    \quad\forall v\in V, q\in Q,
+    a(\vu,\vv)+\form(\div \vv,p)+\form(\div \vu,q) = \vf(\vv)+g(q)
+    \quad\forall \vv\in \vV, q\in Q,
   \end{gather}
-  has a unique solution for any right hand side $f\in V^*$ and $g\in
+  has a unique solution for any right hand side $\vf\in \vV^*$ and $g\in
   \range{\div}$.
 \end{Theorem}
 
@@ -160,26 +160,26 @@
 \end{intro}
 
 \begin{Theorem}{stokes-convergence}
-  Let $V=H^1_0(\domain;\R^d)$ and $Q=L^2_0(\domain)$. Let furthermore
-  $V_h\subset V$ and $Q_h\subset Q$ be discrete subspaces such that
+  Let $\vV=H^1_0(\domain;\R^d)$ and $Q=L^2_0(\domain)$. Let furthermore
+  $\vV_h\subset \vV$ and $Q_h\subset Q$ be discrete subspaces such that
   there exists $\beta>0$ independent of $h$ such that
   \begin{gather}
     \label{eq:stokes:2}
-    \inf_{q_h\in Q_h}\sup_{v_h\in V_h}\frac{\form(\div
-      v_h,q_h)}{\norm{v_h}_V\norm{q_h}_Q} \ge \beta.
+    \inf_{q_h\in Q_h}\sup_{\vv_h\in \vV_h}\frac{\form(\div
+      \vv_h,q_h)}{\norm{\vv_h}_{\vV}\norm{q_h}_Q} \ge \beta.
   \end{gather}
   Then, the Galerkin approximation of~\eqref{eq:stokes:3} admits a
-  unique solution $(u_h, p_h)\in V_h\times Q_h$ with the
+  unique solution $(\vu_h, p_h)\in \vV_h\times Q_h$ with the
   quasi-bestapproximation property
   \begin{gather}
     \label{eq:stokes:4}
     \begin{split}
-      \norm{u-u_h}_1
-      &\le c_1 \inf_{v_h\in V_h}\norm{u-v_h}_1
+      \norm{\vu-\vu_h}_1
+      &\le c_1 \inf_{\vv_h\in \vV_h}\norm{\vu-\vv_h}_1
       + c_2 \inf_{q_h\in Q_h}\norm{p-q_h}_0
       \\
       \norm{p-p_h}_1
-      &\le c_3 \inf_{v_h\in V_h}\norm{u-v_h}_1
+      &\le c_3 \inf_{\vv_h\in \vV_h}\norm{\vu-\vv_h}_1
       + c_4 \inf_{q_h\in Q_h}\norm{p-q_h}_0.
     \end{split}
   \end{gather}
@@ -187,12 +187,12 @@
 
 \begin{Corollary}{stokes-convergence2}
   Under the assumptions of \slideref{Theorem}{stokes-convergence},
-  let there be in addition interpolation operators $I_{V_h}$ and
+  let there be in addition interpolation operators $I_{\vV_h}$ and
   $I_{Q_h}$ such that
   \begin{gather}
     \label{eq:stokes:5}
     \begin{split}
-      \norm{u-I_{V_h} u}_1 &\le c h^k \snorm{u}_{k+1} \\
+      \norm{\vu-I_{\vV_h} \vu}_1 &\le c h^k \snorm{\vu}_{k+1} \\
       \norm{p-I_{Q_h} p}_0 &\le c h^k \snorm{p}_{k}.
     \end{split}
   \end{gather}
@@ -201,10 +201,10 @@
   \begin{gather}
     \label{eq:stokes:6}
     \begin{split}
-      \norm{u-u_h}_1 &\le c h^k \bigl(\snorm{u}_{k+1} +
+      \norm{\vu-\vu_h}_1 &\le c h^k \bigl(\snorm{\vu}_{k+1} +
       \snorm{p}_{k}\bigr)
       \\
-      \norm{p-p_h}_1 &\le c h^k \bigl(\snorm{u}_{k+1} +
+      \norm{p-p_h}_1 &\le c h^k \bigl(\snorm{\vu}_{k+1} +
       \snorm{p}_{k}\bigr).
     \end{split}
   \end{gather}
@@ -221,7 +221,7 @@
 \begin{example}
   \label{ex:p1-p1}
   We begin with a one-dimensional example. Piecewise linear velocity
-  and piecewise linear pressure ($P_1-P_1$). Both continuous. Then, $\div v_h$ is
+  and piecewise linear pressure ($P_1-P_1$). Both continuous. Then, $\div \vv_h$ is
   piecewise constant. Consequently, a pressure function which has zero
   mean value on each cell is in the kernel of $B_h^\transpose$.
   \begin{figure}[tp]
@@ -239,15 +239,15 @@
 \begin{example}
   Take a patch of four quadrilaterals or triangles meeting in a common
   vertex. Let $\domain$ be the union of these grid cells. Choose
-  linear and bilinear shape functions for $V_h$, respectively. Then, $\dim
-  V_h = 2$, since we have one interior vertex with one basis function for
+  linear and bilinear shape functions for $\vV_h$, respectively. Then, $\dim
+  \vV_h = 2$, since we have one interior vertex with one basis function for
   each velocity component. Choose piecewise constant pressure
   functions. Dividing out the global constant, we conclude that $\dim
   Q_h = 3$. Thus, the statement
   \begin{gather}
-    \forall q_h\in Q_h \;\exists v_h\in V_h:
-    \quad \norm{v_h}_1 = \norm{q_h}_0
-    \;\wedge\; b(v_h, q_h) \ge \beta \norm{q_h}^2
+    \forall q_h\in Q_h \;\exists \vv_h\in \vV_h:
+    \quad \norm{\vv_h}_1 = \norm{q_h}_0
+    \;\wedge\; b(\vv_h, q_h) \ge \beta \norm{q_h}^2
   \end{gather}
   cannot hold true. Therefore, the inf-sup condition does not hold. In
   fact, $\ker{B_h} = \{0\}$.
@@ -268,7 +268,7 @@
   approximation of the Stokes problem. But, this may be a problem of a
   mesh with too few cells. In fact, asymptotically, a triangular mesh
   contains twice as many vertices as cells, a quadrilateral mesh as
-  many. Therefore, $\dim V_h > \dim Q_h$ as soon as the mesh is
+  many. Therefore, $\dim \vV_h > \dim Q_h$ as soon as the mesh is
   sufficiently fine. Will this be sufficient?
 \end{example}
 
@@ -277,29 +277,29 @@ The domain $\Omega=[0,1]^2$ is decomposed into $N \times N$ congruent squares wh
 of them is again divided into two triangles. The decomposition $\mesh_h$
 is given by these triangles.
 
-We again choose piecewise linear ansatz functions for the velocity for $V_h$
+We again choose piecewise linear ansatz functions for the velocity for $\vV_h$
 (vanishing on $\partial \Omega$) and piecewise constant ansatz functions
 for $Q_h$.
 
-Is there a $N$ and an orientation of the triangles such that $V_h\times Q_h$ is
+Is there a $N$ and an orientation of the triangles such that $\vV_h\times Q_h$ is
 inf-sup stable?
 \begin{solution}
   The number of degrees of freedom for the velocity is $2(N-1)^2$ and for the
   pressure $2N^2-1$. Hence, there is always a pressure ansatz functions such that
   \begin{align}
-    (\nabla \cdot \boldsymbol{v}_h, q_h)=0 \quad \forall \boldsymbol{v}_h\in V_h.
+    (\nabla \cdot \vv_h, q_h)=0 \quad \forall \vv_h\in \vV_h.
   \end{align}
 \end{solution}
 \end{Problem}
 
 \begin{Problem}{checker-board}
   Let $\domain = (0,1)^2$ be the unit square and let the mesh consist
-  of Cartesian squares of side length $1/n$. Choose $V_h \subset V$
+  of Cartesian squares of side length $1/n$. Choose $\vV_h \subset \vV$
   based on bilinear shape functions. Show that the piecewise constant
   pressure function $p_c=\pm 1$ in a checkerboard fashion is in the
   kernel of $B_h^\transpose$, that is
   \begin{gather}
-    b(v_h, p_c) = 0 \quad\forall v_h\in V_h.
+    b(\vv_h, p_c) = 0 \quad\forall \vv_h\in \vV_h.
   \end{gather}
 \begin{solution}
 This time there are $2N^2$ for the velocity and $2N^2-1$ ansatz functions for
@@ -312,17 +312,17 @@ first component and similarly for the second component.
 
 Using this notation we can write the divergence constraint in terms of nodal and cell values:
 \begin{align}
- &(\nabla \cdot \boldsymbol{v}_h, q_h)\\
-   &= \sum_{i,j} q_{i+\frac12,j+\frac12} \int_{K_{i,j}} \nabla \cdot \boldsymbol{v}_h \,\mathrm{d}x\\
-   &= \sum_{i,j} q_{i+\frac12,j+\frac12} \int_{\partial K_{i,j}} \boldsymbol{n} \cdot \boldsymbol{v}_h \,\mathrm{d}x\\
-   &= \sum_{i,j} q_{i+\frac12,j+\frac12} \frac{h}{2}(u^1_{i+1,j}-u^1_{i,j+1}+u^1_{i+1,j}-u^1_{i+1,j+1})\\
-      &\quad +\sum_{i,j} q_{i,j} \frac{h}{2}(u^2_{i,j+1}-u^2_{i+1,j}+u^2_{i,j+1}-u^2_{i+1,j+1})\\
+ &(\nabla \cdot \vv_h, q_h)\\
+   &= \sum_{i,j} q_{i+\frac12,j+\frac12} \int_{K_{i,j}} \nabla \cdot \vv_h \,\mathrm{d}x\\
+   &= \sum_{i,j} q_{i+\frac12,j+\frac12} \int_{\partial K_{i,j}} \boldsymbol{n} \cdot \vv_h \,\mathrm{d}x\\
+   &= \sum_{i,j} q_{i+\frac12,j+\frac12} \frac{h}{2}(\vu^1_{i+1,j}-u^1_{i,j+1}+u^1_{i+1,j}-u^1_{i+1,j+1})\\
+      &\quad +\sum_{i,j} q_{i,j} \frac{h}{2}(\vu^2_{i,j+1}-u^2_{i+1,j}+u^2_{i,j+1}-u^2_{i+1,j+1})\\
    &= \frac{h}{2}\sum_{i,j} u^1_{i,j}(q_{i-\frac12,j+\frac12}+q_{i-\frac12,j-\frac12}-q_{i+\frac12,j+\frac12}-q_{i+\frac12,j-\frac12})\\
       &\quad +\frac{h}{2}\sum_{i,j} u^2_{i,j}(q_{i+\frac12,j-\frac12}+q_{i-\frac12,j-\frac12}-q_{i+\frac12,j+\frac12}-q_{i-\frac12,j+\frac12})
 \end{align}
 Thus,
 \begin{align}
-(\nabla \cdot \boldsymbol{v}_h, q_h)=0 \quad \forall \boldsymbol{v}_h\in V_h
+(\nabla \cdot \vv_h, q_h)=0 \quad \forall \vv_h\in \vV_h
 \end{align}
 implies
 \begin{align}
@@ -338,7 +338,7 @@ q_{i-\frac12,j-\frac12} &= q_{i+\frac12,j+\frac12}
 for all ($0\leq i,j \leq N-1$). Since the mean value of the pressure must be zero,
 the set of pressure functions that fulfill
 \begin{align}
-(\nabla \cdot \boldsymbol{v}_h, q_h)=0 \quad \forall \boldsymbol{v}_h\in V_h
+(\nabla \cdot \vv_h, q_h)=0 \quad \forall \vv_h\in \vV_h
 \end{align}
 can be described by
 \begin{align}
@@ -469,7 +469,7 @@ where $c\not=0$.
 \begin{Definition}{mini-element-p}
   The \define{MINI element} consists of the spaces
   \begin{gather}
-    V_h = \bigl(H^1_h(\P_1) \oplus B_h(b_3)\bigr)^2 \cap V,
+    \vV_h = \bigl(H^1_h(\P_1) \oplus B_h(b_3)\bigr)^2 \cap \vV,
     \qquad
     Q_h = H^1_h(\P_1) \cap Q.
   \end{gather}
@@ -488,21 +488,21 @@ where $c\not=0$.
   projection operator turns out a bit complicated, we first introduce
   a construction principle, which will help us in our further
   analysis. The idea of this principle is separating the interpolation
-  into $V_h$ from the preservation of the divergence.
+  into $\vV_h$ from the preservation of the divergence.
 \end{intro}
 
 \begin{Lemma}{fortin-construction-1}
-  Let there be operators $\Pi_1,\Pi_2\colon V \to V_h$ such that
+  Let there be operators $\Pi_1,\Pi_2\colon \vV \to \vV_h$ such that
   \begin{xalignat}2
     \label{eq:stokes:10}
-    \norm{\Pi_1 v}_V &\le c_1 \norm{v}_V
-    &\forall v&\in V,\\
+    \norm{\Pi_1 \vv}_{\vV} &\le c_1 \norm{\vv}_{\vV}
+    &\forall \vv&\in \vV,\\
     \label{eq:stokes:11}
-    \norm{\Pi_2(\identity-\Pi_1)v}_V &\le c_2 \norm{v}_V
-    &\forall v&\in V,\\
+    \norm{\Pi_2(\identity-\Pi_1)\vv}_{\vV} &\le c_2 \norm{\vv}_{\vV}
+    &\forall \vv&\in \vV,\\
     \label{eq:stokes:12}
-    b(v-\Pi_2v,q_h) &= 0
-    &\forall v&\in V, \;q_h\in Q_h,
+    b(\vv-\Pi_2 \vv,q_h) &= 0
+    &\forall \vv&\in \vV, \;q_h\in Q_h,
   \end{xalignat}
   with constants $c_1$ and $c_2$ independent of the discretization
   parameter $h$. Then, the operator
@@ -510,9 +510,9 @@ where $c\not=0$.
     \label{eq:stokes:9}
     \Pi_h = \Pi_1 + \Pi_2 - \Pi_2\Pi_1
   \end{gather}
-  is a \putindex{Fortin projection}, that is, it is bounded on $V$ and
+  is a \putindex{Fortin projection}, that is, it is bounded on $\vV$ and
   \begin{gather}
-    b(v-\Pi_h v, q_h) =0 \qquad\forall q_h\in Q_h.
+    b(\vv-\Pi_h \vv, q_h) =0 \qquad\forall q_h\in Q_h.
   \end{gather}
 \end{Lemma}
 
@@ -520,19 +520,19 @@ where $c\not=0$.
   Boundedness of $\Pi_h$ is obvious, such that we only focus on
   preservation of the kernel ob $B$:
   \begin{multline}
-    b(v-\Pi_h v,q_h) = b(v-\Pi_1 v - \Pi_2 v + \Pi_2\Pi_1 v, q_h)
+    b(\vv-\Pi_h \vv,q_h) = b(\vv-\Pi_1 \vv - \Pi_2 \vv + \Pi_2\Pi_1 \vv, q_h)
     \\
-    = b(v-\Pi_2 v, q_h) - b(\Pi_1 v - \Pi_2\Pi_1 v,q_h) = 0-0 = 0.
+    = b(\vv-\Pi_2 \vv, q_h) - b(\Pi_1 \vv - \Pi_2\Pi_1 \vv,q_h) = 0-0 = 0.
   \end{multline}
 \end{proof}
 
 \begin{Assumption}{h1-stable-interpolation}
-  There exists an $H^1$-stable interpolation operator $I_h:V\to V_h$
+  There exists an $H^1$-stable interpolation operator $I_h:\vV\to \vV_h$
   such that for each cell $\cell \in \mesh_h$ there holds for $m=0,1$
   \begin{gather}
     \label{eq:stokes:13}
-    \snorm{v-I_h v}_{m,\cell} \le c \sum_{\cell'\cap\cell
-      \neq\emptyset} h_{\cell'}^{1-m}\snorm{v}_{1,\cell'},
+    \snorm{\vv-I_h \vv}_{m,\cell} \le c \sum_{\cell'\cap\cell
+      \neq\emptyset} h_{\cell'}^{1-m}\snorm{\vv}_{1,\cell'},
   \end{gather}
   with a constant $c$ independent of the mesh parameter $h$.
 \end{Assumption}
@@ -564,7 +564,7 @@ where $c\not=0$.
   for $m=0,1$
   \begin{gather}
     \label{eq:stokes:15}
-    \snorm{v-I_h v}_{m,\cell} \le c h_\cell^{1-m} \snorm{v}_{1,\domain_\cell},
+    \snorm{\vv-I_h \vv}_{m,\cell} \le c h_\cell^{1-m} \snorm{\vv}_{1,\domain_\cell},
   \end{gather}
   where $\Omega_\cell$ is the union of all cells with nonempty
   intersection with $\cell$.
@@ -577,38 +577,38 @@ where $c\not=0$.
 
 \begin{proof}
   We construct a \putindex{Fortin projection} by choosing
-  $\Pi_1 = I_h$, where $I_h:V\to \bigl(H^1_h(\P_1)\bigr)^2$ is an
+  $\Pi_1 = I_h$, where $I_h:\vV\to \bigl(H^1_h(\P_1)\bigr)^2$ is an
   $H^1$-stable interpolation operator into the standard linear finite
-  element space. Now, we construct $\Pi_2: V \to \bigl(B_h\bigr)^2$
+  element space. Now, we construct $\Pi_2: \vV \to \bigl(B_h\bigr)^2$
   such that for all $q_h\in Q_h$
   \begin{gather}
-    \int_\domain \div(\Pi_2 v-v) q_h \dx
-    = \int_\domain (v-\Pi_2v)\cdot\nabla q_h\dx
+    \int_\domain \div(\Pi_2 \vv-\vv) q_h \dx
+    = \int_\domain (\vv-\Pi_2 \vv)\cdot\nabla q_h\dx
     = 0.
   \end{gather}
-  Indeed, $\Pi_2 v$ can be chosen on each cell. Since $\nabla q_h$ is
+  Indeed, $\Pi_2 \vv$ can be chosen on each cell. Since $\nabla q_h$ is
   constant on a cell $\cell$, we choose
   \begin{gather}
-    \int_\cell \Pi_2 v_i \dx
+    \int_\cell \Pi_2 \vv_i \dx
     = \alpha_{\cell,i} \int_\cell b_{3,\cell}\dx
-    = \int_\cell v_i\dx,
+    = \int_\cell \vv_i\dx,
   \end{gather}
   where $i=1,2$ enumerates the velocity components. This is possible,
   since the mean value of $b_3$ is strictly positive. Assuming shape
   regularity, we can use the inverse estimate for $b_3$ to obtain
   \begin{gather}
-    \norm{\Pi_2 v}_{1,\cell}
-    \le c h_\cell^{-1} \norm{\Pi_2 v}_{0,\cell}
-    \le c h_\cell^{-1} \norm{v}_{0,\cell}.
+    \norm{\Pi_2 \vv}_{1,\cell}
+    \le c h_\cell^{-1} \norm{\Pi_2 \vv}_{0,\cell}
+    \le c h_\cell^{-1} \norm{\vv}_{0,\cell}.
   \end{gather}
   Finally, we use the estimates for $I_h$ to obtain
   \begin{gather}
-    \norm{\Pi_2 (\identity-\Pi_1) v}_{1,\cell}
-    \le c h_\cell^{-1} \norm{v-I_h v}_{0,\cell}
-    \le c \snorm{v}_{1,\domain_\cell}.
+    \norm{\Pi_2 (\identity-\Pi_1) \vv}_{1,\cell}
+    \le c h_\cell^{-1} \norm{\vv-I_h \vv}_{0,\cell}
+    \le c \snorm{\vv}_{1,\domain_\cell}.
   \end{gather}
   Since the number of intersecting of cells of shape regular meshes is
-  bounded, the final term is bounded by $\norm v_{1,\domain}$.
+  bounded, the final term is bounded by $\norm \vv_{1,\domain}$.
 \end{proof}
 
 \begin{Notation}{broken-bilinear-form}
@@ -626,15 +626,15 @@ where $c\not=0$.
   the MINI element is equivalent to solving
   \begin{multline}
     \label{eq:stokes:16}
-    \form(\nabla u,\nabla v) + \form(\div v,p) + \form(\div u,q)
+    \form(\nabla \vu,\nabla \vv) + \form(\div \vv,p) + \form(\div \vu,q)
     - \form(c_T \nabla p, \nabla q)_{\mesh_h}
     \\
-    = f(v) + g(q) + \form(c_T f_T,\nabla q)_{\T_h}
+    = \vf(\vv) + g(q) + \form(c_T \vf_T,\nabla q)_{\T_h}
   \end{multline}
   with standard, continuous linear finite elements for velocity and
   pressure. Here,
   \begin{gather}
-    f_T = \int_\cell f\dx,
+    \vf_T = \int_\cell \vf\dx,
     \qquad
     c_T = \frac{\form(b_3,1)_\cell}{\norm{\nabla
       b_3}_\cell^2}.
@@ -642,40 +642,40 @@ where $c\not=0$.
 \end{Lemma}
 
 \begin{proof}
-  Let $V_h^1 = H^1_h(\P_1)^2$ be the linear, vector-valued velocity
-  space and $V_h^b = B_h(b_3)^2$ the bubble function space, such that
+  Let $\vV_h^1 = H^1_h(\P_1)^2$ be the linear, vector-valued velocity
+  space and $\vV_h^b = B_h(b_3)^2$ the bubble function space, such that
   the MINI element space is
   \begin{gather}
-    V_h = V_h^1 \oplus V_h^b.
+    \vV_h = \vV_h^1 \oplus \vV_h^b.
   \end{gather}
   Accordingly, we split the solution with the MINI element into
-  $u_h = u_h^1 + u_h^b$.  By integration by parts, we obtain for the
-  cubic bubble $b_3$
+  $\vu_h = \vu_h^1 + \vu_h^b$.  By integration by parts, we obtain for the
+  cubic bubble $b_3$\todo{Vector or not vector?}
   \begin{gather}
-    \form(\nabla v,\nabla b_{3,\cell})_\cell = \form(-\Delta v,b_{3,\cell})_\cell = 0
-    \qquad\forall v\in \P_1,
+    \form(\nabla \vv,\nabla b_{3,\cell})_\cell = \form(-\Delta \vv,b_{3,\cell})_\cell = 0
+    \qquad\forall \vv\in \P_1,
   \end{gather}
   such that
   \begin{gather}
-    \form(\nabla v, \nabla b) = \form(\nabla b, \nabla v) = 0
+    \form(\nabla \vv, \nabla b) = \form(\nabla b, \nabla \vv) = 0
     \qquad
-    \forall v\in V_h^1,b\in V_h^b.
+    \forall \vv\in \vV_h^1,b\in \vV_h^b.
   \end{gather}
 
-  Thus, testing~\eqref{eq:stokes:3} with $v_h\in V_h^1$ yields
+  Thus, testing~\eqref{eq:stokes:3} with $\vv_h\in \vV_h^1$ yields
   \begin{gather}
     \label{eq:stokes:17}
-    \form(\nabla u_h^1,\nabla v_h)
-    + \form(\div v_h, p_h) = f(v_h)
-    \qquad\forall v_h\in V_h^1.
+    \form(\nabla \vu_h^1,\nabla \vv_h)
+    + \form(\div \vv_h, p_h) = f(\vv_h)
+    \qquad\forall \vv_h\in \vV_h^1.
   \end{gather}
-  Testing the same equation with $v\in V_h^b$, we obtain
+  Testing the same equation with $\vv\in \vV_h^b$, we obtain
   \begin{gather}
-    \form(\nabla u_h^b,\nabla v_h)
-    = f(v_h) - \form(\div v_h, p_h)
-    = f(v_h) + \form(v_h,\nabla p_h)_{\mesh_h}.
+    \form(\nabla \vu_h^b,\nabla \vv_h)
+    = f(\vv_h) - \form(\div \vv_h, p_h)
+    = f(\vv_h) + \form(\vv_h,\nabla p_h)_{\mesh_h}.
   \end{gather}
-  Choosing more specifically $v_h$ as the bubble function $b_{3,\cell}$ of the
+  Choosing more specifically $\vv_h$ as the bubble function $b_{3,\cell}$ of the
   cell $\cell$ for each vector component yields
   \begin{gather}
     \label{eq:stokes:20}
@@ -683,10 +683,10 @@ where $c\not=0$.
   \end{gather}
   where $\mu_\cell^{(i)}$ is the coefficient in front of the basis
   function $b_{3,\cell}$ on cell $\cell$ in the basis representation of
-  $u_h^{(i)}$, such that
+  $\vu_h^{(i)}$, such that
   \begin{gather}
     \label{eq:stokes:19}
-    u_h^b = \sum_{\cell\in\mesh_h}
+    \vu_h^b = \sum_{\cell\in\mesh_h}
     \begin{pmatrix}
       \mu_\cell^{(1)} b_{3,\cell}\\
       \mu_\cell^{(2)} b_{3,\cell}
@@ -695,14 +695,14 @@ where $c\not=0$.
   Testing the Stokes equations with $q_h\in Q_h$, we obtain the
   divergence equation
   \begin{gather}
-    \form(\div u_h^1 + \div u_h^b,q_h)
-    = \form(\div u_h^1, q_h)
-    - \form(u_h^b, \nabla q_h)_{\mesh_h} = g(q_h).
+    \form(\div \vu_h^1 + \div \vu_h^b,q_h)
+    = \form(\div \vu_h^1, q_h)
+    - \form(\vu_h^b, \nabla q_h)_{\mesh_h} = g(q_h).
   \end{gather}
   Using~\eqref{eq:stokes:20}, \eqref{eq:stokes:19} and using
   $f_T^{(i)} = \form(f^{(i)},1)_\cell$ yields
   \begin{align}
-    \form(u_h^b, \nabla q_h)_{\mesh_h}
+    \form(\vu_h^b, \nabla q_h)_{\mesh_h}
     &=
     \sum_{\cell\in\mesh_h} \frac{1}{\norm{\nabla b_3}_\cell^2}
     \sum_{i=1,2}\form(f_\cell^{(i)}+\d_i
@@ -741,7 +741,7 @@ where $c\not=0$.
   popular in the early decades of finite element computation, since
   they only involve simple shape function spaces. They are still
   widely used due to their simplicity. The method constructed this way
-  is consistent, i.~e.~, the continuous solution $(u,p)$ solves the
+  is consistent, i.~e.~, the continuous solution $(\vu,p)$ solves the
   discrete problem.
 \end{remark}
 
@@ -750,7 +750,7 @@ where $c\not=0$.
   Show that the MINI element can be generalized to quadrilateral
   meshes. Design a bubble space $b_Q$ of minimal tensor degree such that
   \begin{gather}
-    V_h = \bigl(H^1_h(\Q_1) \oplus B_h(b_Q) \cap V\bigr)^2,
+    \vV_h = \bigl(H^1_h(\Q_1) \oplus B_h(b_Q) \cap \vV\bigr)^2,
     \qquad
     Q_h = H^1_h(\Q_1) \cap Q.
   \end{gather}
@@ -774,8 +774,8 @@ where $c\not=0$.
   \end{align}
   In particular, we have to satisfy
   \begin{gather}
-    \int_\domain \div(\Pi_2 v-v) q_h \dx
-    = \int_\domain (v-\Pi_2v)\cdot\nabla q_h\dx
+    \int_\domain \div(\Pi_2 \vv-\vv) q_h \dx
+    = \int_\domain (\vv-\Pi_2v)\cdot\nabla q_h\dx
     = 0 \quad \forall q_h\in Q_h.
   \end{gather}
   Since $\nabla Q_h$ is spanned by
@@ -809,36 +809,36 @@ where $c\not=0$.
   dimensional problems.
 \begin{solution}
   We procede just as in the two-dimensional case and observe for any
-  $\Pi_2: V \to \bigl(B_h\bigr)^3$
+  $\Pi_2: \vV \to \bigl(B_h\bigr)^3$
   \begin{align}
-    \int_\domain \div(\Pi_2 v-v) q_h \dx
-    = \int_\domain (v-\Pi_2v)\cdot\nabla q_h\dx = \sum_\cell\int_\cell (v-\Pi_2v)\dx\cdot\nabla q_\cell\dx
+    \int_\domain \div(\Pi_2 \vv-\vv) q_h \dx
+    = \int_\domain (\vv-\Pi_2v)\cdot\nabla q_h\dx = \sum_\cell\int_\cell (\vv-\Pi_2v)\dx\cdot\nabla q_\cell\dx
   \end{align}
   due to the continuity of the ansatz spaces.
-  If we choose $\Pi_2: V \to \bigl(B_h\bigr)^3$ such that for all $q_h\in Q_h$,
+  If we choose $\Pi_2: \vV \to \bigl(B_h\bigr)^3$ such that for all $q_h\in Q_h$,
   \begin{align}
-   \int_\cell \Pi_2 v_i \dx
+   \int_\cell \Pi_2 \vv_i \dx
     = \alpha_{\cell,i} \int_\cell b_{4,\cell}\dx
-    = \int_\cell v_i\dx,
+    = \int_\cell \vv_i\dx,
   \end{align}
   we indeed get the desired property
   \begin{align}
-    \int_\domain \div(\Pi_2 v-v) q_h \dx = 0.
+    \int_\domain \div(\Pi_2 \vv-\vv) q_h \dx = 0.
   \end{align}
   This is possible as $b_{4,\cell}$ is nonnegative. Stability follows as in the two-dimensional case.
   \begin{gather}
-    \norm{\Pi_2 v}_{1,\cell}
-    \le c h_\cell^{-1} \norm{\Pi_2 v}_{0,\cell}
-    \le c h_\cell^{-1} \norm{v}_{0,\cell}.
+    \norm{\Pi_2 \vv}_{1,\cell}
+    \le c h_\cell^{-1} \norm{\Pi_2 \vv}_{0,\cell}
+    \le c h_\cell^{-1} \norm{\vv}_{0,\cell}.
   \end{gather}
   Finally, we use the estimates for $I_h$ to obtain
   \begin{gather}
-    \norm{\Pi_2 (\identity-\Pi_1) v}_{1,\cell}
-    \le c h_\cell^{-1} \norm{v-I_h v}_{0,\cell}
-    \le c \snorm{v}_{1,\domain_\cell}.
+    \norm{\Pi_2 (\identity-\Pi_1) \vv}_{1,\cell}
+    \le c h_\cell^{-1} \norm{\vv-I_h \vv}_{0,\cell}
+    \le c \snorm{\vv}_{1,\domain_\cell}.
   \end{gather}
   Since the number of intersecting of cells of shape regular meshes is
-  bounded, the final term is bounded by $\norm v_{1,\domain}$.
+  bounded, the final term is bounded by $\norm \vv_{1,\domain}$.
 \end{solution}
 
 \end{Problem}
@@ -847,10 +847,10 @@ where $c\not=0$.
   The reasoning behind the MINI element can be applied easily to
   pressure spaces of higher order. Take for instance the pair
   $P_k-P_k$, generalized from Example~\ref{ex:p1-p1}.
-  There holds $\div v_h \in \P_{k-1}$ on each cell,
+  There holds $\div \vv_h \in \P_{k-1}$ on each cell,
   and the term
   \begin{gather}
-    \int_\cell \div v_h q_h\dx
+    \int_\cell \div \vv_h q_h\dx
   \end{gather}
   does not control the function in $\hat p_\cell \in \P_k$ which is
   orthogonal to $\P_{k-1}$. The only function $p_h\in Q_h$ such that
@@ -866,8 +866,8 @@ where $c\not=0$.
   \begin{gather}
     \label{eq:stokes:24}
     B_h(b_\cell \nabla Q_h)
-    = \bigl\{ v\in V \big\vert
-    \; \exists q_h\in Q_h \colon v_{|\cell} = b_\cell \nabla q_h \bigr\}.
+    = \bigl\{ \vv\in \vV \big\vert
+    \; \exists q_h\in Q_h \colon \vv_{|\cell} = b_\cell \nabla q_h \bigr\}.
   \end{gather}
   Here, $b_\cell$ is a bubble function on $\cell$ like the cubic buble
   $b_{3,\cell}$ of a triangle, the quartic bubble $b_{4,\cell}$, the
@@ -877,20 +877,20 @@ where $c\not=0$.
   We also define the cell bubble space
   \begin{gather}
     \label{eq:stokes:25}
-    B_\cell(\nabla Q_h) = \bigl\{ v\in L^2(\cell) \big\vert
-    \;\exists q_h\in Q_h \colon v = b_T \nabla q_{h|\cell}\bigr\}.
+    B_\cell(\nabla Q_h) = \bigl\{ \vv\in L^2(\cell) \big\vert
+    \;\exists q_h\in Q_h \colon \vv = b_T \nabla q_{h|\cell}\bigr\}.
   \end{gather}
 \end{Definition}
 
 \begin{Theorem}{higher-order-bubble}
-  Assume that the pair $V_h\times Q_h$ is chosen such that there is
+  Assume that the pair $\vV_h\times Q_h$ is chosen such that there is
   an $H^1$-stable interpolation operator according to
   \slideref{Assumption}{h1-stable-interpolation}, such that $Q_h\subset
   C^0(\domain)$, piecewise differentiable, and such that
   \begin{gather}
-    B_h(b_\cell \nabla Q_h) \subset V_h.
+    B_h(b_\cell \nabla Q_h) \subset \vV_h.
   \end{gather}
-  Then, the pair $V_h\times Q_h$ is inf-sup stable.
+  Then, the pair $\vV_h\times Q_h$ is inf-sup stable.
 \end{Theorem}
 
 \begin{proof}
@@ -912,19 +912,19 @@ where $c\not=0$.
   $\Pi_2(\identity-\Pi_1)$, which is done by the standard scaling
   argument
   \begin{gather}
-    \snorm{\Pi_2 v}_{1,\cell}
-    =\snorm{\widehat{\Pi_2 v}}_{1,\widehat\cell}
-    \le c \norm{\widehat v}_{1,\widehat\cell}
-    \le c \bigl(h_\cell^{-1} \norm{v}_{0,\cell} + \snorm{v}_{1,\cell}\bigr).
+    \snorm{\Pi_2 \vv}_{1,\cell}
+    =\snorm{\widehat{\Pi_2 \vv}}_{1,\widehat\cell}
+    \le c \norm{\widehat \vv}_{1,\widehat\cell}
+    \le c \bigl(h_\cell^{-1} \norm{\vv}_{0,\cell} + \snorm{\vv}_{1,\cell}\bigr).
   \end{gather}
 \end{proof}
 
 \begin{Corollary}{pk-bubble}
   Let $Q_h\subset Q$ be continuous and cell-wise differentiable. If
   \begin{gather}
-    H^1_h(\P_1)^d\oplus B_h(b_\cell\nabla Q_h) \subset V_h \subset V,
+    H^1_h(\P_1)^d\oplus B_h(b_\cell\nabla Q_h) \subset \vV_h \subset \vV,
   \end{gather}
-  then the pair $V_h\times Q_h$ is inf-sup stable. The same holds on
+  then the pair $\vV_h\times Q_h$ is inf-sup stable. The same holds on
   quadrilateral and hexahedral meshes replacing $\P_1$ by $\Q_1$.
 \end{Corollary}
 
@@ -945,7 +945,7 @@ where $c\not=0$.
   The \textbf{$\mathbf{P_2-P_0}$ element} on triangles consists of the finite
   element spaces
   \begin{gather}
-    V_h = H^1_h(\P_2)^2 \cap V,
+    \vV_h = H^1_h(\P_2)^2 \cap \vV,
     \qquad
     Q_h = H^0_h(\P_0) \cap Q.
   \end{gather}
@@ -972,7 +972,7 @@ where $c\not=0$.
   divergence condition to obtain
   \begin{gather}
     \label{eq:stokes:23}
-    \int_\cell \div (u-\Pi_2u)\dx = \int_{\d\cell} (u-\Pi_2u)\cdot\n\ds.
+    \int_\cell \div (\vu-\Pi_2u)\dx = \int_{\d\cell} (\vu-\Pi_2u)\cdot\n\ds.
   \end{gather}
   Hence, the following interpolation conditions on each cell $\cell$
   define a divergence preserving operator $\Pi_2$:
@@ -994,19 +994,19 @@ where $c\not=0$.
   Thus, we have by the standard scaling
   argument
   \begin{gather}
-    \snorm{\Pi_2 v}_{1,\cell}
-    =\snorm{\widehat{\Pi_2 v}}_{1,\widehat\cell}
-    \le c \snorm{\widehat{\Pi_2 v}}_{0,\widehat\cell}
-    \le c \norm{\widehat v}_{1,\widehat\cell}
-    \le c \bigl(h_\cell^{-1} \norm{v}_{0,\cell} + \snorm{v}_{1,\cell}\bigr).
+    \snorm{\Pi_2 \vv}_{1,\cell}
+    =\snorm{\widehat{\Pi_2 \vv}}_{1,\widehat\cell}
+    \le c \snorm{\widehat{\Pi_2 \vv}}_{0,\widehat\cell}
+    \le c \norm{\widehat \vv}_{1,\widehat\cell}
+    \le c \bigl(h_\cell^{-1} \norm{\vv}_{0,\cell} + \snorm{\vv}_{1,\cell}\bigr).
   \end{gather}
-  Entering $v=u-\Pi_1 u$ and the estimates~\eqref{eq:stokes:15} of
+  Entering $\vv=u-\Pi_1 u$ and the estimates~\eqref{eq:stokes:15} of
   \slideref{Assumption}{locally-quasi-uniform}, we obtain
   \begin{gather}
     \norm{\Pi_2 (\identity-\Pi_1)u}_1^2
     = \sum_{\cell\in\mesh_h}\norm{\Pi_2
       (\identity-\Pi_1)u}_{1,\cell}^2
-    \le c \norm{u}_1^2
+    \le c \norm{\vu}_1^2
   \end{gather}
 \end{proof}
 
@@ -1020,20 +1020,20 @@ where $c\not=0$.
 \end{remark}
 
 \begin{Theorem}{p2-p0-convergence}
-  Let $(u,p)\in V\times Q$ be a solution to the Stokes problem and let
-  the pair $(u_h,p_h) \in V_h\times Q_h$ be the approximation on a
+  Let $(\vu,p)\in \vV\times Q$ be a solution to the Stokes problem and let
+  the pair $(\vu_h,p_h) \in \vV_h\times Q_h$ be the approximation on a
   mesh $\mesh_h$ of mesh size $h$ with the $P_2-P_0$ element of
   \slideref{Definition}{p2-p0-element}. Then, we have the error
   estimate
   \begin{gather}
-    \norm{u-u_h}_1 + \norm{p-p_h}_0
-    \le c \bigl(h^2\snorm{u}_3 + h \snorm{p}_1\bigr).
+    \norm{\vu-\vu_h}_1 + \norm{p-p_h}_0
+    \le c \bigl(h^2\snorm{\vu}_3 + h \snorm{p}_1\bigr).
   \end{gather}
 \end{Theorem}
 
 \begin{remark}
   While this theorem is optimal with respect to our analysis, it is
-  not optimal with respect to the approximation properties of $V_h$.
+  not optimal with respect to the approximation properties of $\vV_h$.
 \end{remark}
 
 \begin{remark}
@@ -1082,7 +1082,7 @@ where $c\not=0$.
 \begin{Problem}{q2-q0}
   Show that the quadrilateral element
   \begin{gather}
-    V_h = H^1_h(\Q_2)^2\cap V,
+    \vV_h = H^1_h(\Q_2)^2\cap \vV,
     \qquad Q_h = H^0_h(\P_0) \cap Q,
   \end{gather}
   with degrees of freedom
@@ -1096,12 +1096,12 @@ where $c\not=0$.
 \begin{solution}
   Let's first consider the element pair $\mathbb{Q}_2/\mathbb{P}\_0^-$ in 2D.
   Since any function in the pressure ansatz space is piecewise constant, we observe
-  for any $\Pi_2: V \to \bigl(V_h\bigr)^2$
+  for any $\Pi_2: \vV \to \bigl(\vV_h\bigr)^2$
   \begin{align}
-    \int_\domain \div(\Pi_2 v-v) q_h \dx
-    = \sum_\cell\int_{\partial \cell} (v-\Pi_2v)q_h \cdot n \ds \,q_\cell.
+    \int_\domain \div(\Pi_2 \vv-\vv) q_h \dx
+    = \sum_\cell\int_{\partial \cell} (\vv-\Pi_2v)q_h \cdot n \ds \,q_\cell.
   \end{align}
-  If we choose $\Pi_2: V \to \bigl(V_h\bigr)^2$ such that for all $q_h\in Q_h$,
+  If we choose $\Pi_2: \vV \to \bigl(\vV_h\bigr)^2$ such that for all $q_h\in Q_h$,
   \begin{align}
     \Pi_2 u(x) &= 0
     & \forall x &\text{ is vertex or midpoint of } \cell\\
@@ -1110,31 +1110,31 @@ where $c\not=0$.
   \end{align}
   we clearly get the desired property
   \begin{align}
-    \int_\domain \div(\Pi_2 v-v) q_h \dx = 0.
+    \int_\domain \div(\Pi_2 \vv-\vv) q_h \dx = 0.
   \end{align}
   In fact, the first condition determines 5 of the 9 degrees of freedom
   and the second condition the remaining 4. This means that the interpolation
   again is given by face integrals alone and we achieve stability via
   \begin{align}
-    \snorm{\Pi_2 v}_{1,\cell}
-    =\snorm{\widehat{\Pi_2 v}}_{1,\widehat\cell}
-    \le c \norm{\widehat v}_{1,\widehat\cell}
-    \le c \bigl(h_\cell^{-1} \norm{v}_{0,\cell} + \snorm{v}_{1,\cell}\bigr).
+    \snorm{\Pi_2 \vv}_{1,\cell}
+    =\snorm{\widehat{\Pi_2 \vv}}_{1,\widehat\cell}
+    \le c \norm{\widehat \vv}_{1,\widehat\cell}
+    \le c \bigl(h_\cell^{-1} \norm{\vv}_{0,\cell} + \snorm{\vv}_{1,\cell}\bigr).
   \end{align}
-  Entering $v=u-\Pi_1 u$ and the estimates~\eqref{eq:stokes:15} of
+  Entering $\vv=u-\Pi_1 u$ and the estimates~\eqref{eq:stokes:15} of
   \slideref{Assumption}{locally-quasi-uniform}, we obtain
   \begin{align}
     \norm{\Pi_2 (\identity-\Pi_1)u}_1^2
     = \sum_{\cell\in\mesh_h}\norm{\Pi_2
       (\identity-\Pi_1)u}_{1,\cell}^2
-    \le c \norm{u}_1^2.
+    \le c \norm{\vu}_1^2.
   \end{align}
 
   For the pair $\mathbb{P}_2/\mathbb{P}_0^-$ in 3D on tetrahedra we have
   4 degrees of freedom at the vertices and 6 degrees of freedom on the midpoints of the edges.
   Again, the condition we need to satisfy is
   \begin{align}
-    \int_{\partial \cell} (v-\Pi_2v)q_h \cdot n \ds \,q_\cell = 0.
+    \int_{\partial \cell} (\vv-\Pi_2v)q_h \cdot n \ds \,q_\cell = 0.
   \end{align}
   Hence, one way to choose the interpolation operator is by requiring
   \begin{align}
@@ -1154,7 +1154,7 @@ where $c\not=0$.
   \end{itemize}
   Again, the condition we need to satisfy is
   \begin{align}
-    \int_{\partial \cell} (v-\Pi_2v)q_h \cdot n \ds \,q_\cell = 0.
+    \int_{\partial \cell} (\vv-\Pi_2v)q_h \cdot n \ds \,q_\cell = 0.
   \end{align}
   Hence, one way to choose the interpolation operator is by requiring
   \begin{align}
@@ -1176,37 +1176,37 @@ where $c\not=0$.
 
 \begin{Lemma}{bubble-discontinuous}
   Given a space $Q_h\subset Q$ possibly discontinuous, choose
-  $V_h\subset V$ such that
+  $\vV_h\subset \vV$ such that
   \begin{gather}
-    B_h(b_\cell \nabla Q_h)^d \subset V_h.
+    B_h(b_\cell \nabla Q_h)^d \subset \vV_h.
   \end{gather}
   If there is an operator $\Pi_1$ such that
   \begin{xalignat*}2
-    \norm{\Pi_1 v}_V & \le \norm{v}_V
-    &\forall v&\in V,\\
-    \int_\cell \div (v-\Pi_1v) \dx &= 0
-    &\forall v&\in V, \cell\in\mesh_h,
+    \norm{\Pi_1 \vv}_{\vV} & \le \norm{\vv}_{\vV}
+    &\forall \vv&\in \vV,\\
+    \int_\cell \div (\vv-\Pi_1v) \dx &= 0
+    &\forall \vv&\in \vV, \cell\in\mesh_h,
   \end{xalignat*}
-  then the pair $V_h\times Q_h$ is inf-sup stable.
+  then the pair $\vV_h\times Q_h$ is inf-sup stable.
 \end{Lemma}
 
 \begin{proof}
   We construct the \putindex{Fortin projection} using $\Pi_1$ and
-  define $\Pi_2$ only on $V^0 = \ker{\div}$. This is sufficient, since
-  for any $v\in V$ there holds $v-\Pi_1 v \in V^0$. Therefore, define
-  cell-wise $\Pi_2\colon V^0_{|\cell} \to B_\cell(b_\cell \nabla Q_h)$
+  define $\Pi_2$ only on $\vV^0 = \ker{\div}$. This is sufficient, since
+  for any $\vv\in \vV$ there holds $\vv-\Pi_1 \vv \in \vV^0$. Therefore, define
+  cell-wise $\Pi_2\colon \vV^0_{|\cell} \to B_\cell(b_\cell \nabla Q_h)$
   by the conditions
   \begin{gather}
-    \int_\cell \div (\Pi_2 v - v ) q_h \dx = 0
+    \int_\cell \div (\Pi_2 \vv - \vv ) q_h \dx = 0
     \qquad\forall q_h\in Q_{h|\cell}.
   \end{gather}
-  By this condition, $\Pi_2 v$ is divergence free itself.
+  By this condition, $\Pi_2 \vv$ is divergence free itself.
   Note that by the Gauss theorem, the divergence of a bubble function
   has always zero mean. Therefore, we have unique solvability and
-  $\Pi_h v$ is well defined. It remains to apply the standard scaling
+  $\Pi_h \vv$ is well defined. It remains to apply the standard scaling
   argument to prove
   \begin{gather}
-    \norm{\Pi_2 v}_1 \le c \norm{v}_1.
+    \norm{\Pi_2 \vv}_1 \le c \norm{\vv}_1.
   \end{gather}
 \end{proof}
 
@@ -1224,17 +1224,17 @@ where $c\not=0$.
 
 \begin{Corollary}{bubble-p2}
   Let $Q_h\subset Q$ be a space of piecewise differentiable
-  functions. If for $V_h\subset V$ holds
+  functions. If for $\vV_h\subset \vV$ holds
   \begin{gather}
-    H^1_h(\P_2)^2 \oplus B_h(b_\cell \nabla Q_h)^2 \subset V_h,
+    H^1_h(\P_2)^2 \oplus B_h(b_\cell \nabla Q_h)^2 \subset \vV_h,
   \end{gather}
-  then the pair $V_h\times Q_h$ is inf-sup stable.
+  then the pair $\vV_h\times Q_h$ is inf-sup stable.
 \end{Corollary}
 
 \begin{Corollary}{pk-pk2}
   Let the space dimension be $d=2$ and $k\ge 2$. Then, the spaces
   \begin{gather}
-    V_h = H^1_h(\P_k)^2 \cap V,
+    \vV_h = H^1_h(\P_k)^2 \cap \vV,
     \qquad
     Q_k = H^0_h(\P_{k-2}) \cap Q,
   \end{gather}
@@ -1256,16 +1256,16 @@ where $c\not=0$.
 \end{intro}
 
 \begin{Theorem}{discontinuous-pressure-normal-velocity}
-  Let $Q_h\subset Q$ and let $V_h \subset V$ be such that there is an
+  Let $Q_h\subset Q$ and let $\vV_h \subset \vV$ be such that there is an
   $H^1$-stable interpolation according to
   \slideref{Assumption}{h1-stable-interpolation}. Furthermore, let
   there be a degree of freedom on each edge (face in 3D) controlling
-  the average normal derivative of $u\in V_h$ on this face. Finally,
-  let $V_h$ contain the bubble space for $\nabla Q_h$,
+  the average normal derivative of $u\in \vV_h$ on this face. Finally,
+  let $\vV_h$ contain the bubble space for $\nabla Q_h$,
   \begin{gather}
-    B_h(b_\cell \nabla Q_h)^d \subset V_h.
+    B_h(b_\cell \nabla Q_h)^d \subset \vV_h.
   \end{gather}
-  Then, the pair $V_h\times Q_h$ is inf-sup stable.
+  Then, the pair $\vV_h\times Q_h$ is inf-sup stable.
 \end{Theorem}
 
 \begin{proof}
@@ -1276,9 +1276,9 @@ where $c\not=0$.
   ~\eqref{eq:stokes:22} is more than needed.
 
   Now, let $\{\nodal_{\cell,i}\}$ be the $n_\cell$ node values for the
-  discrete velocity space $V_\cell = V_{h|\cell}$ on the cell $\cell$. For
+  discrete velocity space $\vV_\cell = \vV_{h|\cell}$ on the cell $\cell$. For
   convenience, let them be ordered in a way, that the first ones
-  control the normal derivatives of $u_h$ on the faces of the cell,
+  control the normal derivatives of $\vu_h$ on the faces of the cell,
   that is,
   \begin{gather}
     \nodal_{\cell,i} = \int_{F_i} u\cdot\n \ds
@@ -1287,12 +1287,12 @@ where $c\not=0$.
   where $n_F$ is the number of faces per cell. Given the $H^1$-stable
   interpolation operator $I_h$, define $\Pi_2$ cell-wise such that
   \begin{xalignat}2
-    \nodal_{\cell,i}(\Pi_2 u) &= \nodal_{\cell,i}(u)
+    \nodal_{\cell,i}(\Pi_2 u) &= \nodal_{\cell,i}(\vu)
     &i&=1,\dots,n_F\\
     \nodal_{\cell,i}(\Pi_2 u) &= 0
     &i&=n_F+1,\dots,n_\cell.
   \end{xalignat}
-  Choosing the basis on $V_T$ which is dual to $\{\nodal_{\cell,i}\}$,
+  Choosing the basis on $\vV_T$ which is dual to $\{\nodal_{\cell,i}\}$,
   we see that this indeed implies
   \begin{gather}
     0=\int_{\d\cell} (\Pi_2 u - u) \ds = \int_\cell \div (\Pi_2 u-u)\dx.
@@ -1302,9 +1302,9 @@ where $c\not=0$.
 \end{proof}
 
 \begin{Corollary}{qk-pk1}
-  The finite-element pair $V_h\times Q_h$ with
+  The finite-element pair $\vV_h\times Q_h$ with
   \begin{gather}
-    V_h = H^1_h(\Q_k)^2 \cap V,
+    \vV_h = H^1_h(\Q_k)^2 \cap \vV,
     \qquad
     Q_h = H^0_h(\P_{k-1}) \cap Q,
   \end{gather}
@@ -1312,7 +1312,7 @@ where $c\not=0$.
 \end{Corollary}
 
 \begin{proof}
-  First, we prove that $B_h(b_\cell \nabla Q_h)^d \subset V_h$. To
+  First, we prove that $B_h(b_\cell \nabla Q_h)^d \subset \vV_h$. To
   this end, we note that on each cell, we have that the gradient of
   a discrete pressure $q_h$ restricted to this cell is in
   $\P_{k-2}\subset \Q_{k-2}$. The bubble function $b_T$ is in $\Q_2$,
@@ -1452,14 +1452,14 @@ where $c\not=0$.
   for polynomial degrees $k\ge 1$ consists of the pairs
   \begin{gather}
     \label{eq:stokes:38}
-    V_h = H^1_h(\P_k)^d \cap V,
+    \vV_h = H^1_h(\P_k)^d \cap \vV,
     \qquad
     Q_h = H^1_h(\P_{k-1}) \cap Q.
   \end{gather}
   On quadrilaterals and hexahedra, it consists of the pairs
   \begin{gather}
     \label{eq:stokes:39}
-    V_h = H^1_h(\Q_k)^d \cap V,
+    \vV_h = H^1_h(\Q_k)^d \cap \vV,
     \qquad
     Q_h = H^1_h(\Q_{k-1}) \cap Q.
   \end{gather}
@@ -1549,8 +1549,8 @@ where $c\not=0$.
   For a \putindex{macro element} $M$, we introduce the spaces
   \begin{align}
     \label{eq:stokes:27}
-    V_M &= \bigl\{ u\in H^1_0(M;\R^d) \big\vert
-            \;\exists v_h\in V_h\colon u=v_{h|M}\bigr\},
+    \vv_M &= \bigl\{ \vu\in H^1_0(M;\R^d) \big\vert
+            \;\exists \vv_h\in \vV_h\colon \vu=\vv_{h|M}\bigr\},
     \\
     \label{eq:stokes:28}
     Q_M &= \bigl\{ p\in L^2(M) \big\vert
@@ -1560,7 +1560,7 @@ where $c\not=0$.
   \begin{gather}
     \label{eq:stokes:29}
     \ker{B^\transpose_M} = \bigl\{q\in Q_M \big\vert
-    \;\forall v\in V_M\colon \form(\div v,q) = 0\bigr\}.
+    \;\forall \vv\in \vV_M\colon \form(\div \vv,q) = 0\bigr\}.
   \end{gather}
 \end{Definition}
 
@@ -1606,14 +1606,14 @@ where $c\not=0$.
   estimate
   \begin{gather}
     \label{eq:stokes:42}
-    \sup_{v\in V_M} \frac{\form(\div v,q)_M}{\snorm{v}_{1,M}}
+    \sup_{\vv\in \vV_M} \frac{\form(\div \vv,q)_M}{\snorm{\vv}_{1,M}}
     \ge \widehat \beta \snorm{q}_M
     \qquad\forall q\in Q_M,
   \end{gather}
   implies the stability estimate
   \begin{gather}
     \label{eq:stokes:43}
-    \sup_{v\in V_h} \frac{\form(\div v,q)}{\norm{v}_{1}}
+    \sup_{\vv\in \vV_h} \frac{\form(\div \vv,q)}{\norm{\vv}_{1}}
     \ge \beta \norm{q}_h
     \qquad\forall q\in Q_h,
   \end{gather}
@@ -1622,26 +1622,26 @@ where $c\not=0$.
 
 \begin{proof}
   For arbitrarily chosen $q\in Q_h$, choose for each $M$ according to
-  assumption~\eqref{eq:stokes:42} functions $v_M\in V_M$ with
-  $\norm{v_M}_1 \le \snorm{q}_M$
+  assumption~\eqref{eq:stokes:42} functions $\vv_M\in \vV_M$ with
+  $\norm{\vv_M}_1 \le \snorm{q}_M$
   such that
   \begin{gather}
-    \form(\div v_M,q)
-    = \form(\div v_M,q)_M
+    \form(\div \vv_M,q)
+    = \form(\div \vv_M,q)_M
     \ge \widehat \beta \snorm{q}_M^2.
   \end{gather}
-  Define $v = \sum v_M$. Since every face is an interior face of a
+  Define $\vv = \sum \vv_M$. Since every face is an interior face of a
   macro element, every cell is element of at least one macro
   element. Hence,
   \begin{gather}
-    \form(\div v, q) = \sum_M \form(\div v_M,q)
+    \form(\div \vv, q) = \sum_M \form(\div \vv_M,q)
     \ge \widehat \beta \sum_M \snorm{q}_M^2
     \ge \widehat \beta \norm{q}_h^2.
   \end{gather}
   Furthermore, there holds by Poincaré inequality
   \begin{gather}
-    c_S \norm{v}_1 \le \snorm{v}_1
-    \le \sum_M \snorm{v_M}_{1} \le \sum_M \snorm{q}_M
+    c_S \norm{\vv}_1 \le \snorm{\vv}_1
+    \le \sum_M \snorm{\vv_M}_{1} \le \sum_M \snorm{q}_M
     \le n_O \norm{q}_h.
   \end{gather}
   Thus, the estimate holds with
@@ -1659,8 +1659,8 @@ where $c\not=0$.
   $M$ there holds
   \begin{gather}
     \label{eq:stokes:31}
-    \inf_{p\in Q_M} \sup_{v\in V_M}
-    \frac{\form(\div v,q)_M}{\snorm{v}_{1,M}\snorm{q}_{M}}
+    \inf_{p\in Q_M} \sup_{\vv\in \vV_M}
+    \frac{\form(\div \vv,q)_M}{\snorm{\vv}_{1,M}\snorm{q}_{M}}
     \ge \beta_{\widehat M}.
   \end{gather}
 \end{Lemma}
@@ -1702,59 +1702,59 @@ where $c\not=0$.
 
 \begin{Lemma}{verfuerth1}
   Assume that there is an $H^1$-stable interpolation operator $I_h :
-  V\to V_h$
+  \vV\to \vV_h$
   according to \slideref{Assumption}{locally-quasi-uniform}. Then,
   there are positive constants $c_1$ and $c_2$ independent of $h$ such
   that for any $q_h\in Q_h$ there holds
   \begin{gather}
     \label{eq:stokes:44}
-    \sup_{v_h\in V_h} \frac{\form(\div v_h, q_h)}{\norm{v_h}_V}
+    \sup_{\vv_h\in \vV_h} \frac{\form(\div \vv_h, q_h)}{\norm{\vv_h}_{\vV}}
     \ge c_1 \norm{q_h}_Q - c_2 \norm{q_h}_h.
   \end{gather}
 \end{Lemma}
 
 \begin{proof}
   We begin by using the continuous inf-sup condition to deduce that
-  for arbitrary $q_h\in Q_h$ there is $v\in V$ with
-  $\norm{v}_V \le \norm{q_h}_Q$ such that
+  for arbitrary $q_h\in Q_h$ there is $\vv\in \vV$ with
+  $\norm{\vv}_{\vV} \le \norm{q_h}_Q$ such that
   \begin{gather}
-    \form(\div v,q_h) \ge c_1 \norm{q_h}_Q^2.
+    \form(\div \vv,q_h) \ge c_1 \norm{q_h}_Q^2.
   \end{gather}
-  Now, let $v_h = I_h v$. Hence,
+  Now, let $\vv_h = I_h \vv$. Hence,
   \begin{align}
-    \form(\div v_h, q_h)
-    &= \form(\div v_h - \div v,q_h) + \form(\div v,q_h)\\
-    &\ge \sum_{\cell\in\mesh_h} \form(v-v_h,\nabla q_h)_{\cell}
+    \form(\div \vv_h, q_h)
+    &= \form(\div \vv_h - \div \vv,q_h) + \form(\div \vv,q_h)\\
+    &\ge \sum_{\cell\in\mesh_h} \form(\vv-\vv_h,\nabla q_h)_{\cell}
       + \sum_{\face\in\faces_h^i}
-      \form([v_h-v]\cdot\n_1,\jmp{q_h})_\face
+      \form([v_h-\vv]\cdot\n_1,\jmp{q_h})_\face
       + c_1 \norm{q_h}_Q\\
-    &\ge -\left[\sum_{\cell\in\mesh_h} h_\cell^{-2} \norm{v-v_h}_\cell^2
+    &\ge -\left[\sum_{\cell\in\mesh_h} h_\cell^{-2} \norm{\vv-\vv_h}_\cell^2
       +\sum_{\face\in\faces_h^i} h_\face^{-1}
-      \norm{v-v_h}_\face\right]
+      \norm{\vv-\vv_h}_\face\right]
       \norm{q_h}_h + c_1 \norm{q_h}_Q\\
-    &\ge -c \snorm{v}_1\norm{q_h}_h+ c_1 \norm{q_h}_Q\\
+    &\ge -c \snorm{\vv}_1\norm{q_h}_h+ c_1 \norm{q_h}_Q\\
     &\ge \left[c_1 \norm{q_h}_Q - c_2 \norm{q_h}_h\right]
       \norm{q_h}_Q.
   \end{align}
   Furthermore, we have by the interpolation estimate
   \begin{gather}
-    \snorm{v_h} \le c \snorm{v} \le c \norm{q_h}_Q,
+    \snorm{\vv_h} \le c \snorm{\vv} \le c \norm{q_h}_Q,
   \end{gather}
-  which proves the result by dividing $\form(\div v_h,q_h)$ by the
-  norm of $v_h$.
+  which proves the result by dividing $\form(\div \vv_h,q_h)$ by the
+  norm of $\vv_h$.
 \end{proof}
 
 \begin{Lemma}{verfuerth2}
   Let the assumptions of \slideref{Lemma}{verfuerth1} hold, and assume
   that there is a constant $\tilde \beta$ such that
   \begin{gather}
-    \sup_{v\in V_h} \frac{\form(\div v,q)}{\norm{v}_{1}}
+    \sup_{\vv\in \vV_h} \frac{\form(\div \vv,q)}{\norm{\vv}_{1}}
     \ge \tilde \beta \norm{q}_h
     \qquad\forall q\in Q_h.
   \end{gather}
   Then, the inf-sup condition
   \begin{gather}
-    \sup_{v\in V_h} \frac{\form(\div v,q)}{\norm{v}_{1}}
+    \sup_{\vv\in \vV_h} \frac{\form(\div \vv,q)}{\norm{\vv}_{1}}
     \ge \beta \norm{q}_Q
     \qquad\forall q\in Q_h,
   \end{gather}
@@ -1764,11 +1764,11 @@ where $c\not=0$.
 \begin{proof}
   For any $q_h\in Q_h$ and $\theta\in[0,1]$ we have
   \begin{align}
-    \sup_{v_h\in V_h} \frac{\form(\div v_h,q_h)}{\norm{v_h}_V}
+    \sup_{\vv_h\in \vV_h} \frac{\form(\div \vv_h,q_h)}{\norm{\vv_h}_{\vV}}
     &=
-      \theta \sup_{v_h\in V_h} \frac{\form(\div v_h,q_h)}{\norm{v_h}_V}
-    + (1-\theta)\sup_{v_h\in V_h} \frac{\form(\div
-      v_h,q_h)}{\norm{v_h}_V}
+      \theta \sup_{\vv_h\in \vV_h} \frac{\form(\div \vv_h,q_h)}{\norm{\vv_h}_{\vV}}
+    + (1-\theta)\sup_{\vv_h\in \vV_h} \frac{\form(\div
+      \vv_h,q_h)}{\norm{\vv_h}_{\vV}}
     \\
     &\ge \theta c_1 \norm{q_h}_Q - c_2 \theta \norm{q_h}_h
       + (1-\theta) \tilde\beta \norm{q_h}_h
@@ -1780,11 +1780,11 @@ where $c\not=0$.
 
 \begin{Theorem}{hood-taylor-stability}
   The Hood-Taylor families are inf-sup stable. Thus, for solutions
-  $u\in H^{k+1}(\domain;\R^d)\cap V$ and $q\in H^k(\domain)\cap Q$,
+  $u\in H^{k+1}(\domain;\R^d)\cap \vV$ and $q\in H^k(\domain)\cap Q$,
   there holds
   \begin{gather}
-    \norm{u-u_h}_1 + \norm{p-p_h}_0
-    \le c h^k\bigl(\snorm{u}_{k+1} + \snorm{p}_k\bigr).
+    \norm{\vu-\vu_h}_1 + \norm{p-p_h}_0
+    \le c h^k\bigl(\snorm{\vu}_{k+1} + \snorm{p}_k\bigr).
   \end{gather}
 \end{Theorem}
 
@@ -1810,7 +1810,7 @@ where $c\not=0$.
   \begin{gather}
     \label{eq:stokes:32}
     \ker{B_M^\transpose} = \bigl\{ q\in Q_M \big\vert
-    \;\forall v\in V_M\colon b(v,q) = 0 \bigr\}
+    \;\forall \vv\in \vV_M\colon b(\vv,q) = 0 \bigr\}
     = \P_0.
   \end{gather}
 \end{Lemma}
@@ -1820,7 +1820,7 @@ where $c\not=0$.
   that the tangential derivatives $t_i\cdot\nabla q_h$ coincide for
   both adjacent cells due to the continuity of $q_h$. Now, we will
   derive conditions for $\ker{B_M^\transpose}$ by choosing special test
-  functions in $V_M$ defined through interpolation in the points $x_1$
+  functions in $\vV_M$ defined through interpolation in the points $x_1$
   and $x_2$.
 
   Furthermore, note that the shape function $\phi$ in $\P_2$
@@ -1837,7 +1837,7 @@ where $c\not=0$.
   Now, let $u(x_1)\cdot t_1 = 1$, $u(x_1)\cdot\n_1 = 0$, and $u(x_2)
   = 0$. Then,
   \begin{gather}
-    \form(\div u,q_h)_M = -\form(u,\nabla q_h)_M
+    \form(\div u,q_h)_M = -\form(\vu,\nabla q_h)_M
     = -(w_1+w_2) \nabla q_h\cdot t_1.
   \end{gather}
   Hence, $q_h\in \ker{B_M^\transpose}$ implies $\nabla q_h\cdot t_1 = 0$ in
@@ -1874,7 +1874,7 @@ where $c\not=0$.
   Then,
   \begin{gather}
     \ker{B_M^\transpose} = \bigl\{ q\in Q_M \big\vert
-    \;\forall v\in V_M\colon b(v,q) = 0 \bigr\}
+    \;\forall \vv\in \vV_M\colon b(\vv,q) = 0 \bigr\}
     = \P_0.
   \end{gather}
 \end{Lemma}
@@ -1890,7 +1890,7 @@ where $c\not=0$.
   $u\in \Q_2^2$ and $\nabla q\in \Q_1^2$. Therefore, $u\cdot\nabla q
   \in \Q_3$ and the Simpson rule is exact on each cell. Hence
   \begin{gather}
-    -\form(\div u,q)_{\widehat M} = \form(u,\nabla q)_{\widehat M}
+    -\form(\div u,q)_{\widehat M} = \form(\vu,\nabla q)_{\widehat M}
     = \frac49 u(x_1) \nabla q(x_1)
     + \frac49 u(x_2) \nabla q(x_2)
     + \frac49 u(x_3) \nabla q(x_3).
@@ -1937,7 +1937,7 @@ where $c\not=0$.
   \end{gather}
   For a patch $M$ equivalent to $\widehat M$, we observe that
   \begin{gather}
-    -\form(\div u,q)_M = \form(u,\nabla q)_M
+    -\form(\div u,q)_M = \form(\vu,\nabla q)_M
     = \sum_{i=1,2}
     \int_{\widehat{\cell_i}} \hat u^\transpose (\nabla\Phi)^{-T} \nabla
     \widehat q \;\det(\nabla\Phi) \,d\widehat x.
@@ -1981,10 +1981,10 @@ where $c\not=0$.
   the approximation is reduced but not destroyed.
 
   In view of \slideref{Theorem}{galerkin-mixed-u-kerbh}, locking means
-  that $V_h^g$ is too small or even the zero space, and therefore the
+  that $\vV_h^g$ is too small or even the zero space, and therefore the
   quasi best-approximation result of this theorem is useless, since
   \begin{gather}
-    \inf_{w_h\in V_h^g} \norm{u-w_h}_V \not\to 0
+    \inf_{w_h\in \vV_h^g} \norm{\vu-w_h}_{\vV} \not\to 0
     \quad\text{as } h \to 0.
   \end{gather}
   
@@ -1995,19 +1995,19 @@ where $c\not=0$.
 \end{intro}
 
 \begin{Lemma}{reduced integration}
-  Let $V_h\times Q_h$ be a stable pair for the Stokes problem
+  Let $\vV_h\times Q_h$ be a stable pair for the Stokes problem
   admitting a Korn inequality. Let furthermore $\Pi_Q$ be the
-  $L^2$-projection onto $Q_h$. Then, the solution $u_h\in V_h$ to the
+  $L^2$-projection onto $Q_h$. Then, the solution $\vu_h\in \vV_h$ to the
   weak formulation
   \begin{gather}
     \label{eq:stokes:33}
-    2\mu \form(\strain{u_h},\strain v) + \lambda (\Pi_Q \div
-    u_h,\Pi_q\div v) = (f,v)
-    \quad\forall v\in V_h,
+    2\mu \form(\strain{\vu_h},\strain \vv) + \lambda (\Pi_Q \div
+    \vu_h,\Pi_q\div \vv) = (f,v)
+    \quad\forall \vv\in \vV_h,
   \end{gather}
   admits the quasi-optimality estimate
   \begin{gather}
-    \norm{u-u_h}_1 \le c \sup_{v_h\in V_h}\norm{u-v_h}_1,
+    \norm{\vu-\vu_h}_1 \le c \sup_{\vv_h\in \vV_h}\norm{\vu-\vv_h}_1,
   \end{gather}
   with a constant $c$ independent of the quotient $\lambda/\mu$.
 \end{Lemma}
@@ -2015,25 +2015,25 @@ where $c\not=0$.
 \begin{proof}
   We introduce the auxiliary variable $p_h\in Q_h$ by the condition
   \begin{gather}
-    \int_\domain \div u_h q_h \dx = \int_\domain p_h q_h\dx
+    \int_\domain \div \vu_h q_h \dx = \int_\domain p_h q_h\dx
     \quad\forall q_h\in Q_h.
   \end{gather}
   By definition of the $L^2$-projection, we have
   \begin{gather}
-    \form(\div u_h, q_h) = \form(\Pi_Q\div u_h,q_h) = \form(p_h,q_h).
+    \form(\div \vu_h, q_h) = \form(\Pi_Q\div \vu_h,q_h) = \form(p_h,q_h).
   \end{gather}
-  Since $\Pi_Q\div u_h$ and $p_h$ are in the same space, this implies
-  that $p_h = \Pi_Q\div u_h$ pointwise. In addition, we observe that
+  Since $\Pi_Q\div \vu_h$ and $p_h$ are in the same space, this implies
+  that $p_h = \Pi_Q\div \vu_h$ pointwise. In addition, we observe that
   \begin{gather}
-    \form (p_h, \Pi_Q\div v) = \form (p_h, \div v).
+    \form (p_h, \Pi_Q\div \vv) = \form (p_h, \div \vv).
   \end{gather}
   Hence, the formulation~\eqref{eq:stokes:33} is equivalent to
   \begin{gather}
     \arraycolsep2pt
     \begin{matrix}
-      2\mu\form(\strain{u_h},\strain v) &+& \form(p_h,\div v)
-      &=& \form(f,v) &\qquad&\forall v\in V_h\\
-      \form(\div u_h, q) &-&\tfrac1\lambda\form(p_h,q)&=&0&&\forall q\in Q_h.
+      2\mu\form(\strain{\vu_h},\strain \vv) &+& \form(p_h,\div \vv)
+      &=& \form(f,v) &\qquad&\forall \vv\in \vV_h\\
+      \form(\div \vu_h, q) &-&\tfrac1\lambda\form(p_h,q)&=&0&&\forall q\in Q_h.
     \end{matrix}
   \end{gather}
   This is the Stokes problem augmented by a positive definite bilinear
@@ -2047,7 +2047,7 @@ where $c\not=0$.
     integration}. This refers to the fact, that we can replace the
   explicit projection $\Pi_Q$ by using a quadrature formula which is
   exact on $Q_h$, but zero for all higher order polynomials occuring
-  in $\div u_h$.
+  in $\div \vu_h$.
 \end{remark}
 
 %%% Local Variables:
