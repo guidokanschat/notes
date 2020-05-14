@@ -1,3 +1,31 @@
+\begin{intro}
+  This chapter discusses well-posedness and finite element
+  approximation for the simplified Stokes equations
+  \begin{gather}
+    \label{eq:mixed:stokes-strong2}
+    \arraycolsep.2ex
+    \begin{matrix}
+      - \nu \Delta \vu &+& \nabla p &=& \vf \\
+      \div \vu && &=& 0.
+    \end{matrix}
+  \end{gather}
+
+  If not explicitly stated otherise, we will assume no-slip boundary
+  conditions on the whole boundary $\d\domain$.
+
+  In weak form, they
+  are: find a \putindex{velocity} $\vu\in \vV = \vH^1_0(\domain)$ and
+  a \putindex{pressure} $p\in Q \subset L^2_0(\domain)$ such that
+  \begin{gather}
+    \label{eq:mixed:stokes-weak2}
+    \begin{aligned}
+      \nu\form(\nabla \vu, \nabla \vv) &- \form(\div \vv,p) &=&\form(\vf,\vv)
+      &\forall \vv&\in \vV\\
+      -\form(\div \vu,q) & &=&0
+      &\forall q&\in Q.\\      
+    \end{aligned}
+  \end{gather}
+\end{intro}
 
 \section{Well-posedness of the continuous problem}
 
@@ -61,7 +89,7 @@
     = \bigl\{\vv\in \vV \big|
     \div \vv = 0 \text{ a.e.} \bigr\}
   \end{gather}
-  is closed in $\vV$ and $\vV$ admits the orthogonal decomposition
+  is closed in $\vV$. Thus, $\vV$ admits the orthogonal decomposition
   \begin{gather}
     \vV = \vV^0\oplus \vV^\perp.
   \end{gather}
@@ -77,11 +105,18 @@
   \end{gather}
   Thus, the divergence operator is a continuous mapping from $\vV$ to
   $L^2(\domain)$. The definition of $\vV^0$ is equivalent to the
-  definition of zero in $L^2(\domain)$. Finally, since the kernel is
+  definition of the zero in $L^2(\domain)$. Finally, since the kernel is
   the pre-image of a closed set under a continuous map, it is
   closed. The existence of the decomposition follows from
   \slideref{Theorem}{orthogonal-complement}.
 \end{proof}
+
+\begin{notation}
+  The notation $\vV^\perp$ differs slightly from the use in the
+  introduction of orthogonal decomposition of Hilbert
+  spaces. Nevertheless, Confusion should hardly arise.
+\end{notation}
+
 
 \begin{Lemma}{stokes-grad}
   If $\vf\in \vV^* = H^{-1}(\domain;\R^d)$ satisfies
@@ -120,10 +155,13 @@
 \begin{Corollary}{stokes-iso}
   Let $\domain$ be connected. Then,
   \begin{enumerate}
-  \item $\nabla\colon L^2_0(\domain) \to \vV^0$ is an isomorphism
+  \item $\nabla\colon L^2_0(\domain) \to \polar{(\vV^0)}$ is an isomorphism
   \item $\div\colon \vV^\perp \to L^2_0(\domain)$ is an isomorphism
   \end{enumerate}
 \end{Corollary}
+
+Combining these with the the theory of \Cref{sec:mixed-wellposedness},
+we immediately obtain:
 
 \begin{Theorem}{stokes-infsup}
   Let $\domain\subset \R^d$ be a Lipschitz-domain,
@@ -133,7 +171,7 @@
   \begin{gather}
     \label{eq:stokes:1}
     \inf_{q\in Q}\sup_{\vv\in \vV}\frac{\form(\div
-      \vv,q)}{\norm{\vv}_\vV\norm{q}_Q} \ge \beta.
+      \vv,q)}{\norm{\vv}_\vV\norm{q}_{0}} \ge \beta.
   \end{gather}
   Furthermore, the problem finding $(\vu,p)\in \vV\times Q$ such that
   \begin{gather}
@@ -166,7 +204,7 @@
   \begin{gather}
     \label{eq:stokes:2}
     \inf_{q_h\in Q_h}\sup_{\vv_h\in \vV_h}\frac{\form(\div
-      \vv_h,q_h)}{\norm{\vv_h}_{\vV}\norm{q_h}_Q} \ge \beta.
+      \vv_h,q_h)}{\norm{\vv_h}_{1}\norm{q_h}_{0}} \ge \beta.
   \end{gather}
   Then, the Galerkin approximation of~\eqref{eq:stokes:3} admits a
   unique solution $(\vu_h, p_h)\in \vV_h\times Q_h$ with the
@@ -266,9 +304,10 @@
   Thus, we conclude that for this combination of shape function
   spaces, there is a mesh such that they are not suited for the
   approximation of the Stokes problem. But, this may be a problem of a
-  mesh with too few cells. In fact, asymptotically, a triangular mesh
-  contains twice as many vertices as cells, a quadrilateral mesh as
-  many. Therefore, $\dim \vV_h > \dim Q_h$ as soon as the mesh is
+  mesh with too few cells. In fact, asymptotically, a shape regular
+  triangular mesh contains twice as many vertices as cells, for a
+  quadrilateral mesh the number of vertices converges to the number of
+  cells. Therefore, $\dim \vV_h > \dim Q_h$ as soon as the mesh is
   sufficiently fine. Will this be sufficient?
 \end{example}
 
@@ -277,7 +316,7 @@ The domain $\Omega=[0,1]^2$ is decomposed into $N \times N$ congruent squares wh
 of them is again divided into two triangles. The decomposition $\mesh_h$
 is given by these triangles.
 
-We again choose piecewise linear ansatz functions for the velocity for $\vV_h$
+We again choose piecewise linear ansatz functions for the velocity space $\vV_h$
 (vanishing on $\partial \Omega$) and piecewise constant ansatz functions
 for $Q_h$.
 
@@ -482,6 +521,8 @@ where $c\not=0$.
 \end{Definition}
 
 \begin{intro}
+  The MINI element was introduced by Arnold, Brezzi, and Fortin in 1984 and serves as
+  one of the simplest examples of steble elements for the Stokes system.
   We will show now that the MINI element is indeed inf-sup stable. To
   this end, we construct the \putindex{Fortin projection} according to
   \slideref{Lemma}{fortin}. Since the construction of such a
@@ -495,10 +536,10 @@ where $c\not=0$.
   Let there be operators $\Pi_1,\Pi_2\colon \vV \to \vV_h$ such that
   \begin{xalignat}2
     \label{eq:stokes:10}
-    \norm{\Pi_1 \vv}_{\vV} &\le c_1 \norm{\vv}_{\vV}
+    \norm{\Pi_1 \vv}_{1} &\le c_1 \norm{\vv}_{1}
     &\forall \vv&\in \vV,\\
     \label{eq:stokes:11}
-    \norm{\Pi_2(\identity-\Pi_1)\vv}_{\vV} &\le c_2 \norm{\vv}_{\vV}
+    \norm{\Pi_2(\identity-\Pi_1)\vv}_{1} &\le c_2 \norm{\vv}_{1}
     &\forall \vv&\in \vV,\\
     \label{eq:stokes:12}
     b(\vv-\Pi_2 \vv,q_h) &= 0
@@ -527,19 +568,26 @@ where $c\not=0$.
 \end{proof}
 
 \begin{Assumption}{h1-stable-interpolation}
-  There exists an $H^1$-stable interpolation operator $I_h:\vV\to \vV_h$
-  such that for each cell $\cell \in \mesh_h$ there holds for $m=0,1$
+  There exists an $H^1$-stable quasi-interpolation operator
+  $I_h:\vV\to \vV_h$ such that for each cell $\cell \in \mesh_h$ there
+  holds for $m\in\{0,1\}$
   \begin{gather}
     \label{eq:stokes:13}
     \snorm{\vv-I_h \vv}_{m,\cell} \le c \sum_{\cell'\cap\cell
       \neq\emptyset} h_{\cell'}^{1-m}\snorm{\vv}_{1,\cell'},
   \end{gather}
-  with a constant $c$ independent of the mesh parameter $h$.
+  with a constant $c$ depending on the shape of the cell and its
+  neighbors, but independent of the size $h_T$.
 \end{Assumption}
 
 \begin{remark}
-  The interpolation operators of Clément, Scott and Zhang, Schöberl or
-  Ern and Guermond fullfil these assumptions.
+  The interpolation operators of Clément~\cite{Clement75}, Scott and
+  Zhang~\cite{ScottZhang90},
+  Schöberl~\cite{Schoeberl08,Schoeberl10multilevel-hcurl} or Ern and
+  Guermond~\cite{ErnGuermond17} fullfil these assumptions. In order
+  for such an estimate to hold with a uniform constant on a family of
+  meshes for $h\to 0$, we require shape regularity and one local
+  quasi-uniformity.
 \end{remark}
 
 \begin{Definition}{locally-quasi-uniform}
@@ -607,7 +655,7 @@ where $c\not=0$.
     \le c h_\cell^{-1} \norm{\vv-I_h \vv}_{0,\cell}
     \le c \snorm{\vv}_{1,\domain_\cell}.
   \end{gather}
-  Since the number of intersecting of cells of shape regular meshes is
+  Since the number of intersecting cells of shape regular meshes is
   bounded, the final term is bounded by $\norm \vv_{1,\domain}$.
 \end{proof}
 
@@ -746,59 +794,6 @@ where $c\not=0$.
 \end{remark}
 
 
-\begin{Problem}{quadrilateral-mini}
-  Show that the MINI element can be generalized to quadrilateral
-  meshes. Design a bubble space $b_Q$ of minimal tensor degree such that
-  \begin{gather}
-    \vV_h = \bigl(H^1_h(\Q_1) \oplus B_h(b_Q) \cap \vV\bigr)^2,
-    \qquad
-    Q_h = H^1_h(\Q_1) \cap Q.
-  \end{gather}
-
-  Discuss extensions to tetrahedra and hexahedra in three dimensions.
-\begin{solution}
-  For simplices in any dimension consider the bubble function
-  \begin{align}
-    b_T=\prod_{i=1}^d\lambda_i\in \mathbb{P}_d(\mathcal{T}_h)
-  \end{align}
-  and we can procede exactly as in the 2D case, i.e. the bubble
-  space is spanned by
-  \begin{align}
-   \left\{b_T e_1,\dotsc, b_T e_d\right\}.
-  \end{align}
-
-  For quadrilaterals and higher-dimensional generalizations consider
-  on the reference cell $[-1,1]^d$
-  \begin{align}
-    \hat{b}_T=\prod_{i=1}^d(1-x_i^2)\in \mathbb{Q}_{2d}(\hat{\mathcal{T}}_h).
-  \end{align}
-  In particular, we have to satisfy
-  \begin{gather}
-    \int_\domain \div(\Pi_2 \vv-\vv) q_h \dx
-    = \int_\domain (\vv-\Pi_2v)\cdot\nabla q_h\dx
-    = 0 \quad \forall q_h\in Q_h.
-  \end{gather}
-  Since $\nabla Q_h$ is spanned by
-  \begin{align}
-    \left\{
-      \begin{pmatrix} 1 \\0 \end{pmatrix},
-      \begin{pmatrix} 0 \\1 \end{pmatrix},
-      \begin{pmatrix} y \\x \end{pmatrix}
-    \right\}
-  \end{align}
-  in 3D, we need three additional bubble functions we choose as
-  \begin{align}
-    b_{T,1}= \begin{pmatrix} \hat{b}_T   \\ 0         \end{pmatrix},
-    b_{T,2}= \begin{pmatrix}         0   \\ \hat{b}_T \end{pmatrix},
-    b_{T,3}= \begin{pmatrix} \hat{b}_T y \\ \hat{b}_T x \end{pmatrix}.
-  \end{align}
-  With respect to the reference element $[-1,1]^2$, these functions are orthogonal
-  to the basis of $\nabla Q_h$ and non-negative. Hence, there exists a function
-  fulfilling the three requirements and we define $\Pi_2$ to be the projection to the
-  space spanned by $b_{T,1}, b_{T,2}$ and $b_{T,3}$.
-\end{solution}
-\end{Problem}
-
 \begin{Problem}{mini-3d}
   By introducing barycentric coordinates $\lambda_0,\dots,\lambda_3$
   for a tetrahedron $\cell\subset\R^3$ and the quartic bubble
@@ -841,6 +836,59 @@ where $c\not=0$.
   bounded, the final term is bounded by $\norm \vv_{1,\domain}$.
 \end{solution}
 
+\end{Problem}
+
+\begin{Problem}{quadrilateral-mini}
+  Show that the MINI element can be generalized to quadrilateral
+  meshes. Design a bubble space $b_Q$ of minimal tensor degree such that
+  \begin{gather}
+    \vV_h = \bigl(H^1_h(\Q_1) \oplus B_h(b_Q) \cap \vV\bigr)^2,
+    \qquad
+    Q_h = H^1_h(\Q_1) \cap Q.
+  \end{gather}
+
+  Discuss extensions to hexahedra in three dimensions.
+\begin{solution}
+  For simplices in any dimension consider the bubble function
+  \begin{align}
+    b_T=\prod_{i=1}^d\lambda_i\in \mathbb{P}_d(\mathcal{T}_h)
+  \end{align}
+  and we can procede exactly as in the 2D case, i.e. the bubble
+  space is spanned by
+  \begin{align}
+   \left\{b_T e_1,\dotsc, b_T e_d\right\}.
+  \end{align}
+
+  For quadrilaterals and higher-dimensional generalizations consider
+  on the reference cell $[-1,1]^d$
+  \begin{align}
+    \hat{b}_T=\prod_{i=1}^d(1-x_i^2)\in \mathbb{Q}_{2d}(\hat{\mathcal{T}}_h).
+  \end{align}
+  In particular, we have to satisfy
+  \begin{gather}
+    \int_\domain \div(\Pi_2 \vv-\vv) q_h \dx
+    = \int_\domain (\vv-\Pi_2v)\cdot\nabla q_h\dx
+    = 0 \quad \forall q_h\in Q_h.
+  \end{gather}
+  Since $\nabla Q_h$ is spanned by
+  \begin{align}
+    \left\{
+      \begin{pmatrix} 1 \\0 \end{pmatrix},
+      \begin{pmatrix} 0 \\1 \end{pmatrix},
+      \begin{pmatrix} y \\x \end{pmatrix}
+    \right\}
+  \end{align}
+  in 3D, we need three additional bubble functions we choose as
+  \begin{align}
+    b_{T,1}= \begin{pmatrix} \hat{b}_T   \\ 0         \end{pmatrix},
+    b_{T,2}= \begin{pmatrix}         0   \\ \hat{b}_T \end{pmatrix},
+    b_{T,3}= \begin{pmatrix} \hat{b}_T y \\ \hat{b}_T x \end{pmatrix}.
+  \end{align}
+  With respect to the reference element $[-1,1]^2$, these functions are orthogonal
+  to the basis of $\nabla Q_h$ and non-negative. Hence, there exists a function
+  fulfilling the three requirements and we define $\Pi_2$ to be the projection to the
+  space spanned by $b_{T,1}, b_{T,2}$ and $b_{T,3}$.
+\end{solution}
 \end{Problem}
 
 \begin{intro}
@@ -901,14 +949,14 @@ where $c\not=0$.
   B_\cell(\nabla Q_h)$ fulfills
   \begin{gather}
     \label{eq:stokes:26}
-    \int_\cell (\Pi_2 u - u) \cdot\nabla q = 0,
+    \int_\cell (\Pi_2 \vu - \vu) \cdot\nabla q = 0,
     \qquad
     \forall q\in Q_{h|\cell}.
   \end{gather}
   Clearly, the dimension of $B_\cell(\nabla Q_h)$ equals the dimension
   of $Q_{h|\cell}$. Then, since the bubble functions are strictly
   positive inside $\cell$, equation~\eqref{eq:stokes:26} defines
-  $\Pi_2 u$ uniquely. It remains to show the $H^1$-stability of
+  $\Pi_2 \vu$ uniquely. It remains to show the $H^1$-stability of
   $\Pi_2(\identity-\Pi_1)$, which is done by the standard scaling
   argument
   \begin{gather}
@@ -978,17 +1026,17 @@ where $c\not=0$.
   define a divergence preserving operator $\Pi_2$:
   \begin{xalignat}2
     \label{eq:stokes:21}
-    \Pi_2 u(x) &= 0
+    \Pi_2 \vu(x) &= 0
     & \forall x &\text{ is vertex of } \cell\\
     \label{eq:stokes:22}
-    \int_E \Pi_2 u\ds &= \int_E u\ds
+    \int_E \Pi_2 \vu\ds &= \int_E u\ds
     & \forall E &\text{ is edge of } \cell
   \end{xalignat}
   This is true, since~\eqref{eq:stokes:22} implies the right hand side
   of~\eqref{eq:stokes:23}. It remains to show $H^1$-stability of
   $\Pi_2(\identity-\Pi_1)$. Let us first observe that the
   interpolation operator only involves edge integrals of $u$, which
-  are bounded functionals on $H^1$. Second, the condition on $\Pi_2 u$
+  are bounded functionals on $H^1$. Second, the condition on $\Pi_2 \vu$
   at the vertices implies a Poincaré-Friedrichs type inequality on the
   reference cell.
   Thus, we have by the standard scaling
@@ -1182,7 +1230,7 @@ where $c\not=0$.
   \end{gather}
   If there is an operator $\Pi_1$ such that
   \begin{xalignat*}2
-    \norm{\Pi_1 \vv}_{\vV} & \le \norm{\vv}_{\vV}
+    \norm{\Pi_1 \vv}_{1} & \le \norm{\vv}_{1}
     &\forall \vv&\in \vV,\\
     \int_\cell \div (\vv-\Pi_1v) \dx &= 0
     &\forall \vv&\in \vV, \cell\in\mesh_h,
@@ -1708,17 +1756,17 @@ where $c\not=0$.
   that for any $q_h\in Q_h$ there holds
   \begin{gather}
     \label{eq:stokes:44}
-    \sup_{\vv_h\in \vV_h} \frac{\form(\div \vv_h, q_h)}{\norm{\vv_h}_{\vV}}
-    \ge c_1 \norm{q_h}_Q - c_2 \norm{q_h}_h.
+    \sup_{\vv_h\in \vV_h} \frac{\form(\div \vv_h, q_h)}{\norm{\vv_h}_{1}}
+    \ge c_1 \norm{q_h}_{0} - c_2 \norm{q_h}_h.
   \end{gather}
 \end{Lemma}
 
 \begin{proof}
   We begin by using the continuous inf-sup condition to deduce that
   for arbitrary $q_h\in Q_h$ there is $\vv\in \vV$ with
-  $\norm{\vv}_{\vV} \le \norm{q_h}_Q$ such that
+  $\norm{\vv}_{1} \le \norm{q_h}_{0}$ such that
   \begin{gather}
-    \form(\div \vv,q_h) \ge c_1 \norm{q_h}_Q^2.
+    \form(\div \vv,q_h) \ge c_1 \norm{q_h}_{0}^2.
   \end{gather}
   Now, let $\vv_h = I_h \vv$. Hence,
   \begin{align}
@@ -1727,18 +1775,18 @@ where $c\not=0$.
     &\ge \sum_{\cell\in\mesh_h} \form(\vv-\vv_h,\nabla q_h)_{\cell}
       + \sum_{\face\in\faces_h^i}
       \form([v_h-\vv]\cdot\n_1,\jmp{q_h})_\face
-      + c_1 \norm{q_h}_Q\\
+      + c_1 \norm{q_h}_{0}\\
     &\ge -\left[\sum_{\cell\in\mesh_h} h_\cell^{-2} \norm{\vv-\vv_h}_\cell^2
       +\sum_{\face\in\faces_h^i} h_\face^{-1}
       \norm{\vv-\vv_h}_\face\right]
-      \norm{q_h}_h + c_1 \norm{q_h}_Q\\
-    &\ge -c \snorm{\vv}_1\norm{q_h}_h+ c_1 \norm{q_h}_Q\\
-    &\ge \left[c_1 \norm{q_h}_Q - c_2 \norm{q_h}_h\right]
-      \norm{q_h}_Q.
+      \norm{q_h}_h + c_1 \norm{q_h}_{0}\\
+    &\ge -c \snorm{\vv}_1\norm{q_h}_h+ c_1 \norm{q_h}_{0}\\
+    &\ge \left[c_1 \norm{q_h}_{0} - c_2 \norm{q_h}_h\right]
+      \norm{q_h}_{0}.
   \end{align}
   Furthermore, we have by the interpolation estimate
   \begin{gather}
-    \snorm{\vv_h} \le c \snorm{\vv} \le c \norm{q_h}_Q,
+    \snorm{\vv_h} \le c \snorm{\vv} \le c \norm{q_h}_{0},
   \end{gather}
   which proves the result by dividing $\form(\div \vv_h,q_h)$ by the
   norm of $\vv_h$.
@@ -1755,7 +1803,7 @@ where $c\not=0$.
   Then, the inf-sup condition
   \begin{gather}
     \sup_{\vv\in \vV_h} \frac{\form(\div \vv,q)}{\norm{\vv}_{1}}
-    \ge \beta \norm{q}_Q
+    \ge \beta \norm{q}_{0}
     \qquad\forall q\in Q_h,
   \end{gather}
   holds with $\beta$ determined by $c_1$, $c_2$ and $\tilde \beta$.
@@ -1764,16 +1812,16 @@ where $c\not=0$.
 \begin{proof}
   For any $q_h\in Q_h$ and $\theta\in[0,1]$ we have
   \begin{align}
-    \sup_{\vv_h\in \vV_h} \frac{\form(\div \vv_h,q_h)}{\norm{\vv_h}_{\vV}}
+    \sup_{\vv_h\in \vV_h} \frac{\form(\div \vv_h,q_h)}{\norm{\vv_h}_{1}}
     &=
-      \theta \sup_{\vv_h\in \vV_h} \frac{\form(\div \vv_h,q_h)}{\norm{\vv_h}_{\vV}}
+      \theta \sup_{\vv_h\in \vV_h} \frac{\form(\div \vv_h,q_h)}{\norm{\vv_h}_{1}}
     + (1-\theta)\sup_{\vv_h\in \vV_h} \frac{\form(\div
-      \vv_h,q_h)}{\norm{\vv_h}_{\vV}}
+      \vv_h,q_h)}{\norm{\vv_h}_{1}}
     \\
-    &\ge \theta c_1 \norm{q_h}_Q - c_2 \theta \norm{q_h}_h
+    &\ge \theta c_1 \norm{q_h}_{0} - c_2 \theta \norm{q_h}_h
       + (1-\theta) \tilde\beta \norm{q_h}_h
     \\
-    & \ge \frac{c_1 \tilde\beta}{c_2+\tilde\beta} \norm{q_h}_Q,
+    & \ge \frac{c_1 \tilde\beta}{c_2+\tilde\beta} \norm{q_h}_{0},
   \end{align}
   by choosing $\theta = \tilde\beta/(c_2+\tilde\beta)$.
 \end{proof}
@@ -1959,96 +2007,6 @@ where $c\not=0$.
   argument still applies.
 \end{proof}
 
-\subsection{Almost incompressible elasticity}
-
-\begin{intro}
-  If we discretize the mixed formulation of almost incompressible
-  elasticity with any of the stable Stokes pairs of the preceding
-  sections, we can apply
-  \slideref{Corollary}{stabilized-mixed-convergence} to obtain optimal
-  error estimates. Nevertheless, our problem with almost
-  incompressible elasticity was not the approximation of the pressure
-  (which was introduced artificially anyway), but locking. So, how
-  does the choice of an inf-sup stable pair avoid locking?
-  
-  Locking, in the terminology developed in the previous chapter, can
-  be described as the fact that the kernel of the discrete divergence
-  operator is too small, in the example presented even
-  \begin{gather}
-    \ker B_h = \{0\}.
-  \end{gather}
-  Note though, that there might be more subtle locking effects, where
-  the approximation is reduced but not destroyed.
-
-  In view of \slideref{Theorem}{galerkin-mixed-u-kerbh}, locking means
-  that $\vV_h^g$ is too small or even the zero space, and therefore the
-  quasi best-approximation result of this theorem is useless, since
-  \begin{gather}
-    \inf_{w_h\in \vV_h^g} \norm{\vu-w_h}_{\vV} \not\to 0
-    \quad\text{as } h \to 0.
-  \end{gather}
-  
-  The additional assumption of the inf-sup condition
-  in\slideref{Theorem}{galerkin-mixed-p} on the other hand guarantees
-  that an approximation of the kernel is possible, and thus, locking
-  becomes impossible.
-\end{intro}
-
-\begin{Lemma}{reduced integration}
-  Let $\vV_h\times Q_h$ be a stable pair for the Stokes problem
-  admitting a Korn inequality. Let furthermore $\Pi_Q$ be the
-  $L^2$-projection onto $Q_h$. Then, the solution $\vu_h\in \vV_h$ to the
-  weak formulation
-  \begin{gather}
-    \label{eq:stokes:33}
-    2\mu \form(\strain{\vu_h},\strain \vv) + \lambda (\Pi_Q \div
-    \vu_h,\Pi_q\div \vv) = (f,v)
-    \quad\forall \vv\in \vV_h,
-  \end{gather}
-  admits the quasi-optimality estimate
-  \begin{gather}
-    \norm{\vu-\vu_h}_1 \le c \sup_{\vv_h\in \vV_h}\norm{\vu-\vv_h}_1,
-  \end{gather}
-  with a constant $c$ independent of the quotient $\lambda/\mu$.
-\end{Lemma}
-
-\begin{proof}
-  We introduce the auxiliary variable $p_h\in Q_h$ by the condition
-  \begin{gather}
-    \int_\domain \div \vu_h q_h \dx = \int_\domain p_h q_h\dx
-    \quad\forall q_h\in Q_h.
-  \end{gather}
-  By definition of the $L^2$-projection, we have
-  \begin{gather}
-    \form(\div \vu_h, q_h) = \form(\Pi_Q\div \vu_h,q_h) = \form(p_h,q_h).
-  \end{gather}
-  Since $\Pi_Q\div \vu_h$ and $p_h$ are in the same space, this implies
-  that $p_h = \Pi_Q\div \vu_h$ pointwise. In addition, we observe that
-  \begin{gather}
-    \form (p_h, \Pi_Q\div \vv) = \form (p_h, \div \vv).
-  \end{gather}
-  Hence, the formulation~\eqref{eq:stokes:33} is equivalent to
-  \begin{gather}
-    \arraycolsep2pt
-    \begin{matrix}
-      2\mu\form(\strain{\vu_h},\strain \vv) &+& \form(p_h,\div \vv)
-      &=& \form(f,v) &\qquad&\forall \vv\in \vV_h\\
-      \form(\div \vu_h, q) &-&\tfrac1\lambda\form(p_h,q)&=&0&&\forall q\in Q_h.
-    \end{matrix}
-  \end{gather}
-  This is the Stokes problem augmented by a positive definite bilinear
-  form $c(.,.)$, such that
-  \slideref{Theorem}{mixed-stabilized-well-posed} and
-  \slideref{Corollary}{stabilized-mixed-convergence} apply.
-\end{proof}
-
-\begin{remark}
-  The technique in the previous lemma is often called \define{reduced
-    integration}. This refers to the fact, that we can replace the
-  explicit projection $\Pi_Q$ by using a quadrature formula which is
-  exact on $Q_h$, but zero for all higher order polynomials occuring
-  in $\div \vu_h$.
-\end{remark}
 
 %%% Local Variables:
 %%% mode: latex

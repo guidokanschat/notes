@@ -49,13 +49,13 @@ allslides.pdf: main.pdf
 
 png:	allslides.pdf
 	mkdir -p png
-	convert -transparent white -density 300 -scale 960x720 -antialias allslides.pdf[1-50] ./png/slide-%03d.png
-	convert -transparent white -density 300 -scale 960x720 -antialias allslides.pdf[51-100] ./png/slide-%03d.png
-	convert -transparent white -density 300 -scale 960x720 -antialias allslides.pdf[101-150] ./png/slide-%03d.png
-	convert -transparent white -density 300 -scale 960x720 -antialias allslides.pdf[151-200] ./png/slide-%03d.png
-	convert -transparent white -density 300 -scale 960x720 -antialias allslides.pdf[201-250] ./png/slide-%03d.png
-	convert -transparent white -density 300 -scale 960x720 -antialias allslides.pdf[251-300] ./png/slide-%03d.png
-	convert -transparent white -density 300 -scale 960x720 -antialias allslides.pdf[301-] ./png/slide-%03d.png
+	convert -transparent '#cccccc' -density 300 -scale 960x720 -antialias allslides.pdf[1-50] ./png/slide-%03d.png
+	convert -transparent '#cccccc' -density 300 -scale 960x720 -antialias allslides.pdf[51-100] ./png/slide-%03d.png
+	convert -transparent '#cccccc' -density 300 -scale 960x720 -antialias allslides.pdf[101-150] ./png/slide-%03d.png
+	convert -transparent '#cccccc' -density 300 -scale 960x720 -antialias allslides.pdf[151-200] ./png/slide-%03d.png
+	convert -transparent '#cccccc' -density 300 -scale 960x720 -antialias allslides.pdf[201-250] ./png/slide-%03d.png
+	convert -transparent '#cccccc' -density 300 -scale 960x720 -antialias allslides.pdf[251-300] ./png/slide-%03d.png
+	convert -transparent '#cccccc' -density 300 -scale 960x720 -antialias allslides.pdf[301-] ./png/slide-%03d.png
 
 
 problems.pdf: allslides.pdf
