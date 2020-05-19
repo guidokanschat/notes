@@ -50,6 +50,11 @@ Ciarlet, P.~G. (1988).
   volume~20 of {\em Studies in mathematics and its applications}.
 \newblock North-Holland.
 
+\bibitem[Clément, 1975]{Clement75}
+Clément, P. (1975).
+\newblock Approximation by finite element functions using local regularization.
+\newblock {\em Math. Modeling Numer. Anal.}, 9(R2):77--84.
+
 \bibitem[Desvillettes and Villani, 2002]{DesvillettesVillani02}
 Desvillettes, L. and Villani, C. (2002).
 \newblock On a variant of korn's inequality arising in statistical mechanics.
@@ -67,6 +72,11 @@ Ern, A. and Guermond, J.-L. (2004).
   Applied Mathematical Sciences}.
 \newblock Springer-Verlag, New York.
 
+\bibitem[Ern and Guermond, 2017]{ErnGuermond17}
+Ern, A. and Guermond, J.-L. (2017).
+\newblock Finite element quasi-interpolation and best approximation.
+\newblock {\em ESAIM: M2AN}, 51(4):1367--1385.
+
 \bibitem[Girault et~al., 2014]{GiraultKanschatRiviere14}
 Girault, V., Kanschat, G., and Rivière, B. (2014).
 \newblock Error analysis for a monolithic discretization of coupled {D}arcy and
@@ -83,6 +93,22 @@ Girault, V. and Raviart, P.-A. (1986).
 Monk, P. (2003).
 \newblock {\em Finite Element Methods for {M}axwell's Equations}.
 \newblock Oxford.
+
+\bibitem[Schöberl, 2008]{Schoeberl08}
+Schöberl, J. (2008).
+\newblock A posteriori error estimates for {M}axwell equations.
+\newblock {\em Math. Comput.}, 77(262):633--649.
+
+\bibitem[Schöberl, 2010]{Schoeberl10multilevel-hcurl}
+Schöberl, J. (2010).
+\newblock A multilevel decomposition result in h(curl).
+\newblock on the author's web site.
+
+\bibitem[Scott and Zhang, 1990]{ScottZhang90}
+Scott, L.~R. and Zhang, S. (1990).
+\newblock Finite element interpolation of non-smooth functions satisfying
+  boundary conditions.
+\newblock {\em Math. Comput.}, 54:483--493.
 
 \bibitem[Stenberg, 1990]{Stenberg90}
 Stenberg, R. (1990).

@@ -333,10 +333,11 @@ inf-sup stable?
 
 \begin{Problem}{checker-board}
   Let $\domain = (0,1)^2$ be the unit square and let the mesh consist
-  of Cartesian squares of side length $1/n$. Choose $\vV_h \subset \vV$
-  based on bilinear shape functions. Show that the piecewise constant
-  pressure function $p_c=\pm 1$ in a checkerboard fashion is in the
-  kernel of $B_h^\transpose$, that is
+  of Cartesian squares of side length $\nicefrac1n$ with $n$
+  even. Choose $\vV_h \subset \vV$ based on bilinear shape
+  functions. Show that the piecewise constant pressure function
+  $p_c=\pm 1$ in a checkerboard fashion is in the kernel of
+  $B_h^\transpose$, that is
   \begin{gather}
     b(\vv_h, p_c) = 0 \quad\forall \vv_h\in \vV_h.
   \end{gather}
@@ -393,74 +394,6 @@ where $c\not=0$.
 \subsection{Bubble stabilization and the MINI element}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{Definition}{barycentric-coordinates}
-  A simplex $T\in \R^d$ with vertices $x_0,\dots,x_d$ is described by
-  a set of $d+1$ \define{barycentric coordinates}
-  $\lambda_0,\dots,\lambda_d$ such that
-  \begin{xalignat}2
-    0\le\lambda_i(x) &\le 1& i&=0,\dots,d;\quad x\in T\\
-    \lambda_i(x_j) &= \delta_{ij}& i,j&=0,\dots,d\\
-    \sum \lambda_i(x) &= 1.
-  \end{xalignat}
-\end{Definition}
-
-\begin{remark}
-  The functions $\lambda_i(x)$ are the shape functions of the linear
-  $P_1$ element on $T$. They allow us to define basis functions on the
-  cell $T$ without use of a reference element $\widehat T$.
-
-  Note that $\lambda_i\equiv 0$ on the face opposite to the
-  vertex $x_i$.
-\end{remark}
-
-\begin{example}
-  We can use barycentric coordinates to define shape functions on
-  simplicial meshes easily, as in
-  Table~\ref{tab:barycentric-shapes}.
-  \begin{table}[tp]
-    \centering
-    \begin{tabular}{|c|l|}
-      \hline Degrees of freedom
-      & Shape functions \\\hline
-      \adjustbox{valign=center,margin=3pt}{\includegraphics[width=2cm]{./fig/p1-p.tikz}}
-      &
-        {\begin{minipage}[b]{6cm}
-          \begin{gather}
-            \phi_i = \lambda_i,
-            \quad i=0,1,2
-          \end{gather}
-        \end{minipage}}
-      \\\hline
-      \adjustbox{valign=center,margin=3pt}{\includegraphics[width=2cm]{./fig/p2-p.tikz}}
-      &
-        {\begin{minipage}[b]{6cm}
-          \begin{xalignat*}2
-            \phi_{ii} &= 2\lambda_i^2 - \lambda_i,
-            &i&=0,1,2\\
-            \phi_{ij} &= 4\lambda_i\lambda_j
-            &j&\neq i
-          \end{xalignat*}
-        \end{minipage}}
-        \\\hline
-      \adjustbox{valign=center,margin=3pt}{\includegraphics[width=2cm]{./fig/p3-p.tikz}}
-      &
-        {\begin{minipage}[b]{6cm}
-          \begin{xalignat*}2
-          \phi_{iii} &= \tfrac12 \lambda_i(3\lambda_i-1)(3\lambda_i-2)
-          &i&=0,1,2\\
-          \phi_{ij} &= \tfrac92\lambda_i\lambda_j(3\lambda_j-1)
-          &j&\neq i\\
-          \phi_0 &= 27\lambda_0\lambda_1\lambda_2
-        \end{xalignat*}
-        \end{minipage}}
-        \\\hline
-    \end{tabular}
-    \caption{Degrees of freedom and shape functions of simplicial elements
-      in terms of barycentric coordinates}
-    \label{tab:barycentric-shapes}
-  \end{table}
-\end{example}
 
 \begin{Notation}{piecewise-polynomial-spaces}
   We denote by
@@ -659,6 +592,114 @@ where $c\not=0$.
   bounded, the final term is bounded by $\norm \vv_{1,\domain}$.
 \end{proof}
 
+\begin{Theorem}{mini-convergence}
+  Let the mesh $\mesh_h$ be shape regular and quasi-uniform with mesh
+  size $h$. Then, the MINI element produces a discrete solution
+  $(\vu_h,p_h)\in \vV_h\times Q_h$ such that the following error
+  estimate holds:
+  \begin{gather}
+    \norm{\vu - \vu_h}_1 + \norm{p-p_h}_0
+    \le c h \bigl(\abs{u}_{\vH^2(\mesh_h)} + \abs{p}_{H^1(\mesh_h)}\bigr).
+  \end{gather}
+\end{Theorem}
+
+\begin{Problem}{mini-3d}
+  By introducing barycentric coordinates $\lambda_0,\dots,\lambda_3$
+  for a tetrahedron $\cell\subset\R^3$ and the quartic bubble
+  \begin{gather}
+    b_{4,\cell} = \lambda_0\lambda_1\lambda_2\lambda_3,
+  \end{gather}
+  show that the MINI element has a natural generalization to three
+  dimensional problems.
+\begin{solution}
+  We procede just as in the two-dimensional case and observe for any
+  $\Pi_2: \vV \to \bigl(B_h\bigr)^3$
+  \begin{align}
+    \int_\domain \div(\Pi_2 \vv-\vv) q_h \dx
+    = \int_\domain (\vv-\Pi_2v)\cdot\nabla q_h\dx = \sum_\cell\int_\cell (\vv-\Pi_2v)\dx\cdot\nabla q_\cell\dx
+  \end{align}
+  due to the continuity of the ansatz spaces.
+  If we choose $\Pi_2: \vV \to \bigl(B_h\bigr)^3$ such that for all $q_h\in Q_h$,
+  \begin{align}
+   \int_\cell \Pi_2 \vv_i \dx
+    = \alpha_{\cell,i} \int_\cell b_{4,\cell}\dx
+    = \int_\cell \vv_i\dx,
+  \end{align}
+  we indeed get the desired property
+  \begin{align}
+    \int_\domain \div(\Pi_2 \vv-\vv) q_h \dx = 0.
+  \end{align}
+  This is possible as $b_{4,\cell}$ is nonnegative. Stability follows as in the two-dimensional case.
+  \begin{gather}
+    \norm{\Pi_2 \vv}_{1,\cell}
+    \le c h_\cell^{-1} \norm{\Pi_2 \vv}_{0,\cell}
+    \le c h_\cell^{-1} \norm{\vv}_{0,\cell}.
+  \end{gather}
+  Finally, we use the estimates for $I_h$ to obtain
+  \begin{gather}
+    \norm{\Pi_2 (\identity-\Pi_1) \vv}_{1,\cell}
+    \le c h_\cell^{-1} \norm{\vv-I_h \vv}_{0,\cell}
+    \le c \snorm{\vv}_{1,\domain_\cell}.
+  \end{gather}
+  Since the number of intersecting of cells of shape regular meshes is
+  bounded, the final term is bounded by $\norm \vv_{1,\domain}$.
+\end{solution}
+
+\end{Problem}
+
+\begin{Problem}{quadrilateral-mini}
+  Show that the MINI element can be generalized to quadrilateral
+  meshes. Design a bubble space $b_Q$ of minimal tensor degree such that
+  \begin{gather}
+    \vV_h = \bigl(H^1_h(\Q_1) \oplus B_h(b_Q) \cap \vV\bigr)^2,
+    \qquad
+    Q_h = H^1_h(\Q_1) \cap Q.
+  \end{gather}
+
+  Discuss extensions to hexahedra in three dimensions.
+\begin{solution}
+  For simplices in any dimension consider the bubble function
+  \begin{align}
+    b_T=\prod_{i=1}^d\lambda_i\in \mathbb{P}_d(\mathcal{T}_h)
+  \end{align}
+  and we can procede exactly as in the 2D case, i.e. the bubble
+  space is spanned by
+  \begin{align}
+   \left\{b_T e_1,\dotsc, b_T e_d\right\}.
+  \end{align}
+
+  For quadrilaterals and higher-dimensional generalizations consider
+  on the reference cell $[-1,1]^d$
+  \begin{align}
+    \hat{b}_T=\prod_{i=1}^d(1-x_i^2)\in \mathbb{Q}_{2d}(\hat{\mathcal{T}}_h).
+  \end{align}
+  In particular, we have to satisfy
+  \begin{gather}
+    \int_\domain \div(\Pi_2 \vv-\vv) q_h \dx
+    = \int_\domain (\vv-\Pi_2v)\cdot\nabla q_h\dx
+    = 0 \quad \forall q_h\in Q_h.
+  \end{gather}
+  Since $\nabla Q_h$ is spanned by
+  \begin{align}
+    \left\{
+      \begin{pmatrix} 1 \\0 \end{pmatrix},
+      \begin{pmatrix} 0 \\1 \end{pmatrix},
+      \begin{pmatrix} y \\x \end{pmatrix}
+    \right\}
+  \end{align}
+  in 3D, we need three additional bubble functions we choose as
+  \begin{align}
+    b_{T,1}= \begin{pmatrix} \hat{b}_T   \\ 0         \end{pmatrix},
+    b_{T,2}= \begin{pmatrix}         0   \\ \hat{b}_T \end{pmatrix},
+    b_{T,3}= \begin{pmatrix} \hat{b}_T y \\ \hat{b}_T x \end{pmatrix}.
+  \end{align}
+  With respect to the reference element $[-1,1]^2$, these functions are orthogonal
+  to the basis of $\nabla Q_h$ and non-negative. Hence, there exists a function
+  fulfilling the three requirements and we define $\Pi_2$ to be the projection to the
+  space spanned by $b_{T,1}, b_{T,2}$ and $b_{T,3}$.
+\end{solution}
+\end{Problem}
+
 \begin{Notation}{broken-bilinear-form}
   We use the abbreviation
   \begin{gather}
@@ -793,103 +834,6 @@ where $c\not=0$.
   discrete problem.
 \end{remark}
 
-
-\begin{Problem}{mini-3d}
-  By introducing barycentric coordinates $\lambda_0,\dots,\lambda_3$
-  for a tetrahedron $\cell\subset\R^3$ and the quartic bubble
-  \begin{gather}
-    b_{4,\cell} = \lambda_0\lambda_1\lambda_2\lambda_3,
-  \end{gather}
-  show that the MINI element has a natural generalization to three
-  dimensional problems.
-\begin{solution}
-  We procede just as in the two-dimensional case and observe for any
-  $\Pi_2: \vV \to \bigl(B_h\bigr)^3$
-  \begin{align}
-    \int_\domain \div(\Pi_2 \vv-\vv) q_h \dx
-    = \int_\domain (\vv-\Pi_2v)\cdot\nabla q_h\dx = \sum_\cell\int_\cell (\vv-\Pi_2v)\dx\cdot\nabla q_\cell\dx
-  \end{align}
-  due to the continuity of the ansatz spaces.
-  If we choose $\Pi_2: \vV \to \bigl(B_h\bigr)^3$ such that for all $q_h\in Q_h$,
-  \begin{align}
-   \int_\cell \Pi_2 \vv_i \dx
-    = \alpha_{\cell,i} \int_\cell b_{4,\cell}\dx
-    = \int_\cell \vv_i\dx,
-  \end{align}
-  we indeed get the desired property
-  \begin{align}
-    \int_\domain \div(\Pi_2 \vv-\vv) q_h \dx = 0.
-  \end{align}
-  This is possible as $b_{4,\cell}$ is nonnegative. Stability follows as in the two-dimensional case.
-  \begin{gather}
-    \norm{\Pi_2 \vv}_{1,\cell}
-    \le c h_\cell^{-1} \norm{\Pi_2 \vv}_{0,\cell}
-    \le c h_\cell^{-1} \norm{\vv}_{0,\cell}.
-  \end{gather}
-  Finally, we use the estimates for $I_h$ to obtain
-  \begin{gather}
-    \norm{\Pi_2 (\identity-\Pi_1) \vv}_{1,\cell}
-    \le c h_\cell^{-1} \norm{\vv-I_h \vv}_{0,\cell}
-    \le c \snorm{\vv}_{1,\domain_\cell}.
-  \end{gather}
-  Since the number of intersecting of cells of shape regular meshes is
-  bounded, the final term is bounded by $\norm \vv_{1,\domain}$.
-\end{solution}
-
-\end{Problem}
-
-\begin{Problem}{quadrilateral-mini}
-  Show that the MINI element can be generalized to quadrilateral
-  meshes. Design a bubble space $b_Q$ of minimal tensor degree such that
-  \begin{gather}
-    \vV_h = \bigl(H^1_h(\Q_1) \oplus B_h(b_Q) \cap \vV\bigr)^2,
-    \qquad
-    Q_h = H^1_h(\Q_1) \cap Q.
-  \end{gather}
-
-  Discuss extensions to hexahedra in three dimensions.
-\begin{solution}
-  For simplices in any dimension consider the bubble function
-  \begin{align}
-    b_T=\prod_{i=1}^d\lambda_i\in \mathbb{P}_d(\mathcal{T}_h)
-  \end{align}
-  and we can procede exactly as in the 2D case, i.e. the bubble
-  space is spanned by
-  \begin{align}
-   \left\{b_T e_1,\dotsc, b_T e_d\right\}.
-  \end{align}
-
-  For quadrilaterals and higher-dimensional generalizations consider
-  on the reference cell $[-1,1]^d$
-  \begin{align}
-    \hat{b}_T=\prod_{i=1}^d(1-x_i^2)\in \mathbb{Q}_{2d}(\hat{\mathcal{T}}_h).
-  \end{align}
-  In particular, we have to satisfy
-  \begin{gather}
-    \int_\domain \div(\Pi_2 \vv-\vv) q_h \dx
-    = \int_\domain (\vv-\Pi_2v)\cdot\nabla q_h\dx
-    = 0 \quad \forall q_h\in Q_h.
-  \end{gather}
-  Since $\nabla Q_h$ is spanned by
-  \begin{align}
-    \left\{
-      \begin{pmatrix} 1 \\0 \end{pmatrix},
-      \begin{pmatrix} 0 \\1 \end{pmatrix},
-      \begin{pmatrix} y \\x \end{pmatrix}
-    \right\}
-  \end{align}
-  in 3D, we need three additional bubble functions we choose as
-  \begin{align}
-    b_{T,1}= \begin{pmatrix} \hat{b}_T   \\ 0         \end{pmatrix},
-    b_{T,2}= \begin{pmatrix}         0   \\ \hat{b}_T \end{pmatrix},
-    b_{T,3}= \begin{pmatrix} \hat{b}_T y \\ \hat{b}_T x \end{pmatrix}.
-  \end{align}
-  With respect to the reference element $[-1,1]^2$, these functions are orthogonal
-  to the basis of $\nabla Q_h$ and non-negative. Hence, there exists a function
-  fulfilling the three requirements and we define $\Pi_2$ to be the projection to the
-  space spanned by $b_{T,1}, b_{T,2}$ and $b_{T,3}$.
-\end{solution}
-\end{Problem}
 
 \begin{intro}
   The reasoning behind the MINI element can be applied easily to

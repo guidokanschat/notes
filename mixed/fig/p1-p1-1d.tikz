@@ -2,7 +2,7 @@
   %axis and cells
   \draw[->] (0,0) -- (8.5,0);
   \foreach \x in {0,1,2,3,4,5,6,7,8}
-    \draw (\x,-.1) -- (\x,.1);
+    \draw[dotted] (\x,-2) -- (\x,2);
 
   \foreach \x in {0,2,4,6}
   {
