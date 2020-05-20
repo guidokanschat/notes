@@ -723,7 +723,8 @@ where $c\not=0$.
   with standard, continuous linear finite elements for velocity and
   pressure. Here,
   \begin{gather}
-    \vf_T = \int_\cell \vf\dx,
+    \vf_T = \frac{1}{\norm{\nabla
+      b_3}_\cell^2} \int_\cell \vf b_3\dx,
     \qquad
     c_T = \frac{\form(b_3,1)_\cell}{\norm{\nabla
       b_3}_\cell^2}.
@@ -919,6 +920,24 @@ where $c\not=0$.
   then the pair $\vV_h\times Q_h$ is inf-sup stable. The same holds on
   quadrilateral and hexahedral meshes replacing $\P_1$ by $\Q_1$.
 \end{Corollary}
+
+\begin{Problem}{consistent-mini}
+  Let $\mesh_h$ be a simplicial mesh (for instance triangles in
+  two-dimensions) and let the pressure space be chosen as
+  \begin{gather}
+    Q_h = H^1_h(\P_k) \cap L^2_0(\domain).
+  \end{gather}
+  Design a velocity space $\vV_h\subset \vH^1_0(\domain)$ such that
+  the spaces are an inf-sup stable pair for the Stokes problem and
+  such that the estimate
+  \begin{gather}
+    \norm{u-u_h}_1 + \norm{p-p_h}_0 \le c h^{k+1} \left(\abs{u}_{k+2} + \abs{p}_{k+1}\right)
+  \end{gather}
+  holds for sufficiently regular solutions $u$ and $p$ on
+  quasi-uniform meshes with mesh size $h$, and such that this estimate
+  is optimal with respect to the interpolation estimates of both
+  spaces.
+\end{Problem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1158,6 +1177,18 @@ where $c\not=0$.
   just relies on face integrals.
 \end{solution}
 \end{Problem}
+
+\begin{Definition}{cellwise-conservative}
+  A discretization such that
+  \begin{gather}
+    \int_{\d\cell} \vu_h\cdot\n \ds = \int_{\d\cell} \vu\cdot \n \ds
+  \end{gather}
+  holds for any mesh cell $\cell$ is called \define{locally
+    conservative} or \define{cellwise conservative}, as it conserves
+  the mass of the flow inside each cell.
+  \index{mass conservation|local}
+  \index{mass conservation|cellwise}
+\end{Definition}
 
 \begin{intro}
   In spite of our remarks above, there is a generalization of the
@@ -1437,7 +1468,7 @@ where $c\not=0$.
   order less than the unmapped.
 \end{remark}
 
-\subsection{The family of Hood-Taylor elements}
+\section{The family of Hood-Taylor elements}
 
 \begin{Definition}{hood-taylor}
   The family of Hood-Taylor elements on simplices in dimension $d=2,3$
