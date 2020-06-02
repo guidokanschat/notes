@@ -593,8 +593,8 @@ where $c\not=0$.
 \end{proof}
 
 \begin{Theorem}{mini-convergence}
-  Let the mesh $\mesh_h$ be shape regular and quasi-uniform with mesh
-  size $h$. Then, the MINI element produces a discrete solution
+  Let the family of meshes $\mesh_h$ be shape regular and quasi-uniform with mesh
+  sizes $h$. Then, the MINI element produces a discrete solution
   $(\vu_h,p_h)\in \vV_h\times Q_h$ such that the following error
   estimate holds:
   \begin{gather}
@@ -992,14 +992,14 @@ where $c\not=0$.
     \Pi_2 \vu(x) &= 0
     & \forall x &\text{ is vertex of } \cell\\
     \label{eq:stokes:22}
-    \int_E \Pi_2 \vu\ds &= \int_E u\ds
+    \int_E \Pi_2 \vu\ds &= \int_E \vu\ds
     & \forall E &\text{ is edge of } \cell
   \end{xalignat}
   This is true, since~\eqref{eq:stokes:22} implies the right hand side
   of~\eqref{eq:stokes:23}. It remains to show $H^1$-stability of
   $\Pi_2(\identity-\Pi_1)$. Let us first observe that the
-  interpolation operator only involves edge integrals of $u$, which
-  are bounded functionals on $H^1$. Second, the condition on $\Pi_2 \vu$
+  interpolation operator only involves edge integrals of $\vu$, which
+  are bounded functionals on $\vH^1(\domain)$. Second, the condition on $\Pi_2 \vu$
   at the vertices implies a Poincaré-Friedrichs type inequality on the
   reference cell.
   Thus, we have by the standard scaling
@@ -1020,6 +1020,18 @@ where $c\not=0$.
     \le c \norm{\vu}_1^2
   \end{gather}
 \end{proof}
+
+\begin{Definition}{cellwise-conservative}
+  A discretization such that
+  \begin{gather}
+    \int_{\d\cell} \vu_h\cdot\n \ds = \int_{\d\cell} \vu\cdot \n \ds
+  \end{gather}
+  holds for any mesh cell $\cell$ is called \define{locally
+    conservative} or \define{cellwise conservative}, as it conserves
+  the mass of the flow inside each cell.
+  \index{mass conservation!local}
+  \index{mass conservation!cellwise}
+\end{Definition}
 
 \begin{remark}
   The proof shows, that from a mathematical point of view degrees of
@@ -1178,18 +1190,6 @@ where $c\not=0$.
 \end{solution}
 \end{Problem}
 
-\begin{Definition}{cellwise-conservative}
-  A discretization such that
-  \begin{gather}
-    \int_{\d\cell} \vu_h\cdot\n \ds = \int_{\d\cell} \vu\cdot \n \ds
-  \end{gather}
-  holds for any mesh cell $\cell$ is called \define{locally
-    conservative} or \define{cellwise conservative}, as it conserves
-  the mass of the flow inside each cell.
-  \index{mass conservation|local}
-  \index{mass conservation|cellwise}
-\end{Definition}
-
 \begin{intro}
   In spite of our remarks above, there is a generalization of the
   $P_2-P_0$ element involving bubble functions. We will discuss it in
@@ -1201,7 +1201,7 @@ where $c\not=0$.
   Given a space $Q_h\subset Q$ possibly discontinuous, choose
   $\vV_h\subset \vV$ such that
   \begin{gather}
-    B_h(b_\cell \nabla Q_h)^d \subset \vV_h.
+    B_h(b_\cell \nabla Q_h) \subset \vV_h.
   \end{gather}
   If there is an operator $\Pi_1$ such that
   \begin{xalignat*}2
@@ -1215,15 +1215,15 @@ where $c\not=0$.
 
 \begin{proof}
   We construct the \putindex{Fortin projection} using $\Pi_1$ and
-  define $\Pi_2$ only on $\vV^0 = \ker{\div}$. This is sufficient, since
-  for any $\vv\in \vV$ there holds $\vv-\Pi_1 \vv \in \vV^0$. Therefore, define
-  cell-wise $\Pi_2\colon \vV^0_{|\cell} \to B_\cell(b_\cell \nabla Q_h)$
+  define $\Pi_2$ only on $\vV^{0,0} \subset \vV$, the subspace of functions with zero average divergence on each cell. This is sufficient, since
+  for any $\vv\in \vV$ there holds $\vv-\Pi_1 \vv \in \vV^{0,0}$. Therefore, define
+  cell-wise $\Pi_2\colon \vV^{0,0}_{|\cell} \to B_\cell(b_\cell \nabla Q_h)$
   by the conditions
   \begin{gather}
     \int_\cell \div (\Pi_2 \vv - \vv ) q_h \dx = 0
     \qquad\forall q_h\in Q_{h|\cell}.
   \end{gather}
-  By this condition, $\Pi_2 \vv$ is divergence free itself.
+  By this condition, $\Pi_2 \vv \in \vV^{0,0}$ as well.
   Note that by the Gauss theorem, the divergence of a bubble function
   has always zero mean. Therefore, we have unique solvability and
   $\Pi_h \vv$ is well defined. It remains to apply the standard scaling
@@ -1249,25 +1249,35 @@ where $c\not=0$.
   Let $Q_h\subset Q$ be a space of piecewise differentiable
   functions. If for $\vV_h\subset \vV$ holds
   \begin{gather}
-    H^1_h(\P_2)^2 \oplus B_h(b_\cell \nabla Q_h)^2 \subset \vV_h,
+    H^1_h(\P_2)^2 + B_h(b_\cell \nabla Q_h) \subset \vV_h,
   \end{gather}
   then the pair $\vV_h\times Q_h$ is inf-sup stable.
 \end{Corollary}
 
+\begin{proof}
+  We apply \slideref{Lemma}{bubble-discontinuous} where $\Pi_1$ is the \putindex{Fortin operator} of the $P_2-P_0$ element.
+\end{proof}
+
 \begin{Corollary}{pk-pk2}
   Let the space dimension be $d=2$ and $k\ge 2$. Then, the spaces
   \begin{gather}
-    \vV_h = H^1_h(\P_k)^2 \cap \vV,
+    \vV_h = H^1_h(\P_k;\R^2) \cap \vV,
     \qquad
     Q_k = H^0_h(\P_{k-2}) \cap Q,
   \end{gather}
   form an inf-sup stable pair.
+  In three dimensions this holds for $k\ge 3$ and
+  \begin{gather}
+    \vV_h = H^1_h(\P_k;\R^3) \cap \vV,
+    \qquad
+    Q_k = H^0_h(\P_{k-3}) \cap Q,
+  \end{gather}
 \end{Corollary}
 
 \begin{proof}
   For $k=2$, this is the $P_2-P_0$ element. For $k>2$, we have for all
   $q_h\in Q_h$ on every cell $\nabla q_h\in \P_{k-3}$. Therefore,
-  $(b_{3,\cell} q_h)_{|\cell} \in \P_k$.
+  $(b_{3,\cell} \nabla q_h)_{|\cell} \in \P_k^2$.
 \end{proof}
 
 \begin{intro}
@@ -1283,7 +1293,7 @@ where $c\not=0$.
   $H^1$-stable interpolation according to
   \slideref{Assumption}{h1-stable-interpolation}. Furthermore, let
   there be a degree of freedom on each edge (face in 3D) controlling
-  the average normal derivative of $u\in \vV_h$ on this face. Finally,
+  the average of the normal component of $\vu\in \vV_h$ on this face. Finally,
   let $\vV_h$ contain the bubble space for $\nabla Q_h$,
   \begin{gather}
     B_h(b_\cell \nabla Q_h)^d \subset \vV_h.
@@ -1304,21 +1314,25 @@ where $c\not=0$.
   control the normal derivatives of $\vu_h$ on the faces of the cell,
   that is,
   \begin{gather}
-    \nodal_{\cell,i} = \int_{F_i} u\cdot\n \ds
+    \nodal_{\cell,i} = \int_{F_i} \vu\cdot\n \ds
     \qquad i=1,\dots,n_F,
   \end{gather}
   where $n_F$ is the number of faces per cell. Given the $H^1$-stable
   interpolation operator $I_h$, define $\Pi_2$ cell-wise such that
   \begin{xalignat}2
-    \nodal_{\cell,i}(\Pi_2 u) &= \nodal_{\cell,i}(\vu)
+    \nodal_{\cell,i}(\Pi_2 \vu) &= \nodal_{\cell,i}(\vu)
     &i&=1,\dots,n_F\\
-    \nodal_{\cell,i}(\Pi_2 u) &= 0
+    \nodal_{\cell,i}(\Pi_2 \vu) &= 0
     &i&=n_F+1,\dots,n_\cell.
   \end{xalignat}
-  Choosing the basis on $\vV_T$ which is dual to $\{\nodal_{\cell,i}\}$,
-  we see that this indeed implies
+  Choosing the basis $\{v_j\}$ on $\vV_T$ which is dual to $\{\nodal_{\cell,i}\}$,
+  we let
   \begin{gather}
-    0=\int_{\d\cell} (\Pi_2 u - u) \ds = \int_\cell \div (\Pi_2 u-u)\dx.
+    \Pi_2 \vu_{|\cell} = \sum_i \nodal_{\cell,i}(\vu) v_i.
+  \end{gather}
+  This indeed implies
+  \begin{gather}
+    0=\int_{\d\cell} (\Pi_2 \vu - \vu) \ds = \int_\cell \div (\Pi_2 \vu - \vu)\dx.
   \end{gather}
   Therefore, $\Pi_1 = I_h + \Pi_2(\identity-I_h)$ is divergence
   preserving. Boundedness follows by the standard scaling argument.
@@ -1346,12 +1360,12 @@ where $c\not=0$.
   component are determined by this definition, we can simply select
   the normal component on Cartesian meshes. On meshes with straight
   interfaces, it is clear that we can choose a linear combination of
-  the components of $u$ splitting into normal and tangential and thus
+  the components of $\vu$ splitting into normal and tangential and thus
   get the desired result. In general, we refer to the \putindex{Piola
   transformation} in the next chapter.
 \end{proof}
 
-\begin{Definition}{moment-basis-1d}
+\begin{Definition}{moment-basis-1d}7868
   The shape function space $\P_k$ on the reference element $\widehat
   T = [-1,1]$ in one dimension can be split into
   \begin{gather}
@@ -1807,7 +1821,7 @@ where $c\not=0$.
   there holds
   \begin{gather}
     \norm{\vu-\vu_h}_1 + \norm{p-p_h}_0
-    \le c h^k\bigl(\snorm{\vu}_{k+1} + \snorm{p}_k\bigr).
+    \le c h^k\bigl(\snorm{\vu}_{k+1} + \snorm{p}_{k}\bigr).
   \end{gather}
 \end{Theorem}
 
