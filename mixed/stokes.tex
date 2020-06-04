@@ -1422,7 +1422,7 @@ where $c\not=0$.
   Together with node functionals for $j_1, \dots, j_d = 0,\dots, k$
   \begin{gather}
     \nodal_{j_1,\dots,j_d}(\psi_{i_1,\dots,i_d})
-    = \prod_{m=1}^d \frac{2j_m+1}2 \int_{-1}^{1} \plegendre_{j_m} \plegendre_{i_m}(x_m) \dx_m,
+    = \prod_{m=1}^d \frac{2j_m+1}2 \int_{-1}^{1} \plegendre_{j_m}(x_m) \plegendre_{i_m}(x_m) \dx_m,
   \end{gather}
   they form a unisolvent finite element.
   A basis and node function set for $\P_k(\refcell)$ is obtained by
@@ -1450,26 +1450,74 @@ where $c\not=0$.
   \end{enumerate}
 \end{Problem}
 
+\begin{intro}
+  Now that we have introduced moment degrees of freedom for $L^2$, we
+  need the same for $H^1$. The major difference here is, that
+  interpolation at the boundary of the element must be included in the
+  node functionals in order to achieve continuity. Thus, the set of
+  node functionals will be split in two: interpolation at the boundary
+  and orthogonality in the interior.
+\end{intro}
 
-
-\begin{Definition}{moment-basis-1d}
-  The shape function space $\P_k$ on the reference element $\refcell = [-1,1]$ in one dimension can be split into
+\begin{Definition}{gegenbauer-polynomials}
+  For $k\ge 2$ let $\P_k^0 = \P_k \cap H^1_0([-1,1])$ be the space of
+  polynomials of degree up to $k$. On $\P_k^0$ we use the $H^1_0$-inner product
   \begin{gather}
-    \label{eq:stokes:35}
-    \P_k^0 \oplus \overline{\P_k},
+    \scal(p,q) = \int_{-1}^1 p'q'\dx.
   \end{gather}
-  where $\P_k^0 = \P_k \cap H^1_0(\refcell)$. We choose an
-  orthogonal basis for $\P_k^0$ with respect to the $H^1_0$-inner
-  product $\scal(p,q) = \int p'q'\dx$ by
+  The integrated Legendre polynomials
   \begin{gather}
     \label{eq:Lobatto-polynomials}
     \phi_i(x) = \int_{-1}^x L_{i}(t)\dt\quad i=1,\dots,k-1,
   \end{gather}
-  where $L_i$ is the Legendre polynomial of degree $i$. The two
-  basis functions for $\overline{\P_k}$ are chosen such that
-  \begin{xalignat*}2
-    \phi_0(-1) &= 1, & \scal(\phi_0,\phi_i) &= 0 \quad i=1,\dots,k-1,\\
-    \phi_k(1) &= 1, & \scal(\phi_k,\phi_i) &= 0 \quad i=1,\dots,k-1.
+  form an orthogonal basis of this space.
+\end{Definition}
+
+\begin{Remark}
+  By the relation
+  \begin{gather}
+    (2i+1)\plegendre_{i} = \tfrac{d}{dx}\bigl(\plegendre_{i+1}-\plegendre_{i-1}\bigr),
+  \end{gather}
+  we can characterize the integrated Legendre polynomials as
+  \begin{gather}
+    \phi_i = \tfrac1{2i+1}\bigl(\plegendre_{i+1}-\plegendre_{i-1}\bigr),
+    \qquad i=1,\dots.
+  \end{gather}
+  Since the Legendre polynomials are a special case of \define{Jacobi
+    polynomials}, namely $\plegendre_i = P_i^{(0,0)}$ and for those there holds
+  the relation
+  \begin{gather}
+    \tfrac{d^k}{dx^k} P_i^{(\alpha,\beta)}
+    = \tfrac{\Gamma(\alpha+\beta+i+1+k)}{2^k\Gamma(\alpha+\beta+i+1)}
+    P_{i-k}^{(\alpha+k,\beta+k)},
+  \end{gather}
+  we also have $\phi_i' = P_i^{(0,0)}$ and thus up to normalization
+  $\phi_i = P_{i+1}^{(-1,-1)}$. This is also the corresponding Gegenbauer
+  polynomial $C_j^{(\alpha)}$ for $\alpha=-\nicefrac12$.
+\end{Remark}
+
+\begin{Problem}{gegenbauer-polynomials}
+  Verify that the integrated Legendre polynomials form indeed an
+  orthogonal basis of the space $\P_k^0$.
+\end{Problem}
+
+\begin{Definition}{moment-basis-1d}
+  The shape function space $\P_k$ on the reference interval
+  $\refcell = [-1,1]$ can be split orthogonally into
+  \begin{gather}
+    \label{eq:stokes:35}
+    \P_k^0 \oplus \overline{\P_k},
+  \end{gather}
+  where $\P_k^0 = \P_k \cap H^1_0(\refcell)$. We obtain an orthogonal
+  basis for $\P_k$ with respect to the $H^1_0$-inner product by first
+  using the integrated Legendre polynomials $\phi_i$, for
+  $i=1,\dots,k-1$.  The two remaining basis functions for $\P_k$ are
+  chosen such that
+  \begin{xalignat*}3
+    \phi_0(-1) &= 1, & \phi_0(1) &= 0,
+    & \scal(\phi_0,\phi_i) &= 0 \quad i=1,\dots,k-1,\\
+    \phi_k(1) &= 1, & \phi_k(-1) &= 0,
+    & \scal(\phi_k,\phi_i) &= 0 \quad i=1,\dots,k-1.
   \end{xalignat*}
 \end{Definition}
 
@@ -1478,10 +1526,10 @@ where $c\not=0$.
   \begin{gather}
     \label{eq:stokes:30}
     \begin{aligned}
-    \nodal_0(\phi) &= \phi(-1),&
-    \nodal_k(\phi) &= \phi(1),\\
-    \nodal_i(\phi) &= \frac1{\int {\phi_i'}^2} \int_{-1}^{1}
-    \phi'\phi_i'\dx
+    \nodal_0(u) &= u(-1),&
+    \nodal_k(u) &= u(1),\\
+    \nodal_i(u) &= \frac1{\norm{\phi_i'}_0^2}
+    \int_{-1}^{1} u'\phi_i'\dx
     &i&=1,\dots,k-1,
     \end{aligned}
   \end{gather}
@@ -1537,9 +1585,6 @@ where $c\not=0$.
 \begin{Problem}{moment-dofs}
   \begin{enumerate}
   \item Prove \slideref{Lemma}{moment-dofs-1d}
-  \item Find an expression for the basis functions (up to
-    normalization) in $\P_k^0$ in one dimension terms of Legendre polynomials
-    (Wikipedia?)
   \item Verify with meaningful examples that the preceding definitions
     define unisolvent finite elements.
 
