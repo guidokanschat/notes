@@ -1365,14 +1365,100 @@ where $c\not=0$.
   transformation} in the next chapter.
 \end{proof}
 
-\begin{Definition}{moment-basis-1d}7868
-  The shape function space $\P_k$ on the reference element $\widehat
-  T = [-1,1]$ in one dimension can be split into
+\subsection{Finite elements based on moments}
+
+\begin{intro}
+  So far, we are used to finite elements based on node functionals
+  defined by Lagrange interpolation in some support points. Any other
+  type of node functional seemed an exercise in the category
+  ``possible but useless''. In this section now, we have seen an
+  example, where the mean value over an edge is more suited than a
+  point value. We also have to discuss the implementation of the
+  pressure space $\P_k$ on quadrilaterals and hexahedra. There, the
+  dimension of the shape function space does not match the topology of
+  the mesh cell. Thus, assigning quadrature points introduces a
+  certain randomness, which in the worst case may not even yield a
+  unisolvent combination of node functionals. Here, we will generalize
+  the idea of mean value integrals to higher order elements.
+\end{intro}
+
+\begin{Definition}{legendre-basis-1d}
+  Let $\refcell = [-1,1]$ be the reference cell in one
+  dimension. Then, the conditions $\plegendre_i \in \P_i$ for
+  $i=0,\dots,k$ and
+  \begin{gather}
+      \int_{\refcell} \plegendre_i\plegendre_j\dx = 0 \qquad i\neq j,
+  \end{gather}
+  define an orthogonal basis of $\P_k$ up to normalization. If we pose
+  the additional condition $\plegendre_i(1) = 1$, the $\plegendre_i$ are called
+  \define{Legendre polynomials}.
+
+  A unisolvent finite element on $\refcell$ with the interpolation
+  conditions $\nodal_j(\plegendre_i) = \delta_{ij}$ is declared by the
+  node functionals
+  \begin{gather}
+    \nodal_j(u) = \frac{2j+1}2 \int_{\refcell} \plegendre_j u \dx.
+  \end{gather}
+  The degrees of freedom are called \define{moments} with respect to the polynomials $\plegendre_j$.
+\end{Definition}
+
+\begin{remark}
+  The normalization $\plegendre_i(1) = 1$ is arbitrary and from a
+  mathematical point of view not very intuitive. It can be replaced by the condition
+  \begin{gather}
+    \int_{\refcell} \plegendre_i^2\dx = 1,
+  \end{gather}
+  yielding an orthonormal basis. Still, both normalizations have their own merits.
+\end{remark}
+
+\begin{Definition}{legendre-higher-dimension}
+  Let $\refcell = [-1,1]^d$ be the reference cell in dimension
+  $d$. A \define{tensor product basis} for the space
+  $\Q_k(\refcell)$ is obtained by the definition
+  \begin{gather}
+    \psi_{i_1,\dots,i_d}(\vx) = \prod_{m=1}^d \plegendre_{i_m}(x_m),
+    \qquad i_1,\dots,i_d = 0,\dots,k.
+  \end{gather}
+  Together with node functionals for $j_1, \dots, j_d = 0,\dots, k$
+  \begin{gather}
+    \nodal_{j_1,\dots,j_d}(\psi_{i_1,\dots,i_d})
+    = \prod_{m=1}^d \frac{2j_m+1}2 \int_{-1}^{1} \plegendre_{j_m} \plegendre_{i_m}(x_m) \dx_m,
+  \end{gather}
+  they form a unisolvent finite element.
+  A basis and node function set for $\P_k(\refcell)$ is obtained by
+  truncating the sets such that
+  \begin{gather}
+    \sum i_m \le k, \qquad \sum j_m \le k.
+  \end{gather}
+\end{Definition}
+
+\begin{Problem}{legendre-basis}
+  \begin{enumerate}
+  \item Argue that the node functionals in the previous definition, albeit
+    defined on basis functions with a special structure only, apply to
+    the whole space $\Q_k(\refcell)$.
+    
+  \item Verify the interpolation conditions
+    \begin{gather}
+      \nodal_{j_1,\dots,j_d}(\psi_{i_1,\dots,i_d}) = \delta_{i_1j_1} \cdots \delta_{i_dj_d},
+    \end{gather}
+    using for instance Wikipedia for the one-dimensional integrals.
+    
+  \item For a mesh cell $\cell$ of size $h$, you can define basis and
+    node functionals through integrals on $\cell$ or through mapping
+    to $\refcell$. Discuss the scaling properties of both approaches.
+  \end{enumerate}
+\end{Problem}
+
+
+
+\begin{Definition}{moment-basis-1d}
+  The shape function space $\P_k$ on the reference element $\refcell = [-1,1]$ in one dimension can be split into
   \begin{gather}
     \label{eq:stokes:35}
     \P_k^0 \oplus \overline{\P_k},
   \end{gather}
-  where $\P_k^0 = \P_k \cap H^1_0(\widehat T)$. We choose an
+  where $\P_k^0 = \P_k \cap H^1_0(\refcell)$. We choose an
   orthogonal basis for $\P_k^0$ with respect to the $H^1_0$-inner
   product $\scal(p,q) = \int p'q'\dx$ by
   \begin{gather}
@@ -1403,12 +1489,8 @@ where $c\not=0$.
   \slideref{Definition}{moment-basis-1d}.
 \end{Lemma}
 
-\begin{proof}
-  The proof is left to the reader.
-\end{proof}
-
 \begin{Definition}{qk0}
-  Let $\widehat T = [-1,1]^d$ be the reference square in $\R^d$. We
+  Let $\widehat T = [-1,1]^d$ be the reference hypercube in $\R^d$. We
   define the space
   \begin{gather}
     \label{eq:stokes:36}
@@ -1451,6 +1533,21 @@ where $c\not=0$.
     &\phi_j&\in\Q_{k}^0(\widehat T).
   \end{xalignat*}
 \end{Definition}
+
+\begin{Problem}{moment-dofs}
+  \begin{enumerate}
+  \item Prove \slideref{Lemma}{moment-dofs-1d}
+  \item Find an expression for the basis functions (up to
+    normalization) in $\P_k^0$ in one dimension terms of Legendre polynomials
+    (Wikipedia?)
+  \item Verify with meaningful examples that the preceding definitions
+    define unisolvent finite elements.
+
+    \item For a mesh cell $\cell$ of size $h$, you can define basis and
+    node functionals through integrals on $\cell$ or through mapping
+    to $\refcell$. Discuss the scaling properties of both approaches.
+\end{enumerate}
+\end{Problem}
 
 \begin{Example}{qk-pk1}
   The first two members of the $Q_k-P_{k-1}$ family have the nodal
@@ -1586,7 +1683,7 @@ where $c\not=0$.
   For a \putindex{macro element} $M$, we introduce the spaces
   \begin{align}
     \label{eq:stokes:27}
-    \vv_M &= \bigl\{ \vu\in H^1_0(M;\R^d) \big\vert
+    \vV_M &= \bigl\{ \vu\in \vH^1_0(M) \big\vert
             \;\exists \vv_h\in \vV_h\colon \vu=\vv_{h|M}\bigr\},
     \\
     \label{eq:stokes:28}
