@@ -1576,7 +1576,7 @@ where $c\not=0$.
     \nodal_{1,i,j}(u) &= \int_{E_i} u \phi_j\ds
     &\phi_j&\in\Q_{k}^0(E_i)&E_i&\text{ is edge of } \widehat T\\
     \nodal_{2,i,j}(u) &= \int_{F_i} u \phi_j\ds
-    &\phi_j&\in\Q_{k}^0(F_i)&F_i&\text{ is face of } \widehat T\\
+    &\phi_j&\in \Q_{k}^0(F_i)&F_i&\text{ is face of } \widehat T\\
     \nodal_{3,j}(u) &=\int_{\widehat T} u \phi_j \dx
     &\phi_j&\in\Q_{k}^0(\widehat T).
   \end{xalignat*}
@@ -1585,6 +1585,9 @@ where $c\not=0$.
 \begin{Problem}{moment-dofs}
   \begin{enumerate}
   \item Prove \slideref{Lemma}{moment-dofs-1d}
+  \item Verify that the node values in
+    \slideref{Definition}{moment-dofs-qk-2d} are indeed tensor product
+    node functionals as claimed.
   \item Verify with meaningful examples that the preceding definitions
     define unisolvent finite elements.
 
@@ -1628,7 +1631,7 @@ where $c\not=0$.
 
 \begin{Definition}{hood-taylor}
   The family of Hood-Taylor elements on simplices in dimension $d=2,3$
-  for polynomial degrees $k\ge 1$ consists of the pairs
+  for polynomial degrees $k\ge 2$ consists of the pairs
   \begin{gather}
     \label{eq:stokes:38}
     \vV_h = H^1_h(\P_k)^d \cap \vV,
@@ -1694,14 +1697,25 @@ where $c\not=0$.
 
 \begin{Definition}{macro-equivalence}
   A \define{macro element} $M\subset \T_h$ is a union of cells
-  $\cell_i\in\T_h$ connected by their boundary faces. Given the
-  mappings $\Phi_\cell\colon \widehat\cell \to \cell$, there is a
-  reference macro element $\widehat M$ and a mapping
-  $\Phi_M\colon \widehat M\to M$ such that $\Phi_M(\widehat M) =
-  M$. We say that $M$ is equivalent to $\widehat M$.
-
-  We will use the symbol $M$ for the set of cells constituting a macro
-  element as well as for the subset of $\domain$ covered by their union.
+  $\cell_i\in\T_h$ connected by their boundary faces. We introduce
+  reference macro elements $\widehat M$ as union of reference macro
+  cells $\widehat \cell_i$. We say that the macro element $M$ is
+  \textbf{equivalent}\index{equivalence!macro elements}
+  to $\widehat M$, if there is a continuous, invertible,
+  surjective mapping $\Phi_M\colon \widehat M\to M$ such that
+  \begin{gather}
+    \begin{aligned}
+      \cell_i &= \Phi_M(\refcell_i)
+      &\qquad&\cell_i&\subset M,\\
+      \Phi_{M|\refcell_i} &= \Phi_\cell \circ \Phi^{-1}_{\refcell_i}
+      &\qquad&\refcell_i&\subset \widehat M.\\
+    \end{aligned}
+  \end{gather}
+  Here, the two cell mappings are mappings from the reference cell
+  $\refcell$.
+%
+%  We will use the symbol $M$ for the set of cells constituting a macro
+%  element as well as for the subset of $\domain$ covered by their union.
 \end{Definition}
 
 \begin{Problem}{reference-macros}
@@ -1781,7 +1795,7 @@ where $c\not=0$.
   Assume that there is a covering of $\domain$ by macro elements such
   that every interior face $\face \in \faces_h^i$ is an interior face
   of one macro element and each cell $\cell\in\mesh_h$ is an element
-  of not more than $n_O$ macro elements. Then, the local stability
+  of not more than $n_O$ macro elements. Then, if the local stability
   estimate
   \begin{gather}
     \label{eq:stokes:42}
@@ -1789,14 +1803,14 @@ where $c\not=0$.
     \ge \widehat \beta \snorm{q}_M
     \qquad\forall q\in Q_M,
   \end{gather}
-  implies the stability estimate
+  holds uniformly for all $M$, the stability estimate
   \begin{gather}
     \label{eq:stokes:43}
     \sup_{\vv\in \vV_h} \frac{\form(\div \vv,q)}{\norm{\vv}_{1}}
     \ge \beta \norm{q}_h
     \qquad\forall q\in Q_h,
   \end{gather}
-  with a constant $\beta$ independent of the mesh size $h$.
+  holds with a constant $\beta$ independent of the mesh size $h$.
 \end{Lemma}
 
 \begin{proof}
@@ -1817,7 +1831,7 @@ where $c\not=0$.
     \ge \widehat \beta \sum_M \snorm{q}_M^2
     \ge \widehat \beta \norm{q}_h^2.
   \end{gather}
-  Furthermore, there holds by Poincaré inequality
+  Furthermore, there holds by Friedrichs inequality
   \begin{gather}
     c_S \norm{\vv}_1 \le \snorm{\vv}_1
     \le \sum_M \snorm{\vv_M}_{1} \le \sum_M \snorm{q}_M
@@ -1845,11 +1859,13 @@ where $c\not=0$.
 \end{Lemma}
 
 \begin{Problem}{macro-local}
-  Prove \slideref{Lemma}{macro-local}. Furthermore, prove that under
-  the assumption that there is a finite set of reference macro
-  elements $\widehat M_i$, such that all macro elements in a family
-  are equivalent to one of them, the estimate holds with a uniform
-  constant $\beta>0$.
+  \begin{enumerate}
+  \item Prove \slideref{Lemma}{macro-local}.
+  \item Assume that there is a finite set of reference macro elements
+    $\widehat M_i$, such that all macro elements covering a family of
+    meshes are equivalent to one of them. Prove that the estimate holds with a uniform
+  constant $\widehat\beta_i \ge \widehat\beta>0$.
+  \end{enumerate}
 \begin{solution}
   For each $M$, the existence of such a constant $\beta_{M}$ is
   equivalent to the fact that the smallest nonzero singular value is
