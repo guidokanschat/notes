@@ -1792,13 +1792,13 @@ where $c\not=0$.
 \end{Definition}
 
 \begin{Lemma}{macro1}
-  Assume that there is a covering of $\domain$ by macro elements such
+  Assume that there is a covering of $\mesh_h$ by macro elements such
   that every interior face $\face \in \faces_h^i$ is an interior face
   of one macro element and each cell $\cell\in\mesh_h$ is an element
   of not more than $n_O$ macro elements. Then, if the local stability
   estimate
   \begin{gather}
-    \label{eq:stokes:42}
+    \label{eq:Stokes:42}
     \sup_{\vv\in \vV_M} \frac{\form(\div \vv,q)_M}{\snorm{\vv}_{1,M}}
     \ge \widehat \beta \snorm{q}_M
     \qquad\forall q\in Q_M,
@@ -1828,7 +1828,7 @@ where $c\not=0$.
   element. Hence,
   \begin{gather}
     \form(\div \vv, q) = \sum_M \form(\div \vv_M,q)
-    \ge \widehat \beta \sum_M \snorm{q}_M^2
+    \ge \widcehat \beta \sum_M \snorm{q}_M^2
     \ge \widehat \beta \norm{q}_h^2.
   \end{gather}
   Furthermore, there holds by Friedrichs inequality
@@ -1848,7 +1848,7 @@ where $c\not=0$.
   equivalent to the same reference macro element $\widehat M$. Let the
   family $\{\mesh_h\}$ be shape regular and assume that on each macro
   $M$ the set $\ker{B^\transpose_{M}}$ only contains the constant functions. Then,
-  there is a constant $\beta_M>0$ independent of $h$ such that for all
+  there is a constant $\beta_{\widetilde M}>0$ independent of $h$ such that for all
   $M$ there holds
   \begin{gather}
     \label{eq:stokes:31}
@@ -1858,15 +1858,34 @@ where $c\not=0$.
   \end{gather}
 \end{Lemma}
 
+\begin{proof}
+  The proof consists of the following steps
+  \begin{enumerate}
+  \item Show that it is sufficient to construct $\vv$ only for mean
+    value free $q \in Q_M$.
+  \item Use the condition on the kernel to argue the existence of $\vv \in \vV_M$
+  \item Use the finite dimensionality to deduce $\beta_M>0$ for each $M$.
+  \item Show that $\beta_M$ is constant under the transformation
+    $M \mapsto h M$ for any factor $h$.
+  \item Show that $\beta_M$ is uniformly bounded away from zero by a
+    compactness argument.
+  \end{enumerate}
+\end{proof}
+
 \begin{Problem}{macro-local}
   \begin{enumerate}
-  \item Prove \slideref{Lemma}{macro-local}.
-  \item Assume that there is a finite set of reference macro elements
+  \item Show that $\beta_M$ in the proof of
+    \slideref{Lemma}{macro-local} is indeed a continuous function for
+    cells mapped bilinearly. To this end, make use of the fact that
+    shape functions on a mesh cell $cell$ are defined through
+    $\vv(\vx) = \refvv(\Phi_T^{-1}(\vx))$.
+  \item   Assume that there is a finite set of reference macro elements
     $\widehat M_i$, such that all macro elements covering a family of
     meshes are equivalent to one of them. Prove that the estimate holds with a uniform
   constant $\widehat\beta_i \ge \widehat\beta>0$.
-  \end{enumerate}
+\end{enumerate}
 \begin{solution}
+  \todo{Solution for old version of problem!}
   For each $M$, the existence of such a constant $\beta_{M}$ is
   equivalent to the fact that the smallest nonzero singular value is
   strictly greater than zero in finite dimensional
@@ -1921,14 +1940,14 @@ where $c\not=0$.
     &= \form(\div \vv_h - \div \vv,q_h) + \form(\div \vv,q_h)\\
     &\ge \sum_{\cell\in\mesh_h} \form(\vv-\vv_h,\nabla q_h)_{\cell}
       + \sum_{\face\in\faces_h^i}
-      \form([v_h-\vv]\cdot\n_1,\jmp{q_h})_\face
+      \form({(\vv_h-\vv)\cdot\n_1},\jmp{q_h})_\face
       + c_1 \norm{q_h}_{0}\\
     &\ge -\left[\sum_{\cell\in\mesh_h} h_\cell^{-2} \norm{\vv-\vv_h}_\cell^2
       +\sum_{\face\in\faces_h^i} h_\face^{-1}
-      \norm{\vv-\vv_h}_\face\right]
+      \norm{\vv-\vv_h}_\face\right]^{\nicefrac12}
       \norm{q_h}_h + c_1 \norm{q_h}_{0}\\
     &\ge -c \snorm{\vv}_1\norm{q_h}_h+ c_1 \norm{q_h}_{0}\\
-    &\ge \left[c_1 \norm{q_h}_{0} - c_2 \norm{q_h}_h\right]
+    &\ge \bigl(c_1 \norm{q_h}_{0} - c_2 \norm{q_h}_h\bigr)
       \norm{q_h}_{0}.
   \end{align}
   Furthermore, we have by the interpolation estimate
@@ -2029,10 +2048,10 @@ where $c\not=0$.
     \quad
     w_1 = \int_{\cell_2} \phi\dx,
   \end{gather}
-  Now, let $u(x_1)\cdot t_1 = 1$, $u(x_1)\cdot\n_1 = 0$, and $u(x_2)
+  Now, let $\vu(x_1)\cdot t_1 = 1$, $\vu(x_1)\cdot\n_1 = 0$, and $\vu(x_2)
   = 0$. Then,
   \begin{gather}
-    \form(\div u,q_h)_M = -\form(\vu,\nabla q_h)_M
+    \form(\div \vu,q_h)_M = -\form(\vu,\nabla q_h)_M
     = -(w_1+w_2) \nabla q_h\cdot t_1.
   \end{gather}
   Hence, $q_h\in \ker{B_M^\transpose}$ implies $\nabla q_h\cdot t_1 = 0$ in
@@ -2046,10 +2065,10 @@ where $c\not=0$.
     \nabla q_h|_{\cell_1} = 0.
   \end{gather}
 
-  Now we choose the test function $u(x_1)\cdot \n_1 = 1$,
-  $u(x_1)\cdot t_1 = 0$, and $u(x_2) = 0$. We get
+  Now we choose the test function $\vu(x_1)\cdot \n_1 = 1$,
+  $\vu(x_1)\cdot t_1 = 0$, and $\vu(x_2) = 0$. We get
   \begin{gather}
-    0 = \form(\div u,q_h) = -w_1 \nabla q_h|_{\cell_1}\cdot\n_1
+    0 = \form(\div \vu,q_h) = -w_1 \nabla q_h|_{\cell_1}\cdot\n_1
     - w_2 \nabla q_h|_{\cell_2}\cdot\n_1.
   \end{gather}
   Due to~\eqref{eq:stokes:34}, the first term vanishes and together
