@@ -277,7 +277,7 @@ write down our second weak formulation of the mixed diffusion problem:
   %   \int_{\R^d} u\cdot \phi \dx + \int_{\R^d}
   % \end{gather}
   Either by a standard mollifier argument~\cite{AdamsFournier03} or
-  following~\cite[Theorem 2.4]{GiraultRaviart86}
+  following~\cite[Theorem 2.4]{GiraultRaviart86} or~\cite[Theorem 3.22]{Monk03}.
 \end{proof}
 
 \begin{remark}
@@ -534,13 +534,13 @@ Therefore, $\d_n p\in H^{-1/2}(\d\domain)$.
   \end{gather}
   and
   \begin{gather}
-    \ortho V = \bigl\{ v = \nabla q \big\vert
+    \ortho V = \bigl\{ v = \nabla q \;\big\vert\;
     q\in H^1(\domain) \bigr\}.
   \end{gather}
 \end{Theorem}
 
 \begin{proof}
-  Let $X=\{ v= \nabla q \vert q\in H^1(\domain)\}$. we have to show
+  Let $X=\{ v= \nabla q \;\vert\; q\in H^1(\domain)\}$. we have to show
   $\ortho V = X$. Observe that $X$ is closed in $L^2$ since $H^1$ is
   complete. We show that $V_0 = \ortho X$ and thus
   \begin{gather}
@@ -698,8 +698,6 @@ Combining these lemmas yields the assumptions of
   the \putindex{dual mixed formulation} is well-posed.
 \end{Theorem}
 
-\section{Discretization of dual mixed problems}
-
 \subsection{Conforming subspaces of $\Hdiv(\domain)$}
 
 \begin{intro}
@@ -806,7 +804,7 @@ Combining these lemmas yields the assumptions of
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Finite elements on simplices}
+\section{Finite elements on simplices}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -816,6 +814,7 @@ Combining these lemmas yields the assumptions of
   actual mesh cell. We present here the two most common families.
 \end{intro}
 
+\subsection{Definition and unisolvence}
 \begin{Definition}{rt-simplex}
   The \define{Raviart-Thomas element} of degree $k \ge 0$ on simplices
   consists of the polynomial space
@@ -1248,18 +1247,7 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   The next natural step is the extension of $I_h$ to
   $\Hdiv(\domain)$. Then, $I_h$ would be our Fortin
   projection. Unfortunately, this is not possible, as the following
-  example shows. Meanwhile, we note that the operator $I_h$ is
-  well-defined on the space $\tilde V=\Hdiv(\domain) \cap H^s(\domain;\R^d)$
-  for any $s>0$. Thus, if the domain allows for an inf-sup condition
-  of the form
-  \begin{gather}
-    \inf_{q\in Q}\sup_{v\in \tilde V} \frac{(\div
-      v,q)}{\norm{v}_{\tilde V}\norm{q}_Q} \ge \beta > 0,
-  \end{gather}
-  then we are done here. The case of minimal regularity will require
-  us to extend the ideas of the Clément interpolant to commuting
-  interpolation operators, which will be done in
-  Chapter~\ref{cha:derham}.
+  example shows.
 \end{remark}
 
 \begin{example}
@@ -1351,25 +1339,48 @@ Choose $w$ such that $\d_2 w-\d_1 w = \psi$ to obtain $\psi=0$.
   this integral for interpolation.
 \end{intro}
 
-\begin{Definition}{hdiv-clement}
-  An $\Hdiv$-stable interpolation operator is obtained from
-  \slideref{Definition}{canonical-interpolation} of the
-  \putindex{canonical interpolation}
-  \begin{enumerate}
-  \item by choosing the standard degrees of freedom for every cell
-    integral as in~\eqref{eq:darcy:20}, ~\eqref{eq:darcy:29},
-    and~\eqref{eq:darcy:30}, and
-  \item by replacing every face integral as in~\eqref{eq:darcy:19}
-    and~\eqref{eq:darcy:28} by integrals of the form
-    \begin{gather}
-      \int_{\face} f\cdot\n \,q \ds
-      \to
-      c_q \int_{\domain_\face} f\cdot \n \,q \dx,
-    \end{gather}
-    where $\domain_\face$ consists of the cells sharing $\face$ and
-    $c_q$ is a normalization constant.
-  \end{enumerate}
-\end{Definition}
+\begin{remark}{hdiv-clement}
+  We could apply the idea of Clément and replace
+  \begin{gather}
+    \int_{\face} f\cdot\n \,q \ds
+    \to
+    c_q \int_{\domain_\face} f\cdot \n \,q \dx,
+  \end{gather}
+  where $\domain_\face$ consists of the cells sharing $\face$ and
+  $c_q$ is a normalization constant. But then, the interoplation error
+  on the faces, integrated against discrete pressure functions, will
+  not vanish. As a consequence, such an operator does not commute with
+  the divergence anymore.
+\end{remark}
+
+\begin{Lemma}{hdiv-discrete-infsup}
+  Let $Q_h \subset L^2(\domain)$ be the discontinuous finite element
+  space on a simplicial mesh $\mesh_h$ such that $Q_{h|\cell} = \P_k$
+  for all $\cell\in\mesh_h$. Let furthermore
+  $V_h \subset \Hdiv(\domain)$ such that its local restriction is
+  either $RT_k$ or $BDM_{k+1}$. Then, there is a constant $\beta$
+  independent of $h$ such that
+  \begin{gather}
+    \inf_{q_h\in Q_h} \sup_{v_h \in V_h}
+    \frac{\form(\div v_h,q_h)}{\norm{v_h}_{\Hdiv}\norm{q_h}_{L^2}}.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  When reviewing the proof of the continuous inf-sup condition in
+  \slideref{Lemma}{darcy-infsup}, we realize that the velocity was
+  constructed as $\nabla \phi$ with $-\Delta\phi = q$. The regularity
+  theory of elliptic PDE now tells us, that not only
+  $\phi\in H^1_0(\domain)$, bbut also $\phi \in W^{1,s}(\domain)$ with
+  some $s>2$. Thus, we have $v\in \tilde V_s$ with
+  \begin{gather}
+    \tilde V_s=\Hdiv(\domain) \cap L^s(\domain;\R^d)
+  \end{gather}
+  Meanwhile, we note that the operator $I_h$ is well-defined and
+  bounded on the space $\tilde V_s$ for any $s>2$. Thus, we can use
+  this extra regularity to finish the proof of
+  \slideref{Lemma}{fortin}.
+\end{proof}
 
 Summarizing the results from this section and applying the general
 theory, in particular \slideref{Corollary}{galerkin-mixed-u-kerb} and
@@ -1392,22 +1403,22 @@ theory, in particular \slideref{Corollary}{galerkin-mixed-u-kerb} and
   The elements $RT_k$ and $BDM_{k+1}$ with their matching pressure
   space $\P_k$ admit the error estimates
   \begin{align}
-    \norm{u-u_h}_{L^2} &\le c h^{k+1} \snorm{u}_{H^{k+1,\text{div}}} \\
-    \norm{\div u-\div u_h}_{L^2} &\le c h^{k+1} \snorm{u}_{H^{k+1,\text{div}}} \\
+    \norm{u-u_h}_{L^2} &\le c h^{k+1} \snorm{u}_{H^{k+1,\text{div}}(\mesh_h)} \\
+    \norm{\div u-\div u_h}_{L^2} &\le c h^{k+1} \snorm{u}_{H^{k+1,\text{div}}(\mesh_h)} \\
     \norm{p-p_h}_{L^2} &\le c h^{k+1}
-                         \bigl(\snorm{u}_{H^{k+1,\text{div}}}
-    + \snorm{p}_{H^{k+1}} \bigr),
+                         \bigl(\snorm{u}_{H^{k+1,\text{div}}(\mesh_h)}
+    + \snorm{p}_{H^{k+1}(\mesh_h)} \bigr),
   \end{align}
   where
   \begin{gather}
-    \snorm{u}_{H^{k+1,\text{div}}}^2 = \snorm{u}_{H^{k+1}}^2
-    + \snorm{\div u}_{H^{k+1}}^2.
+    \snorm{u}_{H^{k+1,\text{div}}}^2 = \snorm{u}_{H^{k+1}(\mesh_h)}^2
+    + \snorm{\div u}_{H^{k+1}(\mesh_h)}^2.
   \end{gather}
 \end{Corollary}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Finite elements on quadrilaterals and hexahedra}
+\section{Finite elements on quadrilaterals and hexahedra}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1422,13 +1433,10 @@ theory, in particular \slideref{Corollary}{galerkin-mixed-u-kerb} and
 \end{intro}
 
 \begin{Notation}{recap-reference-transform}
-  Let $\refcell$ be a reference cell, either the reference
-  simplex spanned by $\{0,e_1,\dots,e_d\}$ or the reference hypercube
-  $[-1,1]^d$. Then, a mesh cell $\cell\in\mesh_h$ is defined as the
-  image of $\widehat \cell$ under a mapping $\Phi$ (we suppress the
-  index $\cell$ and understand that $\Phi$ is different for every
-  cell). We define the Jacobi matrix, the Jacobi determinant, and the
-  face Jacobian
+  Let $\refcell$ be a reference cell and let the mesh cell
+  $\cell\in\mesh_h$ be defined as $\Phi_\cell(\widehat \cell)$. We
+  define the \define{Jacobi matrix}, the \define{Jacobi determinant},
+  and the \define{face Jacobian} (suppreccing the index $\cell$)
   \begin{gather}
     \mathrm D\Phi(\widehat x) = \Bigl(\d_j\Phi_i\Bigr),
     \qquad
@@ -1726,10 +1734,12 @@ p\in BDM_{[k]}, \nodal_* (p) = 0 \Rightarrow p \equiv 0.
 \end{Problem}
 
 \begin{Corollary}{darcy-convergence-affine}
-  Let the mesh be such that each cell is obtained by affine
-  transformation from the reference cell $\refcell$. Then,
-  \slideref{Theorem}{darcy-quasi-best} applies and we obtain
-  quasi-bestapproximation.
+  \slideref{Theorem}{darcy-quasi-best} applies to quadrilateral and
+  hexahedral meshes and we obtain quasi-bestapproximation.
+
+  If in adition each cell is obtained by affine transformation from
+  the reference cell $\refcell$. Then,, the asymptotic estimates of
+  \slideref{Corollary}{darcy-convergence} hold.
 \end{Corollary}
 
 \begin{remark}
