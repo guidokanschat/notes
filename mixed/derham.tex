@@ -200,12 +200,12 @@ theorem on $\Hdiv$.
   \begin{gather}
     L^2(\domain) \xrightarrow{\frac1{\abs{\domain}}\int} \R,
   \end{gather}
-  where the arror is the mean value operator.
+  where the arrow is the mean value operator.
 \end{remark}
 
 \begin{Theorem}{div-curl-well-posed}
-  The Maxwell problem in \slideref{Definition}{Maxwell-mixed-0} is
-  well posed.
+  Let $\domain$ be simply connected. Then, the Maxwell problem in
+  \slideref{Definition}{Maxwell-mixed-0} is well posed.
 \end{Theorem}
 
 \begin{proof}
@@ -260,7 +260,7 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
 \section{Polynomial complexes for simplicial meshes}
 
 \begin{intro}
-  We have already seen that adding $x\P_k$ to the space $\P_k^d$, we
+  We have already seen that adding $\vx\P_k$ to the space $\P_k^d$, we
   obtain a surjective divergence operator from the Raviart-Thomas
   element to the pressure space $\P_k$. In this section, we see that
   there is a general principle behind this concept and it can be
@@ -332,7 +332,7 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
   and there holds
   \begin{gather}
     \label{eq:derham:14}
-    \kappa\circ\kappa = \kappa_{k+1}\circ\kappa_k = 0.
+    \kappa\circ\kappa = \kappa_k\circ\kappa_{k+1} = 0.
   \end{gather}
 \end{Definition}
 

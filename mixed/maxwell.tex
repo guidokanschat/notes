@@ -37,25 +37,13 @@
   \end{gather}
   Similarly, the vector curl of a scalar function $\phi$ in two dimensions
   consistes of the first two components of the curl of a three
-  dimensional function in the last component of t he vector,
+  dimensional function in the last component of the vector,
   \begin{gather}
     \curl \phi = \curl
     \begin{pmatrix}
       0\\0\\\phi
     \end{pmatrix}_{1,2}.
   \end{gather}
-\end{remark}
-\begin{remark}
-  A popular error in the literature consists of the following
-  argument: since $\div E = 0$, there also holds $\nabla \div E =
-  0$. Therefore, we can use the formula
-  \begin{gather}
-    \Delta u = \nabla\div u - \curl\curl u,
-  \end{gather}
-  and avoid the div-curl-problem alltogether. Unfortunately, this is
-  only true, if solutions of~\eqref{eq:maxwell:1} are in
-  $H^1(\domain;\R^d)$, which is not true, depending on the boundary
-  conditions.
 \end{remark}
 
 \begin{Lemma}{curl-green}
@@ -131,6 +119,18 @@
   theory also provides insight into the other forms.
 \end{intro}
 
+\begin{remark}
+  A popular error in the literature consists of the following
+  argument: since $\div E = 0$, there also holds $\nabla \div E =
+  0$. Therefore, we can use the formula
+  \begin{gather}
+    \Delta \vu = \nabla\div \vu - \curl\curl \vu,
+  \end{gather}
+  and avoid the div-curl-problem alltogether. Unfortunately, this is
+  only true, if solutions of~\eqref{eq:maxwell:1} are in
+  $H^1(\domain;\R^d)$, which is not true, depending on the boundary
+  conditions. See the discussion in~\cite{CostabelDauge00}.
+\end{remark}
 
 \begin{Definition}{Maxwell-boundary}
   The Maxwell equation~\eqref{eq:maxwell:1} is complemented with the
@@ -138,27 +138,41 @@
   \begin{itemize}
   \item Perfectly conducting:
     \begin{gather}
-      \n\times u = 0.
+      \n\times \vu = 0.
     \end{gather}
     \item Natural:
       \begin{gather}
-        n\times \curl u = 0.
+        \n\times \curl \vu = 0.
       \end{gather}
     \item Impedance:
       \begin{gather}
-        n\times \curl u - \alpha  (\n\times u) \times \n = 0.
+        \n\times \curl \vu - \alpha  (\n\times \vu) \times \n = 0.
       \end{gather}
   \end{itemize}
 \end{Definition}
 
+\begin{Definition}{Hcurl}
+  The space $\Hcurl(\domain)$ is the subspace of vector fields in
+  $L^2(\domain;\R^d)$ with distributional curls in $L^2(\domain;\R^d)$,
+  \begin{gather}
+    \Hcurl(\domain) = \bigl\{ \vu \in L^2(\domain;\R^d) \; \big\vert
+    \; \nabla \times \vu \in L^2(\domain;\R^d) \bigr\}.
+  \end{gather}
+  It is a Hilbert space with the norm defined by
+  \begin{gather}
+    \norm{\vu}_{\Hcurl}^2 = \norm{\vu}_{L^2}^2 + \norm{\curl\vu}_{L^2}^2.
+  \end{gather}
+  In two dimensions, the same definitions apply with replacement of
+  the scalar curl of the vector field.
+\end{Definition}
 
 \begin{Definition}{curl-traces}
   For $u\in C^1(\overline\domain)$, we define the trace operators
   \begin{gather}
     \label{eq:maxwell:4}
     \begin{split}
-      \gamma_{\tau} &= \n\times u_{|\d\domain}, \\
-      \gamma_{T} &= \n\times u_{|\d\domain} \times \n.\\
+      \gamma_{\tau} &= \n\times \vu_{|\d\domain}, \\
+      \gamma_{T} &= \n\times \vu_{|\d\domain} \times \n.\\
     \end{split}
   \end{gather}
   The second of these is the tangential component of $u$ on the
@@ -182,11 +196,11 @@
     \label{eq:maxwell:5}
     \begin{split}
       Y(\d\domain) &= \bigl\{
-      u\in H^{-1/2}_\tau(\d\domain) \big\vert
-      \;\nu\cdot(\curl u) \in H^{-1/2}(\d\domain) \bigr\},\\
-      H^{-1/2}_\tau(\d\domain) &= \bigl\{
-      u\in H^{-1/2}(\d\domain;\R^d) \big\vert 
-      u\cdot\n=0 \text{ a.e.}\bigr\}.
+      \vu\in \vH^{-1/2}_\tau(\d\domain)\; \big\vert
+      \;\n\cdot(\curl \vu) \in \vH^{-1/2}(\d\domain) \bigr\},\\
+      \vH^{-1/2}_\tau(\d\domain) &= \bigl\{
+      \vu\in \vH^{-1/2}(\d\domain;\R^d) \;\big\vert \;
+      \vu\cdot\n=0 \text{ a.e.}\bigr\}.
     \end{split}
   \end{gather}
   Furthermore, the trace operator $\gamma_T$ can be extended to a
@@ -211,14 +225,14 @@
 
 \begin{Definition}{Maxwell-mixed-0}
   The Maxwell problem for perfectly conducting boundary conditions in
-  weak form reads: find $(u,p)\in V\times Q$, where
+  weak form reads: find $(\vu,p)\in V\times Q$, where
   $V=\Hcurl_0(\domain)$ and $Q=H^1_0(\domain)$ such that there holds
     \begin{gather}
       \label{eq:maxwell:6}
     \begin{aligned}
-      \form(\curl u, \curl v) &+ \form(v,\nabla p) &=&\form(f,v)
-      &\forall v&\in V\\
-      \form(u,\nabla q) & &=&0
+      \form(\curl \vu, \curl \vv) &+ \form(\vv,\nabla p) &=&\form(\vf,\vv)
+      &\forall \vv&\in \vV\\
+      \form(\vu,\nabla q) & &=&0
       &\forall q&\in Q.\\      
     \end{aligned}
   \end{gather}

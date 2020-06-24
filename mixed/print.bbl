@@ -55,6 +55,11 @@ Clément, P. (1975).
 \newblock Approximation by finite element functions using local regularization.
 \newblock {\em Math. Modeling Numer. Anal.}, 9(R2):77--84.
 
+\bibitem[Costabel and Dauge, 2000]{CostabelDauge00}
+Costabel, M. and Dauge, M. (2000).
+\newblock Singularities of electromagnetic fields in polyhedral domains.
+\newblock {\em Arch. Rat. Mech. Anal.}, 151(3):221--276.
+
 \bibitem[Desvillettes and Villani, 2002]{DesvillettesVillani02}
 Desvillettes, L. and Villani, C. (2002).
 \newblock On a variant of korn's inequality arising in statistical mechanics.

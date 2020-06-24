@@ -18,20 +18,20 @@ while(<>)
 	    else
 	    {
 		$t =~ s/---zzz---/$math/;
-		print "\\section{$t}\n\\frame{\\sectoc}\n";
+		print "\\section{$t}\n\\frame[shrink]{\\sectoc}\n";
 	    }
 	    next;
 	}
 	if ($1 eq 'section')
 	{
 	    $t =~ s/---zzz---/$math/;
-	    print "\\subsection{$t}\n\\frame{\\subtoc}\n";
+	    print "\\subsection{$t}\n\\frame[shrink]{\\subtoc}\n";
 	    next;
 	}
 	if ($1 eq 'subsection')
 	{
 	    $t =~ s/---zzz---/$math/;
-	    print "\\subsubsection{$t}\n\\frame{\\subsubtoc}\n";
+	    print "\\subsubsection{$t}\n\\frame[shrink]{\\subsubtoc}\n";
 	    next;
 	}
     }
