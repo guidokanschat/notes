@@ -223,7 +223,7 @@
     \omega_0 &= p\\
     \omega_1 &= u_1 dx_1 + u_2 dx_2 + u_3 dx_3\\
     \omega_2 &= u_1 dx_2\wedge dx_3 + u_2 dx_3 \wedge dx_1 + u_3 dx_1 \wedge dx_2\\
-    \omega_3 &= p dx_1 \wedge dx_2 \wedge dx_3.
+    \omega_3 &= p \, dx_1 \wedge dx_2 \wedge dx_3.
   \end{align}
 \end{Definition}
 
@@ -242,11 +242,11 @@
   \end{gather}
   holds for any smooth manifold $M$ of dimension $k$. The exterior
   derivative on differential forms is defined as
-  $d:C^1\Lambda^k(\R^n) \to C^0\Lambda^{k+1}(\R^n)$ by
+  $d:C^1\Lambda^k \to C^0\Lambda^{k+1}$ by
   \begin{gather}
     \label{eq:mixed:exterior-derivative}
-    d\omega(v_0,\dots,v_{k})
-    = \sum_{j=0}^k (-1)^j \tfrac{\d}{\d v_j} \omega(v_0,\dots,\widehat{v_j},\dots,v_k).
+    d\omega(v_1,\dots,v_{k+1})
+    = \sum_{j=1}^{k+1} (-1)^{j+1} \tfrac{\d}{\d v_j} \omega(v_1,\dots,\widehat{v_j},\dots,v_{k+1}).
   \end{gather}
   In coordinates, we have
   \begin{gather}
@@ -263,6 +263,24 @@
   \putindex{Stokes theorem} for differential forms.
 \end{remark}
 
+\begin{Lemma}{proxy-derivatives}
+  Let $p$ be a proxy field for $\omega_0\in C^1\Lambda^0(\R^3)$ and
+  $\vu$ be a proxy field for $\omega_1\in C^1\Lambda^1(\R^3)$ and
+  $\omega_2\in C^1\Lambda^2(\R^3)$, respectively. Then, the
+  corresponding proxy fields of the exterior derivatives are
+  \begin{gather}
+    \begin{matrix}
+      d\omega_0 & \leftrightarrow & \nabla p\\
+      d\omega_1 & \leftrightarrow & \curl \vu\\
+      d\omega_2 & \leftrightarrow & \div \vu.
+    \end{matrix}
+  \end{gather}
+\end{Lemma}
+
+\begin{Problem}{proxy-derivatives}
+  Show \slideref{Lemma}{proxy-derivatives} by using thee coordinate
+  representations of the exterior derivative and the proxy fields.
+\end{Problem}
 
 
 %%% Local Variables:
