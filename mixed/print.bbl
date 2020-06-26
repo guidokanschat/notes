@@ -94,6 +94,11 @@ Girault, V. and Raviart, P.-A. (1986).
   equations}.
 \newblock Springer.
 
+\bibitem[Hiptmair, 2002]{Hiptmair02}
+Hiptmair, R. (2002).
+\newblock Finite elements in computational electromagnetism.
+\newblock {\em Acta Numer.}, 11:237--339.
+
 \bibitem[Monk, 2003]{Monk03}
 Monk, P. (2003).
 \newblock {\em Finite Element Methods for {M}axwell's Equations}.
