@@ -172,7 +172,10 @@
   $\domain\subset\R^n$, yielding $C^m\Lambda^k(\domain)$. We can also
   replace differentiablility of $\alpha_\sigma$ by integrability to
   obtain spaces like $L^p\Lambda^k(\domain)$ and even Sobolev spaces
-  $H^m\Lambda^k(\domain)$.
+  $H^m\Lambda^k(\domain)$. We use the notation
+  \index{lambdak@$\Lambda^k$} $\Lambda^k(\domain)$ as a short hand
+  notation for $C^\infty\Lambda^k(\domain)$, in particular when we do
+  not want to worry about precise degrees of smoothness.
 \end{remark}
 
 \begin{remark}
@@ -282,6 +285,56 @@
   representations of the exterior derivative and the proxy fields.
 \end{Problem}
 
+\begin{Lemma}{leibnitz-rule}
+  The exterior derivative admits the \define{Leibnitz rule}: for
+  $\omega\in C^1\Lambda^j$ and $\eta\in C^1\Lambda^k$, there holds
+  \begin{gather}
+    d(\omega\wedge\eta) = d\omega\wedge\eta + (-1)^j\omega\wedge d\eta.
+  \end{gather}
+\end{Lemma}
+
+\begin{Definition}{pullback-algebra}
+  Let $L\colon V\to W$ be a linear mapping and $\omega \in \Alt^k
+  W$. Then, a $k$-form on $V$ is defined by \define{pullback}, namely
+  \begin{gather}
+    L^* \omega(v_1,\dots,v_k) = \omega(Lv_1,\dots,Lv_k)
+    \qquad\forall v_1,dots,v_k\in V.
+  \end{gather}
+\end{Definition}
+
+\begin{remark}
+  The definition of the pullback is consistent with the dual
+  operator $L^*\colon \Alt^1 W \to \Alt^1 V$. Furthermore, there holds
+  \begin{gather}
+    L^*(\omega\wedge\eta) = L^*\omega \wedge L^*\eta.
+  \end{gather}
+\end{remark}
+
+\begin{Definition}{pullback}
+  Let $\domain,\domain'$ be domains in $\R^n$ such that there is a
+  smooth, surjective, invertible, orientation preserving transformation
+  $\Phi\colon \domain \to \domain'$. Then, the \define{pullback} of a
+  differential form $\omega \in\Lambda^k(\domain')$ is the
+  differential form $\Phi^*\omega \in \Lambda^k(\domain)$ defined by
+  \begin{gather}
+    (\Phi^*\omega)(\vx) = \bigl(\nabla\Phi(\vx)\bigr)^*\omega\bigl(\Phi(\vx)\bigr),
+  \end{gather}
+  or more explicitly
+  \begin{gather}
+    (\Phi^*\omega)(\vx)(v_1,\dots,v_k)
+    = \omega\bigl(\Phi(\vx)\bigr)\bigl(\nabla\Phi(\vx)v_1,\dots,\nabla\Phi(\vx)v_k\bigr).
+  \end{gather}  
+\end{Definition}
+
+\begin{Lemma}{pullback-structure}
+  The pullback for differential forms preserves the structure of such
+  forms, in particular, for all forms applicable
+  \begin{align}
+    \Phi^*(\omega\wedge \eta) &= \Phi^* \omega \wedge \Phi^*\eta\\
+    \Phi^*(d\omega) &= d(\Phi^*\omega)\\
+    \int_{\domain} \Phi^*\omega &= \int_{\domain'} \omega.
+  \end{align}
+\end{Lemma}
 
 %%% Local Variables:
 %%% mode: latex
