@@ -55,11 +55,6 @@ Clément, P. (1975).
 \newblock Approximation by finite element functions using local regularization.
 \newblock {\em Math. Modeling Numer. Anal.}, 9(R2):77--84.
 
-\bibitem[Costabel and Dauge, 2000]{CostabelDauge00}
-Costabel, M. and Dauge, M. (2000).
-\newblock Singularities of electromagnetic fields in polyhedral domains.
-\newblock {\em Arch. Rat. Mech. Anal.}, 151(3):221--276.
-
 \bibitem[Desvillettes and Villani, 2002]{DesvillettesVillani02}
 Desvillettes, L. and Villani, C. (2002).
 \newblock On a variant of korn's inequality arising in statistical mechanics.
@@ -76,11 +71,6 @@ Ern, A. and Guermond, J.-L. (2004).
 \newblock {\em Theory and practice of finite elements}, volume 159 of {\em
   Applied Mathematical Sciences}.
 \newblock Springer-Verlag, New York.
-
-\bibitem[Ern and Guermond, 2017]{ErnGuermond17}
-Ern, A. and Guermond, J.-L. (2017).
-\newblock Finite element quasi-interpolation and best approximation.
-\newblock {\em ESAIM: M2AN}, 51(4):1367--1385.
 
 \bibitem[Girault et~al., 2014]{GiraultKanschatRiviere14}
 Girault, V., Kanschat, G., and Rivière, B. (2014).
