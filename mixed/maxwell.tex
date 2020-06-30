@@ -95,7 +95,7 @@
     \div E &= \frac\rho\epsilon
     & \curl E &= -\d_t B,\\
     \div B &= 0
-    & \curl B &= \mu J + \mu\epsilon E.
+    & \curl B &= \mu J + \mu\epsilon \d_t E.
   \end{xalignat}
   They are an hyperbolic system of equations and typically have wave
   solutions. Many simplifications have been developed to suit
@@ -199,7 +199,7 @@
     \begin{split}
       Y(\d\domain) &= \bigl\{
       \vu\in \vH^{-1/2}_\tau(\d\domain)\; \big\vert
-      \;\n\cdot(\curl \vu) \in \vH^{-1/2}(\d\domain) \bigr\},\\
+      \;\n\cdot(\curl \vu) \in H^{-1/2}(\d\domain) \bigr\},\\
       \vH^{-1/2}_\tau(\d\domain) &= \bigl\{
       \vu\in \vH^{-1/2}(\d\domain;\R^d) \;\big\vert \;
       \vu\cdot\n=0 \text{ a.e.}\bigr\}.
