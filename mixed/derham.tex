@@ -18,35 +18,32 @@
 
 \input{alt}
 
-\subsection{Differential forms and Maxwell's equations}
+\subsection{Well-posedness of the Maxwell problem}
 
-\begin{intro}
-  We now know three differential operators, $\nabla$, $\curl$, and
-  $\div$ with the interesting property
+\begin{Definition}{hlambda}
+  The space $H\Lambda^k(\domain)$ is the closure of $\Lambda^k(\domain)$
+  under the norm corresponding to the inner product
   \begin{gather}
-    \label{eq:derham:10}
-    \curl\nabla \phi = 0
-    \qquad \div\curl E=0.
+    \scal(u,v)_{H\Lambda^k}
+    = \scal(u,v)_{L^2\Lambda^k}
+    + \scal(d u, d v)_{L^2\Lambda^{k+1}}.
   \end{gather}
-  As a consequence, for $\phi\in H^1(\domain)$ we not only have
-  $\nabla \phi\in L^2(\domain;\R^3)$, we also have
-  $\curl\nabla\phi=0\in L^2(\domain;\R^3)$. This gives rise to the sequence
+  The space $H\Lambda^k_0(\domain)$ is the closure of
+  $C^{\infty}_{00}\Lambda^k(\domain)$ with respect to the same norm.
+
+  Both spaces are Hilbert spaces and we have
   \begin{gather}
-    \label{eq:derham:11}
-    \R
-    \overset{\subset}{\longrightarrow} H^1(\domain)
-    \overset{\nabla}{\longrightarrow} \Hcurl(\domain)
-    \overset{\curl}{\longrightarrow} \Hdiv(\domain)
-    \overset{\div}{\longrightarrow} L^2(\domain)
-    \longrightarrow 0,
+    \gamma\omega(v_1,\dots,v_k) = 0 \qquad
+    \forall \omega\in H\Lambda^k_0(\domain),
   \end{gather}
-  such that the range of an operator is always in the kernel of the
-  operator to its right.
-\end{intro}
+  and tangential vector fields $v_1,\dots,v_k$.
+\end{Definition}
 
 \begin{Notation}{hlambda}
-  The notation of exterior calculus of differential forms allows us to
-  write this sequence elegantly as
+  We can summarize the results of the previous section by the notation
+  of the \define{Hilbert cochain complex}\index{cochain complex} of
+  differential forms and the corresponding cochain complex for proxy
+  fields
   \begin{gather}\minCDarrowwidth20pt
     \label{eq:derham:9}
     \begin{CD}
@@ -131,18 +128,37 @@
   \end{gather}
 \end{Notation}
 
-\begin{Notation}{hlambda-norm}
-  The spaces $H\Lambda^k(\domain)$ are Hilbert spaces with the inner product
-  \begin{gather}
-    \scal(u,v)_{H\Lambda^k} = \scal(u,v)_{L^2} + \scal(d u, d v)_{L^2}.
-  \end{gather}
-\end{Notation}
-
 The value of this notation lies in the following theorem by de Rham,
 which describes the relation between the elements of the sequence. It
 is cited here without proof.
 
-\begin{Theorem}{de-rham}
+\begin{Definition}{cohomology-space}
+  The \define{cohomology group} in $\Lambda^k(\domain)$ is defined in
+  differential geometry as
+  \begin{gather}
+    \mathcal H_k(\domain) = \nicefrac{\ker{d_k}}{\range{d_{k-1}}}.
+  \end{gather}
+  Since we have a Hilbert space structure, we can much more
+  conveniently choose a representative in $\ker{d_k} \subset H\Lambda^k(\domain)$
+  \begin{gather}
+    \mathcal H_k(\domain) = \bigl\{ \omega\in \ker{d_k}
+    \;\big|\;
+    \form(\omega,d\eta) = 0 \quad\forall \eta\in H\Lambda^{k-1}(\domain)
+    \bigr\}.
+  \end{gather}
+  For spaces $H\Lambda^k_0(\domain)$ defined below, $\mathcal H_k$ is
+  defined in an analogous way.
+\end{Definition}
+
+\begin{Theorem*}{de-rham-1}{de Rham}
+  The dimension of the cohomology groups is equal to the Betti
+  numbers, which in turn depend only on the topology of the
+  domain. These depend on the number of ``holes of dimension
+  $k$''. For a Lipschitz domain, they are finite. For a simply
+  connected domain, they are all zero.
+\end{Theorem*}
+
+\begin{Theorem*}{de-rham}{de Rham for Hilbert complexes}
   Assume the domain $\domain$ is Lipschitz.  If $\domain$ is simply
   connected, the sequences in equations~\eqref{eq:derham:9}
   and~\eqref{eq:derham:8} are exact, that is, there holds
@@ -151,9 +167,60 @@ is cited here without proof.
     \ker {d_{k+1}} = \range{d_k}.
   \end{gather}
   If it is not simply connected, the codimension of $\range{d_k}$ in
-  $\ker{d_{k+1}}$ is finite. In particular, in both cases,
-  $\range{d_k}$ is closed in $H\Lambda^{k+1}(\domain)$.
-\end{Theorem}
+  $\ker{d_{k+1}}$ is finite and only determined by the topology of
+  $\domain$. In particular, $\range{d_k}$ is closed in
+  $H\Lambda^{k+1}(\domain)$.
+\end{Theorem*}
+
+\begin{Corollary}{de-rham-1}
+  Let
+  \begin{gather}
+    V_0 = \bigl\{ \omega\in H\Lambda^k(\domain)
+    \; \big| \;
+    \form(\omega, d\eta)_{L^2\Lambda^k(\domain)} = 0
+    \quad\forall\eta\in H\Lambda^{k-1}(\domain)\bigr\}.
+  \end{gather}
+  The problem: find $\omega\in V_0$ such that
+  \begin{gather}
+    \form(d \omega, d\mu) = \form(f,\mu)
+    \qquad\forall \mu\in V_0,
+  \end{gather}
+  has a unique solution on a simply connected domain.
+\end{Corollary}
+
+\begin{Example}{de-rham-1}
+  Consider the case $H\Lambda^0(\domain) = H^1(\domain)$. Then, $V_0$
+  is the space of functions orthogonal to constants, and we seek a
+  solution $p\in  V_0$ such that
+  \begin{gather}
+    \form(\nabla p, \nabla q) = (f,q) \qquad\forall q\in V_0.
+  \end{gather}
+\end{Example}
+
+\begin{Corollary}{de-rham-2}
+  Let
+  \begin{gather}
+    V_0 = \left\{ \omega\in H\Lambda^k(\domain)
+        \; \middle| \;
+        \arraycolsep1pt
+        \begin{array}{rcll}
+          \form(\omega, d\eta)
+          &=&0
+          &\;\forall\eta\in H\Lambda^{k-1}(\domain)\\
+          \form(\omega,\tau)
+          &=&0
+          &\;\forall \tau\in \mathcal H_k(\domain)
+        \end{array}
+  \right\}.
+  \end{gather}
+  The problem: find $\omega\in V_0$ such that
+  \begin{gather}
+    \form(d \omega, d\mu) = \form(f,\mu)
+    \qquad\forall \mu\in V_0,
+  \end{gather}
+  has a unique solution.
+\end{Corollary}
+
 
 So far, we have not considered boundary conditions. The next lemma,
 which is again stated without proof, indicates that the properties of
@@ -165,7 +232,7 @@ condition, but it is the compatibility condition implied by the Gauss
 theorem on $\Hdiv$.
 
 \begin{Lemma}{hlambda-0}
-  The bounded Hilbert cochain complex
+  The Hilbert cochain complex with boundary values
   \begin{gather}\minCDarrowwidth20pt
     \begin{CD}
       0
@@ -208,6 +275,33 @@ theorem on $\Hdiv$.
   \end{gather}
   where the arrow is the mean value operator.
 \end{remark}
+
+\begin{Lemma}{de-rham-3}
+  The problem: find
+  \begin{gather}
+    (\omega,\eta,\theta)
+    \in H\Lambda^k_0(\domain)
+    \times H\Lambda^{k-1}_0(\domain)
+    \times \mathcal H_k(\domain)
+  \end{gather}
+   such that
+  \begin{gather}
+    \arraycolsep1pt
+    \begin{array}{cccccclll}
+      \form(d \omega, d\mu) &+& \form(\mu,d\eta) &+& \form(\zeta,\mu)
+      &=& \form(f,\mu)
+      & \qquad & \forall \mu\in H\Lambda^k_0(\domain)
+      \\
+      \form(\omega,d\zeta) && && &=&0
+      & \qquad & \forall \zeta\in H\Lambda^{k-1}_0(\domain)
+      \\
+      \form(\omega,\tau) && && &=& 0
+      & \qquad & \forall \tau\in \mathcal H_k(\domain)
+    \end{array}
+    \qquad\forall \mu\in V_0,
+  \end{gather}
+  is well-posed.
+\end{Lemma}
 
 \begin{Theorem}{div-curl-well-posed}
   Let $\domain$ be simply connected. Then, the Maxwell problem in
