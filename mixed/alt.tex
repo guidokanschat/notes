@@ -317,12 +317,12 @@
   differential form $\omega \in\Lambda^k(\domain)$ is the
   differential form $\Phi^*\omega \in \Lambda^k(\widehat\domain)$ defined by
   \begin{gather}
-    (\Phi^*\omega)(\refvx) = \bigl(\nabla\Phi(\refvx)\bigr)^*\omega(\vx),
+    (\Phi^*\omega)(\refvx) = \bigl(\jacobian\refmap(\refvx)\bigr)^*\omega(\vx),
   \end{gather}
   or more explicitly
   \begin{gather}
     (\Phi^*\omega)(\refvx)(v_1,\dots,v_k)
-    = \omega(\vx)\bigl(\nabla\Phi(\refvx)v_1,\dots,\nabla\Phi(\refvx)v_k\bigr).
+    = \omega(\vx)\bigl(\jacobian\refmap(\refvx)v_1,\dots,\jacobian\refmap(\refvx)v_k\bigr).
   \end{gather}
   Here, $\vx = \Phi(\refvx)$.
 \end{Definition}
@@ -342,9 +342,9 @@
   yields the following transformations
   \begin{xalignat}2
     \Lambda^0&:& \refp(\refvx) &= p(\vx)\\
-    \Lambda^1&:& \refvu(\refvx) &= \nabla\Phi(\refvx)^T \vu(\vx)\\
-    \Lambda^2&:& \refvu(\refvx) &= \det \nabla\Phi(\refvx) \; \nabla\Phi(\refvx)^{-1} \vu(\vx)\\
-    \Lambda^3&:& \refp(\refvx) &= \det \nabla\Phi(\refvx) \,p(\vx).
+    \Lambda^1&:& \refvu(\refvx) &= \jacobian\refmap(\refvx)^T \vu(\vx)\\
+    \Lambda^2&:& \refvu(\refvx) &= \det \jacobian\refmap(\refvx) \; \jacobian\refmap(\refvx)^{-1} \vu(\vx)\\
+    \Lambda^3&:& \refp(\refvx) &= \det \jacobian\refmap(\refvx) \,p(\vx).
   \end{xalignat}
 \end{Lemma}
 
@@ -367,13 +367,13 @@
   \begin{gather}
     \Phi^*\gamma\omega(\refvx)(v_1,\dots,v_k)
     =
-    \gamma\omega(\vx)(\nabla\Phi v_1,\dots,\nabla\Phi v_k).
+    \gamma\omega(\vx)(\jacobian\refmap v_1,\dots,\jacobian\refmap v_k).
   \end{gather}
   There holds $\Phi^*\gamma\omega\in \Lambda^k(\widehat U)$ and the
   vectors $v_1,\dots,v_k$ are in $\R^{n-1}$. Their images
-  $\nabla\Phi v_i$ are tangential to $\d\domain$. Thus, the trace only
+  $\jacobian\refmap v_i$ are tangential to $\d\domain$. Thus, the trace only
   depends on the tangential component of $\omega$. In particular,
-  nothing is known about $\gamma\omega$ applied to vectord which are
+  nothing is known about $\gamma\omega$ applied to vectors which are
   not tangential.
 \end{remark}
 
