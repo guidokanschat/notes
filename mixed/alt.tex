@@ -35,10 +35,10 @@
 \end{Lemma}
 
 \begin{Notation}{dual-basis}
-  Let $x_1,\dots,x_n$ be a basis of $V$. Then we denote by $dx_1,\dots,dx_n$ the basis of $\Alt^1V$,
+  Let $x_1,\dots,x_n$ be a basis of $V$. Then we denote by $\dx_1,\dots,\dx_n$ the basis of $\Alt^1V$,
   such that
   \begin{gather}
-    dx_i(x_j) = \delta_{ij}.
+    \dx_i(x_j) = \delta_{ij}.
   \end{gather}
 \end{Notation}
 
@@ -52,40 +52,41 @@
   This suggests the concept of an ``alternating product'' denoted by $\omega \wedge \eta$. In
   particular, we can assign to basis vectors
   \begin{align}
-    dx_i \wedge dx_j (x_k,x_\ell)
-    &= dx_i(x_k)dx_j(x_\ell) - dx_j(x_k)dx_i(x_\ell) \\
-    = - dx_j \wedge dx_i(x_k,x_\ell) &= dx_i(x_\ell)dx_j(x_k) - dx_j(x_\ell)dx_i(x_k) \\
+    \dx_i \wedge \dx_j (x_k,x_\ell)
+    &= \dx_i(x_k)\dx_j(x_\ell) - \dx_j(x_k)\dx_i(x_\ell) \\
+    = - \dx_j \wedge \dx_i(x_k,x_\ell) &= \dx_i(x_\ell)\dx_j(x_k) - \dx_j(x_\ell)\dx_i(x_k) \\
     &= \delta_{ik}\delta_{j\ell} - \delta_{i\ell}\delta_{jk}.
   \end{align}
-  It can be shown that the products $dx_i\wedge dx_j$ with $i<j$ form a basis of $\Alt^2V$.
+  It can be shown that the products $\dx_i\wedge \dx_j$ with $i<j$ form a basis of $\Alt^2V$.
 \end{example}
 
 \begin{Definition}{wedge-product}
   The \define{wedge product} of two alternating forms
-  $\omega\in \Alt^k\R^d$ and $\eta\in\Alt^l\R^d$ is a form in $\Alt^{k+l}\R^d$ such that for
-  $v_1,\dots,v_{k+l}\in\R^d$ holds
+  $\omega\in \Alt^k\R^n$ and $\eta\in\Alt^\ell\R^n$ is a form in $\Alt^{k+\ell}\R^n$ such that for
+  $v_1,\dots,v_{k+\ell}\in\R^n$ holds
   \begin{gather}
-    (\omega\wedge\eta)(v_1,\dots,v_{k+l})
+    (\omega\wedge\eta)(v_1,\dots,v_{k+\ell})
     = \sum_{\sigma} \operatorname{sgn}(\sigma) \omega(v_{\sigma_1},\dots,v_{\sigma_k})
-    \eta(v_{\sigma_{k+1}},\dots,v_{\sigma_{k+l}}),
+    \eta(v_{\sigma_{k+1}},\dots,v_{\sigma_{k+\ell}}),
   \end{gather}
-  where the sum is taken over all permutations $\sigma$ such that
+  where the sum is taken over all permutations $\sigma$ of the set
+  $\{1,\dots,k+\ell\}$ such that
   \begin{gather}
     \begin{split}
       \sigma_1 &< \dots < \sigma_k,\\
-      \sigma_{k+1} & < \dots < \sigma_{k+l}.
+      \sigma_{k+1} & < \dots < \sigma_{k+\ell}.
     \end{split}
   \end{gather}
 \end{Definition}
 
 \begin{remark}
-  Alternatively, we can sum the wedge product over all perumtations of $k+l$ elements
-  without restriction of the order. Then, we sum up similar terms
-  mutliple times, such that
+  Alternatively, we can sum the wedge product over all permutations of
+  $k+\ell$ elements without restriction of the order. Then, we sum up
+  similar terms mutliple times, such that
   \begin{gather}
-    (\omega\wedge\eta)(v_1,\dots,v_{k+l})
+    (\omega\wedge\eta)(v_1,\dots,v_{k+\ell})
     = \frac1{k!l!}\sum_{\sigma} \operatorname{sgn}(\sigma) \omega(v_{\sigma_1},\dots,v_{\sigma_k})
-    \eta(v_{\sigma_{k+1}},\dots,v_{\sigma_{k+l}})
+    \eta(v_{\sigma_{k+1}},\dots,v_{\sigma_{k+\ell}})
   \end{gather}
 \end{remark}
 
@@ -93,20 +94,28 @@
   The dimension of $\Alt^k V$ for an $n$-dimensional vector space $V$
   is $\binom nk$. The set
   \begin{gather}
-    \left\{ dx_{\sigma_1}\wedge\dots\wedge\dx_{\sigma_k} \;\middle|\;
+    \left\{ \dx_{\sigma_1}\wedge\dots\wedge\dx_{\sigma_k} \;\middle|\;
       0<\sigma_1 < \dots < \sigma_k\le n \right\}
   \end{gather}
   is a basis for $\Alt^k V$.
 \end{Lemma}
+\begin{todo}
+  There holds
+  \begin{gather}
+    \dx_{\sigma_1}\wedge\dots\wedge\dx_{\sigma_k} (x_{\rho_1},\dots,x_{\rho_k})
+    = \prod_{i=1}^k \delta_{\sigma_i\rho_i}
+  \end{gather}
+  among all combinations $0<\rho_1 < \dots < \rho_k\le n$.
+\end{todo}
 
 \begin{remark}
   The alternating $n$-forms on $\R^n$ can be used to measure volume. In particular,
   we have
   \begin{gather}
-    dx_1\wedge\dots\wedge dx_n(v_1,\dots,v_n)
+    \dx_1\wedge\dots\wedge \dx_n(v_1,\dots,v_n)
   \end{gather}
   is the (oriented) volume of the parallelepiped spanned by the
-  vectors $v_1$ to $v_n$. The $n$-form $dx_1\wedge\dots\wedge dx_n$ is
+  vectors $v_1$ to $v_n$. The $n$-form $\dx_1\wedge\dots\wedge \dx_n$ is
   the determinant.
 
   Similarly, alternating $k$-forms measure the volume or area of oriented
@@ -147,35 +156,48 @@
   position in $\R^n$ by
   \begin{gather}
     \omega(\vx) = \sum_{\sigma} \alpha_{\sigma}(\vx)
-    dx_{\sigma_1}\wedge\dots\wedge dx_{\sigma_k}.
+    \dx_{\sigma_1}\wedge\dots\wedge \dx_{\sigma_k}.
   \end{gather}
 \end{intro}
 
 \begin{Definition}{differential-form}
   A \define{differential $k$-form} on $\R^n$ is a mapping
-  $\omega\colon \R^n \to \Alt^k\R^n$ of the form
   \begin{gather}
-    \omega(\vx) = \sum_{\sigma} \alpha_{\sigma}(\vx)
-    dx_{\sigma_1}\wedge\dots\wedge dx_{\sigma_k},
+    \begin{split}
+      \omega\colon \R^n &\to  \Alt^k\R^n\\
+      \omega(\vx) &= \sum_{\sigma} a_{\sigma}(\vx)
+      \dx_{\sigma_1}\wedge\dots\wedge \dx_{\sigma_k},
+    \end{split}
   \end{gather}
-  where $\sigma$ runs over all incresing sequences of $k$ elements out
-  of $n$ and $\alpha_\sigma$ is differentiable. More specifically, we
-  define the spaces $C^m\Lambda^k(\R^n)$ of such forms, where
-  $\alpha_\sigma \in C^m(\R^n)$.
-
-  The space $C^m\Lambda^0(\R^n)$ is introduced for closure and
-  consists of differentiable functions.
+  where $\sigma$ runs over all increasing sequences of $k$ elements
+  out of $n$ and the coefficient functions $a_\sigma$ are
+  differentiable. More specifically, we define the spaces
+  \index{lambdak@$\Lambda^k$}
+  $\Lambda^k(\R^n)$ of such forms, where
+  $a_\sigma \in C^\infty(\R^n)$.
+  The space $\Lambda^0(\R^n)$ is introduced for closure and
+  consists of differentiable functions in $C^\infty(\R^n)$.
 \end{Definition}
 
 \begin{remark}
-  The definition above extends naturally to coefficients defined on
-  $\domain\subset\R^n$, yielding $C^m\Lambda^k(\domain)$. We can also
+  Note that $\Alt^k\R^n$ is a finite dimensional vector space and
+  thus, we can view elements from $\Lambda^k(\domain)$ as
+  vector-valued functions with an additional structure. If we define a
+  norm on $\Alt^k\R^n$, we can define differential forms without going
+  through coefficients.
+
+  Thus, definition above extends naturally to all types of function
+  spaces we know. Then, we prefix $\Lambda^k$ by the function
+  space. Thus, $C^m\Lambda^k(\domain)$ is the space of $m$-times
+  differentiable $k$-forms on the domain $\domain$.  We can also
   replace differentiablility of $\alpha_\sigma$ by integrability to
   obtain spaces like $L^p\Lambda^k(\domain)$ and even Sobolev spaces
-  $H^m\Lambda^k(\domain)$. We use the notation
-  \index{lambdak@$\Lambda^k$} $\Lambda^k(\domain)$ as a short hand
-  notation for $C^\infty\Lambda^k(\domain)$, in particular when we do
-  not want to worry about precise degrees of smoothness.
+  $H^m\Lambda^k(\domain)$.
+
+  The short hand notation $\Lambda^k$ for $C^\infty\Lambda^k$
+  introduced in the definition above is used when we do not want to
+  worry about order of differentiability in order to keep arguments
+  more readable.
 \end{remark}
 
 \begin{remark}
@@ -224,11 +246,15 @@
   $p\in C^m(\domain)$ or $\vu\in\C^m(\domain;\R^3)$ by assigning
   \begin{align}
     \omega_0 &= p\\
-    \omega_1 &= u_1 dx_1 + u_2 dx_2 + u_3 dx_3\\
-    \omega_2 &= u_1 dx_2\wedge dx_3 + u_2 dx_3 \wedge dx_1 + u_3 dx_1 \wedge dx_2\\
-    \omega_3 &= p \, dx_1 \wedge dx_2 \wedge dx_3.
+    \omega_1 &= u_1 \dx_1 + u_2 \dx_2 + u_3 \dx_3\\
+    \omega_2 &= u_1 \dx_2\wedge \dx_3 + u_2 \dx_3 \wedge \dx_1 + u_3 \dx_1 \wedge \dx_2\\
+    \omega_3 &= p \, \dx_1 \wedge \dx_2 \wedge \dx_3.
   \end{align}
 \end{Definition}
+\begin{todo}
+  Should $\dx_i$ be the dual basis of $e_i$ or of any basis $x_i$?
+\end{todo}
+
 
 \begin{Problem}{proxy-fields}
   Show that the definition of the proxy fields in coordinates in
@@ -253,9 +279,9 @@
   \end{gather}
   In coordinates, we have
   \begin{gather}
-    d(\alpha_\sigma dx_{\sigma_1} \wedge\dots\wedge dx_{\sigma_k})
+    d(\alpha_\sigma \dx_{\sigma_1} \wedge\dots\wedge \dx_{\sigma_k})
     = \sum_{j=1}^n \frac{\partial \alpha_\sigma}{\d x_j}
-    dx_j \wedge dx_{\sigma_1} \wedge\dots\wedge dx_{\sigma_k}.
+    \dx_j \wedge \dx_{\sigma_1} \wedge\dots\wedge \dx_{\sigma_k}.
   \end{gather}
 \end{Definition}
 
