@@ -41,7 +41,9 @@ crop.pdf: print.pdf
 chapters: print.pdf
 	perl ../chapters.pl print
 
-slides.pdf: main.pdf
+slides.pdf: slides.tex
+	pdflatex slides 
+	convert -transparent white  -density 300 -scale 960x720 -antialias slides.pdf ./png/img-%03d.png
 
 allslides.pdf: main.pdf
 	perl ../aux2slides.pl main.aux > iallslides.tex

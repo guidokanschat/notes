@@ -1,6 +1,6 @@
-\documentclass[american,ignorenonframetext,notheorems]{beamer}
+\documentclass[american,notheorems]{beamer}
 \usetheme{Antibes}
-\useinnertheme[shadow]{rounded}
+\useinnertheme{rounded}
 \makeatletter
 \defbeamertemplate*{headline}{subtree theme}
 {%
@@ -42,6 +42,7 @@
     \end{beamercolorbox}
 }
 \makeatother
+\setbeamertemplate{navigation symbols}{}
 \usecolortheme{iwr}
 \usepackage{../mathsim}
 \input{./fig/tikzsettings}
@@ -240,6 +241,20 @@
     \end{column}
   \end{columns}
 \end{frame}
+
+\section{The de Rham complex}
+\begin{frame}[plain]
+  \begin{alertblock}{Decomposition of $\P_r$}
+    \begin{gather}
+      \P_r = \only<2-4>{\breve \P_r}
+      \only<3-4>{\oplus \breve \P_{r-1}}
+      \only<4>{\oplus \breve \P_{r-2}}
+      \only<5>{\bigoplus_{s=0}^r \breve \P_s}
+      \\[3mm]
+    \end{gather}
+  \end{alertblock}
+\end{frame}
+
 
 \end{document}
 
