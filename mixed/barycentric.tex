@@ -1,6 +1,12 @@
+\begin{Definition}{spanned-simplex}
+  Let $x_0,\dots,x_k$ for $k\le \sdim$ be a set of $k+1$ points in
+  $\R^\sdim$. Then, we call the set of convex combinations of these points
+  the $k$-simplex $f$ spanned by $\{x_0,\dots,x_k\}$.
+\end{Definition}
+
 \begin{Definition}{barycentric-coordinates}
-  A simplex $T\in \R^d$ with vertices $x_0,\dots,x_d$ is described by
-  a set of $d+1$ \define{barycentric coordinates}
+  A simplex $T\in \R^\sdim$ with vertices $x_0,\dots,x_\sdim$ is described by
+  a set of $\sdim+1$ \define{barycentric coordinates}
   $\lambda_0,\dots,\lambda_d$ such that
   \begin{xalignat}2
     0\le\lambda_i(x) &\le 1& i&=0,\dots,d;\quad x\in T\\
@@ -65,6 +71,31 @@
     \label{tab:barycentric-shapes}
   \end{table}
 \end{example}
+
+\begin{Notation}{dual-barycentric}
+  For a simplex $\cell\subset \R^\sdim$, the vectors $t_i = x_i-x_0$
+  for $i=1,\dots,\sdim$ form a basis of $\R^n$. The dual basis in
+  $\Alt^1\R^\sdim$ is denoted by $\dlambda_1,\dots,\dlambda_\sdim$.
+
+  For a subsimplex $f_\sigma$ of dimension $k$, the vectors
+  $\{t_{\sigma_1},\dots,t_{\sigma_k}\}$ span the tangent space
+  $Tf_\sigma$ and the restrictions of $\{\dlambda_{\sigma_1},\dots,\dlambda_{\sigma_k}\}$ to this tangent space form a basis for $\Alt^1Tf_\sigma$.
+\end{Notation}
+
+\begin{Notation}{alt-k-barycentric}
+  The algebraic $k$-forms
+  \begin{gather}
+    \dlambda_\sigma = \dlambda_{\sigma_1}\wedge\dots\wedge\dlambda_{\sigma_k},
+  \end{gather}
+  for $\sigma\in\Sigma(k,n)$ form a basis for $\Alt^k(\R^n)$. Thus,
+  each differential form on a simplex $\cell$ can be written as
+  \begin{gather}
+    \omega = \sum_{\sigma\in\Sigma(k,n)} a_\sigma \dlambda_\sigma,
+  \end{gather}
+  with coefficient functions $a_\sigma\colon \cell\to \R$.
+\end{Notation}
+
+
 
 %%% Local Variables:
 %%% mode: latex

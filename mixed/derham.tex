@@ -292,7 +292,7 @@ theorem on $\Hdiv$.
   \begin{gather}
     \arraycolsep1pt
     \begin{array}{cccccclll}
-      \form(d \omega, d\mu) &+& \form(\mu,d\eta) &+& \form(\zeta,\mu)
+      \form(d \omega, d\mu) &+& \form(\mu,d\eta) &+& \form(\theta,\mu)
       &=& \form(f,\mu)
       & \qquad & \forall \mu\in H\Lambda^1_0(\domain)
       \\
@@ -476,7 +476,7 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
 
 Note that the ``Koszul differential'' increases the polynomial order
 and lowers the order of the form, thus acts in the opposite way of the
-usual differential $d$.
+usual exterior derivative $d$.
 
 \begin{Lemma}{kd-plus-dk}
   For $\omega\in \breve \P_r\Lambda^k$ there holds
@@ -870,26 +870,20 @@ usual differential $d$.
 
 \subsubsection{Geometric structure of simplices}
 
-\begin{Definition}{spanned-simplex}
-  Let $x_0,\dots,x_k$ for $k\le \sdim$ be a set of $k+1$ points in
-  $\R^\sdim$. Then, we call the set of convex combinations of these points
-  the $k$-simplex $f$ spanned by $\{x_0,\dots,x_k\}$.
-\end{Definition}
-
-
 \begin{Definition}{subsimplices}
   Let $\cell$ be the simplex in $\R^\sdim$ spanned by the points
-  $x_0,\dots,x_d$. Then, every ascending subset
+  $x_0,\dots,x_\sdim$. Then, every ascending subset
   $\sigma \subset \{0,\dots,\sdim\}$ of length $k+1$ defines a
   $k$-dimensional \define{subsimplex} of $\cell$ denoted as $f_\sigma$.
 
   The set of all subsimplices of $\cell$, including $\cell$ itself is
-  called $\Delta(\cell)$. The set of all $k$-dimensional subsimplices
-  is $\Delta_k(\cell)$.
+  called es
+  \index{Delta@$\Delta(\cell)$} $\Delta(\cell)$. The set of all $k$-dimensional subsimplices
+  is \index{Delta k@$\Delta_k(\cell)$} $\Delta_k(\cell)$.
 \end{Definition}
 
 \begin{example}
-  A $d$-dimensional simplex $\cell$ has $\binom{\sdim+1}{k+1}$
+  A $\sdim$-dimensional simplex $\cell$ has $\binom{\sdim+1}{k+1}$
   subsimplices of dimension $k$.
 
   The one-dimensional simplex $[x_0,x_1]$ has two subsimplices of
@@ -909,32 +903,12 @@ usual differential $d$.
 
 \subsubsection{Geometric decomposition of $\P_r(\cell)$}
 
-\begin{remark}
-  For a simplex $\cell\subset\R^\sdim$, the barycentric coordinates are
-  the uniquely determined linear interpolating polynomials such that
-  \begin{gather}
-    \lambda_i(x_j) = \delta_{ij}.
-  \end{gather}
-  Then,
-  \begin{gather}
-    \cell = \biggl\{ x = \sum_{i=0}^\sdim\lambda_i\bigg\vert
-    \lambda_i \ge 0,\quad\sum_{i=0}^\sdim\lambda_i = 1\biggr\}.
-  \end{gather}
-
-  Let $f=f_\sigma$ be the $k$-dimensional subsimplex spanned by the
-  points $x_{\sigma_0},\dots,x_{\sigma_k}$. Then, the linear
-  polynomials $\lambda_{\sigma_1},\dots,\lambda_{\sigma_k}$ form a set
-  of barycentric coordinates for $f_\sigma$, that is,
-  \begin{gather}
-    \begin{split}
-      f_\sigma &= \bigl\{x\in\cell \big\vert
-      \lambda_j=0 \text{ for } j\not\in\sigma\bigr\}.
-      \\
-      &= \biggl\{ x = \sum_{i\in\sigma}\lambda_i\bigg\vert
-    \lambda_i \ge 0,\quad\sum_{i\in\sigma}\lambda_i = 1\biggr\}.
-    \end{split}
-  \end{gather}
-\end{remark}
+\begin{Lemma}{barycentric-subsimplex}
+  Let $\cell$ be a simplex in $\R^\sdim$ with barycentric coordinates
+  $\lambda_0,\dots,\lambda_\sdim$. Then, the subset
+  $\lambda_{\sigma_1},\dots,\lambda_{\sigma_k}$ form the barycentric
+  coordinates of the subsimplex $f_\sigma\in\Delta_k(\cell)$.
+\end{Lemma}
 
 \begin{remark}
   When we introduced barycentric coordinates in order to define
@@ -948,7 +922,7 @@ usual differential $d$.
   which reads: for every $p\in \P_k(\R^\sdim)$ there is
   $q\in\breve\P_k(\R^{\sdim+1})$ such that
   \begin{gather}
-    p(x_1,\dots,x_d) = q(\lambda_0,\dots,\lambda_d).
+    p(x_1,\dots,x_\sdim) = q(\lambda_0,\dots,\lambda_\sdim).
   \end{gather}
 % Argue why isomorphism: count?
 \end{remark}
@@ -959,28 +933,50 @@ usual differential $d$.
   $\P_r(f_\sigma) \cong \breve\P_r(\R^{k+1})$ is defined as
   \begin{gather}
     \P_r(f_\sigma) = \bigl\{
-    q(\lambda_{\sigma_0},\dots,\lambda_{\sigma_k})\big\vert
+    q(\lambda_{\sigma_0},\dots,\lambda_{\sigma_k})
+    \;\big\vert\;
     q\in\breve \P_r(\R^{k+1})\bigr\}.
   \end{gather}
+  
+  By $\overset{\circ}{\P}_r(f_\sigma)$ we denote the space of
+  polynomials in $\P_r(f_\sigma)$ which vanish on the boundary $\d f_\sigma$.
+
   The \putindex{bubble function} associated with $f_\sigma$ is
   \begin{gather}
-    b_{f\sigma} = \lambda_{\sigma_0}\cdots\lambda_{\sigma_k}.
+    b_{f\sigma} = \lambda_{\sigma_0}\cdots\lambda_{\sigma_k}
+    \in \overset{\circ}{\P}_{k+1}(f_\sigma).
   \end{gather}
+\end{Definition}
+
+\begin{Lemma}{p0-bubble}
+  Let $f$ be a $k$-simplex. Then,
+  \begin{gather}
+    \overset{\circ}{\P}_r(f) =
+    \begin{cases}
+      b_f \P_{r-k-1}(f) &\text{if } r\ge k+1\\
+      \{0\} &\text{if } r \le k.
+    \end{cases}
+  \end{gather}
+\end{Lemma}
+
+
+\begin{Definition}{pr-f-extension}
   The \define{extension operator} $E_{f_\sigma\to\cell}$ is defined as
   \begin{gather}
     \begin{split}
       E_{f_\sigma\to\cell}\colon \P_r(f_\sigma) &\to \P_r(\R^\sdim),\\
-      p(\lambda_0,\dots,\lambda_d) &= q(\lambda_{\sigma_0},\dots,\lambda_{\sigma_k}),
+      p(\lambda_0,\dots,\lambda_\sdim) &= q(\lambda_{\sigma_0},\dots,\lambda_{\sigma_k}),
     \end{split}
   \end{gather}
   where $q$ is chosen as in the definition of $\P_r(f_\sigma)$.
 \end{Definition}
 
 \begin{Lemma}{subsimplex-polynomials}
-  Every function in $\P_r(f)$ vanishes on every subsimplex $g$ which
-  is disjoint from $f$.
+  Every function in $\P_r(f)$ vanishes on every subsimplex
+  $g\in\Delta(\cell)$ which is disjoint from $f$.
 
-  The bubble function $b_f$ vanishes on every subsimplex not containing $f$.
+  The bubble function $b_f$ vanishes on every subsimplex in
+  $\Delta(\cell)$ not containing $f$.
 \end{Lemma}
 
 \begin{Problem}{subsimplex-polynomials}
@@ -1042,13 +1038,19 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
   , we define
   $V(f) \subset \P_r(\cell)$  for $\dim f>0$ as
   \begin{gather}
-    V(f) = \bigl\{ p = E_{f\to\cell} b_f q \big\vert
-    \;q \in \P_{r-\dim f -1}(f) \bigr\},
+    V(f) = \bigl\{ p = E_{f\to\cell} b_f q
+    \;\big\vert\;
+    q \in \P_{r-\dim f -1}(f) \bigr\},
   \end{gather}
   and for $\dim f=0$
   \begin{gather}
-    V(f) = \bigl\{ \lambda_i^r \big\vert
-    \;f = \{x_i\}\bigr\}.
+    V(f) = \bigl\{ \lambda_i^r
+    \;\big\vert\;
+    f = \{x_i\}\bigr\}.
+  \end{gather}
+  For $r\le \dim f$ holds
+  \begin{gather}
+    V(f) = \{0\}.
   \end{gather}
 \end{Definition}
 
@@ -1064,6 +1066,10 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
     W(f) = \bigl\{\phi(p)= p(x_i) \big|
     \;f=\{x_i\}
     \bigr\}.
+  \end{gather}
+  For $r \le \dim f$ there holds
+  \begin{gather}
+    W(f) = \{0\}.
   \end{gather}
 \end{Definition}
 
@@ -1091,9 +1097,9 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
   same lemma, the spaces $V(f)$ for all $f$ with equal dimension are
   disjoint. Therefore, the sum
   \begin{gather}
-    V_d(\cell) = \sum_{k=0}^{\sdim-1} \sum_{f\in \Delta_k(\cell)} V(f),
+    V_\sdim(\cell) = \sum_{k=0}^{\sdim-1} \sum_{f\in \Delta_k(\cell)} V(f),
   \end{gather}
-  is direct. But, $V(\cell) \cap V_d(\cell) = \{0\}$, since all elements in
+  is direct. But, $V(\cell) \cap V_\sdim(\cell) = \{0\}$, since all elements in
   $V(\cell)$ contain a bubble function factor. Therefore,
   \begin{gather}
     \bigoplus_{f\in\Delta(\cell)}V(f) \subset \P_r(\cell).
@@ -1140,11 +1146,149 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
   the sum on the right must be direct.
 \end{proof}
 
-\subsubsection{Results for $\P_r\Lambda^k$ and $\P_r^+\Lambda^k$ and applications}
+\subsubsection{Results for $\P_r\Lambda^k$ and proxy fields}
 
-For polynomial differential forms on simplices, we cite the main
-results without proof and then discuss their application to $\Hdiv$
-and $\Hcurl$.
+\begin{Lemma}{pr-lambda-dimension-decomposition}
+  There holds
+  \begin{align}
+    \dim \P_r\Lambda^k(\cell)
+    &= \sum_{f\in\Delta(\cell)}
+      \dim \P_{r+k-\dim f-1}^+\Lambda^{\dim f-k}(f) \\
+    \dim \P_r^+\Lambda^k(\cell)
+    &= \sum_{f\in\Delta(\cell)}
+      \dim \P_{r+k-\dim f}\Lambda^{\dim f-k}(f)
+  \end{align}
+\end{Lemma}
+
+% \begin{Notation}{volume-form}
+%   The \define{volume form} of a $k$-dimensional subsimplex
+%   $f\in\Delta(\cell)$ is defined by the relation
+%   \begin{gather}
+%     \abs{f} = \int_f \vol_f.
+%   \end{gather}
+%   Using the fact that $n! \abs{T} = \vol_T(t_1,\dots,t_n)$ we see
+%   \begin{gather}
+%     \dlambda_{\sigma_1}\wedge\dots\wedge\dlambda_{\sigma_k}
+%     = \pm \frac1{k! \abs{f}} \vol_f.
+%   \end{gather}
+% \end{Notation}
+
+\begin{Lemma}{afw06-4-7}
+  Let $\omega \in \overset{\circ}{\P}_r \Lambda^k(\cell)$ and assume
+  \begin{gather}
+    \int_\cell\omega\wedge\eta = 0,
+    \qquad\forall \eta\in\P_{r-n+k-1}^+\Lambda^{n-k}(\cell).
+  \end{gather}
+  Then, $\omega = 0$.
+\end{Lemma}
+
+\begin{proof}
+  The proof consists of Lemmas 4.5 to 4.7 in
+  \cite{ArnoldFalkWinther06acta}. It skilfully exploits representations of
+  polynomial forms with zero traces by barycentric coordinates, but is
+  rather technical.
+\end{proof}
+
+\begin{Theorem}{pr-lambda-unisolvent}
+  Let $r\ge 1$ and $0\le k \le n$. For $f\in \Delta(\cell)$, define
+  subspaces of $W(f) \subset \P_r\Lambda^k(\cell)^*$ by
+  \begin{gather}
+    W(f) = \left\{
+      \nodal_{f,_\eta}(\omega) = \int_f \gamma_f \omega\wedge\eta,
+      \;\middle\vert\;
+       \eta \in \P_{r+k-\dim f-1}^+\Lambda^{\dim f-k}(f)
+      \right\}.
+  \end{gather}
+  Then, if $\omega \in \P_r\Lambda^k(\cell)$ satisfies
+  \begin{gather}
+    \nodal_{f,\eta}(\omega) = 0
+    \qquad \forall f\in \Delta(\cell)
+    \quad\forall \nodal_{f,\eta} \in W(f),
+  \end{gather}
+  then $\omega = 0$. Thus, the space $\P_r\Lambda^k(\cell)$ together
+  with the node functionals $\nodal_{f,\eta}$ forms a unisolvent
+  finite element.
+\end{Theorem}
+
+\begin{proof}
+  First we note, that by
+  \slideref{Lemma}{pr-lambda-dimension-decomposition} the dimensions
+  of the spaces $W(f)$ add up to the dimension of
+  $\P_r\Lambda^k(\cell)$. Thus, if we can show the first statement, we
+  have shown that the sum of the spaces $W(f)$ is a direct sum, and
+  thus unisolvence is obtained by the usual argument.
+
+  Let now $f\in\Delta_k(\cell)$. Then, $\gamma\omega$ vanishes on
+  $\d f$ as a $k$-form on a simplex of dimension $k-1$. Thus, we have
+  $\gamma_f\omega\in \overset{\circ}{\P}_r\Lambda^k(f)$. Since
+  furthermore by the assumption
+  \begin{gather}
+    \int_f \gamma_f\omega\wedge \eta = 0,
+    \qquad \forall \eta \in \P_{r-1}^+\Lambda^0(f),
+  \end{gather}
+  \slideref{Lemma}{afw06-4-7} yields $\gamma_f\omega = 0$, which holds
+  for all $f\in\Delta_k(\cell)$.
+
+  Let now $f\in \Delta_{k+1}(\cell)$. Then, by the result of the
+  previous argument,
+  $\gamma_f\omega\in \overset{\circ}{\P}_r\Lambda^k(f)$, and by the
+  argument itself $\gamma_f \omega = 0$.
+
+  We can now do induction by the dimension of $f$ until we reach
+  $\Delta_n(\cell) = \{\cell\}$ to obtain the result.
+\end{proof}
+
+\begin{remark}
+  Note that the space $\P_s^+\Lambda^k$ vanishes if $s<0$ or
+  $k<0$. Therefore, the spaces $W(f)$ are nontrivial only if
+  \begin{gather}
+    k \le \dim f \le r+k-1.
+  \end{gather}
+  Comparing this to \slideref{Example}{h1-moment-dofs} for
+  $H^1 = H\Lambda^0$, we see that one-dimensional subsimplices carry
+  degrees of freedom for $r\ge 2$ and two-dimensional for $r\ge 3$.
+\end{remark}
+
+\begin{Theorem}{decomp-pr}
+  Let $k,r\ge 1$. Then, $\P_r(\cell)$ admits a geometric decomposition
+  \begin{gather}
+    \P_r\Lambda^k(\cell) = \bigoplus_{f\in\Delta(\cell)} V(f),
+  \end{gather}
+  where
+  \begin{gather}
+    V(f) \cong W(f) \cong
+    \begin{cases}
+      0 & \dim f < k\\
+      \P_{r+k-\dim f-1}^+ \Lambda^{\dim f-k}(f) &\text{else}\\
+      0 & \dim f \le r+k.
+    \end{cases}
+  \end{gather}
+\end{Theorem}
+
+\begin{Example}{bdm-complex-decomp}
+  \begin{gather}
+    \begin{array}{c|cc|cc}
+      \dim f
+      & \P_r\Lambda^1 & N^{2e}_r
+      & \P_r\Lambda^2 & BDM_r \\\hline
+      3 & \P_{r-3}^+\Lambda^2 & RT_{r-2} & \P_{r-1}^+\Lambda^1 & N^{1e}_{r-1} \\
+      2 & \P_{r-2}^+\Lambda^1 & RT_{r-1} & \P_{r}^+\Lambda^0 & \P_r \\
+      1 & \P_{r-1}^+\Lambda^0 & \P_r & --& --
+%      0 & \R & \R & -- & --
+    \end{array}
+  \end{gather}
+  The spaces $\P_r\Lambda^k$ and their proxy fields and the spaces
+  $W(f)$ of degrees of freedom.
+  
+  \begin{itemize}
+  \item [$N^{2e}$] ($\Hcurl$) Nedelec 2nd family edge element
+  \item [$BDM$] ($\Hdiv$) Brezzi-Douglas-Marini (also Nedelec 2nd face in 3D)
+  \item [$N^{1e}$] ($\Hcurl$) Nedelec 1st family edge element
+  \end{itemize}
+\end{Example}
+
+\subsubsection{Results for $\P_r^+\Lambda^k$ and proxy fields}
+
 
 \begin{Theorem}{decomp-pr-plus}
   Let $k,r\ge 1$. Then, $\P_r^+(\cell)$ admits a geometric decomposition
@@ -1189,42 +1333,6 @@ and $\Hcurl$.
   \item [$N^{1e}$] ($\Hcurl$) Nedelec 1st family edge element
   \item [$RT$] ($\Hdiv$) Raviart-Thomas (also Nedelec 1st face in 3D)
   \item [$N^{2e}$] ($\Hcurl$) Nedelec 2nd family edge element
-  \end{itemize}
-\end{Example}
-
-\begin{Theorem}{decomp-pr}
-  Let $k,r\ge 1$. Then, $\P_r(\cell)$ admits a geometric decomposition
-  \begin{gather}
-    \P_r\Lambda^k(\cell) = \bigoplus_{f\in\Delta(\cell)} V(f),
-  \end{gather}
-  where
-  \begin{gather}
-    V(f) \equiv
-    \begin{cases}
-      0 & \dim f < k\\
-      \P_{r+k-\dim f-1}^+ \Lambda^{\dim f-k}(f) &\text{else}\\
-      0 & \dim f \ge r+k.
-    \end{cases}
-  \end{gather}
-\end{Theorem}
-
-\begin{Example}{bdm-complex-decomp}
-  \begin{gather}
-    \begin{array}{c|cccc}
-      \dim f
-      & \P_r\Lambda^1 & N^{2e}_r
-      & \P_r\Lambda^2 & BDM_r \\\hline
-      3 & \P_{r-3}^+\Lambda^2 & RT_{r-2} & \P_{r-1}^+\Lambda^1 & N^{1e}_{r-1} \\
-      2 & \P_{r-2}^+\Lambda^1 & RT_{r-1} & \P_{r}^+\Lambda^0 & \P_r \\
-      1 & \P_{r-1}^+\Lambda^0 & \P_r & --& --
-%      0 & \R & \R & -- & --
-    \end{array}
-  \end{gather}
-  Geometric decomposition of $\P_r\Lambda^k$ and their spaces of degrees of freedom.
-  \begin{itemize}
-  \item [$N^{2e}$] ($\Hcurl$) Nedelec 2nd family edge element
-  \item [$BDM$] ($\Hdiv$) Brezzi-Douglas-Marini (also Nedelec 2nd face in 3D)
-  \item [$N^{1e}$] ($\Hcurl$) Nedelec 1st family edge element
   \end{itemize}
 \end{Example}
 
@@ -1352,7 +1460,7 @@ and $\Hcurl$.
 \begin{remark}
   The degrees of freedom for $\P_{r+1}\Lambda^0$ are chosen such that
   the finite element function on a subdivision of $I$ is continuous,
-  thus ih $H^1$. For $\P_{r}\Lambda^1$, we do not require continuity
+  thus in $H^1$. For $\P_{r}\Lambda^1$, we do not require continuity
   and thus only need interior degrees of freedom.
 \end{remark}
 
