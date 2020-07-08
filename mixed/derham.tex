@@ -96,6 +96,7 @@
   In two dimensions, we consider the de Rham sequences
   \begin{gather}\minCDarrowwidth20pt
     \label{eq:derham:8}
+    {\small
     \begin{CD}
       \R
       @>{\subset}>> H^1(\domain)
@@ -125,6 +126,7 @@
       @>{\div}>> L^2(\domain)
       @>>> 0,
     \end{CD}
+    }
   \end{gather}
 \end{Notation}
 
@@ -234,6 +236,7 @@ theorem on $\Hdiv$.
 \begin{Lemma}{hlambda-0}
   The Hilbert cochain complex with boundary values
   \begin{gather}\minCDarrowwidth20pt
+    {\small
     \begin{CD}
       0
       @>{d}>> H\Lambda^0_0(\domain)
@@ -255,6 +258,7 @@ theorem on $\Hdiv$.
       @>{\div}>> L^2_0(\domain)
       @>>> 0,
     \end{CD}
+    }
   \end{gather}
   has the same properties as stated for the Hilbert complex without
   boundary conditions.
@@ -280,9 +284,9 @@ theorem on $\Hdiv$.
   The problem: find
   \begin{gather}
     (\omega,\eta,\theta)
-    \in H\Lambda^k_0(\domain)
-    \times H\Lambda^{k-1}_0(\domain)
-    \times \mathcal H_k(\domain)
+    \in H\Lambda^1_0(\domain)
+    \times H\Lambda^{0}_0(\domain)
+    \times \mathcal H_1(\domain)
   \end{gather}
    such that
   \begin{gather}
@@ -290,15 +294,14 @@ theorem on $\Hdiv$.
     \begin{array}{cccccclll}
       \form(d \omega, d\mu) &+& \form(\mu,d\eta) &+& \form(\zeta,\mu)
       &=& \form(f,\mu)
-      & \qquad & \forall \mu\in H\Lambda^k_0(\domain)
+      & \qquad & \forall \mu\in H\Lambda^1_0(\domain)
       \\
       \form(\omega,d\zeta) && && &=&0
-      & \qquad & \forall \zeta\in H\Lambda^{k-1}_0(\domain)
+      & \qquad & \forall \zeta\in H\Lambda^{0}_0(\domain)
       \\
       \form(\omega,\tau) && && &=& 0
-      & \qquad & \forall \tau\in \mathcal H_k(\domain)
+      & \qquad & \forall \tau\in \mathcal H_1(\domain).
     \end{array}
-    \qquad\forall \mu\in V_0,
   \end{gather}
   is well-posed.
 \end{Lemma}
@@ -360,7 +363,7 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
 \section{Polynomial complexes for simplicial meshes}
 
 \begin{intro}
-  We have already seen that adding $\vx\P_k$ to the space $\P_k^d$, we
+  We have already seen that adding $\vx\P_k$ to the space $\P_k^\sdim$, we
   obtain a surjective divergence operator from the Raviart-Thomas
   element to the pressure space $\P_k$. In this section, we see that
   there is a general principle behind this concept and it can be
@@ -368,10 +371,14 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
 \end{intro}
 
 \begin{Notation}{pk-complex}
-  The homogeneous polynomial spaces $\breve\P_k$ form the cochain complex
+  The polynomial complex $\P_r\Lambda^k$ consists of $k$-forms with
+  coefficients in the polynomial space $\P_r$.
+  
+  The homogeneous polynomial spaces $\breve\P_k$ and their proxy
+  fields form the cochain complex
   \begin{gather}\minCDarrowwidth15pt
     \begin{CD}
-      \R
+      0
       @>{d}>> \breve\P_r\Lambda^0
       @>{d}>> \breve\P_{r-1}\Lambda^1
       @>{d}>> \breve\P_{r-2}\Lambda^2
@@ -384,7 +391,7 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
       @V{\cong}VV
       @V{\cong}VV
       \\
-      \R
+      0
       @>{\subset}>> \breve\P_r
       @>{\nabla}>> \breve\P_{r-1}^3
       @>{\curl}>> \breve\P_{r-2}^3
@@ -406,6 +413,51 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
 
 \subsection{The Koszul complex}
 
+\begin{Definition}{koszul-differential}
+  We define the \define{Koszul differential} as a map
+  \begin{gather}
+    \kappa\colon \Lambda^k(\R^\sdim) \to \Lambda^{k-1}(\R^\sdim),
+  \end{gather}
+  such that
+  \begin{gather}
+    \kappa\omega(\vx) (v_1,\dots,v_{k-1})
+    = \omega(\vx) (-\vx,v_1,\dots,v_{k-1}).
+  \end{gather}
+  As with the exterior differentail, we write $\kappa_k$ if we want to
+  specify the degree of $\Lambda^k$.  Application to proxy fields yields
+  \begin{gather}
+    \label{eq:derham:13}
+    \begin{aligned}
+      \kappa\omega_1 &\leftrightarrow \vx\cdot\vu,\\
+      \kappa\omega_2 &\leftrightarrow -\vx\times\vu,\\
+      \kappa\omega_3 &\leftrightarrow \vx p.
+    \end{aligned}
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{koszul-differential}
+  There holds
+  \begin{gather}
+    \label{eq:derham:14}
+    \kappa\circ\kappa = \kappa_k\circ\kappa_{k+1} = 0.
+  \end{gather}
+  Furthermore, we have the Leibnitz rule for $\omega\in \Lambda^k$ and
+  $\eta\in\Lambda^\ell$
+  \begin{gather}
+    \kappa(\omega\wedge\eta) = \kappa\omega\wedge\eta
+    + (-1)^k \omega\wedge\kappa\eta.
+  \end{gather}
+  If
+  $\omega(\vx) = a_\sigma(\vx)
+  \dx_{\sigma_1}\wedge\dots\wedge\dx_{\sigma_k}$, then we have
+  \begin{gather}
+    \kappa\omega(\vx) = \sum_{i=1}^k (-1)^{i+1} a_\sigma(\vx)x_{\sigma_i}
+    \dx_{\sigma_1}\wedge\dots\wedge\widehat{\dx_{\sigma_i}}
+    \wedge\dots\wedge\dx_{\sigma_k}.
+  \end{gather}
+  Finally, the Koszul differential commutes with the pullback.
+\end{Lemma}
+
 \begin{Definition}{Koszul-complex}
   The homogeneous \define{Koszul complex} is a polynomial complex of
   the form
@@ -419,20 +471,6 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
       @<{\kappa_3}<< \breve \P_{r-3}\Lambda^3
       @<<< 0
     \end{CD}.
-  \end{gather}
-  The \define{Koszul differential} is defined such that
-  \begin{gather}
-    \label{eq:derham:13}
-    \begin{aligned}
-      \kappa_1\omega &= x\cdot\omega & \omega&\in \P_s\Lambda^1,\\
-      \kappa_2\omega &= -x\times\omega & \omega&\in \P_s\Lambda^2,\\
-      \kappa_3\omega &= x\omega & \omega&\in \P_s\Lambda^3,
-    \end{aligned}
-  \end{gather}
-  and there holds
-  \begin{gather}
-    \label{eq:derham:14}
-    \kappa\circ\kappa = \kappa_k\circ\kappa_{k+1} = 0.
   \end{gather}
 \end{Definition}
 
@@ -449,8 +487,8 @@ usual differential $d$.
 \end{Lemma}
 
 \begin{proof}
-  Since we are not using differential form technology, we prove this
-  for each $k$ directly. For $k=0$, we have $\kappa\omega = 0$, thus
+  We prove this here
+  for each $k$ directly. The proof for forms is in the video and can be found in ~\cite{ArnoldFalkWinther06}. For $k=0$, we have $\kappa\omega = 0$, thus
   we have to show
   \begin{gather}
     \kappa d\omega = r\omega.
@@ -554,7 +592,7 @@ usual differential $d$.
 
 \begin{Theorem}{polynomial-exact}
   The polynomial de Rham complex and the Koszul complex are exact for
-  $r>3$. Furthermore for $r+k>0$, there holds
+  $r\ge 1$. Furthermore, for $k,r\ge 0$ and $k+r>0$, there holds
   \begin{gather}
     \label{eq:derham:17}
     \breve \P_r\Lambda^k = \kappa \breve\P_{r-1}\Lambda^{k+1}
@@ -632,7 +670,7 @@ usual differential $d$.
   \begin{gather}
     \P_r^+\Lambda^0 = \P_{r+1}\Lambda^0,
     \qquad
-    \P_r^+\Lambda^d = \P_r\Lambda^d.
+    \P_r^+\Lambda^\sdim = \P_r\Lambda^\sdim.
   \end{gather}
 \end{Definition}
 
@@ -668,9 +706,21 @@ usual differential $d$.
   $\omega=\omega_1$.
 \end{proof}
 
+\begin{Problem}{rt-bdm-forms}
+  \begin{enumerate}
+  \item   Identify the spaces $\P_r \Lambda^{\sdim-1}$ and
+    $\P_r^+ \Lambda^{\sdim-1}$ with finite element spaces for
+    $\Hdiv$.
+  \item Where have we stated a special case of
+    \slideref{Lemma}{pk-plus-d} before?
+  \item Suggest polynomial spaces for $\Hcurl$ corresponding to
+    $\P_r \Lambda^{1}$ and $\P_r^+ \Lambda^{1}$
+  \end{enumerate}
+\end{Problem}
+
 % AFW 2006 Lemma 3.8
 \begin{Lemma}{pr-pr-plus}
-  For $r\ge 1$ and $0\le k < d$ there holds
+  For $r\ge 1$ and $0\le k < n$ there holds
   \begin{gather}
     d\P_{r}^+\Lambda^k \subset d\P_{r+1}\Lambda^k
     \subset \P_r\Lambda^{k+1}
@@ -679,25 +729,25 @@ usual differential $d$.
   The following four mappings $d$ have the same kernel:
   \begin{gather}
     \begin{aligned}
-      d\colon \P_r\Lambda_k &\to \P_{r-1}\Lambda^{k+1}
+      d\colon \P_{r+1}\Lambda^k &\to \P_{r}\Lambda^{k+1}
       &
-      d\colon \P_r^+\Lambda_k &\to \P_{r}\Lambda^{k+1}
+      d\colon \P_r^+\Lambda^k &\to \P_{r}\Lambda^{k+1}
       \\
-      d\colon \P_r\Lambda_k &\to \P_{r-1}^+\Lambda^{k+1}
+      d\colon \P_{r+1}\Lambda^k &\to \P_{r}^+\Lambda^{k+1}
       &
-      d\colon \P_r^+\Lambda_k &\to \P_{r}^+\Lambda^{k+1}
+      d\colon \P_r^+\Lambda^k &\to \P_{r}^+\Lambda^{k+1}
     \end{aligned}
   \end{gather}
   The following four mappings $d$ have the same range:
   \begin{gather}
     \begin{aligned}
-      d\colon \P_r\Lambda_k &\to \P_{r-1}\Lambda^{k+1}
+      d\colon \P_{r+1}\Lambda^k &\to \P_{r}\Lambda^{k+1}
       &
-      d\colon \P_{r-1}^+\Lambda_k &\to \P_{r-1}\Lambda^{k+1}
+      d\colon \P_{r}^+\Lambda^k &\to \P_{r}\Lambda^{k+1}
       \\
-      d\colon \P_r\Lambda_k &\to \P_{r-1}^+\Lambda^{k+1}
+      d\colon \P_{r+1}\Lambda^k &\to \P_{r}^+\Lambda^{k+1}
       &
-      d\colon \P_{r-1}^+\Lambda_k &\to \P_{r-1}^+\Lambda^{k+1}
+      d\colon \P_{r}^+\Lambda^k &\to \P_{r}^+\Lambda^{k+1}
     \end{aligned}
   \end{gather}
 \end{Lemma}
@@ -715,13 +765,13 @@ usual differential $d$.
 \end{proof}
 
 \begin{Theorem}{dimension-pr-lambda}
-  Let $r\ge 0$ and $1\le k \le d$. Then,
+  Let $r\ge 0$ and $1\le k \le \sdim$. Then,
   \begin{gather}
     \begin{split}
-      \dim \kappa \breve P_r\Lambda^k(\R^d)
-      & = \dim d \breve P_{r+1}\Lambda^{k-1}(\R^d)
+      \dim \kappa \breve P_r\Lambda^k(\R^\sdim)
+      & = \dim d \breve P_{r+1}\Lambda^{k-1}(\R^\sdim)
       \\
-      &= \binom{d+r}{d-k}\binom{r+k-1}{k-1}.
+      &= \binom{\sdim+r}{\sdim-k}\binom{r+k-1}{k-1}.
     \end{split}
   \end{gather}
 \end{Theorem}
@@ -731,57 +781,57 @@ usual differential $d$.
   to equation~\eqref{eq:derham:17}, yielding
   \begin{gather}
     \kappa \breve P_r\Lambda^k(\R^d)
-    = \kappa d \breve P_{r+1}\Lambda^{k-1}(\R^d).
+    = \kappa \ediff \breve P_{r+1}\Lambda^{k-1}(\R^\sdim).
   \end{gather}
   By \slideref{Lemma}{d-kappa-injective}, the two spaces are
   isomorphic and the equality holds.
 
   The dimension formula is proven first for $r=0$ and $k\ge 1$. The
-  Koszul operator is injective on $\P_0\Lambda^K(\R^d)$ since the
+  Koszul operator is injective on $\P_0\Lambda^K(\R^\sdim)$ since the
   first factor in equation~\eqref{eq:derham:17} vanishes. It is
-  also injective on $\breve P_r\Lambda^d(\R^d)$ for $r\ge 0$.
+  also injective on $\breve P_r\Lambda^\sdim(\R^\sdim)$ for $r\ge 0$.
 
   For all other combinations of $r$ and $k$ it is proven by induction
-  over $k$. For $k=d$,
+  over $k$. For $k=\sdim$,
   \begin{gather}
-    \dim \breve\P_r\Lambda^d(\R^d) = \dim\breve\P_r(\R^d)
-    = \binom{d+r-1}{d-1}.
+    \dim \breve\P_r\Lambda^\sdim(\R^\sdim) = \dim\breve\P_r(\R^\sdim)
+    = \binom{\sdim+r-1}{\sdim-1}.
   \end{gather}
-  For $k<d$, we assume the formula proven for $k+1$. We have
+  For $k<\sdim$, we assume the formula proven for $k+1$. We have
 % Move this to an earlier point or an appendix
   \begin{gather}
-    \breve P_r\Lambda^k(\R^d) = \binom{d+r-1}{d-1}\binom{d}{k}.
+    \breve P_r\Lambda^k(\R^d) = \binom{\sdim+r-1}{\sdim-1}\binom{\sdim}{k}.
   \end{gather}
   Now, the dimension formula
   \begin{gather}
-    \dim \range \phi = \dim V - \dim ker \phi,
+    \dim \range \phi = \dim V - \dim \ker \phi,
   \end{gather}
   yields
   \begin{gather}
-    \dim\kappa\breve \P_r\Lambda^k(\R^d) =
-    \dim\breve \P_r\Lambda^k(\R^d)
-    - \dim\kappa\breve \P_{r-1}\Lambda^{k+1}(\R^d),
+    \dim\kappa\breve \P_r\Lambda^k(\R^\sdim) =
+    \dim\breve \P_r\Lambda^k(\R^\sdim)
+    - \dim\kappa\breve \P_{r-1}\Lambda^{k+1}(\R^\sdim),
   \end{gather}
   where we have used the exactness of the Koszul complex.
   Using the induction hypothesis yields by the binomial identity
 % Olkhovskiy
   \begin{align}
-    \dim\kappa\breve \P_r\Lambda^k(\R^d) 
-    &= \binom{d+r-1}{d-1}\binom{d}{k} - \binom{d+r-1}{d-k-1}\binom{r+k-1}{k}
+    \dim\kappa\breve \P_r\Lambda^k(\R^\sdim)
+    &= \binom{\sdim+r-1}{\sdim-1}\binom{\sdim}{k} - \binom{\sdim+r-1}{\sdim-k-1}\binom{r+k-1}{k}
     \\
-    &= \frac{(d+r-1)!{\color{green}d!}}{{\color{green}(d-1)!}{\color{purple}r!}k!{\color{blue}(d-k)!}}
-      - \frac{(d+r-1)!{\color{red}(r+k-1)!}}{{\color{blue}(d-k-1)!}
+    &= \frac{(\sdim+r-1)!{\color{green}\sdim!}}{{\color{green}(\sdim-1)!}{\color{purple}r!}k!{\color{blue}(\sdim-k)!}}
+      - \frac{(\sdim+r-1)!{\color{red}(r+k-1)!}}{{\color{blue}(\sdim-k-1)!}
       {\color{red}(r+k)!}k!{\color{purple}(r-1)!}}
     \\
     &=
-      \frac{(d+r-1)!{\color{green}d}{\color{red}(r+k)}-{\color{blue}(d-k)}(d+r-1)!{\color{purple}r}}
-      {{\color{purple}r!}k!{\color{blue}(d-k)!}{\color{red}(r+k)}}
+      \frac{(\sdim+r-1)!{\color{green}\sdim}{\color{red}(r+k)}-{\color{blue}(\sdim-k)}(\sdim+r-1)!{\color{purple}r}}
+      {{\color{purple}r!}k!{\color{blue}(\sdim-k)!}{\color{red}(r+k)}}
     \\
-    &= \frac{(d+r-1)!\bigl(d(r+k)-(d-k)r\bigr)}{r!k!(d-k)!(r+k)}
+    &= \frac{(\sdim+r-1)!\bigl(\sdim(r+k)-(\sdim-k)r\bigr)}{r!k!(\sdim-k)!(r+k)}
     \\
-    &= \frac{(d+r)!}{r!(k-1)!(d-k)!(r+k)}
+    &= \frac{(\sdim+r)!}{r!(k-1)!(\sdim-k)!(r+k)}
     \\
-    &= \binom{d+r}{d-k}\binom{r+k-1}{k-1}.
+    &= \binom{\sdim+r}{\sdim-k}\binom{r+k-1}{k-1}.
   \end{align}
 \end{proof}
 
@@ -798,9 +848,9 @@ usual differential $d$.
 
 \begin{Definition}{mesh-pk}
   Given a space of polynomial forms
-  $\P_r\Lambda^k=\P_r\Lambda^k(\R^d)$, we define the space of finite
+  $\P_r\Lambda^k=\P_r\Lambda^k(\R^\sdim)$, we define the space of finite
   element polynomial forms on a mesh $\mesh_h$ covering the domain
-  $\domain\subset\R^d$ as
+  $\domain\subset\R^\sdim$ as
   \begin{gather}
     \P_r\Lambda^k(\mesh) = \bigl\{
     \omega \in H\Lambda^k \big|
@@ -821,16 +871,16 @@ usual differential $d$.
 \subsubsection{Geometric structure of simplices}
 
 \begin{Definition}{spanned-simplex}
-  Let $x_0,\dots,x_k$ for $k\le d$ be a set of $k+1$ points in
-  $\R^d$. Then, we call the set of convex combinations of these points
+  Let $x_0,\dots,x_k$ for $k\le \sdim$ be a set of $k+1$ points in
+  $\R^\sdim$. Then, we call the set of convex combinations of these points
   the $k$-simplex $f$ spanned by $\{x_0,\dots,x_k\}$.
 \end{Definition}
 
 
 \begin{Definition}{subsimplices}
-  Let $\cell$ be the simplex in $\R^d$ spanned by the points
+  Let $\cell$ be the simplex in $\R^\sdim$ spanned by the points
   $x_0,\dots,x_d$. Then, every ascending subset
-  $\sigma \subset \{0,\dots,d\}$ of length $k+1$ defines a
+  $\sigma \subset \{0,\dots,\sdim\}$ of length $k+1$ defines a
   $k$-dimensional \define{subsimplex} of $\cell$ denoted as $f_\sigma$.
 
   The set of all subsimplices of $\cell$, including $\cell$ itself is
@@ -839,7 +889,7 @@ usual differential $d$.
 \end{Definition}
 
 \begin{example}
-  A $d$-dimensional simplex $\cell$ has $\binom{d+1}{k+1}$
+  A $d$-dimensional simplex $\cell$ has $\binom{\sdim+1}{k+1}$
   subsimplices of dimension $k$.
 
   The one-dimensional simplex $[x_0,x_1]$ has two subsimplices of
@@ -860,15 +910,15 @@ usual differential $d$.
 \subsubsection{Geometric decomposition of $\P_r(\cell)$}
 
 \begin{remark}
-  For a simplex $\cell\subset\R^d$, the barycentric coordinates are
+  For a simplex $\cell\subset\R^\sdim$, the barycentric coordinates are
   the uniquely determined linear interpolating polynomials such that
   \begin{gather}
     \lambda_i(x_j) = \delta_{ij}.
   \end{gather}
   Then,
   \begin{gather}
-    \cell = \biggl\{ x = \sum_{i=0}^d\lambda_i\bigg\vert
-    \lambda_i \ge 0,\quad\sum_{i=0}^d\lambda_i = 1\biggr\}.
+    \cell = \biggl\{ x = \sum_{i=0}^\sdim\lambda_i\bigg\vert
+    \lambda_i \ge 0,\quad\sum_{i=0}^\sdim\lambda_i = 1\biggr\}.
   \end{gather}
 
   Let $f=f_\sigma$ be the $k$-dimensional subsimplex spanned by the
@@ -889,14 +939,14 @@ usual differential $d$.
 \begin{remark}
   When we introduced barycentric coordinates in order to define
   standard shape functions on simplices, we generated a basis for
-  $\P_r(\R^d)$ by selecting polynomials of the $\lambda_i$. Closer
+  $\P_r(\R^\sdim)$ by selecting polynomials of the $\lambda_i$. Closer
   inspection reveals that these polynomials were
   homogeneous. Therefore, we defined an isomorphism
   \begin{gather}
-    \breve \P_k(\R^{d+1}) \equiv \P_k(\R^d),
+    \breve \P_k(\R^{\sdim+1}) \cong \P_k(\R^\sdim),
   \end{gather}
-  which reads: for every $p\in \P_k(\R^d)$ there is
-  $q\in\breve\P_k(\R^{d+1})$ such that
+  which reads: for every $p\in \P_k(\R^\sdim)$ there is
+  $q\in\breve\P_k(\R^{\sdim+1})$ such that
   \begin{gather}
     p(x_1,\dots,x_d) = q(\lambda_0,\dots,\lambda_d).
   \end{gather}
@@ -906,7 +956,7 @@ usual differential $d$.
 \begin{Definition}{pr-f}
   For each $k$-dimensional subsimplex $f_\sigma$ of $\cell$ with
   $\sigma = \sigma_0,\dots,\sigma_k$, the space
-  $\P_r(f_\sigma) \equiv \breve\P_r(\R^{k+1})$ is defined as
+  $\P_r(f_\sigma) \cong \breve\P_r(\R^{k+1})$ is defined as
   \begin{gather}
     \P_r(f_\sigma) = \bigl\{
     q(\lambda_{\sigma_0},\dots,\lambda_{\sigma_k})\big\vert
@@ -919,7 +969,7 @@ usual differential $d$.
   The \define{extension operator} $E_{f_\sigma\to\cell}$ is defined as
   \begin{gather}
     \begin{split}
-      E_{f_\sigma\to\cell}\colon \P_r(f_\sigma) &\to \P_r(\R^d),\\
+      E_{f_\sigma\to\cell}\colon \P_r(f_\sigma) &\to \P_r(\R^\sdim),\\
       p(\lambda_0,\dots,\lambda_d) &= q(\lambda_{\sigma_0},\dots,\lambda_{\sigma_k}),
     \end{split}
   \end{gather}
@@ -1041,7 +1091,7 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
   same lemma, the spaces $V(f)$ for all $f$ with equal dimension are
   disjoint. Therefore, the sum
   \begin{gather}
-    V_d(\cell) = \sum_{k=0}^{d-1} \sum_{f\in \Delta_k(\cell)} V(f),
+    V_d(\cell) = \sum_{k=0}^{\sdim-1} \sum_{f\in \Delta_k(\cell)} V(f),
   \end{gather}
   is direct. But, $V(\cell) \cap V_d(\cell) = \{0\}$, since all elements in
   $V(\cell)$ contain a bubble function factor. Therefore,
@@ -1051,15 +1101,15 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
   We conclude by showing that dimensions on both sides are equal.
   On the right, we use
   \begin{gather}
-    \dim \P_r(\R^d) = \binom{r+d}{r} = \frac{(r+d)!}{d!r!}
+    \dim \P_r(\R^\sdim) = \binom{r+\sdim}{r} = \frac{(r+\sdim)!}{\sdim!r!}
   \end{gather}
   On the left, we have
   \begin{multline}
     \dim \bigoplus_{f\in\Delta(\cell)}V(f) =
-    \sum_{k=0}^{d} \binom{d+1}{k+1} \binom{r+k}{k}
+    \sum_{k=0}^{\sdim} \binom{\sdim+1}{k+1} \binom{r+k}{k}
     \\
     = \frac{(d+1)!}{r!}
-    \sum_{k=0}^{d} \frac{1}{(k+1)!(d-k)!} \frac{(r+k)!}{k!}.
+    \sum_{k=0}^{\sdim} \frac{1}{(k+1)!(d-k)!} \frac{(r+k)!}{k!}.
   \end{multline}
 
 % Finish this!
@@ -1269,7 +1319,7 @@ and $\Hcurl$.
     \R
     @>{\subset}>>
     H^1(I) = H\Lambda^0(I)
-    @>{\tfrac{d}{dx}}>>
+    @>{\tfrac{\diffd}{\dx}}>>
     L^2(I) = H\Lambda^1(I)
     @>>> 0
     \\
@@ -1280,7 +1330,7 @@ and $\Hcurl$.
     \R
     @>{\subset}>>
     \P_{r+1} = \P_{r+1}\Lambda^0
-    @>{\tfrac{d}{dx}}>>
+    @>{\tfrac{\diffd}{\dx}}>>
     \P_r = \P_r\Lambda^1
     @>>> 0
     \end{CD}
