@@ -488,7 +488,7 @@ usual exterior derivative $d$.
 
 \begin{proof}
   We prove this here
-  for each $k$ directly. The proof for forms is in the video and can be found in ~\cite{ArnoldFalkWinther06}. For $k=0$, we have $\kappa\omega = 0$, thus
+  for each $k$ directly. The proof for forms is in the video and can be found in ~\cite{ArnoldFalkWinther06acta}. For $k=0$, we have $\kappa\omega = 0$, thus
   we have to show
   \begin{gather}
     \kappa d\omega = r\omega.
@@ -662,10 +662,12 @@ usual exterior derivative $d$.
 \end{proof}
 
 \begin{Definition}{pk-plus}
+  \index{prpl@$\P_r+\Lambda^k$}
   The polynomial space of $k$-forms $\P_r^+\Lambda^k$ is defined as
   \begin{gather}
-    \P_r^+\Lambda^k = \P_r\Lambda^k \oplus \kappa \P_r\Lambda^{k+1}.
+    \P_r^+\Lambda^k = \P_r\Lambda^k \oplus \kappa \breve\P_r\Lambda^{k+1}.
   \end{gather}
+  \index{prml@$\P_r-\Lambda^k$}
   It is also referred to as $\P_{r+1}^-\Lambda^k$. Furthermore,
   \begin{gather}
     \P_r^+\Lambda^0 = \P_{r+1}\Lambda^0,
@@ -751,6 +753,32 @@ usual exterior derivative $d$.
     \end{aligned}
   \end{gather}
 \end{Lemma}
+
+
+\begin{Corollary}{pr-sequences}
+  For polynomial forms in $\R^3$, 
+  all four sequences in this diagram are exact:
+  {\small
+  \begin{tikzcd}
+    \R \arrow[r,hook]
+    & \P_{r+3}\Lambda^0 \arrow[r,"\diffd"]
+    & \P_{r+2}\Lambda^1 \arrow[rd,"\diffd"]\\
+    \R \arrow[r,hook]
+    & \P_{r+2}\Lambda^0 \arrow[r,"\diffd"]
+    & \P_{r+1}^+\Lambda^1 \arrow[r,"\diffd"]
+    & \P_{r+1}\Lambda^2 \arrow[rdd,"\diffd"]\\
+    \R \arrow[r,hook]
+    & \P_{r+2}\Lambda^0 \arrow[r,"\diffd"]
+    & \P_{r+1}\Lambda^1 \arrow[rd,"\diffd"]\\
+    \R \arrow[r,hook]
+    & \P_{r+1}\Lambda^0 \arrow[r,"\diffd"]
+    & \P_{r}^+\Lambda^1 \arrow[r,"\diffd"]
+    & \P_{r}^+\Lambda^2 \arrow[r,"\diffd"]
+    & \P_{r}\Lambda^3 \arrow[r,"\diffd"]
+    & 0
+  \end{tikzcd}
+  }
+\end{Corollary}
 
 \begin{proof}
   The first statement follows from the inclusions of $\P_r$ and
@@ -857,6 +885,9 @@ usual exterior derivative $d$.
     \;\forall \cell\in\T\colon \omega_{|\cell} \in \P_r\Lambda^k
     \bigr\}.
   \end{gather}
+  Furthermore, we define $\Delta_m(\T_h)$ as the set of all
+  $m$-dimensional subsimplices of the whole mesh, where shared
+  subsimplices of several cells are identified.
 \end{Definition}
 
 \begin{intro}
@@ -868,47 +899,32 @@ usual exterior derivative $d$.
   allocated to these subsimplices.
 \end{intro}
 
-\subsubsection{Geometric structure of simplices}
+\begin{Theorem}{hlambda-continuity}
+  Let $\omega\in L^2\Lambda^k(\domain)$ be polynomial on each mesh
+  cell $\cell$ of a mesh $\mesh_h$ covering $\domain$. Then, the
+  following statements are equivalent:
+  \begin{enumerate}
+  \item $\omega\in H\Lambda^k(\domain)$
+  \item $\gamma_f\omega$ is single-valued for all $f\in\Delta_{\sdim-1}(\T_h)$
+  \item $\gamma_f\omega$ is single-valued for all $f\in\Delta_{m}(\T_h)$ for
+    $k\le m \le n-1$.
+  \end{enumerate}
+\end{Theorem}
 
-\begin{Definition}{subsimplices}
-  Let $\cell$ be the simplex in $\R^\sdim$ spanned by the points
-  $x_0,\dots,x_\sdim$. Then, every ascending subset
-  $\sigma \subset \{0,\dots,\sdim\}$ of length $k+1$ defines a
-  $k$-dimensional \define{subsimplex} of $\cell$ denoted as $f_\sigma$.
+\begin{proof}
+  By the Stokes theorem, every smooth $k$-form on a mesh cell $\cell$
+  has a well-defined trace $\gamma_f\omega$ on
+  $f\in\Delta_{n-1}(\cell)$. Thus, $\omega\in H\Lambda^k(\domain)$ if
+  and only if these traces coincide from both cells sharing this face.
 
-  The set of all subsimplices of $\cell$, including $\cell$ itself is
-  called es
-  \index{Delta@$\Delta(\cell)$} $\Delta(\cell)$. The set of all $k$-dimensional subsimplices
-  is \index{Delta k@$\Delta_k(\cell)$} $\Delta_k(\cell)$.
-\end{Definition}
-
-\begin{example}
-  A $\sdim$-dimensional simplex $\cell$ has $\binom{\sdim+1}{k+1}$
-  subsimplices of dimension $k$.
-
-  The one-dimensional simplex $[x_0,x_1]$ has two subsimplices of
-  dimension zero, namely the two points $x_0$ and $x_1$.
-
-  The triangle spanned by the points $x_0, x_1, x_3$ has three
-  one-dimensional subsimplices (edges) and three zero-dimensional
-  subsimplices (vertices).
-
-  The tetrahedron spanned by the points $x_0,\dots,x_3$ has
-  \begin{itemize}
-  \item 4 triangular faces,
-  \item 6 edges,
-  \item 4 vertices.
-  \end{itemize}
-\end{example}
+  Once this is established, it is also clear that the two traces can
+  only be the same if their traces to the boundary of $f$ coincide as
+  well.
+\end{proof}
 
 \subsubsection{Geometric decomposition of $\P_r(\cell)$}
 
-\begin{Lemma}{barycentric-subsimplex}
-  Let $\cell$ be a simplex in $\R^\sdim$ with barycentric coordinates
-  $\lambda_0,\dots,\lambda_\sdim$. Then, the subset
-  $\lambda_{\sigma_1},\dots,\lambda_{\sigma_k}$ form the barycentric
-  coordinates of the subsimplex $f_\sigma\in\Delta_k(\cell)$.
-\end{Lemma}
+For the geometric decomposition of simplices and the consequences on barycentric coordinates, see \cref{sec:barycentric}
 
 \begin{remark}
   When we introduced barycentric coordinates in order to define
@@ -1207,7 +1223,9 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
   \end{gather}
   then $\omega = 0$. Thus, the space $\P_r\Lambda^k(\cell)$ together
   with the node functionals $\nodal_{f,\eta}$ forms a unisolvent
-  finite element.
+  finite element.  Furthermore, $\gamma_f\omega$ for any subsimplex
+  $f\in\Delta(\cell)$ is uniquely determined by the degrees of freedom
+  in $\bigoplus_g W(g)$ where $g\in\Delta(f)$.
 \end{Theorem}
 
 \begin{proof}
@@ -1232,7 +1250,9 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
   Let now $f\in \Delta_{k+1}(\cell)$. Then, by the result of the
   previous argument,
   $\gamma_f\omega\in \overset{\circ}{\P}_r\Lambda^k(f)$, and by the
-  argument itself $\gamma_f \omega = 0$.
+  argument itself $\gamma_f \omega = 0$. In particular,
+  $\gamma_f\omega$ is uniquely determined at this point of the
+  construction process, which proves the last statement of the theorem.
 
   We can now do induction by the dimension of $f$ until we reach
   $\Delta_n(\cell) = \{\cell\}$ to obtain the result.
@@ -1299,14 +1319,14 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
   \end{gather}
   where
   \begin{align}
-    V(f) \equiv
+    V(f) \cong
     \begin{cases}
       0 & \dim f < k\\
       \P_{r+k-\dim f} \Lambda^{\dim f-k}(f) &\text{else}\\
       0 & \dim f > r+k.
     \end{cases}
     \\
-    W(f) \equiv
+    W(f) \cong
     \begin{cases}
       0 & \dim f < k\\
       \P_{r+k-\dim f} \Lambda^{\dim f-k}(f) &\text{else}\\
@@ -1336,91 +1356,71 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
   \end{itemize}
 \end{Example}
 
+\begin{Definition}{k-form-interpolation}
+  By choosing a basis for each of the spaces $W(f)$ with
+  $f\in\Delta(\cell)$, we obtain a finite number of node functionals
+  $\nodal_{f,i}$ which in turn induces bases $\{\omega_{f,i}\}$ for $V(f)$ by
+  duality.
+  The \define{canonical interpolation} operators
+  \begin{gather}
+    \Pi_k\colon C\Lambda^k(\cell) \to \P_r\Lambda^k(\cell),
+    \qquad
+    \Pi_k^+\colon C\Lambda^k(\cell) \to \P_r^+\Lambda^k(\cell),
+  \end{gather}
+  are defined such that for all $\omega\in C\Lambda^k(\cell)$
+  \begin{gather}
+    \Pi_k \omega, \Pi_k^+\omega = \sum_{f\in\Delta(\cell)}
+  \sum_{i=1}^{\dim W(f)} \nodal_{f,i}(\omega) \omega_{f,i},
+\end{gather}
+where the inner sum is determined by the spaces in \slideref{Theorem}{pr-lambda-unisolvent} and \slideref{Theorem}{decomp-pr-plus}, respectively.
+\end{Definition}
+
+\begin{Theorem}{canonical-commute}
+  The diagram
+  \begin{center}
+    \begin{tikzcd}
+      \Lambda^k(\cell)
+      \arrow[r,"\diffd"]
+      \arrow[d,"\Pi"]
+      & \Lambda^{k+1}(\cell)
+      \arrow[d,"\Pi"]
+      \\
+      \P\Lambda^k(\cell) \arrow[r,"\diffd"]
+      &\P\Lambda^{k+1}(\cell)
+    \end{tikzcd}
+  \end{center}
+  commutes for all combinations of the spaces
+  $\P\Lambda^k \in \{\P_{r+1}\Lambda^k,\P_r^+\Lambda^k\}$ and
+  $\P\Lambda^{k+1}\in \{\P_r\Lambda^{k+1}, \P_r^+\Lambda^{k+1}\}$.
+  Namely, the canonical interpolation operators commute with the
+  exterior derivative,
+  \begin{gather}
+    \Pi(d\omega) = d(\Pi\omega).
+  \end{gather}
+\end{Theorem}
 
 
 \section{The complex of tensor product polynomials}
 
-\begin{Lemma}{qr-complex}
-  Tensor product polynomials form the exact sequence
-  \begin{gather}
-    \R
-    \overset{\subset}{\longrightarrow} \Q_r
-    \overset{\nabla}{\longrightarrow}
-    \begin{pmatrix}
-      \Q_{r,r+1,r+1}\\\Q_{r+1,r,r+1}\\\Q_{r+1,r+1,r}
-    \end{pmatrix}
-    \overset{\curl}{\longrightarrow}
-    \begin{pmatrix}
-      \Q_{r+1,r,r}\\\Q_{r,r+1,r}\\\Q_{r,r,r+1}
-    \end{pmatrix}
-    \overset{\div}{\longrightarrow}
-    \Q_r
-    \longrightarrow 0,    
-  \end{gather}
-\end{Lemma}
+\begin{intro}
+  The other multilinear map we know is the tensor product, which we
+  used to define finite elements on squares and cubes. This section is
+  now concerned with the interplay of alternating and differential
+  forms and tensor products. In particular, we are looking into the
+  construction of $k$-forms on $\R^\sdim$ as tensor products of
+  one-dimensional forms.
 
-\begin{proof}
-  First, we show that the differential operators map into the right
-  spaces. Let $q\in\Q_{r+1}$ such that
-  $q(x) = q_1(x_1) q_2(x_2)q_3(x_3)$ with $q_i\in\Q_{r+1}$. Then
-  \begin{gather}
-    \nabla q =
-    \begin{pmatrix}
-      q_1'q_2q_3\\q_1q_2'q_3\\q_1q_2q_3'
-    \end{pmatrix}
-    \in
-    \begin{pmatrix}
-      \Q_{r,r+1,r+1}\\\Q_{r+1,r,r+1}\\\Q_{r+1,r+1,r}
-    \end{pmatrix}.
-  \end{gather}
-  Similarly, we can compute this directly for $\curl$ and
-  $\div$. Since polynomials are differentiable, we have $d^2=0$. It
-  remains to show that the sequence is exact, which we will prove at
-  the example of $\Hcurl$. Let $u\in \ker{\curl}$,
-  \begin{gather}
-    u=
-    \begin{pmatrix}
-      \phi_1\phi_2\phi_3\\
-      \psi_1\psi_2\psi_3\\
-      \pi_1\pi_2\pi_3
-    \end{pmatrix},
-    \qquad
-    0 = \curl u =
-    \begin{pmatrix}
-      \pi_1\pi_2'\pi_3 - \psi_1\psi_2\psi_3'\\
-      \phi_1\phi_2\phi_3' - \pi_1'\pi_2\pi_3\\
-      \psi_1'\psi_2\psi_3 - \phi_1\phi_2'\phi_3
-    \end{pmatrix},
-  \end{gather}
-  where each polynomial with index $i$ only depends on
-  $x_i$. Furthermore, $\phi_1,\psi_2,\pi_3\in\P_r$ and all other in
-  $\P_{r+1}$.  From the continuous de Rham complex, we know that there
-  is a function $p$ such that $u=\nabla p$. It remains to show that
-  $p\in\Q_{r+1}$. There holds
-  \begin{gather}
-    \d_1 p = \phi_1\phi_2\phi_3.
-  \end{gather}
-  Thus, we make the ansatz
-  \begin{gather}
-    p = \Phi_1\phi_2\phi_3,
-  \end{gather}
-  where $\Phi_1\in\P_{r+1}$ is the antiderivative of $\phi_1$. Thus,
-  $p\in\Q_{r+1}$ It remains to show that this ansatz is consistent
-  with the other two derivatives, thus,
-  \begin{gather}
-    p = \Phi_1\phi_2\phi_3 = \psi_1\Psi_2\psi_3 = \pi_1\pi_2\Pi_3.
-  \end{gather}
-  Integrating the first component of $\curl u$ with respect to $x_2$
-  and $x_3$, we obtain
-  \begin{gather}
-    \pi_1\pi_2\Pi_3 = \psi_1\Psi_2\psi_3.
-  \end{gather}
-  Doing the same with the second component, we see indeed that the
-  function $p$ is consistently defined and thus $u=\nabla p$.
-\end{proof}
+  We will avoid the functional analysis of tensor products of Hilbert
+  spaces and refer the readers
+  to~\cite{ReedSimon80,Hackbusch14,Hackbusch19}.
+
+  We focus instead on the finite dimensional construction of
+  polynomial $k$-forms on $\R^\sdim$ by tensor products of
+  one-dimensional forms.
+\end{intro}
 
 \begin{Definition}{pr-complex-1d}
-  The one-dimensional de Rham complex on the interval $I = [\xi_0,\xi_1]$ and
+  The one-dimensional de Rham complex on the interval $I = [0,1]$ and
   its polynomial subcomplex are
   \begin{gather}
     \begin{CD}
@@ -1443,99 +1443,404 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
     @>>> 0
     \end{CD}
   \end{gather}
-  The degrees of freedom for $\P_{r+1}\Lambda^0$ are
+  We also use the simplified notation $\P\Lambda^k$, indicating that
+  the polynomial degrees are chosen such that $r+k$ is constant.
+\end{Definition}
+
+\begin{remark}
+  The polynomials sequence is exact due to \slideref{Theorem}{polynomial-exact}.
+\end{remark}
+
+\begin{Definition}{pr-1d-basis}
+  The node functionals for $\P_{r+1}\Lambda^0$ are
   \begin{gather}
     \begin{matrix}
-    \nodal_{0,0}(p) = p(\chi_0),\\
-    \nodal_{0,1}(p) = p(\chi_1),
+      \nodal_{0,0}^0(p) = p(1) - p(0),\\
+      \nodal_{0,1}^0(p) = p(1) + p(0),
     \end{matrix}\qquad
-    \nodal_{1.q}(p) = \int_{I} p q \dx,\quad\forall q\in\P_{r-1}.
+    \nodal_{1.q}^0(p) = \int_{I} p' q \dx,\quad\forall q\in\nicefrac{\P_{r-1}}{\R}.
   \end{gather}
   The degrees of freedom for $\P_{r}\Lambda^1$ are
   \begin{gather}
-    \nodal_{1,q}(p) = \int_{I} p q \dx,\quad\forall q\in\P_{r}.
+    \nodal_{1,q}^1(p) = \int_{I} p q \dx,\quad\forall q\in\P_{r}.
   \end{gather}
+  Bases for the shape function spaces are defined by duality.
 \end{Definition}
 
 \begin{remark}
   The degrees of freedom for $\P_{r+1}\Lambda^0$ are chosen such that
   the finite element function on a subdivision of $I$ is continuous,
-  thus in $H^1$. For $\P_{r}\Lambda^1$, we do not require continuity
+  thus in $H^1$. This is true, even if the function values at the end
+  points only appear in linear combinations.
+
+  For $\P_{r}\Lambda^1$, we do not require continuity
   and thus only need interior degrees of freedom.
 \end{remark}
 
-\begin{Definition}{tensor-dofs}
-  Let
+\begin{Lemma}{commute-nodal}
+  Let finite element $k$-forms $\P\Lambda^k$ on the cell $\cell\subset\R^\sdim$ be
+  defined by node values $\nodal_i^k$ for $i=1,\dots,m_k$. Let the
+  basis for the shape function spaces $\{\phi^k_i\}$ and
+  $\{\phi^{k+1}_i\}$, respectively defined by duality.  Assume for $r=\dim\range d$
   \begin{gather}
-    \nodal_{0,0} p = p(\chi_0),\qquad \nodal_{0,1} p = p(\chi_1), \qquad
-    \nodal_{1,i} = \int_I p q_i\dx,
+    \label{eq:commute-basis}
+      \begin{aligned}
+          d\phi^k_i &= \phi^{k+1}_i & \qquad i&=1,\dots,r,\\
+          d\phi^k_i &= 0 & i&=r+1,\dots,\dim\P\Lambda^{k}(\cell).
+      \end{aligned}
   \end{gather}
-  be the degrees of freedom of a one-dimensional element where the
-  $q_i$ are a basis for $\P_{r-1}$ and $\P_r$ in case of
-  $\P_{r+1}\Lambda^0$ and $\P_{r}\Lambda^1$, respectively. Then, the
-  tensor product of these degrees of freedom applied to the function
-  $p(x_1,x_2) = p_1(x_1)p_2(x_2)$ is defined as
+Moreover, assume for any $\omega\in \Lambda^k(\cell)$
   \begin{gather}
-    \begin{split}
-      \nodal_{0,i}\otimes\nodal_{0,j}(p) &= p_1(\chi_i) p_2(\chi_j),\\
-      \nodal_{0,i}\otimes\nodal_{1,j}(p) &= \int_I p_1(\chi_i)  p_2(x)q_j(x)\dx,\\
-      \nodal_{1,i}\otimes\nodal_{0,j}(p) &= \int_I p_1(x)q_j(x) p_2(\chi_j) \dx,\\
-      \nodal_{1,i}\otimes\nodal_{1,j}(p) &= \iint_I p_1(x_1)
-      p_2(x_2) \dx_1\dx_2.
-    \end{split}
+    \label{eq:commute-nodal}
+      \begin{aligned}
+      \nodal^{k+1}_i(d \omega) &= \nodal^k_i(\omega)& \qquad i&=1,\dots,r,\\
+      \nodal^{k+1}_i(d \omega) &= 0 & i&=r+1,\dots,\dim\P\Lambda^{k+1}.
+      \end{aligned}
   \end{gather}
-\end{Definition}
-
-\begin{Lemma}{2d-tensor-rt-nedelec}
-  For the two elements
+  Then, the \putindex{canonical interpolation} operators $\Pi$ commute
+  with the exterior derivative, namely, there holds:
   \begin{gather}
-    RT_r =
-    \begin{pmatrix}
-      \P_{r+1}\Lambda^0 \otimes \P_{r}\Lambda^1\\
-      \P_{r}\Lambda^1 \otimes \P_{r+1}\Lambda^0
-    \end{pmatrix},
-    \qquad
-    N^{1e}_r =
-    \begin{pmatrix}
-      \P_{r}\Lambda^1 \otimes \P_{r+1}\Lambda^0\\
-      \P_{r+1}\Lambda^0 \otimes \P_{r}\Lambda^1      
-    \end{pmatrix},
+    d_k \Pi_k \omega = \Pi_{k+1} d_k \omega.
   \end{gather}
-  the tensorized degrees of freedom uniquely determine the normal and
-  tangential components, respectively, on the face of a square.
-
-  Both elements with their tensor degrees of freedom are unisolvent.
 \end{Lemma}
 
 \begin{proof}
-  The elements are unisolvent by the following argument: Let
-  $\{\phi_i\}$ and $\{\psi_j\}$ be the basis dual to the degrees of
-  freedom of $\P_{r+1}\Lambda^0$ or $\P_r \Lambda^1$,
-  respectively. Then, (renumbering the degrees of freedom)
+  By linearity, we have
   \begin{gather}
-    \nodal_k\otimes\nodal_l(\phi_i\otimes\psi_j) = \delta_{ik}\delta_{jl}.
+      d\Pi_k \omega = d\left(\sum_{i=1}^{\dim\P\Lambda^k}\nodal^k_i(\omega) \phi^k_i\right)
+      = \sum_{i=1}^{r}\nodal^k_i(\omega) d \phi^k_i
+      = \sum_{i=1}^{r}\nodal^k_i(\omega) \phi^{k+1}_i.
   \end{gather}
-  Thus, the mapping between tensorized degrees of freedom and
-  tensorized basis functions is one-to-one.
-
-  For the Raviart-Thomas element $RT_r$, the normal component is
-  $\P_r\Lambda^1$. Take for instance the face $x_1 = \chi_0$. Then,
-  the degrees of freedom associated to this face are
+  On the other hand,
   \begin{gather}
-    \nodal_{0,0} \otimes \nodal{1,q} p
-    = \int_I p_1(\chi_1) p_2(x_2) q(x_2) \dx_2
-    \quad\forall q\in \P_r.
+      \Pi_{k+1} d \omega = \sum_{i=1}^{\dim\P\Lambda^{k+1}}\nodal^{k+1}_i(d \omega) \phi^{k+1}_i.
   \end{gather}
-  Since the trace of $p$ on this face is $p_2 \in \P_r$, this
-  polynomial is uniquely determined by the degree of freedom.
-
-  The argument for the Nedelec edge element $N^{1e}_r$ follows by
-  exchanging tangential and normal component.
+  Employing~\eqref{eq:commute-nodal} concludes the proof.
 \end{proof}
 
-\begin{remark}
-  The construction extends to the three-dimensional products.
-\end{remark}
+
+\begin{Lemma}{pr-1d-commute}
+  Let
+  \begin{gather}
+    \begin{split}
+      \Pi^0_{r+1}\colon \Lambda^0(I) &\to \P_{r+1}\Lambda^0(I)\\
+      \Pi^1_{r}\colon \Lambda^1(I) &\to \P_{r}\Lambda^1(I).
+    \end{split}
+  \end{gather}
+ Then, the diagram
+  \begin{center}
+    \begin{tikzcd}
+      \Lambda^0(I)
+      \arrow[r,"\diffd"]
+      \arrow[d,"\Pi"]
+      & \Lambda^{1}(I)
+      \arrow[d,"\Pi"]
+      \\
+      \P\Lambda^0(I) \arrow[r,"\diffd"]
+      &\P\Lambda^{1}(I)
+    \end{tikzcd}
+  \end{center}
+  commutes.
+\end{Lemma}
+
+\begin{proof}
+  We prove that the assumptions of \slideref{Lemma}{commute-nodal} are
+  fulfilled. To this end, we have to choose a particular basis for the
+  node functional spaces. Let this be the \putindex{Legendre
+    polynomials} of degrees zero to $r$ for $\nodal_{1,q}^1$. For
+  $\nodal_{1,q}^0$, we choose
+  \begin{gather}
+    q_i = \plegendre_i,\qquad i=1,\dots, r-1
+  \end{gather}
+
+  We note that for Legendre polynomials on $[0,1]$ there holds
+  \begin{gather}
+    2(2m+1) \int_0^x \plegendre_m(t)\dt = \plegendre_{m+1}(x) - \plegendre_{m-1}(x).
+  \end{gather}
+  The basis functions for $\P_r\Lambda^0$ are
+  \begin{gather}
+    \begin{split}
+      \phi_{0,0}^0 &= x-\tfrac12,\\
+      \phi_{1,q_i} &= \tfrac{1}{2(2i+1)}(\plegendre_{i+1} - \plegendre_{i-1}),
+      \qquad i=1,\dots,n-1,\\
+      \phi_{0,1}^0 &= \tfrac12.
+    \end{split}
+  \end{gather}
+  Clearly, the basis functions for $\P_r\Lambda^1$ are the Legendre polynomials themselves.
+  Then, we have for $i=1,\dots,r-1$
+  \begin{gather}
+    d \phi_{1,q_i}^0(x) = \frac{\diffd}{\diffd x} \phi_{1,q_i}(x)
+    = \plegendre_i(x)
+    = \phi_{1,i}(x).
+  \end{gather}
+  Furthermore, $d\phi_{0,1}^0(x)=0$ and
+  $d\phi_{0,0}^0(x)=1 = \phi_{1,0}^1(x)$. It thus remains to verify
+  that the node functionals commute, which is obvious for
+  $\nodal_{1,q_i}^0$ for $i=1,\dots,r-1$. For the remaining one, this
+  is due to the fundamantal theorem of calculus.
+\end{proof}
+
+\begin{Definition}{k-form-tensor-product}
+  Let $\omega\in \Lambda^k$ and $\eta\in\Lambda^\ell$, then their
+  tensor product $\omega\otimes\eta\in\Lambda^{k+\ell}$ is defined through
+  their basis representations
+  \begin{gather}
+    \omega = \sum_{\sigma\in\Sigma(k,n)} a_\sigma \dx_\sigma,
+    \qquad
+    \eta = \sum_{\tau\in\Sigma(\ell,n)} b_\tau \dx_\tau,
+  \end{gather}
+  as
+  \begin{gather}
+    \omega\otimes\eta = \sum_{\sigma\in\Sigma(k,n)}\sum_{\tau\in\Sigma(\ell,n)}
+    (a_\sigma\otimes b_\tau) \dx_\sigma \wedge \dx_\tau.
+  \end{gather}
+  The space of $n$-fold tensor product polynomial $k$-forms is
+  \begin{gather}
+    \left(\P\Lambda^{\otimes n}\right)^k
+    = \bigoplus_{\sigma_\in\Sigma(k,n)}
+    \P\Lambda^{\chi_1} \otimes \dots \otimes \P\Lambda^{\chi_n},
+  \end{gather}
+  where $\chi= \chi_\sigma$ is the \putindex{characteristic vector} of $\sigma$.
+\end{Definition}
+
+\begin{Lemma}{tensor-product-exterior-derivative}
+  The \putindex{exterior derviative} of a tensor product $k$-form
+  $\omega\otimes\eta$ with $\omega\in\Lambda^i$,
+  $\eta\in\Lambda^j$, and $i+j=k$ is the $(k+1)$-form obtained by the
+  \putindex{Leibnitz rule}
+  \begin{gather}
+    d_k(\omega\otimes\eta) = d_i\omega \otimes \eta +  (-1)^i \omega \otimes d_j\eta.
+  \end{gather}
+\end{Lemma}
+
+\begin{example}
+  Let $\omega_1^0 = p_1 = p_1(x_1)$ and $\omega_2 = p_2(x_2)$.
+  The two-dimensional tensor product $0$-form $q=p_1\otimes p_2$ on $[0,1]^2$ is
+  \begin{gather}
+    q(\vx) = \omega_1^0\otimes \omega_2^0(\vx) = p_1(x_1)p_2(x_2).
+  \end{gather}
+  Its exterior derivative is
+  \begin{gather}
+    d q(\vx) = d\omega_1^0 \tensor \omega_2^0 - \omega_1^0 \tensor d\omega_2^0
+    = p_1'(x_1) p_2(x_2) \dx_1 - p_1(x_1) p_2'(x_2) \dx_2.
+  \end{gather}
+  Note that $d^2 = 0$ since $\dx_i\wedge \dx_i=0$.
+  
+  Let $\omega_1^1 = p_1(x_1)\dx_1$ and $\omega_2^1 = p_2(x_2)\dx_2$. Then, the
+  possible tensor product 1-forms on $[0,1]^2$ are
+  \begin{align}
+    \omega_1^1 \otimes \omega_2^0 (\vx) &= p_1(x_1)p_2(x_2) \dx_1 \\
+    \omega_1^0 \otimes \omega_2^1 (\vx) &= p_1(x_1)p_2(x_2) \dx_2,
+  \end{align}
+  Since forms of index 1 are one polynomial degree lower, we see that
+  the tensor product function coefficient in front of $\dx_i$ is one
+  degree lower in $x_i$ than in $x_j$ for $j\neq i$.
+
+  Finally, we obtain the 2-form
+  \begin{gather}
+    \omega_1^1 \otimes \omega_2^1 (\vx) = p_1(x_1)p_2(x_2) \dx_1\wedge\dx_2.    
+  \end{gather}
+\end{example}
+
+\begin{Lemma}{tensor-product-complex-exact}
+  The tensor product complex
+  \begin{gather}
+    \R
+    \overset{\subset}{\longrightarrow}
+    \left(\P_r\Lambda^{\otimes n}\right)^0
+    \overset{d}{\longrightarrow}    
+    \left(\P_r\Lambda^{\otimes n}\right)^1
+    \overset{d}{\longrightarrow}
+    \dots
+    \overset{d}{\longrightarrow}    
+    \left(\P_r\Lambda^{\otimes n}\right)^n
+    \longrightarrow 0
+  \end{gather}
+  is exact.
+\end{Lemma}
+
+\begin{proof}
+  By the Leibnitz rule, $\omega\times\eta \in \ker d$ if
+  $\omega\in\ker d$ and $\eta\in\ker d$, individually. Thus,
+\end{proof}
+
+
+\begin{Lemma}{qr-complex}
+  The coefficient functions for $(\P_r^{\otimes 3})^k$ and thus the
+  polynomial proxy fields are from the spaces
+  \begin{gather}
+    \R
+    \overset{\subset}{\longrightarrow} \Q_{r+1}
+    \overset{\nabla}{\longrightarrow}
+    \begin{pmatrix}
+      \Q_{r,r+1,r+1}\\\Q_{r+1,r,r+1}\\\Q_{r+1,r+1,r}
+    \end{pmatrix}
+    \overset{\curl}{\longrightarrow}
+    \begin{pmatrix}
+      \Q_{r+1,r,r}\\\Q_{r,r+1,r}\\\Q_{r,r,r+1}
+    \end{pmatrix}
+    \overset{\div}{\longrightarrow}
+    \Q_r
+    \longrightarrow 0,    
+  \end{gather}
+\end{Lemma}
+
+
+\begin{Definition}{tensor-product-node-values}
+  The 
+\end{Definition}
+
+
+% \begin{Lemma}{qr-complex}
+%   Tensor product polynomials form the exact sequence
+%   \begin{gather}
+%     \R
+%     \overset{\subset}{\longrightarrow} \Q_{r+1}
+%     \overset{\nabla}{\longrightarrow}
+%     \begin{pmatrix}
+%       \Q_{r,r+1,r+1}\\\Q_{r+1,r,r+1}\\\Q_{r+1,r+1,r}
+%     \end{pmatrix}
+%     \overset{\curl}{\longrightarrow}
+%     \begin{pmatrix}
+%       \Q_{r+1,r,r}\\\Q_{r,r+1,r}\\\Q_{r,r,r+1}
+%     \end{pmatrix}
+%     \overset{\div}{\longrightarrow}
+%     \Q_r
+%     \longrightarrow 0,    
+%   \end{gather}
+% \end{Lemma}
+
+% \begin{proof}
+%   First, we show that the differential operators map into the right
+%   spaces. Let $q\in\Q_{r+1}$ such that
+%   $q(x) = q_1(x_1) q_2(x_2)q_3(x_3)$ with $q_i\in\Q_{r+1}$. Then
+%   \begin{gather}
+%     \nabla q =
+%     \begin{pmatrix}
+%       q_1'q_2q_3\\q_1q_2'q_3\\q_1q_2q_3'
+%     \end{pmatrix}
+%     \in
+%     \begin{pmatrix}
+%       \Q_{r,r+1,r+1}\\\Q_{r+1,r,r+1}\\\Q_{r+1,r+1,r}
+%     \end{pmatrix}.
+%   \end{gather}
+%   Similarly, we can compute this directly for $\curl$ and
+%   $\div$. Since polynomials are differentiable, we have $d^2=0$. It
+%   remains to show that the sequence is exact, which we will prove at
+%   the example of $\Hcurl$. Let $u\in \ker{\curl}$,
+%   \begin{gather}
+%     u=
+%     \begin{pmatrix}
+%       \phi_1\phi_2\phi_3\\
+%       \psi_1\psi_2\psi_3\\
+%       \pi_1\pi_2\pi_3
+%     \end{pmatrix},
+%     \qquad
+%     0 = \curl u =
+%     \begin{pmatrix}
+%       \pi_1\pi_2'\pi_3 - \psi_1\psi_2\psi_3'\\
+%       \phi_1\phi_2\phi_3' - \pi_1'\pi_2\pi_3\\
+%       \psi_1'\psi_2\psi_3 - \phi_1\phi_2'\phi_3
+%     \end{pmatrix},
+%   \end{gather}
+%   where each polynomial with index $i$ only depends on
+%   $x_i$. Furthermore, $\phi_1,\psi_2,\pi_3\in\P_r$ and all other in
+%   $\P_{r+1}$.  From the continuous de Rham complex, we know that there
+%   is a function $p$ such that $u=\nabla p$. It remains to show that
+%   $p\in\Q_{r+1}$. There holds
+%   \begin{gather}
+%     \d_1 p = \phi_1\phi_2\phi_3.
+%   \end{gather}
+%   Thus, we make the ansatz
+%   \begin{gather}
+%     p = \Phi_1\phi_2\phi_3,
+%   \end{gather}
+%   where $\Phi_1\in\P_{r+1}$ is the antiderivative of $\phi_1$. Thus,
+%   $p\in\Q_{r+1}$ It remains to show that this ansatz is consistent
+%   with the other two derivatives, thus,
+%   \begin{gather}
+%     p = \Phi_1\phi_2\phi_3 = \psi_1\Psi_2\psi_3 = \pi_1\pi_2\Pi_3.
+%   \end{gather}
+%   Integrating the first component of $\curl u$ with respect to $x_2$
+%   and $x_3$, we obtain
+%   \begin{gather}
+%     \pi_1\pi_2\Pi_3 = \psi_1\Psi_2\psi_3.
+%   \end{gather}
+%   Doing the same with the second component, we see indeed that the
+%   function $p$ is consistently defined and thus $u=\nabla p$.
+% \end{proof}
+% \begin{Definition}{tensor-dofs}
+%   Let
+%   \begin{gather}
+%     \nodal_{0,0} p = p(0),\qquad \nodal_{0,1} p = p(1), \qquad
+%     \nodal_{1,i} = \int_I p q_i\dx,
+%   \end{gather}
+%   be the degrees of freedom of a one-dimensional element where the
+%   $q_i$ are a basis for $\P_{r-1}$ and $\P_r$ in case of
+%   $\P_{r+1}\Lambda^0$ and $\P_{r}\Lambda^1$, respectively. Then, the
+%   tensor product of these degrees of freedom applied to the function
+%   $p(x_1,x_2) = p_1(x_1)p_2(x_2)$ is defined as
+%   \begin{gather}
+%     \begin{split}
+%       \nodal_{0,i}\otimes\nodal_{0,j}(p) &= p_1(\chi_i) p_2(\chi_j),\\
+%       \nodal_{0,i}\otimes\nodal_{1,j}(p) &= \int_I p_1(\chi_i)  p_2(x)q_j(x)\dx,\\
+%       \nodal_{1,i}\otimes\nodal_{0,j}(p) &= \int_I p_1(x)q_j(x) p_2(\chi_j) \dx,\\
+%       \nodal_{1,i}\otimes\nodal_{1,j}(p) &= \iint_I p_1(x_1)
+%       p_2(x_2) \dx_1\dx_2.
+%     \end{split}
+%   \end{gather}
+% \end{Definition}
+
+% \begin{Lemma}{2d-tensor-rt-nedelec}
+%   For the two elements
+%   \begin{gather}
+%     RT_r =
+%     \begin{pmatrix}
+%       \P_{r+1}\Lambda^0 \otimes \P_{r}\Lambda^1\\
+%       \P_{r}\Lambda^1 \otimes \P_{r+1}\Lambda^0
+%     \end{pmatrix},
+%     \qquad
+%     N^{1e}_r =
+%     \begin{pmatrix}
+%       \P_{r}\Lambda^1 \otimes \P_{r+1}\Lambda^0\\
+%       \P_{r+1}\Lambda^0 \otimes \P_{r}\Lambda^1      
+%     \end{pmatrix},
+%   \end{gather}
+%   the tensorized degrees of freedom uniquely determine the normal and
+%   tangential components, respectively, on the face of a square.
+
+%   Both elements with their tensor degrees of freedom are unisolvent.
+% \end{Lemma}
+
+% \begin{proof}
+%   The elements are unisolvent by the following argument: Let
+%   $\{\phi_i\}$ and $\{\psi_j\}$ be the basis dual to the degrees of
+%   freedom of $\P_{r+1}\Lambda^0$ or $\P_r \Lambda^1$,
+%   respectively. Then, (renumbering the degrees of freedom)
+%   \begin{gather}
+%     \nodal_k\otimes\nodal_l(\phi_i\otimes\psi_j) = \delta_{ik}\delta_{jl}.
+%   \end{gather}
+%   Thus, the mapping between tensorized degrees of freedom and
+%   tensorized basis functions is one-to-one.
+
+%   For the Raviart-Thomas element $RT_r$, the normal component is
+%   $\P_r\Lambda^1$. Take for instance the face $x_1 = 0$. Then,
+%   the degrees of freedom associated to this face are
+%   \begin{gather}
+%     \nodal_{0,0} \otimes \nodal{1,q} p
+%     = \int_I p_1(1) p_2(x_2) q(x_2) \dx_2
+%     \quad\forall q\in \P_r.
+%   \end{gather}
+%   Since the trace of $p$ on this face is $p_2 \in \P_r$, this
+%   polynomial is uniquely determined by the degree of freedom.
+
+%   The argument for the Nedelec edge element $N^{1e}_r$ follows by
+%   exchanging tangential and normal component.
+% \end{proof}
+
+% \begin{remark}
+%   The construction extends to the three-dimensional products.
+% \end{remark}
 
 
 

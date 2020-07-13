@@ -4,6 +4,37 @@
   the $k$-simplex $f$ spanned by $\{x_0,\dots,x_k\}$.
 \end{Definition}
 
+\begin{Definition}{subsimplices}
+  Let $\cell$ be the simplex in $\R^\sdim$ spanned by the points
+  $x_0,\dots,x_\sdim$. Then, every ascending subset
+  $\sigma \subset \{0,\dots,\sdim\}$ of length $k+1$ defines a
+  $k$-dimensional \define{subsimplex} of $\cell$ denoted as $f_\sigma$.
+
+  The set of all subsimplices of $\cell$, including $\cell$ itself is
+  called es
+  \index{Delta@$\Delta(\cell)$} $\Delta(\cell)$. The set of all $k$-dimensional subsimplices
+  is \index{Delta k@$\Delta_k(\cell)$} $\Delta_k(\cell)$.
+\end{Definition}
+
+\begin{example}
+  A $\sdim$-dimensional simplex $\cell$ has $\binom{\sdim+1}{k+1}$
+  subsimplices of dimension $k$.
+
+  The one-dimensional simplex $[x_0,x_1]$ has two subsimplices of
+  dimension zero, namely the two points $x_0$ and $x_1$.
+
+  The triangle spanned by the points $x_0, x_1, x_3$ has three
+  one-dimensional subsimplices (edges) and three zero-dimensional
+  subsimplices (vertices).
+
+  The tetrahedron spanned by the points $x_0,\dots,x_3$ has
+  \begin{itemize}
+  \item 4 triangular faces,
+  \item 6 edges,
+  \item 4 vertices.
+  \end{itemize}
+\end{example}
+
 \begin{Definition}{barycentric-coordinates}
   A simplex $T\in \R^\sdim$ with vertices $x_0,\dots,x_\sdim$ is described by
   a set of $\sdim+1$ \define{barycentric coordinates}
@@ -71,6 +102,13 @@
     \label{tab:barycentric-shapes}
   \end{table}
 \end{example}
+
+\begin{Lemma}{barycentric-subsimplex}
+  Let $\cell$ be a simplex in $\R^\sdim$ with barycentric coordinates
+  $\lambda_0,\dots,\lambda_\sdim$. Then, the subset
+  $\lambda_{\sigma_1},\dots,\lambda_{\sigma_k}$ form the barycentric
+  coordinates of the subsimplex $f_\sigma\in\Delta_k(\cell)$.
+\end{Lemma}
 
 \begin{Notation}{dual-barycentric}
   For a simplex $\cell\subset \R^\sdim$, the vectors $t_i = x_i-x_0$
