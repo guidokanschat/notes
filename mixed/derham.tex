@@ -363,7 +363,7 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
 \section{Polynomial complexes for simplicial meshes}
 
 \begin{intro}
-  We have already seen that adding $\vx\P_k$ to the space $\P_k^\sdim$, we
+  We have already seen that adding $\vx\P_r$ to the space $\P_r^\sdim$, we
   obtain a surjective divergence operator from the Raviart-Thomas
   element to the pressure space $\P_k$. In this section, we see that
   there is a general principle behind this concept and it can be
@@ -1400,7 +1400,11 @@ where the inner sum is determined by the spaces in \slideref{Theorem}{pr-lambda-
 \end{Theorem}
 
 
-\section{The complex of tensor product polynomials}
+\section{The complex of tensor product polynomial forms}
+
+\begin{todo}
+  Tensor products of algebraic forms first
+\end{todo}
 
 \begin{intro}
   The other multilinear map we know is the tensor product, which we
@@ -1458,7 +1462,7 @@ where the inner sum is determined by the spaces in \slideref{Theorem}{pr-lambda-
       \nodal_{0,0}^0(p) = p(1) - p(0),\\
       \nodal_{0,1}^0(p) = p(1) + p(0),
     \end{matrix}\qquad
-    \nodal_{1.q}^0(p) = \int_{I} p' q \dx,\quad\forall q\in\nicefrac{\P_{r-1}}{\R}.
+    \nodal_{1.q}^0(p) = \int_{I} p' q \dx,\quad\forall q\in\nicefrac{\P_{r}}{\R}.
   \end{gather}
   The degrees of freedom for $\P_{r}\Lambda^1$ are
   \begin{gather}
@@ -1481,20 +1485,20 @@ where the inner sum is determined by the spaces in \slideref{Theorem}{pr-lambda-
   Let finite element $k$-forms $\P\Lambda^k$ on the cell $\cell\subset\R^\sdim$ be
   defined by node values $\nodal_i^k$ for $i=1,\dots,m_k$. Let the
   basis for the shape function spaces $\{\phi^k_i\}$ and
-  $\{\phi^{k+1}_i\}$, respectively defined by duality.  Assume for $r=\dim\range d$
+  $\{\phi^{k+1}_i\}$, respectively defined by duality.  Assume for $\rho=\dim\range d$
   \begin{gather}
     \label{eq:commute-basis}
       \begin{aligned}
-          d\phi^k_i &= \phi^{k+1}_i & \qquad i&=1,\dots,r,\\
-          d\phi^k_i &= 0 & i&=r+1,\dots,\dim\P\Lambda^{k}(\cell).
+          d\phi^k_i &= \phi^{k+1}_i & \qquad i&=1,\dots,\rho,\\
+          d\phi^k_i &= 0 & i&=\rho+1,\dots,\dim\P\Lambda^{k}(\cell).
       \end{aligned}
   \end{gather}
 Moreover, assume for any $\omega\in \Lambda^k(\cell)$
   \begin{gather}
     \label{eq:commute-nodal}
       \begin{aligned}
-      \nodal^{k+1}_i(d \omega) &= \nodal^k_i(\omega)& \qquad i&=1,\dots,r,\\
-      \nodal^{k+1}_i(d \omega) &= 0 & i&=r+1,\dots,\dim\P\Lambda^{k+1}.
+      \nodal^{k+1}_i(d \omega) &= \nodal^k_i(\omega)& \qquad i&=1,\dots,\rho,\\
+      \nodal^{k+1}_i(d \omega) &= 0 & i&=\rho+1,\dots,\dim\P\Lambda^{k+1}.
       \end{aligned}
   \end{gather}
   Then, the \putindex{canonical interpolation} operators $\Pi$ commute
@@ -1508,12 +1512,13 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
   By linearity, we have
   \begin{gather}
       d\Pi_k \omega = d\left(\sum_{i=1}^{\dim\P\Lambda^k}\nodal^k_i(\omega) \phi^k_i\right)
-      = \sum_{i=1}^{r}\nodal^k_i(\omega) d \phi^k_i
-      = \sum_{i=1}^{r}\nodal^k_i(\omega) \phi^{k+1}_i.
+      = \sum_{i=1}^{\rho}\nodal^k_i(\omega) d \phi^k_i
+      = \sum_{i=1}^{\rho}\nodal^k_i(\omega) \phi^{k+1}_i.
   \end{gather}
   On the other hand,
   \begin{gather}
-      \Pi_{k+1} d \omega = \sum_{i=1}^{\dim\P\Lambda^{k+1}}\nodal^{k+1}_i(d \omega) \phi^{k+1}_i.
+    \Pi_{k+1} d \omega = \sum_{i=1}^{\dim\P\Lambda^{k+1}}\nodal^{k+1}_i(d \omega) \phi^{k+1}_i.
+     = \sum_{i=1}^{\rho}\nodal^{k+1}_i(d \omega) \phi^{k+1}_i.
   \end{gather}
   Employing~\eqref{eq:commute-nodal} concludes the proof.
 \end{proof}
@@ -1550,7 +1555,7 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
     polynomials} of degrees zero to $r$ for $\nodal_{1,q}^1$. For
   $\nodal_{1,q}^0$, we choose
   \begin{gather}
-    q_i = \plegendre_i,\qquad i=1,\dots, r-1
+    q_i = \plegendre_i,\qquad i=1,\dots, r
   \end{gather}
 
   We note that for Legendre polynomials on $[0,1]$ there holds
@@ -1562,12 +1567,12 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
     \begin{split}
       \phi_{0,0}^0 &= x-\tfrac12,\\
       \phi_{1,q_i} &= \tfrac{1}{2(2i+1)}(\plegendre_{i+1} - \plegendre_{i-1}),
-      \qquad i=1,\dots,n-1,\\
+      \qquad i=1,\dots,r,\\
       \phi_{0,1}^0 &= \tfrac12.
     \end{split}
   \end{gather}
   Clearly, the basis functions for $\P_r\Lambda^1$ are the Legendre polynomials themselves.
-  Then, we have for $i=1,\dots,r-1$
+  Then, we have for $i=1,\dots,r$
   \begin{gather}
     d \phi_{1,q_i}^0(x) = \frac{\diffd}{\diffd x} \phi_{1,q_i}(x)
     = \plegendre_i(x)
@@ -1576,7 +1581,7 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
   Furthermore, $d\phi_{0,1}^0(x)=0$ and
   $d\phi_{0,0}^0(x)=1 = \phi_{1,0}^1(x)$. It thus remains to verify
   that the node functionals commute, which is obvious for
-  $\nodal_{1,q_i}^0$ for $i=1,\dots,r-1$. For the remaining one, this
+  $\nodal_{1,q_i}^0$ for $i=1,\dots,r$. For the remaining one, this
   is due to the fundamantal theorem of calculus.
 \end{proof}
 
@@ -1603,6 +1608,14 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
   where $\chi= \chi_\sigma$ is the \putindex{characteristic vector} of $\sigma$.
 \end{Definition}
 
+\begin{todo}
+  Use the form
+  \begin{gather}
+    \omega(v_1,\dots,v_k), qquad \eta(w_1,\dots,w_\ell)\\
+    \omega\otimes \eta(v_1,\dots,v_k,w_1,\dots,w_\ell.
+  \end{gather}
+\end{todo}
+
 \begin{Lemma}{tensor-product-exterior-derivative}
   The \putindex{exterior derviative} of a tensor product $k$-form
   $\omega\otimes\eta$ with $\omega\in\Lambda^i$,
@@ -1621,8 +1634,8 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
   \end{gather}
   Its exterior derivative is
   \begin{gather}
-    d q(\vx) = d\omega_1^0 \tensor \omega_2^0 - \omega_1^0 \tensor d\omega_2^0
-    = p_1'(x_1) p_2(x_2) \dx_1 - p_1(x_1) p_2'(x_2) \dx_2.
+    d q(\vx) = d\omega_1^0 \otimes \omega_2^0 - \omega_1^0 \otimes d\omega_2^0
+    = p_1'(x_1) p_2(x_2) \dx_1 + p_1(x_1) p_2'(x_2) \dx_2.
   \end{gather}
   Note that $d^2 = 0$ since $\dx_i\wedge \dx_i=0$.
   
@@ -1642,7 +1655,50 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
   \end{gather}
 \end{example}
 
-\begin{Lemma}{tensor-product-complex-exact}
+\begin{Definition}{tensor-product-complex}
+  Let there be two complexes $V^k = \Lambda^k(\R^n)$ and $W^\ell = \Lambda^\ell(\R^m)$,
+  \begin{gather}
+    \begin{matrix}
+      \R&\xrightarrow{\subset}&V^0&\xrightarrow{d}&\cdots&
+      \xrightarrow{d}&V^n&\xrightarrow{}& 0\\
+      \R&\xrightarrow{\subset}&W^0&\xrightarrow{d}&\cdots&
+      \xrightarrow{d}&W^m&\xrightarrow{}& 0
+    \end{matrix}
+  \end{gather}
+  Then, the tensor product of the two complexes is
+  \begin{gather}
+    \R\xrightarrow{\subset}(V\otimes W)^0
+    %\xrightarrow{d}(V\otimes W)^1
+    \xrightarrow{d}\cdots\xrightarrow{d}(V\otimes W)^{m+n},
+  \end{gather}
+  where
+  \begin{gather}
+    (V\otimes W)^k = \bigoplus_{i+j=k} (V^i\otimes W^j).
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{tensor-product-exact}
+  If the two complexes $\{V^k\}$ and $\{W^k\}$ are exact, then their tensor product is.
+\end{Lemma}
+
+\begin{proof}
+  By the Leibnitz rule,
+  $\omega\otimes\eta \in \ker{d_{k+\ell}^\otimes}$ if
+  $\omega\in\ker{d_k}$ and $\eta\in\ker{d_\ell}$, individually. Here
+  we use the superscript $d^\otimes$ to highlight the fact that this
+  $d$ acts on the tensor product.
+  \begin{gather}
+    \ker{d_{k+\ell}^\otimes} = \ker{d_k} \otimes \ker{d_\ell}.
+  \end{gather}
+  Conversely, if $\omega\otimes\eta\in\range{d_{k-1}}\otimes \range{d_{\ell-1}}$,
+  then $\omega\otimes\eta\in\range{d_{k+\ell-1}^\otimes}$.
+
+  Exactness of the two complexes implies $\ker{d_k} = \range{d_{k-1}}$
+  and $\ker{d_\ell} = \range{d_{\ell-1}}$, which proves the lemma if
+  combined with the statemennts above.
+\end{proof}
+
+\begin{Corollary}{tensor-power-complex-exact}
   The tensor product complex
   \begin{gather}
     \R
@@ -1657,13 +1713,7 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
     \longrightarrow 0
   \end{gather}
   is exact.
-\end{Lemma}
-
-\begin{proof}
-  By the Leibnitz rule, $\omega\times\eta \in \ker d$ if
-  $\omega\in\ker d$ and $\eta\in\ker d$, individually. Thus,
-\end{proof}
-
+\end{Corollary}
 
 \begin{Lemma}{qr-complex}
   The coefficient functions for $(\P_r^{\otimes 3})^k$ and thus the
@@ -1686,9 +1736,18 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
 \end{Lemma}
 
 
-\begin{Definition}{tensor-product-node-values}
-  The 
-\end{Definition}
+\begin{Theorem}{tensor-product-node-values}
+  Let there be two polynomial tensor complexes $\{V^k=\P\Lambda^k\}$
+  and $\{W^k=\P\Lambda^k\}$ with node functionals $\nodal_{V,i}^k$ and
+  $\nodal_{W,j}^k$, respectively. Let the node functionals be
+  unisolvent for each of these spaces. Then, a unisolvent set of node
+  functionals on $V^{k_1}\otimes W^{k_2}$ is defined on the tensor product by
+  \begin{gather}
+    \nodal_{V,i}^{k_1}\otimes\nodal_{W,j}^{k_2}(\omega\otimes\eta)
+    = \nodal_{V,i}^{k_1}(\omega)\nodal_{W,j}^{k_2}(\eta),
+    \qquad \omega\in V^{k_1}, \eta\in W^{k_2}
+  \end{gather}
+\end{Theorem}
 
 
 % \begin{Lemma}{qr-complex}
