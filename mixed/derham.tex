@@ -441,7 +441,7 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
     \label{eq:derham:14}
     \kappa\circ\kappa = \kappa_k\circ\kappa_{k+1} = 0.
   \end{gather}
-  Furthermore, we have the Leibnitz rule for $\omega\in \Lambda^k$ and
+  Furthermore, we have the Leibniz rule for $\omega\in \Lambda^k$ and
   $\eta\in\Lambda^\ell$
   \begin{gather}
     \kappa(\omega\wedge\eta) = \kappa\omega\wedge\eta
@@ -1611,7 +1611,7 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
 \begin{todo}
   Use the form
   \begin{gather}
-    \omega(v_1,\dots,v_k), qquad \eta(w_1,\dots,w_\ell)\\
+    \omega(v_1,\dots,v_k), \qquad \eta(w_1,\dots,w_\ell)\\
     \omega\otimes \eta(v_1,\dots,v_k,w_1,\dots,w_\ell.
   \end{gather}
 \end{todo}
@@ -1620,7 +1620,7 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
   The \putindex{exterior derviative} of a tensor product $k$-form
   $\omega\otimes\eta$ with $\omega\in\Lambda^i$,
   $\eta\in\Lambda^j$, and $i+j=k$ is the $(k+1)$-form obtained by the
-  \putindex{Leibnitz rule}
+  \putindex{Leibniz rule}
   \begin{gather}
     d_k(\omega\otimes\eta) = d_i\omega \otimes \eta +  (-1)^i \omega \otimes d_j\eta.
   \end{gather}
@@ -1682,7 +1682,7 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
 \end{Lemma}
 
 \begin{proof}
-  By the Leibnitz rule,
+  By the Leibniz rule,
   $\omega\otimes\eta \in \ker{d_{k+\ell}^\otimes}$ if
   $\omega\in\ker{d_k}$ and $\eta\in\ker{d_\ell}$, individually. Here
   we use the superscript $d^\otimes$ to highlight the fact that this
@@ -1740,8 +1740,9 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
   Let there be two polynomial tensor complexes $\{V^k=\P\Lambda^k\}$
   and $\{W^k=\P\Lambda^k\}$ with node functionals $\nodal_{V,i}^k$ and
   $\nodal_{W,j}^k$, respectively. Let the node functionals be
-  unisolvent for each of these spaces. Then, a unisolvent set of node
-  functionals on $V^{k_1}\otimes W^{k_2}$ is defined on the tensor product by
+  unisolvent for the spaces $V^{k_1}$ and $W^{k_2}$,
+  respectively. Then, a unisolvent set of node functionals on
+  $V^{k_1}\otimes W^{k_2}$ is defined on the tensor product by
   \begin{gather}
     \nodal_{V,i}^{k_1}\otimes\nodal_{W,j}^{k_2}(\omega\otimes\eta)
     = \nodal_{V,i}^{k_1}(\omega)\nodal_{W,j}^{k_2}(\eta),
@@ -1749,159 +1750,96 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
   \end{gather}
 \end{Theorem}
 
+\begin{Definition}{cube-facets}
+  Let $\cell$ be the hypercube $[0,1]^\sdim$ in $\R^\sdim$. Then,
+  every combination $\sigma\in\Sigma(j,\sdim)$ together with a tuple
+  $\{b_1,\dots,b_{\sdim-j}\}$ defines a $j$-dimensional \define{facet} of $\cell$ denoted by
+  \begin{gather}
+    f_{\sigma,b_1,\dots,b_{n-j}} =
+    \left\{
+      \vx\in\R^\sdim \;\middle\vert\;
+      \arraycolsep1pt
+      \begin{array}{rlcrl}
+        x_i &\in [0,1] &\text{ for }& i&\in\sigma\\
+        x_{\overline\sigma_i} &= b_i&\text{ for }& i&\not\in\sigma.
+      \end{array}
+    \right\},
+  \end{gather}
+  where $\overline\sigma\in\Sigma(n-j,n)$ is the complement of $\sigma$.
 
-% \begin{Lemma}{qr-complex}
-%   Tensor product polynomials form the exact sequence
-%   \begin{gather}
-%     \R
-%     \overset{\subset}{\longrightarrow} \Q_{r+1}
-%     \overset{\nabla}{\longrightarrow}
-%     \begin{pmatrix}
-%       \Q_{r,r+1,r+1}\\\Q_{r+1,r,r+1}\\\Q_{r+1,r+1,r}
-%     \end{pmatrix}
-%     \overset{\curl}{\longrightarrow}
-%     \begin{pmatrix}
-%       \Q_{r+1,r,r}\\\Q_{r,r+1,r}\\\Q_{r,r,r+1}
-%     \end{pmatrix}
-%     \overset{\div}{\longrightarrow}
-%     \Q_r
-%     \longrightarrow 0,    
-%   \end{gather}
-% \end{Lemma}
+  The set of all facets of $\cell$ is denoted by $\Delta(\cell)$, the
+  set of all facets of dimension $j$ is $\Delta_j(\cell)$.
+\end{Definition}
 
-% \begin{proof}
-%   First, we show that the differential operators map into the right
-%   spaces. Let $q\in\Q_{r+1}$ such that
-%   $q(x) = q_1(x_1) q_2(x_2)q_3(x_3)$ with $q_i\in\Q_{r+1}$. Then
-%   \begin{gather}
-%     \nabla q =
-%     \begin{pmatrix}
-%       q_1'q_2q_3\\q_1q_2'q_3\\q_1q_2q_3'
-%     \end{pmatrix}
-%     \in
-%     \begin{pmatrix}
-%       \Q_{r,r+1,r+1}\\\Q_{r+1,r,r+1}\\\Q_{r+1,r+1,r}
-%     \end{pmatrix}.
-%   \end{gather}
-%   Similarly, we can compute this directly for $\curl$ and
-%   $\div$. Since polynomials are differentiable, we have $d^2=0$. It
-%   remains to show that the sequence is exact, which we will prove at
-%   the example of $\Hcurl$. Let $u\in \ker{\curl}$,
-%   \begin{gather}
-%     u=
-%     \begin{pmatrix}
-%       \phi_1\phi_2\phi_3\\
-%       \psi_1\psi_2\psi_3\\
-%       \pi_1\pi_2\pi_3
-%     \end{pmatrix},
-%     \qquad
-%     0 = \curl u =
-%     \begin{pmatrix}
-%       \pi_1\pi_2'\pi_3 - \psi_1\psi_2\psi_3'\\
-%       \phi_1\phi_2\phi_3' - \pi_1'\pi_2\pi_3\\
-%       \psi_1'\psi_2\psi_3 - \phi_1\phi_2'\phi_3
-%     \end{pmatrix},
-%   \end{gather}
-%   where each polynomial with index $i$ only depends on
-%   $x_i$. Furthermore, $\phi_1,\psi_2,\pi_3\in\P_r$ and all other in
-%   $\P_{r+1}$.  From the continuous de Rham complex, we know that there
-%   is a function $p$ such that $u=\nabla p$. It remains to show that
-%   $p\in\Q_{r+1}$. There holds
-%   \begin{gather}
-%     \d_1 p = \phi_1\phi_2\phi_3.
-%   \end{gather}
-%   Thus, we make the ansatz
-%   \begin{gather}
-%     p = \Phi_1\phi_2\phi_3,
-%   \end{gather}
-%   where $\Phi_1\in\P_{r+1}$ is the antiderivative of $\phi_1$. Thus,
-%   $p\in\Q_{r+1}$ It remains to show that this ansatz is consistent
-%   with the other two derivatives, thus,
-%   \begin{gather}
-%     p = \Phi_1\phi_2\phi_3 = \psi_1\Psi_2\psi_3 = \pi_1\pi_2\Pi_3.
-%   \end{gather}
-%   Integrating the first component of $\curl u$ with respect to $x_2$
-%   and $x_3$, we obtain
-%   \begin{gather}
-%     \pi_1\pi_2\Pi_3 = \psi_1\Psi_2\psi_3.
-%   \end{gather}
-%   Doing the same with the second component, we see indeed that the
-%   function $p$ is consistently defined and thus $u=\nabla p$.
-% \end{proof}
-% \begin{Definition}{tensor-dofs}
-%   Let
-%   \begin{gather}
-%     \nodal_{0,0} p = p(0),\qquad \nodal_{0,1} p = p(1), \qquad
-%     \nodal_{1,i} = \int_I p q_i\dx,
-%   \end{gather}
-%   be the degrees of freedom of a one-dimensional element where the
-%   $q_i$ are a basis for $\P_{r-1}$ and $\P_r$ in case of
-%   $\P_{r+1}\Lambda^0$ and $\P_{r}\Lambda^1$, respectively. Then, the
-%   tensor product of these degrees of freedom applied to the function
-%   $p(x_1,x_2) = p_1(x_1)p_2(x_2)$ is defined as
-%   \begin{gather}
-%     \begin{split}
-%       \nodal_{0,i}\otimes\nodal_{0,j}(p) &= p_1(\chi_i) p_2(\chi_j),\\
-%       \nodal_{0,i}\otimes\nodal_{1,j}(p) &= \int_I p_1(\chi_i)  p_2(x)q_j(x)\dx,\\
-%       \nodal_{1,i}\otimes\nodal_{0,j}(p) &= \int_I p_1(x)q_j(x) p_2(\chi_j) \dx,\\
-%       \nodal_{1,i}\otimes\nodal_{1,j}(p) &= \iint_I p_1(x_1)
-%       p_2(x_2) \dx_1\dx_2.
-%     \end{split}
-%   \end{gather}
-% \end{Definition}
+\begin{Lemma}{cube-facets}
+  The number of $j$-dimensional facets of a $\sdim$-dimensional hypercube is
+  \begin{gather}
+    \#\Delta_j(\cell) = 2^{\sdim-j}\binom{\sdim}{j}.
+  \end{gather}
+\end{Lemma}
 
-% \begin{Lemma}{2d-tensor-rt-nedelec}
-%   For the two elements
-%   \begin{gather}
-%     RT_r =
-%     \begin{pmatrix}
-%       \P_{r+1}\Lambda^0 \otimes \P_{r}\Lambda^1\\
-%       \P_{r}\Lambda^1 \otimes \P_{r+1}\Lambda^0
-%     \end{pmatrix},
-%     \qquad
-%     N^{1e}_r =
-%     \begin{pmatrix}
-%       \P_{r}\Lambda^1 \otimes \P_{r+1}\Lambda^0\\
-%       \P_{r+1}\Lambda^0 \otimes \P_{r}\Lambda^1      
-%     \end{pmatrix},
-%   \end{gather}
-%   the tensorized degrees of freedom uniquely determine the normal and
-%   tangential components, respectively, on the face of a square.
+\begin{Lemma}{facets-k-forms}
+  The space of tangential traces
+  $\gamma_f \left(\P_r\Lambda^{\otimes n}\right)^k$ on a facet of $\cell$ of
+  dimension $j$ is isomorphic to
+  $\left(\P_r\Lambda^{\otimes {j}}\right)^k$. In particular, it is zero if $j<k$.
+\end{Lemma}
 
-%   Both elements with their tensor degrees of freedom are unisolvent.
-% \end{Lemma}
+\begin{Notation}{dual-pr-1d}
+  We denote by $W_r^i$ the dual space of $\P_r\Lambda^i(I)$ for
+  $i=0,1$, respectively. We obtain a basis by a transformation and
+  translating~\slideref{Definition}{pr-1d-basis} into the language of
+  differential forms:
+  \begin{xalignat}3
+    \widetilde\nodal_{0,b}^0(\omega) &= \int_b \omega
+    & \forall b&\in\{0,1\},
+    & \forall \omega&\in \P_{r+1}\Lambda^0,
+    \\
+    \widetilde\nodal_{1,q}^0(\omega) &= \int_I \diffd\omega \wedge q
+    & \forall q&\in \nicefrac{\P_r\Lambda^0}{\R},
+    & \forall \omega&\in \P_{r+1}\Lambda^0,
+    \\
+    \widetilde\nodal_{1,q}^1(\omega) &= \int_I \omega \wedge q
+    & \forall q&\in \P_r\Lambda^0,
+    & \forall \omega&\in \P_{r}\Lambda^1,
+  \end{xalignat}
 
-% \begin{proof}
-%   The elements are unisolvent by the following argument: Let
-%   $\{\phi_i\}$ and $\{\psi_j\}$ be the basis dual to the degrees of
-%   freedom of $\P_{r+1}\Lambda^0$ or $\P_r \Lambda^1$,
-%   respectively. Then, (renumbering the degrees of freedom)
-%   \begin{gather}
-%     \nodal_k\otimes\nodal_l(\phi_i\otimes\psi_j) = \delta_{ik}\delta_{jl}.
-%   \end{gather}
-%   Thus, the mapping between tensorized degrees of freedom and
-%   tensorized basis functions is one-to-one.
+  Due to \slideref{Theorem}{tensor-product-node-values},
+  we can write
+  \begin{gather}
+    \left(\left(\P\Lambda^{\otimes n}\right)^k\right)^*
+    = \bigoplus_{\sigma\in\Sigma(k,n)} W_r^{\chi_1}\otimes\dots\otimes W_r^{\chi_n}.
+  \end{gather}
+\end{Notation}
 
-%   For the Raviart-Thomas element $RT_r$, the normal component is
-%   $\P_r\Lambda^1$. Take for instance the face $x_1 = 0$. Then,
-%   the degrees of freedom associated to this face are
-%   \begin{gather}
-%     \nodal_{0,0} \otimes \nodal{1,q} p
-%     = \int_I p_1(1) p_2(x_2) q(x_2) \dx_2
-%     \quad\forall q\in \P_r.
-%   \end{gather}
-%   Since the trace of $p$ on this face is $p_2 \in \P_r$, this
-%   polynomial is uniquely determined by the degree of freedom.
+\begin{Definition}{facet-nodal}
+  Let $f_{\sigma,b_1,\dots,b_{n-j}}$ be a $j$-dimensional facet of the
+  hypercube $T = [0,1]^\sdim$. Using \slideref{Notation}{dual-pr-1d},
+  we define the space
+  \begin{gather}
+    W^k(f_{\sigma,b_1,\dots,b_{n-j}}) = \bigoplus_{\tau\in\Sigma(k,n)} W_\tau,
+  \end{gather}
+  where
+  \begin{gather}
+    W_\tau = W_{\tau,1}\otimes \dots \otimes W_{\tau,n},
+    \qquad W_{\tau,i} =
+    \begin{cases}
+      W_r^1 & \text{if } i \in \sigma \cap \tau\\
+      W_r^0 & \text{if } i \in \sigma \cap \overline\tau\\
+      \operatorname{span} \nodal_{0,b_i}^0 & \text{if } i \in \overline\sigma \cap \overline\tau\\
+      \{0\} & \text{if } i \in \overline\sigma \cap \tau
+    \end{cases}
+  \end{gather}
+  We call these the node values on the facet $f_{\sigma,b_1,\dots,b_{n-j}}$.
+\end{Definition}
 
-%   The argument for the Nedelec edge element $N^{1e}_r$ follows by
-%   exchanging tangential and normal component.
-% \end{proof}
-
-% \begin{remark}
-%   The construction extends to the three-dimensional products.
-% \end{remark}
-
-
+\begin{Theorem}{qr-unisolvence}
+  Let $f\in\Delta(\cell)$. Let
+  $\omega\in \left(\P\Lambda^{\otimes n}(I)\right)^k$. Then,
+  $\gamma_f\omega$ is uniquely determined by the node functionals
+  spanning $W^k(f)$. In particular, the finite element $k$-form with
+  its node functionals is unisolvent.
+\end{Theorem}
 
 %%% Local Variables:
 %%% mode: latex

@@ -94,6 +94,16 @@ Girault, V. and Raviart, P.-A. (1986).
   equations}.
 \newblock Springer.
 
+\bibitem[Hackbusch, 2014]{Hackbusch14}
+Hackbusch, W. (2014).
+\newblock Numerical tensor calculus.
+\newblock {\em Acta Numerica}, 23:651--742.
+
+\bibitem[Hackbusch, 2019]{Hackbusch19}
+Hackbusch, W. (2019).
+\newblock {\em Tensor Spaces and Numerical Tensor Calculus}.
+\newblock Springer, 2nd edition.
+
 \bibitem[Hiptmair, 2002]{Hiptmair02}
 Hiptmair, R. (2002).
 \newblock Finite elements in computational electromagnetism.
@@ -103,6 +113,12 @@ Hiptmair, R. (2002).
 Monk, P. (2003).
 \newblock {\em Finite Element Methods for {M}axwell's Equations}.
 \newblock Oxford.
+
+\bibitem[Reed and Simon, 1980]{ReedSimon80}
+Reed, M. and Simon, B. (1980).
+\newblock {\em Functional Analysis}, volume~1 of {\em Methods of Modern
+  Mathematical Physics}.
+\newblock Academic Press.
 
 \bibitem[Schöberl, 2008]{Schoeberl08}
 Schöberl, J. (2008).
