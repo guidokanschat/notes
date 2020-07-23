@@ -1601,18 +1601,43 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
   \end{gather}
   The space of $n$-fold tensor product polynomial $k$-forms is
   \begin{gather}
+    \Q_r^+\Lambda^k \equiv
     \left(\P\Lambda^{\otimes n}\right)^k
     = \bigoplus_{\sigma_\in\Sigma(k,n)}
-    \P\Lambda^{\chi_1} \otimes \dots \otimes \P\Lambda^{\chi_n},
+    \P_r^+\Lambda^{\chi_1} \otimes \dots \otimes \P_r^+\Lambda^{\chi_n},
   \end{gather}
   where $\chi= \chi_\sigma$ is the \putindex{characteristic vector} of $\sigma$.
 \end{Definition}
 
+From the study of the one-dimensional complex, we know that
+$\P_{r+1}\Lambda^0$ and $\P_r\Lambda^1$ form an exact sequence. Thus,
+in more detail, we have
+  \begin{align}
+    \left(\P\Lambda^{\otimes n}\right)^k
+    &= \bigoplus_{\sigma_\in\Sigma(k,n)}
+      \P_{r+1-\chi_1}\Lambda^{\chi_1} \otimes \dots \otimes \P_{r+1-\chi_n}\Lambda^{\chi_n}
+    &= \bigoplus_{\sigma_\in\Sigma(k,n)}
+      \P_r^+ \Lambda^{\chi_1}\otimes \dots \otimes \P_r^+\Lambda^{\chi_n},
+  \end{align}
+  where the second line hides the change of polynomial degree in the
+  `$+$' superscript. This is also the idea behind the notation
+  $\Q_r^+\Lambda^k$, which leads to the known continuous $\Q_{r+1}$
+  element for 0-forms.
+  
+  Theoretically, $r$ could be different in each factor, as long as the
+  relation between $\Lambda^0$ and $\Lambda^1$ is maintained.
+
+  The tensor product of functions $p_i$ is
+  \begin{gather}
+    p_1\otimes \dots\otimes p_n(\vx) = p_1(x_1) p_2(x_2)\dots p_n(x_n).
+  \end{gather}
+
+  
 \begin{todo}
   Use the form
   \begin{gather}
     \omega(v_1,\dots,v_k), \qquad \eta(w_1,\dots,w_\ell)\\
-    \omega\otimes \eta(v_1,\dots,v_k,w_1,\dots,w_\ell.
+    \omega\otimes \eta(v_1,\dots,v_k,w_1,\dots,w_\ell).
   \end{gather}
 \end{todo}
 
@@ -1681,22 +1706,9 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
   If the two complexes $\{V^k\}$ and $\{W^k\}$ are exact, then their tensor product is.
 \end{Lemma}
 
-\begin{proof}
-  By the Leibniz rule,
-  $\omega\otimes\eta \in \ker{d_{k+\ell}^\otimes}$ if
-  $\omega\in\ker{d_k}$ and $\eta\in\ker{d_\ell}$, individually. Here
-  we use the superscript $d^\otimes$ to highlight the fact that this
-  $d$ acts on the tensor product.
-  \begin{gather}
-    \ker{d_{k+\ell}^\otimes} = \ker{d_k} \otimes \ker{d_\ell}.
-  \end{gather}
-  Conversely, if $\omega\otimes\eta\in\range{d_{k-1}}\otimes \range{d_{\ell-1}}$,
-  then $\omega\otimes\eta\in\range{d_{k+\ell-1}^\otimes}$.
-
-  Exactness of the two complexes implies $\ker{d_k} = \range{d_{k-1}}$
-  and $\ker{d_\ell} = \range{d_{\ell-1}}$, which proves the lemma if
-  combined with the statemennts above.
-\end{proof}
+\begin{todo}
+  Make the representation of kernel and range part of the lemma?
+\end{todo}
 
 \begin{Corollary}{tensor-power-complex-exact}
   The tensor product complex
@@ -1785,6 +1797,9 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
   $\left(\P_r\Lambda^{\otimes {j}}\right)^k$. In particular, it is zero if $j<k$.
 \end{Lemma}
 
+\begin{todo}
+  Connectupper index of node functionals and spaces
+\end{todo}
 \begin{Notation}{dual-pr-1d}
   We denote by $W_r^i$ the dual space of $\P_r\Lambda^i(I)$ for
   $i=0,1$, respectively. We obtain a basis by a transformation and
@@ -1803,7 +1818,8 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
     & \forall q&\in \P_r\Lambda^0,
     & \forall \omega&\in \P_{r}\Lambda^1,
   \end{xalignat}
-
+  The upper index of $\widetilde\nodal_{x,y}^i$ corresponds to the space $W_r^i$.
+  
   Due to \slideref{Theorem}{tensor-product-node-values},
   we can write
   \begin{gather}
@@ -1840,6 +1856,191 @@ Moreover, assume for any $\omega\in \Lambda^k(\cell)$
   spanning $W^k(f)$. In particular, the finite element $k$-form with
   its node functionals is unisolvent.
 \end{Theorem}
+
+\section{Commuting quasi-interpolation operators}
+
+\begin{intro}
+  Quasi-interpolation operators for
+  $H\Lambda^0(\domain) = H^1(\domain)$ are obtained by replacing point
+  values by volume (Clément, Schöberl) or line (Scott/Zhang)
+  averages. We have already seen, that in $\Hdiv(\domain)$, we also
+  must replace face integrals by volume averages. Here, we are faced
+  with the commutation property, such that the averages cannot be
+  defined for each facet separately. Instead, we turn the procedure
+  around and use interpolation on whole families of cells and the
+  average over these families.
+  
+  The original version of the quasi-interpolation operators presented
+  here is due to J.~Schöberl. The tensor product construction
+  presented here is from current work of myself and F.~Bonizzoni.
+\end{intro}
+
+
+\begin{Lemma}{perturbed-interpolation-1d}
+  Let $I_{a,b} = [a,b]$ Let the node functionals for
+  $\P_r^+\Lambda^i(I_{a,b})$ with $i=0,1$ be defined for
+  $\omega^0\in\Lambda^0$ and $\omega^1\in\Lambda^1$, respectively, by
+  \begin{align}
+    \nodal_{0,a,b}^0(\omega^0) &= \omega^0(b) - \omega^0(a),\\
+    \nodal_{i,a,b}^0(\omega^0) &= \int_a^b \mu_i\diffd\omega^0 ,
+                                 \quad i=1,\dots,r,
+    \\
+    \nodal_{r+1,a,b}^0(\omega^0) &= \omega^0(b) + \omega^0(a),\\
+    \nodal_{i,a,b}^1(\omega^1) &= \int_a^b \mu_i\omega^1 ,\quad i=0,\dots,r,
+  \end{align}
+  where $\mu_i\in \P_i\Lambda^0$ are from the sequence of orthogonal
+  polynomials on $I_{a,b}$. Then, there holds for $\omega\in\Lambda^0$
+  \begin{gather}
+    \nodal_{i,a,b}^0(\omega) = \nodal_{i,a,b}^1(\diffd\omega), \qquad i=0,\dots,r.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  The proof is trivial for $i=1,\dots,r$ and elementary for $i=0$.
+\end{proof}
+
+\begin{Definition*}{cutoff}{Cutoff functions}
+  A $C^k$-\define{cutoff function} $\eta_{x,\rho}$ for the interval $B_\rho(x)$ of radius
+  $\rho$ around $x$ is a function fulfilling the following conditions:
+  \begin{gather}
+    \eta_{x,\rho} \in C^k\left(\R^\sdim\right),\qquad
+    \operatorname{supp} \eta_{x,\rho}  \subseteq \overline{B_\rho(x)},\qquad
+    \int \eta_{x,\rho} \dx = 1.
+  \end{gather}
+  An example for a $C^\infty$-cutoff function is
+  \begin{gather}
+    \eta_{x,\rho}(y) = \frac1{\rho\int\tilde\eta} \tilde\eta\left(\tfrac{y-x}{\rho}\right),
+    \qquad
+    \tilde\eta(t) =
+    \begin{cases}
+      \exp\left(\tfrac1{t^2-1}\right) & t\le 1\\
+      0 & t>1.
+    \end{cases}
+  \end{gather}
+\end{Definition*}
+
+\begin{Definition}{quasi-interpolation-1d}
+  Let $\rho\le \nicefrac13$. Let $\eta_{0,\rho}$, and $\eta_{1,\rho}$ be cutoff
+  functions. Then, we define quasi-interpolation operators
+  \begin{align}
+    I^k_\rho\colon \Lambda^k(I_{-\rho,1+\rho}) &\to \P_r^+\Lambda^k(I_{0,1}),
+                                     \qquad k=0,1,\\
+    \omega^k & \mapsto \sum_i \overline{\nodal_i^k}(\omega^k) \phi_i^k,
+  \end{align}
+  using the node functionals
+  \begin{gather}
+    \overline{\nodal_i^k}(\omega^k)
+    = \int_{-\rho}^\rho\int_{-\rho}^\rho \nodal_{i,a,b}^k(\omega^k)
+    \eta_{0,\rho}(a)\eta_{1,\rho}(b) \,\diffd a\,\diffd b,
+  \end{gather}
+  and the shape functions $\phi_i^k$ according to \slideref{Definition}{pr-1d-basis}.
+\end{Definition}
+
+\begin{Lemma}{quasi-interpolation-1d}
+  The quasi-interpolation operators $I_\rho^k$ can be extended to
+  bounded operators on $L^2\Lambda^k(I_{-\rho,1+\rho})$, and thus on
+  $H\Lambda^k(I_{-\rho,1+\rho})$. Furthermore, they commute with the
+  exterior derivative.
+\end{Lemma}
+
+\begin{Definition}{quasi-interpolation-tensor}
+  The tensor product quasi-interpolation operator
+  $I^k_{\rho,\otimes n}$ is defined formally as
+  \begin{gather}
+    I^k_{\rho,\otimes n}\colon L^2\left(\Lambda^{\otimes n}\right)^k
+    \to \Q_r^+\Lambda^k,
+    \qquad
+    I^k_{\rho,\otimes n} = \sum_{\sigma\in\Sigma(k,n)}
+    I^{\chi_1}_\rho \otimes \dots \otimes I^{\chi_n}_\rho.
+  \end{gather}
+  Applied to a rank one tensor $\omega_1\otimes \dots \otimes \omega_\sdim$ with
+  $\omega_i \in L^2\Lambda^{\chi_i}$, there holds
+  \begin{gather}
+    I^k_{\rho,\otimes n}(\omega_1\otimes \dots \otimes \omega_\sdim)
+    = I^{\chi_1}_\rho (\omega_1)\otimes \cdots\otimes I^{\chi_n}_\rho(\omega_n).
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem}{quasi-interpolation-tensor}
+  Let node functionals for $\Q_r^+\Lambda^k(\cell)$, where
+  $\cell = [0,1]^\sdim$ be defined as tensor products of the node
+  functionals in \slideref{Definition}{quasi-interpolation-1d}. Then,
+  the resulting quasi-interpolation operators $I_{\rho,\otimes n}^k$ commute with
+  the exterior derivative. Furthermore, they are bounded operators on
+  $L^2\Lambda^k(\overline\cell$), where $\overline \cell = [-\rho,1+\rho]^\sdim$.
+\end{Theorem}
+
+\begin{Definition}{tensor-form-shape-functions}
+  Let $\mesh_h$ be a finite element mesh on $\domain$ consisting of
+  mesh cells $\cell$ which are obtained from a reference cell
+  $\refcell = [0,1]^\sdim$ by the mapping $\Phi_\cell$. We define the
+  \define{shape function space} $V_\cell^k$ on each cell $\cell$ by
+  pullback from the reference cell such that
+  \begin{gather}
+    V_\cell^k = \bigl\{ \omega^k\in \Lambda^k(\cell) \;\big\vert\;
+    \Phi^* \omega^k \in \Q_r^+\Lambda^k(\refcell) \bigr\}.
+  \end{gather}
+  The \define{finite element space} on the mesh $\mesh_h$ is
+  \begin{gather}
+    V_h^k = \bigl\{\omega_h^k \in H\Lambda^k(\domain)\;\big\vert\;
+    \omega_h^k \in V_\cell^k \bigr\}.
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{form-quasi-interpolation-mesh}
+  A quasi-interpolation operator $I_{h,\rho}^k$ on the mesh $\mesh$ is defined by
+  choosing the averaged node functionals consistently between mesh
+  cells with averaging length $\rho = \nicefrac13 h$.
+\end{Definition}
+
+\begin{Corollary}{form-quasi-interpolation-mesh}
+  The quasi-interpolation operators $I_{h,\rho}^k$ are bounded operators
+  \begin{gather}
+    I_{h,\rho}^k \colon H\Lambda^k(\domain) \to V_h^k,
+  \end{gather}
+  such that
+  \begin{gather}
+    d_k \circ I_{h,\rho}^k = I_{h,\rho}^{k+1} \circ d_k.
+  \end{gather}
+\end{Corollary}
+
+\begin{Lemma}{form-quasi-interpolation-convergence}
+  The restriction of $I_{h,\rho}^k$ to $V_h^k$ is a continuous function
+  in $\rho$, and its limit for $\rho\to0$ is the identity.
+
+  For sufficiently small $\rho$ the operator $I_{h,\rho|V_h^k}^k$ is
+  invertible.
+\end{Lemma}
+
+\begin{Definition}{schoeberl-interpolation}
+  The \define{Schöberl interpolation} operator $S_h^k$ is defined for
+  sufficiently small $\rho$ as
+  \begin{gather}
+    S_h^k = \left(I_{h,\rho|V_h^k}^k\right)^{-1} \circ I_{h,\rho}^k.
+  \end{gather}
+  $S_h$ is a bounded operator on $H\Lambda^k$ which commutes with the
+  exterior derivative and there holds
+  \begin{gather}
+    \left(S_h^k\right)^2 = S_h^k.
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem}{fem-cochain}
+  The finite element cochain complex with spaces $V_h^k$ provides
+  inf-sup stable discretizations for mixed problems of the form: find
+  $\omega^{k}\in V_h^k$ for $k=0,\dots,\sdim$, such that
+  \begin{gather}
+    \arraycolsep1pt
+    \begin{matrix}
+      \form(\diffd\omega^k,\diffd \mu^k)
+      &+& \form(\diffd \omega^{k-1},\mu^k)
+      &=& \form(f,\mu^k)\\
+      \form(\diffd\mu^{k-1},\omega^k) &&&=&0
+    \end{matrix}
+    \qquad\forall \mu^k\in V_h^k, \quad k=0,\dots,\sdim.
+  \end{gather}
+\end{Theorem}
+
 
 %%% Local Variables:
 %%% mode: latex
