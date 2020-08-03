@@ -400,6 +400,23 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
     \end{CD}
   \end{gather}
   and $d_{k+1}\circ d_k = 0$.
+
+  Note the special cases $r=0$ and $r=3$, namely
+  \begin{gather}\minCDarrowwidth15pt
+    \begin{CD}
+      0
+      @>{\subset}>> \R
+      @>{\cong}>> \breve\P_0
+      @>{\nabla}>> 0\\
+      0
+      @>{\subset}>> \breve\P_3
+      @>{\nabla}>> \breve\P_{2}^3
+      @>{\curl}>> \breve\P_{1}^3
+      @>{\div}>> \breve\P_{0}
+      @>{\cong}>> \R
+      @>>> 0,
+    \end{CD}
+  \end{gather}
 \end{Notation}
 
 \begin{remark}
@@ -421,7 +438,7 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
   such that
   \begin{gather}
     \kappa\omega(\vx) (v_1,\dots,v_{k-1})
-    = \omega(\vx) (-\vx,v_1,\dots,v_{k-1}).
+    = \omega(\vx) (\vx,v_1,\dots,v_{k-1}).
   \end{gather}
   As with the exterior differentail, we write $\kappa_k$ if we want to
   specify the degree of $\Lambda^k$.  Application to proxy fields yields
@@ -469,9 +486,22 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
       @<{\kappa_1}<< \breve \P_{r-1}\Lambda^1
       @<{\kappa_2}<< \breve \P_{r-2}\Lambda^2
       @<{\kappa_3}<< \breve \P_{r-3}\Lambda^3
-      @<<< 0
+      @<<< \R
     \end{CD}.
   \end{gather}
+  For $r\le 3$ we have
+  \begin{gather}\minCDarrowwidth15pt
+    \label{eq:derham:12a}
+    \begin{CD}
+      0
+      @<<< \breve \P_3\Lambda^{-r}
+      @<{\kappa_1}<< \breve \P_{2}\Lambda^{1-r}
+      @<{\kappa_2}<< \breve \P_{1}\Lambda^{2-r}
+      @<{\kappa_3}<< \breve \P_{0}\Lambda^{3-r}
+      @<<< \R
+    \end{CD},
+  \end{gather}
+  where forms with negative index evaluate to zero.
 \end{Definition}
 
 Note that the ``Koszul differential'' increases the polynomial order
