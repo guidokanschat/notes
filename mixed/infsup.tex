@@ -287,6 +287,11 @@ The question of well-posedness in finite dimensions can be answered by:
   consider different spaces $V$ and $W$.
 \end{remark}
 
+\begin{todo}
+  JW: introduce this lemma and the associated problem after musical isomorphisms
+  have been defined. use them in the statements, e.g. $Au = I_\flat w$... 
+\end{todo}
+
 \begin{Lemma}{infsup2}
   The following statements are equivalent to the inf-sup
   condition~\eqref{eq:infsup:1}:
@@ -318,6 +323,20 @@ The question of well-posedness in finite dimensions can be answered by:
     \end{array}
     \right.
   \end{gather}
+  \begin{todo}
+    JW:
+  \begin{gather}
+    \forall u\in V
+    \;\exists w\in W \;:\;
+    \left\{
+    \arraycolsep0.3ex
+    \begin{array}{rcl}
+      \ellipa \norm{u}_V &\le&\norm{w}_W\\
+      Au &=& w
+    \end{array}
+    \right.
+  \end{gather}
+  \end{todo}
 \end{Lemma}
 
 \begin{Problem}{inf-sup-equivalence}
