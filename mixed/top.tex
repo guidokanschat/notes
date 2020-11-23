@@ -1,4 +1,4 @@
-\input{./fig/tikzsettings}
+\input{mixed/fig/tikzsettings}
 \maketitle
 
 \section*{Preface}
@@ -27,7 +27,7 @@ and additions.
 
 \tableofcontents
 
-\chapter{From elliptic to mixed problems}
+\chapter{Introduction: from elliptic to mixed problems}
 We begin our course of mixed finite element methods by studying a
 vector-valued elliptic problem. Then, we study its dependence on its
 parameters and naturally arrive at a mixed formulation. We derive a
@@ -36,8 +36,37 @@ first example: the Stokes equations of incompressible flow. We close
 the chapter by considering mixed systems as first order conditions
 for constrained minimization problems.
 
-\input{mixedintro}
-\input{lagrange}
+\input{mixed/mixedintro}
+
+\section{Abstract saddle-point systems}
+\input{mixed/abstract-saddle}
+
+\section{Relation to constrained minimization}
+\input{mixed/lagrange}
+
+\section{Additional problems and experiments}
+
+\begin{Problem}{elasticity-locking-convergence}
+  The graph for $\lambda=100$ in \cref{fig:elasticity-locking}
+  suggests the following behavior: on very coarse meshes, the solution
+  is badly approximated. Eventually, the approximation cathes up and
+  is even faster than orer $h^{-1}$ until it approximates
+  asymptotically the straight line for $\lambda=1$. The curve for
+  $\lambda=1000$ seems to show the beginning of this behavior.
+
+  \begin{enumerate}
+  \item Compute on finer meshes to see if this is actually true. If
+    such a behavior is confirmed, this implies that the part of the
+    bilinear form with $\lambda$ is less important on finer meshes,
+    something which cannot be covered by Céa's lemma from the elliptic
+    toolbox.
+  \item Compute the energy norm of the error as in the symmetric
+    finite element toolbox. What do those curves look like? There, the
+    constant in Céa's lemma is 1.
+  \item Can we draw any conclusions on the best approximation in the
+    energy norm?
+  \end{enumerate}
+\end{Problem}
 
 \chapter{Conditions for well-posedness}
 \label{sec:mixed-wellposedness}
@@ -47,28 +76,47 @@ particular, we will derive a quantitative formulation, which we will
 study for infinite dimensional problems in the second section. In the
 third section, we derive the inf-sup condition for mixed problems as a
 special case.
-\input{infsup}
+\input{mixed/infsup}
 
 \chapter{The Stokes problem}
 \label{cha:stokes}
-\input{stokes}
+\input{mixed/stokes}
 
 \chapter{Mixed formulation of elliptic problems}
 \label{cha:darcy}
-\input{darcy}
-
-\chapter{Divergence conforming discontinuous Galerkin methods}
-\label{cha:hdivdg}
-\input{hdivdg}
+\input{mixed/darcy}
 
 \chapter{Maxwell's equations and the de Rham complex}
 \section{Maxwell's equations}
 \label{cha:maxwell}
-\input{maxwell}
+\input{mixed/maxwell}
 
 \section{The de Rham complex}
 \label{cha:derham}
-\input{derham}
+\input{mixed/derham}
+
+\chapter{Divergence conforming discontinuous Galerkin methods}
+\label{cha:hdivdg}
+\input{mixed/hdivdg}
+
+% \chapter{Almost incompressible elasticity}
+% \section{Augmented saddle point problems}
+% \input{augmented}
+% \section{Discretization}
+% \input{lame-navier-discrete}
+
+\appendix
+\chapter{Appendix}
+\section{Notation}
+
+\input{mixed/notation}
+
+\section{Useful tools}
+\input{mixed/tools}
+
+\section{Derivation of the Lamé-Navier equations}
+\label{sec:lame-navier}
+\input{mixed/lame-navier}
 
 \bibliographystyle{apalike}
 \bibliography{all}

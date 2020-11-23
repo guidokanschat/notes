@@ -9,11 +9,26 @@
   result.
 \end{intro}
 
+\begin{Definition}{mixed-galerkin}
+  Let $V_h\subset V$ and $Q_h\subset Q$. Then, the \define{Galerkin
+    approximation} of the mixed problem in
+  \slideref{Definition}{mixed-weak} is: find
+  $(u_h, p_h)\in V_h\times Q_h$ such that
+  \begin{gather}
+    \label{eq:galerkin:3}
+        \arraycolsep.1em
+    \begin{matrix}
+      a(u_h,v_h) &+& b(v_h,p_h) &=& f(v_h) &\quad&\forall v_h\in V_h, \\
+      b(u_h,q_h) && &=& g(q_h) &&\forall q_h\in Q_h.
+    \end{matrix}
+  \end{gather}
+\end{Definition}
+
 \begin{Definition}{kerbh}
   Let $V_h\subset V$ and $Q_h\subset Q$. Then, we define the subspace
   \begin{gather}
     \label{eq:galerkin:1}
-    \ker{B_h} = \bigl\{v_h\in V_h \big|
+    V_h^0 = \ker{B_h} = \bigl\{v_h\in V_h \big|
     b(v_h, q_h) = 0 \quad\forall q_h\in Q_h
     \bigr\}.
   \end{gather}
@@ -24,27 +39,17 @@
     b(v_h, q_h) = g(q) \quad\forall q_h\in Q_h
     \bigr\}.
   \end{gather}
-\end{Definition}
-
-
-\begin{Definition}{mixed-galerkin}
-  We introduce the mixed discrete problem: find $(u_h, p_h)\in
-  V_h\times Q_h$ such that
-  \begin{gather}
-    \label{eq:galerkin:3}
-    a(u_h, v_h) + b(v_h, p_h) + b(u_h, q_h) = f(v_h)+g(q_h),
-    \quad\forall v_h\in V_h, q_h\in Q_h,
-  \end{gather}
-  and the discrete reduced problem: find $u_h\in V_h^g$ such that
+  The discrete reduced problem is: find $u_h\in V_h^g$ such that
   \begin{gather}
     \label{eq:galerkin:4}
     a(u_h, v_h) = f(v_h), \qquad\forall v_h \in \ker{B_h}.
   \end{gather}
 \end{Definition}
 
+
 \begin{Theorem}{galerkin-mixed-u-kerbh}
   Let $V_h^g$ be nonempty and let $a(.,.)$ and $b(.,.)$ be bounded
-  with norms $\norm a$ and $\norm b$, respectively, and let there be constant and $\gamma_h$
+  with $\bounda$ and $\boundb$, respectively, and let there be constant and $\gamma_h$
   such that
   \begin{gather}
     \label{eq:galerkin:5}
@@ -54,12 +59,12 @@
   Let furthermore the continuous mixed problem be well-posed with
   solution $(u,p)\in V\times Q$.
   Then, the discrete reduced problem~\eqref{eq:galerkin:4} has a
-  unique solution and there holds
+  unique solution $u_h\in V_h$ and there holds
   \begin{gather}
     \label{eq:galerkin:8}
-    \norm{u-u_h}_V \le \left(1+\frac{\norm a}{\gamma_h}\right)
+    \norm{u-u_h}_V \le \left(1+\frac{\bounda}{\gamma_h}\right)
     \inf_{w_h\in V_h^g}\norm{u-w_h}_V
-    + \frac{\norm b}{\gamma_h}
+    + \frac{\boundb}{\gamma_h}
     \inf_{q_h\in Q_h}\norm{p-q_h}_Q
   \end{gather}
 \end{Theorem}
@@ -67,16 +72,16 @@
 \begin{proof}
   Let $u_h^g \in V_h^g$ arbitrary. By the ellipticity assumption,
   there is a unique function $u_h^0\in \ker{B_h}$ such that
-  \begin{gather*}
+  \begin{gather}
     a(u_h^0,v_h) = f(v_h) - a(u_h^g,v_h),
     \qquad\forall v_h\in \ker{B_h}.
-  \end{gather*}
+  \end{gather}
   Hence, $u_h = u_h^g + u_h^0$ is the unique solution
   to~\eqref{eq:galerkin:4}. Choose now $w_h\in V_h^g$
   arbitrarily. Then, $v_h = u_h-w_h\in \ker{B_h}$ and using
-  \begin{gather*}
+  \begin{gather}
     f(v_h) = a(u, v_h) - b(v_h, p),
-  \end{gather*}
+  \end{gather}
   we obtain
   \begin{gather}
     \begin{split}
@@ -88,32 +93,22 @@
     \end{split}
   \end{gather}
   for any $q_h\in Q_h$, yielding
-  \begin{gather*}
+  \begin{gather}
     \gamma_h\norm{v_h}^2_V
     \le \abs{a(v_h, v_h)}
-    \le \norm a \norm{u-w_h}_V \norm{v_h}_V
-      + \norm b \norm{p-q_h}_Q \norm{v_h}_V.
-  \end{gather*}
+    \le \bounda \norm{u-w_h}_V \norm{v_h}_V
+      + \boundb \norm{p-q_h}_Q \norm{v_h}_V.
+  \end{gather}
   We conclude by the standard triangle inequality argument
-  \begin{multline*}
+  \begin{multline}
     \norm{u-u_h}_V \le \norm{u-w_h}_V + \norm{u_h-w_h}_V
     \\
-    \le \norm{u-w_h}_V + \frac{\norm a}{\gamma_h} \norm{u-w_h}_V
-    + \frac{\norm b}{\gamma_h} \norm{p-q_h}_Q.
-  \end{multline*}
+    \le \norm{u-w_h}_V + \frac{\bounda}{\gamma_h} \norm{u-w_h}_V
+    + \frac{\boundb}{\gamma_h} \norm{p-q_h}_Q.
+  \end{multline}
   The estimate follows since $w_h\in V_h^g$ and $q_h\in Q_h$ were
   chosen arbitrarily.
 \end{proof}
-
-\begin{remark}
-  Note that we only used ellipticity of $a(.,.)$ on the subspace
-  $\ker{B_h}$ for the discrete problem and on $\ker B$ for the
-  continuous problem. Since the union of two vector spaces is not a
-  vector space, this is a strange condition. In practice, we will
-  encounter two situations: either ellipticity holds on the whole
-  space $V$ or $\ker{B_h}\subset\ker{B}$, where the latter is again a
-  vector space.
-\end{remark}
 
 \begin{Corollary}{galerkin-mixed-u-kerb}
   If in addition to the assumptions of
@@ -125,7 +120,7 @@
   then
   \begin{gather}
     \label{eq:galerkin:7}
-    \norm{u-u_h}_V \le \left(1+\frac{\norm a}{\gamma_h}\right)
+    \norm{u-u_h}_V \le \left(1+\frac{\bounda}{\gamma_h}\right)
     \inf_{w_h\in V_h^g}\norm{u-w_h}_V
   \end{gather}
 \end{Corollary}
@@ -135,20 +130,32 @@
   $v_h\in\ker B$.
 \end{proof}
 
+\begin{remark}
+  Note that we used ellipticity of $a(.,.)$ on the subspace
+  $\ker{B_h}$ for the discrete problem and on $\ker B$ for the
+  continuous problem. If $\ker{B_h}\not\subset\ker{B}$, then
+  ellipticity on $\ker B$ like in \slideref{Theorem}{mixed-elliptic}
+  is not sufficient for well-posedness of the discrete problem.
+  
+  In practice, we will encounter two situations: either ellipticity
+  holds on the whole space $V$ (Stokes equations) or
+  $\ker{B_h}\subset\ker{B}$ (the other examples in these notes).
+\end{remark}
+
 \begin{Theorem}{galerkin-mixed-p}
   Assume in addition the assumptions of
   \slideref{Theorem}{galerkin-mixed-u-kerbh} that there are constants
-  $\beta_h$, possibly depending on the parameter $h$, such that
+  $\infsupc_h$, possibly depending on the parameter $h$, such that
   \begin{gather}
     \label{eq:galerkin:10}
     \inf_{q_h\in Q_h} \sup_{v_h\in V_h}
     \frac{b(v_h, q_h)}{\norm{v_h}_V\norm{q_h}_Q}
-    \ge \beta_h.
+    \ge \infsupc_h.
   \end{gather}
   Then, there is a unique solution $p_h\in Q_h$ such that $(u_h, p_h)$
   is the unique solution to the discrete mixed
   problem~\eqref{eq:galerkin:3}. There are a constants $c_h^{(i)}$
-  only depending on $\norm a$, $\norm b$, $\gamma_h$ and $\beta_h$
+  only depending on $\bounda$, $\boundb$, $\gamma_h$ and $\infsupc_h$
   such that
   \begin{align}
     \label{eq:galerkin:11}
@@ -169,41 +176,41 @@
   \begin{gather}
     \label{eq:galerkin:12}
     \inf_{w_h\in V_h^g} \norm{u-w_h}_V
-    \le \left(1+\frac{\norm b}{\beta_h}\right)
+    \le \left(1+\frac{\boundb}{\infsupc_h}\right)
     \inf_{v_h\in V_h} \norm{u-v_h}_V.
   \end{gather}
   By the third condition in
   \slideref{Theorem}{infsup-well-equivalence}, there is a unique
-  $z_h\in \ortho{\ker{B_h}}$ such that
-  \begin{gather*}
+  $z_h\in \ortho{\ker{B_h}} \subset V_h$ such that
+  \begin{gather}
     B_h z_h = B_h(u-v_h),\qquad \forall v_h\in V_h,
-  \end{gather*}
+  \end{gather}
   and
-  \begin{gather*}
-    \norm{z_h}_V \le \frac1{\beta_h}\norm{B_h(u-v_h)}_{Q_h^*}
-    \le\frac{\norm b}{\beta_h} \norm{u-v_h}_V.
-  \end{gather*}
+  \begin{gather}
+    \norm{z_h}_V \le \frac1{\infsupc_h}\norm{B_h(u-v_h)}_{Q_h^*}
+    \le\frac{\boundb}{\infsupc_h} \norm{u-v_h}_V.
+  \end{gather}
   Let $w_h = z_h+v_h$. Then, $w_h\in V_h^g$ since
-  \begin{gather*}
+  \begin{gather}
     b(w_h, q_h) = b(u-v_h, q_h) = b(u, q_h) = g(q_h),
     \qquad\forall q_h\in Q_h.
-  \end{gather*}
+  \end{gather}
   Furthermore,
-  \begin{gather*}
+  \begin{gather}
     \norm{u-w_h}_V \le \norm{u-v_h}_V + \norm{z_h}_V
-    \le \left(1+\frac{\norm b}{\beta_h}\right)
+    \le \left(1+\frac{\boundb}{\infsupc_h}\right)
     \norm{u-v_h}_V.
-  \end{gather*}
+  \end{gather}
   Since $v_h \in V_h$ was chosen arbitrarily, we have
   proven~\eqref{eq:galerkin:12} and thus by
   \slideref{Theorem}{galerkin-mixed-u-kerbh} the estimate for
   $\norm{u-u_h}_V$ with
   \begin{gather}
-    c_h^{(1)} = \left(1+\frac{\norm b}{\beta_h}\right)
-    \left(1+\frac{\norm a}{\gamma_h}\right),
+    c_h^{(1)} = \left(1+\frac{\boundb}{\infsupc_h}\right)
+    \left(1+\frac{\bounda}{\gamma_h}\right),
     \qquad
-    c_h^{(2)} = \left(1+\frac{\norm b}{\beta_h}\right)
-    \frac{\norm b}{\gamma_h}.
+    c_h^{(2)} = \left(1+\frac{\boundb}{\infsupc_h}\right)
+    \frac{\boundb}{\gamma_h}.
   \end{gather}
   It remains to prove the estimate for $\norm{p-p_h}_Q$. Using Galerkin
   orthogonality for the test function $v_h$, we obtain
@@ -213,25 +220,25 @@
   \end{gather}
   Hence, for any $q_h\in Q_h$ there is by the inf-sup condition
   $v_h\in V_h$ with $\norm{v_h}_V=1$ such that
-  \begin{align*}
-    \beta_h \norm{p_h-q_h}_Q
+  \begin{align}
+    \infsupc_h \norm{p_h-q_h}_Q
     &\le b(v_h, p_h-q_h)\\
     & = a(u-u_h, v_h) + b(v_h, p-q_h)\\
-    &\le \norm a \norm{u-u_h}_V + \norm b \norm{p-q_h}_Q.
-  \end{align*}
+    &\le \bounda \norm{u-u_h}_V + \boundb \norm{p-q_h}_Q.
+  \end{align}
   Again, the estimate for $\norm{p-p_h}_Q$ follows by triangle
   inequality.
 \end{proof}
 
 \begin{remark}
   Indeed, if~\eqref{eq:galerkin:10} holds, we do not have to require
-  that $V_h^g$ is nonempty anymore, since $B\colon V\to Q^*$ is
+  that $V_h^g$ is nonempty anymore, since $B_h\colon V_h\to Q_h^*$ is
   surjective.
 \end{remark}
 
 \begin{remark}
   We purposely proved the preceding theorems with $\gamma_h$ and
-  $\beta_h$ depending on the parameter $h$, typically the mesh
+  $\infsupc_h$ depending on the parameter $h$, typically the mesh
   size. This is the minimal condition for well-posedness of the
   discrete problems. Nevertheless, this well-posedness is not uniform
   in $h$, which causes loss of approximation, as the following problem
@@ -241,68 +248,68 @@
 
 \begin{Problem}{infsup-uniform}
   Let the following interpolation estimates hold:
-  \begin{gather*}
+  \begin{gather}
     \inf_{v_h\in V_h}\norm{u-v_h}_V = \mathcal O(h^k),
     \qquad
-    \inf_{q_h\in Q_h}\norm{p-q_h}_V = \mathcal O(h^k).
-  \end{gather*}
+    \inf_{q_h\in Q_h}\norm{p-q_h}_Q = \mathcal O(h^k).
+  \end{gather}
   Then, the estimates in \slideref{Theorem}{galerkin-mixed-p}
   are asymptotically optimal if and only if there are
-  constants $\tilde \gamma>0$ and $\tilde \beta>0$ independent of
+  constants $\tilde \gamma>0$ and $\tilde \infsupc>0$ independent of
   $h$ such that
   \begin{gather}
     \label{eq:galerkin:14}
-    \gamma_h\ge \tilde\gamma,\quad\beta_h\ge\tilde\beta,
+    \gamma_h\ge \tilde\gamma,\quad\infsupc_h\ge\tilde\infsupc,
   \end{gather}
   independent of $h$.
 \begin{solution}
   The estimates in \slideref{Theorem}{galerkin-mixed-p} state
-  \begin{align*}
+  \begin{align}
     \norm{u-u_h}_V &\le c_h^{(1)} \inf_{v_h\in V_h^g}\norm{u-v_h}_V
 	      + c_h^{(2)} \inf_{q_h\in Q_h}\norm{p-q_h}_Q \\
     \norm{p-p_h}_Q &\le c_h^{(3)} \inf_{v_h\in V_h}\norm{u-v_h}_V
 	      + c_h^{(4)} \inf_{q_h\in Q_h}\norm{p-q_h}_Q.
-  \end{align*}
+  \end{align}
   such that the additional assumptions imply
-  \begin{align*}
+  \begin{align}
     \norm{u-u_h}_V &\le c_h^{(1)} C h^k + c_h^{(2)} C h^k \\
     \norm{p-p_h}_Q &\le c_h^{(3)} C h^k + c_h^{(4)} C h^k.
-  \end{align*}
+  \end{align}
     where the first constants are given by
-  \begin{align*}
-    c_h^{(1)} = \left(1+\frac{\norm b}{\beta_h}\right)
-    \left(1+\frac{\norm a}{\gamma_h}\right),
+  \begin{align}
+    c_h^{(1)} = \left(1+\frac{\boundb}{\infsupc_h}\right)
+    \left(1+\frac{\bounda}{\gamma_h}\right),
     \qquad
-    c_h^{(2)} = \left(1+\frac{\norm b}{\beta_h}\right)
-    \frac{\norm b}{\gamma_h}.
-  \end{align*}
+    c_h^{(2)} = \left(1+\frac{\boundb}{\infsupc_h}\right)
+    \frac{\boundb}{\gamma_h}.
+  \end{align}
   For the last two estimates, the relevant estimates read
-  \begin{align*}
-    \beta_h \norm{p_h-q_h}_Q
+  \begin{align}
+    \infsupc_h \norm{p_h-q_h}_Q
     &\le b(v_h,p_h-q_h)\\
     & = a(u-u_h, v_h) + b(v_h, p-q_h)\\
-    &\le \norm a \norm{u-u_h}_V + \norm b \norm{p-q_h}_Q\\
+    &\le \bounda \norm{u-u_h}_V + \boundb \norm{p-q_h}_Q\\
     \Rightarrow \norm{p-p_h}_Q
     &\le \norm{p-q_h} + \norm{p_h-q_h}_Q \\
-    &\le \frac{\norm a}{\beta_h} \norm{u-u_h}_V + \left(1+\frac{\norm b}{\beta_h}\right) \norm{p-q_h}_Q.
-  \end{align*}
+    &\le \frac{\bounda}{\infsupc_h} \norm{u-u_h}_V + \left(1+\frac{\boundb}{\infsupc_h}\right) \norm{p-q_h}_Q.
+  \end{align}
   Therefore, the remaining constants are
-  \begin{align*}
-    c_h^{(3)} = \frac{\norm a}{\beta_h}c_h^{(1)}, \qquad
-    c_h^{(4)} = \frac{\norm a}{\beta_h}c_h^{(2)}+\left(1+\frac{\norm b}{\beta}\right).
-  \end{align*}
+  \begin{align}
+    c_h^{(3)} = \frac{\bounda}{\infsupc_h}c_h^{(1)}, \qquad
+    c_h^{(4)} = \frac{\bounda}{\infsupc_h}c_h^{(2)}+\left(1+\frac{\boundb}{\infsupc}\right).
+  \end{align}
 \end{solution}
 \end{Problem}
 
 \begin{intro}
   As we can see from the form
-  \begin{gather*}
+  \begin{gather}
     \forall q_h\in Q_h \;
     \exists v_h\in V_h\colon
     \quad B_h v_h = q_h
     \quad\wedge\quad
     \norm{v_h}_V \le \norm{q_h}_Q,
-  \end{gather*}
+  \end{gather}
   the uniform, discrete inf-sup condition introduces a compatibility
   condition between the spaces $V_h$ and $Q_h$. An immediate necessary
   condition is
@@ -313,22 +320,22 @@
   functions in $Q_h$. Obviously, counting dimensions is not
   sufficient, since we could have added basis functions in
   $\ker{B_h}$. Even the condition
-  \begin{gather*}
+  \begin{gather}
     \dim\ortho{\ker{B_h}} = \dim Q_h
-  \end{gather*}
+  \end{gather}
   is necessary and sufficient only for the existence of an inf-sup
-  constant $\beta_h$ depending on $h$. Therefore, we need a stronger
+  constant $\infsupc_h$ depending on $h$. Therefore, we need a stronger
   argument in order to ensure compatibility of the discrete
   spaces. Such an argument is the following lemma by Fortin. The
   projection operator $\Pi_{V_h}$ introduced there is usually referred
   to as \define{Fortin projection}.
 \end{intro}
 
-\begin{Lemma}{fortin}
+\begin{Lemma*}{fortin}{Fortin operator}
   Let the inf-sup condition for the bilinear form $b(.,.)$
   hold on $V\times Q$ with a constant
-  $\beta>0$. Then, it holds on $V_h\times Q_h$ uniformly with a
-  constant $\tilde\beta>0$ if and only if there exists a linear
+  $\infsupc>0$. Then, it holds on $V_h\times Q_h$ uniformly with a
+  constant $\tilde\infsupc>0$ if and only if there exists a linear
   operator $\Pi_{V_h}\colon V\to V_h$ satisfying for any $v\in V$
   \begin{align}
     \label{eq:galerkin:15}
@@ -337,106 +344,37 @@
     \label{eq:galerkin:16}
     \norm{\Pi_{V_h}v}_V \le c \norm{v}_V,
   \end{align}
-  with $c$ independent of $h$. There holds $\tilde\beta = \beta/c$.
-\end{Lemma}
+  with $c$ independent of $h$. There holds $\tilde\infsupc = \infsupc/c$.
+\end{Lemma*}
 
 \begin{proof}
   Assume first that $\Pi_{V_h}$ exists. then, there holds for any
   $q_h\in Q_h$
-  \begin{gather*}
+  \begin{gather}
     \sup_{v_h\in V_h} \frac{b(v_h, q_h)}{\norm{v_h}_V}
     \ge
-    \sup_{v\in V} \frac{b(\Pi_{V_h}v_h, q_h)}{\norm{\Pi_{V_h} v_h}_V}
+    \sup_{v\in V} \frac{b(\Pi_{V_h}v, q_h)}{\norm{\Pi_{V_h} v}_V}
     =
-    \sup_{v\in V} \frac{b(v, q_h)}{\norm{\Pi_{V_h} v_h}_V}
-    \ge \frac{\beta}{c} \norm{q_h}_Q.
-  \end{gather*}
+    \sup_{v\in V} \frac{b(v, q_h)}{\norm{\Pi_{V_h} v}_V}
+    \ge \frac{\infsupc}{c} \norm{q_h}_Q.
+  \end{gather}
   Conversely, we assume the existence of a uniform, discrete inf-sup
-  constant $\tilde\beta>0$. Then, for any $v\in V$ let
+  constant $\tilde\infsupc>0$. Then, for any $v\in V$ let
   $g(.) = b(v,.) \in Q_h^*$. By
   \slideref{Theorem}{infsup-well-equivalence}, there is a unique
   element $\Pi_{V_h} v \in \ortho{\ker{B_h}}$ such that
-  \begin{gather*}
+  \begin{gather}
     b(\Pi_{V_h}v,q_h) = b(v, q_h),\qquad\forall q_h\in Q_h
-  \end{gather*}
+  \end{gather}
   and
-  \begin{gather*}
+  \begin{gather}
     \norm{\Pi_{V_h}v}_V
-    \le \frac1{\tilde\beta}\norm{B_h v}_{Q_H^*}
-    \le \frac{\norm b}{\tilde\beta} \norm{v}_V.
-  \end{gather*}
+    \le \frac1{\tilde\infsupc}\norm{B_h v}_{Q_H^*}
+    \le \frac{\boundb}{\tilde\infsupc} \norm{v}_V.
+  \end{gather}
   Thus, $\Pi_{V_h}$ is bounded and~\eqref{eq:galerkin:15} holds with
-  $c=\norm b/\tilde\beta$.
+  $c=\boundb/\tilde\infsupc$.
 \end{proof}
-
-\begin{Problem}{schur-complement}
-Let $A\in\mathbb{R}^{n\times n}$, $B\in\mathbb{R}^{k\times n}$, $k\leq n$.
-Moreover, assume that $B$ has full rank and that $A$ is symmetric and
-positive definite.\\
-Consider the problem
-\begin{align}
-\begin{aligned}
-\begin{pmatrix} A & B^* \\ B & 0 \end{pmatrix}
-\begin{pmatrix} x \\ y \end{pmatrix}
-= \begin{pmatrix} F \\ G \end{pmatrix}
-\end{aligned}
-\tag{*}
-\label{problem9-stokes}
-\end{align}
-\begin{enumerate}
-\item Prove that then $S := BA^{-1}B^*$ is symmetric and positive definite, too.
-How can this matrix be used to solve (\ref{problem9-stokes})?
-\item Show that
-\begin{align*}
- P := I - B^*(BB^*)^{-1}B.
-\end{align*}
-is a projector on the kernel of $B$ with $\norm{P}_2=1$.
-\item Show for the case $G = 0$ that $x$ is a solution of
-\begin{align*}
-PAPx = PF
-\end{align*}
-if $(x,y)$ is a solution of (\ref{problem9-stokes}).
-\end{enumerate}
-\begin{solution}
-\begin{enumerate}
- \item Let's first consider the symmetry:
-  \begin{align*}
-    S^*=(BA^{-1}B^*)^*=B(A^*)^{-1}B^*=BA^{-1}B^*=S
-  \end{align*}
-  We further observe
-  \begin{align*}
-   \norm{v}_S^2 &= v^*Sv = v^*BA^{-1}B^*v = (B^*v)^*A^{-1}B^*v \leq 0 \\
-   \norm{v}_S^2 &\Longleftrightarrow B^*v = 0 \Longleftrightarrow v=0
-  \end{align*}
-  since $A$ and $B$ have full rank.
-
-  The first equation implies
-  \begin{align*}
-   x=A^{-1} (F-B^* y)
-  \end{align*}
-  and eliminating $x$ in the second equation yields
-  \begin{align*}
-   BA^{-1} (F-B^* y)=G \Longleftrightarrow BA^{-1} B^* y=BA^{-1} F-G.
-   \end{align*}
-
-  \item \begin{align*}P^2&=(I - B^*(BB^*)^{-1}B)(I - B^*(BB^*)^{-1}B)\\
-            &=I - 2B^*(BB^*)^{-1}B+ B^*(BB^*)^{-1}BB^*(BB^*)^{-1}B\\
-            &= I-B^*(BB^*)^{-1}B=P
-        \end{align*}
-        Therefore, $\norm{P}_2=1$ if $\operatorname{ker} B\not=\{0\}$.
-        Note that $k<n$ implies this.
-
-        Further, $Px=x$ for all $x\in \operatorname{ker} B$ and $BPy=0$ for all $y$.
-  \item Let $x$ be a solution of (\ref{problem9-stokes}) for $G=0$.
-  \begin{align*}
-PAPx &= (I-B^*(BB^*)^{-1}B) A (I-B^*(BB^*)^{-1}B) x\\
-&= (I-B^*(BB^*)^{-1}B) Ax\\
-&= (I-B^*(BB^*)^{-1}B) (F-B^* y)\\
-&= (I-B^*(BB^*)^{-1}B) F = PF
-        \end{align*}
-\end{enumerate}
-\end{solution}
-\end{Problem}
 
 
 %%% Local Variables:

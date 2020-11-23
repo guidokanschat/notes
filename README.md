@@ -18,9 +18,13 @@ git submodule init
 git submodule update
 ```
 
-Finally, make sure that `$NOTESPATH` is in your `TEXINPUTS`variable, for instance by (bash)
+Finally, make sure that `$NOTESPATH` is in your `TEXINPUTS`variable. If you plan to use the slidetheorem installation within the notes, use the second line, for instance by (bash)
 ```
 export TEXINPUTS=.:$NOTESPATH/notes/:$TEXINPUTS
+
+or
+
+export TEXINPUTS=.:$NOTESPATH/notes/:$NOTESPATH/notes/slidetheorem/:$TEXINPUTS
 ```
 
 ### Compiling ###

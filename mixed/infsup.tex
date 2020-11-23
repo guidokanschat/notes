@@ -1,24 +1,88 @@
 
+Let us begin with a simple example, displaying some of the
+difficulties we may have.
+
+\begin{Problem}{unbounded-inverse}
+  On the space $\ell_2(\R)$ define the operator $A$ by its eigenvalue
+  decomposition
+  \begin{align}
+    A: \ell_2(\R) &\to \ell_2(\R)\\
+    e_k & \mapsto \tfrac1k e_k.
+  \end{align}
+  Here, $\{e_k\}$ is the orthogonal basis of unit vectors of the form
+  \begin{gather}
+    \arraycolsep0.1em
+    \begin{array}{cccccccc}
+      e_k =(0&,\ldots,&0&,&1&,&0&,\ldots)^\transpose.\\
+      &&&&\uparrow\\
+      &&&&k
+    \end{array}
+  \end{gather}
+  \begin{enumerate}
+  \item Show that this operator does not have a bounded inverse, albeit
+    its eigenvalues are positive.
+  \item Show that the range of $A$ is not closed in $\ell_2(\R)$
+  \end{enumerate}
+\begin{solution}
+  \begin{enumerate}
+  \item For each $e_k$, the inverse is $A^{-1} e_k = k e_k$. In particular, $A$ is injective.
+    On the other hand, it holds
+    \begin{gather}
+      \lim_{k\to\infty}\frac{\norm{A^{-1}e_k}}{\norm{e_k}}=\lim_{k\to\infty}k=\infty
+    \end{gather}
+      and the inverse cannot be bounded.
+  \item We have to construct a convergent sequence in the range of $A$
+    such that the pre-image of the sequence does not converge.
+    \begin{enumerate}
+    \item Choose
+      \begin{gather}
+        v_n = \sum_{k=1}^n \frac1k e_k.
+      \end{gather}
+      \item $v_n$ is a Cauchy-sequence, since
+        \begin{gather}
+          \norm{v_m-v_n}^2 = \norm*{\sum_{k=m}^n \frac1k e_k}^2
+          = \sum_{k=m}^n \frac1{k^2}\norm*{e_k}^2
+          \le \frac1{m^2} \sum_{k=1}^\infty \frac1{k^2}
+          = \frac{\pi^2}{6} \frac1{m^2}.
+        \end{gather}
+      \item We conclude that $v=\lim_{n\to\infty}v_n$ exists in the
+        closure of the range of $A$.
+      \item There holds
+        \begin{gather}
+          v_n = A \sum_{k=1}^n e_k =: A u_n.
+        \end{gather}
+      \item Due to the injectivity of $A$ for $v$ to be in the range of $A$,
+            $u_n$ has to converge in $\ell_2(\R)$.
+      \item The sequence $u_n$ is not a Cauchy sequence, since
+        \begin{gather}
+          \norm{v_m-v_n}^2 = \norm*{\sum_{k=m}^n e_k}^2
+          = \sum_{k=m}^n \norm*{e_k}^2
+          = n-m.
+        \end{gather}
+    \end{enumerate}
+  \end{enumerate}
+\end{solution}
+\end{Problem}
+
 \section{Finite-dimensional problems}
 \begin{intro}
   So far, our power horse for well-posedness was the Lax-Milgram
   lemma, which can be applied under the conditions
   \begin{xalignat}2
     a(u,v) &\le M \norm{u}\norm{v} & \forall u,v&\in V\\
-    \label{eq:infsup:elliptic}
     a(u,u) &\ge \ellipa \norm{u}^2 & \forall u&\in V.
   \end{xalignat}
   The second condition can also be rewritten in terms of the
   \putindex{Rayleigh quotient} as
-  \begin{gather*}
+  \begin{gather}
     0 < \ellipa = \inf_{u\in V}\frac{a(u,u)}{\norm{u}^2}.
-  \end{gather*}
+  \end{gather}
   Restricting this to a finite dimensional space, the notation usually
   changes from
   \begin{gather}
     a(u,v) = f(v)
     \qquad\text{to}\qquad
-    v^TA u = v^T f,
+    v^\transpose A u = v^\transpose f,
   \end{gather}
   where $A\in \R^{n\times n}$ is the matrix associated with the
   bilinear form. The bound for the Rayleigh quotient means nothing but
@@ -43,85 +107,24 @@
   estimate~\eqref{eq:infsup:elliptic}: the assumption of the theorem
   is qualitative, $\lambda \neq 0$, while the assumption of Lax-Milgram
   is quantitative,
-  \begin{gather*}
+  \begin{gather}
     \Re\lambda \ge \ellipa> 0.
-  \end{gather*}
+  \end{gather}
   The following problem shows why such a change is necessary.
 \end{intro}
 
-\begin{Problem}{unbounded-inverse}
-  On the space $\ell_2(\R)$ define the operator $A$ by its eigenvalue
-  decomposition
-  \begin{align*}
-    A: \ell_2(\R) &\to \ell_2(\R)\\
-    e_k & \mapsto \tfrac1k e_k.
-  \end{align*}
-  Here, $\{e_k\}$ is the orthogonal basis of unit vectors of the form
-  \begin{gather*}
-    \arraycolsep0.1em
-    \begin{array}{cccccccc}
-      e_k =(0&,\ldots,&0&,&1&,&0&,\ldots)^T.\\
-      &&&&\uparrow\\
-      &&&&k
-    \end{array}
-  \end{gather*}
-  \begin{enumerate}
-  \item Show that this operator does not have a bounded inverse, albeit
-    its eigenvalues are positive.
-  \item Show that the range of $A$ is not closed in $\ell_2(\R)$
-  \end{enumerate}
-\begin{solution}
-  \begin{enumerate}
-  \item For each $e_k$, the inverse is $A^{-1} e_k = k e_k$. In particular, $A$ is injective.
-    On the other hand, it holds
-    \begin{gather*}
-      \lim_{k\to\infty}\frac{\norm{A^{-1}e_k}}{\norm{e_k}}=\lim_{k\to\infty}k=\infty
-    \end{gather*}
-      and the inverse cannot be bounded.
-  \item We have to construct a convergent sequence in the range of $A$
-    such that the pre-image of the sequence does not converge.
-    \begin{enumerate}
-    \item Choose
-      \begin{gather*}
-        v_n = \sum_{k=1}^n \frac1k e_k.
-      \end{gather*}
-      \item $v_n$ is a Cauchy-sequence, since
-        \begin{gather*}
-          \norm{v_m-v_n}^2 = \norm*{\sum_{k=m}^n \frac1k e_k}^2
-          = \sum_{k=m}^n \frac1{k^2}\norm*{e_k}^2
-          \le \frac1{m^2} \sum_{k=1}^\infty \frac1{k^2}
-          = \frac{\pi^2}{6} \frac1{m^2}.
-        \end{gather*}
-      \item We conclude that $v=\lim_{n\to\infty}v_n$ exists in the
-        closure of the range of $A$.
-      \item There holds
-        \begin{gather*}
-          v_n = A \sum_{k=1}^n e_k =: A u_n.
-        \end{gather*}
-      \item Due to the injectivity of $A$ for $v$ to be in the range of $A$,
-            $u_n$ has to converge in $\ell_2(\R)$.
-      \item The sequence $u_n$ is not a Cauchy sequence, since
-        \begin{gather*}
-          \norm{v_m-v_n}^2 = \norm*{\sum_{k=m}^n e_k}^2
-          = \sum_{k=m}^n \norm*{e_k}^2
-          = n-m.
-        \end{gather*}
-    \end{enumerate}
-  \end{enumerate}
-\end{solution}
-\end{Problem}
 
 \begin{Problem}{lax-milgram-not-applicable}
   Find an invertible, symmetric matrix $A\in \R^{2\times 2}$ and a
-  vector $v\in \R^2$ such that $v^T A v=0$ and thus the Lax-Milgram
+  vector $v\in \R^2$ such that $v^\transpose A v=0$ and thus the Lax-Milgram
   lemma is inconclusive.
 \begin{solution}
-  \begin{gather*}
+  \begin{gather}
     A =
     \begin{pmatrix}
       1 & 0 \\ 0 & -1
     \end{pmatrix}
-  \end{gather*}
+  \end{gather}
 \end{solution}
 \end{Problem}
 
@@ -143,9 +146,9 @@ The question of well-posedness in finite dimensions can be answered by:
   But, the problem above tells us that we
   will run into trouble, if we do not quantify this. Therefore, we
   start our attempt by requiring:
-  \begin{gather*}
+  \begin{gather}
     \norm{Au}^2 \ge \ellipa \norm{u}^2 \qquad\forall u\in V.
-  \end{gather*}
+  \end{gather}
   But while this is a condition we can easily write down for matrices
   and operators, it does not work that well for bilinear forms. Thus,
   we first look at the singular value decomposition.
@@ -157,10 +160,10 @@ The question of well-posedness in finite dimensions can be answered by:
   \index{ker}
   Let $A: V\to W$ be a linear operator. Then, we define
   the \define{kernel} and the \define{range} of $A$ as
-  \begin{align*}
+  \begin{align}
     \ker A &= \bigl\{ v\in V \big| Av = 0\bigr\} \\
     \range A &= \bigl\{ w\in W \big| \;\exists\,v\in V: Av=w\bigr\}.
-  \end{align*}
+  \end{align}
 \end{Definition}
 
 \begin{Definition}{orthogonal1}
@@ -173,55 +176,60 @@ The question of well-posedness in finite dimensions can be answered by:
 \end{Definition}
 
 \begin{Lemma}{ker-coker-rn}
-  Let $A\in \R^{m\times n}$ and $A^T$ its transpose. Then, there holds
+  Let $A\in \R^{m\times n}$ and $A^\transpose$ its transpose. Then, there holds
   \begin{gather}
     \label{eq:infsup:5}
     \begin{split}
-      \ker A &= \ortho{\range{A^T}}\\
-      \range A &= \ortho{\ker{A^T}}\\
-      \ker{A^T} &= \ortho{\range A}\\
-      \range{A^T} &= \ortho{\ker{A}}
+      \ker A &= \ortho{\range{A^\transpose}}\\
+      \range A &= \ortho{\ker{A^\transpose}}\\
+      \ker{A^\transpose} &= \ortho{\range A}\\
+      \range{A^\transpose} &= \ortho{\ker{A}}
     \end{split}
   \end{gather}
 \end{Lemma}
 
 \begin{proof}
   % First, we note that
-  % \begin{gather*}
+  % \begin{gather}
   %   \R^n = \ker A \oplus \ortho{\ker A},
   %   \qquad
-  %   \R^m = \ker{A^T} \oplus \ortho{\ker{A^T}}.
-  % \end{gather*}
-  Let $A=U\Sigma V^T$ be the singular value decomposition of $A$ and
+  %   \R^m = \ker{A^\transpose} \oplus \ortho{\ker{A^\transpose}}.
+  % \end{gather}
+  Let $A=U\Sigma V^\transpose$ be the singular value decomposition of $A$ and
   $r$ be the number of nonzero singular values. Then, the first $r$
   vectors of $U$ span the range of $A$ and the last $n-r$ vectors of
   $V$ span its kernel. Furthermore,
   \begin{gather}
-    A^T = \bigl(U\Sigma V^T\bigr)^T = V \Sigma U^T.
+    A^\transpose = \bigl(U\Sigma V^\transpose\bigr)^\transpose = V \Sigma U^\transpose.
   \end{gather}
-  Therefore, the first $r$ vectors of V span the range of $A^T$ and
-  the last $n-r$ vectors of $U$ span its kernel.
+  Therefore, the first $r$ vectors of V span the range of
+  $A^\transpose$ and the last $n-r$ vectors of $U$ span its
+  kernel. The lemma follows since $U$ and $V$ are orthogonal.
 \end{proof}
 
 \begin{Corollary}{ker-coker-iso}
-  Let $A\in \R^{m\times n}$ and $A^T$ its transpose. Then, the
-  restrictions $A\colon \ortho{\ker A} \to \range A$ and $A^T\colon
-  \ortho{\ker{A^T}} \to \range{A^T}$ are isomorphisms.
+  Let $A\in \R^{m\times n}$ and $A^\transpose$ its transpose. Then, the
+  restrictions $A\colon \ortho{\ker A} \to \range A$ and $A^\transpose\colon
+  \ortho{\ker{A^\transpose}} \to \range{A^\transpose}$ are isomorphisms.
+  
+  The linear system $Ax=f\in\R^m$ has at least one solution if and
+  only if $f\in \range A$. If $x\in\R^n$ is such a solution, then
+  every $y\in\R^n$ with $y-x\in\ker A$ is a solution as well.
 \end{Corollary}
 
 \begin{proof}
-  We note that $\dim \range A = \dim \range{A^T}$. Thus, by
+  We note that $\dim \range A = \dim \range{A^\transpose}$. Thus, by
   \slideref{Lemma}{ker-coker-rn} the dimensions of domain and range of
   each of the restricted operators are equal, say $\dim \range A =
   r$. The singular value decomposition of the operators is
-  \begin{gather*}
-    A = U\Sigma V^T \qquad A^T = V\Sigma U^T,
-  \end{gather*}
+  \begin{gather}
+    A = U\Sigma V^\transpose \qquad A^\transpose = V\Sigma U^\transpose,
+  \end{gather}
   where all matrices are in $\R^{r\times r}$ and
-  \begin{gather*}
+  \begin{gather}
     \Sigma = \diag(\sigma_1,\dots,\sigma_r),
-  \end{gather*}
-  and all singular values are positive. Thus, $A$ and $A^T$ are invertible.
+  \end{gather}
+  and all singular values are positive. Thus, $A$ and $A^\transpose$ are invertible.
 \end{proof}
 
 \begin{Corollary}{svd-infsup}
@@ -230,34 +238,34 @@ The question of well-posedness in finite dimensions can be answered by:
   \begin{gather}
     \label{eq:infsup:6}
     \sigma_r
-    = \inf_{v\in \ortho{\ker A}} \sup_{w\in \R^m} \frac{w^T A v}{\abs{v}\abs{w}}
-    = \inf_{w\in \ortho{\ker{A^T}}} \sup_{v\in \R^n} \frac{w^T A v}{\abs{v}\abs{w}}.
+    = \inf_{v\in \ortho{\ker A}} \sup_{w\in \R^m} \frac{w^\transpose A v}{\norm{v}\norm{w}}
+    = \inf_{w\in \ortho{\ker{A^\transpose}}} \sup_{v\in \R^n} \frac{w^\transpose A v}{\norm{v}\norm{w}}.
   \end{gather}
 \end{Corollary}
 
 \begin{proof}
   Since the Cauchy-Schwarz inequality turns into an equation if and
   only if the two vectors are coaligned, there holds for any $v\in \R^n$:
-  \begin{gather*}
-    \sup_{w\in\R^m}\frac{w^T A v}{\abs{w}} = \frac{v^T A^T A v}{\abs{Av}}.
-  \end{gather*}
+  \begin{gather}
+    \sup_{w\in\R^m}\frac{w^\transpose A v}{\norm{w}} = \frac{v^\transpose A^\transpose A v}{\norm{Av}} = \frac{\norm{Av}^2}{\norm{Av}}.
+  \end{gather}
   Therefore,
-  \begin{gather*}
+  \begin{gather}
     \inf_{v\in \ortho{\ker A}} \sup_{w\in \R^m}
-    \frac{w^T A v}{\abs{v}\abs{w}}
-    = \inf_{v\in \ortho{\ker A}} \frac{\abs{Av}}{\abs{v}}.
-  \end{gather*}
+    \frac{w^\transpose A v}{\norm{v}\norm{w}}
+    = \inf_{v\in \ortho{\ker A}} \frac{\norm{Av}}{\norm{v}}.
+  \end{gather}
   Now, let $v = \sum \alpha_i v_i$ where $v_i$ are the columns of $V$
   in the SVD of $A$. Then,
-  \begin{gather*}
-    \abs{Av}^2 = \abs*{A\sum_{i=1}^r \alpha_i v_i}^2
-    = \abs*{\sum_{i=1}^r \sigma_i \alpha_i u_i}^2
+  \begin{gather}
+    \norm{Av}^2 = \norm*{A\sum_{i=1}^r \alpha_i v_i}^2
+    = \norm*{\sum_{i=1}^r \sigma_i \alpha_i u_i}^2
     = \sum_{i=1}^r \sigma_i^2 \alpha_i^2.
-  \end{gather*}
+  \end{gather}
   The quotient
-  \begin{gather*}
+  \begin{gather}
     \frac{\sum_{i=1}^r \sigma_i^2 \alpha_i^2}{\sum_{i=1}^r \alpha_i^2}
-  \end{gather*}
+  \end{gather}
   clearly has its minimum if $\alpha_1 = \dots=\alpha_{r-1} = 0$.
 \end{proof}
 
@@ -278,6 +286,11 @@ The question of well-posedness in finite dimensions can be answered by:
   different, when we consider infinite dimensional spaces and indeed
   consider different spaces $V$ and $W$.
 \end{remark}
+
+\begin{todo}
+  JW: introduce this lemma and the associated problem after musical isomorphisms
+  have been defined. use them in the statements, e.g. $Au = I_\flat w$... 
+\end{todo}
 
 \begin{Lemma}{infsup2}
   The following statements are equivalent to the inf-sup
@@ -310,6 +323,20 @@ The question of well-posedness in finite dimensions can be answered by:
     \end{array}
     \right.
   \end{gather}
+  \begin{todo}
+    JW:
+  \begin{gather}
+    \forall u\in V
+    \;\exists w\in W \;:\;
+    \left\{
+    \arraycolsep0.3ex
+    \begin{array}{rcl}
+      \ellipa \norm{u}_V &\le&\norm{w}_W\\
+      Au &=& w
+    \end{array}
+    \right.
+  \end{gather}
+  \end{todo}
 \end{Lemma}
 
 \begin{Problem}{inf-sup-equivalence}
@@ -348,35 +375,35 @@ The question of well-posedness in finite dimensions can be answered by:
   The inf-sup condition is equivalent to $A: ker(A)^\perp\to V^*$ being an isomorphism.
   By the Riesz representation theorem there exists for a given $u\in V$ a $w\in W$ such that
   $Aw=J u$ where $J$ is the Riesz map. Hence, it holds
-  \begin{align*}
+  \begin{align}
 a(u,w)=\langle A w, u\rangle = \langle J u, u\rangle = \norm{u}_V^2.
-  \end{align*}
+  \end{align}
  Due to $w\in ker(A)^\perp$, $A^{-1}$ is bounded and
- \begin{align*}
+ \begin{align}
  \norm{w}_W=\norm{A^{-1}u}_V\leq \frac{1}{\ellipa}\norm{u}_V.
-  \end{align*}
+  \end{align}
 
   $(3)\Rightarrow(2)$ \\
   Define $\tilde{w}=\ellipa w$. Then,
-  \begin{align*}
+  \begin{align}
 a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
-  \end{align*}
+  \end{align}
   and
-  \begin{align*}
+  \begin{align}
 \norm{\tilde{w}}_W=\ellipa \norm{w}_W\leq\norm{u}_V
-  \end{align*}
+  \end{align}
 
   $(2)\Rightarrow(1)$ \\
-  \begin{align*}
+  \begin{align}
   a(u,w) \ge \ellipa \norm{u}_V^2 \ge \ellipa \norm{u}_V \norm{w}_W
-  \end{align*}
+  \end{align}
 
   $(1)\Rightarrow(IS)$ \\
-  \begin{align*}
+  \begin{align}
   &\forall u\in V \exists w\in W: a(u,w)\ge \ellipa \norm{u}_V\norm{w}_W\\
   &\Rightarrow \forall u\in V: \sup_{w\in W} \frac{a(u,w)}{\norm{w}_W}\ge \ellipa \norm{u}_V\\
   &\Rightarrow \inf_{u\in V}\sup_{w\in W} \frac{a(u,w)}{\norm{w}_W\norm{u}_V}\ge \ellipa
-  \end{align*}
+  \end{align}
 \end{solution}
 \end{Problem}
 
@@ -398,58 +425,123 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   that most notions of linear algebra related to orthogonality can be
   maintained in Hilbert spaces if closed subspaces are considered.
   We begin by citing the most important results.
+
+  The presentation here is neither complete nor self-contained. It
+  just highlights some of the important facts. In particular, we
+  assume the validity of the \putindex{Riesz representation theorem}
+  and the existence of a \putindex{Schauder basis} a priori.
 \end{intro}
+
+\begin{Notation}{musical-isomorphisms}
+  The \putindex{Riesz representation theorem} induces isomorphisms
+  between a Hilbert space $V$ and its dual $V^*$. We call them
+  \define{Riesz isomorphism}s. Following custom in differential
+  geometry, we denote them as \define{musical isomorphism}s
+  \begin{xalignat}2
+    I_\flat\colon V&\to V^*
+    &I_\sharp\colon V^*&\to V\\
+    v&\mapsto v^\flat
+    &\phi&\mapsto \phi^\sharp.
+  \end{xalignat}
+  \index{sharp@$\sharp$}\index{flat@$\flat$}\index{b@$\flat$}
+\end{Notation}
+
+\begin{Problem*}{riesz-h10}{Riesz Isomorphisms}
+  Let $V=H^1_0(\domain)$ on the domain $\domain=(0,1)$ be equipped with the
+  inner product
+  \begin{gather}
+    \scal(u,v)_V = \int_0^1 u'v'\dt.
+  \end{gather}
+  \begin{enumerate}
+  \item Show that for any function $f\in L^2(\domain)$ the functional
+    $\phi_f$ defined by
+    \begin{gather}
+      \phi_f(v) = \int_0^1 f v \dt
+    \end{gather}
+    is in $V^*$, even if $f\not\in V$.
+  \item Discuss this for the function $f\equiv 1$ and compute $f^\sharp$.
+  \end{enumerate}
+\end{Problem*}
+
+\begin{Example}{solution-pressure}
+  When we look at computing the pressure in Stokes' equations, we have
+  to solve a weak formulation of the form: find $p\in Q$ such that
+  \begin{gather}
+    \form(\div \vv,p) = g(v) \qquad \forall \vv\in \vV.
+  \end{gather}
+  Here $\vg\in \vV^*$ consists of the parts of the momentum equation not
+  containing the pressure. If we define $B^\transpose$ by
+  \begin{gather}
+    \scal(B^\transpose q,\vv)_{V^*\times V} = \form(\div \vv,q)
+    \qquad \forall \vv\in \vV, q \in Q,
+  \end{gather}
+  then the operator form of the problem posed in $\vV^*$ is
+  \begin{gather}
+    B^\transpose p = g
+  \end{gather}
+  Since this equation involves two different spaces, we require an
+  extension of \slideref{Lemma}{ker-coker-rn}.
+\end{Example}
 
 \begin{Definition}{polar-orthogonal}
   Let $W\subset V$ be a subspace of a Hilbert space $V$. We define its
-  \define{polar space} $\polar{W}\subset V^*$ and its
-  \define{orthogonal complement} $\ortho{W}\subset V$ by
+  \define{orthogonal complement} $\ortho{W}\subset V$ and its
+  \define{polar space} $\polar{W}\subset V^*$ by
   \begin{gather}
     \label{eq:infsup:7}
-    \begin{split}
-    \polar{W} &= \bigl\{f\in V^* \big| \scal(f,w)_{V^*\times V} = 0
-    \quad\forall\,w\in W\bigr\},
+    \begin{aligned}
+    \ortho{W} &= \bigl\{v\in V &\big|&& \scal(v,w)_{V} &= 0
+    &\forall\,w&\in W\bigr\},
     \\
-    \ortho{W} &= \bigl\{v\in V \big| \scal(v,w)_{V} = 0
-    \quad\forall\,w\in W\bigr\}.
-    \end{split}
+    \polar{W} &= \bigl\{f\in V^* &\big|&& \scal(f,w)_{V^*\times V} &= 0
+    &\forall\,w&\in W\bigr\}.
+    \end{aligned}
   \end{gather}
   For a subspace $U\subset V^*$, we define its polar space
   \begin{gather}
-    \polar{U} = \bigl\{v\in V \big| \scal(u,v)_{V^*\times V} = 0
+    \dualpolar{U} = \bigl\{v\in V \quad\big|\quad \scal(u,v)_{V^*\times V} = 0
     \quad\forall\,u\in U\bigr\}
   \end{gather}
 \end{Definition}
 
+\begin{Problem}{polar-orthogonal}
+  Show that $\polar{W} = I_\flat \ortho{W}$ and $\dualpolar{U} = I_\sharp \ortho{U}$.
+\end{Problem}
+
 \begin{Lemma}{orthogonal-closed}
   The polar space $\polar{W}$ and the orthogonal complement $\ortho{W}$ of a
-  subspace $W\subset V$ are both closed. So is the polar space $\polar{U}$
+  subspace $W\subset V$ are both closed. So is the polar space $\dualpolar{U}$
   of a subspace $U\subset V^*$.
 \end{Lemma}
 
 \begin{proof}
   Consider the mapping
-  \begin{align*}
+  \begin{align}
     \Phi_w\colon V^* &\to \R,\\
-    v&\mapsto \scal(v,w)_{V^*\times V}.
-  \end{align*}
-  For any $w$, the kernel of $\Phi$ is closed as
+    \phi&\mapsto \scal(\phi,w)_{V^*\times V}.
+  \end{align}
+  For any $w$, the kernel of $\Phi_w$ is closed as
   the pre-image of a closed set. $\polar{W}$ is closed since it is the
   intersection of these kernels for all $w\in W$.
 
   The inner product is continuous on $V\times V$. Therefore, the
   mapping
-  \begin{align*}
-    \phi_w\colon V &\to \R,\\
+  \begin{align}
+    \Psi_w\colon V &\to \R,\\
     v&\mapsto \scal(v,w),
-  \end{align*}
-  is continuous. The argument continues as above. Similar for $\polar{U}$.
+  \end{align}
+  is continuous. The argument continues as above. Similar for $\dualpolar{U}$.
 \end{proof}
 
 \begin{Theorem}{orthogonal-complement}
   Let $W$ be a subspace of a Hilbert space $V$ and $\ortho{W}$ its
-  orthogonal complement. Then, $\ortho{W} = \ortho{\overline{W}}$. Further,
-  $V = W \oplus \ortho{W}$ if and only if $W$ is closed.
+  orthogonal complement. Then, $\ortho{W} =
+  \ortho{\overline{W}}$. Furthermore, there holds
+  \begin{gather}
+    V = W \oplus \ortho{W}
+    \qquad\Longleftrightarrow\qquad
+    \text{$W$ is closed.}
+  \end{gather}
 \end{Theorem}
 
 \begin{proof}
@@ -458,9 +550,9 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   \scal(u,\cdot)$ is a continuous linear functional on $V$. Therefore,
   if a sequence $w_n \subset W$ converges to $w\in \overline{W}$, we
   have
-  \begin{gather*}
+  \begin{gather}
     \scal(u,w) = \lim_{n\to\infty} \scal(u,w_n) = 0.
-  \end{gather*}
+  \end{gather}
   Hence, $u\in \ortho{\overline{W}}$ and $\ortho{W} = \ortho{\overline{W}}$.
 
   Now, the ``only if'' follows by the fact, that if $W$ is not
@@ -475,51 +567,51 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   \end{gather}
   which is equivalent to $V = W \oplus \ortho{W}$. Uniqueness follows,
   since
-  \begin{gather*}
+  \begin{gather}
     v = w_1+u_1 = w_2+u_2
-  \end{gather*}
+  \end{gather}
   implies that for any $y\in V$
-  \begin{gather*}
+  \begin{gather}
     0 = \scal(w_1-w_2+u_1-u_2,y) = \scal(w_1-w_2,y) + \scal(u_1-u_2,y).
-  \end{gather*}
+  \end{gather}
   Choosing $y=u_1-u_2$ and $w_1-w_2$ in turns, we see that one of the
   inner products vanishes for orthogonality and the other implies that
   the difference is zero.
 
   If $v\in W$, we choose $w=v$ and $u=0$. For $v\not\in W$, we prove
   existence by considering that due to the closedness of $W$ there holds
-  \begin{gather*}
+  \begin{gather}
     d=\inf_{w\in W} \norm{v-w} >0.
-  \end{gather*}
+  \end{gather}
   Let $w_n$ be a minimizing sequence. Using the parallelogram identity
-  \begin{gather*}
+  \begin{gather}
     \norm{a+b}^2+\norm{a-b}^2 = 2\norm{a}^2+2\norm{b}^2,
-  \end{gather*}
+  \end{gather}
   we prove that $\{w_n\}$ is a Cauchy sequence by
-  \begin{align*}
+  \begin{align}
     \norm{w_m-w_n}^2 &= \norm{(v-w_n)-(v-w_m)}^2\\
     &= 2\norm{v-w_n}^2+2\norm{v-w_m}^2-\norm{2v-w_m-w_n}^2\\
     &= 2\norm{v-w_n}^2+2\norm{v-w_m}^2-4\norm*{v-\frac{w_m+w_n}2}^2\\
     &\le 2\norm{v-w_n}^2+2\norm{v-w_m}^2-4d^2,
-  \end{align*}
+  \end{align}
   since $(w_m+w_n)/2\in W$ and $d$ is the infimum. Now we use the
   minimizing property to obtain
-  \begin{gather*}
+  \begin{gather}
     \lim_{m,n\to\infty}\norm{w_m-w_n}^2 = 2d^2-2d^2 -4d^2=0.
-  \end{gather*}
+  \end{gather}
   By completeness of $V$, $w=\lim w_n$ exists and by the closedness of
   $W$, we have $w\in W$. Let $u=v-w$. By continuity of the norm, we
   have $\norm{u}=d$. It remains to show that $u\in \ortho{W}$. To this
   end, we introduce the variation $w+\epsilon \tilde w$ with $\tilde
   w\in W$ to obtain
-  \begin{align*}
+  \begin{align}
     d^2 &\le \norm{v-w-\epsilon \tilde w}^2\\
     &= \norm{u}^2-2\epsilon\scal(u,\tilde w)+\epsilon^2 \norm{\tilde w},
-  \end{align*}
+  \end{align}
   implying for any $\epsilon>0$
-  \begin{gather*}
+  \begin{gather}
     0\le-2\epsilon\scal(u,\tilde w)+\epsilon^2 \norm{\tilde w},
-  \end{gather*}
+  \end{gather}
   which requires $\scal(u,\tilde w) = 0$.
 \end{proof}
 
@@ -529,46 +621,46 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   decomposition with $w\in W$ and $u\in \ortho{W}$. Then we call $w$ and
   $u$ the \define{orthogonal projection}s of $v$ into $W$ and $\ortho{W}$,
   respectively. We write
-  \begin{gather*}
-    \Pi_W = w, \qquad \Pi_{\ortho{W}} = u.
-  \end{gather*}
+  \begin{gather}
+    \Pi_W v = w, \qquad \Pi_{\ortho{W}} v = u.
+  \end{gather}
 \end{Definition}
 
-\begin{Lemma}{polar-orthogonal-hilbert}
-  Let $V$ be a Hilbert space and $W\subset V$ be a closed
-  subspace. Then, the polar space $\polar{W}\subset V^*$ and the orthogonal
-  space $\ortho{W}$ can be isometrically identified by \putindex{Riesz
-    representation}.
-\end{Lemma}
+% \begin{Lemma}{polar-orthogonal-hilbert}
+%   Let $V$ be a Hilbert space and $W\subset V$ be a closed
+%   subspace. Then, the polar space $\polar{W}\subset V^*$ and the orthogonal
+%   space $\ortho{W}$ can be isometrically identified by \putindex{Riesz
+%     representation}.
+% \end{Lemma}
 
-\begin{proof}
-  For every $f$ in the
-  dual of $\ortho{W}$, define $g\in V^*$ by
-  \begin{gather*}
-    \scal(g,v)_{V^*\times V} =
-    \scal(f,\Pi_{\ortho{V}}v)_{(\ortho{V})^*\times \ortho{V}}.
-  \end{gather*}
-  Clearly, $g(v)=0$ for $v\in W$, therefore $g\in \polar{W}$.
-\end{proof}
+% \begin{proof}
+%   For every $f$ in the
+%   dual of $\ortho{W}$, define $g\in V^*$ by
+%   \begin{gather}
+%     \scal(g,v)_{V^*\times V} =
+%     \scal(f,\Pi_{\ortho{V}}v)_{(\ortho{V})^*\times \ortho{V}}.
+%   \end{gather}
+%   Clearly, $g(v)=0$ for $v\in W$, therefore $g\in \polar{W}$.
+% \end{proof}
 
 % \begin{Corollary}
 
 % \end{Corollary}
 
 
-\begin{Theorem}{closed-range}
+\begin{Theorem*}{closed-range}{Closed Range Theorem}
   Let $V,W$ be Hilbert spaces and $A\colon V\to W$ a continuous linear
   operator. Then, the following statements are equivalent:
   \begin{gather}
     \label{eq:infsup:9}
     \begin{split}
       \range A &\text{ is closed in } W,\\
-      \range{A^T} &\text{ is closed in } V^*,\\
-      \range A &= \polar{\ker{A^T}},\\
-      \range{A^T} &= \polar{\ker A}.
+      \range{A^\transpose} &\text{ is closed in } V^*,\\
+      \range A &= \dualpolar{\ker{A^\transpose}},\\
+      \range{A^\transpose} &= \polar{\ker A}.
     \end{split}
   \end{gather}
-\end{Theorem}
+\end{Theorem*}
 
 \begin{remark}
   This is the famous \emph{\putindex{closed range theorem}} by Banach.
@@ -577,10 +669,10 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   in~\cite[p.~205--209]{Yosida80}.
 \end{remark}
 
-\begin{Theorem}{open-mapping}
+\begin{Theorem*}{open-mapping}{Open Mapping Theorem}
   Let $A\colon V\to W$ be continuous and surjective. Then, the image
   $A(U)\subset W$ of any open set $U\subset V$ is open.
-\end{Theorem}
+\end{Theorem*}
 
 \begin{remark}
   This is the \emph{\putindex{open mapping theorem}} by Banach. The
@@ -603,13 +695,14 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 \begin{proof}
   We first show that the inf-sup condition~\eqref{eq:infsup:10}
   implies $\range A$ closed. To this end, let $\{w_n\}$ be a Cauchy
-  sequence in $\range A$ converging to a point $w\in W$. Thus, there
+  sequence in $\range A$ converging to a point $w\in W$. By the assumption,
+  there
   is a sequence $\{v_n\}$ in $V$ such that $Av_n = w_n$ and
-  $\ellipa \norm{v_n} \le \norm{w_n}$. Hence,
-  \begin{gather*}
+  $\ellipa \norm{v_n} \le \norm{w_n}$. Hence, using
+  \begin{gather}
     \norm{v_m-v_n}_V \le \frac1\ellipa \norm{w_m-w_n}_W,
-  \end{gather*}
-  and $\{v_n\}$ is a Cauchy sequence in $V$. Therefore, $v_n\to v\in
+  \end{gather}
+  we realize that $\{v_n\}$ is a Cauchy sequence in $V$. Therefore, $v_n\to v\in
   V$ and due to continuity of $A$ we obtain $Av=w$ and thus $w\in
   \range A$.
 
@@ -621,18 +714,19 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   to construct $v$:
 
   Let $w\in\range A$. Then,
-  \begin{gather*}
-    \tilde w\frac\delta2 \frac{w}{\norm{w}} \in B_\delta(0) \subset A(B_1(0)).
-  \end{gather*}
+  \begin{gather}
+    \tilde w = \frac\delta2 \frac{w}{\norm{w}}
+    \in B_\delta(0) \subset A(B_1(0)).
+  \end{gather}
   Hence, there is $v\in V$ with $\norm{v}<1$ such that $Av=\tilde w$,
   which proves the lemma.
 \end{proof}
 
 \begin{Theorem}{infsup-well-equivalence}
-  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form such that
-  \begin{gather}
-    a(v,w) \le M \norm{v}_V \norm{w}_W,
-  \end{gather}
+  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form % such that
+%  \begin{gather}
+%    a(v,w) \le M \norm{v}_V \norm{w}_W,
+%  \end{gather}
   and $A\colon V\to W^*$ its associated operator.
   Then, the following statements are equivalent:
   \begin{enumerate}
@@ -643,10 +737,10 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
       \frac{a(v,w)}{\norm{v}_V\norm{w}_W}
       \ge \ellipa.
     \end{gather}
-  \item The operator $A^T\colon W\to \polar{\ker A}$ is an isomorphism and
+  \item The operator $A^\transpose\colon W\to \polar{\ker A}$ is an isomorphism and
     \begin{gather}
       \label{eq:infsup:12}
-      \norm{A^T w}_{V^*} \ge \ellipa \norm{w}_{W} \qquad\forall w\in W.
+      \norm{A^\transpose w}_{V^*} \ge \ellipa \norm{w}_{W} \qquad\forall w\in W.
     \end{gather}
   \item The operator $A\colon \ortho{\ker A}\to W^*$ is an isomorphism
     and
@@ -659,111 +753,126 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 
 \begin{proof}
   First, we show the equivalence of the first two statements. Let us
-  rephrase the inf-sup condition to
-  \begin{gather*}
-    \norm{A^T w}_{V^*}
-    = \sup_{v\in V}\frac{\scal(A^T w,v)}{\norm{v}_V}
+  use equivalently to the inf-sup condition~\eqref{eq:infsup:11}
+  \begin{gather}
+    \norm{A^\transpose w}_{V^*}
+    = \sup_{v\in V}\frac{\scal(A^\transpose w,v)}{\norm{v}_V}
     = \sup_{v\in V}\frac{a(v,w)}{\norm{v}_V}
     \ge \ellipa\norm{w} \qquad
     \forall w\in W.
-  \end{gather*}
+  \end{gather}
   Thus, equations~\eqref{eq:infsup:11} and~\eqref{eq:infsup:12} are
   equivalent and we have already proven that the second statement
-  implies the first. It remains to show the $A^T$ is an isomorphism
+  implies the first. It remains to show the $A^\transpose$ is an isomorphism
   from $W$ onto $\polar{\ker A}$. Equation~\eqref{eq:infsup:12} implies that
-  $A^T\colon W \to \range{A^T}$ is an isomorphism and its inverse is
+  $A^\transpose\colon W \to \range{A^\transpose}$ is an isomorphism and its inverse is
   bounded by $1/\ellipa$ (multiply both sides by $A^{-1}$). Using
-  \slideref{Lemma}{closed-infsup}, we obtain that $\range{A^T}$ is
+  \slideref{Lemma}{closed-infsup}, we obtain that $\range{A^\transpose}$ is
   closed in $V^*$ and the \putindex{closed range theorem} settles the
   issue.
 
   In order to prove equivalence of the second and third statement, we
-  use \slideref{Lemma}{polar-orthogonal-hilbert} to isometrically
+  use the result of \slideref{Problem}{polar-orthogonal} to isometrically
   identify $(\ortho{\ker A})^*$ with $\polar{\ker A}$. Thus, $A$ is an
-  isomorphism from $\ortho{\ker A}$ onto $W^*$ if and only if $A^T$ is an
+  isomorphism from $\ortho{\ker A}$ onto $W^*$ if and only if $A^\transpose$ is an
   isomorphism from $W$ onto $(\ortho{\ker A})^* = \polar{\ker A}$. and
-  \begin{gather*}
-    \norm{A}_{W^*\to \ortho{\ker A}} = \norm{A^T}_{\polar{\ker A}\to W}.
-  \end{gather*}
+  \begin{gather}
+    \norm{A}_{W^*\to \ortho{\ker A}} = \norm{A^\transpose}_{\polar{\ker A}\to W}.
+  \end{gather}
 \end{proof}
 
 \begin{Corollary}{infsup-well-posedness1}
-  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form such that
-  \begin{gather}
-    a(v,w) \le M \norm{v}_V \norm{w}_W.
-  \end{gather}
+  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form. %such that
+  %\begin{gather}
+  %  a(v,w) \le M \norm{v}_V \norm{w}_W.
+  %\end{gather}
   Let the inf-sup-condition
-  \begin{gather*}
+  \begin{gather}
     \inf_{w\in W}\sup_{v\in V}
     \frac{a(v,w)}{\norm{v}_V\norm{w}_W}
     \ge \ellipa > 0
-  \end{gather*}
+  \end{gather}
   hold.  Then, the problem finding $w\in W$ such that
-  \begin{gather*}
+  \begin{gather}
     a(v,w) = f(v) \qquad\forall v\in V,
-  \end{gather*}
+  \end{gather}
   has a unique solution for $f\in \polar{\ker A}$ and
   \begin{gather}
     \norm{w}_W \le \frac1\ellipa \norm{f}_{V^*}.
   \end{gather}
+  The opposite implication holds true.
 \end{Corollary}
 
 \begin{remark}
   \slideref{Corollary}{infsup-well-posedness1} exhibits an asymmetry
   between the left and right argument. In particular, we obtain a
-  unique solution only for the adjoint operator $A^T$, which is
+  unique solution only for the adjoint operator $A^\transpose$, which is
   exactly what we need, when we compute say a pressure from the
   divergence of a velocity field. In general, we consider the
   restriction of $f$ to the polar set of the kernel in the above
   well-posedness result detrimental and would prefer a result that
   holds for all $f\in V^*$. This on the other hand requires
-  $\ker A=\{0\}$, or $\overline{\range{A^T}} = W^*$. Then, on the
-  other hand, we see that $\range{A^T}$ is closed since $\range{A}$ is
+  $\ker A=\{0\}$, or $\overline{\range{A^\transpose}} = W^*$. Then, on the
+  other hand, we see that $\range{A^\transpose}$ is closed since $\range{A}$ is
   closed and the closed range theorem holds. Therefore, we obtain the
   following theorem for the case that we require a unique solution for
   all right hand sides.
 \end{remark}
 
 \begin{Theorem}{infsup-well-posedness2}
-  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form such that
-  \begin{gather}
-    a(v,w) \le M \norm{v}_V \norm{w}_W.
-  \end{gather}
+  Let $a(\cdot,\cdot)$ on $V\times W$ be a bounded bilinear form. % such that
+%  \begin{gather}
+%    a(v,w) \le M \norm{v}_V \norm{w}_W.
+%  \end{gather}
   Let for some $\ellipa>0$ the inf-sup-conditions
-  \begin{align*}
+  \begin{align}
     \inf_{w\in W}\sup_{v\in V}
     \frac{a(v,w)}{\norm{v}_V\norm{w}_W}
     &\ge \ellipa,\\
     \inf_{v\in V}\sup_{w\in W}
     \frac{a(v,w)}{\norm{v}_V\norm{w}_W}
     &\ge \ellipa
-  \end{align*}
+  \end{align}
   hold.  Then, the problem finding $v\in V$ such that
-  \begin{gather*}
+  \begin{gather}
     a(v,w) = f(w) \qquad\forall w\in W,
-  \end{gather*}
+  \end{gather}
   has a unique solution for $f\in W^*$ and
   \begin{gather}
     \norm{v}_V \le \frac1\ellipa \norm{f}_{W^*}.
   \end{gather}
 \end{Theorem}
 
+\begin{Problem}{closed-range}
+  Assume for $A\colon V\to W^*$ that $\range A$ is closed. Show
+  \begin{enumerate}
+  \item $A:V\to W^*$ is surjective if and only if $A^\transpose$ is
+    injective.
+  \item Show that with all other assumptions unchanged, the second
+    inf-sup condition in \slideref{Theorem}{infsup-well-posedness2} is
+    not only sufficient, but equivalent to $A$ injective.
+  \item \slideref{Theorem}{infsup-well-posedness2} seems excessive if
+    we only want to establish one of the statements
+    \begin{xalignat}3
+      \forall f&\in W^*& \exists u&\in V& a(u,w) &= f(w)\\
+      \forall g&\in V^*& \exists u&\in W& a(v,u) &= g(v)
+    \end{xalignat}
+    Is this true or is there equivalence of both inf-sup conditions
+    with only one of these statements?
+  \end{enumerate}
+\end{Problem}
+
 \begin{remark}
   If we compare \slideref{Theorem}{infsup-well-posedness2} with
   \slideref{Corollary}{infsup-well-posedness1}, we see that the only
   difference lies in the fact that the second inf-sup condition
-  ensures surjectivity of $A$ by injectivity of $A^T$. In some cases
-  it may be difficult to prove both inf-sup conditions. Then, it is
+  ensures surjectivity of $A$ by injectivity of $A^\transpose$. In some cases
+  it may be impossible difficult to prove both inf-sup conditions. Then, it is
   sufficient to prove one inf-sup condition, say the first, and then
-  only
-  \begin{gather*}
-     \inf_{v\in V}\sup_{w\in W}
-    \frac{a(v,w)}{\norm{v}_V\norm{w}_W} > 0,
-  \end{gather*}
-  thus, injectivity of $A^T$. Although we verify less than the
+  only injectivity of $A^\transpose$. Although we verify less than the
   assumptions of \slideref{Theorem}{infsup-well-posedness2}, the
   closed range theorem saves us from the additional work. We further
-  note that this notion is symmetric between $A$ and $A^T$, that is,
+  note that this notion is symmetric between $A$ and $A^\transpose$, that is,
   it is sufficient to prove inf-sup for either operator and
   injectivity for the other.
 \end{remark}
@@ -786,41 +895,59 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   theorems.
 \end{intro}
 
+\begin{Definition}{mixed-weak}
+  The abstract saddle-point problem in weak form reads:
+  find $(u,p)\in V\times Q$ such that
+  \begin{gather}
+    \label{eq:saddle-point-weak}
+    \arraycolsep.1em
+    \begin{matrix}
+      a(u,v) &+& b(v,p) &=& f(v) &\quad&\forall v\in V, \\
+      b(u,q) && &=& g(q) &&\forall q\in Q.
+    \end{matrix}
+  \end{gather}
+  Here, $V$ and $Q$ are Hilbert spaces chosen, such that $a(.,.)$ and
+  $b(.,.)$ are bounded bilinear forms on $V\times V$ and $V\times Q$,
+  respectively. The bounds $\bounda$ and $\boundb$ are such that
+  \begin{gather}
+    \label{eq:saddle-point-bounds}
+    \sup_{u,v\in V}\frac{a(u,v)}{\norm{u}_V\norm{v}_V} = \bounda,
+    \qquad
+    \sup_{\substack{v\in V\\q\in Q}}\frac{b(v,q)}{\norm{v}_V\norm{q}_Q} = \boundb.
+  \end{gather}
+\end{Definition}
+
+
 \begin{Theorem}{infsup-mixed1}
-  Let $V$ and $Q$ be Hilbert spaces and let the mixed bilinear form
-  \begin{gather*}
-        \mathcal A\mixedform(u,p,v,q)
-      = a(u,v) + b(v,p) + b(u,q)
-  \end{gather*}
-  be defined and bounded for any $u,v\in V$ and $p,q\in Q$.
-  Then, the problem
-  \begin{gather*}
-    \mathcal A\mixedform(u,p,v,q) = \scal(f,v)+\scal(g,q)
-    \quad\forall v\in V, q\in Q,
-  \end{gather*}
+  Let $V$ and $Q$ be Hilbert spaces. Let $a(\cdot,\cdot)$ and
+  $b(\cdot,\cdot)$ be bounded bilinear forms. Then, the weak
+  formulation find $u\in V$ and $p\in Q$ such that
+  \begin{gather}
+    a(u,v) + b(v,p) + b(u,q)
+    = f(v)+g(q)
+    \qquad\forall v\in V, q\in Q,
+  \end{gather}
   has a unique solution for any $f\in V^*$ and any $g\in Q^*$ if and
   only if there exists $\ellipa>0$ such that
-  \begin{gather*}
-    \forall
-    \begin{bmatrix}
-      u\in V\\p\in Q
-    \end{bmatrix}
-    \;
-    \exists
-    \begin{bmatrix}
-      v\in V\\q\in Q
-    \end{bmatrix}
-    \colon
-    \quad
-    \mathcal A\mixedform(u,p,v,q) \ge \ellipa
-    \norm{(u,p)}_{V\times Q}\norm{(v,q)}_{V\times Q},
-  \end{gather*}
-  and vice versa.
+  \begin{gather}
+    \label{eq:infsup:system-infsup}
+    \inf_{\substack{u\in V\\p\in Q}}
+    \sup_{\substack{v\in V\\q\in Q}}
+    \quad \frac{a(u,v) + b(v,p) + b(u,q)}{\norm{(u,p)}_{V\times
+        Q}\norm{(v,q)}_{V\times Q}} \ge \ellipa.
+  \end{gather}
 \end{Theorem}
 
 \begin{proof}
   Straight application of \slideref{Theorem}{infsup-well-posedness2}.
 \end{proof}
+
+Often, like in the case of Stokes' equations, the properties of the
+form $a(\cdot,\cdot)$ or the form $b(\cdot,\cdot)$ are already known
+and you want to combine them to a mixed formulation. Thus, the theorem
+above is unwieldy, since it requires to do the analysis from
+scratch. We thus provide an equivalence theorem, which allows us to
+separate the properties of the bilinear forms.
 
 \begin{Theorem}{infsup-mixed2}
   Let $V$ and $Q$ be Hilbert spaces and let
@@ -829,44 +956,104 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
       \ker B &= \bigl\{v\in V \big| b(v,q) = 0 \;\forall q\in Q\bigr\}.
     \end{split}
   \end{gather}
-  Then, the problem finding $(u,p)\in V\times Q$ such that
+  Then, the mixed problem finding $(u,p)\in V\times Q$ such that
   \begin{gather}
     a(u,v) + b(v,p) + b(u,q) = f(v) \quad\forall v\in V, q\in Q,
   \end{gather}
-  is well-posed if and only if the problem finding $u\in \ker B$ such that
+  is well-posed if and only if the reduced problem
+  finding $u\in \ker B$ such that
     \begin{gather}
       a(u,v) = f(v) \quad\forall v\in \ker B
     \end{gather}
     is well-posed for any $f\in V^*$ and there is a positive constant
-    $\beta$ such that
+    $\infsupc$ such that
     \begin{gather}
-      \inf_{q\in Q}\sup_{v\in V} \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} \ge \beta.
+      \inf_{q\in Q}\sup_{v\in V} \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} \ge \infsupc.
     \end{gather}
 \end{Theorem}
 
 \begin{proof}
-  By requiring well-posedness of the reduced problem, $u\in V$ is
-  well-determined and bounded by the data $f\in V^*$ without knowledge
-  of the Lagrange multiplier. Hence, with $u\in V$ given and
-  $b(u,q) = 0$, the problem of determining the Lagrange multiplier $p$
-  reduces to
+  In order to show the ``if'', we note that by well-posedness of the
+  reduced problem, $u\in V$ is well-determined and bounded by the data
+  $f\in V^*$ without knowledge of the Lagrange
+  multiplier. Furthermore, there holds $b(u,q) = 0$.
+  
+  Entering this into the mixed formulation, the Lagrange multiplier
+  $p$ is determined by
   \begin{gather}
     b(v,p) = f(v) - a(u,v), \qquad\forall v\in V.
   \end{gather}
   Applying \slideref{Corollary}{infsup-well-posedness1} to the
   bilinear form $b(.,.)$, we deduce that this equation has a unique
-  solution $p\in Q$ if and only if $f(v)-a(u,v) \in \ker B^0$, which
-  is the reduced problem.
+  solution $p\in Q$ if and only if $f-a(u,\cdot) \in \polar{\ker B}$, which
+  is true due to the statement of the reduced problem.
+
+  For the only if, we note that choosing $v=0$ in the mixed problem,
+  we see that there holds
+  \begin{gather}
+    b(u,q) = 0 \qquad \forall q\in Q,
+  \end{gather}
+  and thus $u\in \ker B$. For such $u$ holds in the mixed formulation
+  \begin{gather}
+    f(v) = a(u,v) + b(v,p) = a(u,v) \qquad \forall v \in \ker B.
+  \end{gather}
+  In order to deduce the inf-sup condition, we note that
+  well-posedness of the mixed problem implies the inf-sup
+  condition~\eqref{eq:infsup:system-infsup}. Since the infimum will
+  not decrease by taking a subset, we confine the set to $u=0$ and
+  obtain
+  \begin{align}
+    &\inf_{p\in Q}\sup_{v\in V} \frac{b(v,p)}{\norm{v}_V\norm{q}_Q}
+    \\ = &
+           \inf_{p\in Q}
+           \sup_{\substack{v\in V\\q\in Q}}
+    \frac{a(0,v) + b(v,p) + b(0,q)}{\norm{(0,p)}_{V\times Q} \norm{(v,q)}_{V\times Q}}
+    \\ \ge&
+            \inf_{\substack{u\in U\\p\in Q}}
+    \sup_{\substack{v\in V\\q\in Q}}
+    \frac{a(u,v) + b(v,p) + b(u,q)}{\norm{(u,p)}_{V\times Q} \norm{(v,q)}_{V\times Q}} \\\ge& \ellipa > 0
+  \end{align}
 \end{proof}
+
+\begin{Problem}{inhomogeneous-continuity}
+  Show that \slideref{Theorem}{infsup-mixed2} can be extended to the
+  case with right hand side $f(v)+g(q)$ with $g\in Q^*$.
+
+\begin{solution}
+  We want to solve the problem
+  \begin{align}
+    a(u,v) + b(v,p) + b(u,q) = f(v)+g(q) \quad\forall v\in V, q\in Q,
+  \end{align}
+  where $b(v,p)$ fulfills a inf-sup condition.
+
+  \begin{enumerate}
+  \item Due to \slideref{Theorem}{infsup-well-equivalence}, the
+    operator $B: V\to Q^*$ is surjective and thus, there exists
+    $u_g\in V$ such that
+    \begin{gather}
+      b(u_g,q) = q(q) \quad\forall q\in Q.
+    \end{gather}
+  \item Now consider the function $u_0 = u-u_g$. For $u$ to solve the
+    original problem $u_0$ has to solve
+    \begin{align}
+      a(u_0+u_g,v) + b(v,p) + b(u_0+u_g,q) = f(v)+g(q) \quad\forall v\in V, q\in Q\\
+      \Leftrightarrow a(u_0,v) + b(v,p) + b(u_0,q) = f(v)-a(u_g,v) \quad\forall v\in V, q\in Q
+    \end{align}
+  \item Due to $a(u_g,v) \leq \bounda \norm{u_g}_V\norm{v}_V$,
+    the right-hand side $f(\cdot)-a(u_g,\cdot)$ is in $V^*$
+    and we are in the setting of
+    \slideref{Theorem}{infsup-mixed2}.
+  \end{enumerate}
+\end{solution}
+\end{Problem}
 
 \begin{remark}
   Since $V$ is a Hilbert space, the decomposition
   $V = \ker B \oplus \ker B^\perp$ is uniquely determined and there is
-  a corresponding decomposition $V^* = \ker B^0+(\ker B^\perp)^0$,
+  a corresponding decomposition $V^* = \polar{(\ker B^\perp)} \oplus \polar{\ker B} = I_\flat\ker B \oplus I_\flat \ortho{\ker B} $,
   such that $f = f^0+f^\perp$ above. The way we solve the reduced
   problem first and then compute the Lagrange multiplier implies that
-  the solution $u$ only depends on $f^\perp$, while the Lagrange
-  multiplier $p$ only depends on $f^0$.
+  the solution $u$ only depends on $f^\perp$ only.
 \end{remark}
 
 \begin{remark}
@@ -879,74 +1066,52 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
   implies the well-posedness on $\ker B$.
 \end{remark}
 
-\begin{Problem}{inhomogeneous-continuity}
-  Show that \slideref{Theorem}{infsup-mixed2} can be extended to the
-  case with right hand side $f(v)+g(q)$ with $g\in Q^*$.
-
-\begin{solution}
-  We want to solve the problem
-  \begin{align*}
-    a(u,v) + b(v,p) + b(u,q) = f(v)+g(q) \quad\forall v\in V, q\in Q,
-  \end{align*}
-  where $b(v,p)$ fulfills a inf-sup condition.
-
-  \begin{enumerate}
-  \item Due to \slideref{Theorem}{infsup-well-equivalence}, the
-    operator $B: V\to Q^*$ is surjective and thus, there exists
-    $u_g\in V$ such that
-    \begin{gather*}
-      b(u_g,q) = q(q) \quad\forall q\in Q.
-    \end{gather*}
-  \item Now consider the function $u_0 = u-u_g$. For $u$ to solve the
-    original problem $u_0$ has to solve
-    \begin{align*}
-      a(u_0+u_g,v) + b(v,p) + b(u_0+u_g,q) = f(v)+g(q) \quad\forall v\in V, q\in Q\\
-      \Leftrightarrow a(u_0,v) + b(v,p) + b(u_0,q) = f(v)-a(u_g,v) \quad\forall v\in V, q\in Q
-    \end{align*}
-  \item Due to $a(u_g,v) \leq \norm{a}\norm{u_g}_V\norm{v}_V$,
-    the right-hand side $f(\cdot)-a(u_g,\cdot)$ is in $V^*$
-    and we are in the setting of
-    \slideref{Theorem}{infsup-mixed2}.
-  \end{enumerate}
-\end{solution}
-\end{Problem}
-
-\begin{intro}
-  We summarize the result of this section in an assumption for
-  well-posedness which will be the basis for further results in this
-  course. We know from the discussion above that this assumption is
-  only sufficient and weaker conditions may be imposed on
-  $a(.,.)$. But indeed, it helps us through a lot of problems and is a
-  good compromise between generality and ease of use.
-\end{intro}
-
-\begin{Assumption}{mixed-elliptic}
-  Let $V$ and $Q$ be Hilbert spaces and let $a(.,.)$ and $b(.,.)$ be
-  bounded bilinear forms on $V\times V$ and $V\times Q$,
-  respectively. We define their norms as the smallest constants such
-  that for all arguments there holds
-  \begin{gather}
-    a(u,v) \le \norm a \norm{u}_V \norm{v}_V,
-    \qquad
-    b(v,q) \le \norm b \norm{v}_V \norm{q}_Q.
-  \end{gather}
-  With these forms, we associate bounded operators $A$, $B$, and $B^T$
-  according to \slideref{Definition}{saddle-point-operators}. With
-  $b(.,.)$ we associate the spaces
+\begin{Notation}{v0-kernel}
+  Since the kernels of the bilinear form $b(\cdot,\cdot)$ play an
+  important role, we abbreviate
   \begin{gather}
     \begin{split}
-      \ker B &= \bigl\{v\in V \big| b(v,q) = 0 \;\forall q\in Q\bigr\},\\
-      \ker B^T &= \bigl\{q\in Q \big| b(v,q) = 0 \;\forall v\in V\bigr\}.
+      V^0 = \ker B &= \bigl\{v\in V \;\big|\; b(v,q) = 0 \quad\forall q\in Q\bigr\},\\
+      Q^0 = \ker{B^\transpose} &= \bigl\{q\in Q \;\big|\; b(v,q) = 0 \quad\forall v\in V\bigr\}.
     \end{split}
   \end{gather}
-  Furthermore, we assume that $a(.,.)$ is positive semi-definite on
-  $V$ and elliptic on $\ker B$,
+  We als define for $g\in Q^*$ and for $f\in V^*$ the affine spaces
   \begin{gather}
-    a(u,u) \ge 0 \quad\forall u\in V,
-    \qquad
-    a(u,u) \ge \ellipa \norm{u}_V^2 \quad\forall u\in \ker B.
+    \begin{split}
+      V^g &= \bigl\{v\in V \;\big|\; b(v,q) = g(q) \quad\forall q\in Q\bigr\},\\
+      Q^f &= \bigl\{q\in Q \;\big|\; b(v,q) = f(v) \quad\forall v\in V\bigr\}.
+    \end{split}
   \end{gather}
-\end{Assumption}
+\end{Notation}
+
+\begin{intro}
+  We summarize the results of this section in a theorem for
+  well-posedness of the mixed formulation in
+  \slideref{Definition}{mixed-weak} with simplified assumptions.  It
+  will be the basis for further results in this course. We know from
+  the discussion above that this assumption is only sufficient and
+  weaker conditions may be imposed on $a(.,.)$. But indeed, it helps
+  us through a lot of problems and is a good compromise between
+  generality and ease of use.
+\end{intro}
+
+\begin{Theorem}{mixed-elliptic}
+  Let the bilinear form $a(.,.)$ be positive semi-definite on $V$ and
+  elliptic on $V^0 = \ker B$. Let the bilinear form $b(\cdot,\cdot)$
+  be inf-sup stable. Thus, there are constants $\ellipa>0$ and
+  $\infsupc>0$
+  \begin{gather}
+    \inf_{v\in V^0} \frac{a(v,v)}{\norm{u}_V^2} = \ellipa,  \qquad
+    \inf_{q\in Q}\sup_{v\in V} \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} = \infsupc.
+  \end{gather}
+  Then, the abstract mixed problem in \slideref{Definition}{mixed-weak}
+  has a unique solution.
+\end{Theorem}
+
+\begin{Problem}{mixed-elliptic}
+  Derive bounds for the solutions $u\in V$ and $p\in Q$ using the
+  assumptions of the previous theorem.
+\end{Problem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -956,294 +1121,6 @@ a(u,\tilde{w})=\ellipa a(u,w) = \ellipa \norm{u}_V^2
 
 \input{../mixed/galerkin}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Bringing back $c(p,q)$}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{intro}
-  The key to the mixed analysis which is also underlying our
-  quasi-best\-ap\-proxi\-mation result was a splitting of the solution
-  process into the reduced problem for $u$ and then applying the
-  inf-sup condition for $b(.,.)$ in order to estimate $p$. This way,
-  we will be able to obtain estimates for the Stokes problem, but we
-  have tacitly abandoned weakly compressible elasticity. Indeed, the
-  mixed form of the Lamé-Navier equations is not a constrained
-  minimization problem. In this section, we will fill the gap and
-  derive estimates for the solution of this problem which are robust
-  in $\lambda$.
-
-  In the Lamé-Navier equations, we had
-  \begin{gather*}
-    c(p,q) = -\tfrac1\lambda \scal(q,p)_{L^2(\domain)},
-  \end{gather*}
-  which suggests assuming symmetric and $Q$-elliptic. But, we want
-  estimates independent of $\lambda$! Therefore, we should only
-  require semi-definite, which on the other hand turns out a bit too
-  weak.
-\end{intro}
-
-\begin{Assumption}{mixed-elliptic-stabilized}
-  In addition to \slideref{Assumption}{mixed-elliptic}, let $c(.,.)$
-  be positive semi-definite and elliptic on $\ker{B^T}$,
-  \begin{gather}
-    c(q,q) \ge u\quad\forall q\in Q,
-    \qquad
-    c(q,q) \ge \ellipc \norm{q}_Q^2 \quad\forall q\in \ker{B^T}.
-  \end{gather}
-\end{Assumption}
-
-\begin{remark}
-  Again, this assumption is not necessary for the analysis, but it
-  yields a convenient and useful theorem which goes far beyond weakly
-  compressible elasticity and covers stabilized methods for spaces
-  where the inf-sup condition for $b(.,.)$ does not hold for the whole
-  space $Q$.
-\end{remark}
-
-\begin{Theorem}{mixed-stabilized-well-posed}
-  Let \slideref{Assumption}{mixed-elliptic-stabilized} hold and
-  let $a(.,.)$ and $c(.,)$ be symmetric. In addition, let there be
-  $\beta>0$ such that
-  \begin{gather}
-    \begin{split}
-      \inf_{q\in \ortho{\ker{B^T}}}  \sup_{v\in V}
-      \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} &\ge \beta\\
-      \inf_{v\in \ortho{\ker{B}}}  \sup_{q\in Q}
-      \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} &\ge \beta
-    \end{split}
-  \end{gather}
-  Then, the problem finding $(u,p)\in V\times Q$ such that
-  \begin{multline}
-    a(u,v) + b(v,p) + b(u,q) - c(p,q) = f(v)+g(q)
-    \\
-    \forall v\in V, q\in Q
-  \end{multline}
-  has a unique solution for all $f\in V^*$ and $g\in Q^*$ and there is
-  a constant $C$ such that
-  \begin{gather}
-    \norm{u}_V+\norm{p}_Q
-    \le C \bigl(\norm{f}_{V^*} + \norm{g}_{Q^*}\bigr).
-  \end{gather}
-\end{Theorem}
-
-\begin{proof}
-  First, note that the ellipticity assumptions as well as the inf-sup
-  conditions are symmetric in $V$ and $Q$. Indeed, replacing the test
-  functions and the form $b(.,.)$ by their negatives, we can transform
-  the problem into one where $V$ and $Q$ have exchanged their
-  roles. Thus, it is sufficient to show well-posedness for $f=0$. The
-  same result then holds for $g=0$ and it holds for both nonzero by
-  linearity.
-  
-  We note that by the inf-sup conditions both $\range B$ and
-  $\range{B^T}$ are closed. Thus, we can decompose $u=u^0+u^\perp$
-  with $u^0\in\ker B$ and $u^\perp$ in its orthogonal
-  complement. Assuming $f=0$ and testing with $q=0$ we obtain the
-  equation
-  \begin{gather}
-    \label{eq:infsup:14}
-    a(u,v) = -b(v,p) = 0.
-  \end{gather}
-  In particular, testing with $v=u^0$ yields
-  \begin{gather*}
-    a(u,u^0) = -b(u^0,p) = 0.
-  \end{gather*}
-  Hence,
-  \begin{gather*}
-    \ellipa \norm{u^0}^2_V \le a(u^0,u^0)
-    = -a(u^\perp,u^0)
-    \le \norm a \norm{u^\perp}\norm{u^0},
-  \end{gather*}
-  which implies
-  \begin{gather}
-    \label{eq:infsup:15}
-    \norm{u^0}_V \le \frac{\norm a}{\ellipa} \norm{u^\perp}_V.
-  \end{gather}
-  Testing with $v=u$ and $q=-p$ yields
-  \begin{gather*}
-    a(u,u)+c(p,p) \le g(p) = g^0(p^0) + g^\perp(p^\perp),
-  \end{gather*}
-  where $p^0\in \ker{B^T}$, $g^\perp\in \polar{\ker{B^T}}$ and the
-  other two are defined by orthogonality in $Q$ and $Q^*$,
-  respectively. Let first $g^0=0$. Then, by~\eqref{eq:infsup:14} and
-  the inf-sup condition for $p$, there is $v\in V$ with $\norm{v}_V = 1$
-  such that
-  \begin{gather*}
-    \beta \norm{p^\perp} \le
-    \abs{b(v,p^\perp)} = \abs{b(v,p)} = \abs{a(u,v)}
-    \le \sqrt{a(u,u)}\sqrt{a(v,v)},
-  \end{gather*}
-  by the Bunyakovsky-Cauchy-Schwarz inequality for symmetric bilinear
-  forms.  Therefore, squaring and using the definition of the operator
-  norm of $g^\perp$ yields
-  \begin{gather*}
-    \norm{p^\perp}_Q \le \frac{\norm a}{\beta^2}\norm{g^\perp}_{Q^*}.
-  \end{gather*}
-  Furthermore, we have
-  \begin{gather*}
-    c(p,p^0) = b(u,p^0) - g^\perp(p^0) = 0.
-  \end{gather*}
-  Hence,
-  \begin{gather*}
-    \ellipc \norm{p^0}_Q^2 \le c(p^0,p^0)
-    = c(p^\perp,p^0) \le \norm c \norm{p^0}_Q \norm{p^\perp}_Q,
-  \end{gather*}
-  concluding
-  \begin{gather*}
-    \norm{p^0}_Q
-    \le \frac{\norm a \norm c}{\ellipc\beta^2}
-    \norm{g^\perp}_{Q^*}.
-  \end{gather*}
-
-  We continue our proof for $g^\perp=0$ and $g^0 \neq 0$. Testing with
-  $q=p^0$, we obtain
-  \begin{align*}
-    c(p^0,p^0)
-    &= c(p,p^0) - c(p^\perp,p^0) \\
-    &= b(u,p^0) - g^0(p^0) - c(p^\perp,p^0) \\
-    &\le \norm{g^0}_{Q^*} \norm{p^0}_Q
-      + \norm c \norm{p^\perp}_Q \norm{p^0}_Q,
-  \end{align*}
-  yielding
-  \begin{gather*}
-    \norm{p^0}_Q \le \frac1{\ellipc}
-    \left(\norm{g^0}_{Q^*} + \norm c \norm{p^\perp}_Q\right).
-  \end{gather*}
-  $p^\perp$ is estimated as before by
-  \begin{align*}
-    \norm{p^\perp}_Q^2
-    &\le \frac{\norm a}{\beta^2}\norm{g^0}_{Q^*} \norm{p^0}_Q \\
-    &\le \frac{\norm a}{\ellipc\beta^2} \norm{g^0}_{Q^*}^2
-      + \frac{\norm a\norm c}{\ellipc\beta^2}
-      \norm{g^0}_{Q^*}\norm{p^\perp}_Q\\
-    &\le \frac{\norm a}{\ellipc\beta^2} \norm{g^0}_{Q^*}^2
-      + \frac12 \norm{p^\perp}_Q^2
-      + \frac{\norm a^2 \norm c^2}{2{\ellipc}^2\beta^4} \norm{g^0}_{Q^*}^2.
-  \end{align*}
-  We conclude that $p^\perp$ and $p^0$ are bounded by $g^0$. Summing
-  up, we obtain for $f=0$ and $g\in Q^*$ the estimate
-  \begin{gather*}
-    \norm{p}_Q \le c \norm{g}_{Q^*}.
-  \end{gather*}
-
-  We estimate $u^0$ by $u^\perp$ using~\eqref{eq:infsup:15} and
-  $u^\perp$ by the inf-sup condition, choosing $q\in Q$ with
-  $\norm{q}_Q = 1$ such that
-  \begin{gather*}
-    \beta\norm{u^\perp} = b(u,q) = c(p,q) + g(q)
-    \le \norm{c}\norm{p}_Q +  \norm{g}_{Q^*}.
-  \end{gather*}
-  Thus, we have estimated all components of the solution by the norm
-  of $g$, assuming $f=0$. Now we conclude the proof by reverting the
-  roles of $u$ and $p$, respectively $f$ and $g$.
-\end{proof}
-
-\begin{intro}
-  The extension of \slideref{Theorem}{galerkin-mixed-p} to the
-  saddle-point problem of \slideref{Definition}{saddle-point-abstract}
-  with bilinear form $c(.,.)$ is even more cumbersome than this
-  theorem. Nevertheless, the use of residual operators as a technique
-  to structure the proof of convergence is instructive and may come
-  handy at some point.
-\end{intro}
-
-\begin{Definition}{mixed-residual}
-  For the saddle-point problem
-  \begin{gather*}
-    a(u,v) + b(v,p) + b(u,q) - c(p,q),
-  \end{gather*}
-  and functions $w_h\in V_h$ and $r_h\in Q_h$ we introduce the the
-  residual operators $R_f \in V_h^*$ and $R_g\in Q_h^*$ as
-  \begin{gather*}
-    \begin{split}
-      R_f(v_h) &= a(u-w_h, v_h) + b(v_h, p-r_h) \\
-      R_g(q_h) &= b(u-w_h, q_h) - c(p-r_h, q_h).
-    \end{split}
-  \end{gather*}
-\end{Definition}
-
-\begin{Corollary}{mixed-residual-bounded}
-  Under \slideref{Assumption}{mixed-elliptic-stabilized}, we have
-  \begin{gather}
-    \begin{split}
-      \abs{R_f(v_h)}
-      &\le \bigl(\norm a \norm{u-w_h}_V + \norm b \norm{p-r_h}\bigr)
-      \norm{v_h}_V
-      \\
-      \abs{R_g(q_h)}
-      &\le \bigl(\norm b \norm{u-w_h}_V + \norm c \norm{p-r_h}\bigr)
-      \norm{q_h}_Q.
-    \end{split}
-  \end{gather}
-\end{Corollary}
-
-\begin{Lemma}{stabilized-mixed-approximation}
-  Let the assumptions of
-  \slideref{Theorem}{mixed-stabilized-well-posed} hold. Then, there
-  are constants $c_1$ to $c_4$ independent of the solutions $u$, $p$,
-  $u_h$, and $p_h$ and the discretization parameter $h$, such that for
-  any $v_h\in V_h$ and $q_h\in Q_h$
-  \begin{gather}
-    \label{eq:infsup:16}
-    \begin{split}
-      \norm{u_h-v_h} &\le c_1 \norm{R_f}_{V_h^*} + c_2
-      \norm{R_g}_{Q_h^*}
-      \\
-      \norm{p_h-q_h} &\le c_3 \norm{R_f}_{V_h^*} + c_4
-      \norm{R_g}_{Q_h^*}.
-    \end{split}
-  \end{gather}
-\end{Lemma}
-
-\begin{proof}
-  The proof is lengthy and follows the lines of the proof of
-  well-posedness for
-  \slideref{Theorem}{mixed-stabilized-well-posed}. It is obtained by
-  considering the components $u_h^0-v_h^0$ and $u_h^\perp-v_h^\perp$
-  as well as $p_h^0-q_h^0$ and $p_h^\perp-q_h^\perp$ separately.
-\end{proof}
-
-\begin{intro}
-  In spite of the bad treatment the proof of the previous lemma
-  received in these notes, it contains the main parts of the
-  convergence proof, and whenever a saddle-point problem including
-  $c(.,.)$ is solved, it has to be reproduced. It is just the fact
-  that the proof is overwhelmingly technical that led to the decision
-  to leave this experience to the first time the reader actually needs
-  this result.
-\end{intro}
-
-\begin{Corollary}{stabilized-mixed-convergence}
-    Let the assumptions of
-  \slideref{Theorem}{mixed-stabilized-well-posed} hold. Then, there
-  are constants $c_1$ to $c_4$ independent of the solutions $u$, $p$,
-  $u_h$, and $p_h$ and the discretization parameter $h$, such that
-  \begin{gather}
-    \label{eq:infsup:17}
-    \begin{split}
-      \norm{u-u_h}
-      &\le c_1 \inf_{v_h\in V_h}\norm{u-v_h}_V
-      + c_2 \inf_{q_h\in Q_h} \norm{p-q_h}_Q
-      \\
-      \norm{p-p_h}
-      &\le c_3 \inf_{v_h\in V_h}\norm{u-v_h}_V
-      + c_4 \inf_{q_h\in Q_h} \norm{p-q_h}_Q.
-    \end{split}
-  \end{gather}
-\end{Corollary}
-
-\begin{proof}
-  The proof begins with the standard approach with triangle inequality
-  \begin{align*}
-    \norm{u-u_h} &\le \norm{u-v_h} + \norm{v_h-u_h} \\
-    \norm{p-p_h} &\le \norm{p-q_h} + \norm{q_h-p_h}.
-  \end{align*}
-  Then, we employ \slideref{Lemma}{stabilized-mixed-approximation} on
-  the terms on the right and use the estimate of
-  \slideref{Corollary}{mixed-residual-bounded}.
-\end{proof}
 
 %%% Local Variables: 
 %%% mode: latex

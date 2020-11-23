@@ -1,0 +1,93 @@
+\begin{intro}
+  If we discretize the mixed formulation of almost incompressible
+  elasticity with any of the stable Stokes pairs of the preceding
+  sections, we can apply
+  \slideref{Corollary}{stabilized-mixed-convergence} to obtain optimal
+  error estimates. Nevertheless, our problem with almost
+  incompressible elasticity was not the approximation of the pressure
+  (which was introduced artificially anyway), but locking. So, how
+  does the choice of an inf-sup stable pair avoid locking?
+  
+  Locking, in the terminology developed in the previous chapter, can
+  be described as the fact that the kernel of the discrete divergence
+  operator is too small, in the example presented even
+  \begin{gather}
+    \ker B_h = \{0\}.
+  \end{gather}
+  Note though, that there might be more subtle locking effects, where
+  the approximation is reduced but not destroyed.
+
+  In view of \slideref{Theorem}{galerkin-mixed-u-kerbh}, locking means
+  that $\vV_h^g$ is too small or even the zero space, and therefore the
+  quasi best-approximation result of this theorem is useless, since
+  \begin{gather}
+    \inf_{w_h\in \vV_h^g} \norm{\vu-w_h}_{1} \not\to 0
+    \quad\text{as } h \to 0.
+  \end{gather}
+  
+  The additional assumption of the inf-sup condition
+  in\slideref{Theorem}{galerkin-mixed-p} on the other hand guarantees
+  that an approximation of the kernel is possible, and thus, locking
+  becomes impossible.
+\end{intro}
+
+\begin{Lemma}{reduced integration}
+  Let $\vV_h\times Q_h$ be a stable pair for the Stokes problem
+  admitting a Korn inequality. Let furthermore $\Pi_Q$ be the
+  $L^2$-projection onto $Q_h$. Then, the solution $\vu_h\in \vV_h$ to the
+  weak formulation
+  \begin{gather}
+    \label{eq:stokes:33}
+    2\mu \form(\strain{\vu_h},\strain \vv) + \lambda (\Pi_Q \div
+    \vu_h,\Pi_q\div \vv) = (f,v)
+    \quad\forall \vv\in \vV_h,
+  \end{gather}
+  admits the quasi-optimality estimate
+  \begin{gather}
+    \norm{\vu-\vu_h}_1 \le c \sup_{\vv_h\in \vV_h}\norm{\vu-\vv_h}_1,
+  \end{gather}
+  with a constant $c$ independent of the quotient $\lambda/\mu$.
+\end{Lemma}
+
+\begin{proof}
+  We introduce the auxiliary variable $p_h\in Q_h$ by the condition
+  \begin{gather}
+    \int_\domain \div \vu_h q_h \dx = \int_\domain p_h q_h\dx
+    \quad\forall q_h\in Q_h.
+  \end{gather}
+  By definition of the $L^2$-projection, we have
+  \begin{gather}
+    \form(\div \vu_h, q_h) = \form(\Pi_Q\div \vu_h,q_h) = \form(p_h,q_h).
+  \end{gather}
+  Since $\Pi_Q\div \vu_h$ and $p_h$ are in the same space, this implies
+  that $p_h = \Pi_Q\div \vu_h$ pointwise. In addition, we observe that
+  \begin{gather}
+    \form (p_h, \Pi_Q\div \vv) = \form (p_h, \div \vv).
+  \end{gather}
+  Hence, the formulation~\eqref{eq:stokes:33} is equivalent to
+  \begin{gather}
+    \arraycolsep2pt
+    \begin{matrix}
+      2\mu\form(\strain{\vu_h},\strain \vv) &+& \form(p_h,\div \vv)
+      &=& \form(f,v) &\qquad&\forall \vv\in \vV_h\\
+      \form(\div \vu_h, q) &-&\tfrac1\lambda\form(p_h,q)&=&0&&\forall q\in Q_h.
+    \end{matrix}
+  \end{gather}
+  This is the Stokes problem augmented by a positive definite bilinear
+  form $c(.,.)$, such that
+  \slideref{Theorem}{mixed-stabilized-well-posed} and
+  \slideref{Corollary}{stabilized-mixed-convergence} apply.
+\end{proof}
+
+\begin{remark}
+  The technique in the previous lemma is often called \define{reduced
+    integration}. This refers to the fact, that we can replace the
+  explicit projection $\Pi_Q$ by using a quadrature formula which is
+  exact on $Q_h$, but zero for all higher order polynomials occuring
+  in $\div \vu_h$.
+\end{remark}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

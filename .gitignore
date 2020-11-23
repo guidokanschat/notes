@@ -1,5 +1,7 @@
 **/auto
+TAGS
 blocks
+png
 *~
 *.aux
 *.blg
@@ -16,10 +18,16 @@ blocks
 *.bcf
 *.run.xml
 main-blx.bib
+*.bbl
 comment.cut
 print.pdf
 print-crop.pdf
 main.pdf
+listprobs.tex
 problems.pdf
 solutions.pdf
 slides.pdf
+iallslides.tex
+allslides.pdf
+appendix.pdf
+chapter-?.pdf

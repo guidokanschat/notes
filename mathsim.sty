@@ -12,6 +12,7 @@
 \RequirePackage{babel}
 \RequirePackage{hyperref}
 \RequirePackage{cleveref}
+\RequirePackage{enumerate}
 \RequirePackage{stringstrings}
 \RequirePackage{xr}
 \RequirePackage{nicefrac}
@@ -21,7 +22,7 @@
 \RequirePackage{subfigure}
 \RequirePackage{comment}
 \RequirePackage{listings}
-\RequirePackage{tikz,tikzscale}
+\RequirePackage{tikz,tikzscale,tikz-cd}
 \usetikzlibrary{calc}
 \usetikzlibrary{math}
 \usetikzlibrary{arrows.meta}
@@ -51,7 +52,8 @@
 % Commands for beamer
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\sectoc{\tableofcontents[currentsection,hideothersubsections]}
-\def\subtoc{\tableofcontents[currentsection,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/show/hide/hide]}
+\def\subtoc{\tableofcontents[sectionstyle=shaded/hide,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/show/hide/hide]}
+\def\subsubtoc{\tableofcontents[sectionstyle=shaded/hide,subsectionstyle=shaded/shaded/hide,subsubsectionstyle=show/shaded/hide/hide]}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Counters and their representation
@@ -84,6 +86,7 @@
 \newslidetheorem{Bemerkung}
 \newslidetheorem{Algorithmus}
 \newslidetheorem{Fazit}
+\newslidetheorem{Quiz}
 
 % Definitions for index
 \def\defindex#1{\index{#1}}
@@ -106,6 +109,7 @@
 \def\refv{\reference{v}}
 \def\refx{\reference{x}}
 \def\refy{\reference{y}}
+\def\refom{\reference{\omega}}
 \def\refphi{\reference{\phi}}
 \def\refrho{\reference{\rho}}
 \def\refvx{\reference{\vx}}
@@ -113,6 +117,8 @@
 \def\refvxo{\reference{\vxo}}
 \def\refvu{\reference{\vu}}
 \def\refvv{\reference{\vv}}
+\def\refmap{\Phi}
+\def\jacobian{\mathrm D}
 \def\vertex{\mathbf X}
 \def\nodal{\mathscr N}
 \def\shapespace{\mathscr P}
@@ -127,6 +133,7 @@
 \def\C{\mathbb C}
 \def\co{\mathcal C}
 \def\coo{\mathcal C_{00}^\infty}
+\def\sdim{n}
 \let\domain\Omega
 \def\F{\mathbb F}
 \def\n{\mathbf n}
@@ -144,10 +151,14 @@
 \let\phi\varphi
 \let\ellipa\gamma
 \def\ellipc{\gamma_c}
+\let\infsupc\beta
+\def\bounda{M_a}
+\def\boundb{M_b}
 
 % Matrices
 \def\mata{\mathbf A}
 \def\matb{\mathbf B}
+\def\matc{\mathbf C}
 \def\matg{\mathbf G}
 \def\matm{\mathbf M}
 \def\mats{\mathbf S}
@@ -159,17 +170,24 @@
 \def\cond{\operatorname{cond}}
 \def\mat#1{\mathbf{#1}}
 \def\vec#1{\mathbf{#1}}
+\def\transpose{*}
 
 % vectors
 \def\vb{\mathbf b}
 \def\vf{\mathbf f}
+\def\vg{\mathbf g}
 \def\vn{\mathbf n}
+\def\vp{\mathbf p}
+\def\vq{\mathbf q}
 \def\vx{\mathbf x}
 \def\vy{\mathbf y}
 \def\vxo{\mathbf{x_0}}
 \def\vu{\mathbf u}
 \def\vv{\mathbf v}
 \def\vecx{\vec x}
+\def\vH{\mathbf H}
+\def\vL{\mathbf L}
+\def\vV{\mathbf V}
 \def\vlambda{\boldsymbol\lambda}
 
 % Spaces, norms, and forms
@@ -177,10 +195,11 @@
 \def\ker#1{\operatorname{ker}\left(#1\right)}
 \def\range#1{\operatorname{im}(#1)}
 \def\spann#1{\operatorname{span}\left\{#1\right\}}
-\def\polar#1{#1^0}
-\def\ortho#1{#1^\perp}
-\def\Hcurl{H^{\text{curl}}}
-\def\Hdiv{H^{\text{div}}}
+\def\polar#1{{#1}^{\perp_\flat}}
+\def\dualpolar#1{{#1}^{\perp_\sharp}}
+\def\ortho#1{{#1}^\perp}
+\def\Hcurl{\vH^{\text{curl}}}
+\def\Hdiv{\vH^{\text{div}}}
 
 % Polynomials
 \def\pol{\mathbb P} % polynomial space P_n
@@ -216,11 +235,15 @@
 \def\supp{\operatorname{supp}}
 \def\esssup{\operatorname{ess sup}}
 \def\osc{\operatorname{osc}}
-% differential quotients for integrals
+\def\vol{\operatorname{vol}}
+\def\ediff{d} % exterior derivative
+% differentials for integrals
 \let\d\partial
 \def\diffd{\mathrm{d}}
 \def\diffq[#1]{\frac{\mathrm{d}}{\mathrm{d}#1}}
 \def\pdiffq[#1]{\frac{\partial}{\partial #1}}
+\def\dlambda{\,\diffd \lambda}
+\def\dl{\,\diffd \ell}
 \def\dr{\,\diffd r}
 \def\ds{\,\diffd s}
 \def\dt{\,\diffd t}
@@ -228,6 +251,7 @@
 \def\dy{\,\diffd y}
 \def\dvx{\,\diffd \vx}
 \def\dvy{\,\diffd \vy}
+% reference coordinates
 \def\dvxref{\,\diffd \reference \vx}
 \def\dxref{\,\diffd \reference x}
 \def\dsref{\,\diffd \reference s}

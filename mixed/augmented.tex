@@ -1,0 +1,284 @@
+
+\begin{intro}
+  The key to the mixed analysis which is also underlying our
+  quasi-best\-ap\-proxi\-mation result was a splitting of the solution
+  process into the reduced problem for $u$ and then applying the
+  inf-sup condition for $b(.,.)$ in order to estimate $p$. This way,
+  we will be able to obtain estimates for the Stokes problem, but we
+  have tacitly abandoned weakly compressible elasticity. Indeed, the
+  mixed form of the Lamé-Navier equations is not a constrained
+  minimization problem. In this section, we will fill the gap and
+  derive estimates for the solution of this problem which are robust
+  in $\lambda$.
+
+  In the Lamé-Navier equations, we had
+  \begin{gather}
+    c(p,q) = -\tfrac1\lambda \scal(q,p)_{L^2(\domain)},
+  \end{gather}
+  which suggests assuming symmetric and $Q$-elliptic. But, we want
+  estimates independent of $\lambda$! Therefore, we should only
+  require semi-definite, which on the other hand turns out a bit too
+  weak.
+\end{intro}
+
+\begin{Assumption}{mixed-elliptic-stabilized}
+  In addition to \slideref{Assumption}{mixed-elliptic}, let $c(.,.)$
+  be positive semi-definite and elliptic on $\ker{B^\transpose}$,
+  \begin{gather}
+    c(q,q) \ge u\quad\forall q\in Q,
+    \qquad
+    c(q,q) \ge \ellipc \norm{q}_Q^2 \quad\forall q\in \ker{B^\transpose}.
+  \end{gather}
+\end{Assumption}
+
+\begin{remark}
+  Again, this assumption is not necessary for the analysis, but it
+  yields a convenient and useful theorem which goes far beyond weakly
+  compressible elasticity and covers stabilized methods for spaces
+  where the inf-sup condition for $b(.,.)$ does not hold for the whole
+  space $Q$.
+\end{remark}
+
+\begin{Theorem}{mixed-stabilized-well-posed}
+  Let \slideref{Assumption}{mixed-elliptic-stabilized} hold and
+  let $a(.,.)$ and $c(.,)$ be symmetric. In addition, let there be
+  $\infsupc>0$ such that
+  \begin{gather}
+    \begin{split}
+      \inf_{q\in \ortho{\ker{B^\transpose}}}  \sup_{v\in V}
+      \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} &\ge \infsupc\\
+      \inf_{v\in \ortho{\ker{B}}}  \sup_{q\in Q}
+      \frac{b(v,q)}{\norm{v}_V\norm{q}_Q} &\ge \infsupc
+    \end{split}
+  \end{gather}
+  Then, the problem finding $(u,p)\in V\times Q$ such that
+  \begin{multline}
+    a(u,v) + b(v,p) + b(u,q) - c(p,q) = f(v)+g(q)
+    \\
+    \forall v\in V, q\in Q
+  \end{multline}
+  has a unique solution for all $f\in V^*$ and $g\in Q^*$ and there is
+  a constant $C$ such that
+  \begin{gather}
+    \norm{u}_V+\norm{p}_Q
+    \le C \bigl(\norm{f}_{V^*} + \norm{g}_{Q^*}\bigr).
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  First, note that the ellipticity assumptions as well as the inf-sup
+  conditions are symmetric in $V$ and $Q$. Indeed, replacing the test
+  functions and the form $b(.,.)$ by their negatives, we can transform
+  the problem into one where $V$ and $Q$ have exchanged their
+  roles. Thus, it is sufficient to show well-posedness for $f=0$. The
+  same result then holds for $g=0$ and it holds for both nonzero by
+  linearity.
+  
+  We note that by the inf-sup conditions both $\range B$ and
+  $\range{B^\transpose}$ are closed. Thus, we can decompose $u=u^0+u^\perp$
+  with $u^0\in\ker B$ and $u^\perp$ in its orthogonal
+  complement. Assuming $f=0$ and testing with $q=0$ we obtain the
+  equation
+  \begin{gather}
+    \label{eq:infsup:14}
+    a(u,v) = -b(v,p) = 0.
+  \end{gather}
+  In particular, testing with $v=u^0$ yields
+  \begin{gather}
+    a(u,u^0) = -b(u^0,p) = 0.
+  \end{gather}
+  Hence,
+  \begin{gather}
+    \ellipa \norm{u^0}^2_V \le a(u^0,u^0)
+    = -a(u^\perp,u^0)
+    \le \bounda \norm{u^\perp}\norm{u^0},
+  \end{gather}
+  which implies
+  \begin{gather}
+    \label{eq:infsup:15}
+    \norm{u^0}_V \le \frac{\bounda}{\ellipa} \norm{u^\perp}_V.
+  \end{gather}
+  Testing with $v=u$ and $q=-p$ yields
+  \begin{gather}
+    a(u,u)+c(p,p) \le g(p) = g^0(p^0) + g^\perp(p^\perp),
+  \end{gather}
+  where $p^0\in \ker{B^\transpose}$, $g^\perp\in \polar{\ker{B^\transpose}}$ and the
+  other two are defined by orthogonality in $Q$ and $Q^*$,
+  respectively. Let first $g^0=0$. Then, by~\eqref{eq:infsup:14} and
+  the inf-sup condition for $p$, there is $v\in V$ with $\norm{v}_V = 1$
+  such that
+  \begin{gather}
+    \infsupc \norm{p^\perp} \le
+    \abs{b(v,p^\perp)} = \abs{b(v,p)} = \abs{a(u,v)}
+    \le \sqrt{a(u,u)}\sqrt{a(v,v)},
+  \end{gather}
+  by the Bunyakovsky-Cauchy-Schwarz inequality for symmetric bilinear
+  forms.  Therefore, squaring and using the definition of the operator
+  norm of $g^\perp$ yields
+  \begin{gather}
+    \norm{p^\perp}_Q \le \frac{\bounda}{\infsupc^2}\norm{g^\perp}_{Q^*}.
+  \end{gather}
+  Furthermore, we have
+  \begin{gather}
+    c(p,p^0) = b(u,p^0) - g^\perp(p^0) = 0.
+  \end{gather}
+  Hence,
+  \begin{gather}
+    \ellipc \norm{p^0}_Q^2 \le c(p^0,p^0)
+    = c(p^\perp,p^0) \le \norm c \norm{p^0}_Q \norm{p^\perp}_Q,
+  \end{gather}
+  concluding
+  \begin{gather}
+    \norm{p^0}_Q
+    \le \frac{\bounda \norm c}{\ellipc\infsupc^2}
+    \norm{g^\perp}_{Q^*}.
+  \end{gather}
+
+  We continue our proof for $g^\perp=0$ and $g^0 \neq 0$. Testing with
+  $q=p^0$, we obtain
+  \begin{align}
+    c(p^0,p^0)
+    &= c(p,p^0) - c(p^\perp,p^0) \\
+    &= b(u,p^0) - g^0(p^0) - c(p^\perp,p^0) \\
+    &\le \norm{g^0}_{Q^*} \norm{p^0}_Q
+      + \norm c \norm{p^\perp}_Q \norm{p^0}_Q,
+  \end{align}
+  yielding
+  \begin{gather}
+    \norm{p^0}_Q \le \frac1{\ellipc}
+    \left(\norm{g^0}_{Q^*} + \norm c \norm{p^\perp}_Q\right).
+  \end{gather}
+  $p^\perp$ is estimated as before by
+  \begin{align}
+    \norm{p^\perp}_Q^2
+    &\le \frac{\bounda}{\infsupc^2}\norm{g^0}_{Q^*} \norm{p^0}_Q \\
+    &\le \frac{\bounda}{\ellipc\infsupc^2} \norm{g^0}_{Q^*}^2
+      + \frac{\bounda\norm c}{\ellipc\infsupc^2}
+      \norm{g^0}_{Q^*}\norm{p^\perp}_Q\\
+    &\le \frac{\bounda}{\ellipc\infsupc^2} \norm{g^0}_{Q^*}^2
+      + \frac12 \norm{p^\perp}_Q^2
+      + \frac{\bounda^2 \norm c^2}{2{\ellipc}^2\infsupc^4} \norm{g^0}_{Q^*}^2.
+  \end{align}
+  We conclude that $p^\perp$ and $p^0$ are bounded by $g^0$. Summing
+  up, we obtain for $f=0$ and $g\in Q^*$ the estimate
+  \begin{gather}
+    \norm{p}_Q \le c \norm{g}_{Q^*}.
+  \end{gather}
+
+  We estimate $u^0$ by $u^\perp$ using~\eqref{eq:infsup:15} and
+  $u^\perp$ by the inf-sup condition, choosing $q\in Q$ with
+  $\norm{q}_Q = 1$ such that
+  \begin{gather}
+    \infsupc\norm{u^\perp} = b(u,q) = c(p,q) + g(q)
+    \le \norm{c}\norm{p}_Q +  \norm{g}_{Q^*}.
+  \end{gather}
+  Thus, we have estimated all components of the solution by the norm
+  of $g$, assuming $f=0$. Now we conclude the proof by reverting the
+  roles of $u$ and $p$, respectively $f$ and $g$.
+\end{proof}
+
+\begin{intro}
+  The extension of \slideref{Theorem}{galerkin-mixed-p} to the
+  saddle-point problem of \slideref{Definition}{saddle-point-abstract}
+  with bilinear form $c(.,.)$ is even more cumbersome than this
+  theorem. Nevertheless, the use of residual operators as a technique
+  to structure the proof of convergence is instructive and may come
+  handy at some point.
+\end{intro}
+
+\begin{Definition}{mixed-residual}
+  For the saddle-point problem
+  \begin{gather}
+    a(u,v) + b(v,p) + b(u,q) - c(p,q),
+  \end{gather}
+  and functions $w_h\in V_h$ and $r_h\in Q_h$ we introduce the the
+  residual operators $R_f \in V_h^*$ and $R_g\in Q_h^*$ as
+  \begin{gather}
+    \begin{split}
+      R_f(v_h) &= a(u-w_h, v_h) + b(v_h, p-r_h) \\
+      R_g(q_h) &= b(u-w_h, q_h) - c(p-r_h, q_h).
+    \end{split}
+  \end{gather}
+\end{Definition}
+
+\begin{Corollary}{mixed-residual-bounded}
+  Under \slideref{Assumption}{mixed-elliptic-stabilized}, we have
+  \begin{gather}
+    \begin{split}
+      \abs{R_f(v_h)}
+      &\le \bigl(\bounda \norm{u-w_h}_V + \boundb \norm{p-r_h}\bigr)
+      \norm{v_h}_V
+      \\
+      \abs{R_g(q_h)}
+      &\le \bigl(\boundb \norm{u-w_h}_V + \norm c \norm{p-r_h}\bigr)
+      \norm{q_h}_Q.
+    \end{split}
+  \end{gather}
+\end{Corollary}
+
+\begin{Lemma}{stabilized-mixed-approximation}
+  Let the assumptions of
+  \slideref{Theorem}{mixed-stabilized-well-posed} hold. Then, there
+  are constants $c_1$ to $c_4$ independent of the solutions $u$, $p$,
+  $u_h$, and $p_h$ and the discretization parameter $h$, such that for
+  any $v_h\in V_h$ and $q_h\in Q_h$
+  \begin{gather}
+    \label{eq:infsup:16}
+    \begin{split}
+      \norm{u_h-v_h} &\le c_1 \norm{R_f}_{V_h^*} + c_2
+      \norm{R_g}_{Q_h^*}
+      \\
+      \norm{p_h-q_h} &\le c_3 \norm{R_f}_{V_h^*} + c_4
+      \norm{R_g}_{Q_h^*}.
+    \end{split}
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  The proof is lengthy and follows the lines of the proof of
+  well-posedness for
+  \slideref{Theorem}{mixed-stabilized-well-posed}. It is obtained by
+  considering the components $u_h^0-v_h^0$ and $u_h^\perp-v_h^\perp$
+  as well as $p_h^0-q_h^0$ and $p_h^\perp-q_h^\perp$ separately.
+\end{proof}
+
+\begin{intro}
+  In spite of the bad treatment the proof of the previous lemma
+  received in these notes, it contains the main parts of the
+  convergence proof, and whenever a saddle-point problem including
+  $c(.,.)$ is solved, it has to be reproduced. It is just the fact
+  that the proof is overwhelmingly technical that led to the decision
+  to leave this experience to the first time the reader actually needs
+  this result.
+\end{intro}
+
+\begin{Corollary}{stabilized-mixed-convergence}
+    Let the assumptions of
+  \slideref{Theorem}{mixed-stabilized-well-posed} hold. Then, there
+  are constants $c_1$ to $c_4$ independent of the solutions $u$, $p$,
+  $u_h$, and $p_h$ and the discretization parameter $h$, such that
+  \begin{gather}
+    \label{eq:infsup:17}
+    \begin{split}
+      \norm{u-u_h}
+      &\le c_1 \inf_{v_h\in V_h}\norm{u-v_h}_V
+      + c_2 \inf_{q_h\in Q_h} \norm{p-q_h}_Q
+      \\
+      \norm{p-p_h}
+      &\le c_3 \inf_{v_h\in V_h}\norm{u-v_h}_V
+      + c_4 \inf_{q_h\in Q_h} \norm{p-q_h}_Q.
+    \end{split}
+  \end{gather}
+\end{Corollary}
+
+\begin{proof}
+  The proof begins with the standard approach with triangle inequality
+  \begin{align}
+    \norm{u-u_h} &\le \norm{u-v_h} + \norm{v_h-u_h} \\
+    \norm{p-p_h} &\le \norm{p-q_h} + \norm{q_h-p_h}.
+  \end{align}
+  Then, we employ \slideref{Lemma}{stabilized-mixed-approximation} on
+  the terms on the right and use the estimate of
+  \slideref{Corollary}{mixed-residual-bounded}.
+\end{proof}
+

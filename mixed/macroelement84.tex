@@ -32,7 +32,7 @@
   the kernel of the discrete, local gradient operator
   \begin{gather}
     \label{eq:macroelement:29}
-    \ker{B^T_M} = \bigl\{q\in Q_M \big\vert 
+    \ker{B^\transpose_M} = \bigl\{q\in Q_M \big\vert 
     \;\forall v\in V_M\colon \form(\div v,q) = 0\bigr\}.
   \end{gather}
   For a mesh $\mesh_h$ which is subdivided into a nonoverlapping set
@@ -45,7 +45,7 @@
   Let $\{M\}$ with $M\subset \mesh_h$ be a set of macroelements
   equivalent to the same reference macroelement $\widehat M$. Let the
   family $\{\mesh_h\}$ be shape regular and assume
-  $\ker{B^T_{M}} = \{0\}$. Then, there is a constant
+  $\ker{B^\transpose_{M}} = \{0\}$. Then, there is a constant
   $\beta_M>0$ independent of $h$ such that for all $M$ there holds
   \begin{gather}
     \label{eq:macroelement:31}
@@ -63,9 +63,9 @@
   $\nabla\Phi_{\cell_i}$, which in turn is uniformly bounded by the
   shape regularity. Therefore, by a cell-wise scaling argument and the
   fact that $\widehat M$ has only finitely many cells we have
-  \begin{gather*}
+  \begin{gather}
     \beta_{\widehat M} = \min_M \beta_M > 0.
-  \end{gather*}
+  \end{gather}
 \end{proof}
 
 \begin{remark}
@@ -76,7 +76,7 @@
 \begin{Lemma}{macro-projection}
   Let $\mesh_h$ be subdivided into a nonoverlapping set of
   macroelements $M$ such that there is a finite set of reference macro
-  elements $\widehat M$, and let $\ker{B^T_M} = \{0\}$. Then, there is
+  elements $\widehat M$, and let $\ker{B^\transpose_M} = \{0\}$. Then, there is
   a constant $c_1>0$ such that for all $q_h\in Q_h$ exists $v_h\in V_h$
   satisfying
   \begin{gather}
@@ -93,10 +93,10 @@
   For any $q_h\in Q_h$, we have $(\identity-\Pi_M) q_h\in Q_M$ for each
   macroelement $M$. Applying \slideref{Lemma}{macro-local}, for each
   $M$ there exists $v_M\in V_M$ such that
-  \begin{gather*}
+  \begin{gather}
     \form(\div v_M, {(\identity-\Pi_M)} q_h)_M
     \ge c_1 \norm{v_M}_{1,M}\norm{(\identity-\Pi_M) q_h}_{0,M},
-  \end{gather*}
+  \end{gather}
   with $c=\min \beta_{\widehat M}$. Let now $v_M$ such that
   $\norm{v_M}_{1,M} = \norm{(\identity-\Pi_M) q_h}_{0,M}$ and $v$ such that
   $v_{|M} = v_M$. Since $v_M$ is zero on $\d M$, we have $v\in
@@ -133,7 +133,7 @@
   and \slideref{Lemma}{macro-constant}, we obtain functions $v_h$ and
   $w_h$ such that for $u_h = v_h+ \delta w_h$ for any $\delta>0$ there
   holds
-  \begin{align*}
+  \begin{align}
     \form(\div u_h, q_h)
     &= \form(\div v_h, q_h) + \form(\div w_h, q_h) \\
     &\ge c_1 \norm{(\identity-\Pi_M) q_h}_0^2
@@ -141,7 +141,7 @@
       - \delta \norm{w_h}_1 \norm{(\identity-\Pi_M) q_h}_0 \\
     & = (c_1 - \delta) \norm{(\identity-\Pi_M) q_h}_0^2
       + \delta c_2 \norm{\Pi_M q_h}_0^2.
-  \end{align*}
+  \end{align}
   Choosing $\delta = c_1/(1+c_2)$, we obtain
   \begin{gather}
     \label{eq:macroelement:34}

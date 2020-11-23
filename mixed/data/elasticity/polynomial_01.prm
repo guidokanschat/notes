@@ -1,0 +1,26 @@
+set Mu = 1.
+set Lambda = 1000.
+set Linear = true
+set Steps = 8
+set Grad factor = 0.
+subsection Discretization
+  set FE         = FESystem[FESystem[FE_Q(1)^d]]
+#  set FE         = FE_RaviartThomas(1)
+  set Refinement = 0
+end
+subsection Newton
+  set Assemble threshold  = 0.2
+  set Debug level         = 0
+  set Debug vectors       = false
+  set Log frequency       = 1
+  set Log history         = true
+  set Log result          = true
+  set Max steps           = 100
+  set Reduction           = 1.e-14
+  set Stepsize iterations = 21
+  set Tolerance           = 1.e-7
+end
+subsection Output
+  set Output format = gnuplot
+  set Subdivisions  = 4
+end

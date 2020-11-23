@@ -1,87 +1,410 @@
 \begin{intro}
-  From one dimensional polynomial space $\P_r(\R)$, we construct the
-  tensor product space $\Q_r$ by the construction
+  This section of the notes gives a very brief overview over
+  alternating multilinear forms, integrals, and differential forms and
+  their relation to vector fields. It is inspired by \cite{Hiptmair02}
+  and serves as a motivation for the usage of such objects.
+\end{intro}
+
+\begin{Definition}{alternating-k-form}
+  An \define{alternating} $k$-form on a vector space $V$ is a map
   \begin{gather}
-    \begin{split}
-      \Q_r(\R^d) & = \bigotimes_{i=1}^d \P_r(\R^1),
-      = \P_r(\R^1) \otimes\dots\otimes\P_r(\R^1),\\
-      q &= p_1 \otimes \dots \otimes p_d,\\
-      q(x_1,\dots,x_d) &= \prod_{i=1}^d p_1(x_1)\cdots p_d(x_d).
-    \end{split}
+    \omega\colon\underbrace{V\times \dots\times V}_{k \text{ factors}} \to \R,
   \end{gather}
-  We can even allow for different orders in different dimenions,
-  obtaining $\Q_{r_1,\dots,r_d}$. Examining the product, we see that
-  $\R^d$ was decomposed into the direct sum of one-dimensional spaces
+  which is linear in each argument and such that
+  \begin{gather}
+    \omega(v_1,\dots,v_k) = 0
+  \end{gather}
+  whenever two or more of the vectors $v_i$ coincide.
+
+  The vector space of alternating $k$-forms on $V$ is called
+  $\Alt^k V$. The space $\Alt^1 V$ is the dual space of $V$.
+\end{Definition}
+
+\begin{Lemma}{alternating-k-forms}
+  For an alternating $k$-form $\omega$, there holds
+  \begin{enumerate}
+  \item Whenever the set $v_1,\dots,v_k$ is linearly dependent, then
+    \begin{gather}
+      \omega(v_1,\dots,v_k) = 0.
+    \end{gather}
+  \item There holds
+    \begin{gather}
+      \omega(\ldots,v_i,\ldots,v_j,\ldots) = - \omega(\ldots,v_j,\ldots,v_i,\ldots).
+    \end{gather}
+  \end{enumerate}
+\end{Lemma}
+
+\begin{Notation}{dual-basis}
+  Let $x_1,\dots,x_n$ be a basis of $V$. Then we denote by $\dx_1,\dots,\dx_n$ the basis of $\Alt^1V$,
   such that
   \begin{gather}
-    \begin{split}
-      \R^d &= \bigtimes_{i=1}^d \R,\\
-      x &= \sum_{i=1}^d \pi_i x,\\
-      q(x) &= \prod_{i=1}^d p_i(\pi_i x),
-    \end{split}
+    \dx_i(x_j) = \delta_{ij}.
   \end{gather}
-  where $\pi_i$ is the projection to the $i$th component of the vector.
+\end{Notation}
 
-  We can generalize this construction in an obvious way to the direct
-  sum of spaces of higher dimension, say $\R^d\oplus \R^d$ and
-  functionals $f\colon \R^d\to \R$ and $g\colon \R^e\to \R$. Then,
+
+\begin{example}
+  Let there be two alternating 1-forms $\omega, \eta \in \Alt^1V$.
+  Then, a 2-form $\mu \in \Alt^2V$ can be defined by
   \begin{gather}
-    f\otimes g
-    \begin{pmatrix}
-      x\\y
-    \end{pmatrix}
-    = f(x) g(y).
+    \mu(v_1, v_2) = \omega(v_1)\eta(v_2) - \eta(v_1)\omega(v_2).
   \end{gather}
-  Thus, we have constructed the tensor product of functions, which are the zero-forms.
-\end{intro}
-
-\begin{intro}
-  We now extend this concept to alternating multilinear forms. We
-  begin with one-forms on $\R^1$. They form the one-dimensional vector
-  space $\Alt^1\R^1$ and we call the only basis element $dx$. We
-  assume that for the basis vector $e$ of $\R^1$ there holds $dx(e) = 1$.
-
-  Let $\omega_1 = \alpha \in \Alt^0\R^1$ and
-  $\omega_2 = \beta dx \in\Alt^1\R^1$. Then,
-  \begin{gather*}
-    \begin{split}
-          \omega_1\otimes\omega_2 (x) &= \alpha\beta dx(\pi_2x) \in\Alt^1\R^2,
-          \\
-          \omega_2\otimes\omega_1 (x) &= \alpha\beta dx(\pi_1x) \in\Alt^1\R^2.
-    \end{split}
-  \end{gather*}
-  Again, $\pi_i$ projects on the $i$th factor of the space
-  $\R^1\times \R^1$. Let now $\omega_3 = \gamma dx$ be another 1-form
-  on $\R^1$. Then,
-  \begin{gather}
-    \phi(x,y) = \omega_2\times \omega_3(x,y) = \beta\gamma (dx(\pi_1 x)
-    dx(\pi_2 y) - dx(\pi_2 x) dx(\pi_1)y) \in \Alt^2\R^2.
-  \end{gather}
-  Here, we chose the antisymmetric product, such that $\phi$ is
-  alternating. Thus, we have a recipe for the construction of
-  alternating forms on higher dimensional spaces from those of lower
-  dimensional spaces.
-\end{intro}
-
+  This suggests the concept of an ``alternating product'' denoted by $\omega \wedge \eta$. In
+  particular, we can assign to basis vectors
+  \begin{align}
+    \dx_i \wedge \dx_j (x_k,x_\ell)
+    &= \dx_i(x_k)\dx_j(x_\ell) - \dx_j(x_k)\dx_i(x_\ell) \\
+    = - \dx_j \wedge \dx_i(x_k,x_\ell) &= \dx_i(x_\ell)\dx_j(x_k) - \dx_j(x_\ell)\dx_i(x_k) \\
+    &= \delta_{ik}\delta_{j\ell} - \delta_{i\ell}\delta_{jk}.
+  \end{align}
+  It can be shown that the products $\dx_i\wedge \dx_j$ with $i<j$ form a basis of $\Alt^2V$.
+\end{example}
 
 \begin{Definition}{wedge-product}
   The \define{wedge product} of two alternating forms
-  $\omega\in \Alt^k\R^d$ and $\eta\in\Alt^l\R^d$ is a form in $\Alt^{k+l}\R^d$ such that for
-  $v_1,\dots,v_{k+l}\in\R^d$ holds
+  $\omega\in \Alt^k\R^n$ and $\eta\in\Alt^\ell\R^n$ is a form in $\Alt^{k+\ell}\R^n$ such that for
+  $v_1,\dots,v_{k+\ell}\in\R^n$ holds
   \begin{gather}
-    (\omega\wedge\eta)(v_1,\dots,v_{k+l})
+    (\omega\wedge\eta)(v_1,\dots,v_{k+\ell})
     = \sum_{\sigma} \operatorname{sgn}(\sigma) \omega(v_{\sigma_1},\dots,v_{\sigma_k})
-    \eta(v_{\sigma_{k+1}},\dots,v_{\sigma_{k+l}}),
+    \eta(v_{\sigma_{k+1}},\dots,v_{\sigma_{k+\ell}}),
   \end{gather}
-  where the sum is taken over all permutations $\sigma$ such that
-  \begin{gather*}
+  where the sum is taken over all permutations $\sigma$ of the set
+  $\{1,\dots,k+\ell\}$ such that
+  \begin{gather}
     \begin{split}
       \sigma_1 &< \dots < \sigma_k,\\
-      \sigma_{k+1} & < \dots < \sigma_{k+l}.
+      \sigma_{k+1} & < \dots < \sigma_{k+\ell}.
     \end{split}
-  \end{gather*}
+  \end{gather}
 \end{Definition}
 
-\begin{Notation}{dx-basis}
-  Let $V$ be a vector space with basis $e_1,\dots,e_d$. Then, we denote by $dx_i$
-\end{Notation}
+\begin{remark}
+  Alternatively, we can sum the wedge product over all permutations of
+  $k+\ell$ elements without restriction of the order. Then, we sum up
+  similar terms mutliple times, such that
+  \begin{gather}
+    (\omega\wedge\eta)(v_1,\dots,v_{k+\ell})
+    = \frac1{k!l!}\sum_{\sigma} \operatorname{sgn}(\sigma) \omega(v_{\sigma_1},\dots,v_{\sigma_k})
+    \eta(v_{\sigma_{k+1}},\dots,v_{\sigma_{k+\ell}})
+  \end{gather}
+\end{remark}
+
+\begin{Lemma}{basis-alt-k}
+  The dimension of $\Alt^k V$ for an $n$-dimensional vector space $V$
+  is $\binom nk$. The set
+  \begin{gather}
+    \left\{ \dx_{\sigma_1}\wedge\dots\wedge\dx_{\sigma_k} \;\middle|\;
+      0<\sigma_1 < \dots < \sigma_k\le n \right\}
+  \end{gather}
+  is a basis for $\Alt^k V$.
+\end{Lemma}
+\begin{todo}
+  There holds
+  \begin{gather}
+    \dx_{\sigma_1}\wedge\dots\wedge\dx_{\sigma_k} (x_{\rho_1},\dots,x_{\rho_k})
+    = \prod_{i=1}^k \delta_{\sigma_i\rho_i}
+  \end{gather}
+  among all combinations $0<\rho_1 < \dots < \rho_k\le n$.
+\end{todo}
+
+\begin{remark}
+  The alternating $n$-forms on $\R^n$ can be used to measure volume. In particular,
+  we have
+  \begin{gather}
+    \dx_1\wedge\dots\wedge \dx_n(v_1,\dots,v_n)
+  \end{gather}
+  is the (oriented) volume of the parallelepiped spanned by the
+  vectors $v_1$ to $v_n$. The $n$-form $\dx_1\wedge\dots\wedge \dx_n$ is
+  the determinant.
+
+  Similarly, alternating $k$-forms measure the volume or area of oriented
+  parallelepipeds of dimension $k$ in $\R^n$. But, while
+  $\dim\Alt^n\R^n = 1$ and therefore the choice of a basis determines
+  the volume up to a constant only, the dimension of $\Alt^k\R^n$ for
+  $0<k<n$ is nontrivial, the area has the character of a vector itself.
+\end{remark}
+
+\begin{intro}
+  Let $M \subset \R^n$ be a smooth manifold of dimension $k$. We
+  approximate $M$ by a set of parallelepipeds $\cell_i$ of dimension
+  $k$. Then, we can define an integral of a $k$-form
+  $\omega\in \Alt^k\R^n$ over $M$ in the Riemannian fashion by
+  \begin{gather}
+    \int_M \omega \approx \sum_{\cell_i} \omega(v_{i,1},\dots, v_{i,k}),
+  \end{gather}
+  where the vectors $v_{i,1}$ to $v_{i,k}$ span the cell
+  $\cell_i$. The integral is then defined by a suitable limit process
+  for finer and finer subdivisions of $M$.
+
+  It is clear, that in this process, the form $\omega$ may be
+  different on each cell, which leads to the more general concept of
+  an integral $k$-form $\omega$ on $\R^n$, which assigns every
+  submanifold of dimension $k$ a value through the integral
+  ``defined'' above.
+
+  Looking at Maxwell's equations, the electric field $E$ and the
+  magnetic field $B$ in the integral form of
+  equations~\eqref{eq:mixed:maxwell:faraday}
+  and~\eqref{eq:mixed:maxwell:ampere} are exactly such forms, which
+  assign a value to each loop in $\R^n$, or more generally, to each
+  smooth curve. Thus, they qualify as integral 1-forms in this
+  context.
+
+  As all $k$-forms can be constructed as linear combinations of the
+  basis of alternating $k$-forms, we can define forms depending on
+  position in $\R^n$ by
+  \begin{gather}
+    \omega(\vx) = \sum_{\sigma} \alpha_{\sigma}(\vx)
+    \dx_{\sigma_1}\wedge\dots\wedge \dx_{\sigma_k}.
+  \end{gather}
+\end{intro}
+
+\begin{Definition}{differential-form}
+  A \define{differential $k$-form} on $\R^n$ is a mapping
+  \begin{gather}
+    \begin{split}
+      \omega\colon \R^n &\to  \Alt^k\R^n\\
+      \omega(\vx) &= \sum_{\sigma} a_{\sigma}(\vx)
+      \dx_{\sigma_1}\wedge\dots\wedge \dx_{\sigma_k},
+    \end{split}
+  \end{gather}
+  where $\sigma$ runs over all increasing sequences of $k$ elements
+  out of $n$ and the coefficient functions $a_\sigma$ are
+  differentiable. More specifically, we define the spaces
+  \index{lambdak@$\Lambda^k$}
+  $\Lambda^k(\R^n)$ of such forms, where
+  $a_\sigma \in C^\infty(\R^n)$.
+  The space $\Lambda^0(\R^n)$ is introduced for closure and
+  consists of differentiable functions in $C^\infty(\R^n)$.
+\end{Definition}
+
+\begin{remark}
+  Note that $\Alt^k\R^n$ is a finite dimensional vector space and
+  thus, we can view elements from $\Lambda^k(\domain)$ as
+  vector-valued functions with an additional structure. If we define a
+  norm on $\Alt^k\R^n$, we can define differential forms without going
+  through coefficients.
+
+  Thus, definition above extends naturally to all types of function
+  spaces we know. Then, we prefix $\Lambda^k$ by the function
+  space. Thus, $C^m\Lambda^k(\domain)$ is the space of $m$-times
+  differentiable $k$-forms on the domain $\domain$.  We can also
+  replace differentiablility of $\alpha_\sigma$ by integrability to
+  obtain spaces like $L^p\Lambda^k(\domain)$ and even Sobolev spaces
+  $H^m\Lambda^k(\domain)$.
+
+  The short hand notation $\Lambda^k$ for $C^\infty\Lambda^k$
+  introduced in the definition above is used when we do not want to
+  worry about order of differentiability in order to keep arguments
+  more readable.
+\end{remark}
+
+\begin{remark}
+  \label{remark:proxy-fields}
+  Integral and differential forms are fairly abstract objects, which
+  gain their meaning by being integrated over their respective
+  domains. Let us therefore relate them to functions and vector
+  fields, also referred to as \define{proxy fields}.
+
+  First 0-forms. We have already defined them as differentiable
+  functions. Furthermore, 0-forms define integrals over sets of
+  dimension zero, thus point evaluation.
+  Thus, a form $\omega_0$ is related to a scalar function $p$ by
+  \begin{gather}
+    \omega_0(\vx) = p(\vx),\qquad \int_\vx \omega_0 = p(\vx).
+  \end{gather}
+
+  The space of 3-forms is also one-dimensional and can thus be
+  represented by a scalar function. They represent integrals over
+  three-dimensional sets $\domain$. It is known that all elements of
+  $\Alt^n\R^n$ are multiples of the determinant. Thus, we conclude the
+  relation
+  \begin{gather}
+    \omega_3(\vx)(\vv_1,\vv_2,\vv_3) = p(\vx) \det(\vv_1,\vv_2,\vv_3)
+    ,\qquad \int_\domain \omega_3 = \int_\domain p(\vx) \dvx.
+  \end{gather}
+
+  The spaces of 1-forms and 2-forms on $\R^n$ are of dimension
+  $n$. Thus they can be represented by vector fields $\vu$. 1-forms are
+  related to line integrals and their proxy fields follow the scheme
+  \begin{gather}
+    \omega_1(\vx)(\vv_1) = \vu(\vx) \cdot \vv_1
+    ,\qquad \int_\Gamma \omega_1 = \int_\Gamma \vu(\vx) \cdot \dl.
+  \end{gather}
+
+  Finally, 2-forms represent area integrals over vector fields such as
+  \begin{gather}
+    \omega_2(\vx)(\vv_1,\vv_2) = \vu(\vx) \cdot (\vv_1 \times ,\vv_2)
+    ,\qquad \int_A \omega_2 = \int_A \vu(\vx) \cdot \n \ds.
+  \end{gather}
+\end{remark}
+
+\begin{Definition}{proxy-fields}
+  A differential form $\omega_k \in \C^m\Lambda^k(\domain)$ for
+  $\domain \subseteq \R^3$ is generated by a \define{proxy field}
+  $p\in C^m(\domain)$ or $\vu\in\C^m(\domain;\R^3)$ by assigning
+  \begin{align}
+    \omega_0 &= p\\
+    \omega_1 &= u_1 \dx_1 + u_2 \dx_2 + u_3 \dx_3\\
+    \omega_2 &= u_1 \dx_2\wedge \dx_3 + u_2 \dx_3 \wedge \dx_1 + u_3 \dx_1 \wedge \dx_2\\
+    \omega_3 &= p \, \dx_1 \wedge \dx_2 \wedge \dx_3.
+  \end{align}
+\end{Definition}
+\begin{todo}
+  Should $\dx_i$ be the dual basis of $e_i$ or of any basis $x_i$?
+\end{todo}
+
+
+\begin{Problem}{proxy-fields}
+  Show that the definition of the proxy fields in coordinates in
+  \slideref{Definition}{proxy-fields} is consisten with the discussion
+  in Remark~\ref{remark:proxy-fields}.
+\end{Problem}
+
+\begin{Definition}{exterior-derivative}
+  The \define{exterior derivative} $d$ of an integral $k$-form is
+  defined such that the relation
+  \begin{gather}
+    \label{eq:mixed:k-forms-stokes}
+    \int_M d\omega = \int_{\d M} \omega
+  \end{gather}
+  holds for any smooth manifold $M$ of dimension $k$. The exterior
+  derivative on differential forms is defined as
+  $d:C^1\Lambda^k \to C^0\Lambda^{k+1}$ by
+  \begin{gather}
+    \label{eq:mixed:exterior-derivative}
+    d\omega(v_1,\dots,v_{k+1})
+    = \sum_{j=1}^{k+1} (-1)^{j+1} \tfrac{\d}{\d v_j} \omega(v_1,\dots,\widehat{v_j},\dots,v_{k+1}).
+  \end{gather}
+  In coordinates, we have
+  \begin{gather}
+    d(\alpha_\sigma \dx_{\sigma_1} \wedge\dots\wedge \dx_{\sigma_k})
+    = \sum_{j=1}^n \frac{\partial \alpha_\sigma}{\d x_j}
+    \dx_j \wedge \dx_{\sigma_1} \wedge\dots\wedge \dx_{\sigma_k}.
+  \end{gather}
+\end{Definition}
+
+\begin{remark}
+  The definitions of the exterior derivative according to
+  formulas~\eqref{eq:mixed:exterior-derivative}
+  and~\eqref{eq:mixed:k-forms-stokes} are consistent by the
+  \putindex{Stokes theorem} for differential forms.
+\end{remark}
+
+\begin{Lemma}{proxy-derivatives}
+  Let $p$ be a proxy field for $\omega_0\in C^1\Lambda^0(\R^3)$ and
+  $\vu$ be a proxy field for $\omega_1\in C^1\Lambda^1(\R^3)$ and
+  $\omega_2\in C^1\Lambda^2(\R^3)$, respectively. Then, the
+  corresponding proxy fields of the exterior derivatives are
+  \begin{gather}
+    \begin{matrix}
+      d\omega_0 & \leftrightarrow & \nabla p\\
+      d\omega_1 & \leftrightarrow & \curl \vu\\
+      d\omega_2 & \leftrightarrow & \div \vu.
+    \end{matrix}
+  \end{gather}
+\end{Lemma}
+
+\begin{Problem}{proxy-derivatives}
+  Show \slideref{Lemma}{proxy-derivatives} by using thee coordinate
+  representations of the exterior derivative and the proxy fields.
+\end{Problem}
+
+\begin{Lemma}{leibnitz-rule}
+  The exterior derivative admits the \define{Leibniz rule}: for
+  $\omega\in C^1\Lambda^j$ and $\eta\in C^1\Lambda^k$, there holds
+  \begin{gather}
+    d(\omega\wedge\eta) = d\omega\wedge\eta + (-1)^j\omega\wedge d\eta.
+  \end{gather}
+\end{Lemma}
+
+\begin{Definition}{pullback-algebra}
+  Let $L\colon V\to W$ be a linear mapping and $\omega \in \Alt^k
+  W$. Then, a $k$-form on $V$ is defined by \define{pullback}, namely
+  \begin{gather}
+    L^* \omega(v_1,\dots,v_k) = \omega(Lv_1,\dots,Lv_k)
+    \qquad\forall v_1,\dots,v_k\in V.
+  \end{gather}
+\end{Definition}
+
+\begin{remark}
+  The definition of the pullback is consistent with the dual
+  operator $L^*\colon \Alt^1 W \to \Alt^1 V$. Furthermore, there holds
+  \begin{gather}
+    L^*(\omega\wedge\eta) = L^*\omega \wedge L^*\eta.
+  \end{gather}
+\end{remark}
+
+\begin{Definition}{pullback}
+  Let $\widehat\domain,\domain$ be domains in $\R^n$ such that there is a
+  smooth, surjective, invertible, orientation preserving transformation
+  $\Phi\colon \widehat\domain \to \domain$. Then, the \define{pullback} of a
+  differential form $\omega \in\Lambda^k(\domain)$ is the
+  differential form $\Phi^*\omega \in \Lambda^k(\widehat\domain)$ defined by
+  \begin{gather}
+    (\Phi^*\omega)(\refvx) = \bigl(\jacobian\refmap(\refvx)\bigr)^*\omega(\vx),
+  \end{gather}
+  or more explicitly
+  \begin{gather}
+    (\Phi^*\omega)(\refvx)(v_1,\dots,v_k)
+    = \omega(\vx)\bigl(\jacobian\refmap(\refvx)v_1,\dots,\jacobian\refmap(\refvx)v_k\bigr).
+  \end{gather}
+  Here, $\vx = \Phi(\refvx)$.
+\end{Definition}
+
+\begin{Lemma}{pullback-structure}
+  The pullback for differential forms preserves the structure of such
+  forms, in particular, for all forms applicable
+  \begin{align}
+    \Phi^*(\omega\wedge \eta) &= \Phi^* \omega \wedge \Phi^*\eta\\
+    \Phi^*(d\omega) &= d(\Phi^*\omega)\\
+    \int_{\widehat\domain} \Phi^*\omega &= \int_{\domain} \omega.
+  \end{align}
+\end{Lemma}
+
+\begin{Lemma}{pullback-proxy}
+  The pullback under the mapping $\Phi$ applied to the proxy fields
+  yields the following transformations
+  \begin{xalignat}2
+    \Lambda^0&:& \refp(\refvx) &= p(\vx)\\
+    \Lambda^1&:& \refvu(\refvx) &= \jacobian\refmap(\refvx)^T \vu(\vx)\\
+    \Lambda^2&:& \refvu(\refvx) &= \det \jacobian\refmap(\refvx) \; \jacobian\refmap(\refvx)^{-1} \vu(\vx)\\
+    \Lambda^3&:& \refp(\refvx) &= \det \jacobian\refmap(\refvx) \,p(\vx).
+  \end{xalignat}
+\end{Lemma}
+
+\begin{Definition}{forms-trace}
+  Let $i\colon \d\domain \to \overline\domain$ be the embedding
+  operator mapping the point $\vx\in\d\domain$ to itself as
+  $\vx\in\overline\domain$.  We define the trace operator
+  \begin{align}
+    \gamma\colon \Lambda^k(\overline\domain) &\to \Lambda^k(\d\domain)\\
+    \omega & \mapsto i^*\omega.
+  \end{align}
+\end{Definition}
+
+\begin{remark}
+  The boundary of $\domain$ is of codimension one. Hence, for a
+  smooth, open part $U\subset \d\domain$, we can find a set
+  $\widehat U\in \R^{n-1}$ and a transformation
+  $\Phi\colon\widehat U\to U$. Then, we have for
+  $\omega\in\Lambda^k(\domain)$ and $\vx\in U$ with $\vx = \Phi\refvx$
+  \begin{gather}
+    \Phi^*\gamma\omega(\refvx)(v_1,\dots,v_k)
+    =
+    \gamma\omega(\vx)(\jacobian\refmap v_1,\dots,\jacobian\refmap v_k).
+  \end{gather}
+  There holds $\Phi^*\gamma\omega\in \Lambda^k(\widehat U)$ and the
+  vectors $v_1,\dots,v_k$ are in $\R^{n-1}$. Their images
+  $\jacobian\refmap v_i$ are tangential to $\d\domain$. Thus, the trace only
+  depends on the tangential component of $\omega$. In particular,
+  nothing is known about $\gamma\omega$ applied to vectors which are
+  not tangential.
+\end{remark}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

@@ -1,0 +1,141 @@
+\begin{Definition}{spanned-simplex}
+  Let $x_0,\dots,x_k$ for $k\le \sdim$ be a set of $k+1$ points in
+  $\R^\sdim$. Then, we call the set of convex combinations of these points
+  the $k$-simplex $f$ spanned by $\{x_0,\dots,x_k\}$.
+\end{Definition}
+
+\begin{Definition}{subsimplices}
+  Let $\cell$ be the simplex in $\R^\sdim$ spanned by the points
+  $x_0,\dots,x_\sdim$. Then, every ascending subset
+  $\sigma \subset \{0,\dots,\sdim\}$ of length $k+1$ defines a
+  $k$-dimensional \define{subsimplex} of $\cell$ denoted as $f_\sigma$.
+
+  The set of all subsimplices of $\cell$, including $\cell$ itself is
+  called es
+  \index{Delta@$\Delta(\cell)$} $\Delta(\cell)$. The set of all $k$-dimensional subsimplices
+  is \index{Delta k@$\Delta_k(\cell)$} $\Delta_k(\cell)$.
+\end{Definition}
+
+\begin{example}
+  A $\sdim$-dimensional simplex $\cell$ has $\binom{\sdim+1}{k+1}$
+  subsimplices of dimension $k$.
+
+  The one-dimensional simplex $[x_0,x_1]$ has two subsimplices of
+  dimension zero, namely the two points $x_0$ and $x_1$.
+
+  The triangle spanned by the points $x_0, x_1, x_3$ has three
+  one-dimensional subsimplices (edges) and three zero-dimensional
+  subsimplices (vertices).
+
+  The tetrahedron spanned by the points $x_0,\dots,x_3$ has
+  \begin{itemize}
+  \item 4 triangular faces,
+  \item 6 edges,
+  \item 4 vertices.
+  \end{itemize}
+\end{example}
+
+\begin{Definition}{barycentric-coordinates}
+  A simplex $T\in \R^\sdim$ with vertices $x_0,\dots,x_\sdim$ is described by
+  a set of $\sdim+1$ \define{barycentric coordinates}
+  $\lambda_0,\dots,\lambda_d$ such that
+  \begin{xalignat}2
+    0\le\lambda_i(x) &\le 1& i&=0,\dots,d;\quad x\in T\\
+    \lambda_i(x_j) &= \delta_{ij}& i,j&=0,\dots,d\\
+    \sum \lambda_i(x) &= 1.
+  \end{xalignat}
+\end{Definition}
+
+\begin{remark}
+  The functions $\lambda_i(x)$ are the shape functions of the linear
+  $P_1$ element on $T$. They allow us to define basis functions on the
+  cell $T$ without use of a reference element $\widehat T$.
+
+  Note that $\lambda_i\equiv 0$ on the face opposite to the
+  vertex $x_i$.
+\end{remark}
+
+\begin{example}
+  We can use barycentric coordinates to define shape functions on
+  simplicial meshes easily, as in
+  Table~\ref{tab:barycentric-shapes}.
+  \begin{table}[tp]
+    \centering
+    \begin{tabular}{|c|l|}
+      \hline Degrees of freedom
+      & Shape functions \\\hline
+      \adjustbox{valign=center,margin=3pt}{\includegraphics[width=2cm]{./fig/p1-p.tikz}}
+      &
+        {\begin{minipage}[b]{6cm}
+          \begin{gather}
+            \phi_i = \lambda_i,
+            \quad i=0,1,2
+          \end{gather}
+        \end{minipage}}
+      \\\hline
+      \adjustbox{valign=center,margin=3pt}{\includegraphics[width=2cm]{./fig/p2-p.tikz}}
+      &
+        {\begin{minipage}[b]{6cm}
+          \begin{xalignat*}2
+            \phi_{ii} &= 2\lambda_i^2 - \lambda_i,
+            &i&=0,1,2\\
+            \phi_{ij} &= 4\lambda_i\lambda_j
+            &j&\neq i
+          \end{xalignat*}
+        \end{minipage}}
+        \\\hline
+      \adjustbox{valign=center,margin=3pt}{\includegraphics[width=2cm]{./fig/p3-p.tikz}}
+      &
+        {\begin{minipage}[b]{6cm}
+          \begin{xalignat*}2
+          \phi_{iii} &= \tfrac12 \lambda_i(3\lambda_i-1)(3\lambda_i-2)
+          &i&=0,1,2\\
+          \phi_{ij} &= \tfrac92\lambda_i\lambda_j(3\lambda_j-1)
+          &j&\neq i\\
+          \phi_0 &= 27\lambda_0\lambda_1\lambda_2
+        \end{xalignat*}
+        \end{minipage}}
+        \\\hline
+    \end{tabular}
+    \caption{Degrees of freedom and shape functions of simplicial elements
+      in terms of barycentric coordinates}
+    \label{tab:barycentric-shapes}
+  \end{table}
+\end{example}
+
+\begin{Lemma}{barycentric-subsimplex}
+  Let $\cell$ be a simplex in $\R^\sdim$ with barycentric coordinates
+  $\lambda_0,\dots,\lambda_\sdim$. Then, the subset
+  $\lambda_{\sigma_1},\dots,\lambda_{\sigma_k}$ form the barycentric
+  coordinates of the subsimplex $f_\sigma\in\Delta_k(\cell)$.
+\end{Lemma}
+
+\begin{Notation}{dual-barycentric}
+  For a simplex $\cell\subset \R^\sdim$, the vectors $t_i = x_i-x_0$
+  for $i=1,\dots,\sdim$ form a basis of $\R^n$. The dual basis in
+  $\Alt^1\R^\sdim$ is denoted by $\dlambda_1,\dots,\dlambda_\sdim$.
+
+  For a subsimplex $f_\sigma$ of dimension $k$, the vectors
+  $\{t_{\sigma_1},\dots,t_{\sigma_k}\}$ span the tangent space
+  $Tf_\sigma$ and the restrictions of $\{\dlambda_{\sigma_1},\dots,\dlambda_{\sigma_k}\}$ to this tangent space form a basis for $\Alt^1Tf_\sigma$.
+\end{Notation}
+
+\begin{Notation}{alt-k-barycentric}
+  The algebraic $k$-forms
+  \begin{gather}
+    \dlambda_\sigma = \dlambda_{\sigma_1}\wedge\dots\wedge\dlambda_{\sigma_k},
+  \end{gather}
+  for $\sigma\in\Sigma(k,n)$ form a basis for $\Alt^k(\R^n)$. Thus,
+  each differential form on a simplex $\cell$ can be written as
+  \begin{gather}
+    \omega = \sum_{\sigma\in\Sigma(k,n)} a_\sigma \dlambda_\sigma,
+  \end{gather}
+  with coefficient functions $a_\sigma\colon \cell\to \R$.
+\end{Notation}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

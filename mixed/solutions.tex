@@ -1,22 +1,17 @@
 \documentclass[USenglish]{report}
-\usepackage{../mathsim}
+\usepackage{mathsim}
 \usetikzlibrary{svg.path}
 \externaldocument{main}
 
 \makeatletter
-\def\thickrule{\leavevmode\leaders\hrule height 2pt\hfill\kern\z@}
-\def\BT@without#1(#2){%
-    \textbf{\capitalizewords{#1} #2:}}
-\def\BT@with[#1]#2(#3){%
-    \textbf{\capitalizewords{#2} #3 (#1):}}
-\def\endblocktheorem{
-
-\thickrule\vfill}
+\def\blocktheorem#1#2(#3){\begin{block}{#3 \capitalizewords{#1}%
+      \def\tmp{#2}\ifx\tmp\empty{}\else (#2)\fi}}
+\def\endblocktheorem{\end{block}}
 \makeatother
+\def\frame#1{#1}
+
 \newenvironment{solution}{
-
-\hrulefill
-
+  
 \textbf{Solution:}}{}
 
 \begin{document}

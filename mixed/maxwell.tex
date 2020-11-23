@@ -24,7 +24,7 @@
   The scalar curl of a two-dimensional vector field is equal to the
   third component of the extension of this vector field by zero into
   $\R^3$, in formulas,
-  \begin{gather*}
+  \begin{gather}
     \curl
     \begin{pmatrix}
       u_1\\u_2
@@ -34,28 +34,16 @@
     \begin{pmatrix}
       u_1\\u_2\\0
     \end{pmatrix}_3.
-  \end{gather*}
+  \end{gather}
   Similarly, the vector curl of a scalar function $\phi$ in two dimensions
   consistes of the first two components of the curl of a three
-  dimensional function in the last component of t he vector,
-  \begin{gather*}
+  dimensional function in the last component of the vector,
+  \begin{gather}
     \curl \phi = \curl
     \begin{pmatrix}
       0\\0\\\phi
     \end{pmatrix}_{1,2}.
-  \end{gather*}
-\end{remark}
-\begin{remark}
-  A popular error in the literature consists of the following
-  argument: since $\div E = 0$, there also holds $\nabla \div E =
-  0$. Therefore, we can use the formula
-  \begin{gather*}
-    \Delta u = \nabla\div u - \curl\curl u,
-  \end{gather*}
-  and avoid the div-curl-problem alltogether. Unfortunately, this is
-  only true, if solutions of~\eqref{eq:maxwell:1} are in
-  $H^1(\domain;\R^d)$, which is not true, depending on the boundary
-  conditions.
+  \end{gather}
 \end{remark}
 
 \begin{Lemma}{curl-green}
@@ -74,28 +62,30 @@
   \item Gauss' law for the electric field: the electric flux
     through a closed surface equals $1/\epsilon$ times the electric
     charge enclosed by the surface:
-    \begin{gather*}
+    \begin{gather}
       \int_{\d V} E\cdot \n \ds = \int_V \frac\rho\epsilon \dx.
-    \end{gather*}
+    \end{gather}
   \item There are no magnetic monopoles, therefore the magnetic flux
     through any closed surface vanishes:
-    \begin{gather*}
+    \begin{gather}
       \int_{\d V} B\cdot \n \ds = 0.
-    \end{gather*}
+    \end{gather}
   \item Faraday's law of induction: the voltage induced in a closed
     loop is proportional to the rate of change of the magnetic field
     through the surface encloded by the loop:
-    \begin{gather*}
-      \int_{\d A} E\cdot\ds = -\frac{d}{dt}\int_A B\cdot \n \ds.
-    \end{gather*}
+    \begin{gather}
+      \label{eq:mixed:maxwell:faraday}
+      \int_{\d A} E\cdot\dl = -\frac{d}{dt}\int_A B\cdot \n \ds.
+    \end{gather}
   \item Ampère's law: the magnetic field induced in a closed loop is
     proportional to the electric current plus the change of electric
     field through that loop:
-    \begin{gather*}
-      \int_{\d A} B\cdot\ds
+    \begin{gather}
+      \label{eq:mixed:maxwell:ampere}
+      \int_{\d A} B\cdot\dl
       = \mu \int_A J\cdot \n \ds
       + \mu\epsilon\frac{d}{dt}\int_A E\cdot \n \ds.
-    \end{gather*}
+    \end{gather}
   \end{enumerate}
   
   Using the Gauss theorem for the first two and the Stokes theorem for
@@ -105,7 +95,7 @@
     \div E &= \frac\rho\epsilon
     & \curl E &= -\d_t B,\\
     \div B &= 0
-    & \curl B &= \mu J + \mu\epsilon E.
+    & \curl B &= \mu J + \mu\epsilon \d_t E.
   \end{xalignat}
   They are an hyperbolic system of equations and typically have wave
   solutions. Many simplifications have been developed to suit
@@ -131,6 +121,18 @@
   theory also provides insight into the other forms.
 \end{intro}
 
+\begin{remark}
+  A popular error in the literature consists of the following
+  argument: since $\div E = 0$, there also holds $\nabla \div E =
+  0$. Therefore, we can use the formula
+  \begin{gather}
+    \Delta \vu = \nabla\div \vu - \curl\curl \vu,
+  \end{gather}
+  and avoid the div-curl-problem alltogether. Unfortunately, this is
+  only true, if solutions of~\eqref{eq:maxwell:1} are in
+  $H^1(\domain;\R^d)$, which is not true, depending on the boundary
+  conditions. See the discussion in~\cite{CostabelDauge00}.
+\end{remark}
 
 \begin{Definition}{Maxwell-boundary}
   The Maxwell equation~\eqref{eq:maxwell:1} is complemented with the
@@ -138,27 +140,41 @@
   \begin{itemize}
   \item Perfectly conducting:
     \begin{gather}
-      \n\times u = 0.
+      \n\times \vu = 0.
     \end{gather}
     \item Natural:
       \begin{gather}
-        n\times \curl u = 0.
+        \n\times \curl \vu = 0.
       \end{gather}
     \item Impedance:
       \begin{gather}
-        n\times \curl u - \alpha  (\n\times u) \times \n = 0.
+        \n\times \curl \vu - \alpha  (\n\times \vu) \times \n = 0.
       \end{gather}
   \end{itemize}
 \end{Definition}
 
+\begin{Definition}{Hcurl}
+  The space $\Hcurl(\domain)$ is the subspace of vector fields in
+  $L^2(\domain;\R^d)$ with distributional curls in $L^2(\domain;\R^d)$,
+  \begin{gather}
+    \Hcurl(\domain) = \bigl\{ \vu \in L^2(\domain;\R^d) \; \big\vert
+    \; \nabla \times \vu \in L^2(\domain;\R^d) \bigr\}.
+  \end{gather}
+  It is a Hilbert space with the norm defined by
+  \begin{gather}
+    \norm{\vu}_{\Hcurl}^2 = \norm{\vu}_{L^2}^2 + \norm{\curl\vu}_{L^2}^2.
+  \end{gather}
+  In two dimensions, the same definitions apply with replacement of
+  the scalar curl of the vector field.
+\end{Definition}
 
 \begin{Definition}{curl-traces}
   For $u\in C^1(\overline\domain)$, we define the trace operators
   \begin{gather}
     \label{eq:maxwell:4}
     \begin{split}
-      \gamma_{\tau} &= \n\times u_{|\d\domain}, \\
-      \gamma_{T} &= \n\times u_{|\d\domain} \times \n.\\
+      \gamma_{\tau} &= \n\times \vu_{|\d\domain}, \\
+      \gamma_{T} &= \n\times \vu_{|\d\domain} \times \n.\\
     \end{split}
   \end{gather}
   The second of these is the tangential component of $u$ on the
@@ -174,26 +190,26 @@
 \begin{Theorem}{curl-traces}
   The trace operator $\gamma_\tau$ can be extended to a continuous,
   surjective operator
-  \begin{gather*}
+  \begin{gather}
     \gamma_\tau \colon \Hcurl(\domain) \to Y(\d\domain),
-  \end{gather*}
+  \end{gather}
   where
   \begin{gather}
     \label{eq:maxwell:5}
     \begin{split}
       Y(\d\domain) &= \bigl\{
-      u\in H^{-1/2}_\tau(\d\domain) \big\vert
-      \;\nu\cdot(\curl u) \in H^{-1/2}(\d\domain) \bigr\},\\
-      H^{-1/2}_\tau(\d\domain) &= \bigl\{
-      u\in H^{-1/2}(\d\domain;\R^d) \big\vert 
-      u\cdot\n=0 \text{ a.e.}\bigr\}.
+      \vu\in \vH^{-1/2}_\tau(\d\domain)\; \big\vert
+      \;\n\cdot(\curl \vu) \in H^{-1/2}(\d\domain) \bigr\},\\
+      \vH^{-1/2}_\tau(\d\domain) &= \bigl\{
+      \vu\in \vH^{-1/2}(\d\domain;\R^d) \;\big\vert \;
+      \vu\cdot\n=0 \text{ a.e.}\bigr\}.
     \end{split}
   \end{gather}
   Furthermore, the trace operator $\gamma_T$ can be extended to a
   continuous operator
-  \begin{gather*}
+  \begin{gather}
     \gamma_T \colon \Hcurl(\domain) \to Y(\d\domain)^*.
-  \end{gather*}
+  \end{gather}
 \end{Theorem}
 
 
@@ -211,14 +227,14 @@
 
 \begin{Definition}{Maxwell-mixed-0}
   The Maxwell problem for perfectly conducting boundary conditions in
-  weak form reads: find $(u,p)\in V\times Q$, where
+  weak form reads: find $(\vu,p)\in V\times Q$, where
   $V=\Hcurl_0(\domain)$ and $Q=H^1_0(\domain)$ such that there holds
     \begin{gather}
       \label{eq:maxwell:6}
     \begin{aligned}
-      \form(\curl u, \curl v) &+ \form(v,\nabla p) &=&\form(f,v)
-      &\forall v&\in V\\
-      \form(u,\nabla q) & &=&0
+      \form(\curl \vu, \curl \vv) &+ \form(\vv,\nabla p) &=&\form(\vf,\vv)
+      &\forall \vv&\in \vV\\
+      \form(\vu,\nabla q) & &=&0
       &\forall q&\in Q.\\      
     \end{aligned}
   \end{gather}

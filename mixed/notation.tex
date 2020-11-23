@@ -1,0 +1,118 @@
+\subsection{Combinatorics}
+
+\input{combinations}
+
+\subsection{Simplices and barycentric coordinates}
+\label{sec:barycentric}
+\input{barycentric}
+
+\subsection{Domains and function spaces}
+
+\begin{Notation}{domain}
+  By $\domain$ we denote a \define{domain} in $\R^d$, that is, an
+  open, connected subset. The boundary of $\domain$ is denoted by
+  $\d\domain$.
+
+  Unless stated otherwise, we will always assume that the boundary of
+  the domain consists of finitely many smooth surfaces meeting in
+  ridges. Actually, we will often assume polygonal domains, such that
+  the finite element mesh covers it exactly.
+\end{Notation}
+
+\begin{Notation}{vector-diff-operators}
+  Differential operators for vector fields $u:\R^d\to\R^d$
+  are defined as follows:
+  \begin{xalignat}2
+    \nabla \vu &=
+    \begin{pmatrix}
+      \d_1 u_1 & \cdots & \d_d u_1\\
+      \vdots && \vdots \\
+      \d_1 u_d & \cdots & \d_d u_d
+    \end{pmatrix}
+    &&\text{(gradient)}
+    \\
+    \div \vu &= \sum_{i=1}^d \d_i u_i
+    &&\text{(divergence)}\\
+    \strain u &= \frac{\nabla u + (\nabla u)^\transpose}{2}
+    &&\text{(symmetric gradient)}
+  \end{xalignat}
+
+  For a tensor field $\sigma: \R^d\to \R^{d\times d}$, the divergence
+  is a vector defined row-wise as
+  \begin{gather}
+    \div\sigma = \left(\sum_{j=1}^d \d_j \sigma_{ij}\right)_{i=1,\dots,d}
+  \end{gather}
+\end{Notation}
+
+\begin{Notation}{lebesgue-spaces}
+  For a domain $\domain\in\R^d$, we denote by $L^2(\domain)$\index{L2@$L^2(\domain)$} the \define{Lebesgue-space}
+  of square integrable ``functions'' on $\domain$ with its norm\index{norm!L2@$\norm{\cdot}_{L^2}=\norm{\cdot}_0$}
+  \begin{gather}
+    \norm{u} = \norm{u}_0 = \norm{u}_{L^2(\domain)}.
+  \end{gather}
+  We denote the inner product of $L^2(\domain)$ by
+  \begin{gather}
+    \scal(u,v)_{L^2(\domain} = \form(u,v) = \int_\domain u v \dvx.
+  \end{gather}
+\end{Notation}
+
+\begin{Notation}{sobolev-spaces}
+  By $H^k(\domain)$\index{Hk@$H^k(\domain)$} we denote the
+  \define{Sobolev space} of square integrable functions on $\domain$
+  with square integrable distributional derivatives up to order
+  $k$. Its norm is\index{norm!Hk@$\norm{\cdot}_{H^k}=\norm{\cdot}_{k}$}
+  \begin{gather}
+    \norm{u}_k = \norm{u}_{H^k(\domain)} = \sum_{\abs{\alpha} \le k}
+    \norm{\d^\alpha u}_{L^2(\domain)}.
+  \end{gather}
+  We also use the $H^k$-seminorm\index{seminorm!Hk@$\abs{\cdot}_{H^k}$}
+  \begin{gather}
+    \abs{u}_k = \norm{u}_{H^k(\domain)} = \sum_{\abs{\alpha} \le k}
+    \norm{\d^\alpha u}_{L^2(\domain)}.
+  \end{gather}
+\end{Notation}
+
+\begin{Notation}{sobolev-spaces-2}
+  By $H^1_0(\domain)$\index{H10@$H^1_0(\domain)$} we denote the
+  completion of $C^\infty_0(\domain)$ with respect to the norm
+  $\norm{\cdot}_{H^1(\domain)}$. Similarly,
+  $H^1_{\Gamma}(\domain)$\index{H1gamma@$H^1_\Gamma(\domain)$} for any
+  $\Gamma\subset\d\domain$ is the completion of all functions in
+  $C^\infty(\domain)$ vanishing on $\gamma$.
+
+  By $H^{-1}(\domain)$\index{H1m@$H^{-1}(\domain)$}, we denote the
+  normed dual of $H^1_0(\domain)$, that is the space of bounded linear
+  functionals on this space.
+\end{Notation}
+
+\begin{Notation}{vector-valued}
+  We denote vector valued quantities by boldface letters like $\vx$,
+  $\vu$, $\vv$. Lebesgue spaces of vector valued functions
+  are denoted either by $L^2(\domain;\R^d)$ or by $\vL(\domain)$. The inner product of these is
+  \begin{gather}
+    \form(u,v) = \int_\domain \vu \cdot \vv \dx.
+  \end{gather}
+  Vector valued Sobolev spaces $\vH^k(\domain)$ are defined accordingly.
+\end{Notation}
+
+\begin{Notation}{transpose}
+  Given two Hilbert spaces $V$ and $W$ and a mapping $A\colon V\to W^*$,
+  we define the \define{adjoint} of $A$ by
+  \begin{gather}
+    \begin{split}
+      A^\transpose\colon W &\to V^* \\
+      \scal(Av,w)_{W^*\times W} &= \scal(v,A^\transpose w)_{V\times V^*}
+      \qquad \forall v\in V, w\in W.
+    \end{split}
+  \end{gather}
+  The adjoint with respect to the Euclidean inner product is called
+  the \define{transpose} of $A$, denoted by $A^\transpose$ as
+  well. This notation is used consistently for real and complex
+  Hilbert spaces.
+\end{Notation}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

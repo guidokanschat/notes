@@ -50,6 +50,22 @@ Ciarlet, P.~G. (1988).
   volume~20 of {\em Studies in mathematics and its applications}.
 \newblock North-Holland.
 
+\bibitem[Clément, 1975]{Clement75}
+Clément, P. (1975).
+\newblock Approximation by finite element functions using local regularization.
+\newblock {\em Math. Modeling Numer. Anal.}, 9(R2):77--84.
+
+\bibitem[Costabel and Dauge, 2000]{CostabelDauge00}
+Costabel, M. and Dauge, M. (2000).
+\newblock Singularities of electromagnetic fields in polyhedral domains.
+\newblock {\em Arch. Rat. Mech. Anal.}, 151(3):221--276.
+
+\bibitem[Desvillettes and Villani, 2002]{DesvillettesVillani02}
+Desvillettes, L. and Villani, C. (2002).
+\newblock On a variant of korn's inequality arising in statistical mechanics.
+\newblock {\em ESAIM: Control, Optimisation and Calculus of Variations},
+  8:603--619.
+
 \bibitem[Duvaut and Lions, 1976]{DuvautLions76}
 Duvaut, G. and Lions, J.~L. (1976).
 \newblock {\em Inequalities in Mechanics and Physics}.
@@ -60,6 +76,11 @@ Ern, A. and Guermond, J.-L. (2004).
 \newblock {\em Theory and practice of finite elements}, volume 159 of {\em
   Applied Mathematical Sciences}.
 \newblock Springer-Verlag, New York.
+
+\bibitem[Ern and Guermond, 2017]{ErnGuermond17}
+Ern, A. and Guermond, J.-L. (2017).
+\newblock Finite element quasi-interpolation and best approximation.
+\newblock {\em ESAIM: M2AN}, 51(4):1367--1385.
 
 \bibitem[Girault et~al., 2014]{GiraultKanschatRiviere14}
 Girault, V., Kanschat, G., and Rivière, B. (2014).
@@ -73,10 +94,47 @@ Girault, V. and Raviart, P.-A. (1986).
   equations}.
 \newblock Springer.
 
+\bibitem[Hackbusch, 2014]{Hackbusch14}
+Hackbusch, W. (2014).
+\newblock Numerical tensor calculus.
+\newblock {\em Acta Numerica}, 23:651--742.
+
+\bibitem[Hackbusch, 2019]{Hackbusch19}
+Hackbusch, W. (2019).
+\newblock {\em Tensor Spaces and Numerical Tensor Calculus}.
+\newblock Springer, 2nd edition.
+
+\bibitem[Hiptmair, 2002]{Hiptmair02}
+Hiptmair, R. (2002).
+\newblock Finite elements in computational electromagnetism.
+\newblock {\em Acta Numer.}, 11:237--339.
+
 \bibitem[Monk, 2003]{Monk03}
 Monk, P. (2003).
 \newblock {\em Finite Element Methods for {M}axwell's Equations}.
 \newblock Oxford.
+
+\bibitem[Reed and Simon, 1980]{ReedSimon80}
+Reed, M. and Simon, B. (1980).
+\newblock {\em Functional Analysis}, volume~1 of {\em Methods of Modern
+  Mathematical Physics}.
+\newblock Academic Press.
+
+\bibitem[Schöberl, 2008]{Schoeberl08}
+Schöberl, J. (2008).
+\newblock A posteriori error estimates for {M}axwell equations.
+\newblock {\em Math. Comput.}, 77(262):633--649.
+
+\bibitem[Schöberl, 2010]{Schoeberl10multilevel-hcurl}
+Schöberl, J. (2010).
+\newblock A multilevel decomposition result in h(curl).
+\newblock on the author's web site.
+
+\bibitem[Scott and Zhang, 1990]{ScottZhang90}
+Scott, L.~R. and Zhang, S. (1990).
+\newblock Finite element interpolation of non-smooth functions satisfying
+  boundary conditions.
+\newblock {\em Math. Comput.}, 54:483--493.
 
 \bibitem[Stenberg, 1990]{Stenberg90}
 Stenberg, R. (1990).

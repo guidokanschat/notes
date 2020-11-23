@@ -14,33 +14,36 @@
   spaces in Chapter~\ref{cha:darcy}.
 \end{intro}
 
-\begin{intro}
-  We now know three differential operators, $\nabla$, $\curl$, and
-  $\div$ with the interesting property
+\subsection{Excursion to differential forms}
+
+\input{alt}
+
+\subsection{Well-posedness of the Maxwell problem}
+
+\begin{Definition}{hlambda}
+  The space $H\Lambda^k(\domain)$ is the closure of $\Lambda^k(\domain)$
+  under the norm corresponding to the inner product
   \begin{gather}
-    \label{eq:derham:10}
-    \curl\nabla \phi = 0
-    \qquad \div\curl E=0.
+    \scal(u,v)_{H\Lambda^k}
+    = \scal(u,v)_{L^2\Lambda^k}
+    + \scal(d u, d v)_{L^2\Lambda^{k+1}}.
   \end{gather}
-  As a consequence, for $\phi\in H^1(\domain)$ we not only have
-  $\nabla \phi\in L^2(\domain;\R^3)$, we also have
-  $\curl\nabla\phi=0\in L^2(\domain;\R^3)$. This gives rise to the sequence
+  The space $H\Lambda^k_0(\domain)$ is the closure of
+  $C^{\infty}_{00}\Lambda^k(\domain)$ with respect to the same norm.
+
+  Both spaces are Hilbert spaces and we have
   \begin{gather}
-    \label{eq:derham:11}
-    \R
-    \overset{\subset}{\longrightarrow} H^1(\domain)
-    \overset{\nabla}{\longrightarrow} \Hcurl(\domain)
-    \overset{\curl}{\longrightarrow} \Hdiv(\domain)
-    \overset{\div}{\longrightarrow} L^2(\domain)
-    \longrightarrow 0,
+    \gamma\omega(v_1,\dots,v_k) = 0 \qquad
+    \forall \omega\in H\Lambda^k_0(\domain),
   \end{gather}
-  such that the range of an operator is always in the kernel of the
-  operator to its right.
-\end{intro}
+  and tangential vector fields $v_1,\dots,v_k$.
+\end{Definition}
 
 \begin{Notation}{hlambda}
-  The notation of exterior calculus of differential forms allows us to
-  write this sequence elegantly as
+  We can summarize the results of the previous section by the notation
+  of the \define{Hilbert cochain complex}\index{cochain complex} of
+  differential forms and the corresponding cochain complex for proxy
+  fields
   \begin{gather}\minCDarrowwidth20pt
     \label{eq:derham:9}
     \begin{CD}
@@ -93,6 +96,7 @@
   In two dimensions, we consider the de Rham sequences
   \begin{gather}\minCDarrowwidth20pt
     \label{eq:derham:8}
+    {\small
     \begin{CD}
       \R
       @>{\subset}>> H^1(\domain)
@@ -122,13 +126,7 @@
       @>{\div}>> L^2(\domain)
       @>>> 0,
     \end{CD}
-  \end{gather}
-\end{Notation}
-
-\begin{Notation}{hlambda-norm}
-  The spaces $H\Lambda^k(\domain)$ are Hilbert spaces with the inner product
-  \begin{gather}
-    \scal(u,v)_{H\Lambda^k} = \scal(u,v)_{L^2} + \scal(d u, d v)_{L^2}.
+    }
   \end{gather}
 \end{Notation}
 
@@ -136,7 +134,33 @@ The value of this notation lies in the following theorem by de Rham,
 which describes the relation between the elements of the sequence. It
 is cited here without proof.
 
-\begin{Theorem}{de-rham}
+\begin{Definition}{cohomology-space}
+  The \define{cohomology group} in $\Lambda^k(\domain)$ is defined in
+  differential geometry as
+  \begin{gather}
+    \mathcal H_k(\domain) = \nicefrac{\ker{d_k}}{\range{d_{k-1}}}.
+  \end{gather}
+  Since we have a Hilbert space structure, we can much more
+  conveniently choose a representative in $\ker{d_k} \subset H\Lambda^k(\domain)$
+  \begin{gather}
+    \mathcal H_k(\domain) = \bigl\{ \omega\in \ker{d_k}
+    \;\big|\;
+    \form(\omega,d\eta) = 0 \quad\forall \eta\in H\Lambda^{k-1}(\domain)
+    \bigr\}.
+  \end{gather}
+  For spaces $H\Lambda^k_0(\domain)$ defined below, $\mathcal H_k$ is
+  defined in an analogous way.
+\end{Definition}
+
+\begin{Theorem*}{de-rham-1}{de Rham}
+  The dimension of the cohomology groups is equal to the Betti
+  numbers, which in turn depend only on the topology of the
+  domain. These depend on the number of ``holes of dimension
+  $k$''. For a Lipschitz domain, they are finite. For a simply
+  connected domain, they are all zero.
+\end{Theorem*}
+
+\begin{Theorem*}{de-rham}{de Rham for Hilbert complexes}
   Assume the domain $\domain$ is Lipschitz.  If $\domain$ is simply
   connected, the sequences in equations~\eqref{eq:derham:9}
   and~\eqref{eq:derham:8} are exact, that is, there holds
@@ -145,9 +169,60 @@ is cited here without proof.
     \ker {d_{k+1}} = \range{d_k}.
   \end{gather}
   If it is not simply connected, the codimension of $\range{d_k}$ in
-  $\ker{d_{k+1}}$ is finite. In particular, in both cases,
-  $\range{d_k}$ is closed in $H\Lambda^{k+1}(\domain)$.
-\end{Theorem}
+  $\ker{d_{k+1}}$ is finite and only determined by the topology of
+  $\domain$. In particular, $\range{d_k}$ is closed in
+  $H\Lambda^{k+1}(\domain)$.
+\end{Theorem*}
+
+\begin{Corollary}{de-rham-1}
+  Let
+  \begin{gather}
+    V_0 = \bigl\{ \omega\in H\Lambda^k(\domain)
+    \; \big| \;
+    \form(\omega, d\eta)_{L^2\Lambda^k(\domain)} = 0
+    \quad\forall\eta\in H\Lambda^{k-1}(\domain)\bigr\}.
+  \end{gather}
+  The problem: find $\omega\in V_0$ such that
+  \begin{gather}
+    \form(d \omega, d\mu) = \form(f,\mu)
+    \qquad\forall \mu\in V_0,
+  \end{gather}
+  has a unique solution on a simply connected domain.
+\end{Corollary}
+
+\begin{Example}{de-rham-1}
+  Consider the case $H\Lambda^0(\domain) = H^1(\domain)$. Then, $V_0$
+  is the space of functions orthogonal to constants, and we seek a
+  solution $p\in  V_0$ such that
+  \begin{gather}
+    \form(\nabla p, \nabla q) = (f,q) \qquad\forall q\in V_0.
+  \end{gather}
+\end{Example}
+
+\begin{Corollary}{de-rham-2}
+  Let
+  \begin{gather}
+    V_0 = \left\{ \omega\in H\Lambda^k(\domain)
+        \; \middle| \;
+        \arraycolsep1pt
+        \begin{array}{rcll}
+          \form(\omega, d\eta)
+          &=&0
+          &\;\forall\eta\in H\Lambda^{k-1}(\domain)\\
+          \form(\omega,\tau)
+          &=&0
+          &\;\forall \tau\in \mathcal H_k(\domain)
+        \end{array}
+  \right\}.
+  \end{gather}
+  The problem: find $\omega\in V_0$ such that
+  \begin{gather}
+    \form(d \omega, d\mu) = \form(f,\mu)
+    \qquad\forall \mu\in V_0,
+  \end{gather}
+  has a unique solution.
+\end{Corollary}
+
 
 So far, we have not considered boundary conditions. The next lemma,
 which is again stated without proof, indicates that the properties of
@@ -159,8 +234,9 @@ condition, but it is the compatibility condition implied by the Gauss
 theorem on $\Hdiv$.
 
 \begin{Lemma}{hlambda-0}
-  The bounded Hilbert cochain complex
+  The Hilbert cochain complex with boundary values
   \begin{gather}\minCDarrowwidth20pt
+    {\small
     \begin{CD}
       0
       @>{d}>> H\Lambda^0_0(\domain)
@@ -182,6 +258,7 @@ theorem on $\Hdiv$.
       @>{\div}>> L^2_0(\domain)
       @>>> 0,
     \end{CD}
+    }
   \end{gather}
   has the same properties as stated for the Hilbert complex without
   boundary conditions.
@@ -197,25 +274,51 @@ theorem on $\Hdiv$.
 
   On the other hand, we could have replaced the right end of the
   complex by
-  \begin{gather*}
+  \begin{gather}
     L^2(\domain) \xrightarrow{\frac1{\abs{\domain}}\int} \R,
-  \end{gather*}
-  where the arror is the mean value operator.
+  \end{gather}
+  where the arrow is the mean value operator.
 \end{remark}
 
+\begin{Lemma}{de-rham-3}
+  The problem: find
+  \begin{gather}
+    (\omega,\eta,\theta)
+    \in H\Lambda^1_0(\domain)
+    \times H\Lambda^{0}_0(\domain)
+    \times \mathcal H_1(\domain)
+  \end{gather}
+   such that
+  \begin{gather}
+    \arraycolsep1pt
+    \begin{array}{cccccclll}
+      \form(d \omega, d\mu) &+& \form(\mu,d\eta) &+& \form(\theta,\mu)
+      &=& \form(f,\mu)
+      & \qquad & \forall \mu\in H\Lambda^1_0(\domain)
+      \\
+      \form(\omega,d\zeta) && && &=&0
+      & \qquad & \forall \zeta\in H\Lambda^{0}_0(\domain)
+      \\
+      \form(\omega,\tau) && && &=& 0
+      & \qquad & \forall \tau\in \mathcal H_1(\domain).
+    \end{array}
+  \end{gather}
+  is well-posed.
+\end{Lemma}
+
 \begin{Theorem}{div-curl-well-posed}
-  The Maxwell problem in \slideref{Definition}{Maxwell-mixed-0} is
-  well posed.
+  Let $\domain$ be simply connected. Then, the Maxwell problem in
+  \slideref{Definition}{Maxwell-mixed-0} is well posed.
 \end{Theorem}
 
 \begin{proof}
   We have to show the inf-sup condition and the ellipticity of the
   curl-curl bilinear form. Let us introduce
-  \begin{gather*}
+  \begin{gather}
     a(u,v) = \form(\curl u, \curl v),
     \qquad
     b(v,q) = \form(v,\nabla q).
-  \end{gather*}
+  \end{gather}
   From the fact that the de Rham complex starts with zero, we obtain
   that the kernel of the gradient is zero. Thus, for any $q\in
   H^1_0(\domain)\setminus\{0\}$, we have $v = \nabla q \neq 0$ and
@@ -246,21 +349,21 @@ we deduce $L_0^2(\Omega)=\range{\nabla\cdot}$. In particular, this means
 that for all $q\in L_0^2(\Omega)$ there exists $v\in H_0^{\text{div}}$ such that
 $\nabla \cdot v=q$ and $\norm{v}_{H^{\text{div}}}\leq C \norm{q}_0$.
 Hence, it holds the estimate
-\begin{align*}
+\begin{align}
 \inf_{q\in Q}\sup_{v\in V}\frac{(\nabla \cdot v, q)}{\norm{q}_Q\norm{v}_V}
   \geq \inf_{q\in Q} \frac{\norm{q}_0}{\norm{v}_{H^{\text{div}}}}\geq C.
-\end{align*}
+\end{align}
 where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
-\begin{align*}
+\begin{align}
   \norm{u}_{H^{\text{div}}}=\norm{u}_0 \quad \forall u\in \ker B.
-\end{align*}
+\end{align}
 \end{solution}
 \end{Problem}
 
 \section{Polynomial complexes for simplicial meshes}
 
 \begin{intro}
-  We have already seen that adding $x\P_k$ to the space $\P_k^d$, we
+  We have already seen that adding $\vx\P_r$ to the space $\P_r^\sdim$, we
   obtain a surjective divergence operator from the Raviart-Thomas
   element to the pressure space $\P_k$. In this section, we see that
   there is a general principle behind this concept and it can be
@@ -268,10 +371,14 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
 \end{intro}
 
 \begin{Notation}{pk-complex}
-  The homogeneous polynomial spaces $\breve\P_k$ form the cochain complex
+  The polynomial complex $\P_r\Lambda^k$ consists of $k$-forms with
+  coefficients in the polynomial space $\P_r$.
+  
+  The homogeneous polynomial spaces $\breve\P_k$ and their proxy
+  fields form the cochain complex
   \begin{gather}\minCDarrowwidth15pt
     \begin{CD}
-      \R
+      0
       @>{d}>> \breve\P_r\Lambda^0
       @>{d}>> \breve\P_{r-1}\Lambda^1
       @>{d}>> \breve\P_{r-2}\Lambda^2
@@ -284,7 +391,7 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
       @V{\cong}VV
       @V{\cong}VV
       \\
-      \R
+      0
       @>{\subset}>> \breve\P_r
       @>{\nabla}>> \breve\P_{r-1}^3
       @>{\curl}>> \breve\P_{r-2}^3
@@ -293,18 +400,80 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
     \end{CD}
   \end{gather}
   and $d_{k+1}\circ d_k = 0$.
+
+  Note the special cases $r=0$ and $r=3$, namely
+  \begin{gather}\minCDarrowwidth15pt
+    \begin{CD}
+      0
+      @>{\subset}>> \R
+      @>{\cong}>> \breve\P_0
+      @>{\nabla}>> 0\\
+      0
+      @>{\subset}>> \breve\P_3
+      @>{\nabla}>> \breve\P_{2}^3
+      @>{\curl}>> \breve\P_{1}^3
+      @>{\div}>> \breve\P_{0}
+      @>{\cong}>> \R
+      @>>> 0,
+    \end{CD}
+  \end{gather}
 \end{Notation}
 
 \begin{remark}
   Since the polynomial space $\P_r$ is the direct sum
-  \begin{gather*}
+  \begin{gather}
     \P_r = \bigoplus_{s=0}^r \breve\P_s,
-  \end{gather*}
+  \end{gather}
   the homogeneous polynomial complex above can be extended to a
   general polynomial complex in a straightforward way.
 \end{remark}
 
 \subsection{The Koszul complex}
+
+\begin{Definition}{koszul-differential}
+  We define the \define{Koszul differential} as a map
+  \begin{gather}
+    \kappa\colon \Lambda^k(\R^\sdim) \to \Lambda^{k-1}(\R^\sdim),
+  \end{gather}
+  such that
+  \begin{gather}
+    \kappa\omega(\vx) (v_1,\dots,v_{k-1})
+    = \omega(\vx) (\vx,v_1,\dots,v_{k-1}).
+  \end{gather}
+  As with the exterior differentail, we write $\kappa_k$ if we want to
+  specify the degree of $\Lambda^k$.  Application to proxy fields yields
+  \begin{gather}
+    \label{eq:derham:13}
+    \begin{aligned}
+      \kappa\omega_1 &\leftrightarrow \vx\cdot\vu,\\
+      \kappa\omega_2 &\leftrightarrow -\vx\times\vu,\\
+      \kappa\omega_3 &\leftrightarrow \vx p.
+    \end{aligned}
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{koszul-differential}
+  There holds
+  \begin{gather}
+    \label{eq:derham:14}
+    \kappa\circ\kappa = \kappa_k\circ\kappa_{k+1} = 0.
+  \end{gather}
+  Furthermore, we have the Leibniz rule for $\omega\in \Lambda^k$ and
+  $\eta\in\Lambda^\ell$
+  \begin{gather}
+    \kappa(\omega\wedge\eta) = \kappa\omega\wedge\eta
+    + (-1)^k \omega\wedge\kappa\eta.
+  \end{gather}
+  If
+  $\omega(\vx) = a_\sigma(\vx)
+  \dx_{\sigma_1}\wedge\dots\wedge\dx_{\sigma_k}$, then we have
+  \begin{gather}
+    \kappa\omega(\vx) = \sum_{i=1}^k (-1)^{i+1} a_\sigma(\vx)x_{\sigma_i}
+    \dx_{\sigma_1}\wedge\dots\wedge\widehat{\dx_{\sigma_i}}
+    \wedge\dots\wedge\dx_{\sigma_k}.
+  \end{gather}
+  Finally, the Koszul differential commutes with the pullback.
+\end{Lemma}
 
 \begin{Definition}{Koszul-complex}
   The homogeneous \define{Koszul complex} is a polynomial complex of
@@ -317,28 +486,27 @@ where $q = \nabla \cdot v$. Ellipticity of the bilinear form is obvious
       @<{\kappa_1}<< \breve \P_{r-1}\Lambda^1
       @<{\kappa_2}<< \breve \P_{r-2}\Lambda^2
       @<{\kappa_3}<< \breve \P_{r-3}\Lambda^3
-      @<<< 0
+      @<<< \R
     \end{CD}.
   \end{gather}
-  The \define{Koszul differential} is defined such that
-  \begin{gather}
-    \label{eq:derham:13}
-    \begin{aligned}
-      \kappa_1\omega &= x\cdot\omega & \omega&\in \P_s\Lambda^1,\\
-      \kappa_2\omega &= -x\times\omega & \omega&\in \P_s\Lambda^2,\\
-      \kappa_3\omega &= x\omega & \omega&\in \P_s\Lambda^3,
-    \end{aligned}
+  For $r\le 3$ we have
+  \begin{gather}\minCDarrowwidth15pt
+    \label{eq:derham:12a}
+    \begin{CD}
+      0
+      @<<< \breve \P_3\Lambda^{-r}
+      @<{\kappa_1}<< \breve \P_{2}\Lambda^{1-r}
+      @<{\kappa_2}<< \breve \P_{1}\Lambda^{2-r}
+      @<{\kappa_3}<< \breve \P_{0}\Lambda^{3-r}
+      @<<< \R
+    \end{CD},
   \end{gather}
-  and there holds
-  \begin{gather}
-    \label{eq:derham:14}
-    \kappa\circ\kappa = \kappa_{k+1}\circ\kappa_k = 0.
-  \end{gather}
+  where forms with negative index evaluate to zero.
 \end{Definition}
 
 Note that the ``Koszul differential'' increases the polynomial order
 and lowers the order of the form, thus acts in the opposite way of the
-usual differential $d$.
+usual exterior derivative $d$.
 
 \begin{Lemma}{kd-plus-dk}
   For $\omega\in \breve \P_r\Lambda^k$ there holds
@@ -349,36 +517,36 @@ usual differential $d$.
 \end{Lemma}
 
 \begin{proof}
-  Since we are not using differential form technology, we prove this
-  for each $k$ directly. For $k=0$, we have $\kappa\omega = 0$, thus
+  We prove this here
+  for each $k$ directly. The proof for forms is in the video and can be found in ~\cite{ArnoldFalkWinther06acta}. For $k=0$, we have $\kappa\omega = 0$, thus
   we have to show
-  \begin{gather*}
+  \begin{gather}
     \kappa d\omega = r\omega.
-  \end{gather*}
+  \end{gather}
   Due to linearity of $\kappa$ and $d$, it suffices to prove the
   result for $\omega = p=x_1^ax_2^bx_3^c$. We note that $dp/d_{x_1} =
   a/x_1 p$ and $d(x_1 p)/d_{x_1} = (a+1) p$ and analogue for the other
   coordinates.
-  \begin{gather*}
+  \begin{gather}
     \kappa_1 d_0\omega = x\cdot \nabla p = x\cdot
     \begin{pmatrix}
       a/x_1\\b/x_2\\c/x_3
     \end{pmatrix}p
     = (a+b+c)p.
-  \end{gather*}
+  \end{gather}
   The second easy case is $k=3$ such that $d\omega = 0$. Let again
   $\omega = p$ to obtain
-  \begin{gather*}
+  \begin{gather}
     d_2\kappa_3 \omega = \div(xp) = \div
     \begin{pmatrix}
       x_1 p \\x_2 p \\x_3 p
     \end{pmatrix}
     = (a+1+b+1+c+1) p = (r+3) \omega.
-  \end{gather*}
+  \end{gather}
   For the two vector valued cases, we note that it suffices to prove
-  the result for $\omega = (p,0,0)^T$ and to note that the results for
+  the result for $\omega = (p,0,0)^\transpose$ and to note that the results for
   nonzero second and third component follow suite. Thus, for $k=1$
-  \begin{multline*}
+  \begin{multline}
     \nabla (x\cdot \omega) - x\times \curl \omega
     = \nabla(x_1 p) - x\times
     \begin{pmatrix}
@@ -398,9 +566,9 @@ usual differential $d$.
       a+b+c+1 \\0\\0
     \end{pmatrix}p
     = (r+1)\omega.
-  \end{multline*}
+  \end{multline}
   Finally, for $k=2$
-  \begin{multline*}
+  \begin{multline}
     \curl(-x\times \omega) + x \div \omega
     = \curl
     \begin{pmatrix}
@@ -423,7 +591,7 @@ usual differential $d$.
       a+b+c+2\\0\\0
     \end{pmatrix}p
     = (r+2)\omega.
-  \end{multline*}
+  \end{multline}
 \end{proof}
 
 \begin{Lemma}{d-kappa-injective}
@@ -443,18 +611,18 @@ usual differential $d$.
   If $r=k=0$, then $\kappa\omega = d\omega = 0$, such that the lemma
   holds trivially. For $r+k\neq 0$, we apply $\kappa$ to
   equation~\eqref{eq:derham:15} to obtain
-  \begin{gather*}
+  \begin{gather}
     \kappa\omega = \frac1{r+k}
     \bigl(\kappa d\kappa\omega + \kappa^2d\omega\bigr)
     = \frac1{r+k}\kappa d\kappa\omega.
-  \end{gather*}
+  \end{gather}
   Thus, we have proven $d\kappa\omega=0$ implies $\kappa\omega=0$. The
   second implication is proven by applying $d$ to~\eqref{eq:derham:15}.
 \end{proof}
 
 \begin{Theorem}{polynomial-exact}
   The polynomial de Rham complex and the Koszul complex are exact for
-  $r>3$. Furthermore for $r+k>0$, there holds
+  $r\ge 1$. Furthermore, for $k,r\ge 0$ and $k+r>0$, there holds
   \begin{gather}
     \label{eq:derham:17}
     \breve \P_r\Lambda^k = \kappa \breve\P_{r-1}\Lambda^{k+1}
@@ -466,30 +634,30 @@ usual differential $d$.
   We already know $\range{\kappa_{k-1}} \subset \ker{\kappa_k}$. Thus,
   it remains to show the opposite inclusion. Let therefore $\omega\in
   \breve \P_r\Lambda^k$ such that $\kappa\omega=0$. Then,
-  \begin{gather*}
+  \begin{gather}
     \omega = \frac1{r+k} (d\kappa\omega+\kappa d\omega)
     = \frac1{r+k} \kappa d\omega =: \kappa\eta
-  \end{gather*}
+  \end{gather}
   with $\eta \in \breve\P_{r-1}\Lambda^{k+1}$. Thus,
   $\omega\in \range{\kappa_{k-1}}$. Again, the proof for the de Rham
   complex is obtained by replacing $\kappa$ by $d$.
 
   In order to see that $\breve \P_r\Lambda^k$ is the sum of the two
   spaces, we let for arbitrary $\omega\in \breve \P_r\Lambda^k$
-  \begin{gather*}
+  \begin{gather}
     \eta = \frac1{r+k} d\omega \in \breve\P_{r-1}\Lambda^{k+1},
     \qquad
     \mu = \frac1{r+k} \kappa\omega \in \breve\P_{k+1}\Lambda^{k-1}.
-  \end{gather*}
+  \end{gather}
   By equation~\eqref{eq:derham:15}, we have
   $\omega = \kappa\eta + d\mu$. It remains to show that the
   intersection of the spaces is zero. Therefore, let $\omega$ be
   chosen from the intersection. Then, $\omega = \kappa\eta = d \mu$
   and
-  \begin{gather*}
+  \begin{gather}
     (r+k)\omega = d\kappa \omega + \kappa d \omega
     = d \kappa^2 \eta + \kappa d^2 \mu = 0.
-  \end{gather*}
+  \end{gather}
 \end{proof}
 
 \begin{Corollary}{pk-complexes}
@@ -524,31 +692,33 @@ usual differential $d$.
 \end{proof}
 
 \begin{Definition}{pk-plus}
+  \index{prpl@$\P_r+\Lambda^k$}
   The polynomial space of $k$-forms $\P_r^+\Lambda^k$ is defined as
   \begin{gather}
-    \P_r^+\Lambda^k = \P_r\Lambda^k \oplus \kappa \P_r\Lambda^{k+1}.
+    \P_r^+\Lambda^k = \P_r\Lambda^k \oplus \kappa \breve\P_r\Lambda^{k+1}.
   \end{gather}
+  \index{prml@$\P_r-\Lambda^k$}
   It is also referred to as $\P_{r+1}^-\Lambda^k$. Furthermore,
-  \begin{gather*}
+  \begin{gather}
     \P_r^+\Lambda^0 = \P_{r+1}\Lambda^0,
     \qquad
-    \P_r^+\Lambda^d = \P_r\Lambda^d.
-  \end{gather*}
+    \P_r^+\Lambda^\sdim = \P_r\Lambda^\sdim.
+  \end{gather}
 \end{Definition}
 
 \begin{remark}
   We have used the construction principle
-  \begin{gather*}
+  \begin{gather}
     \P_r\Lambda^k = \P_{r-1}\Lambda^k \oplus \breve \P_r\Lambda^k.
-  \end{gather*}
+  \end{gather}
   Using its decomposition, we obtain
-  \begin{gather*}
+  \begin{gather}
     \P_r\Lambda^k =
     \bigoplus_{s=1}^{r-1}\kappa \breve\P_{s-1}\Lambda^{k+1}
     \bigoplus_{s=1}^{r-1} d\breve\P_{s+1}\Lambda^{k-1}
     \oplus \kappa \breve\P_{r-1}\Lambda^{k+1}
     \oplus d\breve\P_{r+1}\Lambda^{k-1}.
-  \end{gather*}
+  \end{gather}
   If we leave out the last factor, we get the new space
   $\P_{r-1}^+\Lambda^k$.
 \end{remark}
@@ -568,9 +738,21 @@ usual differential $d$.
   $\omega=\omega_1$.
 \end{proof}
 
+\begin{Problem}{rt-bdm-forms}
+  \begin{enumerate}
+  \item   Identify the spaces $\P_r \Lambda^{\sdim-1}$ and
+    $\P_r^+ \Lambda^{\sdim-1}$ with finite element spaces for
+    $\Hdiv$.
+  \item Where have we stated a special case of
+    \slideref{Lemma}{pk-plus-d} before?
+  \item Suggest polynomial spaces for $\Hcurl$ corresponding to
+    $\P_r \Lambda^{1}$ and $\P_r^+ \Lambda^{1}$
+  \end{enumerate}
+\end{Problem}
+
 % AFW 2006 Lemma 3.8
 \begin{Lemma}{pr-pr-plus}
-  For $r\ge 1$ and $0\le k < d$ there holds
+  For $r\ge 1$ and $0\le k < n$ there holds
   \begin{gather}
     d\P_{r}^+\Lambda^k \subset d\P_{r+1}\Lambda^k
     \subset \P_r\Lambda^{k+1}
@@ -579,28 +761,54 @@ usual differential $d$.
   The following four mappings $d$ have the same kernel:
   \begin{gather}
     \begin{aligned}
-      d\colon \P_r\Lambda_k &\to \P_{r-1}\Lambda^{k+1}
+      d\colon \P_{r+1}\Lambda^k &\to \P_{r}\Lambda^{k+1}
       &
-      d\colon \P_r^+\Lambda_k &\to \P_{r}\Lambda^{k+1}
+      d\colon \P_r^+\Lambda^k &\to \P_{r}\Lambda^{k+1}
       \\
-      d\colon \P_r\Lambda_k &\to \P_{r-1}^+\Lambda^{k+1}
+      d\colon \P_{r+1}\Lambda^k &\to \P_{r}^+\Lambda^{k+1}
       &
-      d\colon \P_r^+\Lambda_k &\to \P_{r}^+\Lambda^{k+1}
+      d\colon \P_r^+\Lambda^k &\to \P_{r}^+\Lambda^{k+1}
     \end{aligned}
   \end{gather}
   The following four mappings $d$ have the same range:
   \begin{gather}
     \begin{aligned}
-      d\colon \P_r\Lambda_k &\to \P_{r-1}\Lambda^{k+1}
+      d\colon \P_{r+1}\Lambda^k &\to \P_{r}\Lambda^{k+1}
       &
-      d\colon \P_{r-1}^+\Lambda_k &\to \P_{r-1}\Lambda^{k+1}
+      d\colon \P_{r}^+\Lambda^k &\to \P_{r}\Lambda^{k+1}
       \\
-      d\colon \P_r\Lambda_k &\to \P_{r-1}^+\Lambda^{k+1}
+      d\colon \P_{r+1}\Lambda^k &\to \P_{r}^+\Lambda^{k+1}
       &
-      d\colon \P_{r-1}^+\Lambda_k &\to \P_{r-1}^+\Lambda^{k+1}
+      d\colon \P_{r}^+\Lambda^k &\to \P_{r}^+\Lambda^{k+1}
     \end{aligned}
   \end{gather}
 \end{Lemma}
+
+
+\begin{Corollary}{pr-sequences}
+  For polynomial forms in $\R^3$, 
+  all four sequences in this diagram are exact:
+  {\small
+  \begin{tikzcd}
+    \R \arrow[r,hook]
+    & \P_{r+3}\Lambda^0 \arrow[r,"\diffd"]
+    & \P_{r+2}\Lambda^1 \arrow[rd,"\diffd"]\\
+    \R \arrow[r,hook]
+    & \P_{r+2}\Lambda^0 \arrow[r,"\diffd"]
+    & \P_{r+1}^+\Lambda^1 \arrow[r,"\diffd"]
+    & \P_{r+1}\Lambda^2 \arrow[rdd,"\diffd"]\\
+    \R \arrow[r,hook]
+    & \P_{r+2}\Lambda^0 \arrow[r,"\diffd"]
+    & \P_{r+1}\Lambda^1 \arrow[rd,"\diffd"]\\
+    \R \arrow[r,hook]
+    & \P_{r+1}\Lambda^0 \arrow[r,"\diffd"]
+    & \P_{r}^+\Lambda^1 \arrow[r,"\diffd"]
+    & \P_{r}^+\Lambda^2 \arrow[r,"\diffd"]
+    & \P_{r}\Lambda^3 \arrow[r,"\diffd"]
+    & 0
+  \end{tikzcd}
+  }
+\end{Corollary}
 
 \begin{proof}
   The first statement follows from the inclusions of $\P_r$ and
@@ -608,20 +816,20 @@ usual differential $d$.
   from \slideref{Lemma}{pk-plus-d}. The vertical identities from the
   decomposition~\eqref{eq:derham:17}. For the last set of identities,
   we observe that by construction
-  \begin{gather*}
+  \begin{gather}
     \P_r\Lambda^k = \P_{r-1}^+\Lambda^k \oplus d \P_{r+1}\Lambda^{k-1}.
-  \end{gather*}
+  \end{gather}
   Thus, $d\P_r\Lambda^k = d\P_{r-1}^+\Lambda^k\subset \P_{r-1}\Lambda^{k+1}$.
 \end{proof}
 
 \begin{Theorem}{dimension-pr-lambda}
-  Let $r\ge 0$ and $1\le k \le d$. Then,
+  Let $r\ge 0$ and $1\le k \le \sdim$. Then,
   \begin{gather}
     \begin{split}
-      \dim \kappa \breve P_r\Lambda^k(\R^d)
-      & = \dim d \breve P_{r+1}\Lambda^{k-1}(\R^d)
+      \dim \kappa \breve P_r\Lambda^k(\R^\sdim)
+      & = \dim d \breve P_{r+1}\Lambda^{k-1}(\R^\sdim)
       \\
-      &= \binom{d+r}{d-k}\binom{r+k-1}{k-1}.
+      &= \binom{\sdim+r}{\sdim-k}\binom{r+k-1}{k-1}.
     \end{split}
   \end{gather}
 \end{Theorem}
@@ -629,60 +837,60 @@ usual differential $d$.
 \begin{proof}
   First, we prove the equality of the two dimensions by applying $\kappa$
   to equation~\eqref{eq:derham:17}, yielding
-  \begin{gather*}
+  \begin{gather}
     \kappa \breve P_r\Lambda^k(\R^d)
-    = \kappa d \breve P_{r+1}\Lambda^{k-1}(\R^d).
-  \end{gather*}
+    = \kappa \ediff \breve P_{r+1}\Lambda^{k-1}(\R^\sdim).
+  \end{gather}
   By \slideref{Lemma}{d-kappa-injective}, the two spaces are
   isomorphic and the equality holds.
 
   The dimension formula is proven first for $r=0$ and $k\ge 1$. The
-  Koszul operator is injective on $\P_0\Lambda^K(\R^d)$ since the
+  Koszul operator is injective on $\P_0\Lambda^K(\R^\sdim)$ since the
   first factor in equation~\eqref{eq:derham:17} vanishes. It is
-  also injective on $\breve P_r\Lambda^d(\R^d)$ for $r\ge 0$.
+  also injective on $\breve P_r\Lambda^\sdim(\R^\sdim)$ for $r\ge 0$.
 
   For all other combinations of $r$ and $k$ it is proven by induction
-  over $k$. For $k=d$,
-  \begin{gather*}
-    \dim \breve\P_r\Lambda^d(\R^d) = \dim\breve\P_r(\R^d)
-    = \binom{d+r-1}{d-1}.
-  \end{gather*}
-  For $k<d$, we assume the formula proven for $k+1$. We have
+  over $k$. For $k=\sdim$,
+  \begin{gather}
+    \dim \breve\P_r\Lambda^\sdim(\R^\sdim) = \dim\breve\P_r(\R^\sdim)
+    = \binom{\sdim+r-1}{\sdim-1}.
+  \end{gather}
+  For $k<\sdim$, we assume the formula proven for $k+1$. We have
 % Move this to an earlier point or an appendix
-  \begin{gather*}
-    \breve P_r\Lambda^k(\R^d) = \binom{d+r-1}{d-1}\binom{d}{k}.
-  \end{gather*}
+  \begin{gather}
+    \breve P_r\Lambda^k(\R^d) = \binom{\sdim+r-1}{\sdim-1}\binom{\sdim}{k}.
+  \end{gather}
   Now, the dimension formula
-  \begin{gather*}
-    \dim \range \phi = \dim V - \dim ker \phi,
-  \end{gather*}
+  \begin{gather}
+    \dim \range \phi = \dim V - \dim \ker \phi,
+  \end{gather}
   yields
-  \begin{gather*}
-    \dim\kappa\breve \P_r\Lambda^k(\R^d) =
-    \dim\breve \P_r\Lambda^k(\R^d)
-    - \dim\kappa\breve \P_{r-1}\Lambda^{k+1}(\R^d),
-  \end{gather*}
+  \begin{gather}
+    \dim\kappa\breve \P_r\Lambda^k(\R^\sdim) =
+    \dim\breve \P_r\Lambda^k(\R^\sdim)
+    - \dim\kappa\breve \P_{r-1}\Lambda^{k+1}(\R^\sdim),
+  \end{gather}
   where we have used the exactness of the Koszul complex.
   Using the induction hypothesis yields by the binomial identity
 % Olkhovskiy
-  \begin{align*}
-    \dim\kappa\breve \P_r\Lambda^k(\R^d) 
-    &= \binom{d+r-1}{d-1}\binom{d}{k} - \binom{d+r-1}{d-k-1}\binom{r+k-1}{k}
+  \begin{align}
+    \dim\kappa\breve \P_r\Lambda^k(\R^\sdim)
+    &= \binom{\sdim+r-1}{\sdim-1}\binom{\sdim}{k} - \binom{\sdim+r-1}{\sdim-k-1}\binom{r+k-1}{k}
     \\
-    &= \frac{(d+r-1)!{\color{green}d!}}{{\color{green}(d-1)!}{\color{purple}r!}k!{\color{blue}(d-k)!}}
-      - \frac{(d+r-1)!{\color{red}(r+k-1)!}}{{\color{blue}(d-k-1)!}
+    &= \frac{(\sdim+r-1)!{\color{green}\sdim!}}{{\color{green}(\sdim-1)!}{\color{purple}r!}k!{\color{blue}(\sdim-k)!}}
+      - \frac{(\sdim+r-1)!{\color{red}(r+k-1)!}}{{\color{blue}(\sdim-k-1)!}
       {\color{red}(r+k)!}k!{\color{purple}(r-1)!}}
     \\
     &=
-      \frac{(d+r-1)!{\color{green}d}{\color{red}(r+k)}-{\color{blue}(d-k)}(d+r-1)!{\color{purple}r}}
-      {{\color{purple}r!}k!{\color{blue}(d-k)!}{\color{red}(r+k)}}
+      \frac{(\sdim+r-1)!{\color{green}\sdim}{\color{red}(r+k)}-{\color{blue}(\sdim-k)}(\sdim+r-1)!{\color{purple}r}}
+      {{\color{purple}r!}k!{\color{blue}(\sdim-k)!}{\color{red}(r+k)}}
     \\
-    &= \frac{(d+r-1)!\bigl(d(r+k)-(d-k)r\bigr)}{r!k!(d-k)!(r+k)}
+    &= \frac{(\sdim+r-1)!\bigl(\sdim(r+k)-(\sdim-k)r\bigr)}{r!k!(\sdim-k)!(r+k)}
     \\
-    &= \frac{(d+r)!}{r!(k-1)!(d-k)!(r+k)}
+    &= \frac{(\sdim+r)!}{r!(k-1)!(\sdim-k)!(r+k)}
     \\
-    &= \binom{d+r}{d-k}\binom{r+k-1}{k-1}.
-  \end{align*}
+    &= \binom{\sdim+r}{\sdim-k}\binom{r+k-1}{k-1}.
+  \end{align}
 \end{proof}
 
 \subsection{Degrees of freedom and bases for simplicial meshes}
@@ -698,15 +906,18 @@ usual differential $d$.
 
 \begin{Definition}{mesh-pk}
   Given a space of polynomial forms
-  $\P_r\Lambda^k=\P_r\Lambda^k(\R^d)$, we define the space of finite
+  $\P_r\Lambda^k=\P_r\Lambda^k(\R^\sdim)$, we define the space of finite
   element polynomial forms on a mesh $\mesh_h$ covering the domain
-  $\domain\subset\R^d$ as
+  $\domain\subset\R^\sdim$ as
   \begin{gather}
     \P_r\Lambda^k(\mesh) = \bigl\{
     \omega \in H\Lambda^k \big|
     \;\forall \cell\in\T\colon \omega_{|\cell} \in \P_r\Lambda^k
     \bigr\}.
   \end{gather}
+  Furthermore, we define $\Delta_m(\T_h)$ as the set of all
+  $m$-dimensional subsimplices of the whole mesh, where shared
+  subsimplices of several cells are identified.
 \end{Definition}
 
 \begin{intro}
@@ -718,119 +929,100 @@ usual differential $d$.
   allocated to these subsimplices.
 \end{intro}
 
-\subsubsection{Geometric structure of simplices}
+\begin{Theorem}{hlambda-continuity}
+  Let $\omega\in L^2\Lambda^k(\domain)$ be polynomial on each mesh
+  cell $\cell$ of a mesh $\mesh_h$ covering $\domain$. Then, the
+  following statements are equivalent:
+  \begin{enumerate}
+  \item $\omega\in H\Lambda^k(\domain)$
+  \item $\gamma_f\omega$ is single-valued for all $f\in\Delta_{\sdim-1}(\T_h)$
+  \item $\gamma_f\omega$ is single-valued for all $f\in\Delta_{m}(\T_h)$ for
+    $k\le m \le n-1$.
+  \end{enumerate}
+\end{Theorem}
 
-\begin{Definition}{spanned-simplex}
-  Let $x_0,\dots,x_k$ for $k\le d$ be a set of $k+1$ points in
-  $\R^d$. Then, we call the set of convex combinations of these points
-  the $k$-simplex $f$ spanned by $\{x_0,\dots,x_k\}$.
-\end{Definition}
+\begin{proof}
+  By the Stokes theorem, every smooth $k$-form on a mesh cell $\cell$
+  has a well-defined trace $\gamma_f\omega$ on
+  $f\in\Delta_{n-1}(\cell)$. Thus, $\omega\in H\Lambda^k(\domain)$ if
+  and only if these traces coincide from both cells sharing this face.
 
-
-\begin{Definition}{subsimplices}
-  Let $\cell$ be the simplex in $\R^d$ spanned by the points
-  $x_0,\dots,x_d$. Then, every ascending subset
-  $\sigma \subset \{0,\dots,d\}$ of length $k+1$ defines a
-  $k$-dimensional \define{subsimplex} of $\cell$ denoted as $f_\sigma$.
-
-  The set of all subsimplices of $\cell$, including $\cell$ itself is
-  called $\Delta(\cell)$. The set of all $k$-dimensional subsimplices
-  is $\Delta_k(\cell)$.
-\end{Definition}
-
-\begin{example}
-  A $d$-dimensional simplex $\cell$ has $\binom{d+1}{k+1}$
-  subsimplices of dimension $k$.
-
-  The one-dimensional simplex $[x_0,x_1]$ has two subsimplices of
-  dimension zero, namely the two points $x_0$ and $x_1$.
-
-  The triangle spanned by the points $x_0, x_1, x_3$ has three
-  one-dimensional subsimplices (edges) and three zero-dimensional
-  subsimplices (vertices).
-
-  The tetrahedron spanned by the points $x_0,\dots,x_3$ has
-  \begin{itemize}
-  \item 4 triangular faces,
-  \item 6 edges,
-  \item 4 vertices.
-  \end{itemize}
-\end{example}
+  Once this is established, it is also clear that the two traces can
+  only be the same if their traces to the boundary of $f$ coincide as
+  well.
+\end{proof}
 
 \subsubsection{Geometric decomposition of $\P_r(\cell)$}
 
-\begin{remark}
-  For a simplex $\cell\subset\R^d$, the barycentric coordinates are
-  the uniquely determined linear interpolating polynomials such that
-  \begin{gather*}
-    \lambda_i(x_j) = \delta_{ij}.
-  \end{gather*}
-  Then,
-  \begin{gather*}
-    \cell = \biggl\{ x = \sum_{i=0}^d\lambda_i\bigg\vert
-    \lambda_i \ge 0,\quad\sum_{i=0}^d\lambda_i = 1\biggr\}.
-  \end{gather*}
-
-  Let $f=f_\sigma$ be the $k$-dimensional subsimplex spanned by the
-  points $x_{\sigma_0},\dots,x_{\sigma_k}$. Then, the linear
-  polynomials $\lambda_{\sigma_1},\dots,\lambda_{\sigma_k}$ form a set
-  of barycentric coordinates for $f_\sigma$, that is,
-  \begin{gather}
-    \begin{split}
-      f_\sigma &= \bigl\{x\in\cell \big\vert
-      \lambda_j=0 \text{ for } j\not\in\sigma\bigr\}.
-      \\
-      &= \biggl\{ x = \sum_{i\in\sigma}\lambda_i\bigg\vert
-    \lambda_i \ge 0,\quad\sum_{i\in\sigma}\lambda_i = 1\biggr\}.
-    \end{split}
-  \end{gather}
-\end{remark}
+For the geometric decomposition of simplices and the consequences on barycentric coordinates, see \cref{sec:barycentric}
 
 \begin{remark}
   When we introduced barycentric coordinates in order to define
   standard shape functions on simplices, we generated a basis for
-  $\P_r(\R^d)$ by selecting polynomials of the $\lambda_i$. Closer
+  $\P_r(\R^\sdim)$ by selecting polynomials of the $\lambda_i$. Closer
   inspection reveals that these polynomials were
   homogeneous. Therefore, we defined an isomorphism
   \begin{gather}
-    \breve \P_k(\R^{d+1}) \equiv \P_k(\R^d),
+    \breve \P_k(\R^{\sdim+1}) \cong \P_k(\R^\sdim),
   \end{gather}
-  which reads: for every $p\in \P_k(\R^d)$ there is
-  $q\in\breve\P_k(\R^{d+1})$ such that
-  \begin{gather*}
-    p(x_1,\dots,x_d) = q(\lambda_0,\dots,\lambda_d).
-  \end{gather*}
+  which reads: for every $p\in \P_k(\R^\sdim)$ there is
+  $q\in\breve\P_k(\R^{\sdim+1})$ such that
+  \begin{gather}
+    p(x_1,\dots,x_\sdim) = q(\lambda_0,\dots,\lambda_\sdim).
+  \end{gather}
 % Argue why isomorphism: count?
 \end{remark}
 
 \begin{Definition}{pr-f}
   For each $k$-dimensional subsimplex $f_\sigma$ of $\cell$ with
   $\sigma = \sigma_0,\dots,\sigma_k$, the space
-  $\P_r(f_\sigma) \equiv \breve\P_r(\R^{k+1})$ is defined as
+  $\P_r(f_\sigma) \cong \breve\P_r(\R^{k+1})$ is defined as
   \begin{gather}
     \P_r(f_\sigma) = \bigl\{
-    q(\lambda_{\sigma_0},\dots,\lambda_{\sigma_k})\big\vert
+    q(\lambda_{\sigma_0},\dots,\lambda_{\sigma_k})
+    \;\big\vert\;
     q\in\breve \P_r(\R^{k+1})\bigr\}.
   \end{gather}
+  
+  By $\overset{\circ}{\P}_r(f_\sigma)$ we denote the space of
+  polynomials in $\P_r(f_\sigma)$ which vanish on the boundary $\d f_\sigma$.
+
   The \putindex{bubble function} associated with $f_\sigma$ is
   \begin{gather}
-    b_{f\sigma} = \lambda_{\sigma_0}\cdots\lambda_{\sigma_k}.
+    b_{f\sigma} = \lambda_{\sigma_0}\cdots\lambda_{\sigma_k}
+    \in \overset{\circ}{\P}_{k+1}(f_\sigma).
   \end{gather}
+\end{Definition}
+
+\begin{Lemma}{p0-bubble}
+  Let $f$ be a $k$-simplex. Then,
+  \begin{gather}
+    \overset{\circ}{\P}_r(f) =
+    \begin{cases}
+      b_f \P_{r-k-1}(f) &\text{if } r\ge k+1\\
+      \{0\} &\text{if } r \le k.
+    \end{cases}
+  \end{gather}
+\end{Lemma}
+
+
+\begin{Definition}{pr-f-extension}
   The \define{extension operator} $E_{f_\sigma\to\cell}$ is defined as
   \begin{gather}
     \begin{split}
-      E_{f_\sigma\to\cell}\colon \P_r(f_\sigma) &\to \P_r(\R^d),\\
-      p(\lambda_0,\dots,\lambda_d) &= q(\lambda_{\sigma_0},\dots,\lambda_{\sigma_k}),
+      E_{f_\sigma\to\cell}\colon \P_r(f_\sigma) &\to \P_r(\R^\sdim),\\
+      p(\lambda_0,\dots,\lambda_\sdim) &= q(\lambda_{\sigma_0},\dots,\lambda_{\sigma_k}),
     \end{split}
   \end{gather}
   where $q$ is chosen as in the definition of $\P_r(f_\sigma)$.
 \end{Definition}
 
 \begin{Lemma}{subsimplex-polynomials}
-  Every function in $\P_r(f)$ vanishes on every subsimplex $g$ which
-  is disjoint from $f$.
+  Every function in $\P_r(f)$ vanishes on every subsimplex
+  $g\in\Delta(\cell)$ which is disjoint from $f$.
 
-  The bubble function $b_f$ vanishes on every subsimplex not containing $f$.
+  The bubble function $b_f$ vanishes on every subsimplex in
+  $\Delta(\cell)$ not containing $f$.
 \end{Lemma}
 
 \begin{Problem}{subsimplex-polynomials}
@@ -847,13 +1039,13 @@ usual differential $d$.
   and the two spaces are isomorphic.
 
   Let $g$ be a subsimplex that is disjoint from $f$.
-  \begin{align*}
+  \begin{align}
       f_\sigma &= \bigl\{x\in\cell \big\vert
       \lambda_j=0 \text{ for } j\not\in\sigma\bigr\}.
       \\
       &= \biggl\{ x = \sum_{i\in\sigma}\lambda_i\bigg\vert
     \lambda_i \ge 0,\quad\sum_{i\in\sigma}\lambda_i = 1\biggr\}.
-  \end{align*}
+  \end{align}
   Then $\sigma_f$ and $\sigma_g$ are disjoint and in particular
   $\lambda_i = 0$ for all $i\in \sigma_f$ in the decomposition
   $g \ni x = \sum_i \lambda_i(x)$. Thus, $p\in \P_r(f)$
@@ -892,13 +1084,19 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
   , we define
   $V(f) \subset \P_r(\cell)$  for $\dim f>0$ as
   \begin{gather}
-    V(f) = \bigl\{ p = E_{f\to\cell} b_f q \big\vert
-    \;q \in \P_{r-\dim f -1}(f) \bigr\},
+    V(f) = \bigl\{ p = E_{f\to\cell} b_f q
+    \;\big\vert\;
+    q \in \P_{r-\dim f -1}(f) \bigr\},
   \end{gather}
   and for $\dim f=0$
   \begin{gather}
-    V(f) = \bigl\{ \lambda_i^r \big\vert
-    \;f = \{x_i\}\bigr\}.
+    V(f) = \bigl\{ \lambda_i^r
+    \;\big\vert\;
+    f = \{x_i\}\bigr\}.
+  \end{gather}
+  For $r\le \dim f$ holds
+  \begin{gather}
+    V(f) = \{0\}.
   \end{gather}
 \end{Definition}
 
@@ -915,6 +1113,10 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
     \;f=\{x_i\}
     \bigr\}.
   \end{gather}
+  For $r \le \dim f$ there holds
+  \begin{gather}
+    W(f) = \{0\}.
+  \end{gather}
 \end{Definition}
 
 \begin{Lemma}{pr-geometric}
@@ -928,9 +1130,9 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
 
 \begin{proof}
   We begin to show that
-  \begin{gather*}
+  \begin{gather}
     \P_r(\cell) = \bigoplus_{f\in\Delta(\cell)}V(f).
-  \end{gather*}
+  \end{gather}
   First, we note that for any $f\in\Delta(\cell)$ every function in $V(f)$
   is also in $\P_r(\cell)$.  For $\dim f=0$, that is, $f=\{x_i\}$ for some
   vertex $x_i$, the only homogeneous polynomial of order $r$ is $\lambda_i^r$.
@@ -940,27 +1142,27 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
   where $f$ is a vertex are disjoint. By the second statement of the
   same lemma, the spaces $V(f)$ for all $f$ with equal dimension are
   disjoint. Therefore, the sum
-  \begin{gather*}
-    V_d(\cell) = \sum_{k=0}^{d-1} \sum_{f\in \Delta_k(\cell)} V(f),
-  \end{gather*}
-  is direct. But, $V(\cell) \cap V_d(\cell) = \{0\}$, since all elements in
+  \begin{gather}
+    V_\sdim(\cell) = \sum_{k=0}^{\sdim-1} \sum_{f\in \Delta_k(\cell)} V(f),
+  \end{gather}
+  is direct. But, $V(\cell) \cap V_\sdim(\cell) = \{0\}$, since all elements in
   $V(\cell)$ contain a bubble function factor. Therefore,
-  \begin{gather*}
+  \begin{gather}
     \bigoplus_{f\in\Delta(\cell)}V(f) \subset \P_r(\cell).
-  \end{gather*}
+  \end{gather}
   We conclude by showing that dimensions on both sides are equal.
   On the right, we use
-  \begin{gather*}
-    \dim \P_r(\R^d) = \binom{r+d}{r} = \frac{(r+d)!}{d!r!}
-  \end{gather*}
+  \begin{gather}
+    \dim \P_r(\R^\sdim) = \binom{r+\sdim}{r} = \frac{(r+\sdim)!}{\sdim!r!}
+  \end{gather}
   On the left, we have
-  \begin{multline*}
+  \begin{multline}
     \dim \bigoplus_{f\in\Delta(\cell)}V(f) =
-    \sum_{k=0}^{d} \binom{d+1}{k+1} \binom{r+k}{k}
+    \sum_{k=0}^{\sdim} \binom{\sdim+1}{k+1} \binom{r+k}{k}
     \\
     = \frac{(d+1)!}{r!}
-    \sum_{k=0}^{d} \frac{1}{(k+1)!(d-k)!} \frac{(r+k)!}{k!}.
-  \end{multline*}
+    \sum_{k=0}^{\sdim} \frac{1}{(k+1)!(d-k)!} \frac{(r+k)!}{k!}.
+  \end{multline}
 
 % Finish this!
 
@@ -968,33 +1170,175 @@ derive a geometric decomposition of $\P_r(\cell)$ and its dual.
   end, we first notice that for any $f\in\Delta(\cell)$ there holds
   $\dim W(f) = \dim V(f)$ by their definition. Furthermore, for
   $p\in V(f)$ there holds
-  \begin{gather*}
+  \begin{gather}
     \Bigl(\phi(p) = 0 \quad\forall \phi\in W(f)\Bigr)
     \quad\Rightarrow\quad
     p=0.
-  \end{gather*}
+  \end{gather}
   Thus, for $p\in \P_r(\cell)$ there holds
-  \begin{gather*}
+  \begin{gather}
     \Bigl(\phi(p) = 0 \quad\forall \phi\in \sum W(f)\Bigr)
     \quad\Rightarrow\quad
     p=0.
-  \end{gather*}
+  \end{gather}
   Consequently,
-  \begin{gather*}
+  \begin{gather}
     \P_r(\cell)^* = \sum W(f).
-  \end{gather*}
+  \end{gather}
   since we have already proven that
-  \begin{gather*}
+  \begin{gather}
     \dim \P_r(\cell)^* = \sum \dim W(f),
-  \end{gather*}
+  \end{gather}
   the sum on the right must be direct.
 \end{proof}
 
-\subsubsection{Results for $\P_r\Lambda^k$ and $\P_r^+\Lambda^k$ and applications}
+\subsubsection{Results for $\P_r\Lambda^k$ and proxy fields}
 
-For polynomial differential forms on simplices, we cite the main
-results without proof and then discuss their application to $\Hdiv$
-and $\Hcurl$.
+\begin{Lemma}{pr-lambda-dimension-decomposition}
+  There holds
+  \begin{align}
+    \dim \P_r\Lambda^k(\cell)
+    &= \sum_{f\in\Delta(\cell)}
+      \dim \P_{r+k-\dim f-1}^+\Lambda^{\dim f-k}(f) \\
+    \dim \P_r^+\Lambda^k(\cell)
+    &= \sum_{f\in\Delta(\cell)}
+      \dim \P_{r+k-\dim f}\Lambda^{\dim f-k}(f)
+  \end{align}
+\end{Lemma}
+
+% \begin{Notation}{volume-form}
+%   The \define{volume form} of a $k$-dimensional subsimplex
+%   $f\in\Delta(\cell)$ is defined by the relation
+%   \begin{gather}
+%     \abs{f} = \int_f \vol_f.
+%   \end{gather}
+%   Using the fact that $n! \abs{T} = \vol_T(t_1,\dots,t_n)$ we see
+%   \begin{gather}
+%     \dlambda_{\sigma_1}\wedge\dots\wedge\dlambda_{\sigma_k}
+%     = \pm \frac1{k! \abs{f}} \vol_f.
+%   \end{gather}
+% \end{Notation}
+
+\begin{Lemma}{afw06-4-7}
+  Let $\omega \in \overset{\circ}{\P}_r \Lambda^k(\cell)$ and assume
+  \begin{gather}
+    \int_\cell\omega\wedge\eta = 0,
+    \qquad\forall \eta\in\P_{r-n+k-1}^+\Lambda^{n-k}(\cell).
+  \end{gather}
+  Then, $\omega = 0$.
+\end{Lemma}
+
+\begin{proof}
+  The proof consists of Lemmas 4.5 to 4.7 in
+  \cite{ArnoldFalkWinther06acta}. It skilfully exploits representations of
+  polynomial forms with zero traces by barycentric coordinates, but is
+  rather technical.
+\end{proof}
+
+\begin{Theorem}{pr-lambda-unisolvent}
+  Let $r\ge 1$ and $0\le k \le n$. For $f\in \Delta(\cell)$, define
+  subspaces of $W(f) \subset \P_r\Lambda^k(\cell)^*$ by
+  \begin{gather}
+    W(f) = \left\{
+      \nodal_{f,_\eta}(\omega) = \int_f \gamma_f \omega\wedge\eta,
+      \;\middle\vert\;
+       \eta \in \P_{r+k-\dim f-1}^+\Lambda^{\dim f-k}(f)
+      \right\}.
+  \end{gather}
+  Then, if $\omega \in \P_r\Lambda^k(\cell)$ satisfies
+  \begin{gather}
+    \nodal_{f,\eta}(\omega) = 0
+    \qquad \forall f\in \Delta(\cell)
+    \quad\forall \nodal_{f,\eta} \in W(f),
+  \end{gather}
+  then $\omega = 0$. Thus, the space $\P_r\Lambda^k(\cell)$ together
+  with the node functionals $\nodal_{f,\eta}$ forms a unisolvent
+  finite element.  Furthermore, $\gamma_f\omega$ for any subsimplex
+  $f\in\Delta(\cell)$ is uniquely determined by the degrees of freedom
+  in $\bigoplus_g W(g)$ where $g\in\Delta(f)$.
+\end{Theorem}
+
+\begin{proof}
+  First we note, that by
+  \slideref{Lemma}{pr-lambda-dimension-decomposition} the dimensions
+  of the spaces $W(f)$ add up to the dimension of
+  $\P_r\Lambda^k(\cell)$. Thus, if we can show the first statement, we
+  have shown that the sum of the spaces $W(f)$ is a direct sum, and
+  thus unisolvence is obtained by the usual argument.
+
+  Let now $f\in\Delta_k(\cell)$. Then, $\gamma\omega$ vanishes on
+  $\d f$ as a $k$-form on a simplex of dimension $k-1$. Thus, we have
+  $\gamma_f\omega\in \overset{\circ}{\P}_r\Lambda^k(f)$. Since
+  furthermore by the assumption
+  \begin{gather}
+    \int_f \gamma_f\omega\wedge \eta = 0,
+    \qquad \forall \eta \in \P_{r-1}^+\Lambda^0(f),
+  \end{gather}
+  \slideref{Lemma}{afw06-4-7} yields $\gamma_f\omega = 0$, which holds
+  for all $f\in\Delta_k(\cell)$.
+
+  Let now $f\in \Delta_{k+1}(\cell)$. Then, by the result of the
+  previous argument,
+  $\gamma_f\omega\in \overset{\circ}{\P}_r\Lambda^k(f)$, and by the
+  argument itself $\gamma_f \omega = 0$. In particular,
+  $\gamma_f\omega$ is uniquely determined at this point of the
+  construction process, which proves the last statement of the theorem.
+
+  We can now do induction by the dimension of $f$ until we reach
+  $\Delta_n(\cell) = \{\cell\}$ to obtain the result.
+\end{proof}
+
+\begin{remark}
+  Note that the space $\P_s^+\Lambda^k$ vanishes if $s<0$ or
+  $k<0$. Therefore, the spaces $W(f)$ are nontrivial only if
+  \begin{gather}
+    k \le \dim f \le r+k-1.
+  \end{gather}
+  Comparing this to \slideref{Example}{h1-moment-dofs} for
+  $H^1 = H\Lambda^0$, we see that one-dimensional subsimplices carry
+  degrees of freedom for $r\ge 2$ and two-dimensional for $r\ge 3$.
+\end{remark}
+
+\begin{Theorem}{decomp-pr}
+  Let $k,r\ge 1$. Then, $\P_r(\cell)$ admits a geometric decomposition
+  \begin{gather}
+    \P_r\Lambda^k(\cell) = \bigoplus_{f\in\Delta(\cell)} V(f),
+  \end{gather}
+  where
+  \begin{gather}
+    V(f) \cong W(f) \cong
+    \begin{cases}
+      0 & \dim f < k\\
+      \P_{r+k-\dim f-1}^+ \Lambda^{\dim f-k}(f) &\text{else}\\
+      0 & \dim f \le r+k.
+    \end{cases}
+  \end{gather}
+\end{Theorem}
+
+\begin{Example}{bdm-complex-decomp}
+  \begin{gather}
+    \begin{array}{c|cc|cc}
+      \dim f
+      & \P_r\Lambda^1 & N^{2e}_r
+      & \P_r\Lambda^2 & BDM_r \\\hline
+      3 & \P_{r-3}^+\Lambda^2 & RT_{r-2} & \P_{r-1}^+\Lambda^1 & N^{1e}_{r-1} \\
+      2 & \P_{r-2}^+\Lambda^1 & RT_{r-1} & \P_{r}^+\Lambda^0 & \P_r \\
+      1 & \P_{r-1}^+\Lambda^0 & \P_r & --& --
+%      0 & \R & \R & -- & --
+    \end{array}
+  \end{gather}
+  The spaces $\P_r\Lambda^k$ and their proxy fields and the spaces
+  $W(f)$ of degrees of freedom.
+  
+  \begin{itemize}
+  \item [$N^{2e}$] ($\Hcurl$) Nedelec 2nd family edge element
+  \item [$BDM$] ($\Hdiv$) Brezzi-Douglas-Marini (also Nedelec 2nd face in 3D)
+  \item [$N^{1e}$] ($\Hcurl$) Nedelec 1st family edge element
+  \end{itemize}
+\end{Example}
+
+\subsubsection{Results for $\P_r^+\Lambda^k$ and proxy fields}
+
 
 \begin{Theorem}{decomp-pr-plus}
   Let $k,r\ge 1$. Then, $\P_r^+(\cell)$ admits a geometric decomposition
@@ -1005,14 +1349,14 @@ and $\Hcurl$.
   \end{gather}
   where
   \begin{align}
-    V(f) \equiv
+    V(f) \cong
     \begin{cases}
       0 & \dim f < k\\
       \P_{r+k-\dim f} \Lambda^{\dim f-k}(f) &\text{else}\\
       0 & \dim f > r+k.
     \end{cases}
     \\
-    W(f) \equiv
+    W(f) \cong
     \begin{cases}
       0 & \dim f < k\\
       \P_{r+k-\dim f} \Lambda^{\dim f-k}(f) &\text{else}\\
@@ -1042,51 +1386,383 @@ and $\Hcurl$.
   \end{itemize}
 \end{Example}
 
-\begin{Theorem}{decomp-pr}
-  Let $k,r\ge 1$. Then, $\P_r(\cell)$ admits a geometric decomposition
+\begin{Definition}{k-form-interpolation}
+  By choosing a basis for each of the spaces $W(f)$ with
+  $f\in\Delta(\cell)$, we obtain a finite number of node functionals
+  $\nodal_{f,i}$ which in turn induces bases $\{\omega_{f,i}\}$ for $V(f)$ by
+  duality.
+  The \define{canonical interpolation} operators
   \begin{gather}
-    \P_r\Lambda^k(\cell) = \bigoplus_{f\in\Delta(\cell)} V(f),
+    \Pi_k\colon C\Lambda^k(\cell) \to \P_r\Lambda^k(\cell),
+    \qquad
+    \Pi_k^+\colon C\Lambda^k(\cell) \to \P_r^+\Lambda^k(\cell),
   \end{gather}
-  where
+  are defined such that for all $\omega\in C\Lambda^k(\cell)$
   \begin{gather}
-    V(f) \equiv
-    \begin{cases}
-      0 & \dim f < k\\
-      \P_{r+k-\dim f-1}^+ \Lambda^{\dim f-k}(f) &\text{else}\\
-      0 & \dim f \ge r+k.
-    \end{cases}
+    \Pi_k \omega, \Pi_k^+\omega = \sum_{f\in\Delta(\cell)}
+  \sum_{i=1}^{\dim W(f)} \nodal_{f,i}(\omega) \omega_{f,i},
+\end{gather}
+where the inner sum is determined by the spaces in \slideref{Theorem}{pr-lambda-unisolvent} and \slideref{Theorem}{decomp-pr-plus}, respectively.
+\end{Definition}
+
+\begin{Theorem}{canonical-commute}
+  The diagram
+  \begin{center}
+    \begin{tikzcd}
+      \Lambda^k(\cell)
+      \arrow[r,"\diffd"]
+      \arrow[d,"\Pi"]
+      & \Lambda^{k+1}(\cell)
+      \arrow[d,"\Pi"]
+      \\
+      \P\Lambda^k(\cell) \arrow[r,"\diffd"]
+      &\P\Lambda^{k+1}(\cell)
+    \end{tikzcd}
+  \end{center}
+  commutes for all combinations of the spaces
+  $\P\Lambda^k \in \{\P_{r+1}\Lambda^k,\P_r^+\Lambda^k\}$ and
+  $\P\Lambda^{k+1}\in \{\P_r\Lambda^{k+1}, \P_r^+\Lambda^{k+1}\}$.
+  Namely, the canonical interpolation operators commute with the
+  exterior derivative,
+  \begin{gather}
+    \Pi(d\omega) = d(\Pi\omega).
   \end{gather}
 \end{Theorem}
 
-\begin{Example}{bdm-complex-decomp}
+
+\section{The complex of tensor product polynomial forms}
+
+\begin{todo}
+  Tensor products of algebraic forms first
+\end{todo}
+
+\begin{intro}
+  The other multilinear map we know is the tensor product, which we
+  used to define finite elements on squares and cubes. This section is
+  now concerned with the interplay of alternating and differential
+  forms and tensor products. In particular, we are looking into the
+  construction of $k$-forms on $\R^\sdim$ as tensor products of
+  one-dimensional forms.
+
+  We will avoid the functional analysis of tensor products of Hilbert
+  spaces and refer the readers
+  to~\cite{ReedSimon80,Hackbusch14,Hackbusch19}.
+
+  We focus instead on the finite dimensional construction of
+  polynomial $k$-forms on $\R^\sdim$ by tensor products of
+  one-dimensional forms.
+\end{intro}
+
+\begin{Definition}{pr-complex-1d}
+  The one-dimensional de Rham complex on the interval $I = [0,1]$ and
+  its polynomial subcomplex are
   \begin{gather}
-    \begin{array}{c|cccc}
-      \dim f
-      & \P_r\Lambda^1 & N^{2e}_r
-      & \P_r\Lambda^2 & BDM_r \\\hline
-      3 & \P_{r-3}^+\Lambda^2 & RT_{r-2} & \P_{r-1}^+\Lambda^1 & N^{1e}_{r-1} \\
-      2 & \P_{r-2}^+\Lambda^1 & RT_{r-1} & \P_{r}^+\Lambda^0 & \P_r \\
-      1 & \P_{r-1}^+\Lambda^0 & \P_r & --& --
-%      0 & \R & \R & -- & --
-    \end{array}
+    \begin{CD}
+    \R
+    @>{\subset}>>
+    H^1(I) = H\Lambda^0(I)
+    @>{\tfrac{\diffd}{\dx}}>>
+    L^2(I) = H\Lambda^1(I)
+    @>>> 0
+    \\
+    @.
+    @A{\subset}AA
+    @A{\subset}AA
+    \\
+    \R
+    @>{\subset}>>
+    \P_{r+1} = \P_{r+1}\Lambda^0
+    @>{\tfrac{\diffd}{\dx}}>>
+    \P_r = \P_r\Lambda^1
+    @>>> 0
+    \end{CD}
   \end{gather}
-  Geometric decomposition of $\P_r\Lambda^k$ and their spaces of degrees of freedom.
-  \begin{itemize}
-  \item [$N^{2e}$] ($\Hcurl$) Nedelec 2nd family edge element
-  \item [$BDM$] ($\Hdiv$) Brezzi-Douglas-Marini (also Nedelec 2nd face in 3D)
-  \item [$N^{1e}$] ($\Hcurl$) Nedelec 1st family edge element
-  \end{itemize}
-\end{Example}
+  We also use the simplified notation $\P\Lambda^k$, indicating that
+  the polynomial degrees are chosen such that $r+k$ is constant.
+\end{Definition}
+
+\begin{remark}
+  The polynomials sequence is exact due to \slideref{Theorem}{polynomial-exact}.
+\end{remark}
+
+\begin{Definition}{pr-1d-basis}
+  The node functionals for $\P_{r+1}\Lambda^0$ are
+  \begin{gather}
+    \begin{matrix}
+      \nodal_{0,0}^0(p) = p(1) - p(0),\\
+      \nodal_{0,1}^0(p) = p(1) + p(0),
+    \end{matrix}\qquad
+    \nodal_{1.q}^0(p) = \int_{I} p' q \dx,\quad\forall q\in\nicefrac{\P_{r}}{\R}.
+  \end{gather}
+  The degrees of freedom for $\P_{r}\Lambda^1$ are
+  \begin{gather}
+    \nodal_{1,q}^1(p) = \int_{I} p q \dx,\quad\forall q\in\P_{r}.
+  \end{gather}
+  Bases for the shape function spaces are defined by duality.
+\end{Definition}
+
+\begin{remark}
+  The degrees of freedom for $\P_{r+1}\Lambda^0$ are chosen such that
+  the finite element function on a subdivision of $I$ is continuous,
+  thus in $H^1$. This is true, even if the function values at the end
+  points only appear in linear combinations.
+
+  For $\P_{r}\Lambda^1$, we do not require continuity
+  and thus only need interior degrees of freedom.
+\end{remark}
+
+\begin{Lemma}{commute-nodal}
+  Let finite element $k$-forms $\P\Lambda^k$ on the cell $\cell\subset\R^\sdim$ be
+  defined by node values $\nodal_i^k$ for $i=1,\dots,m_k$. Let the
+  basis for the shape function spaces $\{\phi^k_i\}$ and
+  $\{\phi^{k+1}_i\}$, respectively defined by duality.  Assume for $\rho=\dim\range d$
+  \begin{gather}
+    \label{eq:commute-basis}
+      \begin{aligned}
+          d\phi^k_i &= \phi^{k+1}_i & \qquad i&=1,\dots,\rho,\\
+          d\phi^k_i &= 0 & i&=\rho+1,\dots,\dim\P\Lambda^{k}(\cell).
+      \end{aligned}
+  \end{gather}
+Moreover, assume for any $\omega\in \Lambda^k(\cell)$
+  \begin{gather}
+    \label{eq:commute-nodal}
+      \begin{aligned}
+      \nodal^{k+1}_i(d \omega) &= \nodal^k_i(\omega)& \qquad i&=1,\dots,\rho,\\
+      \nodal^{k+1}_i(d \omega) &= 0 & i&=\rho+1,\dots,\dim\P\Lambda^{k+1}.
+      \end{aligned}
+  \end{gather}
+  Then, the \putindex{canonical interpolation} operators $\Pi$ commute
+  with the exterior derivative, namely, there holds:
+  \begin{gather}
+    d_k \Pi_k \omega = \Pi_{k+1} d_k \omega.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  By linearity, we have
+  \begin{gather}
+      d\Pi_k \omega = d\left(\sum_{i=1}^{\dim\P\Lambda^k}\nodal^k_i(\omega) \phi^k_i\right)
+      = \sum_{i=1}^{\rho}\nodal^k_i(\omega) d \phi^k_i
+      = \sum_{i=1}^{\rho}\nodal^k_i(\omega) \phi^{k+1}_i.
+  \end{gather}
+  On the other hand,
+  \begin{gather}
+    \Pi_{k+1} d \omega = \sum_{i=1}^{\dim\P\Lambda^{k+1}}\nodal^{k+1}_i(d \omega) \phi^{k+1}_i.
+     = \sum_{i=1}^{\rho}\nodal^{k+1}_i(d \omega) \phi^{k+1}_i.
+  \end{gather}
+  Employing~\eqref{eq:commute-nodal} concludes the proof.
+\end{proof}
 
 
+\begin{Lemma}{pr-1d-commute}
+  Let
+  \begin{gather}
+    \begin{split}
+      \Pi^0_{r+1}\colon \Lambda^0(I) &\to \P_{r+1}\Lambda^0(I)\\
+      \Pi^1_{r}\colon \Lambda^1(I) &\to \P_{r}\Lambda^1(I).
+    \end{split}
+  \end{gather}
+ Then, the diagram
+  \begin{center}
+    \begin{tikzcd}
+      \Lambda^0(I)
+      \arrow[r,"\diffd"]
+      \arrow[d,"\Pi"]
+      & \Lambda^{1}(I)
+      \arrow[d,"\Pi"]
+      \\
+      \P\Lambda^0(I) \arrow[r,"\diffd"]
+      &\P\Lambda^{1}(I)
+    \end{tikzcd}
+  \end{center}
+  commutes.
+\end{Lemma}
 
-\section{The complex of tensor product polynomials}
+\begin{proof}
+  We prove that the assumptions of \slideref{Lemma}{commute-nodal} are
+  fulfilled. To this end, we have to choose a particular basis for the
+  node functional spaces. Let this be the \putindex{Legendre
+    polynomials} of degrees zero to $r$ for $\nodal_{1,q}^1$. For
+  $\nodal_{1,q}^0$, we choose
+  \begin{gather}
+    q_i = \plegendre_i,\qquad i=1,\dots, r
+  \end{gather}
+
+  We note that for Legendre polynomials on $[0,1]$ there holds
+  \begin{gather}
+    2(2m+1) \int_0^x \plegendre_m(t)\dt = \plegendre_{m+1}(x) - \plegendre_{m-1}(x).
+  \end{gather}
+  The basis functions for $\P_r\Lambda^0$ are
+  \begin{gather}
+    \begin{split}
+      \phi_{0,0}^0 &= x-\tfrac12,\\
+      \phi_{1,q_i} &= \tfrac{1}{2(2i+1)}(\plegendre_{i+1} - \plegendre_{i-1}),
+      \qquad i=1,\dots,r,\\
+      \phi_{0,1}^0 &= \tfrac12.
+    \end{split}
+  \end{gather}
+  Clearly, the basis functions for $\P_r\Lambda^1$ are the Legendre polynomials themselves.
+  Then, we have for $i=1,\dots,r$
+  \begin{gather}
+    d \phi_{1,q_i}^0(x) = \frac{\diffd}{\diffd x} \phi_{1,q_i}(x)
+    = \plegendre_i(x)
+    = \phi_{1,i}(x).
+  \end{gather}
+  Furthermore, $d\phi_{0,1}^0(x)=0$ and
+  $d\phi_{0,0}^0(x)=1 = \phi_{1,0}^1(x)$. It thus remains to verify
+  that the node functionals commute, which is obvious for
+  $\nodal_{1,q_i}^0$ for $i=1,\dots,r$. For the remaining one, this
+  is due to the fundamantal theorem of calculus.
+\end{proof}
+
+\begin{Definition}{k-form-tensor-product}
+  Let $\omega\in \Lambda^k$ and $\eta\in\Lambda^\ell$, then their
+  tensor product $\omega\otimes\eta\in\Lambda^{k+\ell}$ is defined through
+  their basis representations
+  \begin{gather}
+    \omega = \sum_{\sigma\in\Sigma(k,n)} a_\sigma \dx_\sigma,
+    \qquad
+    \eta = \sum_{\tau\in\Sigma(\ell,n)} b_\tau \dx_\tau,
+  \end{gather}
+  as
+  \begin{gather}
+    \omega\otimes\eta = \sum_{\sigma\in\Sigma(k,n)}\sum_{\tau\in\Sigma(\ell,n)}
+    (a_\sigma\otimes b_\tau) \dx_\sigma \wedge \dx_\tau.
+  \end{gather}
+  The space of $n$-fold tensor product polynomial $k$-forms is
+  \begin{gather}
+    \Q_r^+\Lambda^k \equiv
+    \left(\P\Lambda^{\otimes n}\right)^k
+    = \bigoplus_{\sigma_\in\Sigma(k,n)}
+    \P_r^+\Lambda^{\chi_1} \otimes \dots \otimes \P_r^+\Lambda^{\chi_n},
+  \end{gather}
+  where $\chi= \chi_\sigma$ is the \putindex{characteristic vector} of $\sigma$.
+\end{Definition}
+
+From the study of the one-dimensional complex, we know that
+$\P_{r+1}\Lambda^0$ and $\P_r\Lambda^1$ form an exact sequence. Thus,
+in more detail, we have
+  \begin{align}
+    \left(\P\Lambda^{\otimes n}\right)^k
+    &= \bigoplus_{\sigma_\in\Sigma(k,n)}
+      \P_{r+1-\chi_1}\Lambda^{\chi_1} \otimes \dots \otimes \P_{r+1-\chi_n}\Lambda^{\chi_n}
+    &= \bigoplus_{\sigma_\in\Sigma(k,n)}
+      \P_r^+ \Lambda^{\chi_1}\otimes \dots \otimes \P_r^+\Lambda^{\chi_n},
+  \end{align}
+  where the second line hides the change of polynomial degree in the
+  `$+$' superscript. This is also the idea behind the notation
+  $\Q_r^+\Lambda^k$, which leads to the known continuous $\Q_{r+1}$
+  element for 0-forms.
+  
+  Theoretically, $r$ could be different in each factor, as long as the
+  relation between $\Lambda^0$ and $\Lambda^1$ is maintained.
+
+  The tensor product of functions $p_i$ is
+  \begin{gather}
+    p_1\otimes \dots\otimes p_n(\vx) = p_1(x_1) p_2(x_2)\dots p_n(x_n).
+  \end{gather}
+
+  
+\begin{todo}
+  Use the form
+  \begin{gather}
+    \omega(v_1,\dots,v_k), \qquad \eta(w_1,\dots,w_\ell)\\
+    \omega\otimes \eta(v_1,\dots,v_k,w_1,\dots,w_\ell).
+  \end{gather}
+\end{todo}
+
+\begin{Lemma}{tensor-product-exterior-derivative}
+  The \putindex{exterior derviative} of a tensor product $k$-form
+  $\omega\otimes\eta$ with $\omega\in\Lambda^i$,
+  $\eta\in\Lambda^j$, and $i+j=k$ is the $(k+1)$-form obtained by the
+  \putindex{Leibniz rule}
+  \begin{gather}
+    d_k(\omega\otimes\eta) = d_i\omega \otimes \eta +  (-1)^i \omega \otimes d_j\eta.
+  \end{gather}
+\end{Lemma}
+
+\begin{example}
+  Let $\omega_1^0 = p_1 = p_1(x_1)$ and $\omega_2 = p_2(x_2)$.
+  The two-dimensional tensor product $0$-form $q=p_1\otimes p_2$ on $[0,1]^2$ is
+  \begin{gather}
+    q(\vx) = \omega_1^0\otimes \omega_2^0(\vx) = p_1(x_1)p_2(x_2).
+  \end{gather}
+  Its exterior derivative is
+  \begin{gather}
+    d q(\vx) = d\omega_1^0 \otimes \omega_2^0 - \omega_1^0 \otimes d\omega_2^0
+    = p_1'(x_1) p_2(x_2) \dx_1 + p_1(x_1) p_2'(x_2) \dx_2.
+  \end{gather}
+  Note that $d^2 = 0$ since $\dx_i\wedge \dx_i=0$.
+  
+  Let $\omega_1^1 = p_1(x_1)\dx_1$ and $\omega_2^1 = p_2(x_2)\dx_2$. Then, the
+  possible tensor product 1-forms on $[0,1]^2$ are
+  \begin{align}
+    \omega_1^1 \otimes \omega_2^0 (\vx) &= p_1(x_1)p_2(x_2) \dx_1 \\
+    \omega_1^0 \otimes \omega_2^1 (\vx) &= p_1(x_1)p_2(x_2) \dx_2,
+  \end{align}
+  Since forms of index 1 are one polynomial degree lower, we see that
+  the tensor product function coefficient in front of $\dx_i$ is one
+  degree lower in $x_i$ than in $x_j$ for $j\neq i$.
+
+  Finally, we obtain the 2-form
+  \begin{gather}
+    \omega_1^1 \otimes \omega_2^1 (\vx) = p_1(x_1)p_2(x_2) \dx_1\wedge\dx_2.    
+  \end{gather}
+\end{example}
+
+\begin{Definition}{tensor-product-complex}
+  Let there be two complexes $V^k = \Lambda^k(\R^n)$ and $W^\ell = \Lambda^\ell(\R^m)$,
+  \begin{gather}
+    \begin{matrix}
+      \R&\xrightarrow{\subset}&V^0&\xrightarrow{d}&\cdots&
+      \xrightarrow{d}&V^n&\xrightarrow{}& 0\\
+      \R&\xrightarrow{\subset}&W^0&\xrightarrow{d}&\cdots&
+      \xrightarrow{d}&W^m&\xrightarrow{}& 0
+    \end{matrix}
+  \end{gather}
+  Then, the tensor product of the two complexes is
+  \begin{gather}
+    \R\xrightarrow{\subset}(V\otimes W)^0
+    %\xrightarrow{d}(V\otimes W)^1
+    \xrightarrow{d}\cdots\xrightarrow{d}(V\otimes W)^{m+n},
+  \end{gather}
+  where
+  \begin{gather}
+    (V\otimes W)^k = \bigoplus_{i+j=k} (V^i\otimes W^j).
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{tensor-product-exact}
+  If the two complexes $\{V^k\}$ and $\{W^k\}$ are exact, then their tensor product is.
+\end{Lemma}
+
+\begin{todo}
+  Make the representation of kernel and range part of the lemma?
+\end{todo}
+
+\begin{Corollary}{tensor-power-complex-exact}
+  The tensor product complex
+  \begin{gather}
+    \R
+    \overset{\subset}{\longrightarrow}
+    \left(\P_r\Lambda^{\otimes n}\right)^0
+    \overset{d}{\longrightarrow}    
+    \left(\P_r\Lambda^{\otimes n}\right)^1
+    \overset{d}{\longrightarrow}
+    \dots
+    \overset{d}{\longrightarrow}    
+    \left(\P_r\Lambda^{\otimes n}\right)^n
+    \longrightarrow 0
+  \end{gather}
+  is exact.
+\end{Corollary}
 
 \begin{Lemma}{qr-complex}
-  Tensor product polynomials form the exact sequence
-  \begin{gather*}
+  The coefficient functions for $(\P_r^{\otimes 3})^k$ and thus the
+  polynomial proxy fields are from the spaces
+  \begin{gather}
     \R
-    \overset{\subset}{\longrightarrow} \Q_r
+    \overset{\subset}{\longrightarrow} \Q_{r+1}
     \overset{\nabla}{\longrightarrow}
     \begin{pmatrix}
       \Q_{r,r+1,r+1}\\\Q_{r+1,r,r+1}\\\Q_{r+1,r+1,r}
@@ -1098,187 +1774,302 @@ and $\Hcurl$.
     \overset{\div}{\longrightarrow}
     \Q_r
     \longrightarrow 0,    
-  \end{gather*}
+  \end{gather}
+\end{Lemma}
+
+
+\begin{Theorem}{tensor-product-node-values}
+  Let there be two polynomial tensor complexes $\{V^k=\P\Lambda^k\}$
+  and $\{W^k=\P\Lambda^k\}$ with node functionals $\nodal_{V,i}^k$ and
+  $\nodal_{W,j}^k$, respectively. Let the node functionals be
+  unisolvent for the spaces $V^{k_1}$ and $W^{k_2}$,
+  respectively. Then, a unisolvent set of node functionals on
+  $V^{k_1}\otimes W^{k_2}$ is defined on the tensor product by
+  \begin{gather}
+    \nodal_{V,i}^{k_1}\otimes\nodal_{W,j}^{k_2}(\omega\otimes\eta)
+    = \nodal_{V,i}^{k_1}(\omega)\nodal_{W,j}^{k_2}(\eta),
+    \qquad \omega\in V^{k_1}, \eta\in W^{k_2}
+  \end{gather}
+\end{Theorem}
+
+\begin{Definition}{cube-facets}
+  Let $\cell$ be the hypercube $[0,1]^\sdim$ in $\R^\sdim$. Then,
+  every combination $\sigma\in\Sigma(j,\sdim)$ together with a tuple
+  $\{b_1,\dots,b_{\sdim-j}\}$ defines a $j$-dimensional \define{facet} of $\cell$ denoted by
+  \begin{gather}
+    f_{\sigma,b_1,\dots,b_{n-j}} =
+    \left\{
+      \vx\in\R^\sdim \;\middle\vert\;
+      \arraycolsep1pt
+      \begin{array}{rlcrl}
+        x_i &\in [0,1] &\text{ for }& i&\in\sigma\\
+        x_{\overline\sigma_i} &= b_i&\text{ for }& i&\not\in\sigma.
+      \end{array}
+    \right\},
+  \end{gather}
+  where $\overline\sigma\in\Sigma(n-j,n)$ is the complement of $\sigma$.
+
+  The set of all facets of $\cell$ is denoted by $\Delta(\cell)$, the
+  set of all facets of dimension $j$ is $\Delta_j(\cell)$.
+\end{Definition}
+
+\begin{Lemma}{cube-facets}
+  The number of $j$-dimensional facets of a $\sdim$-dimensional hypercube is
+  \begin{gather}
+    \#\Delta_j(\cell) = 2^{\sdim-j}\binom{\sdim}{j}.
+  \end{gather}
+\end{Lemma}
+
+\begin{Lemma}{facets-k-forms}
+  The space of tangential traces
+  $\gamma_f \left(\P_r\Lambda^{\otimes n}\right)^k$ on a facet of $\cell$ of
+  dimension $j$ is isomorphic to
+  $\left(\P_r\Lambda^{\otimes {j}}\right)^k$. In particular, it is zero if $j<k$.
+\end{Lemma}
+
+\begin{todo}
+  Connectupper index of node functionals and spaces
+\end{todo}
+\begin{Notation}{dual-pr-1d}
+  We denote by $W_r^i$ the dual space of $\P_r\Lambda^i(I)$ for
+  $i=0,1$, respectively. We obtain a basis by a transformation and
+  translating~\slideref{Definition}{pr-1d-basis} into the language of
+  differential forms:
+  \begin{xalignat}3
+    \widetilde\nodal_{0,b}^0(\omega) &= \int_b \omega
+    & \forall b&\in\{0,1\},
+    & \forall \omega&\in \P_{r+1}\Lambda^0,
+    \\
+    \widetilde\nodal_{1,q}^0(\omega) &= \int_I \diffd\omega \wedge q
+    & \forall q&\in \nicefrac{\P_r\Lambda^0}{\R},
+    & \forall \omega&\in \P_{r+1}\Lambda^0,
+    \\
+    \widetilde\nodal_{1,q}^1(\omega) &= \int_I \omega \wedge q
+    & \forall q&\in \P_r\Lambda^0,
+    & \forall \omega&\in \P_{r}\Lambda^1,
+  \end{xalignat}
+  The upper index of $\widetilde\nodal_{x,y}^i$ corresponds to the space $W_r^i$.
+  
+  Due to \slideref{Theorem}{tensor-product-node-values},
+  we can write
+  \begin{gather}
+    \left(\left(\P\Lambda^{\otimes n}\right)^k\right)^*
+    = \bigoplus_{\sigma\in\Sigma(k,n)} W_r^{\chi_1}\otimes\dots\otimes W_r^{\chi_n}.
+  \end{gather}
+\end{Notation}
+
+\begin{Definition}{facet-nodal}
+  Let $f_{\sigma,b_1,\dots,b_{n-j}}$ be a $j$-dimensional facet of the
+  hypercube $T = [0,1]^\sdim$. Using \slideref{Notation}{dual-pr-1d},
+  we define the space
+  \begin{gather}
+    W^k(f_{\sigma,b_1,\dots,b_{n-j}}) = \bigoplus_{\tau\in\Sigma(k,n)} W_\tau,
+  \end{gather}
+  where
+  \begin{gather}
+    W_\tau = W_{\tau,1}\otimes \dots \otimes W_{\tau,n},
+    \qquad W_{\tau,i} =
+    \begin{cases}
+      W_r^1 & \text{if } i \in \sigma \cap \tau\\
+      W_r^0 & \text{if } i \in \sigma \cap \overline\tau\\
+      \operatorname{span} \nodal_{0,b_i}^0 & \text{if } i \in \overline\sigma \cap \overline\tau\\
+      \{0\} & \text{if } i \in \overline\sigma \cap \tau
+    \end{cases}
+  \end{gather}
+  We call these the node values on the facet $f_{\sigma,b_1,\dots,b_{n-j}}$.
+\end{Definition}
+
+\begin{Theorem}{qr-unisolvence}
+  Let $f\in\Delta(\cell)$. Let
+  $\omega\in \left(\P\Lambda^{\otimes n}(I)\right)^k$. Then,
+  $\gamma_f\omega$ is uniquely determined by the node functionals
+  spanning $W^k(f)$. In particular, the finite element $k$-form with
+  its node functionals is unisolvent.
+\end{Theorem}
+
+\section{Commuting quasi-interpolation operators}
+
+\begin{intro}
+  Quasi-interpolation operators for
+  $H\Lambda^0(\domain) = H^1(\domain)$ are obtained by replacing point
+  values by volume (Clément, Schöberl) or line (Scott/Zhang)
+  averages. We have already seen, that in $\Hdiv(\domain)$, we also
+  must replace face integrals by volume averages. Here, we are faced
+  with the commutation property, such that the averages cannot be
+  defined for each facet separately. Instead, we turn the procedure
+  around and use interpolation on whole families of cells and the
+  average over these families.
+  
+  The original version of the quasi-interpolation operators presented
+  here is due to J.~Schöberl. The tensor product construction
+  presented here is from current work of myself and F.~Bonizzoni.
+\end{intro}
+
+
+\begin{Lemma}{perturbed-interpolation-1d}
+  Let $I_{a,b} = [a,b]$ Let the node functionals for
+  $\P_r^+\Lambda^i(I_{a,b})$ with $i=0,1$ be defined for
+  $\omega^0\in\Lambda^0$ and $\omega^1\in\Lambda^1$, respectively, by
+  \begin{align}
+    \nodal_{0,a,b}^0(\omega^0) &= \omega^0(b) - \omega^0(a),\\
+    \nodal_{i,a,b}^0(\omega^0) &= \int_a^b \mu_i\diffd\omega^0 ,
+                                 \quad i=1,\dots,r,
+    \\
+    \nodal_{r+1,a,b}^0(\omega^0) &= \omega^0(b) + \omega^0(a),\\
+    \nodal_{i,a,b}^1(\omega^1) &= \int_a^b \mu_i\omega^1 ,\quad i=0,\dots,r,
+  \end{align}
+  where $\mu_i\in \P_i\Lambda^0$ are from the sequence of orthogonal
+  polynomials on $I_{a,b}$. Then, there holds for $\omega\in\Lambda^0$
+  \begin{gather}
+    \nodal_{i,a,b}^0(\omega) = \nodal_{i,a,b}^1(\diffd\omega), \qquad i=0,\dots,r.
+  \end{gather}
 \end{Lemma}
 
 \begin{proof}
-  First, we show that the differential operators map into the right
-  spaces. Let $q\in\Q_{r+1}$ such that
-  $q(x) = q_1(x_1) q_2(x_2)q_3(x_3)$ with $q_i\in\Q_{r+1}$. Then
-  \begin{gather*}
-    \nabla q =
-    \begin{pmatrix}
-      q_1'q_2q_3\\q_1q_2'q_3\\q_1q_2q_3'
-    \end{pmatrix}
-    \in
-    \begin{pmatrix}
-      \Q_{r,r+1,r+1}\\\Q_{r+1,r,r+1}\\\Q_{r+1,r+1,r}
-    \end{pmatrix}.
-  \end{gather*}
-  Similarly, we can compute this directly for $\curl$ and
-  $\div$. Since polynomials are differentiable, we have $d^2=0$. It
-  remains to show that the sequence is exact, which we will prove at
-  the example of $\Hcurl$. Let $u\in \ker{\curl}$,
-  \begin{gather*}
-    u=
-    \begin{pmatrix}
-      \phi_1\phi_2\phi_3\\
-      \psi_1\psi_2\psi_3\\
-      \pi_1\pi_2\pi_3
-    \end{pmatrix},
-    \qquad
-    0 = \curl u =
-    \begin{pmatrix}
-      \pi_1\pi_2'\pi_3 - \psi_1\psi_2\psi_3'\\
-      \phi_1\phi_2\phi_3' - \pi_1'\pi_2\pi_3\\
-      \psi_1'\psi_2\psi_3 - \phi_1\phi_2'\phi_3
-    \end{pmatrix},
-  \end{gather*}
-  where each polynomial with index $i$ only depends on
-  $x_i$. Furthermore, $\phi_1,\psi_2,\pi_3\in\P_r$ and all other in
-  $\P_{r+1}$.  From the continuous de Rham complex, we know that there
-  is a function $p$ such that $u=\nabla p$. It remains to show that
-  $p\in\Q_{r+1}$. There holds
-  \begin{gather*}
-    \d_1 p = \phi_1\phi_2\phi_3.
-  \end{gather*}
-  Thus, we make the ansatz
-  \begin{gather*}
-    p = \Phi_1\phi_2\phi_3,
-  \end{gather*}
-  where $\Phi_1\in\P_{r+1}$ is the antiderivative of $\phi_1$. Thus,
-  $p\in\Q_{r+1}$ It remains to show that this ansatz is consistent
-  with the other two derivatives, thus,
-  \begin{gather*}
-    p = \Phi_1\phi_2\phi_3 = \psi_1\Psi_2\psi_3 = \pi_1\pi_2\Pi_3.
-  \end{gather*}
-  Integrating the first component of $\curl u$ with respect to $x_2$
-  and $x_3$, we obtain
-  \begin{gather*}
-    \pi_1\pi_2\Pi_3 = \psi_1\Psi_2\psi_3.
-  \end{gather*}
-  Doing the same with the second component, we see indeed that the
-  function $p$ is consistently defined and thus $u=\nabla p$.
+  The proof is trivial for $i=1,\dots,r$ and elementary for $i=0$.
 \end{proof}
 
-\begin{Definition}{pr-complex-1d}
-  The one-dimensional de Rham complex on the interval $I = [\xi_0,\xi_1]$ and
-  its polynomial subcomplex are
+\begin{Definition*}{cutoff}{Cutoff functions}
+  A $C^k$-\define{cutoff function} $\eta_{x,\rho}$ for the interval $B_\rho(x)$ of radius
+  $\rho$ around $x$ is a function fulfilling the following conditions:
   \begin{gather}
-    \begin{CD}
-    \R
-    @>{\subset}>>
-    H^1(I) = H\Lambda^0(I)
-    @>{\tfrac{d}{dx}}>>
-    L^2(I) = H\Lambda^1(I)
-    @>>> 0
-    \\
-    @.
-    @A{\subset}AA
-    @A{\subset}AA
-    \\
-    \R
-    @>{\subset}>>
-    \P_{r+1} = \P_{r+1}\Lambda^0
-    @>{\tfrac{d}{dx}}>>
-    \P_r = \P_r\Lambda^1
-    @>>> 0
-    \end{CD}
+    \eta_{x,\rho} \in C^k\left(\R^\sdim\right),\qquad
+    \operatorname{supp} \eta_{x,\rho}  \subseteq \overline{B_\rho(x)},\qquad
+    \int \eta_{x,\rho} \dx = 1.
   \end{gather}
-  The degrees of freedom for $\P_{r+1}\Lambda^0$ are
+  An example for a $C^\infty$-cutoff function is
   \begin{gather}
+    \eta_{x,\rho}(y) = \frac1{\rho\int\tilde\eta} \tilde\eta\left(\tfrac{y-x}{\rho}\right),
+    \qquad
+    \tilde\eta(t) =
+    \begin{cases}
+      \exp\left(\tfrac1{t^2-1}\right) & t\le 1\\
+      0 & t>1.
+    \end{cases}
+  \end{gather}
+\end{Definition*}
+
+\begin{Definition}{quasi-interpolation-1d}
+  Let $\rho\le \nicefrac13$. Let $\eta_{0,\rho}$, and $\eta_{1,\rho}$ be cutoff
+  functions. Then, we define quasi-interpolation operators
+  \begin{align}
+    I^k_\rho\colon \Lambda^k(I_{-\rho,1+\rho}) &\to \P_r^+\Lambda^k(I_{0,1}),
+                                     \qquad k=0,1,\\
+    \omega^k & \mapsto \sum_i \overline{\nodal_i^k}(\omega^k) \phi_i^k,
+  \end{align}
+  using the node functionals
+  \begin{gather}
+    \overline{\nodal_i^k}(\omega^k)
+    = \int_{-\rho}^\rho\int_{-\rho}^\rho \nodal_{i,a,b}^k(\omega^k)
+    \eta_{0,\rho}(a)\eta_{1,\rho}(b) \,\diffd a\,\diffd b,
+  \end{gather}
+  and the shape functions $\phi_i^k$ according to \slideref{Definition}{pr-1d-basis}.
+\end{Definition}
+
+\begin{Lemma}{quasi-interpolation-1d}
+  The quasi-interpolation operators $I_\rho^k$ can be extended to
+  bounded operators on $L^2\Lambda^k(I_{-\rho,1+\rho})$, and thus on
+  $H\Lambda^k(I_{-\rho,1+\rho})$. Furthermore, they commute with the
+  exterior derivative.
+\end{Lemma}
+
+\begin{Definition}{quasi-interpolation-tensor}
+  The tensor product quasi-interpolation operator
+  $I^k_{\rho,\otimes n}$ is defined formally as
+  \begin{gather}
+    I^k_{\rho,\otimes n}\colon L^2\left(\Lambda^{\otimes n}\right)^k
+    \to \Q_r^+\Lambda^k,
+    \qquad
+    I^k_{\rho,\otimes n} = \sum_{\sigma\in\Sigma(k,n)}
+    I^{\chi_1}_\rho \otimes \dots \otimes I^{\chi_n}_\rho.
+  \end{gather}
+  Applied to a rank one tensor $\omega_1\otimes \dots \otimes \omega_\sdim$ with
+  $\omega_i \in L^2\Lambda^{\chi_i}$, there holds
+  \begin{gather}
+    I^k_{\rho,\otimes n}(\omega_1\otimes \dots \otimes \omega_\sdim)
+    = I^{\chi_1}_\rho (\omega_1)\otimes \cdots\otimes I^{\chi_n}_\rho(\omega_n).
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem}{quasi-interpolation-tensor}
+  Let node functionals for $\Q_r^+\Lambda^k(\cell)$, where
+  $\cell = [0,1]^\sdim$ be defined as tensor products of the node
+  functionals in \slideref{Definition}{quasi-interpolation-1d}. Then,
+  the resulting quasi-interpolation operators $I_{\rho,\otimes n}^k$ commute with
+  the exterior derivative. Furthermore, they are bounded operators on
+  $L^2\Lambda^k(\overline\cell$), where $\overline \cell = [-\rho,1+\rho]^\sdim$.
+\end{Theorem}
+
+\begin{Definition}{tensor-form-shape-functions}
+  Let $\mesh_h$ be a finite element mesh on $\domain$ consisting of
+  mesh cells $\cell$ which are obtained from a reference cell
+  $\refcell = [0,1]^\sdim$ by the mapping $\Phi_\cell$. We define the
+  \define{shape function space} $V_\cell^k$ on each cell $\cell$ by
+  pullback from the reference cell such that
+  \begin{gather}
+    V_\cell^k = \bigl\{ \omega^k\in \Lambda^k(\cell) \;\big\vert\;
+    \Phi^* \omega^k \in \Q_r^+\Lambda^k(\refcell) \bigr\}.
+  \end{gather}
+  The \define{finite element space} on the mesh $\mesh_h$ is
+  \begin{gather}
+    V_h^k = \bigl\{\omega_h^k \in H\Lambda^k(\domain)\;\big\vert\;
+    \omega_h^k \in V_\cell^k \bigr\}.
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{form-quasi-interpolation-mesh}
+  A quasi-interpolation operator $I_{h,\rho}^k$ on the mesh $\mesh$ is defined by
+  choosing the averaged node functionals consistently between mesh
+  cells with averaging length $\rho = \nicefrac13 h$.
+\end{Definition}
+
+\begin{Corollary}{form-quasi-interpolation-mesh}
+  The quasi-interpolation operators $I_{h,\rho}^k$ are bounded operators
+  \begin{gather}
+    I_{h,\rho}^k \colon H\Lambda^k(\domain) \to V_h^k,
+  \end{gather}
+  such that
+  \begin{gather}
+    d_k \circ I_{h,\rho}^k = I_{h,\rho}^{k+1} \circ d_k.
+  \end{gather}
+\end{Corollary}
+
+\begin{Lemma}{form-quasi-interpolation-convergence}
+  The restriction of $I_{h,\rho}^k$ to $V_h^k$ is a continuous function
+  in $\rho$, and its limit for $\rho\to0$ is the identity.
+
+  For sufficiently small $\rho$ the operator $I_{h,\rho|V_h^k}^k$ is
+  invertible.
+\end{Lemma}
+
+\begin{Definition}{schoeberl-interpolation}
+  The \define{Schöberl interpolation} operator $S_h^k$ is defined for
+  sufficiently small $\rho$ as
+  \begin{gather}
+    S_h^k = \left(I_{h,\rho|V_h^k}^k\right)^{-1} \circ I_{h,\rho}^k.
+  \end{gather}
+  $S_h$ is a bounded operator on $H\Lambda^k$ which commutes with the
+  exterior derivative and there holds
+  \begin{gather}
+    \left(S_h^k\right)^2 = S_h^k.
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem}{fem-cochain}
+  The finite element cochain complex with spaces $V_h^k$ provides
+  inf-sup stable discretizations for mixed problems of the form: find
+  $\omega^{k}\in V_h^k$ for $k=0,\dots,\sdim$, such that
+  \begin{gather}
+    \arraycolsep1pt
     \begin{matrix}
-    \nodal_{0,0}(p) = p(\chi_0),\\
-    \nodal_{0,1}(p) = p(\chi_1),
-    \end{matrix}\qquad
-    \nodal_{1.q}(p) = \int_{I} p q \dx,\quad\forall q\in\P_{r-1}.
+      \form(\diffd\omega^k,\diffd \mu^k)
+      &+& \form(\diffd \omega^{k-1},\mu^k)
+      &=& \form(f,\mu^k)\\
+      \form(\diffd\mu^{k-1},\omega^k) &&&=&0
+    \end{matrix}
+    \qquad\forall \mu^k\in V_h^k, \quad k=0,\dots,\sdim.
   \end{gather}
-  The degrees of freedom for $\P_{r}\Lambda^1$ are
-  \begin{gather}
-    \nodal_{1,q}(p) = \int_{I} p q \dx,\quad\forall q\in\P_{r}.
-  \end{gather}
-\end{Definition}
-
-\begin{remark}
-  The degrees of freedom for $\P_{r+1}\Lambda^0$ are chosen such that
-  the finite element function on a subdivision of $I$ is continuous,
-  thus ih $H^1$. For $\P_{r}\Lambda^1$, we do not require continuity
-  and thus only need interior degrees of freedom.
-\end{remark}
-
-\begin{Definition}{tensor-dofs}
-  Let
-  \begin{gather}
-    \nodal_{0,0} p = p(\chi_0),\qquad \nodal_{0,1} p = p(\chi_1), \qquad
-    \nodal_{1,i} = \int_I p q_i\dx,
-  \end{gather}
-  be the degrees of freedom of a one-dimensional element where the
-  $q_i$ are a basis for $\P_{r-1}$ and $\P_r$ in case of
-  $\P_{r+1}\Lambda^0$ and $\P_{r}\Lambda^1$, respectively. Then, the
-  tensor product of these degrees of freedom applied to the function
-  $p(x_1,x_2) = p_1(x_1)p_2(x_2)$ is defined as
-  \begin{gather}
-    \begin{split}
-      \nodal_{0,i}\otimes\nodal_{0,j}(p) &= p_1(\chi_i) p_2(\chi_j),\\
-      \nodal_{0,i}\otimes\nodal_{1,j}(p) &= \int_I p_1(\chi_i)  p_2(x)q_j(x)\dx,\\
-      \nodal_{1,i}\otimes\nodal_{0,j}(p) &= \int_I p_1(x)q_j(x) p_2(\chi_j) \dx,\\
-      \nodal_{1,i}\otimes\nodal_{1,j}(p) &= \iint_I p_1(x_1)
-      p_2(x_2) \dx_1\dx_2.
-    \end{split}
-  \end{gather}
-\end{Definition}
-
-\begin{Lemma}{2d-tensor-rt-nedelec}
-  For the two elements
-  \begin{gather}
-    RT_r =
-    \begin{pmatrix}
-      \P_{r+1}\Lambda^0 \otimes \P_{r}\Lambda^1\\
-      \P_{r}\Lambda^1 \otimes \P_{r+1}\Lambda^0
-    \end{pmatrix},
-    \qquad
-    N^{1e}_r =
-    \begin{pmatrix}
-      \P_{r}\Lambda^1 \otimes \P_{r+1}\Lambda^0\\
-      \P_{r+1}\Lambda^0 \otimes \P_{r}\Lambda^1      
-    \end{pmatrix},
-  \end{gather}
-  the tensorized degrees of freedom uniquely determine the normal and
-  tangential components, respectively, on the face of a square.
-
-  Both elements with their tensor degrees of freedom are unisolvent.
-\end{Lemma}
-
-\begin{proof}
-  The elements are unisolvent by the following argument: Let
-  $\{\phi_i\}$ and $\{\psi_j\}$ be the basis dual to the degrees of
-  freedom of $\P_{r+1}\Lambda^0$ or $\P_r \Lambda^1$,
-  respectively. Then, (renumbering the degrees of freedom)
-  \begin{gather*}
-    \nodal_k\otimes\nodal_l(\phi_i\otimes\psi_j) = \delta_{ik}\delta_{jl}.
-  \end{gather*}
-  Thus, the mapping between tensorized degrees of freedom and
-  tensorized basis functions is one-to-one.
-
-  For the Raviart-Thomas element $RT_r$, the normal component is
-  $\P_r\Lambda^1$. Take for instance the face $x_1 = \chi_0$. Then,
-  the degrees of freedom associated to this face are
-  \begin{gather*}
-    \nodal_{0,0} \otimes \nodal{1,q} p
-    = \int_I p_1(\chi_1) p_2(x_2) q(x_2) \dx_2
-    \quad\forall q\in \P_r.
-  \end{gather*}
-  Since the trace of $p$ on this face is $p_2 \in \P_r$, this
-  polynomial is uniquely determined by the degree of freedom.
-
-  The argument for the Nedelec edge element $N^{1e}_r$ follows by
-  exchanging tangential and normal component.
-\end{proof}
-
-\begin{remark}
-  The construction extends to the three-dimensional products.
-\end{remark}
-
+\end{Theorem}
 
 
 %%% Local Variables:
