@@ -1,21 +1,31 @@
 \section{Fließkommazahlen}
 
+\begin{intro}
+  Die Menge der reellen Zahlen ist nicht abbildbar im Rechner mit endlichem Speicher.
+  Wir betrachten deshalb eine neue Art Zahlen darzustellen, eine die für den Rechner geeignet ist.
+\end{intro}
+
 \begin{Definition}{fliesskomma}
-  Die Darstellung einer numerischen größe als \define{Fließkommazahl}
-  (auch \define{Gleitkommazahl}) beruht auf einer Basis $2 \le b \in \mathbb N$. Sie
-  besteht aus einer \define{Mantisse} $\nicefrac1b \le m < 1$ und einem
-  Exponenten $e$, so dass eine Zahl $x\neq 0$ die Gestalt
+  Die Darstellung einer numerischen Größe als \define{Fließkommazahl}
+  (auch \define{Gleitkommazahl}) $x \in \R$ im Rechner beruht auf einer
+  Basis $2 \le b \in \mathbb N$. Desweiteren besteht sie aus einer \define{Mantisse}
+  $\nicefrac1b \le m < 1$ und einem Exponenten $t$, so dass $x$ die folgende Gestalt hat
   \begin{gather}
-    x=\pm m \cdot b^{e}
+    x=\pm m \cdot b^{t}
   \end{gather}
-  hat. Diese Darstellung ist durch die Normierung von $m$
-  eindeutig. Sowohl die Mantisse, als auch der Exponent haben einen
+  Diese Darstellung ist mit der Normierung von $m\neq 0$ für $x\neq$
+  eindeutig. Für $x=0$ wird festgesetzt, dass $m=0$ gilt.
+  Sowohl die Mantisse, als auch der Exponent haben einen
   endlichen Wertebereich, typischerweise eine feste Anzahl von
   Stellen. Die endliche Menge der damit darstellbaren Zahlen
   bezeichnen wir mit $\mathbb M$.
 \end{Definition}
 
 \begin{intro}
+  Die Mantisse als auch der Exponent haben nur einen endlichen Wertebereich
+  (endliche Anzahl an Stellen) und die Basis ist eine fest gewählte Zahl, doch damit lässt sich
+  bereits eine 'große' Menge an Zahlen darstellen.
+  
   Die folgenden drei Beispiele beschreiben Teile der Implementation
   von Fließkommazahlen nach dem IEE-Standard 754. Die Quelle ist
   jeweils Wikipedia.
@@ -145,8 +155,22 @@
 \begin{Beispiel*}{harmonisch}{Harmonische Reihe in Fließkommaarithmetik}
   \lstinputlisting[frame=single]{code/harmonic.py}
 
-  Bricht das Programm ab? Warum?
+  Bricht das Programm ab? Begründen Sie dies.
 \end{Beispiel*}
+\begin{remark}
+  Die Harmonische Reihe ist folgende Summe $1+ \tfrac12 + \tfrac13 + \cdots$ \\
+   1 Das ist eine Möglichkeit in Python einer Variable eine Zahl zuzuweisen. Hier werden
+  nochmals explizite Angaben zur Art der Zahl gemacht.\\
+   2 Hier wird der Variable $i$ auf eine andere Weise die $1$ zugewiesen.\\
+   3 Wi initialisieren die Variable $old$ mit $0$ \\
+   4 Wir springen in eine while- Schleife, die solange den darunterstehenden Code ausführt, bis
+  die Bedingung in den Klammern nicht mehr erfüllt ist.\\
+   5 Hier wird $old$ der momentane Wert der Summe zugewiesen.\\
+   6 Im Code steht eigentlich $i=i+1$, also i wird um $1$ erhöht.\\
+   7 Der Variable $diff$ wird das nächste Glied in der Summe zugewiesen.\\
+   8 Die Summe wird um ein weiteres Glied erweitert. Die Schleife spring nach oben und
+  testet zuerst ob die Bedingung noch erfüllt ist. 
+\end{remark}
 
 \begin{Aufgabe}{rundung}
   Schreiben Sie ein Programm, das bis auf 10\% Genauigkeit die

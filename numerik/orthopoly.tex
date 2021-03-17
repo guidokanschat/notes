@@ -218,18 +218,12 @@
   \end{enumerate}
 \end{proof}
 
-\begin{remark}
-  Ein reeller Vektorraum $V$ mit
-  Skalarprodukt und zugehöriger Norm heißt \define{euklidischer
-    Vektorraum}.
-\end{remark}
-
 \begin{Lemma*}{l2-norm}{$L^2$-Skalarprodukt}
   Auf dem Raum $V=\P_n$ der reellen Polynome vom Grad bis zu $n$ ist durch
   \begin{gather}
     \scal(p,q) = \int_{-1}^1 p(x)q(x)\dx
   \end{gather}
-  ein Skalarprodukt definiert.
+  ein Skalarprodukt definiert. Dieses wird $L^2$ Skalarprodukt genannt.
 \end{Lemma*}
 
 \begin{proof}
@@ -269,8 +263,15 @@
   Dies kann nur der Fall sein, wenn $p \equiv 0$ ist.\\
   Somit haben wir nachgerechnet, dass es sich um Skalarprodukt handelt.
   \end{proof}
-    
-  
+
+\begin{Definition}{l2-norm}
+  Nach dem \slideref{Lemma}{hilbertnorm} können wir mit diesem Skalarprodukt eine Norm auf $\P_n$
+  definierten. Diese Norm wird als die $L^2$ Norm bezeichnet.
+  \begin{gather}
+    \norm{f}_{L^2} = \sqrt{\scal(f,f)_{L^2}} = \int_{-1}^1 f(x)^2 dx
+  \end{gather}
+  \end{Definition}
+
 \begin{Definition}{orthogonal}
   Zwei Vektoren $u,v\in V$ heißen \define{orthogonal}, wenn
   \begin{gather}
@@ -446,6 +447,14 @@
   \end{gather}
 \end{Beispiel}
 
+\begin{remark}
+  Mit unserem Wissen über die $L^2$ Norm aus \slideref{Definition}{l2-norm} erkennen wir, dass sich
+  die Gaußsche Ausgleichsrechnung auch über die Norm formulieren lässt.
+  \begin{gather}
+    \norm{f-p}_{L^2}^2 = \min_{q\in \P_n} \norm{f-q}_{L^2}^2
+  \end{gather}
+\end{remark}
+
 \section{Orthogonale Basen}
 
 \begin{Lemma}{gram-system}
@@ -557,6 +566,29 @@
   \lstinputlisting{code/gram-schmidt.py}
 \end{Algorithmus*}
 
+\begin{remark}
+  Um den Code zu verstehen ist es ratsam ihn zu Beginn einmal durchzugehen und sich Stellen zu
+  merke an denen Zuweisungen getätigt werden. Ebenso sollte der Code mit einem einfachen Beispiel
+  probiert werden, um die Parallelen zum Verfahren besser zu erkennen.\\  
+   1 Es wird eine Funktion mit dem Namen $gram schmidt$. Dieser Funktion wird eine Matrix $v$
+      übergeben. In dieser Matrix stehen die Vektoren $v_1$ bis $v_n$ in Spalten. \\ 
+   2 Es wird $n$ die Länge der Zeilen(Anzahl der Vektoren) zugewiesen und
+      $m$ wird die Länge der Spalten (Anzahl der Einträge im Vektor) zugewiesen. \\
+   3 Beginn des GS Verfahrens. Es geht von Vektor 1 bis Vektor $n$ \\
+   4 Initialsieren eines Vektors $delta$ der Länge $m$ mit Nullen als Einträge\\
+   5 Es wird eine weitere Schleife begonnen in der ein Index i über alle bisher orthogonalisierten
+      Vektoren läuft. Dies entspricht der Summe aus dem Verfahren. \\
+   6 $r$ ist das Skalarprodukt aus dem Vektor $v_j$ und einem bereits orthogonalisierten Vektor.
+      Die Vektoren befinden sich in der Matrix $v$ und über diesen Befehl wird darauf zugegriffen.\\
+   7 delta = delta $+$ Skalarprodukt $*$ dem orthogonalen Vektor\\  
+   8 Hier wird die zweite for-Schleife wieder verlassen! Es reicht tatsächlich das Einrücken.
+      Die Summe wird vom Vektor $v_j$ abgezogen, somit $v_j$ orthogonalisiert und wieder in der
+      Matrix $v$ an der richtigen Stelle zugewiesen.  \\
+   9  Die Norm von $v_j$ wird berechnet.\\  
+   10 Wie im Verfahren wird in  dieser Zeile $v_j$ normiert und in der Matrix $v$ an der Stelle des
+       früheren $v_j$ zugewiesen.
+\end{remark}
+
 \begin{Beispiel}{gram-schmidt}
   Wir wählen für Polynome das $L^2$-Skalarprodukt aus
   \slideref{Lemma}{l2-norm} und die Basis $\{1,x,\dots,x^{n-1}\}$
@@ -578,6 +610,15 @@
 \begin{Algorithmus*}{mgs}{Modifizierter Gram-Schmidt}
   \lstinputlisting{code/modified-gram-schmidt.py}  
 \end{Algorithmus*}
+
+\begin{remark}
+  In diesem Programm wurde der Zwischenschritt über das delta ausgelassen, was mögliche Rundungsfehler
+  verringert.\\
+  4 Hier wird direkt $r$ mit Nullen initialisiert.\\
+  7 Der Vektor $v_j$ wird hier orthogonalisiert, ohne dass die Summe aus dem Verfahren in delta
+    zwischengespeichert wird und direkt wieder an entsprechender Stelle in der
+    Matrix $v$ zugewiesen.\\
+\end{remark}
 
 \begin{Beispiel}{gs-mgs}
   In dieser Tabelle wiederholen wir die Zahlen
@@ -649,11 +690,11 @@
 \end{Definition}
 
 \begin{Beispiel}{least-squares-legendre}
-  Das Problem der Gaußschen Ausgleichsrechnung war: zu einer gegebenen
+  Das Problem der Gaußschen Ausgleichsrechnung war: Zu einer gegebenen
   Funktion $f$ finde $p\in \P_n$, so dass
   \begin{gather}
-    \int_{-1}^1 (f-p)^2 \dx
-    = \min_{q\in\P_n} \int_{-1}^1 (f-q)^2 \dx.
+    \norm{f-q}_{L^2}^2
+    = \min_{q\in\P_n} \norm{f-q}_{L^2}^2.
   \end{gather}
   Mit Hilfe der Legendre-Polynome können wir nun die Lösung explizit angeben als
   \begin{gather}
