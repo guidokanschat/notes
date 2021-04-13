@@ -40,6 +40,8 @@
   \begin{gather}
     \dx_i(x_j) = \delta_{ij}.
   \end{gather}
+  In $\R^n$, will denote by $\dx_1,\dots,\dx_n$ the basis dual to the
+  unit vector basis $e_1,\dots,e_n$.
 \end{Notation}
 
 
@@ -98,15 +100,13 @@
       0<\sigma_1 < \dots < \sigma_k\le n \right\}
   \end{gather}
   is a basis for $\Alt^k V$.
-\end{Lemma}
-\begin{todo}
   There holds
   \begin{gather}
     \dx_{\sigma_1}\wedge\dots\wedge\dx_{\sigma_k} (x_{\rho_1},\dots,x_{\rho_k})
     = \prod_{i=1}^k \delta_{\sigma_i\rho_i}
   \end{gather}
   among all combinations $0<\rho_1 < \dots < \rho_k\le n$.
-\end{todo}
+\end{Lemma}
 
 \begin{remark}
   The alternating $n$-forms on $\R^n$ can be used to measure volume. In particular,
@@ -251,10 +251,6 @@
     \omega_3 &= p \, \dx_1 \wedge \dx_2 \wedge \dx_3.
   \end{align}
 \end{Definition}
-\begin{todo}
-  Should $\dx_i$ be the dual basis of $e_i$ or of any basis $x_i$?
-\end{todo}
-
 
 \begin{Problem}{proxy-fields}
   Show that the definition of the proxy fields in coordinates in

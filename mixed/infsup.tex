@@ -288,8 +288,8 @@ The question of well-posedness in finite dimensions can be answered by:
 \end{remark}
 
 \begin{todo}
-  JW: introduce this lemma and the associated problem after musical isomorphisms
-  have been defined. use them in the statements, e.g. $Au = I_\flat w$... 
+  The last statement uses the wrong spaces. Either restrict the whole
+  argument here to $\R^n$ or think about dual spaces.
 \end{todo}
 
 \begin{Lemma}{infsup2}
@@ -297,7 +297,8 @@ The question of well-posedness in finite dimensions can be answered by:
   condition~\eqref{eq:infsup:1}:
   \begin{gather}
     \label{eq:infsup:2}
-    \forall u\in V \;\exists w\in W \;:\; a(u,w) \ge \ellipa \norm{u}_V\norm{w}_W
+    \forall u\in V \;\exists w\in W \;:\;
+    a(u,w) \ge \ellipa \norm{u}_V\norm{w}_W
   \end{gather}
   \begin{gather}
     \label{eq:infsup:3}
@@ -319,28 +320,14 @@ The question of well-posedness in finite dimensions can be answered by:
     \arraycolsep0.3ex
     \begin{array}{rcl}
       \ellipa \norm{w}_W &\le&\norm{u}_V\\
-      Aw &=& u
+      A^\transpose w &=& u
     \end{array}
     \right.
   \end{gather}
 \end{Lemma}
-  \begin{todo}
-    JW:
-  \begin{gather}
-    \forall u\in V
-    \;\exists w\in W \;:\;
-    \left\{
-    \arraycolsep0.3ex
-    \begin{array}{rcl}
-      \ellipa \norm{u}_V &\le&\norm{w}_W\\
-      Au &=& w
-    \end{array}
-    \right.
-  \end{gather}
-  \end{todo}
 
 \begin{Problem}{inf-sup-equivalence}
-  Prove Lemma 2.1.16.
+  Prove \slideref{Lemma}{infsup2}.
 \begin{solution}
   We have to prove the following statements are equivalent to the inf-sup condition:
   \begin{align}
