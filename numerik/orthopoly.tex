@@ -606,7 +606,7 @@ Wir haben hier o.B.d.A. den affinen Unterraum $A$ durch den Untervektorraum $W$ 
     im Vektor) zugewiesen.
   \item Beginn des Gram-Schmidt-Verfahrens und der Schleife über die
     Vektoren von 1 bis $n$.
-   \item Initialsieren eines Vektors $delta$ der Länge $m$ mit Nullen als Einträge
+   \item Initialsieren eines Vektors $\delta$ der Länge $m$ mit Nullen als Einträge
    \item Es wird eine weitere Schleife begonnen in der ein Index i
      über alle bisher orthogonalisierten Vektoren läuft. Dies
      entspricht der Summe aus dem Verfahren. Beachten Sie, dass diese
@@ -682,7 +682,12 @@ $\delta$ ausgelassen.
 
 \begin{Satz*}{dreiterm}{Dreiterm-Rekursion}
   Zu jedem Skalarprodukt $\scal(\cdot,\cdot)$ auf dem Raum der
-  stetigen Funktionen gibt es genau eine Folge von orthogonalen
+  stetigen Funktionen mit der Eigenschaft, dass für alle Polynome $p,q$
+  \begin{gather}
+    \scal(xp,q) = \scal(p,xq)
+  \end{gather}
+  gilt,
+  gibt es genau eine Folge von orthogonalen
   Polynomen $\{p_k\}_{k=0,\dots}$ wobei $p_k\in \P_k$ mit führendem Koeffizienten eins. Sie
   genügen der Dreiterm-Rekursionsformel
   \begin{gather}
@@ -699,11 +704,50 @@ $\delta$ ausgelassen.
 \end{Satz*}
 
 \begin{proof}
-  Siehe \cite[Satz 6.2]{DeuflhardHohmann08}
+  Siehe auch \cite[Satz 6.2]{DeuflhardHohmann08} und \cite[Satz 2.17]{Rannacher17}.
+
+  Wir beginnen mit der Eindeutigkeit: wenn $p_k$ orthogonal zu allen
+  vorherigen Folgengliedern ist, so ist es auch orthogonal zu allen
+  ihren Linearkombinationen und daher gilt $p_k \perp \P_{k-1}$. Nach
+  \slideref{Lemma}{komp-projekt-wohldefiniert} ist das orthogonale
+  Komplement von $\P_{k-1}$ in $\P_k$ wohldefiniert und nach der
+  Dimensionsformel ist seine Dimension eins. Daher unterscheiden sich
+  alle Polynome dort nur um einen skalaren Faktor und durch die
+  Normierung wird $p_k$ eindeutig.
+  
+  Wir zeigen nun per inductionem, dass die erzeugte Folge eine
+  Orthogonalfolge ist. Da alle Vektoren zum Nullvektor orthogonal ist,
+  gilt die Aussage für die beiden Startpolynome. Sei sie nun bis
+  $p_{k-1}$ bewiesen. Dann gilt zunächst mit der Wahl von $a_k$:
+  \begin{align}
+    \scal(p_k,p_{k-1}) &= \scal(x p_{k-1},p_{k-1}) - a_k\scal(p_{k-1},p_{k-1})
+                         - b_k \scal(p_{k-2},p_{k-1})\\
+                       &=  \scal(x p_{k-1},p_{k-1}) -  \scal(x p_{k-1},p_{k-1}) - 0 \\
+                       &= 0.
+  \end{align}
+  Nach der Wahl von $b_k$ erhalten wir:
+  \begin{align}
+    \scal(p_k,p_{k-2}) &= \scal(x p_{k-1},p_{k-2}) - a_k\scal(p_{k-1},p_{k-2})
+                         - b_k \scal(p_{k-2},p_{k-2})\\
+                       &=  \scal(x p_{k-1},p_{k-2}) - 0 - \scal(p_{k-1},p_{k-1})\\
+                       &= \scal(p_{k-1},xp_{k-2}-p_{k-1}).
+  \end{align}
+  Da die führenden Koeffizienten beider Polynome zur rechten eins
+  sind, ist die Differenz in $\P_{k-2}$ und damit nach
+  Induktionsannahme orthogonal zu $p_{k-1}$. Schließlich gilt für $j<k-2$:
+  \begin{align}
+    \scal(p_k,p_j) &= \scal(x p_{k-1},p_{j}) - a_k\scal(p_{k-1},p_{j})
+                     - b_k \scal(p_{k-2},p_{j})\\
+                   &= \scal(p_{k-1}, xp_j) - 0 - 0.
+  \end{align}
+  Dieser Term verschwindet, da $xp_j\in \P_{k-2}$ und damit orthogonal zu $p_{k-1}$.
 \end{proof}
 
 \begin{Bemerkung}{dreiterm-normierung}
-  Der Beweis ergibt eigentlich die ``Eindeutigkeit einer Orthogonalfolge bis auf Normierung''. Tatsächlich werden in der Literatur immer wieder veschiedene Normierungen benutzt. Beispiele sind:
+  Der Beweis ergibt eigentlich die ``Eindeutigkeit einer
+  Orthogonalfolge bis auf Normierung''. Tatsächlich werden in der
+  Literatur immer wieder veschiedene Normierungen benutzt. Beispiele
+  sind:
   \begin{enumerate}
   \item $p_k(1) = 1$
   \item $\norm{p_k} = 1$
@@ -715,7 +759,7 @@ $\delta$ ausgelassen.
   Die \define{Legendre-Polynome} $L_k$ sind definiert durch
   die Dreiterm-Rekursion
   \begin{gather}
-    L_{k} = \tfrac{2k-1}{k}x L_{k-1}(x) - \tfrac{k-1}{k} L_{k-2}(x)
+    L_{k}(x) = \tfrac{2k-1}{k}x L_{k-1}(x) - \tfrac{k-1}{k} L_{k-2}(x)
   \end{gather}
   mit den Startbedingungen $L_0(x) = 1$ und $L_1(x) = x$.
   Sie sind orthogonal bezüglich des $L^2$-Skalarprodukts in
@@ -760,6 +804,14 @@ $\delta$ ausgelassen.
     \scal(p,q) = \int_{-1}^1 \tfrac1{\sqrt{1-x^2}} \,p(x)q(x)\dx.
   \end{gather}
 \end{Definition}
+
+\begin{Aufgabe}{Tschebyscheff}
+  Zeigen Sie durch vollständige Induktion, dass die Teschebyscheff-Polynome der Darstellung
+  \begin{gather}
+    T_k(x) = \cos(k \operatorname{arccos} x)
+  \end{gather}
+  genügen.
+\end{Aufgabe}
 
 %%% Local Variables:
 %%% mode: latex

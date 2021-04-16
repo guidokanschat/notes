@@ -1,19 +1,19 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{Ran17}
 
-\bibitem[Deuflhard and Hohmann, 2008]{DeuflhardHohmann08}
-Deuflhard, P. and Hohmann, A. (2008).
+\bibitem[DH08]{DeuflhardHohmann08}
+P.~Deuflhard and A.~Hohmann.
 \newblock {\em Numerische Mathematik 1}.
-\newblock de Gruyter, Berlin.
+\newblock de Gruyter, Berlin, 2008.
 
-\bibitem[Rannacher, 2017]{Rannacher17}
-Rannacher, R. (2017).
+\bibitem[Ran17]{Rannacher17}
+R.~Rannacher.
 \newblock {\em Numerik 0. Einführung in die Numerische Mathematik}.
 \newblock Lecture Notes Mathematik. Heidelberg University Publishing,
-  Heidelberg.
+  Heidelberg, 2017.
 
-\bibitem[Stoer, 1983]{Stoer83}
-Stoer, J. (1983).
+\bibitem[Sto83]{Stoer83}
+J.~Stoer.
 \newblock {\em Einführung in die Numerische Mathematik I}.
-\newblock Springer, 4 edition.
+\newblock Springer, 4 edition, 1983.
 
 \end{thebibliography}
