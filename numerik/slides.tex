@@ -1,5 +1,6 @@
 \documentclass[german,ignorenonframetext,notheorems,hidelinks,aspectratio=1610]{beamer}
-\usetheme[compress]{Madrid}
+%\usetheme[compress]{JuanLesPins}
+\usetheme{JuanLesPins}
 \usecolortheme{iwr}
 \usepackage{mathsim}
 \lstset{language=Python}
@@ -37,18 +38,20 @@
 \subsection{Skalarprodukt und Orthogonalität}
 \frame{\subtoc}
 \frame {\input {blocks/Definition-skalarprodukt.tex}}
+\frame {\input {blocks/Lemma-bcs.tex}}
 \frame {\input {blocks/Lemma-hilbertnorm.tex}}
 \frame {\input {blocks/Lemma-l2-norm.tex}}
+\frame {\input {blocks/Definition-l2-norm.tex}}
 \frame {\input {blocks/Definition-orthogonal.tex}
   \input {blocks/Notation-euklidischer-vr.tex}}
-\frame {\input {blocks/Lemma-bcs.tex}}
 \frame {\input {blocks/Lemma-pythagoras.tex}}
 
 \subsection{Bestapproximation und orthogonale Projektion}
 \frame{\subtoc}
 \frame {\input {blocks/Definition-bestapproximation.tex}
   \input {blocks/Satz-bestapproximation.tex}}
-\frame {\input {blocks/Definition-komplement-projektion.tex}}
+\frame {\input {blocks/Definition-komplement-projektion.tex}
+  \input {blocks/Lemma-komp-projekt-wohldefiniert.tex}}
 \frame {\input {blocks/Beispiel-polynom-bestapproximation.tex}}
 
 \subsection{Orthogonale Basen}
@@ -56,9 +59,10 @@
 \frame {\input {blocks/Lemma-gram-system.tex}}
 \frame {\input {blocks/Definition-ortho-system.tex}
   \input {blocks/Lemma-ortho-lu.tex}}
-\frame {\input {blocks/Lemma-parseval.tex}}
-\frame {\input {blocks/Lemma-gram-system.tex}
-  \input {blocks/Lemma-least-squares-orthogonal.tex}}
+\frame {\input {blocks/Lemma-parseval.tex}
+  \input {blocks/Aufgabe-ortho-lu.tex}}
+\frame {\input {blocks/Lemma-gram-system.tex}}
+\frame {\input {blocks/Bemerkung-least-squares-orthogonal.tex}}
 \frame {\input {blocks/Theorem-gram-schmidt.tex}}
 \frame {\input {blocks/Algorithmus-gram-schmidt.tex}}
 \frame {\input {blocks/Beispiel-gram-schmidt.tex}}

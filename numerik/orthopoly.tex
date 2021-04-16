@@ -223,7 +223,7 @@
   \begin{gather}
     \scal(p,q) = \int_{-1}^1 p(x)q(x)\dx
   \end{gather}
-  ein Skalarprodukt definiert. Dieses wird auch $L^2$ Skalarprodukt genannt.
+  ein Skalarprodukt definiert. Dieses wird auch $L^2$-Skalarprodukt genannt.
 \end{Lemma*}
 
 \begin{proof}
@@ -263,7 +263,7 @@
   Nach dem \slideref{Lemma}{hilbertnorm} können wir mit diesem Skalarprodukt eine Norm auf $\P_n$
   definierten. Diese Norm wird als die $L^2$-Norm bezeichnet.
   \begin{gather}
-    \norm{f}_{L^2} = \sqrt{\scal(f,f)_{L^2}} = \int_{-1}^1 f(x)^2 dx
+    \norm{f}_{L^2} = \sqrt{\scal(f,f)_{L^2}} = \sqrt{\int_{-1}^1 f(x)^2 dx}
   \end{gather}
 \end{Definition}
 
@@ -348,11 +348,11 @@
   \end{align}
   und es gilt
   \begin{gather}
-    0 = \left. \frac{d}{dx} F(x) \right|_{x=0} =  2 \scal(u-u_b,xv).
+    0 = \left. \frac{d}{dx} F(x) \right|_{x=0} =  2 \scal(u-u_b,v).
   \end{gather}
 
   \grqq$\Leftarrow$\grqq{}:
-  Erfülle nun $u_b\in A$ die Bedingung $\scal(u-u_b,xv) = 0$ für alle $v\in W$.
+  Erfülle nun $u_b\in A$ die Bedingung $\scal(u-u_b,v) = 0$ für alle $v\in W$.
   \begin{align}
     \norm{u-u_b}^{2}
     &=\scal(u-u_b,u-u_b)\\
@@ -427,7 +427,7 @@
 \end{proof}
 
 \begin{Beispiel}{polynom-bestapproximation}
-  Die Aufgabe der Gaußschen Ausgleichsrechnung lautet: finde zu einer
+  Die Aufgabe der Gaußschen Ausgleichsrechnung (in $L^2$) lautet: finde zu einer
   gegebenen Funktion $f$ das Polynom vom Grad höchstens $n$, das auf
   dem Intervall $[-1,1]$ den mittleren quadratischen Abstand
   minimiert, also $p\in \P_n$ mit
@@ -443,11 +443,32 @@
 \end{Beispiel}
 
 \begin{remark}
-  Mit unserem Wissen über die $L^2$ Norm aus \slideref{Definition}{l2-norm} erkennen wir, dass sich
-  die Gaußsche Ausgleichsrechnung auch über die Norm formulieren lässt.
+  Nach \slideref{Satz}{bestapproximation} ist die Aufgabe der
+  Gaußschen Ausgleichsrechnung äquivalent zur Minimierungsaufgabe ein
+  $p\in\P_n$ zu finden, so dass
   \begin{gather}
-    \norm{f-p}_{L^2}^2 = \min_{q\in \P_n} \norm{f-q}_{L^2}^2
+    \norm{f-p}_{L^2}^2 = \min_{q\in \P_n} \norm{f-q}_{L^2}^2.
   \end{gather}
+\end{remark}
+
+\begin{remark}
+  Die Formulierung in~\slideref{Beispiel}{polynom-bestapproximation}
+  ist die mathematische Überspitzung einer häufigen Aufgabe der
+  Wissenschaft: gegeben $N$ Messwerte $(x_i, f_i)$, wie kann ich eine
+  Funktion $f(x)$ finden, die die Messwerte im quadratischen Mittel am
+  besten approximiert. Schränken wir die Suche nach der Funktion $f$
+  auf den Polynomraum $\P_n$ mit $n<N$ ein, so erhalten wir die
+  diskrete Variante der Gaußschen Ausgleichsrechnung: finde
+  $p\in \P_n$, so dass
+  \begin{gather}
+    \sum_{i=1}^N \bigl(f_i-p(x_i)\bigr)^2 =  \min_{q\in \P_n}  \bigl(f_i-q(x_i)\bigr)^2.
+  \end{gather}
+  Ein Spezialfall ist $n = N-1$ und wir werden im Kapitel zur
+  Interpolation sehen, dass dort das Minimum zu null wird. Dort werden wir auch sehen, dass
+  \begin{gather}
+    \scal(p,q) = \sum_{i=1}^N p(x_i)q(x_i)
+  \end{gather}
+  ein Skalarprodukt auf $\P_n$ mit $n<N$ darstellt.
 \end{remark}
 
 \section{Orthogonale Basen}
@@ -501,11 +522,11 @@ Wir haben hier o.B.d.A. den affinen Unterraum $A$ durch den Untervektorraum $W$ 
   \end{gather}
 \end{Lemma*}
 
-\begin{Problem}{ortho-lu}
+\begin{Aufgabe}{ortho-lu}
   Zeigen Sie \slideref{Lemma}{ortho-lu} und die Parsevalsche Gleichung.
-\end{Problem}
+\end{Aufgabe}
 
-\begin{Remark}{least-squares-orthogonal}
+\begin{Bemerkung}{least-squares-orthogonal}
   Bezüglich einer ONB ist die Gramsche Matrix die
   Einheitsmatrix. Damit berechnen sich die Einträge des
   Koeffizientenvektors $\vx$ in \slideref{Lemma}{gram-system} durch
@@ -513,7 +534,7 @@ Wir haben hier o.B.d.A. den affinen Unterraum $A$ durch den Untervektorraum $W$ 
   \begin{gather}
     x_i = b_i = \scal(u,\phi_i).
   \end{gather}
-\end{Remark}
+\end{Bemerkung}
 
 
 \begin{Theorem*}{gram-schmidt}{Gram-Schmidt-Verfahren}
@@ -662,7 +683,7 @@ $\delta$ ausgelassen.
 \begin{Satz*}{dreiterm}{Dreiterm-Rekursion}
   Zu jedem Skalarprodukt $\scal(\cdot,\cdot)$ auf dem Raum der
   stetigen Funktionen gibt es genau eine Folge von orthogonalen
-  Polynomen $p_k\in \P_k$ mit führendem Koeffizienten eins. Sie
+  Polynomen $\{p_k\}_{k=0,\dots}$ wobei $p_k\in \P_k$ mit führendem Koeffizienten eins. Sie
   genügen der Dreiterm-Rekursionsformel
   \begin{gather}
     p_k(x) = (x-a_k)p_{k-1}(x) - b_k p_{k-2}(x),
@@ -682,11 +703,11 @@ $\delta$ ausgelassen.
 \end{proof}
 
 \begin{Bemerkung}{dreiterm-normierung}
-  Der Beweis ergibt, eigentlich die ``Eindeutigkeit einer Orthogonalfolge bis auf Normierung''. Tatsächlich werden in der Literatur immer wieder veschiedene Normierungen benutzt. Beispiele sind:
+  Der Beweis ergibt eigentlich die ``Eindeutigkeit einer Orthogonalfolge bis auf Normierung''. Tatsächlich werden in der Literatur immer wieder veschiedene Normierungen benutzt. Beispiele sind:
   \begin{enumerate}
-  \item Führender Koeffizient eins, $p_k = x^k + \dots$
-  \item $\norm{p_k} = 1$
   \item $p_k(1) = 1$
+  \item $\norm{p_k} = 1$
+  \item Führender Koeffizient eins, $p_k = x^k + \dots$
   \end{enumerate}
 \end{Bemerkung}
 
@@ -694,8 +715,9 @@ $\delta$ ausgelassen.
   Die \define{Legendre-Polynome} $L_k$ sind definiert durch
   die Dreiterm-Rekursion
   \begin{gather}
-    L_{k} = \tfrac{2k-1}{k}x L_{k-1}(x) - \tfrac{k-1}{k} L_{k-2}(x).
+    L_{k} = \tfrac{2k-1}{k}x L_{k-1}(x) - \tfrac{k-1}{k} L_{k-2}(x)
   \end{gather}
+  mit den Startbedingungen $L_0(x) = 1$ und $L_1(x) = x$.
   Sie sind orthogonal bezüglich des $L^2$-Skalarprodukts in
   \slideref{Lemma}{l2-norm}.
 \end{Definition}
@@ -714,6 +736,18 @@ $\delta$ ausgelassen.
     \alpha_i = \frac1{\norm{L_i}^2}\int_{-1}^1 f L_i(x)\dx.
   \end{gather}
 \end{Beispiel}
+
+\begin{Aufgabe}{shifted-Legendre}
+  Oft benötigt man Legendre-Polynome nicht auf dem Intervall $[-1,1]$,
+  sondern auf einem anderen Intervall $[a,b]$. Man spricht dann auch
+  von \emph{shifted Legendre polynomials}. Während die abstrakte
+  Formel in \slideref{Satz}{dreiterm} natürlich weiter gültig bleibt,
+  ändern sich dabei die Skalarprodukte und damit die Koeffizienten in
+  \slideref{Definition}{legendre-polynome}
+
+  Berechnen Sie die ersten drei Polynome für das Intervall $[0,1]$ mit
+  der Normierung $L_k(1) = 1$.
+\end{Aufgabe}
 
 \begin{Definition}{chebyshev-polynome}
   Die \define{Tschebyscheff-Polynome} $T_k$ sind definiert durch
