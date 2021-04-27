@@ -13,7 +13,7 @@
   \begin{gather}
     x=\pm m \cdot b^{t}
   \end{gather}
-  Diese Darstellung ist mit der Normierung von $m\neq 0$ für $x\neq$
+  Diese Darstellung ist mit der Normierung von $m\neq 0$ für $x\neq 0$
   eindeutig. Für $x=0$ wird festgesetzt, dass $m=0$ gilt.
   Sowohl die Mantisse, als auch der Exponent haben einen
   endlichen Wertebereich, typischerweise eine feste Anzahl von
@@ -22,13 +22,13 @@
 \end{Definition}
 
 \begin{intro}
-  Die Mantisse als auch der Exponent haben nur einen endlichen Wertebereich
-  (endliche Anzahl an Stellen) und die Basis ist eine fest gewählte Zahl, doch damit lässt sich
-  bereits eine 'große' Menge an Zahlen darstellen.
-  
   Die folgenden drei Beispiele beschreiben Teile der Implementation
   von Fließkommazahlen nach dem IEE-Standard 754. Die Quelle ist
   jeweils Wikipedia.
+  
+  Es scheint jeweils ein Bit zuviel aufgelistet. Das liegt daran, dass das führende Bit der Mantisse immer eins ist und daher nicht gespeichert werden muss.
+  
+  Aus dem Wertebereich des Exponenten werden zwei Werte reserviert, die Zahlen repräsentieren, die in der normalisierten Darstellung nicht verfügbar sind. Dabei handelt es sich insbesondere um die null, die Wert $\pm\infty$ und den Wert \glqq NaN\grqq{}, was für \glqq not a number\grqq{} steht und das Resultat fehlerhafter Berechnung signalisiert.
 \end{intro}
 \begin{Beispiel}{ieee754-double}
   Im Fließkommaformat mit 64 Bit (NumPy: \texttt{float64}) nach dem Standard
