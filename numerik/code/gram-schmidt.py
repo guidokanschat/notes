@@ -2,7 +2,7 @@ def gram_schmidt(v):
   (n,m) = v.shape
   for j in range(n):
     delta = np.zeros(m)
-    for i in range(j-1):
+    for i in range(j):
       r = sprod(v[:,j],v[:,i])
       delta += r*v[:,i]
     v[:,j] -= delta

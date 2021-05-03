@@ -39,17 +39,42 @@
     \plagrange_i(x) = \plagrange_{i;n}(x) = \plagrange_{i;x_0,\dots,x_n}(x)
     = \prod_{\substack{j=0\\j\neq i}}^n \frac{x-x_j}{x_i-x_j}
   \end{gather}
-  die Eigenschaft
+  die \define{Interpolationseigenschaft}
   \begin{gather}
     \plagrange_i(x_j) = \delta_{ij},\qquad 0 \le i,j \le n.
   \end{gather}
+  Sie sind linear unabhängig und formen eine Basis von $\P_n$.
+
   Die Lagrange-Polynome sind \putindex{orthonormal} bezüglich des
   Skalarprodukts
   \begin{gather}
     \scal(p,q) = \sum_{i=0}^n p(x_i)q(x_i).
   \end{gather}
-  Daher sind sie linear unabhängig und formen eine Basis von $\P_n$.
 \end{Lemma}
+
+\begin{proof}
+  Der Beweis der Basiseigenschaft ist Übungsaufgabe. Es bleibt zu
+  zeigen, dass $\scal(\cdot,\cdot)$ ein Skalarprodukt ist und die
+  Polynome orthogonal. Dabei sind die Symmetrie und Homogenität und
+  Orthogonalität elementar nachzurechnen. Was zu zeigen bleibt, ist
+  die Definitheit, also für $p\in \P_n$:
+  \begin{gather}
+    \scal(p,p) = \sum_{i=0}^n p(x_i)^2 = 0
+    \qquad \Rightarrow\qquad
+    p= 0.
+  \end{gather}
+  Dazu nutzen wir die Basiseigenschaft der Polynome $\plagrange_j$ und
+  schreiben mit geeigneten Koeffizienten $\alpha_j$:
+  \begin{gather}
+    p(x) = \sum_{j=0}^n \alpha_j \plagrange_j(x).
+  \end{gather}
+  Es gilt dann wegen der Interpolationseigenschaft
+  \begin{gather}
+    \scal(p,p) = \sum_{i=0}^n  \left(\sum_{j=0}^n \plagrange_j(x_i)\right)^2
+    = \sum_{i=0}^n \alpha_j^2.
+  \end{gather}
+  Offensichtlich ist diese Summe genau dann null, wenn dies für jedes $\alpha_j$ gilt, also $p=0$.
+\end{proof}
 
 \begin{Korollar}{lagrange-interpolation}
   Die Lösung der Interpolationsaufgabe nach Lagrange erlauben die Darstellung
@@ -61,10 +86,35 @@
   Identität
 \end{Korollar}
 
-\begin{remark}
+\begin{intro}
   Die Lagrangesche Interpolationsaufgabe kann auch als Gaußsche
-  Ausgleichsrechnung mit dem obigen Skalarprodukt aufgefasst werden.
-\end{remark}
+  Ausgleichsrechnung mit dem obigen Skalarprodukt aufgefasst
+  werden. Allerdings erreichen wir es hier, dass der Abstand in der
+  zugehörigen Norm zu null wird.
+
+  Ein alternativer Berweis zur Eindeutigkeit der Lösung der
+  Interpolationsaufgsbe benutzt nicht die explizite Darstellung in der
+  LAgrange-Basis, sondern folgendes Resultat über die Nullstellen
+  eines Polynoms.
+\end{intro}
+
+\begin{Satz}{polynom-nullstellen}
+  Hat ein Polynom $p\in \P_n$ auf der reellen Achse $n+1$
+  verschiedene Nullstellen, so ist es notwendig das Nullpolynom.
+\end{Satz}
+
+\begin{proof}
+  Seien die Nullstellen $x_0 < x_1 < \dots < x_n$ sortiert nach
+  Größe. Dann gilt nach dem Satz von Rolle, dass in jedem Intervall
+  $(x_i, x_{i+1})$ mit $i=0,\dots, n-1$ eine Nullstelle der Ableitung
+  $p'\in \P_{n-1}$ liegt, insgesamt $n$ Stück.
+
+  Diesen Prozess setzen wir rekursiv fort und schließen, dass die $n$-te
+  Ableitung $p^{(n)} \in \P_0$ eine Nullstelle hat. Damit ist muss
+  $p^{(n)}\equiv 0$ gelten und daher ist $p^{(n-1)} \in \P_0$. Somit
+  schließen wir dass $p^{(n-2)} = p^{(n-3)} = \dots = p \equiv 0$
+\end{proof}
+
 
 \begin{Lemma}{linear-bounded}
   Sei $f\colon X \to Y$ eine lineare Abbildung zwischen Vektorräumen
@@ -82,7 +132,23 @@
       \qquad\forall x \in X.
     \end{gather}
   \end{enumerate}
+  Insbesondere ist eine lineare Abbildung genau dann stetig, wenn es
+  eine solche Schranke gibt.
 \end{Lemma}
+\begin{proof}
+  Der Linearität und $y=f(x)$ wegen gilt
+  \begin{gather}
+    y + \delta y = f(x+\delta x) = f(x) + f(\delta x),
+  \end{gather}
+  beziehungsweise
+  \begin{gather}
+    \delta y = f(x) - y + \delta x = \delta x.
+  \end{gather}
+  Gilt nun die zweite Aussage, so folgt sofort die erste. Betrachte
+  ich die erste im Punkt $x=0$, so dass wegen der Linearität
+  $y=f(x) = 0$ gilt, so ergibt sich aus der Bedingung \glqq für alle
+  $\delta x$\grqq{} die zweite.
+\end{proof}
 
 \begin{remark}
   Es genügt also, die Konditionierung um die null zu untersuchen, was
@@ -112,7 +178,46 @@
 \end{Satz*}
 
 \begin{proof}
-  Siehe \cite[Satz 7.3]{DeuflhardHohmann08}.
+  Siehe auch \cite[Satz 7.3]{DeuflhardHohmann08}.
+  
+  Zunächst zeigen wir die Beschränktheit der Interpolation. Es gilt:
+  \begin{align}
+    \abs{I_n(f)(x)}
+    &= \left\vert\sum_{i=0}^n f(x_i) \plagrange_{i;n}(x)\right\vert \\
+    &\le\sum_{i=0}^n \left\vert f(x_i) \plagrange_{i;n}(x)\right\vert \\
+    &\le \max_{i=0,\dots,n} \abs{f_i}
+      \;\sum_{i=0}^n \left\vert \plagrange_{i;n}(x)\right\vert \\
+    & \le \max_{x\in [a,b]} \abs{f(x)}
+       \;\max_{x\in [a,b]} \sum_{i=0}^n \left\vert \plagrange_{i;n}(x)\right\vert.
+  \end{align}
+  Damit gilt also die behauptete Abschätzung
+  \begin{gather}
+    \norm{I_n(f)}_\infty
+    \le \Lambda_{x_0,\dots,x_n} \norm{f}_\infty,
+  \end{gather}
+  wobei die Supremumsnorm auf dem Intervall $[a,b]$ genommen wurde.
+
+  Wir zeigen, dass die Abschätzung scharf ist, indem wir für eine
+  Funktion die Gleichheit zeigen, also: es existiert eine auf $[a,b]$
+  stetige Funktion $g$, so dass es einen Wert $x\in [a,b]$ gibt an dem gilt:
+  \begin{gather}
+    \abs{I(g)(x)}
+    = \norm{g}_\infty \max_{x\in [a,b]} \left\vert \plagrange_{i;n}(x)\right\vert.
+  \end{gather}
+  Sei zunächst $\xi$ der Wert, an dem die Summe ihr Maximum annimt, also
+  \begin{gather}
+    \left\vert \plagrange_{i;n}(\xi)\right\vert
+    = \max_{x\in [a,b]} \left\vert \plagrange_{i;n}(x)\right\vert.
+  \end{gather}
+  Nun wählen wir $g$ als die stückweise lineare Funktion, die in den
+  Werten $x_i$ die Werte
+  $g(x_i) = \operatorname{sgn} \plagrange_i(\xi)$ annimmt und links und rechts des Intervalls, das von den Punkten $\{x_i\}$ aufgespannt wird, konstant ist. Es gilt damit $\norm{g}_\infty = 1$ und
+  \begin{align}
+    I_n(g)(\xi)
+    &= \sum_{i=0}^n  \operatorname{sgn} \plagrange_i(\xi) \plagrange_i(\xi) \\
+    &= \sum_{i=0}^n  \abs{\plagrange_i(\xi)} \\
+    &= \Lambda_{x_0,\dots,x_n} \norm{g}_\infty
+  \end{align}
 \end{proof}
 
 \begin{Beispiel}{lagrange-kondition-equi}

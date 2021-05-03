@@ -88,7 +88,7 @@
   Wir bezeichnen das
   Maximum des möglichen relativen Rundungsfehlers für ein
   Fließkommaformat als \define{Maschinengenauigkeit}, abgekürzt mit
-  $\eps$. Es gild also per definitionem
+  $\eps$. Es gilt also per definitionem
   \begin{gather}
     \left\lvert\frac{x-\rd(x)}{x}\right\rvert
     \le \eps.
@@ -361,6 +361,40 @@ wobei wir im letzten Beispiel Information veschenkt haben.
   \end{gather}
 \end{Lemma}
 
+\begin{proof}
+  Wir betrachten die Funktion
+  \begin{gather}
+    g(h) = f_i(x + h \delta x),
+  \end{gather}
+  wobei $i$ im Bereich $[1,m]$ liegt und $x$ beziehungsweise
+  $\delta x$ die vektorwertige Eingabe und ihr Fehler sind. Für stetig
+  differenzierbares $g$ gilt
+  \begin{gather}
+    g(h) = g(0) + h g'(0) + \smallo(h).
+  \end{gather}
+  Die Ableitung von $g$ lässt sich aber nach der Kettenregel berechnen:
+  \begin{gather}
+    g'(0) = \sum_{j=1}^n \frac{\partial f_i(x)}{\partial x_j} \delta x_j.
+  \end{gather}
+  Diese ist nach Voraussetzung stetig und somit darf $g$ stetig
+  differenzierbar angenommen werden.
+  Schließlich gilt
+  \begin{gather}
+    \begin{split}
+      y_i+\delta y_i &= g(1) \\
+      &\doteq g(0) + g'(0)\\
+      &= f_i(x) + \sum_{j=1}^n \frac{\partial f_i(x)}{\partial x_j} \delta x_j.
+    \end{split}
+  \end{gather}
+  Damit haben wir den absoluten Fehler des Resultats durch den
+  absoluten Fehler der Eingabedaten abgeschätzt. Der Rest ergibt sich
+  durch Division.
+  
+  Beachten Sie, dass wir auch in diesem Beweis die Komplikation eines
+  mehrdimensionalen Arguments durch die Einführung der Hilfsfunktion
+  $g$ umschifft haben.
+\end{proof}
+
 \begin{Beispiel*}{kond-mult}{Konditionierung der Multiplikation}
   Es gilt
   \begin{gather}
@@ -440,12 +474,13 @@ wobei wir im letzten Beispiel Information veschenkt haben.
 \begin{remark}
   Wir betrachten Algorithmen auf verschiedenen Abstraktionsebenen. So
   ist sowohl das Gram-Schmidt-Verfahren in
-  \slideref{Theorem}{gram-schmidt} ein Algorithmus, wie auch die
-  beiden Beschreibungen in Python in
-  \slideref{Algorithmus}{gram-schmidt} und
-  \slideref{Algorithmus}{mgs}. Zur genaueren Spezifikation bezeichnen
-  wir ersteren auch als \define{mathematisches Verfahren}, letztere
-  auch als \define{Implementation}.
+  \slideref{Theorem}{gram-schmidt} ein Algorithmus, wenn die
+  Gültigkeit des Assoziativgesetzes vorausgesetzt ist. Auch die beiden
+  Beschreibungen in Python in \slideref{Algorithmus}{gram-schmidt} und
+  \slideref{Algorithmus}{mgs} sind Algorithmen. Zur genaueren
+  Spezifikation bezeichnen wir ersteren auch als
+  \define{mathematisches Verfahren}, letztere auch als
+  \define{Implementation}.
 \end{remark}
 
 \begin{remark}
@@ -556,24 +591,51 @@ wobei wir im letzten Beispiel Information veschenkt haben.
     \glqq\%-peak performance\grqq.
   \item[Starke Skalierbarkeit:] Wie verringert sich die
     Bearbeitungszeit, wenn mehr parallele Prozesse für dasselbe
-    Problem eingesetzt werden?
+    Problem eingesetzt werden (strong scaling)?
   \item[Schwache Skalierbarkeit:] Wie verhält sich die
     Bearbeitungszeit beim Einsatz von mehr parallelen Prozessen, wenn
-    die Problemgröße proportional zur Zahl der Prozesse wächst?
+    die Problemgröße proportional zur Zahl der Prozesse wächst (weak scaling)?
   \item[Numerische Intensität:] Die Anzahl an Rechenoperationen pro
-    Speichertransfer
+    Speichertransfer (numerical intensity)
   \end{description}
 \end{remark}
 
 \begin{remark}
+  Die Quantifizierung der Effizienz eines Algorithmus is deswegen so
+  schwierig, weil es heute nicht mehr möglich ist, einfach die
+  Instruktionen, die der Rechner ausführt, nacheinander zu betrachten
+  und die benötigten Zeiten aufzuaddieren.
+  
+  Superskalare Prozessorarchitekturen, und das sind alle modernen
+  CPUs, verfügen über eine sogenannte \define{instruction pipeline}
+  die mehrere Anweisungen gleichzeitig laden und möglichst parallel
+  ausführen soll, ohne dass dies der Benutzer merkt. Dabei eliminiert
+  die Logik in der CPU Seiteneffekte, die dadurch entstehen können,
+  wenn mehrfach dasselbe Datum verändert wird. Auf einem solchen
+  Rechner werden bei kurzen Verzweigungen mit \lstinline!if! beide
+  Zweige ausgeführt und erst anschließend ein Ergebnis verworfen.  Es
+  lohnt also in diesem Fall nicht, einen Algorithmus für spezielle
+  Werte zu optimieren, da alle Programmzweige ausgeführt werden.
+
   Bei der \define{Vektorisierung} von Algorithmen nutzt man aus, dass
   moderne Rechenwerke sehr effizient dieselbe Operation auf mehreren
-  Daten ausführen können. Dazu ist es wichtig, dass logische
-  Verzweigungen im Algorithmus auf möglichst hoher Ebene angesiedelt
-  sind. Damit ist der Algorithmus, den man sowohl in
-  \cite{Rannacher17} als auch in \cite{DeuflhardHohmann08} für die
-  Berechnung von Nullstellen quadratischer Polynome findet, für die
-  Vektorisierung ungeeignet.
+  Daten ausführen können. Das funktioniert auch nur, wenn keine
+  Verzweigungen auftreten, bzw.\ wenn logische Verzweigungen im
+  Algorithmus auf möglichst hoher Ebene angesiedelt sind.
+
+  Das Ausführen arithmentischer Operationen ist heutzutage wesentlich
+  schneller und auch billiger als das Laden der Daten aus dem
+  Speicher. Deshalb ist die Grundregel aus den ersten Jahrzehnten des
+  numerischen Rechnens \glqq{}speichern statt zweimal zu
+  rechnen\grqq{} heute in der Regel falsch und könnte eher heißen
+  \grqq{}lieber zehnmal rechnen als einmal speichern.\grqq{} Als folge
+  sind einzelne Rechenoperationen oft in der Ausführungszeit nicht
+  sichtbar.
+
+  Komplizierter wird dies alles durch eine Hierarchie von
+  Cache-Speichern, bei denen das Laden und Speichern schneller geht,
+  die aber beschränkte Größe haben.
+  % Damit ist der Algorithmus, den man sowohl in \cite{Rannacher17} als auch in \cite{DeuflhardHohmann08} für die Berechnung von Nullstellen quadratischer Polynome findet, für die Vektorisierung ungeeignet.
 \end{remark}
 
 
