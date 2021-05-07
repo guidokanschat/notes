@@ -131,15 +131,18 @@
   \input {blocks/Definition-rueckwaertsanalyse.tex}}
 
 \section{Interpolation und Quadratur}
-\subsection{Lagrange-Interpolation}
+\subsection{Polynominterpolation}
+\subsubsection{Definition und Konditionsabschätzung}
 \frame{\sectoc}
 \frame {\input {blocks/Definition-lagrange-interpolation.tex}}
 \frame {\input {blocks/Satz-lagrange-interpolation.tex}
   \input {blocks/Korollar-lagrange-interpolation.tex}}
+\frame {\input {blocks/Satz-polynom-nullstellen.tex}}
 \frame {\input {blocks/Lemma-lagrange-basis.tex}}
 \frame {\input {blocks/Lemma-linear-bounded.tex}}
 \frame {\input {blocks/Satz-lagrange-kondition.tex}}
 \frame {\input {blocks/Beispiel-lagrange-kondition-equi.tex}}
+\subsubsection{Rekursive Interpolation und Fehlerabschätzung}
 \frame {\input {blocks/Lemma-Aitken.tex}}
 \frame {\input {blocks/Algorithmus-Neville.tex}}
 \frame {\input {blocks/Definition-newton-basis.tex}}
@@ -153,26 +156,25 @@
 \frame {\input {blocks/Lemma-chebyshev-properties.tex}}
 \frame {\input {blocks/Satz-chebyshev-minimal-1.tex}}
 \frame {\input {blocks/Korollar-Lagrange-chebychev.tex}}
-
-\subsection{Hermite-Interpolation}
-\frame{\subtoc}
-\frame {\input {blocks/Definition-hermite-interpolation.tex}}
-\frame {\input {blocks/Satz-hermite-interpolation.tex}}
+\subsubsection{Hermite-Interpolation}
+\frame {\input {blocks/Definition-hermite-interpolation.tex}
+  \input {blocks/Satz-hermite-interpolation.tex}}
 \frame {\input {blocks/Notation-interpolation-ascending.tex}}
 \frame {\input {blocks/Beispiel-taylor-polynom.tex}}
 \frame {\input {blocks/Beispiel-hermite-kubisch.tex}}
 
 \subsection{Interpolation mit Splines}
+\subsubsection{Interpolation auf Teilintervallen}
 \frame{\subtoc}
 \frame {\input {blocks/Notation-indices.tex}}
 \frame {\input {blocks/Notation-reference-interval.tex}}
-\frame {\input {blocks/Definition-piecewise-interpolation.tex}}
-\frame {\input {blocks/Lemma-piecewise-solvable.tex}}
-\frame {\input {blocks/Lemma-scaling-interpolation.tex}}
-\frame {\input {blocks/Bemerkung-scaling-interpolation-local.tex}}
+\frame {\input {blocks/Definition-piecewise-interpolation.tex}
+  \input {blocks/Lemma-piecewise-solvable.tex}}
+\frame {\input {blocks/Lemma-scaling-interpolation.tex}
+  \input {blocks/Bemerkung-scaling-interpolation-local.tex}}
 
-\subsection{Splines}
-\frame{\subtoc}
+\subsubsection{Splines}
+%\frame{\subtoc}
 \frame {\input {blocks/Definition-spline-raum.tex}
   \input {blocks/Lemma-spline-raum.tex}}
 \frame {\input {blocks/Definition-cubic-spline.tex}}
@@ -184,9 +186,9 @@
 \frame {\input {blocks/Lemma-spline-invertierbar.tex}}
 \frame {\input {blocks/Satz-spline-approximation.tex}}
 
-\section{Quadratur}
+\subsection{Interpolatorische Quadratur}
 \frame{\sectoc}
-\subsection{Summierte Quadratur}
+\subsubsection{Summierte Quadratur}
 
 \frame {\input {blocks/Definition-quadratur.tex}}
 \frame {\input {blocks/Definition-lokale-fehlerordnung.tex}}
@@ -194,14 +196,14 @@
 \frame {\input {blocks/Definition-grad-exaktheit.tex}
 \input {blocks/Lemma-exakt-ordnung.tex}}
 
-\subsection{Quadratur auf Einzelintervallen}
+\subsubsection{Quadratur auf Einzelintervallen}
 \frame{\subtoc}
 \frame {\input {blocks/Definition-interpolatorische-quadratur.tex}}
 \frame {\input {blocks/Lemma-interpolatorisch-omega.tex}}
 \frame {\input {blocks/Definition-newton-cotes.tex}}
 \frame {\input {blocks/Satz-newton-cotes-error.tex}}
 
-\subsection{Gauß-Quadratur}
+\subsubsection{Gauß-Quadratur}
 \frame{\subtoc}
 \frame {\input {blocks/Lemma-quadratur-exakt-max.tex}}
 \frame {\input {blocks/Definition-Gauss-Legendre.tex}}
@@ -210,7 +212,7 @@
 \frame {\input {blocks/Lemma-gauss-legendre-gewichte.tex}}
 \frame {\input {blocks/Lemma-gauss-legendre-fehler.tex}}
 
-\subsection{Richardson-Extrapolation und Romberg-Quadratur}
+\subsubsection{Richardson-Extrapolation und Romberg-Quadratur}
 \frame{\subtoc}
 \frame {\input {blocks/Definition-richardson-extrapolation.tex}}
 \frame {\input {blocks/Definition-Romberg-quadratur.tex}}

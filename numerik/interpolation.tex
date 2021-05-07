@@ -92,9 +92,9 @@
   werden. Allerdings erreichen wir es hier, dass der Abstand in der
   zugehörigen Norm zu null wird.
 
-  Ein alternativer Berweis zur Eindeutigkeit der Lösung der
+  Ein alternativer Beweis zur Eindeutigkeit der Lösung der
   Interpolationsaufgsbe benutzt nicht die explizite Darstellung in der
-  LAgrange-Basis, sondern folgendes Resultat über die Nullstellen
+  Lagrange-Basis, sondern folgendes Resultat über die Nullstellen
   eines Polynoms.
 \end{intro}
 
@@ -142,7 +142,7 @@
   \end{gather}
   beziehungsweise
   \begin{gather}
-    \delta y = f(x) - y + \delta x = \delta x.
+    \delta y = f(x) - y + f(\delta x) = f(\delta x).
   \end{gather}
   Gilt nun die zweite Aussage, so folgt sofort die erste. Betrachte
   ich die erste im Punkt $x=0$, so dass wegen der Linearität
@@ -202,12 +202,12 @@
   stetige Funktion $g$, so dass es einen Wert $x\in [a,b]$ gibt an dem gilt:
   \begin{gather}
     \abs{I(g)(x)}
-    = \norm{g}_\infty \max_{x\in [a,b]} \left\vert \plagrange_{i;n}(x)\right\vert.
+    = \norm{g}_\infty \max_{x\in [a,b]} \sum_{i=0}^n \left\vert \plagrange_{i;n}(x)\right\vert.
   \end{gather}
   Sei zunächst $\xi$ der Wert, an dem die Summe ihr Maximum annimt, also
   \begin{gather}
-    \left\vert \plagrange_{i;n}(\xi)\right\vert
-    = \max_{x\in [a,b]} \left\vert \plagrange_{i;n}(x)\right\vert.
+    \sum_{i=0}^n\left\vert \plagrange_{i;n}(\xi)\right\vert
+    = \max_{x\in [a,b]} \sum_{i=0}^n\left\vert \plagrange_{i;n}(x)\right\vert.
   \end{gather}
   Nun wählen wir $g$ als die stückweise lineare Funktion, die in den
   Werten $x_i$ die Werte
@@ -287,27 +287,36 @@
   Als \define{Newton-Basis} der Lagrange-Interpolation bezeichnen wir
   die Polynome
   \begin{gather}
-    \omega_i(x)
-    = \omega_{0,\dots,i}(x)
-    = \prod_{j=0}^{i-1} (x-x_j),
-    \qquad i=0,\dots,n
+    \omega_k(x)
+    = \omega_{0,\dots,k}(x)
+    = \prod_{j=0}^{k-1} (x-x_j),
+    \qquad k=0,\dots,n
   \end{gather}
-  wobei das leere Produkt für $i=0$ den Wert 1 annehme.
+  wobei das leere Produkt für $i=0$ den Wert 1 annehme. Ebenso können
+  wir Newton-Polynome mit Startindex verschieden von null definieren
+  und erhalten für $k\ge 0$
+  \begin{gather}
+    \omega_{i,\dots,i+k} = \prod_{j=i}^{i+k} (x-x_j)
+    = \frac{\omega_{i+k}(x)}{\omega_i(x)}.
+  \end{gather}
 \end{Definition}
 
 \begin{Lemma}{newton-basis}
-  Sei $Q_k\in \P_n$ ein Polynom dargestellt bezüglich der Newton-Basis
-  durch
+  Sei $p \in \P_n$ ein Polynom dargestellt bezüglich der Monombasis
+  und der Newton-Basis durch
   \begin{gather}
-    Q_k(x) = \sum_{i=0}^k a_i \omega_i(x),\qquad k=0,\dots,n.
+    p(x) = \sum_{i=0}^n a_i x^i = \sum_{i=0}^n b_i \omega_i(x),
   \end{gather}
-  Dann gilt
-  \begin{align}
-    Q_k(x) &= Q_{k-1}(x) + a_k \omega_k(x),
-  \end{align}
-  und $a_k$ ist der Koeffizient vor $x^k$ in der Monomdarstellung von
-  $Q_k(x)$.
+  Dann gilt $b_n = a_n$.
 \end{Lemma}
+
+\begin{proof}
+  Es gilt
+  \begin{gather}
+    p(x) = q_n(x) = q_{n-1}(x) + b_n \omega_n(x).
+  \end{gather}
+  Da $q_{n-1}\in \P_{n-1}$ und der führende Koeffizient von $\omega_n$ eins ist, folgt sofort $b_n = a_n$.
+\end{proof}
 
 \begin{Definition}{div-diff-1}
   Als \define{dividierte Differenzen} zur
@@ -326,7 +335,7 @@
   paarweise verschiedenen Stützpunkten $x_i,\dots,x_{i+k}$ gilt
   \begin{gather}
     p_{i,\dots,i+k}(x)
-    = \sum_{j=i}^{i+k} [x_i,\dots,x_{i+k}]f\; \frac{\omega_j(x)}{\omega_i(x)}.
+    = \sum_{j=i}^{i+k} [x_i,\dots,x_{j}]f\; \frac{\omega_j(x)}{\omega_i(x)}.
   \end{gather}
 \end{Satz}
 
@@ -336,7 +345,7 @@
     p_{i,\dots,i+k}(x) = p_{i,\dots,i+k-1}(x)
     + \alpha \frac{\omega_{i+k}(x)}{\omega_i(x)}.
   \end{gather}
-  Zu zeigen ist also $\alpha = [x_i,\dots,x_{i+k}]$, was nach
+  Zu zeigen ist also $\alpha = [x_i,\dots,x_{i+k}]f$, was nach
   \slideref{Lemma}{newton-basis} der Koeffizient vor $x^k$ ist. Nach
   Induktionsannahme ist
   \begin{gather}
@@ -363,9 +372,8 @@
 \begin{Satz}{Lagrange-restglied}
   Sei $f \in C^{n+1}[a,b]$ und $p\in \P_n$ die
   Lagrange-Interpolierende zu den Stützstellen
-  $a=x_0\neq\dots\neq x_n=b$. Dann gibt es zu jedem $x\in \R$ einen Punkt
-  $\xi$ im kleinsten Intervall $I$, das die Punkte $x$, $a$ und $b$
-  enthält, so dass
+  $x_0,\dots,x_n\in [a,b]b$. Dann gibt es zu jedem $x\in [a,b]$ einen Punkt
+  $\xi \in (a,b)$, so dass
   \begin{gather}
     f(x)- p(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \omega_{0,\dots,n}(x).
   \end{gather}
@@ -377,7 +385,7 @@
   Der Beweis folgt \cite[Satz 2.1.4.1]{Stoer83}.  Zunächst bemerken
   wir, dass für alle Stützstellen $x_i$ gilt, dass
   $f(x_i) - p(x_i) = 0$. Dort ist also nichts zu beweisen.
-  Sei nun
+  Für die Fehlerfunktion $F(y)$ machen wir nun den Ansatz
   \begin{gather}
     \label{eq:interpolation:1}
     F(y) = f(y)-p(y) - \alpha \omega_n(y)
@@ -444,6 +452,11 @@
   ist, und das minimalen Betrag auf dem Intervall $[a,b]$ hat.
   Tatsächlich erlauben uns die Tschebyscheff-Polynome, diese
   Optimalität zu erreichen.
+
+  Insbesondere erlaubt uns die Fehlerdarstellung, die Minimierung über
+  die Stützpunkte durch eine Minimierung im Polynomraum zu
+  ersetzen. Letztere hat Vektorraumstruktur und ist damit deutlich
+  strukturierter.
 \end{intro}
 
 \begin{Lemma}{chebyshev-properties}
@@ -534,8 +547,8 @@
   \begin{gather}
     x = \Phi(\xi) = \frac{a+b}2 + \frac{b-a}2 \xi.
   \end{gather}
-  Es gilt $\Phi(-1) = a$, $\Phi(1)=b$ und di Punkte $x_i$ sind die
-  Bilder der Tschebyscheff-Abszissen $\xi_i$ zu $T_{n+1}$. Es gilt
+  Es gilt $\Phi(-1) = a$, $\Phi(1)=b$ und die Punkte $x_i$ sind die
+  Bilder der Tschebyscheff-Knoten $\xi_i$ zu $T_{n+1}$. Es gilt
   $\Phi'(\xi) = (b-a)/2$ und für die Funktion $F(\xi) = f(\Phi(\xi))$
   gilt
   \begin{gather}
