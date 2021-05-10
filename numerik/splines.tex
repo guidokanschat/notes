@@ -21,17 +21,17 @@ Dieser Abschnitt folgt recht eng der Darstellung in \cite[Abschnitt 2.3]{Rannach
   \define{Feinheit} der Unterteilung.
 \end{Notation}
 
-\begin{Notation}{reference-interval}
-  Wir bezeichnen $\hat I = [-1,1]$ als Referenzintervall. Jedes
+\begin{Definition}{reference-interval}
+  Wir bezeichnen $\hat I = [-1,1]$ als \define{Referenzintervall}. Jedes
   Intervall $I_i$ einer Zerlegung $\mathcal I_h$ ergibt sich als Bild
-  von $\hat I$ unter der affinen Abbildung
+  von $\hat I$ unter der affinen Abbildung (\define{Referenzabbildung})
   \begin{gather}
     \begin{split}
       \Phi_i\colon \hat I &\to I_i\\
       \hat x &\mapsto \tfrac{x_{i}+x_{i-1}}{2} + \tfrac{h_i}{2} \hat x.
     \end{split}
   \end{gather}
-\end{Notation}
+\end{Definition}
 
 \begin{Definition*}{piecewise-interpolation}{Stückweise Interpolation}
   Sei $\mathcal I_h$ eine Zerlegung von $[a,b]$. Auf dem
@@ -68,13 +68,42 @@ Dieser Abschnitt folgt recht eng der Darstellung in \cite[Abschnitt 2.3]{Rannach
   \end{gather}
 \end{Lemma*}
 
+\begin{proof}
+  Für jedes Teilintervall $I_j$ sei $\Phi_j\colon \hat I \to I_j$ die
+  affine Referenzabbildung gemäß
+  \slideref{Definition}{reference-interval}. Es gelte dann
+  $\hat f_j\bigl(\Phi_j^{-1}(x)\bigr) = f(x)$ und analog für $\hat
+  p_j$. Offensichtlich gilt
+  \begin{gather}
+    \norm{ f-  p}_{\infty;I_j} = \norm{\hat f_j- \hat p_j}_{\infty;\hat I}.
+  \end{gather}
+  Nun nutzen wir nach Voraussetzung
+  \begin{gather}
+    \label{eq:splines:scaling-1}
+    \norm{\hat f_j- \hat p_j}_{\infty;\hat I}
+    \le C \norm{\hat f_j^{(k+1)}}_{\infty;\hat I}.
+  \end{gather}
+  Es gilt aber mit $x = \Phi_j(\hat x)$ und $f(x) = \hat f(\hat x)$
+  \begin{gather}
+    \hat f'(\hat x) = f'(x) \Phi_j'(\hat x) = \frac{h_j}{2} f'(x).
+  \end{gather}
+  Damit gilt auch
+  \begin{gather}
+    \hat f_j^{(k+1)}(\hat x) = \left(\frac{h_j}{2}\right)^n f^{(n)}(x).
+  \end{gather}
+  Einsetzen in~\eqref{eq:splines:scaling-1} ergibt das Resultat.
+\end{proof}
+
 \begin{Bemerkung}{scaling-interpolation-local}
   Genauere Betrachtung der Analyse ergibt die schärfere Abschätzung
   \begin{gather}
     \norm{f-s}_{\infty;[a,b]}
     \le \frac{C}{2^{k+1}} \max_{i=1,\dots,n}
     \Bigl(h_i^{k+1}\norm{f^{(k+1)}}_{\infty;I_i}\Bigr).
-  \end{gather}  
+  \end{gather}
+  Diese setzt die Ableitungen und Intervallängen lokal in Beziehung,
+  was eine adaptierung der Intervallänge an die \glqq Glattheit\grqq{}
+  der Funktion erlaubt.
 \end{Bemerkung}
 
 \subsection{Splines}

@@ -288,7 +288,7 @@
   die Polynome
   \begin{gather}
     \omega_k(x)
-    = \omega_{0,\dots,k}(x)
+    = \omega_{0,\dots,k-1}(x)
     = \prod_{j=0}^{k-1} (x-x_j),
     \qquad k=0,\dots,n
   \end{gather}
@@ -297,7 +297,7 @@
   und erhalten für $k\ge 0$
   \begin{gather}
     \omega_{i,\dots,i+k} = \prod_{j=i}^{i+k} (x-x_j)
-    = \frac{\omega_{i+k}(x)}{\omega_i(x)}.
+    = \frac{\omega_{i+k+1}(x)}{\omega_{i}(x)}.
   \end{gather}
 \end{Definition}
 
@@ -388,7 +388,7 @@
   Für die Fehlerfunktion $F(y)$ machen wir nun den Ansatz
   \begin{gather}
     \label{eq:interpolation:1}
-    F(y) = f(y)-p(y) - \alpha \omega_n(y)
+    F(y) = f(y)-p(y) - \alpha \omega_{0,\dots,n}(y)
   \end{gather}
   und $\alpha$ soll so gewählt werden, dass $F(x) = 0$. Damit hat $F(y)$ im
   Intervall $I$ insgesamt die $n+2$ Nullstellen $x,x_0,\dots,x_n$.
