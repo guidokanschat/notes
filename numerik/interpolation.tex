@@ -406,16 +406,17 @@
 
 \begin{Korollar}{Lagrange-restglied}
   Sei $f \in C^{n+1}[a,b]$ und alle Stützstellen $x_i$ im Intervall
-  $[a,b]$. Dann gibt es $\xi\in[a,b]$, so dass
+  $[a,b]$. Dann gibt es $\xi$ aus dem kleinsten Intervall, das die Punkte $a$, $b$ und $x$ enthält, so dass
   \begin{gather}
     [x_0,\dots,x_n]f = \frac{f^{(n)}}{n!}(\xi).
   \end{gather}
 \end{Korollar}
 
 \begin{proof}
-  Formel~\eqref{eq:interpolation:1} gibt gerade an, dass $\alpha$ der
-  Koeffizient vor dem nächsten Newton-Basispolynom ist, wenn man den
-  Punkt $x$ der Menge der Stützstellen hinzufügt.
+  Wenden wir Formel~\eqref{eq:interpolation:1} auf $p_{0,\dots,n-1}$
+und $x=x_n$ an, so sehen wir, dass $\alpha$ der Koeffizient vor dem
+nächsten Newton-Basispolynom $\omega_{0,\dots,n-1}$ ist. Dieser ist
+aber gerade die angegebene dividierte Differenz.
 \end{proof}
 
 \begin{Korollar}{Lagrange-fehler-1}
@@ -497,7 +498,8 @@
 
 \begin{proof}
   Siehe auch \cite[Satz 7.19]{DeuflhardHohmann08}. Aus der
-  Rekursionsformel folgt sofort, dass der höchste Koeffizient von
+  Rekursionsformel für Tschebyscheff-Polynome folgt sofort,
+  dass der höchste Koeffizient von
   $T_n$ den Wert $2^{n-1}$ annimmt. Sei nun als Widerspruchsannahme
   $p\in \P_n$ ein weiteres Polynom mit höchstem Koeffizienten
   $2^{n-1}$, so dass
@@ -536,7 +538,7 @@
   \end{gather}
   So gilt für den Fehler der Lagrange-Interpolation
   \begin{gather}
-    \norm{f-p_{0,\dots,n}}_\infty \le \frac{\abs{b-a}^{n+1}}{2^{2n}(n+1)!}
+    \norm{f-p_{0,\dots,n}}_\infty \le \frac{\abs{b-a}^{n+1}}{2^{2n+1}(n+1)!}
     \norm{f^{(n+1)}}_{\infty}.
   \end{gather}
 \end{Korollar}
@@ -548,7 +550,13 @@
     x = \Phi(\xi) = \frac{a+b}2 + \frac{b-a}2 \xi.
   \end{gather}
   Es gilt $\Phi(-1) = a$, $\Phi(1)=b$ und die Punkte $x_i$ sind die
-  Bilder der Tschebyscheff-Knoten $\xi_i$ zu $T_{n+1}$. Es gilt
+  Bilder der Tschebyscheff-Knoten $\xi_i$ zu $T_{n+1}$. Insbesondere
+  ist nun für diese Knoten
+  \begin{gather}
+    \omega_{0,\dots,n}(\xi) = \frac1{2^{n}} T_{n+1}(\xi).
+  \end{gather}
+
+  Es gilt
   $\Phi'(\xi) = (b-a)/2$ und für die Funktion $F(\xi) = f(\Phi(\xi))$
   gilt
   \begin{gather}
@@ -559,21 +567,30 @@
   \slideref{Satz}{chebyshev-minimal-1}, dass für die Interpolation gilt
   \begin{gather}
     \max_{\xi\in[-1,1]} \abs{F(\xi) - P(\xi)}
-    \le 2^{1-n} \max_{\xi\in[-1,1]}\abs{F^{(n+1)}(\xi)},
+    \le 2^{-n} \max_{\xi\in[-1,1]}\abs{F^{(n+1)}(\xi)},
   \end{gather}
   woraus folgt
   \begin{gather}
     \max_{x\in[a,b]} \abs{f(x) - p(x)}
-    \le 2^{1-n} \left(\frac{b-a}2\right)^{n+1} \max_{x\in[a,b]}\abs{f^{(n+1)}(x)}.
+    \le 2^{-n} \left(\frac{b-a}2\right)^{n+1} \max_{x\in[a,b]}\abs{f^{(n+1)}(x)}.
   \end{gather}  
 \end{proof}
+
+\begin{Bemerkung}{extrapolation}
+  Wird das Interpolationspolynom an einem Punkt $x$ ausgewertet, der
+  nicht zwischen den Interpolationspunkten liegt, so sprechen wir von
+  Extrapolation. Aus der Fehlerdarstellung mit den Newton-Polynomen
+  können wir ablesen, dass die Abschätzungen sehr schnell schlechter
+  werden, wenn sich $x$ von den Stützstellen entfernt.
+\end{Bemerkung}
+
 
 \subsection{Hermite-Interpolation}
 
 \begin{Definition}{hermite-interpolation}
   Die \define{Hermite-Interpolation} benutzt neben Funktionswerten
   auch Ableitungswerte zur Interpolation. Das Interpolationspolynom
-  $p\in \P_n$ genügt in $m$ paarweise verschiedenen Punkten den
+  $p\in \P_n$ genügt in $m+1$ paarweise verschiedenen Punkten den
   Bedingungen
   \begin{gather}
     \frac{d^j p}{dx^j}(x_i) = f_i^{j},
@@ -600,6 +617,7 @@
   Interpolationsbedingungen orthogonal ist. Damit stellen wir das
   Interpolationspolynom dar als
   \begin{gather}
+    \label{eq:interpolation:hermite-1}
     p(x) = \sum_{i=0}^m \sum_{j=0}^{n_i-1} f_i^j H_{ij}(x).
   \end{gather}
   Zunächst führen wir die Hilfspolynome
@@ -607,30 +625,35 @@
     q_{ij}(x) = \frac{(x-x_i)^j}{j!}\prod_{k\neq i}
     \left(\frac{x-x_k}{x_i-x_k}\right)^{n_k}
   \end{gather}
-  ein. Es gilt
+  ein. Es gilt, dass $q_{ij}$ in jedem Punkt $x_k \neq x_i$ eine $n_k$-fache Nullstelle hat, also
   \begin{gather}
     \begin{aligned}
-      \frac{d^j q_{i,n_i-1}}{d x^j} (x_k) &=0,
-      \quad &k\neq i,&\quad& j&=0,\dots,n_{k}-1,\\
-      \frac{d^j q_{i,n_i-1}}{d x^j} (x_i) &=0,
-      \qquad &&& j&=0,\dots,n_{i}-2,\\   
-      \frac{d^{n_{i}-1} q_{i,n_i-1}}{d x^{n_{i}-1}} (x_i) &=1.
-      \qquad &&&& 
+      \frac{d^m q_{ij}}{d x^m} (x_k) &=0,
+      \quad &k\neq i,&\quad& m&=0,\dots,n_{k}-1.\\
+      \intertext{Ferner hat $q_{ij}$ in $x_i$ eine $j$-fache Nullstelle, also}
+      \frac{d^m q_{ij}}{d x^m} (x_i) &=0,
+      \qquad &&& m&=0,\dots,j-1.\\
+      \intertext{Schließlich gilt}
+      \frac{d^j q_{ij}}{d x^j} (x_i) &=1.
     \end{aligned}
   \end{gather}
-  Damit können wir rekursiv definieren
+  Damit können wir im Punkt $x_i$ rekursiv definieren
   \begin{gather}
     \begin{aligned}
-      H_{i,n_i-1}(x) &= q_{i,n_i-1}(x)
-      & i&= 0,\dots,m\\
-      H_{ij}(x) &= q_{ij}(x) - \sum_{k=j+1}^{n_i-1} q_{ij}^{(k)}(x_i) H_{ik}(x),
+      H_{i,n_i-1}(x) &= q_{i,n_i-1}(x)\\
+      H_{ij}(x) &= q_{ij}(x) - \sum_{m=j+1}^{n_i-1} q_{ij}^{(m)}(x_i) H_{im}(x),
     \end{aligned}
   \end{gather}
   wobei die letzte Zeile die Anwendung des Gram-Schmidt-Verfahrens
-  ist. Per constructionem gilt für diese Basis
+  ist. Per constructionem gilt für diese Polynome
   \begin{gather}
-    \frac{d^\ell}{dx^\ell} H_{ij}(x_k) = \delta_{ik}\delta_{j\ell}.
+    \frac{d^\ell}{dx^\ell} H_{ij}(x_k) = \delta_{ik}\delta_{j\ell},
   \end{gather}
+  was die lineare Unabhängigkeit impliziert. Da ihre Anzahl gleich der
+  Raumdimension ist, bilden sie eine Basis. Die Aussage des Satzes
+  ergibt sich nun aus der
+  Basisdarstellung~\eqref{eq:interpolation:hermite-1}. Insbesondere
+  impliziert $\equiv 0$ für alle Knotenwerte $f_i^j=0$.
 \end{proof}
 
 \begin{Notation}{interpolation-ascending}
@@ -680,34 +703,39 @@
       &x_i\neq x_{i+k}.
     \end{cases}
   \end{gather}
+  Hier ist das Newton-Polynom mit wiederholten Stützstellen so
+  definiert, dass die zugehörigen Linearfaktoren wiederholt werden.
 \end{Satz}
 
 \begin{proof}
   Der Beweis folgt im wesentlichen dem analogen
   \slideref{Satz}{newton-lagrange}. Wir müssen dort nur die Argumente
   anpassen, die auf paarweise verschiedenen Stützstellen beruhen.
-  
-  Zunächst benutzen wir \slideref{Korollar}{Lagrange-restglied},
-  wonach für $x_i < x_{i+1}< \dots < x_{i+k}$ gilt: es gibt ein
-  $\xi\in[x_i,x_{i+k}]$ mit
+
+  Dazu betrachten wir die Lagrange-Interpolation mit
+  $x_i < x_{i+1}< \dots < x_{i+k}$ und zugehörigem
+  Interpolationspolynom $p_{i,\dots,i+k} \in \P_k$. Wir benutzen
+\slideref{Korollar}{Lagrange-restglied}, wonach gilt: es gibt ein
+$\xi\in[x_{i+1},x_{i+k}]$ mit
   \begin{gather}
     [x_i,\dots,x_{i+k}]f = \frac{f^{(k)}(\xi)}{k!}.
   \end{gather}
   Da diese Eigenschaft unabhängig vom Abstand der Stützstellen gilt,
   können wir den Limes $x_j \to x_i$ für $j=1,\dots,k$ bilden, und es
-  gilt für $x_i=x_{i+k}$
+  gilt im Limes $x_i=\dots=x_{i+k}$
   \begin{gather}
     [x_i,\dots,x_{i+k}]f \to \frac{f^{(k)}(x_i)}{k!},
   \end{gather}
   sowie
   \begin{gather}
-    \omega_{i,\dots,i+k}(x) \to (x-x_i)^{k}.
+    \omega_{i,\dots,i+k-1}(x) \to (x-x_i)^{k}.
   \end{gather}
   Für das zugehörige Interpolationspolynom gilt dann
   \begin{gather}
-    \frac{d^j}{dx^j} p_{i,\dots,i+k}(x_i) = f^{j}(x_i)
-    \qquad j=0,\dots,k-1.
+    \frac{d^k}{dx^k} p_{i,\dots,i+k}(x_i) = f^{k}(x_i).
   \end{gather}
+  Ist $x_i$ ein mehrfacher Interpolationspunkt, so gilt dies Argument für alle $x=1,\dots,n_i-1$ (Achtung, wir wechseln hier in der Diskussion die Numerierung zwischen \slideref{Definition}{hermite-interpolation} und \slideref{Notation}{interpolation-ascending}).
+  
   Damit haben wir im Neville-Schema den Induktionsanfang geschafft. Es
   bleibt zu zeigen, dass die Rekursionsformel von Aitken auch
   weiterhin für $x_i \neq x_{i+k}$ gilt. Das ist unmittelbar

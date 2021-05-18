@@ -113,7 +113,9 @@ Dieser Abschnitt folgt recht eng der Darstellung in \cite[Abschnitt 2.3]{Rannach
   Zerlegung $\mathcal I_h$ definieren wir die
   \textbf{Spline-Räume}\index{Spline-Raum}
   \begin{gather}
-    S^{(k,m)}_h \ \bigl\{ s\in C^m[a,b]
+    S^{(k,m)}_{\mathcal I_h}
+    = S^{(k,m)}_h
+    = \bigl\{ s\in C^m[a,b]
     \big| s_{|I_i} \in \P_k, i=1,\dots,n\bigr\}
   \end{gather}
   mit $m<k$.
@@ -142,6 +144,7 @@ Dieser Abschnitt folgt recht eng der Darstellung in \cite[Abschnitt 2.3]{Rannach
   \begin{gather}
     s(x_i) = f_i,\qquad i=0,\dots,n.
   \end{gather}
+  Hierbei definieren die Stützstellen $x_i$ die Zerlegung $\mathcal I_h$.
 \end{Definition}
 
 \begin{Definition}{cubic-spline-bc}

@@ -162,16 +162,22 @@
 \frame {\input {blocks/Notation-interpolation-ascending.tex}}
 \frame {\input {blocks/Beispiel-taylor-polynom.tex}}
 \frame {\input {blocks/Beispiel-hermite-kubisch.tex}}
+\frame {\input {blocks/Satz-Hermite-interpolation.tex}}
+\frame {\input {blocks/Satz-Hermite-restglied.tex}}
+\frame {\input {blocks/Korollar-Taylor-restglied.tex}}
+% Move this up next time
+\frame {\input {blocks/Bemerkung-extrapolation.tex}}
+
 
 \subsection{Interpolation mit Splines}
 \subsubsection{Interpolation auf Teilintervallen}
 \frame{\subtoc}
 \frame {\input {blocks/Notation-indices.tex}}
 \frame {\input {blocks/Definition-reference-interval.tex}}
-\frame {\input {blocks/Definition-piecewise-interpolation.tex}
-  \input {blocks/Lemma-piecewise-solvable.tex}}
-\frame {\input {blocks/Lemma-scaling-interpolation.tex}
-  \input {blocks/Bemerkung-scaling-interpolation-local.tex}}
+\frame {\input {blocks/Definition-piecewise-interpolation.tex}}
+\frame {\input {blocks/Lemma-piecewise-solvable.tex}
+\input {blocks/Lemma-scaling-interpolation.tex}}
+\frame {\input {blocks/Bemerkung-scaling-interpolation-local.tex}}
 
 \subsubsection{Splines}
 %\frame{\subtoc}
@@ -182,7 +188,7 @@
 \frame {\input {blocks/Satz-cubic-spline.tex}
   \input {blocks/Lemma-spline-optimality.tex}}
 \frame {\input {blocks/Lemma-splines-konkret.tex}}
-\frame {\input {blocks/Lemma-splines-momente.tex}}
+\frame {\small\input {blocks/Lemma-splines-momente.tex}}
 \frame {\input {blocks/Lemma-spline-invertierbar.tex}}
 \frame {\input {blocks/Satz-spline-approximation.tex}}
 
@@ -191,20 +197,21 @@
 \subsubsection{Summierte Quadratur}
 
 \frame {\input {blocks/Definition-quadratur.tex}}
+\frame {\input {blocks/Definition-quadratur-summiert.tex}}
 \frame {\input {blocks/Definition-lokale-fehlerordnung.tex}}
 \frame {\input {blocks/Satz-summierte-quadratur.tex}}
 \frame {\input {blocks/Definition-grad-exaktheit.tex}
 \input {blocks/Lemma-exakt-ordnung.tex}}
 
 \subsubsection{Quadratur auf Einzelintervallen}
-\frame{\subtoc}
-\frame {\input {blocks/Definition-interpolatorische-quadratur.tex}}
-\frame {\input {blocks/Lemma-interpolatorisch-omega.tex}}
+%\frame{\subtoc}
+\frame {\small\input {blocks/Definition-interpolatorische-quadratur.tex}
+  \input {blocks/Lemma-interpolatorisch-omega.tex}}
 \frame {\input {blocks/Definition-newton-cotes.tex}}
 \frame {\input {blocks/Satz-newton-cotes-error.tex}}
 
 \subsubsection{Gauß-Quadratur}
-\frame{\subtoc}
+%\frame{\subtoc}
 \frame {\input {blocks/Lemma-quadratur-exakt-max.tex}}
 \frame {\input {blocks/Definition-Gauss-Legendre.tex}}
 \frame {\input {blocks/Satz-gauss-legendre.tex}}
