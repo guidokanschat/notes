@@ -25,7 +25,20 @@
   \textbf{iterierter} oder \textbf{stückweiser Quadratur}.
 \end{Definition}
 
-\begin{Definition}{lokale-fehlerordnung}
+\begin{Satz}{quadratur-kondition}
+  Die Integration einer Funktion $f\in C[a,b]$ über das Intervall $[a,b]$ genügt der Konditionsabschätzung
+  \begin{gather}
+    \left|\int_a^b f(x)\dx \right| \le \kappa_{\text{abs}} \max_{x\in[a,b]}\abs{f(x)},
+    \qquad \kappa_{\text{abs}} = b-a.
+  \end{gather}
+  Für die Quadraturaufgabe gilt
+  \begin{gather}
+    \left| Q_{[a,b]}(f)\right| \le \kappa_{\text{abs}} \max_{x\in[a,b]}\abs{f(x)},
+    \qquad \kappa_{\text{abs}} = \sum_i \abs{\omega_i}.
+  \end{gather}
+\end{Satz}
+
+\begin{Definition}{quadratur-lokale-fehlerordnung}
   Gilt bei einer summierten Quadraturformel die Abschätzung
   \begin{gather}
     \left|\int_{I_i} f(x)\dx - Q_{I_i}(f)\right|
@@ -93,13 +106,31 @@
   \end{gather}
 \end{Definition}
 
+\begin{remark}
+  Als unmittelbare Folgerung erhalten wir für jede Quadraturformel,
+  die mindestens exakt fom Grad null ist, dass
+  \begin{gather}
+    \sum \omega_i = b-a.
+  \end{gather}
+\end{remark}
+
 \begin{Lemma}{exakt-ordnung}
-  Seid die Quadraturformel $Q_I$ exakt vom Grad $k$ und
+  Sei die Quadraturformel $Q_I$ exakt vom Grad $k$ und
   $\abs{I} \le h$. Dann gilt für $f\in C^{k+1}(I)$
   \begin{gather}
     \left|\int_{I} f(x)\dx - Q_{I}(f)\right| = \bigo\bigl(h^{k+2}\bigr)
   \end{gather}
 \end{Lemma}
+
+\begin{remark}
+  Die Überlegungen des vorhergehenden Lemmas sind insbesondere dann
+  nützlich, wenn man die Konvergenzordnung einer Methode schnell
+  überschlagen möchte. Man spart sich auf diese Art genauere
+  Untersuchungen der Fehlerdarstellung. Umgekehrt sind die Konstanten
+  in den Abschätzungen auch scharf und die Analysis erhebt auch nicht
+  den Anspruch. Im Detail werden wir daher auch noch schärfere
+  Abschätzungen machen.
+\end{remark}
 
 \begin{Definition}{interpolatorische-quadratur}
   Eine \define{interpolatorische Quadraturformel} mit $n$
@@ -128,22 +159,54 @@
 \end{proof}
 
 \begin{Definition}{newton-cotes}
-  Werden die Quadraturpunkte $x_1,\dots,x_n$ gleichmäßig im Intervall
-  $[a,b]$ verteit, so spricht man von einer
-  \define{Newton-Cotes-Formel}. Die ersten drei klassischen Formeln
-  sind auf dem Einheitsintervall $[0,1]$ gegeben durch
+  Werden die Quadraturpunkte $a=x_1,\dots,x_n=b$ gleichmäßig im
+  Intervall $[a,b]$ verteit, so spricht man von einer
+  \define{Newton-Cotes-Formel}. Die
+  ersten drei klassischen Formeln sind auf dem Einheitsintervall
+  $[0,1]$ gegeben durch
   \begin{center}
     \begin{tabular}{l|c|cccc|cccc}
       & $n$ & \multicolumn{4}{|c}{$x_i$} & \multicolumn{4}{|c}{$\omega_i$}
       \\\hline
       Trapezregel & 2 & 0 & 1 &&& \nicefrac12 & \nicefrac12\\
-      Simpson-Regel & 3 & 0 & \nicefrac12 & 1 &
+      Simpson-Regel\footnote{Auch Keplersche Fassregel} & 3 & 0 & \nicefrac12 & 1 &
                           & \nicefrac16& \nicefrac46& \nicefrac16\\
-      \nicefrac38-Regel & 4 & 0 & \nicefrac13 & \nicefrac23 & 1
+      \nicefrac38-Regel\footnote{Von Newton auch mit dem Adjektiv \glqq pulcherrima\grqq{} belegt.}
+      & 4 & 0 & \nicefrac13 & \nicefrac23 & 1
                           & \nicefrac18& \nicefrac38& \nicefrac38& \nicefrac18
     \end{tabular}
   \end{center}
 \end{Definition}
+
+\begin{remark}
+  Genauer gesagt handelt es sich bei den Formeln in
+  \slideref{Definition}{newton-cotes} um \textbf{geschlossene}
+  Newton-Cotes-Formeln, die die Intervallenden als Quadraturpunkte
+  enthalten.  Bei offenen Formeln sind die Intervallenden keine
+  Quadraturpunkte. Während offene Newton-Cotes-Formeln von geringem
+  Interesse sind, werden wir später bei der Gauß-Quadratur offene
+  Formeln kennenlernen.
+
+  Summierte geschlossene Formeln werden of direkt als Summe über die
+  Zerlegung geschrieben. Dazu numerieren wir nun alle Stützpunkte der
+  Reihe nach, egal ob es sich um Intervallenden oder innere
+  Stützpunkte handelt von 1 bis $n$. Sei $h$ nun der Abstand zweier Quadraturpunkte
+  der summierten Formel. dann gilt für die summierte Trapezregel
+  \begin{gather}
+    Q(f) = h\left(\tfrac12 f_1 + f_2 +\dots+f_{n-1}+\tfrac12 f_n\right).
+  \end{gather}
+  Bei der summierten Simpson-Regel (man beachte die Umskalierung der Intervall-Länge) ergibt sich
+  \begin{gather}
+    Q(f) = \tfrac h3\left(f_1 + 4 f_2 + 2 f_3 + 4 f_4 + 2 f_5
+      + \dots + 2 f_{n-2} + 4 f_{n-1} + f_{n}\right).
+  \end{gather}
+  Der Aufwand für Funktionsauswertungen in den Intervallenden halbiert
+  sich bei dieser Darstellung der summierten Regeln. Natürlich lassen
+  sich die summierten Formeln für Intervalle wechselnder Länge
+  umschreiben. Bei der Simpson-Regel muss man aber dabei Bedenken,
+  dass immer 2 Subintervalle ein Intervall der Zerlegung ergeben.
+\end{remark}
+
 
 \begin{Satz}{newton-cotes-error}
   Die Fehler der Newton-Cotes-Formeln auf dem Intervall $I$ der Länge
@@ -221,7 +284,12 @@
 \end{proof}
 
 \begin{remark}
-  Ab Grad ??? haben die Newton-Cotes-Formeln negative Gewichte...
+  Die Newton-Cotes-Formel mit 9 Punkten hat negative Gewichte, was
+  auch bei höheren Formeln wieder auftritt. Bei solchen Formeln wird
+  die Konditionierung der Quadraturaufgabe schlechter als die der
+  Integration. Auch kann es sein, dass eine nirgendwo negative
+  Funktion durch eine solche Quadratur ein negatives Integral erhält.
+  Deswegen werden solche Formeln nicht verwendet.
 \end{remark}
 
 \subsection{Gauß-Quadratur}

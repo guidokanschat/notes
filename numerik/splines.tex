@@ -245,7 +245,7 @@ Dieser Abschnitt folgt recht eng der Darstellung in \cite[Abschnitt 2.3]{Rannach
 
 \begin{proof}
   Siehe \cite[Abschnitt 2.4.2]{Stoer83}. Wir bemerken: $s''$ ist eine
-  stückweise lineare Funktion, die die werte $M_i$ interpoliert. Daher
+  stückweise lineare Funktion, die die Werte $M_i$ interpoliert. Daher
   gilt
   \begin{gather}
     s''(x) = M_{i-1} \frac{x_{i}-x}{h_i} + M_{i}\frac{x-x_{i-1}}{h_i},
@@ -354,7 +354,7 @@ Dieser Abschnitt folgt recht eng der Darstellung in \cite[Abschnitt 2.3]{Rannach
 \begin{proof}
   Sei $k$ ein Index, so dass $\abs{x_k} = \norm{x}_\infty$. Dann gilt
   \begin{gather}
-    y_k \mu_k x_{k-1} + 2 x_{k} + \lambda_k x_{k+1}.
+    y_k = \mu_k x_{k-1} + 2 x_{k} + \lambda_k x_{k+1}.
   \end{gather}
   Aus der Definition folgt $\abs{\lambda_k}< 1$ und $\abs{\mu_k} <
   1$. damit gilt
@@ -472,7 +472,7 @@ Dieser Abschnitt folgt recht eng der Darstellung in \cite[Abschnitt 2.3]{Rannach
   ein, so erhalten wir
   \begin{align}
     \notag
-    \abs{s^{(3)}(x) - f(x)^{(3)}}
+    \abs{s^{(3)}(x) - f^{(3)}(x)}
     &\le \frac32 \frac{h^2}{h_i} \norm{f^{(4)}}_{\infty;[a,b]}
       + \frac{h_i^2}{2h_i} \norm{f^{(4)}}_{\infty;[a,b]}
     \\
