@@ -38,6 +38,23 @@
   \end{gather}
 \end{Satz}
 
+\begin{proof}
+  Für die Integration ist aus der Analysis die Abschätzung
+  \begin{gather}
+    \left|\int_a^b f(x)\dx\right| \le (b-a) \max_{x\in[a,b]}\abs{f(x)}
+  \end{gather}
+  bekannt.
+  Für die Quadratur gilt genauso
+  \begin{gather}
+    \left|\sum_{i=1}^n \omega_i f(x_i)\right|
+    \le \left(\sum_{i=1}^n \abs{\omega_i}\right) \max_{x\in[a,b]}\abs{f(x)}.
+  \end{gather}
+  Wählen wir eine Funktion mit
+  $f(x_i) = \operatorname{sign} \omega_i$, so sehen wir, dass die
+  zweite Abschätzung scharf ist. Für die erste ist das offensichtlich,
+  wenn $f$ konstant ist.
+\end{proof}
+
 \begin{Definition}{quadratur-lokale-fehlerordnung}
   Gilt bei einer summierten Quadraturformel die Abschätzung
   \begin{gather}
@@ -91,10 +108,14 @@
   Wir betrachten in der Regel Quadraturformeln mit $n$ Punkten
   $x_1,\dots,x_n$. Oft benutzen wir Ergebnisse aus den Abschnitten
   über Interpolation. Dabei ist jeweis darauf zu achten, dass die
-  Indizes dort bei null loslaufen. Der Grund für diesen wechsel ist,
+  Indizes dort bei null loslaufen. Der Grund für diesen Wechsel ist,
   dass wir bei der Interpolation den Grad der Polynome als führende
   Größe angesehen haben, während hier die Anzahl der Quadraturpunkte
   im Vordergrund steht.
+
+  Bei der summierten Quadratur steht die Anzahl der Intervalle im
+  Vordergrund. Deswegen werden dort die Punkte weiterhin mit null
+  beginnend numeriert.
 \end{Notation}
 
 \begin{Definition}{grad-exaktheit}
@@ -108,12 +129,15 @@
 
 \begin{remark}
   Als unmittelbare Folgerung erhalten wir für jede Quadraturformel,
-  die mindestens exakt fom Grad null ist, dass
+  die mindestens exakt vom Grad null ist, dass
   \begin{gather}
     \sum \omega_i = b-a.
   \end{gather}
   Insbesondere gilt dann, dass die Konditionierung der Quadratur
-  gleich der der Integration ist, wenn alle Gewichte positiv sind.
+  gleich der der Integration ist, wenn alle Gewichte positiv
+  sind. Umgekehrt führen negative Gewichte automatisch zur
+  Verschlechterung der Konditionierung, weswegen solche Formeln
+  vermieden werden.
 \end{remark}
 
 \begin{Lemma}{exakt-ordnung}
@@ -123,6 +147,26 @@
     \left|\int_{I} f(x)\dx - Q_{I}(f)\right| = \bigo\bigl(h^{k+2}\bigr)
   \end{gather}
 \end{Lemma}
+
+\begin{proof}
+  Ersetzen wir $f$ durch sein Tailorpolynom $p\in \P_k$ um einen Punkt $x_0\in I$, so erhalten wir
+  \begin{gather}
+    f(x) = p(x) + r(x),
+    \qquad r(x) = (x-x_0)^{k+1}\frac{f^{(k+1)}(\xi)}{(k+1)!}
+  \end{gather}
+  für einen Punkt $\xi$ zwischen $x_0$ und $x$. Aufgrund der Exaktheit gilt
+  \begin{gather}
+    \int_{I} f(x)\dx - Q_{I}(f)
+    = \underbrace{\int_{I} p(x)\dx - Q_{I}(p)}_{=0}
+    + \int_{I} r(x) \dx - Q_{I}(r).
+  \end{gather}
+  Für den Rest schätzen wir ab:
+  \begin{gather}
+    (x-x_0) \le h,\quad \int_{I}(x-x_0)^{k+1} = \frac1{k+2} (x-x_0)^{k+2},
+    \qquad \sum_{\omega_i} = h,
+  \end{gather}
+  und die Ableitung von $f$ durch ihr Maximum auf $I$.
+\end{proof}
 
 \begin{remark}
   Die Überlegungen des vorhergehenden Lemmas sind insbesondere dann
@@ -192,16 +236,20 @@
   Summierte geschlossene Formeln werden of direkt als Summe über die
   Zerlegung geschrieben. Dazu numerieren wir nun alle Stützpunkte der
   Reihe nach, egal ob es sich um Intervallenden oder innere
-  Stützpunkte handelt von 1 bis $n$. Sei $h$ nun der Abstand zweier Quadraturpunkte
+  Stützpunkte handelt von 0 bis $n$.
+  Sei $h$ nun der Abstand zweier Quadraturpunkte
   der summierten Formel. dann gilt für die summierte Trapezregel
   \begin{gather}
-    Q(f) = h\left(\tfrac12 f_1 + f_2 +\dots+f_{n-1}+\tfrac12 f_n\right).
+    Q(f) = h\left(\tfrac12 f_0 + f_1 +\dots+f_{n-1}+\tfrac12 f_n\right).
   \end{gather}
   Bei der summierten Simpson-Regel (man beachte die Umskalierung der Intervall-Länge) ergibt sich
   \begin{gather}
-    Q(f) = \tfrac h3\left(f_1 + 4 f_2 + 2 f_3 + 4 f_4 + 2 f_5
+    Q(f) = \tfrac h3\left(f_0 + 4 f_1 + 2 f_2 + 4 f_3 + 2 f_4
       + \dots + 2 f_{n-2} + 4 f_{n-1} + f_{n}\right).
   \end{gather}
+  Die Anzahl der Teilintervalle ist bei dieser Darstellung $n$ für die
+  Trapezregel und $2n$ für die Simpson-regel.
+  
   Der Aufwand für Funktionsauswertungen in den Intervallenden halbiert
   sich bei dieser Darstellung der summierten Regeln. Natürlich lassen
   sich die summierten Formeln für Intervalle wechselnder Länge
@@ -302,7 +350,45 @@
 \end{Lemma}
 
 \begin{proof}
-  Siehe \cite[Satz 3.1]{Rannacher17}
+  Siehe auch \cite[Satz 3.1]{Rannacher17}.  Für die QuadraturPunkte $x_i$
+  definieren wir das quadrierte Newton-Polynom
+  \begin{gather}
+    p(x) = \omega_{1,\dots,n}^2 = \prod_{i=1}^n (x-x_i)^2 \in \P_{2n}.
+  \end{gather}
+  Da es in allen Stützstellen verschwindet, gilt $Q{p} = 0$. Da es
+  aber nichtnegativ und nicht das Nullpolynom ist, so ist sein
+  Integral größer als null. Damit gibt es für jede $n$-Punkt-Formel
+  ein Polynom, für das sie nicht exakt ist.
+\end{proof}
+
+\begin{Satz}{gauss-legendre-eindeutig}
+  Sei in der Folge von Quadraturformeln $\{Q_n\}$ mit Quadraturpunkten
+  $x_1^{(n)},\dots,x_n^{(n)}$ für $k=1,\dots$ auf dem Intervall
+  $I=[-1,1]$ jede Formel $Q_n$ exakt für beliebige $p\in
+  \P_{2n-1}$. Dann sind die Polynome
+  \begin{gather}
+    p_n(x) = \prod_{i=1}^n \left(x-x_i^{(n)}\right) \in \P_n
+  \end{gather}
+  und $p_0(x) = 1 \in \P_0$ paarweise orthogonal bezüglich des
+  $L^2$-Skalarprodukts. Insbesondere sind sie damit Vielfache der
+  Legendre-Polynome $\plegendre_n$ und die Formeln sind eindeutig
+  bestimmt.
+\end{Satz}
+
+\begin{proof}
+  Siehe~\cite[Lemma 9.9 und 9.10]{DeuflhardHohmann08}.
+  Sei $j<n$. Dann ist $p_jp_n\in \P_{2n-1}$. Es gilt also
+  \begin{gather}
+    \int_{-1}^1 p_jp_n \dx = Q_n(p_jp_n)
+    = \sum_{i=0}^n \omega_i p_j(x_i^{(n)}) p_n(x_i^{(n)}).
+  \end{gather}
+  Da die Punkte $x_i^{(n)}$ aber gerade die Nullstellen von $p_n$
+  sind, muss dieser Term null sein. Wir haben damit eine Folge
+  orthogonaler Polynome steigenden Grades. Dazu hatten wir in
+  \slideref{Satz}{dreiterm} nachgewiesen, dass eine solche Folge bis
+  auf Skalierung eindeutig bestimmt ist. Die Polynome $p_n$ sind also
+  Vielfache der Legendre-Polynome $\plegendre_n$ und insbesondere die
+  Nullstellen durch die Bedingung eindeutig festgelegt.
 \end{proof}
 
 \begin{Definition}{Gauss-Legendre}
@@ -316,24 +402,49 @@
 \end{Definition}
 
 \begin{Satz}{gauss-legendre}
-  Die $n$-Punkt-Gauß-Legendre-Formel ist wohldefiniert und exakt für
-  beliebige Polynome vom Grad $2n-1$.
+  Die $n$-Punkt-Gauß-Legendre-Formel wohldefiniert. Sie ist exakt für
+  beliebige Polynome vom Grad $2n-1$ genau dann, wenn sie exakt vom
+  Grad $n-1$ ist.
 \end{Satz}
 
-\begin{Satz}{gauss-legendre-eindeutig}
-  Seien die Quadraturformeln $Q_k$ mit Quadraturpunkten
-  $x_1^{(k)},\dots,x_k^{(k)}$ für $k=1,\dots,n$ auf dem Intervall
-  $I=[-1,1]$ exakt für beliebige $p\in \P_{2k-1}$. Dann sind die
-  Polynome
+\begin{proof}
+  Zunächst müssen wir zeigen, dass das Legendre-Polynom $\plegendre_n$
+  genau $n$ paarweise verschiedene, reelle Nullstellen hat. Seien dazu
+  $\lambda_1,\dots,\lambda_m$ die Nullstellen ungerade Vielfachheit
+  mit $m\le n$. Wir führen das Hilfspolynom $q$ ein, für das gelte
+  $q\equiv 1$, falls es keine solche Nullstelle gibt und sonst
   \begin{gather}
-    p_k(x) = \prod_{i=1}^k (x-x_i^{(k)}) \in \P_k
+    q(x) = \prod_{i=1}^m (x-\lambda_i).
   \end{gather}
-  und $p_0(x) = 1 \in \P_0$ paarweise orthogonal bezüglich des
-  $L^2$-Skalarprodukts. Insbesondere sind sie damit Vielfache der
-  Legendre-Polynome $\plegendre_k$ und die
-  $n$-Punkt-Gauss-Legendre-Formel ist die einzige Formel mit $n$
-  Punkten, deren Grad der Exaktheit $2n-1$ ist.
-\end{Satz}
+  Dieses Polynom hat $m$ reelle Nullstellen.
+  Das Polynom $\plegendre_nq \in \P_{n+m}$ hat dann keinen Vorzeichenwechsel
+  und es gilt daher
+  \begin{gather}
+    \int_{-1}^1 \plegendre_n q \dx \neq 0.
+  \end{gather}
+  Aufgrund der Orthogonalität folgt damit $m=n$ und $q=\plegendre_n$.
+
+  Nun wenden wir uns dem Grad der Exhaktheit zu.  Ein Polynom
+  $p\in \P_{2n-1}$ können wir durch Division mit Rest als Summe
+  \begin{gather}
+    p(x) = q(x)\plegendre_n(x) + r(x)
+  \end{gather}
+  darstellen, wobei $q,r\in \P_{n-1}$. Es gilt dann wegen der Orthogonalität
+  \begin{gather}
+    \int_{-1}^1 p\dx
+    = \int_{-1}^1 q\plegendre_n \dx + \int_{-1}^1 r\dx
+    = \int_{-1}^1 r\dx.
+  \end{gather}
+  Für die Quadratur gilt, da die Quadraturpunkte die Nullstellen von
+  $\plegendre_n$ sind,
+  \begin{gather}
+    Q_n(p) = Q_n(q\plegendre_n) + Q(r) = Q(r).
+  \end{gather}
+  Die Quadratur ist also genau dann exakt, wenn für beliebiges $r\in \P_{n-1}$
+  \begin{gather}
+    Q_n(r) = \int_{-1}^1 r\dx.
+  \end{gather}
+\end{proof}
 
 \begin{Lemma}{gauss-legendre-gewichte}
   Die Gewichte der Gauss-Legendre-Formeln sind positiv und genügen der
@@ -344,6 +455,25 @@
   \end{gather}
 \end{Lemma}
 
+\begin{proof}
+  Die Darstellung ist das Integral der Lagrange-Polynome zu den
+  Punkten $x_1,\dots,x_n$, was nach
+  \slideref{Lemma}{interpolatorisch-omega} und
+  \slideref{Satz}{gauss-legendre} notwendig und hinreichend für die
+  Exaktheit ist.
+
+  Sei nun
+  \begin{gather}
+    q(x) = \left(\frac{\plegendre_n(x)}{x-x_i}\right)^2.
+  \end{gather}
+  Dann ist $q\in \P_{2n-2}$ und $q(x_j) = 0$ für $j\neq i$. Daher gilt
+  auf Grund der Exaktheit
+  \begin{gather}
+    \omega_i = \frac1{q(x_i)} \int q\dx.
+  \end{gather}
+  Da $q(x)\ge 0$ ist die rechte Seite positiv. 
+\end{proof}
+
 \begin{Lemma}{gauss-legendre-fehler}
   Für die Gauss-Legendre-Formel mit $n$ Quadraturpunkten auf
   $I=[-1,1]$ gilt die Fehlerabschätzung
@@ -353,6 +483,10 @@
     \int_{-1}^1 \prod_{i=1}^n(x-x_i)^2.
   \end{gather}
 \end{Lemma}
+
+\begin{proof}
+  Dies ist eine direkte Anwendung der Fehlerdarstellung für die Lagrange-Interpol
+\end{proof}
 
 \begin{remark}
   Alle Resultate dieses Abschnitts gelten für Skalarprodukte der Form
