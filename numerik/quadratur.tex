@@ -537,6 +537,18 @@
   \lstinputlisting{code/romberg.py}
 \end{Algorithmus*}
 
+\begin{Aufgabe*}{romberg}{Romberg-Quadratur}
+  Schreiben Sie eine Funktion, die die Funktion $f(x) = \sin(\pi x)$
+  über das Intervall $[0,1]$ mit der iterierten Trapezregel
+  integriert. Wenden Sie die Romberg-Quadratur mit der Schrittfolge
+  \begin{gather}
+    h = 1,\frac12,\frac14,\frac18,\dots
+  \end{gather}
+  an und beobachten Sie die Konvergenz gegen den exakten Integralwert
+  $2/\pi$ für die verschiedenen Spalten im Tableu des
+  Neville-Algorithmus.
+\end{Aufgabe*}
+
 \subsection{Praktische Aspekte}
 
 \begin{remark}
@@ -563,6 +575,45 @@
   Man spricht hier vom asymptotischen Bereich, für größere $h$ vom
   präasymptotischen Bereich.
 \end{remark}
+
+\begin{remark}
+  Die Konvergenzordnung eines Verfahrens lässt sich auch experimentell
+  bestimmen. Sei dazu $T(h)$ eine numerische Methode mit
+  Diskretisierungsparameter $h$ und der Fehler verhalte sich wie
+  \begin{gather}
+    \abs{T(h) - T(0)} = c h^p + \smallo(h^p).
+  \end{gather}
+  Wenn die exakte Lösung $T(0)$ bekannt ist, so lässt sich die linke
+  Seite für verschiedene Parameter $h$ berechnen. Benutzt man zwei
+  verschiedene Schrittweiten, so lassen sich mit der Abkürzung
+  $e(h) = \abs{T(h) - T(0)}$ die Werte $p$ und $c$ aus dem
+  linearen Gleichungssystem
+  \begin{gather}
+    \begin{aligned}
+      \log c + p \log h_1 &= e(h_1),\\
+      \log c + p \log h_2 &= e(h_2).
+    \end{aligned}
+  \end{gather}
+  bestimmen. Da hier die unbekannten Terme $\smallo(h)$ weggelassen
+  wurden, ist diese Bestimmung nicht exakt, konvergiert aber für
+  $h\to 0$. Führt man die Bestimmung für jeweils aufeinanderfolgende
+  Paare von Parametern $h$ und einer Folge durch, so konvergieren die
+  Werte von $p$ und $c$, so dass man dadurch die Zuverlässigkeit der
+  Schätzung einschätzen kann.
+
+  Findet man keine relevante Aufgabe, deren exakte Lösung bekannt ist,
+  so kann man den Wert $T(0)$ durch Richardson-Extrapolation nähern.
+
+  Der Nutzen dieser Technik liegt nicht nur in der experimentellen
+  Bestätigung der theoretischen Beweise. Sie erlaubt es, die Konstante
+  $c$ zu Schätzen, für die der Beweis oft nur Existenz liefert. Auch
+  kann dadurch die Optimalität des theoretischen Ergebnisses überprüft
+  werden. Schließlich erlaubt diese Technik auch, die
+  Konvergenzordnung zu schätzen um dann erst zu sehen, wie man diese
+  Ordnung auch beweist.
+\end{remark}
+
+
 
 %%% Local Variables:
 %%% mode: latex

@@ -3,9 +3,13 @@
   Approximationen an die Lösung $x$ einer Aufgabe aus einem Startwert
   $x^{(0)}$ mit der Verfahrensvorschrift der Form
   \begin{gather}
-    x^{(k+1)} = G(x^{(k)}), \qquad k=0,1,2,\dots.
+    x^{(k+1)} = f(x^{(k)}), \qquad k=0,1,2,\dots.
   \end{gather}
-  Das Verfahren heißt \define{konvergent}, wenn gilt $x^{(k)} \to x$.
+  Wir nennen $f$ die \define{Iterationsfunktion} und $\{x^{(k)}\}$ die
+  \define{Iterationsfolge} zu $f$ mit Startwert $x^{(0)}$.
+  
+  Das Verfahren heißt \define{konvergent}, wenn gilt $x^{(k)} \to x$
+  für $k\to\infty$.
 \end{Definition}
 
 \begin{Definition}{iteration-ordnung}
@@ -34,15 +38,97 @@
 \end{Definition}
 
 \begin{Satz*}{bfs}{Banachscher Fixpunktsatz}
-  Sei $f$ eine Kontraktion auf der abgeschlossenen Menge $M\subset\R^n$. Dann gibt es genau einen \define{Fixpunkt} $x\in M$, also
+  Sei $f$ eine Kontraktion auf der abgeschlossenen Menge
+  $M\subset\R^n$. Dann gibt es genau einen \define{Fixpunkt} $x^*\in M$,
+  also
   \begin{gather}
-    x = f(x).
+    x^* = f(x^*).
+  \end{gather}
+  Für jeden Startwert $x^{(0)}\in M$ konvergiert die Folge definiert durch
+  \begin{gather}
+    x^{(k+1)} = f\left(x^{(k)}\right)
+  \end{gather}
+  gegen diesen Fixpunkt. Es gelten die Fehlerabschätzungen
+  \begin{gather}
+    \norm{x^{(k)}-x^*}
+    \le \frac{\rho}{1-\rho}\norm{x^{(k)}-x^{(k-1)}}
+    \le \frac{\rho^k}{1-\rho}\norm{x^{(1)}-x^{(0)}}.
   \end{gather}
 \end{Satz*}
 
+\begin{proof}
+  Zunächst zeigen wir die Eindeutigkeit nach der üblichen Methode:
+  seien $x,y\in M$ Fixpunkte der Kontraktion $f(\cdot)$. Dann gilt
+  \begin{gather}
+    \norm{x-y} = \norm{f(x)-f(y)} \le \rho \norm{x-y}.
+  \end{gather}
+  Da $\rho<1$ kann dies nur gelten, wenn die Differenz verschwindet.
+
+  Als nächstes zeigen wir, dass die Iterationsvorschrift eine
+  Cauchy-Folge erzeugt, woraus die Konvergenz gegen einen Grenzwert
+  folgt. Dazu beobachten wir zunächst, dass mit $x^{(0)}\in M$ auch
+  alle weiteren Folgenglieder in $M$ liegen. Ferner gilt:
+  \begin{gather}
+    \norm{x^{(k+1)}-x^{(k)}} \le \rho \norm{x^{(k)}-x^{(k-1)}}
+    \le \rho^k\norm{x^{(1)}-x^{(0)}}.
+  \end{gather}
+  Daher gilt für $m\ge 1$
+  \begin{align}
+    \label{eq:it1:1}
+    \norm{x^{(k+m)}-x^{(k)}}
+    &\le \sum_{i=1}^m \norm{x^{(k+i)}-x^{(k+i-1)}}\\
+    & \le \sum_{i=1}^m \rho^{i} \norm{x^{(k)}-x^{(k-1)}}\\
+    & \le \sum_{i=1}^m \rho^{k+i-1} \norm{x^{(1)}-x^{(0)}}\\
+    & \le \rho^k \sum_{i=0}^\infty \rho^i \norm{x^{(1)}-x^{(0)}}\\
+    & \le \frac{\rho^k}{1-\rho} \norm{x^{(1)}-x^{(0)}}. 
+  \end{align}
+  Daher gilt das Cauchy-Kriterium: für alle $\epsilon>0$ gibt es ein
+  $k_0\ge 0$, so dass für alle $k\ge k_0$ und alle $m\ge 1$ gilt, dass
+  $\norm{x^{(k+m)}-x^{(k)}} < \epsilon$. Damit existiert also der
+  Grenzwert $x^*$ und liegt wegen der Abgeschlossenheit in $M$. aus
+  der Konvergenz der Folge folgt auch
+  \begin{gather}
+    \norm{f\left(x^{(k)}\right)-x^{(k)}} = \norm{x^{(k+1)}-x^{(k)}}
+    \to 0,
+  \end{gather}
+  und damit im Limes $x^* = f(x^*)$. Für die Fehlerabschätzung
+  beobachten wir, dass die Norm links in~\eqref{eq:it1:1} für
+  $m\to\infty$ gegen $\norm{x^*-x^{(k)}}$ konvergiert, so dass mit
+  demselben Argument wie dort die Abschätzungen gelten.
+\end{proof}
+
+\begin{Satz}{lokale-konvergenz}
+  Sei $f\colon \R^n\to \R^n$ eine Selbstabbildung mit einem Fixpunkt
+  $x^*$, so dass für eine Kugel vom Radius $R$ um $x^*$ mit $p>1$ gilt,
+  \begin{gather}
+    \norm*{f\left(x^{(k)}\right) - x^*}
+    \le c \norm*{x^{(k)}-x^*}^p.
+  \end{gather}
+  Dann gibt es einen Radius $r\le R$, so dass die zugehörige
+  Iterationsfolge für alle Startwerte $x^{(0)}\in B_r(x^*)$
+  konvergiert.
+\end{Satz}
+
+\begin{proof}
+  Sei $r$ so gewählt, dass
+  \begin{gather}
+    \rho = c \norm{x-x^*}^{p-1} < 1 \qquad\forall x\in B_r(x^*).
+  \end{gather}
+  Dann gilt $f\colon  B_r(x^*) \to  B_r(x^*)$ und
+  \begin{gather}
+    \norm{f(x)-x^*} \le \rho \norm{x-x^*} \qquad\forall x\in B_r(x^*).
+  \end{gather}
+  Für die Iterationsfolge gilt also
+  \begin{gather}
+    \norm{x^{(k)}-x^*}
+    \le \rho^k \norm{x^{(0)}-x^*}
+    \qquad\forall x\in B_r(x^*).
+  \end{gather} 
+\end{proof}
+
 \begin{Satz}{optimize-solve}
-  Sei $g\colon \R^n\to \R$. Dann gilt für eine Minimalstelle $x^*$ von $g$,
-  also
+  Sei $g\colon \R^n\to \R$ stetig differenzierbar. Dann gilt für eine
+  Minimalstelle $x^*$ von $g$, also
   \begin{gather}
     x^* = \operatorname*{argmin}_{x\in\R^n} g(x),
   \end{gather}
