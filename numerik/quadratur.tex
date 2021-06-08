@@ -545,7 +545,7 @@
     h = 1,\frac12,\frac14,\frac18,\dots
   \end{gather}
   an und beobachten Sie die Konvergenz gegen den exakten Integralwert
-  $2/\pi$ für die verschiedenen Spalten im Tableu des
+  $2/\pi$ für die verschiedenen Spalten im Tableau des
   Neville-Algorithmus.
 \end{Aufgabe*}
 
@@ -564,22 +564,30 @@
   \end{gather}
   Es gibt aber keine Garantie, dass der Fehler bei feinerer
   Unterteilung schrumpft.
-  
-  Ist aber $f\in C^{p+1}(I)$, so gilt die obige Abschätzung für
-  hinreichend kleine $h_1>h_2$ in der stärkeren Form
+
+  Dies gilt auch für große $h$, falls $f\in C^{p+1}(I)$ aber die
+  Ableitungen mit steigender Ordnung schnell wachsen. Dann kann
+  zunächst der Gewinn durch Wahl einer feineren Unterteilung durch das
+  Wachsen der Ableitung annulliert werden. Man nennt das Verhalten
+  dann \define{präasymptotisch}.
+
+Für hinreichend feine Unterteilungen $h_1$ und $h_2$ gilt die obige
+Abschätzung aber in der stärkeren Form
   \begin{gather}
     \left|\int_I f\dx - Q_{h_2}(f)\right|
     \approx \left(\frac{h_2}{h_1}\right)^p
     \left|\int_I f\dx - Q_{h_1}(f)\right|.
   \end{gather}
-  Man spricht hier vom asymptotischen Bereich, für größere $h$ vom
-  präasymptotischen Bereich.
+  Man beobachtet also die Konvergenzordnung als direkte Verbesserung
+  mit jeder Wahl eines feineren Parameters. Dieses Verhalten nennt man
+  \define{asymptotisch}.
 \end{remark}
 
 \begin{remark}
-  Die Konvergenzordnung eines Verfahrens lässt sich auch experimentell
-  bestimmen. Sei dazu $T(h)$ eine numerische Methode mit
-  Diskretisierungsparameter $h$ und der Fehler verhalte sich wie
+  Die Konvergenzordnung\index{Konvergenzordnung!experimentell} eines
+  Verfahrens lässt sich auch experimentell bestimmen. Sei dazu $T(h)$
+  eine numerische Methode mit Diskretisierungsparameter $h$ und der
+  Fehler verhalte sich wie
   \begin{gather}
     \abs{T(h) - T(0)} = c h^p + \smallo(h^p).
   \end{gather}
@@ -613,7 +621,31 @@
   Ordnung auch beweist.
 \end{remark}
 
+\begin{remark}
+  Wenn eine ekakte Lösung nicht verfügbar ist und Extrapolation zur
+  null nicht sinnvoll, so gibt es noch die Option, die
+  \textbf{intrinsische
+    Konvergenzordnung}\index{Konvergenzordnung!intrinsisch} zu
+  betrachten. Dazu betrachten wir zum Beispiel die Folge
+  \begin{gather}
+    d_k = \abs{T(2^kh) - T(2^{k-1}h)}, \qquad k=1,\dots
+  \end{gather}
+  Gilt $d_k \approx 2^p$ mit $p>0$, so gilt aufgrund der Konvergenz
+  der geometrischen Reihe
+  \begin{gather}
+    \abs{T(h)-T(0)} \le \sum_{k=1}^\infty \abs{T(2^kh) - T(2^{k-1}h}
+    \le 2 \abs{T(h)-T(h/2)}.
+  \end{gather}
+  Daraus schließt man, dass auch die Konvergenzordnung etwa gleich $p$
+  ist. Auch dies funktioniert nur, wenn $h$ bereits im asymptotischen
+  Bereich liegt.
+\end{remark}
 
+\begin{Aufgabe}{konvergenzraten}
+  Bestimmen sie aus dem Neville-Tableau aus
+  \slideref{Aufgabe}{romberg} die experimentellen und intrinsischen
+  Konvergenzraten der Spalten.
+\end{Aufgabe}
 
 %%% Local Variables:
 %%% mode: latex
