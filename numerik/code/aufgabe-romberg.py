@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 def trapezoidal(n,f):
     sum = .5*(f(0.) + f(1.))
@@ -19,5 +20,28 @@ def romberg(n0,steps,order,quadrature,f):
 def func(x):
     return np.sin(np.pi*x)
 
-result = romberg(2,4,2,trapezoidal,func)
+initial = 2
+steps = 5
+exact = 2./np.pi
+
+result = romberg(initial,steps,2,trapezoidal,func)
 print(result)
+
+logerror = np.zeros((steps,steps))
+
+print("Fehler")
+for k in range (0,steps):
+    print ("Spalte ", k)
+    for i in range (k,steps):
+        e = abs(exact-result[i,k])
+        print ("Zeile ", i, " Fehler ", e, "\tLog ", math.log2(e))
+        logerror[i,k] = math.log2(e)
+
+print("Experimentelle Ordnungen")
+for k in range (0,steps):
+    print ("Spalte ", k)
+    for i in range (k+1,steps):
+        p = logerror[i-1,k]-logerror[i,k]
+        print (p)
+        
+print("Intrinsische Ordnungen")
