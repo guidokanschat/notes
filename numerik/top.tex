@@ -55,11 +55,53 @@
 \input{quadratur}
 
 \chapter{Iterationsverfahren}
+\begin{intro}
+  Die Bestimmung der Nullstellen einer Funktion ist eine oft
+  wiederkehrende Aufgabe der Numerik, sei es zum Beispiel die
+  Bestimmung der Stützstellen der Gauß-Quadratur. Eine geschlossene
+  Darstellung ist dabei nur in den seltensten Fällen möglich, bei
+  Polynomen zum Beispiel nur bis zum Grad 3. Stattdessen benutzt man
+  sukzessive Annäherungen an die Nullstelle, sogenannte
+  Iterationsverfahren.
+
+  Das folgende Heron-Verfahren war bereits zur Zeit des Königs
+  Hammurabi in Mesopotamien, also vor fast 4000 Jahren bekannt. Es ist
+  benannt nach Heron von Alexandria, in dessen Metrika es beschrieben
+  ist.
+\end{intro}
+
+\begin{Definition*}{heron}{Heron-Verfahren}
+  Zur Bestimmung der Quadratwurzel der Zahl $a$ kann folgende
+  Iteration mit beliebigem, positiven Startwert $x^{(0)}$ angewandt
+  werden:
+  \begin{gather}
+    x^{(k+1)} = \frac12\left(x^{(k)} + \frac{a}{x^{(k)}}\right)
+  \end{gather}
+\end{Definition*}
+
+\begin{Algorithmus*}{heron}{Heron-Verfahren}
+  \lstinputlisting{code/heron.py}
+\end{Algorithmus*}
+
+\begin{Beispiel}{heron}
+  Das Heron-Verfahren zur Bestimmung der Quadratwurzel von 3 liefert
+  folgende Iterationsfolge
+  \begin{center}
+    \begin{tabular}{c|ll}
+      $k$ & $x^{(k)}$ & $x^{(k)} - \sqrt3$\\\hline
+      0  &  1  &  -0.7320508075688772 \\
+      1  &  2.0  &  0.2679491924311228 \\
+      2  &  1.75  &  0.017949192431122807 \\
+      3  &  1.7321428571428572  &  9.204957398001312e-05 \\
+      4  &  1.7320508100147274  &  2.44585018904786e-09 \\
+      5  &  1.7320508075688772  &  0.0
+    \end{tabular}
+  \end{center}
+\end{Beispiel}
 
 \section{Grundlagen}
 \input{it1}
 
-\section{Nichtlineare Gleichungssysteme}
 \input{newton}
 
 %\section{Dünnbesetzte lineare Gleichungssysteme}

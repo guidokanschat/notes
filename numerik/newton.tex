@@ -1,3 +1,5 @@
+\section{Das Newton-Verfahren}
+
 \begin{Definition}{newton-verfahren}
   Das \define{Newton-Verfahren} ist ein Iterationsverfahren zum
   Auffinden einer Nullstelle einer Funktion $f\colon \R^n\to \R^n$. Zu
@@ -9,6 +11,15 @@
   \end{gather}
 \end{Definition}
 
+\begin{Algorithmus*}{newton}{Newton-Verfahren}
+  \lstinputlisting[firstline=3,lastline=9]{code/newton.py} Die
+  Parameter zu dieser Funktion sind der Startwert $x$, die Funktion
+  $f(x)$, die Anwendung der inversen Ableitung
+  \begin{gather}
+    \operatorname{Dfinv}(x,r) = \bigl(\nabla f(x)\bigr)^{-1}r,
+  \end{gather}
+  sowie eine Toleranz als Abbruchkriterium.
+\end{Algorithmus*}
 \begin{Lemma}{newton-1}
   Sei $M\subset \R^n$ konvex. Sei $f\colon M\to \R^n$ stetig differenzierbar auf $M$ und die Ableitung genüge der Lipschitz-Abschätzung
   \begin{gather}
@@ -136,15 +147,31 @@
   Abschätzung~\eqref{eq:newton:4}.
 \end{proof}
 
+\section{Abstiegsverfahren und Globalisierung}
+
+\begin{intro}
+  Die lokale Konvergenz ist beim Newtonverfahren ein großes Hindernis
+  für die Anwendung. Wählt man den Startwert nicht im Einzugsbereich
+  einer Nullstelle, so divergiert das Verfahren. Der Einzugsbereich,
+  wie er sich aus dem Konvergenzsatz ergibt, ist dabei oft sehr klein
+  und daher schwer zu finden.
+
+  Ziel dieses Abschnitts ist daher, eine Modifikation des
+  Newton-Verfahrens zu finden, die den Konvergenzbereich aufweitet,
+  idealerweise sogar globale Konvergenz erzeugt. Solche Modifikationen
+  findet man unter der Bezeichnung \define{Globalisierung}.
+\end{intro}
+
 \begin{Definition}{anstiegskegel}
   Sei $g\colon \R^n\to \R$ stetig differenzierbar. Dann definieren wir
   den Kegel positiven Anstiegs zum Parameter $\gamma$ als
   \begin{gather}
     S_\gamma(x) = \bigl\{ s\in\R^n \big|
     \norm{s} = 1 \;\wedge \;
-    \nabla g(x)s \ge \gamma\norm{\nabla g(x)}
+    \nabla g(x)\cdot s \ge \gamma\norm{\nabla g(x)}
     \bigr\}.
-  \end{gather}  
+  \end{gather}
+  Die Richtung des steilsten Anstiegs im Punkt $x$ ist $\nabla g(x)$.
 \end{Definition}
 
 \begin{Lemma}{abstieg-reduktion}
@@ -267,6 +294,16 @@
 \begin{Algorithmus*}{newton-stepsize}{Newton-Verfahren mit Schrittweitensteuerung}
   
 \end{Algorithmus*}
+
+\begin{remark}
+  Dieser Abschnitt gibt Hinweise darauf, wie das Newton-Verfahren
+  modifiziert werden kann und trotzdem Konvergenz erhalten wird. Neben
+  der Schrittweitensteuerung kommen hier insbesondere approximative
+  Berechnungen der Ableitung in Frage. Diese werden dann oft als
+  \define{Quasi-Newton-Verfahren} bezeichnet, konvergieren in der
+  Regel nur von erster Ordnung, sind aber of viel effizienter als das
+  Newton-Verfahren selbst.
+\end{remark}
 
 %%% Local Variables:
 %%% mode: latex

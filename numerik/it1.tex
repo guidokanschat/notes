@@ -138,10 +138,22 @@
   \end{gather}
   Das Minimierungsproblem lässt sich also auf das Finden einer
   Nullstelle von $f\colon \R^n\to \R^n$ mit $f(x) = \nabla g(x)$
-  reduzieren. Umgekehrt lässt sich die Aufgabe, eine Nullstelle einer
+  reduzieren. Umgekehrt lässt sich die Aufgabe, eine Nullstelle der
   Funktion $f\colon \R^n \to \R^n$ zu finden, durch die Minimierung
-  des Funktionals $g(x) = \norm{f(x)}$ darstellen.
+  der Norm $g(x) = \norm{f(x)}$ darstellen.
 \end{Satz}
+
+\begin{proof}
+  Die erste Tatsache ist aus der Analysis bekannt. Die zweite Aussage
+  ergibt sich daraus, dass $g(x)$ nirgendwo negativ ist, eine
+  Nullstelle also ein Minimum sein muss.
+\end{proof}
+
+\begin{remark}
+  Beide Aussagen des vorigen Satzes lassen keine Umkehr zu: weder ist
+  jede Nullstelle des Gradienten ein Minimum, noch ist jedes lokale
+  Minimum von $g$ eine Nullstelle.
+\end{remark}
 
 %%% Local Variables:
 %%% mode: latex
