@@ -44,4 +44,11 @@ for k in range (0,steps):
         p = logerror[i-1,k]-logerror[i,k]
         print (p)
         
+diff = np.zeros((steps,steps))
+
 print("Intrinsische Ordnungen")
+for k in range (0,steps):
+    print ("Spalte ", k)
+    for i in range (k+1,steps):
+        diff[i,k] = result[i,k] - result[i-1,k]
+        
