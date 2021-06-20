@@ -520,6 +520,7 @@
   Konvergenzordnung zu beweisen. Man benötigt eine asymptotische
   Fehlerentwicklung der Form
   \begin{gather}
+    \label{eq:Richardson-error}
     T(h)-T(0) = \tau_1 h^p + \tau_2 h^{2p} + \dots \tau_n h^{np}
     + \bigo(h^{(n+1)p}).
   \end{gather}
@@ -548,6 +549,31 @@
   $2/\pi$ für die verschiedenen Spalten im Tableau des
   Neville-Algorithmus.
 \end{Aufgabe*}
+
+\begin{Beispiel*}{romberg}{Romberg-Quadratur mit Trapezregel}
+  Mit der summierten Trapezregel $Q_h$ approximieren wir das Integral
+  $\int_0^1 \sin \pi x\dx$ mit den Schrittweiten $h$ (erste beiden
+  Spalten in der folgenden Tabelle).
+  \begin{center}
+    \begin{tabular}{c|llll}
+      $h_i$ & $Q_{i0} = Q_{h_i}$ & $Q_{i1}$ & $Q_{i2}$ & $Q_{i3}$\\\hline
+      \nicefrac12 & 0.5 &&&\\
+      \nicefrac14 & 0.60355339 & 0.63807119 &&\\
+      \nicefrac18 & 0.62841744 & 0.63670545 & 0.6366144&\\
+      \nicefrac1{16} & 0.63457315 & 0.63662505 & 0.63661969 & 0.63661978
+    \end{tabular}
+  \end{center}
+  Die Einträge der hinteren Spalten berechnen sich nach dem Neville-Algorithmus
+  durch die Formel
+  \begin{gather}
+    Q_{ik} = Q_{i,k-1}
+    + \frac{h_i^2}{h_{i-k}^2-h_i^2}\left(Q_{i,k-1} - Q_{i-1,k-1}\right).
+%    + \frac{Q_{i,k-1} - Q_{i-1,k-1}}{2^{2k}-1}.
+  \end{gather}
+  was der Auswertung der Fehlerentwicklung als Polynom in $h^2$ im
+  Punkt null entspricht.
+\end{Beispiel*}
+
 
 \subsection{Praktische Aspekte}
 

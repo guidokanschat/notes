@@ -174,15 +174,65 @@
   Die Richtung des steilsten Anstiegs im Punkt $x$ ist $\nabla g(x)$.
 \end{Definition}
 
+\begin{todo}
+  Umgebung ``remark''.
+\end{todo}
+Da es sich um normierte Vektoren handelt, ist die Menge $S_\gamma(x)$
+eigentlich kein Kegel, sondern eine Kugel in der Einheitssphäre mit
+Zentrum im normierten Gradienten und Radius $\arccos \gamma$. Zusammen
+mit den Skalierungsfaktoren, die unten eingeführt werden,
+repräsentiert sie aber einen Kegel.
+
+
 \begin{Lemma}{abstieg-reduktion}
   Sei $g\colon\R^n\to\R$ stetig differenzierbar und in einem Punkt
   $y\in\R^n$ gelte $\nabla g(y) \neq 0$. Dann gibt es eine Umgebung
   $U(y)$ und $\lambda>0$, so dass für alle $x\in U(y)$,
   $s\in S_\gamma(x)$ und $\mu\in [0,\lambda]$ gilt
   \begin{gather}
-    h(x-\mu s) \le h(x) - \frac{\mu\gamma}4 \norm{\nabla g(y)}.
+    g(x-\mu s) \le g(x) - \frac{\mu\gamma}4 \norm{\nabla g(y)}.
   \end{gather}
 \end{Lemma}
+
+\begin{proof}
+  Wir definieren zunächst eine Umgebung um $y$ auf der sich die
+  Gradienten nicht zu sehr unterscheiden:
+  \begin{gather}
+    \label{eq:newton:8}
+    U_1(y) = \left\{
+      x\in\R^n \middle| \;\norm{\nabla g(x)-\nabla g(y)} \le \frac\gamma4 \norm{\nabla g(y)}
+      \right\}.
+    \end{gather}
+    Eine zweite Umgebung ist so gewählt, dass dort der Abstiegskegel
+    in einem größeren Abstiegskegel im Punkt $y$ enthalten ist:
+    \begin{gather}
+      U_2(y) = \left\{
+        x\in\R^n \middle| S_\gamma(x) \subseteq S_{\nicefrac\gamma2}(y)\right\}.
+    \end{gather}
+
+    Wähle nun $\lambda>0$, so dass
+    \begin{gather}
+      \overline{B_{2\lambda}(y)}\subseteq U_1(y) \cap U_2(y).
+    \end{gather}
+    und $U(y) = B_\lambda(y)$. Dann zeigen wir nun die Aussage für
+    alle $x\in U(y)$, $s\in S_\gamma(x)$ und $\mu\in[0,\lambda]$. Nach
+    dem Mittelwertsatz existiert $\theta\in(0,1)$ so dass
+    \begin{gather}
+      g(x)-g(x-\mu s) = \mu \nabla g(x-\theta\mu s)s.
+    \end{gather}
+    Wir formen weiter um:
+    \begin{align}
+      \nabla g(x-\theta\mu s)s
+      &= \bigl(\nabla g(x-\theta\mu s) - \nabla g(y)\bigr)s + \nabla g(y)s\\
+      &\ge -\frac{\gamma}4 \norm{\nabla g(y)}\norm{s} + \nabla g(y)s\\
+      &\ge -\frac{\gamma}4 \norm{\nabla g(y)} + \frac\gamma2 \norm{\nabla g(y)}\\
+      & \ge \frac\gamma4 \norm{\nabla g(y)}.
+    \end{align}
+\end{proof}
+
+\begin{todo}
+  Reihenfolge vertauschen  
+\end{todo}
 
 \begin{Definition}{abstiegsverfahren}
   Ein \define{Abstiegsverfahren} für eine stetig differenzierbare
@@ -195,12 +245,13 @@
     \begin{gather}
       x^{(k+1)} = x^{(k)} - \alpha_k s^{(k)},
     \end{gather}
-    so dass
+    so dass die \define{Reduktionsbedingung}
     \begin{gather}
       \label{eq:newton:7}
       g\bigl(x^{(k+1)}\bigr)
-      \le g\bigl(x^{(k)}\bigr) - \frac{\gamma_k\alpha_k}{4}\norm{\nabla g(x^{(k)}}.
+      \le g\bigl(x^{(k)}\bigr) - \frac{\gamma_k\alpha_k}{4}\norm{\nabla g(x^{(k)})}
     \end{gather}
+    gilt.
   \end{enumerate}
 \end{Definition}
 
@@ -213,7 +264,8 @@
 \begin{Beispiel*}{steepest-descent}{Verfahren des steilsten Abstiegs}
   Sei der Vektor $x^{(k)} \in\R^n$ gegeben, dann wähle
   $s^{(k)} = \nabla g(x^{(k)})$. Die Schrittweite $\alpha_k$ wird aus
-  der eindimensionalen Minimierungsaufgabe
+  der eindimensionalen Minimierungsaufgabe (auch \define{line search}
+  genannt)
   \begin{gather}
     \alpha_k = \operatorname*{argmin}_{\alpha>0}
     g\bigl(x^{(k)} - \alpha s^{(k)}\bigr)
@@ -230,11 +282,88 @@
     K = \Bigl\{x\in\R^n \; \Big| \; g(x) \le g\bigl(x^{(0)}\bigr) \Bigr\}
   \end{gather}
   kompakt und $g$ stetig differenzierbar auf einer Umgebung von $K$
-  ist. Dann besitzt die Folge $\{x^{(k+1)}\}$ des Abstiegsverfahrens
+  ist. Dann besitzt die Folge $\{x^{(k)}\}$ des Abstiegsverfahrens
   mindestens einen Häufungspunkt in $K$. Gilt zusätzlich in der
-  Umgebung eines Häufungspunkts $\alpha_k \ge \alpha>0$, so ist er
-  ein stationärer Punkt von $g$.
+  Umgebung eines Häufungspunkts $\gamma_k \ge \gamma>0$, so existiert
+  $\alpha$, so dass $\alpha_k \ge \alpha>0$ gewählt werden kann. In
+  diesem Fall ist der Häufungspunkt ein stationärer Punkt von $g$.
 \end{Satz}
+
+\begin{proof}
+  Da die Folge monoton fällt, bleibt sie in $K$ und hat der
+  Kompaktheit wegen mindestens einen Häufungspunkt $x^*$. Wir benennen
+  nun ebenfalls mit $\{x^{(k)}\}$ ebenfalls eine Teilfolge, die gegen diesen
+  Häufungspunkt konvergiert.
+
+  Wir machen die Widerspruchsannahme, dass $x^*$ kein stationäre Punkt von $g$ ist, also
+  \begin{gather}
+    \nabla g(x^*) \neq 0.
+  \end{gather}
+
+  Wir bemerken, dass nach Voraussetzung $S_{\gamma_k}(x^*) \subseteq S_\gamma(x^*)$ gilt.
+  Nun gibt es nach \slideref{Lemma}{abstieg-reduktion} eine Umgebung
+  $U(x^*)$ und eine Zahl $\lambda>0$, so dass für alle $\mu\in[0,\lambda]$ gilt:
+  \begin{gather}
+    g(x-\mu s) \le g(x) - \mu \frac\gamma4\norm{\nabla g(x^*)}.
+  \end{gather}
+  Daraus folgt, dass zu jedem $\alpha_k \le \lambda$ die
+  Reduktionsbedingung~\eqref{eq:newton:7} erfüllt ist und
+  dementsprechend die Bedingung $\alpha_k\ge\alpha$ für
+  $\alpha\le\lambda$ erfüllt werden kann.
+
+  Sei nun $k_0$ gewählt, so dass $x^{(k)}\in U(x^*)$ für alle
+  $k\ge k_0$. Dann gilt nach der Konstruktion von $U(x^*)$
+  in~\eqref{eq:newton:8}, dass
+  \begin{gather}
+    \norm{\nabla g(x^{(k)})} \ge \norm{\nabla g(x^{*})} - \norm{\nabla g(x^{(k)}) - \nabla g(x^{*})}
+    \ge \left(1-\frac\gamma4\right)  \norm{\nabla g(x^{*})}.
+  \end{gather}
+  Es gilt also
+  \begin{gather}
+    g(x^{k+1}) \le g(x^{k}) - \frac34 \alpha \norm{\nabla g(x^{*})}.
+  \end{gather}
+  Daraus folgt im Widerspruch zur Stetigkeit die Konvergenz
+  $g(x^{(k)}) \to -\infty$, Es muss also $\nabla g(x^{*})=0$ gelten,
+  $x^*$ ist also ein stationärer Punkt von $g$.
+\end{proof}
+
+\begin{remark}
+  Der vorherige besteht aus zwei Teilen. Die Existenz eines
+  Häufungspunktes wird unter einer der allgemeinen Bedingung
+  getroffen, dass die Menge $K$ kompakt ist, also eine Abstiegsfolge
+  nicht ins unendliche konvergieren kann. Diese Bedingung ist oft
+  recht leicht nachzuprüfen. Insbesondere steht die Existenz mehrerer
+  Häufungspunkte nicht im Widerspruch zu den Annahmen, so dass das
+  Verfahren auch dann wenigstens einen davon findet.
+
+  Die weiteren Bedingungen, die sicherstellen, dass es sich bei einem
+  Häufungspunkt um einen stationären Punkt handelt, sind lokal in
+  einer Umgebung eines solchen gestellt. An diesem Punkt sind die
+  Folgen $\gamma_k$ und $\alpha_k$ nur sehr abstrakt fixiert. Wir
+  zeigen nun, dass die Folge der $\alpha_k$ im Verfahren des steilsten
+  Abstiegs die Bedingung erfüllt. Als zweite Anwendung von allgemeinen
+  Abstiegsverfahren stellen wir dann das Newton-Verfahren mit
+  Schrittweitensteuerung vor.
+\end{remark}
+
+\begin{Korollar}{abstieg-haeufung}
+  Beim Verfahren des steilsten Abstiegs sind die Folgen $\gamma_k$ und
+  $\alpha_k$ so gewählt, das \slideref{Satz}{abstieg-haeufung} gilt.
+\end{Korollar}
+
+\begin{proof}
+  Da die Abstiegsrichtungen immer gleich dem (negativen) Gradienten
+  sind, gilt $\gamma_k \equiv 1$. Für die Folge $\alpha_k$ zeigen wir
+  nich die Beschränktheit durch $\alpha$. Stattdessen bemerken wir mit
+  $\lambda$ aus \slideref{Lemma}{abstieg-reduktion}:
+  \begin{align}
+    g(x^{(k+1)})
+    &= \min_{\alpha>0} g\left(x^{(k+1)}-\alpha s^{(k)}\right)\\
+    &\le g(x^{(k)}-\lambda s^{(k)})\\
+    &\le g(x^{(k)}) - \frac{\lambda}4 \norm{\nabla g(x^*)}.
+  \end{align}
+  Auch hier schließen wir, dass die Folge divergiert wenn die Punkte konvergieren.
+\end{proof}
 
 \begin{Lemma}{newton-abstieg}
   Sei $f\colon \R^n\to \R^n$ stetig differenzierbar und

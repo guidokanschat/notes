@@ -1,80 +1,3 @@
-\subsection{Eigenwerte und die Spektralnorm}
-
-\begin{Definition}{eigenwert}
-  Sei $A\in \R^{n\times n}$. Gilt für einen Vektor $0\neq x\in \R^n$
-  \begin{gather}
-    Ax = \lambda x,
-  \end{gather}
-  so nennen wir $\lambda$ \define{Eigenwert} von $A$ und $x$ einen
-  zugehörigen \define{Eigenvektor}. Wir notieren die Zugehörigkeit zur
-  Matrix $A$ auch explizit durch $\lambda(A)$.
-\end{Definition}
-
-\begin{Lemma}{ew-norm}
-  Für alle Eigenwerte $\lambda\in\C$ einer Matrix $A\in\R^{n\times n}$ gilt
-  \begin{gather}
-    \abs{\lambda} \le \norm{A}
-  \end{gather}
-  für jede zu einer beliebigen Vektornorm verträglichen Norm.
-\end{Lemma}
-
-\begin{Satz}{onb-ev}
-  Sei $A\in \R^n\times n$ eine symmetrische Matrix. Dann gibt es eine
-  orthonormalbasis des $\R^n$ von Eigenvektoren $v^{(i)}$ mit zugehörigen
-  reellen Eigenwerten $\lambda_i$.
-\end{Satz}
-
-\begin{proof}
-  Resultat der linearen Algebra.
-\end{proof}
-
-\begin{Satz}{spektralnorm}
-  Die Operatornorm zur euklidischen Norm\index{Norm!euklidisch} ist
-  die \define{Spektralnorm}
-  \begin{gather}
-    \norm{A}_2 = \max_{\substack{x\in\R^n\\x\neq0}}
-    \sqrt{\frac{x^TA^TAx}{x^Tx}} = \sqrt{\lambda_{\max}(A^TA)}.
-  \end{gather}
-  Insbesondere gilt für symmetrische Matrizen
-  $\norm{A}_2 = \max_i\abs{\lambda_i(A)}$.
-\end{Satz}
-
-\begin{proof}
-  Nach \slideref{Satz}{onb-ev} gibt es eine Basis des $\R^n$ von
-  Eigenvektoren $v^{(i)}$ von $A^TA$. Jeder beliebige Vektor $x$
-  besitzt damit die Darstellung
-  \begin{gather}
-    x = \sum_{i=1}^n \alpha_i v^{(i)}.
-  \end{gather}
-  Es gilt nach der Parsevalschen Gleichung
-  $\norm{x}_2 = \norm{\alpha}_2$. Ferner gilt mit den Eigenwerten
-  $\lambda_i = \lambda_i(A^TA)$
-  \begin{gather}
-    \norm{Ax}_2^2 = x^TA^TAx = \sum_{i=1}^n \lambda_i \alpha_i^2.
-  \end{gather}
-  Daher gilt
-  \begin{gather}
-    \norm{A}_2^2 = \max_{x\in \R^n} \frac{\norm{Ax}^2}{\norm{x}^2}
-    = \max_{\alpha} \frac{\sum \lambda_i\alpha_i^2}{\sum\alpha_i^2}
-    \le \lambda_{\max}(A^TA).
-  \end{gather}
-  Da für symmetrische Matrizen $A=A^T$, so ist
-  \begin{gather}
-    \lambda_{\max}(A^TA) = \lambda_{\max}(A^2) = \lambda_{\max}^2(A)
-  \end{gather}
-\end{proof}
-
-\begin{Definition}{pos-def}
-  Eine Matrix $A\in\R^{n\times n}$ heißt \define{positiv definit}, wenn
-  \begin{gather}
-    x^TAx > 0 \qquad\forall 0\neq x\in \R^n.
-  \end{gather}
-\end{Definition}
-
-\begin{Satz}{spd}
-  Eine symmetrische Matrix $A\in\R^{n\times n}$ ist positiv definit genau dann, wenn ihre Eigenwerte alle positiv sind.
-\end{Satz}
-
 \subsection{Konditionierung der Lösung}
 
 \begin{Definition}{aufgabe-loesung}
@@ -125,11 +48,6 @@
     \le \frac{\cond(A)}{1-\cond(A)\nicefrac{\norm{\delta A}}{{\norm{A}}}}
     \left[\frac{\norm{\delta A}}{\norm{A}}
       +\frac{\norm{\delta b}}{\norm{b}}\right].
-  \end{gather}
-  Hierzu definieren wir die \define{Konditionszahl} der Matrix $A$ zur
-  Norm $\norm{\cdot}$
-  \begin{gather}
-    \cond(A) = \norm{A} \,\norm{A^{-1}}
   \end{gather}
 \end{Satz}
 
