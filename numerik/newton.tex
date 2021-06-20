@@ -380,6 +380,34 @@ repräsentiert sie aber einen Kegel.
   \end{gather}
 \end{Lemma}
 
+\begin{proof}
+  Es gilt (Nachrechnen!)
+  \begin{gather}
+    \nabla g(x) = 2 f(x)^T\nabla f(x).
+  \end{gather}
+  Daher ist
+  \begin{align}
+    \frac{\nabla g(x) s}{\norm{\nabla g(x)}_2}
+    &= \frac{f(x)^T \nabla f(x) \bigl(\nabla f(c)\bigr)^{-1} f(x)}
+      {\norm{f(x)^T\nabla f(x)}_2\norm{\bigl(\nabla f(c)\bigr)^{-1} f(x)}}_2\\
+    &\ge \frac{\norm{f(x)}^2_2}{\norm{f(x)}_2\norm{\nabla f(x)}_2\norm{\bigl(\nabla f(c)\bigr)^{-1}}_2\norm{f(x)}_2}\\
+    &= \frac1{\cond_2(\nabla f)}.
+  \end{align}
+\end{proof}
+
+\begin{remark}
+  Man kann nun zum Beispiel auch das Newton-Verfahren mit line search
+  ausführen, um globale Konvergenzeigenschaften zu erzielen. Es gilt
+  dann zunächst die Existenz von Häufungspunkten. In der Nähe eines
+  solchen gilt aber natürlich, dass line search nicht schlechter
+  konvergiert, als das normale Newton-Verfahren, woraus dann dort
+  wieder die quadratische Konvergenz gefolgert werden kann.
+
+  Wir betrachten stattdessen die folgende, einfachere Variante, die
+  mit minimaler Modifikation ein global konvergierendes Verfahren
+  ergibt.
+\end{remark}
+
 \begin{Definition}{newton-stepsize}
   Das Newton-Verfahren mit \define{Schrittweitensteuerung} berechnet iterativ
   $x^{(k+1)}\in \R^n$ aus $x^{(k)}\in \R^n$ in folgenden Schritten
@@ -421,7 +449,7 @@ repräsentiert sie aber einen Kegel.
 \end{remark}
 
 \begin{Algorithmus*}{newton-stepsize}{Newton-Verfahren mit Schrittweitensteuerung}
-  
+    \lstinputlisting[firstline=3,lastline=18]{code/newton-stepsize.py}
 \end{Algorithmus*}
 
 \begin{remark}
