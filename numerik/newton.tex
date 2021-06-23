@@ -367,7 +367,7 @@ repräsentiert sie aber einen Kegel.
 
 \begin{Lemma}{newton-abstieg}
   Sei $f\colon \R^n\to \R^n$ stetig differenzierbar und
-  $g(x) = \norm{f(x)}_2^2$.  Dann sind die Suchrichtungen
+  $g(x) = \norm{f(x)}_2^2$.  Dann sind die Suchrichtungen des Newton-Verfahrens
   \begin{gather}
     s^{(k)} = \frac{d^{(k)}}{\norm{d^{(k)}}_2},
     \qquad d^{(k)} = \bigl(\nabla f(x^{(k)})\bigr)^{-1}f(x^{(k)})
@@ -394,6 +394,15 @@ repräsentiert sie aber einen Kegel.
     &= \frac1{\cond_2(\nabla f)}.
   \end{align}
 \end{proof}
+
+\begin{Korollar}{newton-abstieg}
+  Das modifizierte Newton-Verfahren
+  \begin{gather}
+    x^{(k+1)} = x^{(k)} - \alpha_k \bigl(\nabla f(x^{(k)})\bigr)^{-1} f(x^{(k)})
+  \end{gather}
+  ist ein Abstiegsverfahren, wenn $\alpha_k$ so gewählt ist, dass die
+  Reduktionsbedingung gilt.
+\end{Korollar}
 
 \begin{remark}
   Man kann nun zum Beispiel auch das Newton-Verfahren mit line search
