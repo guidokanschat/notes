@@ -288,24 +288,70 @@
 \frame {\input {blocks/Algorithmus-newton-stepsize.tex}}
 
 \section{Lineare Gleichungssysteme}
+\subsection{Grundlagen}
 \frame{\sectoc}
 
-\frame {\input {blocks/Definition-eigenwert.tex}}
-\frame {\input {blocks/Lemma-ew-norm.tex}}
-\frame {\input {blocks/Satz-onb-ev.tex}}
-\frame {\input {blocks/Satz-spektralnorm.tex}}
-\frame {\input {blocks/Definition-pos-def.tex}}
-\frame {\input {blocks/Satz-spd.tex}}
+\frame {\input {blocks/Satz-lgs-loesbar.tex}}
+
+% \frame {\input {blocks/Definition-eigenwert.tex}}
+% \frame {\input {blocks/Lemma-ew-norm.tex}}
+% \frame {\input {blocks/Satz-onb-ev.tex}}
+% \frame {\input {blocks/Satz-spektralnorm.tex}}
+% \frame {\input {blocks/Definition-pos-def.tex}}
+% \frame {\input {blocks/Satz-spd.tex}}
+
+\subsection{Konditionierung der Lösung}
 \frame {\input {blocks/Definition-aufgabe-loesung.tex}}
 \frame {\input {blocks/Lemma-gestoert-invertierbar.tex}}
 \frame {\input {blocks/Satz-kondition-lgs.tex}}
-\frame {\input {blocks/Notation-quadratische-matrizen.tex}}
-\frame {\input {blocks/Definition-dreiecksmatrix.tex}}
-\frame {\input {blocks/Satz-dreieck-gruppe.tex}}
-\frame {\input {blocks/Korollar-dreieck-inverse.tex}}
+
+\subsection{Die LR-Zerlegung}
+\frame{\subtoc}
+%\frame {\input {blocks/Notation-quadratische-matrizen.tex}}
+\frame {\input {blocks/Definition-dreiecksmatrix.tex}
+\input {blocks/Satz-dreieck-gruppe.tex}
+\input {blocks/Korollar-dreieck-inverse.tex}}
 \frame {\input {blocks/Algorithmus-vorwaerts-rueckwaerts.tex}}
+\frame {\input {blocks/Definition-frobenius-matrix.tex}}
+\frame {\input {blocks/Lemma-frobenius-matrix.tex}}
+\frame {\input {blocks/Lemma-elimination-1.tex}}
+\frame {\input {blocks/Satz-elimination-2.tex}}
 \frame {\input {blocks/Algorithmus-lr.tex}}
 \frame {\input {blocks/Algorithmus-for-back.tex}}
+
+\frame {\input {blocks/Lemma-aufwand-LR.tex}}
+\frame {\input {blocks/Satz-existenz-LR.tex}}
+\frame {\input {blocks/Definition-spalten-pivot.tex}}
+\frame {\input {blocks/Lemma-spalten-pivot.tex}}
+\frame {\input {blocks/Lemma-l-p-vertauschung.tex}}
+\frame {\input {blocks/Satz-lr-pivot.tex}}
+\frame {\input {blocks/Lemma-rundung-vor-rueck.tex}
+  \input {blocks/Lemma-rundung-lr-1.tex}}
+\frame {\input {blocks/Satz-rundung-lr-2.tex}}
+
+\subsection{Die QR-Zerlegung}
+\frame{\subtoc}
+\frame {\input {blocks/Definition-ortho-matrix.tex}}
+\frame {\input {blocks/Satz-ortho-matrix.tex}}
+\frame {\input {blocks/Lemma-qr-norm.tex}}
+\frame {\input {blocks/Definition-qr.tex}}
+\frame {\input {blocks/Lemma-qr-spalten.tex}}
+\frame {\input {blocks/Satz-qr.tex}}
+\frame {\input {blocks/Definition-givens.tex}}
+\frame {\input {blocks/Algorithmus-givens-1.tex}}
+\frame {\input {blocks/Algorithmus-givens-2.tex}}
+\frame {\input {blocks/Definition-householder-reflexion.tex}}
+\frame {\input {blocks/Lemma-householder-konstruktion.tex}}
+\frame {\input {blocks/Algorithmus-householder-1.tex}}
+\frame {\input {blocks/Algorithmus-householder-2.tex}}
+
+\subsection{Ausgleichsrechnung}
+\frame{\subtoc}
+\frame {\input {blocks/Satz-normalengleichungen.tex}}
+\frame {\input {blocks/Definition-condition-rectangular.tex}}
+\frame {\input {blocks/Lemma-condition-squared.tex}}
+\frame {\input {blocks/Lemma-qr-rectangular.tex}}
+\frame {\input {blocks/Satz-S.tex}}
 
 \section{Bibliography}
 \frame{\bibliographystyle{alpha}

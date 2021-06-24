@@ -1,8 +1,8 @@
-\begin{Notation}{quadratische-matrizen}
-  Da wir uns in diesem Abschnitt mit der Lösung quadraischer
+\begin{notation}%{quadratische-matrizen}
+  Da wir uns in diesem Abschnitt mit der Lösung quadratischer
   Gleichungssysteme beschäftigen, gelte für alle Matrizen, soweit
   nicht anders vermerkt, dass ihre Dimension $n\times n$ sei.
-\end{Notation}
+\end{notation}
 
 \subsection{Dreiecksmatrizen und Frobeniusmatrizen}
 
@@ -65,20 +65,21 @@
 \end{Definition}
 
 \begin{Lemma}{frobenius-matrix}
-  Für Frobenius-Matrizen gilt
-  \begin{gather}
-    G_k^{-1} = 2\identity-G_k.
-  \end{gather}
   Das Ergebnis des Produktes $G_kA$ einer Frobeniusmatrix mit einer
   beliebigen Matrix ergibt sich aus $A$ dadurch, dass auf die $j$-te
   Zeile das $g_{jk}$-fache der $k$-ten Zeile addiert wird.
 
+  Für Frobenius-Matrizen gilt
+  \begin{gather}
+    G_k^{-1} = 2\identity-G_k.
+  \end{gather}
+  
   Sei $k_1<\dots<k_m$ eine aufsteigende Folge von Indizes. Dann ist
   \begin{gather}
     G_{k_1}\cdots G_{k_m} = \sum_{i=1}^m G_i - (m-1) \identity.
   \end{gather}
-  Insbesondere gilt
   \begin{gather}
+    \text{Insbesondere gilt }\qquad
     G_1\dots G_n =
     \begin{bmatrix}
       1\\
@@ -132,6 +133,28 @@
 \begin{Algorithmus*}{lr}{LR-Zerlegung}
   \lstinputlisting{code/lu.py}
 \end{Algorithmus*}
+
+\begin{remark}
+  Im vorigen Algorithmus wird die LR-Zerlegung (engl. LU
+  decomposition) so durchgeführt, dass sie die Matrix $A$
+  ersetzt. Dadurch wird kein zusätzlicher Speicher benötigt. Nach
+  ausführen der Funktion hat dann $A$ nicht mehr die Bedeutung einer
+  Matrix, sondern ist ein quadratisches Zahlenfeld, für dessen
+  Einträge $a_{ij}$ gilt
+  \begin{gather}
+    a_{ij} =
+    \begin{cases}
+      r_{ij} & i \le j\\
+      \ell_{ij} & i>j.
+    \end{cases}
+  \end{gather}
+  Von den Diagonaleinträgen von $L$ wissen wir, dass sie den Wert 1
+  haben, deswegen werden sie nicht gespeichert.
+
+  Für dieses spezielle Datenformat gibt es dann auch eine
+  spezialisierte Version der Auflösung der gestaffelten
+  Gleichungssysteme:
+\end{remark}
 
 \begin{Algorithmus*}{for-back}{Vorwärts-Rückwärts-Einsetzen}
   \lstinputlisting{code/forward_backward.py}
@@ -190,7 +213,7 @@
       &   & \ell_{\pi(n)k}& & &1
     \end{bmatrix}
   \end{gather}
-  wieder eine Frobenius-Matrix gleicher Struktur wier $L_k$.
+  wieder eine Frobenius-Matrix gleicher Struktur wie $L_k$.
 \end{Lemma}
 
 \begin{proof}
