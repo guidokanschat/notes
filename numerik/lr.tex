@@ -74,13 +74,13 @@
     G_k^{-1} = 2\identity-G_k.
   \end{gather}
   
-  Sei $k_1<\dots<k_m$ eine aufsteigende Folge von Indizes. Dann ist
+  Sei $k_1<\dots<k_m$ eine aufsteigende Folge von Indizes. Dann gilt für Produkte die Darstellung
   \begin{gather}
     G_{k_1}\cdots G_{k_m} = \sum_{i=1}^m G_i - (m-1) \identity.
   \end{gather}
   \begin{gather}
     \text{Insbesondere gilt }\qquad
-    G_1\dots G_n =
+    G_1\cdots G_{n-1} =
     \begin{bmatrix}
       1\\
       g_{21} & 1 \\
@@ -237,34 +237,74 @@
 \subsection{Fehleranalyse}
 
 Ohne Beweis geben wir die folgenden Resultate zur
-Rundungsfehleranalyse der Lösung linearer
-Gleichungssysteme mit der LR-Zerlegung an.
+Rundungsfehleranalyse der Lösung linearer Gleichungssysteme mit der
+LR-Zerlegung an. Teile der Beweise finden sich in~\cite{Stoer83}.
+
+\begin{Notation}{abs-matrix}
+  Zu einer Matrix $A$ sei $\abs{A}$ die Matrix der Absolutbeträge, also
+  \begin{gather}
+    \abs{A} =
+    \begin{pmatrix}
+      \abs{a_{11}} & \cdots & \abs{a_{1n}} \\
+      \vdots && \vdots\\
+      \abs{a_{nn}} & \cdots & \abs{a_{nn}}
+    \end{pmatrix}.
+  \end{gather}
+\end{Notation}
+
+% Stoer:
+\begin{Lemma}{rundung-lr-1}
+  Die Berechnung der LR-Zerlegung einer Matrix $A$ in
+  Fließkommaarithmetik resultiert in einer Zerlegung
+  $\widehat L \widehat R = A+\delta A$ und es gilt die Abschätzung
+  \begin{gather}
+    \abs{\delta A} \le 2\alpha_{\max} \frac{\eps}{1-\eps}
+    \begin{pmatrix}
+      0&0&0&\cdots&0&0\\
+      1&1&1&\cdots&1&1\\
+      1&2&2&\cdots&2&2\\
+      1&2&3&\cdots&3&3\\
+      \vdots&\vdots&\vdots&\cdots&n-1&n-1
+    \end{pmatrix}
+  \end{gather}
+  Hierbei ist $\alpha_{\max}$ der betragsmäßig größte Eintrag
+  aller Matrizen $A^{(k)}$, die im Verfahren auftreten,
+  \begin{gather}
+    \alpha_{\max} = \max_{1\le k,i,j\le n} \abs{a^{(k)}_{ij}}.
+  \end{gather}
+\end{Lemma}
+
+% Deuflhard:
+% \begin{Lemma}{rundung-lr-1}
+%   Die Matrix $A$ besitze eine LR-Zerlegung. Dann berechnet das
+%   Gaußsche Eliminationsverfahren für das Gleichungssystem $AX=b$ die
+%   Lösung $\widehat x$ des Systems $(A+\delta A) \widehat x = b$ für eine Matrix
+%   $A+\delta A$ mit
+%   \begin{gather}
+%     \abs{\delta a_{ij}} \lessdot 2n \abs{\widehat \ell_{ij}}
+%     \abs{\widehat r_{ij}}\eps.
+%   \end{gather}
+% \end{Lemma}
 
 \begin{Lemma}{rundung-vor-rueck}
   Die Realisierung des Vorwärtseinsetzens für das Gleichungssystem
-  $LX = b$ in Fließkommaarithmetik berechnet die Lösung $\hat x$ des
-  gestörten Systems $\hat L \hat x = b$ mit
+  $Lx = b$ in Fließkommaarithmetik berechnet die Lösung $\widehat x$ des
+  gestörten Systems $\widehat L \widehat x = b$ mit
   \begin{gather}
-    \abs{\ell_{ij} - \hat\ell_{ij}}
-    \lessdot n \abs{l_{ij}} \eps.
+    \abs{L - \widehat L}
+    \le \frac{\eps}{1-n\eps} \left(\abs{L}
+      \begin{pmatrix}
+        1\\&2\\&&\ddots\\&&&n
+      \end{pmatrix}
+      .-\id \right)
   \end{gather}
 \end{Lemma}
 
-\begin{Lemma}{rundung-lr-1}
-  Die Matrix $A$ besitze eine LR-Zerlegung. Dann berechnet das
-  Gaußsche Eliminationsverfahren für das Gleichungssystem $AX=b$ die
-  Lösung $\hat x$ des Systems $(A+\delta A) \hat x = b$ für eine Matrix
-  $A+\delta A$ mit
-  \begin{gather}
-    \abs{\delta a_{ij}} \lessdot 2n \abs{\hat \ell_{ij}}
-    \abs{\hat r_{ij}}\eps.
-  \end{gather}
-\end{Lemma}
 
 \begin{Satz*}{rundung-lr-2}{Wilkinson}
   Das Gaußsche Eliminationsverfahren mit Spaltenpivotierung für das
-  Gleichungssystem $Ax=b$ berechnet die Lösung $\hat x$ des Systems
-  $\hat A \hat x = b$ für eine Matrix $\hat A$ mit
+  Gleichungssystem $Ax=b$ berechnet die Lösung $\widehat x$ des Systems
+  $\widehat A \widehat x = b$ für eine Matrix $\widehat A$ mit
   \begin{gather}
     \frac{\norm{\delta A}_\infty}{\norm{A}_\infty}
     \lessdot 2 n^3 \frac{\alpha_{\max}}{\max \abs{a_{ij}}} \eps,
@@ -275,10 +315,11 @@ Gleichungssysteme mit der LR-Zerlegung an.
   \end{gather}
 \end{Satz*}
 
-\subsection{Anmerkungen zur LR-Zerlegung}
-
 \begin{remark}
-  Es gibt einige Aussagen über die LR-Zerlegung von Matrizen mit
+  Im Allgemeinen kann die Konstante $\alpha_{\max}$ durch den Wert
+  $2^{n-1} \max a_{ij}$ abgeschätzt werden. Dies führt bei
+  größeren Matrizen sehr schnell zu inakzeptablen Fehlern.
+  Es gibt aber einige Aussagen über die LR-Zerlegung von Matrizen mit
   spezielleren Strukturen. So gilt
   \begin{enumerate}
   \item Ist die Matrix $A$ invertierbar und schwach diagonaldominant,
@@ -301,6 +342,48 @@ Gleichungssysteme mit der LR-Zerlegung an.
     diese Struktur ausnutzen und erheblich an Operationen sparen.
   \end{enumerate}
 \end{remark}
+
+\begin{remark}
+  Hat man über die LR-Zerlegung eine Näherungslösung
+  $\widehat x = x+\delta x$ von $Ax=b$ berechnet, so kann das Residuum
+  \begin{gather}
+    r(\widehat x) = b-A \widehat x
+  \end{gather}
+  berechnet werden und gibt Aufschluss über den Fehler. Insbesondere gilt
+  \begin{gather}
+    \delta x = A^{-1} r(\widehat x),
+  \end{gather}
+  was aber nicht berechenbar ist, da wir die Inverse von $A$ nicht
+  exakt kennen. Wir können aber $\delta x$ mit derselben relativen
+  Genauigkeit wie $x$ durch den Vektor $\widehat{\delta x}$ approximieren, indem
+  wir mit der bereits berechneten LR-Zerlegung
+  \begin{gather}
+    \widehat L \widehat R \widehat{\delta x} = r(\widehat x)
+  \end{gather}
+  lösen. Dann ist aber $\widehat x + \widehat{\delta x}$ eine
+  Approximation an $x$, deren absoluter Fehler dem von
+  $\widehat{\delta x}$ entspricht, ist also genauer als $\widehat x$.
+  Offenbar lässt sich dieser Prozess wiederholen
+\end{remark}
+
+\begin{Definition}{nachiteration}
+  Sei $\widehat L\widehat R$ die fehlerbehaftete LR-Zerlegung der Matrix $A$
+  und $x^{(0)} = \widehat R^{-1}\widehat L^{-1} b$. Dann besteht die
+  \define{Nachiteration} (engl. \define{iterative refinement}) aus der
+  Iterationsvorschrift
+  \begin{gather}
+    x^{(x+1)} = x^{(k)} + \widehat R^{-1}\widehat L^{-1}
+    \bigl(b-Ax^{(k)}\bigr).
+  \end{gather}
+\end{Definition}
+
+\begin{Aufgabe}{nachiteration-kontraktion}
+  Nutzen Sie \slideref{Satz}{rundung-lr-2} und die Konditionierung der
+  Lösung eines linearen Gleichungssystems um eine Bedingung an die
+  Genauigkeit der Zerlegung zu stellen, unter der Sie die Konvergenz
+  der Nachiteration durch den Banachschen Fixpunktsatz beweisen
+  können.
+\end{Aufgabe}
 
 \begin{remark}
   Die Funktionsbibliothek LAPACK zur linearen Algebra wird heute als
