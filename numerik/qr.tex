@@ -172,6 +172,154 @@
   \end{gather}
 \end{proof}
 
+\begin{Notation}{dyadisch}
+  Zu einem Vektor $w\in \R^n$ beschreibt $ww^T$ das \textbf{dyadische
+    Produkt}\index{dyadisches Produkt}\index{Produkt!dyadisch}, eine
+  symmetrische $n\times n$-Matrix mit den Einträgen
+  \begin{gather}
+    \begin{pmatrix}
+      w_1w_1&\cdots&w_1w_n\\
+      \vdots && \vdots\\
+      w_nw_1 &\cdots & w_nw_n
+    \end{pmatrix}.
+  \end{gather}
+  Es ist damit in gewisser Weise das \glqq Gegenstück\grqq{} zum
+  euklidischen Skalarprodukt $w^Tw$, das ein Skalar und damit eine
+  $1\times 1$-Matrix ist.
+\end{Notation}
+
+\begin{Lemma*}{matrix-reflexion}{Reflexionsmatrix}
+  Ist ein Vektor $w\in \R^n$ gegeben, so beschreibt die Matrix
+  \begin{gather}
+    Q_w = \identity - 2\frac{ww^T}{w^Tw}
+  \end{gather}
+  die Abbildung, die einen Vektor $y$ durch $Q_wy$ an der Hyperebene
+  senkrecht zu $w$ spiegelt.  Diese \define{Reflexionsmatrix} ist
+  symmetrisch und orthogonal.
+\end{Lemma*}
+
+\begin{proof}
+  Zu einem Vektor $x$ ist
+  \begin{gather}
+    x_w = \frac{w}{\norm{w}^2_2} \scal(w,x)
+  \end{gather}
+  die \putindex{orthogonale Projektion}\index{Projektion!orthogonal}
+  des Vektors auf den von $w$ aufgespannten Unterraum. Subtrahiert man
+  $x_w$ von $x$, so erhält man wie im Gram-Schmidt-Verfahren einen
+  Vektor orthogonal zu $w$. Subtrahiert man ein weiteres Mal, so
+  erhält man die Spiegelung an diesme Vektor. Ändern wir nun die
+  Notation, so ist
+  \begin{gather}
+    \norm{w}^2_2 = w^Tw \qquad \text{und} \qquad \scal(w,x) = w^T w.
+  \end{gather}
+
+  Die Symmetrie der Reflexionsmatrix folgt aus der Symmetrie des
+  dyadischen Produkts. Für die Orthogonalität setzen wir
+  $u=\nicefrac{w}{\norm{w}_2}$ und berechnen
+  \begin{align}
+    P^TP &= P^2\\
+         &= (\id-2uu^T)(\id-2uu^T)\\
+         &= \id - 2uu^T-2uu^T + 4uu^Tuu^T\\
+         &= \id - 4uu^T + 4 uu^T = \id.
+  \end{align}
+\end{proof}
+
+\begin{Lemma*}{householder-konstruktion}{Householder-Reflexion}
+  Sei $y\in\R^n$ gegeben. Dann gibt es zwei Vektoren $w^+,w^-\in\R^n$
+  und eine Zahl $\alpha\in \R$, so dass
+  \begin{gather}
+    \label{eq:qr:3}
+    Q_{w^\pm} y = \pm \alpha e_1 =
+    \begin{pmatrix}
+      \pm \alpha\\0\\\vdots\\0
+    \end{pmatrix},\qquad\text{nämlich}\qquad
+    w^\pm =
+    \begin{pmatrix}
+      y_1\pm\norm{y}\\y_2\\\vdots\\y_n
+    \end{pmatrix}
+    .
+  \end{gather}
+  Wir nennen diese Reflexionsmatrizen \define{Householder-Reflexion}.
+\end{Lemma*}
+
+\begin{proof}
+  Orthogonale Abbildungen sind normerhaltend. Daher muss gelten
+  \begin{gather}
+    \abs{\alpha} = \norm{y}_2
+  \end{gather}
+  oder $\alpha = \pm\norm{y}_2$.  Ferner gilt
+  wegen~\eqref{eq:qr:3} für einen geeigneten Reflexionsvektor $w$:
+  \begin{gather}
+    \alpha e_1 = Q_{w} y = y-2 \frac{ww^Ty}{w^Tw}
+    = y-2\left(\frac{w^Ty}{w^Tw}\right)w.
+  \end{gather}
+  Daher ist $w$ ein Vielfaches von $y - \alpha e_1$. Da durch die Norm
+  von $w$ geteilt wird, isd die Länge beliebig und wir wählen
+  \begin{gather}
+    w^{\pm} = y\pm \norm{y}_2 e_1.
+  \end{gather}
+\end{proof}
+
+\begin{remark}
+  Zur Vermeidung von Auslöschung in der ersten Stelle von $w$
+  verwendet man in der QR-Zerlegung den Faktor $\alpha$ so dass
+  \begin{gather}
+    \operatorname{sign} (\alpha) = -\operatorname{sign} (y_1)
+  \end{gather}
+  und damit
+  \begin{gather}
+    w = y + \operatorname{sign} (y_1) \norm{y}_2 e_1
+    =
+    \begin{pmatrix}
+      y_1 + \operatorname{sign} (y_1) \norm{y}_2\\
+      y_2\\\vdots\\y_n
+    \end{pmatrix}.
+  \end{gather}
+\end{remark}
+
+\begin{Algorithmus*}{householder-1}{Householder-Reflexion}
+  \lstinputlisting[firstline=3,lastline=14]{code/householder.py}
+\end{Algorithmus*}
+
+\begin{Definition*}{householder-qr}{QR-Zerlegung mit Householder-Reflexion}
+  Das Verfahren berechnet eine Folge von Matrizen $A^{(k)}$ aus der
+  Matrix $A^{0} = A$ nach der Vorschrift
+  \begin{gather}
+    A^{(k+1)} = Q_{k+1} A^{(k)}, \qquad Q_k =
+    \begin{bmatrix}
+      \id_k\\& \id_{n-k}-uu^T
+    \end{bmatrix},
+  \end{gather}
+  wobei $u$ der Vektor der Householder-Reflexion zu den letzten $n-k$
+  Komponenten der $k$-ten Spalte von $A$ ist.
+\end{Definition*}
+
+\begin{Lemma}{householder-qr}
+  Es gilt, dass der obere linke Block der Dimension $k$ der Matrix
+  $A^{(k)}$ obere Dreicksgestalt hat. Insbesondere ist
+  \begin{gather}
+    A^{(n-1)} = R.
+  \end{gather}
+\end{Lemma}
+
+\begin{Lemma}{householder-aufwand}
+  Der Aufwand der QR-Zerlegung mit Householder-Reflexionen liegt mit
+  \begin{gather}
+    \frac23 n^3 + \bigo(n^2)
+  \end{gather}
+  Operationen doppelt so hoch wie bei der LR-Zerlegung.
+
+  Das Ergebnis der QR-Zerlegung benötigt, wenn die Vektoren $u$ der
+  Reflexionsmatrix im unteren Dreieck der Matrix $A$ gespeichert
+  werden, einen weiteren Vektor zur Speicherung der der Diagonale von
+  $R$.
+\end{Lemma}
+
+\begin{Algorithmus*}{householder-2}{QR-Zerlegung mit Householder-Reflexion}
+  
+\end{Algorithmus*}
+
+
 \begin{Definition}{givens}
   Die \define{Givens-Rotation} $\Omega_{jk}$ mit $j<k$ zum Winkel $\theta$ bildet ab
   \begin{gather}
@@ -300,69 +448,6 @@
     $n-1$ mit Givens-Rotationen möglich ist.
   \end{enumerate}
 \end{Aufgabe}
-
-\begin{Definition*}{householder-reflexion}{Householder-Reflexion}
-  Ist ein Vektor $w\in \R^n$ gegeben, so beschreibt die Matrix
-  \begin{gather}
-    Q_w = \identity - 2\frac{ww^T}{w^Tw}
-  \end{gather}
-  die Abbildung, die einen Vektor $y$ an der Hyperebene senkrecht zu
-  $w$ spiegelt.
-\end{Definition*}
-
-\begin{Lemma}{householder-konstruktion}
-  Sei $y\in\R^n$ gegeben. Dann gibt es zwei Vektoren $w^+,w^-\in\R^n$
-  und eine Zahl $\alpha\in \R$, so dass
-  \begin{gather}
-    \label{eq:qr:3}
-    Q_{w^\pm} y = \pm \alpha e_1 =
-    \begin{pmatrix}
-      \pm \alpha\\0\\\vdots\\0
-    \end{pmatrix}.
-  \end{gather}
-\end{Lemma}
-
-\begin{proof}
-  Orthogonale Abbildungen sind normerhaltend. Daher muss gelten
-  \begin{gather}
-    \abs{\alpha} = \norm{y}_2.
-  \end{gather}
-  oder $\alpha = \pm\norm{y}_2$.  Ferner gilt
-  wegen~\eqref{eq:qr:3} für einen geeigneten Reflexionsvektor $w$:
-  \begin{gather}
-    Q_{w} y = y-2 \frac{ww^Ty}{w^Tw} = y-2\frac{w^Ty}{w^Tw}w = \alpha e_1.
-  \end{gather}
-  Daher ist $w$ ein Vielfaches von $y - \alpha e_1$. Da durch die Norm
-  von $w$ geteilt wird, wählen wir
-  \begin{gather}
-    w^{\pm} = y\mp \norm{y}_2 e_1.
-  \end{gather}
-\end{proof}
-
-\begin{remark}
-  Zur vermeidung von Auslöschung in der ersten Stelle von $w$
-  verwendet man in der QR-Zerlegung den Faktor $\alpha$ so dass
-  \begin{gather}
-    \operatorname{sign} (\alpha) = -\operatorname{sign} (y_1)
-  \end{gather}
-  und damit
-  \begin{gather}
-    w = y + \operatorname{sign} (y_1) \norm{y}_2 e_1
-    =
-    \begin{pmatrix}
-      y_1 + \operatorname{sign} (y_1) \norm{y}_2\\
-      y_2\\\vdots\\y_n
-    \end{pmatrix}.
-  \end{gather}
-\end{remark}
-
-\begin{Algorithmus*}{householder-1}{Householder-Reflexion}
-  
-\end{Algorithmus*}
-
-\begin{Algorithmus*}{householder-2}{QR-Zerlegung mit Householder-Reflexion}
-  
-\end{Algorithmus*}
 
 
 %%% Local Variables:
