@@ -3,9 +3,9 @@
   Operationen auf Matrizen, so ergibt sich das Bild
   \begin{gather}
     \begin{split}
-      A^{(1)} & \mapsto L_{1}^{-1} A^{(2)} \\
-      A^{(2)} & \mapsto L_{2}^{-1} A^{(3)} \\
-      A^{(n-1)} & \mapsto L_{n-1}^{-1} R.
+      A^{(1)} & \mapsto L_{1} A^{(2)} \\
+      A^{(2)} & \mapsto L_{2} A^{(3)} \\
+      A^{(n-1)} & \mapsto L_{n-1} R.
     \end{split}
   \end{gather}
   Es findet also in jedem Schritt eine Umformung der Matrix des
@@ -173,11 +173,24 @@
 \end{proof}
 
 \begin{Definition}{givens}
-  Die \define{Givens-Rotation} $\Omega_{jk}$ zum Winkel $\theta$ bildet ab
-  \begin{align}
-    \Omega_{jk}\colon \R^n &\to \R^n\\
-    x & \mapsto y
-  \end{align}
+  Die \define{Givens-Rotation} $\Omega_{jk}$ mit $j<k$ zum Winkel $\theta$ bildet ab
+  \begin{gather}
+    \label{eq:qr:givens-1}
+    \begin{aligned}
+      \Omega_{jk}\colon \R^n &\to \R^n\\
+      x & \mapsto y      
+    \end{aligned}
+    \qquad\qquad
+    y =
+    \begin{pmatrix}
+      \id \\
+      &c&\cdots&s\\
+      &\vdots&\id &\vdots\\
+      &-s&\cdots&c\\
+      &&&&\id
+    \end{pmatrix}
+    x
+  \end{gather}
   mit
   \begin{gather}
     y_i =
@@ -190,13 +203,103 @@
   mit $c = \cos\theta$ und $s = \sin\theta$.
 \end{Definition}
 
-\begin{Algorithmus*}{givens-1}{Givens-Rotation}
-  
-\end{Algorithmus*}
+\begin{remark}
+  Die Einträge $c$ und $s$ in der
+  Matrixdarstellung~\eqref{eq:qr:givens-1} befinden sich in den Zeilen
+  $j$ und $k$. Einheitsmatrizen $\id$ sollen dann jeweils die passende
+  Dimension haben.
+
+  Multipliziert man $\Omega_{jk}$ von links an die Matrix $A$, so
+  ändern sich nur die Zeilen $j$ und $k$, es ist also ebenfalls eine
+  Zeilenoperation wie bei der Gauß-Elimination.
+
+  Die Wirkung von $\Omega_{jk}$ auf einen Vektor ist eine Rotation des
+  Vektors in der Ebene, die von den Einheitsvektoren $e_j$ und $e_k$
+  aufgespannt wird. Wenn wir das im Kopf behalten, genügt es, sie als
+  $2\times2$-Matrix aufzufassen.
+
+  Die Bezeichnung $\Omega_{jk}$ scheint unzulänglich, da der Winkel
+  $\theta$ fehlt. Dies liegt daran, dass wir im folgenden die Rotation
+  nur dazu verwenden, $y_k=0$ zu erzielen.
+\end{remark}
+
+\begin{Lemma}{givens-berechnung}
+  Mit Hilfe der Givens-Rotation kann aus dem Vektor $(x_j,x_k)^T$ die
+  zweite Komponente eliminiert werden, indem man wählt
+  \begin{gather}
+    r = \sqrt{x_j^2+x_k^2},\qquad
+    c = \frac{x_j}r,\quad s=c = \frac{x_k}r.
+  \end{gather}
+  Man erhält dann
+  \begin{gather}
+    \begin{pmatrix}
+      c & s \\ -s & c
+    \end{pmatrix}
+    \begin{pmatrix}
+      x_j\\x_k
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      r\\0
+    \end{pmatrix}
+    .
+  \end{gather}
+\end{Lemma}
+
+\begin{remark}
+  Die Berechnung von $r$ im vorherigen Lemma kann bei der
+  Implementation zu numerischem Überlauf führen, wenn eins der
+  Argumente sehr groß ist. Es gibt in der Literatur einige
+  Veröffentlichungen zu diesem Thema. Wir können bei der
+  Implementation die Funktion \lstinline!hypot! benutzen, die für die
+  Längen der beiden Katheten die Länge der Hypothenuse eines
+  rechtwinkligen Dreiecks zurückgibt.
+\end{remark}
+
+
+
+\begin{remark}
+  Setzt man die Givens-Rotation zur Reduktion der Spalte $k$ einer
+  Matrix $A$ ein, so beginnt man am unteren Ende und benutzt
+  $\Omega_{n-1,n}$ zur Elimination von $a_{nk}$ und arbeitet sich dann nach oben.
+\end{remark}
+
+\begin{Lemma}{qr-givens}
+  Die QR-Zerlegung mit Givens-Rotation berechnet mit $A^{(1)} = A$ eine Folge von Matrizen
+  \begin{gather}
+    A^{(k+1)} = Q_k^T A^{(k)}, \qquad k=1,\dots,n-1,
+  \end{gather}
+  so dass $A^{(n)}=R$ obere Dreiecksgestalt hat. Es gilt
+  \begin{gather}
+    Q_k^T = \Omega_{n-1,n}\Omega_{n-1,n-2}\cdots\Omega_{k,k+1}
+  \end{gather}
+  mit den Givens-Rotationen $\Omega_{j-1,j}$, die jeweils das aktuelle
+  Element $a_{jk}$ zu null setzen.
+\end{Lemma}
 
 \begin{Algorithmus*}{givens-2}{QR-Zerlegung mit Givens-Rotation}
   
 \end{Algorithmus*}
+
+\begin{Lemma}{qr-givens-aufwand}
+  Der Aufwand der QR-Zerlegung mit Givens-Rotation beträgt
+  \begin{gather}
+    \frac43 n^3 + \bigo(n^2)
+  \end{gather}
+  Multiplikationen und Additionen plus $n^2/2$ Quadratwurzeln.
+\end{Lemma}
+
+\begin{Aufgabe}{givens-hessenberg}
+  Eine obere \define{Hessenbergmatrix} ist eine Matrix mit nur einer
+  unteren Nebendiagonalen, also
+  \begin{gather}
+    a_{ij} = 0\qquad \forall i>j+1.
+  \end{gather}
+  \begin{enumerate}
+  \item Zeigen Sie, dass die QR-Zerlegung einer solchen Matrix mit nur
+    $n-1$ mit Givens-Rotationen möglich ist.
+  \end{enumerate}
+\end{Aufgabe}
 
 \begin{Definition*}{householder-reflexion}{Householder-Reflexion}
   Ist ein Vektor $w\in \R^n$ gegeben, so beschreibt die Matrix
