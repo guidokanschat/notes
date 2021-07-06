@@ -429,14 +429,6 @@
   
 \end{Algorithmus*}
 
-\begin{Lemma}{qr-givens-aufwand}
-  Der Aufwand der QR-Zerlegung mit Givens-Rotation beträgt
-  \begin{gather}
-    \frac43 n^3 + \bigo(n^2)
-  \end{gather}
-  Multiplikationen und Additionen plus $n^2/2$ Quadratwurzeln.
-\end{Lemma}
-
 \begin{Aufgabe}{givens-hessenberg}
   Eine obere \define{Hessenbergmatrix} ist eine Matrix mit nur einer
   unteren Nebendiagonalen, also
@@ -446,8 +438,29 @@
   \begin{enumerate}
   \item Zeigen Sie, dass die QR-Zerlegung einer solchen Matrix mit nur
     $n-1$ mit Givens-Rotationen möglich ist.
+  \item Überlegen Sie, wie Sie die gesamte Information für $Q$ und $R$
+    auf dem Speicherplatz der Matrix $A$ unterbringen.
+  \item Schätzen Sie den Aufwand.
   \end{enumerate}
 \end{Aufgabe}
+
+\begin{Lemma}{qr-givens-aufwand}
+  Der Aufwand der QR-Zerlegung mit Givens-Rotation beträgt
+  \begin{gather}
+    \frac43 n^3 + \bigo(n^2)
+  \end{gather}
+  Multiplikationen und Additionen plus $n^2/2$ Quadratwurzeln.
+
+  Für jede Rotation sind zwei Zahlen zu speichern, so dass die
+  Givens-Rotation zum Speicher der Originalmatrix ein weiteres unteres
+  Dreieck benötigt.
+
+  Da bei einer Matrix in Hessenbergform nur eine Rotation pro Spalte
+  nötig ist, speichert man die Hypotenuse als Diagonalelement von $R$
+  und den Kosinus in der Subdiagonale. Der Sinus lässt sich dann
+  berechnen.
+\end{Lemma}
+
 
 
 %%% Local Variables:
