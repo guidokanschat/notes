@@ -28,7 +28,7 @@
 \begin{Definition}{condition-rectangular}
   Die Konditionszahl einer rechteckigen Matrix maximalen Rangs bezüglich der Operatornorm zur Vektornorm $\norm{\cdot}$ ist
   \begin{gather}
-    \cond(A) = \frac{\sup_{\norm{x}=1}\norm{Ax}}{\inf_{\norm{x}=1}\norm{Ax}}.
+    \cond(A) = \frac{\sup\limits_{\norm{x}=1}\norm{Ax}}{\inf\limits_{\norm{x}=1}\norm{Ax}}.
     \end{gather}
   Die Definition ist konsistent zur Definition für invertierbare, quadratische Matrizen.
 \end{Definition}
@@ -36,9 +36,19 @@
 \begin{Lemma}{condition-squared}
   Für eine Matrix $A\in\R^{m\times n}$ maximalen Rangs mit $m\ge n$ gilt
   \begin{gather}
-    \cond(A^TA) = \cond(A)^2.
+    \cond_2(A^TA) = \cond_2(A)^2.
   \end{gather}
 \end{Lemma}
+
+\begin{proof}
+  \begin{align}
+    \cond_2(A)^2  &= \frac{\sup\norm{Ax}_2^2}{\inf\norm{Ax}_2^2}\\
+                  &= \frac{\sup(x^TA^TAx)}{\inf(x^TA^TAx)}\\
+                  &= \frac{\lambda_{\max}(A^TA)}{\lambda_{\in}(A^TA)}\\
+                  &= \cond_2(A^TA).
+  \end{align}
+\end{proof}
+
 
 \begin{Lemma}{qr-rectangular}
   Zu jeder Matrix $A\in \R^{m\times n}$ maximalen Rangs mit $m\le n$
