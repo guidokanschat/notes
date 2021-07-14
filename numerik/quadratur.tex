@@ -450,27 +450,30 @@
   Die Gewichte der Gauss-Legendre-Formeln sind positiv und genügen der
   Darstellung
   \begin{gather}
+    \label{eq:quadratur-gauss-gewichte}
     \omega_i = \int_{-1}^1 \prod_{j\neq i}
     \left(\frac{x-x_j}{x_i-x_j}\right)^2\dx.
   \end{gather}
 \end{Lemma}
 
 \begin{proof}
-  Die Darstellung ist das Integral der Lagrange-Polynome zu den
-  Punkten $x_1,\dots,x_n$, was nach
-  \slideref{Lemma}{interpolatorisch-omega} und
-  \slideref{Satz}{gauss-legendre} notwendig und hinreichend für die
-  Exaktheit ist.
+%  Die Darstellung ist das Integral der Lagrange-Polynome zu den
+%  Punkten $x_1,\dots,x_n$, was nach
+%  \slideref{Lemma}{interpolatorisch-omega} und
+%  \slideref{Satz}{gauss-legendre} notwendig und hinreichend für die
+%  Exaktheit ist.
 
-  Sei nun
+  Da die $x_i$ die Nullstellen von $\plegendre_n$ sind, gilt $\plegendre_n(x) = \prod(x-x_i)$. Deshalb gilt für
   \begin{gather}
-    q(x) = \left(\frac{\plegendre_n(x)}{x-x_i}\right)^2.
+    q(x) = \left(\frac{\plegendre_n(x)}{x-x_i}\right)^2
+    = \prod_{j\neq i} (x-x_j)^2,
   \end{gather}
-  Dann ist $q\in \P_{2n-2}$ und $q(x_j) = 0$ für $j\neq i$. Daher gilt
-  auf Grund der Exaktheit
+  dass $q\in \P_{2n-2}$. Ferner ist $q(x_j) = 0$ für $j\neq i$ und
+  $q(x_i) \neq 0$.. Daher gilt auf Grund der Exaktheit
   \begin{gather}
     \omega_i = \frac1{q(x_i)} \int q\dx.
   \end{gather}
+  Das ist aber genau die Darstellung~\eqref{eq:quadratur-gauss-gewichte}.
   Da $q(x)\ge 0$ ist die rechte Seite positiv. 
 \end{proof}
 

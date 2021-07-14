@@ -107,15 +107,15 @@ die Gestalt
     i \le \min\{m,n\}.
   \end{gather}
   Sei $\sigma_r\neq0$ der letzte von null verschiedene
-  Singulärwert. Dann gilt für den \putindex{Rang} $\operatorname{rg}(A) = r$
+  Singulärwert. Dann gilt für den \putindex{Rang} der Matrix $\rank A = r$
   und
   \begin{gather}
     \label{eq:svd:3}
     \begin{aligned}
-      \range A &= \span\{u^{(1)},\dots,u^{(r)}\}&&
-      \ker A &= \span\{v^{(r+1)},\dots,v^{(n)}\}\\
-      \range{A^T} &= \span\{v^{(1)},\dots,v^{(r)}\}&&
-      \ker{A^T} &= \span\{u^{(r+1)},\dots,u^{(m)}\}
+      \range A &= \spann{u^{(1)},\dots,u^{(r)}}&
+      \ker A &= \spann{v^{(r+1)},\dots,v^{(n)}}\\
+      \range{A^T} &= \spann{v^{(1)},\dots,v^{(r)}}&
+      \ker{A^T} &= \spann{u^{(r+1)},\dots,u^{(m)}}
     \end{aligned}
   \end{gather}
 \end{Lemma}
@@ -243,18 +243,128 @@ die Gestalt
   ist natürlich nicht invariant unter Störungen von $A$. Im Gegenteil
   wird im Allgemeinen die kleinste Störung dazu führen, dass alle
   Eigenwerte von null verschieden sind. Daher benötigen wir für die
-  stabile Zerelgung eines Vektorraums in den Kern und sein
+  stabile Zerlegung eines Vektorraums in den Kern und sein
   orthogonales Komplement ein neues Konzept des Nullraums bzw. des
   Rangs einer Matrix.
 \end{remark}
 
-\begin{Definition}{eps-rang}
-  Der $\epsilon$-Rang einer Matrix $A$ ist definiert als???
+\begin{Definition}{epsilon-rang}
+  Zu einer positiven Zahl $\epsilon$ ist der $\epsilon$-Rang einer
+  Matrix $A$ ist definiert als
+  \begin{gather}
+    \rank_\epsilon{A} = \min_{\norm{A-B}_2\le\epsilon} \rank B.
+  \end{gather}
 \end{Definition}
 
 \begin{Satz}{rang-approximation}
-  
+  Sei $A\in \R^{m\times n}$ eine Matrix vom Rang $r$ mit
+  Singulärwertzerlegung $A = U\Sigma V^T$. Sei dazu
+  $A_k = U\Sigma_k V^T$ die abgeschnittene SVD mit
+  \begin{gather}
+    \Sigma_k = \diag(\sigma_1,\dots,\sigma_k).
+  \end{gather}
+  Dann ist $A_k$ die Bestapproximation zu $A$ von maximalem Rang $k$ in der
+  Spektralnorm, also
+  \begin{gather}
+    \norm{A-A_k}_2 = \min_{\rank B\le k} \norm{A-B}_2.
+  \end{gather}
+  Es gilt ferner, dass
+  \begin{gather}
+    \norm{A-A_k}_2 = \sigma_{k+1}.
+  \end{gather}
 \end{Satz}
+
+\begin{proof}
+  Es gilt
+  \begin{gather}
+    U^T (A-A_k) V = \diag(0,\dots,0,\sigma_{k+1},\dots,\sigma_r).
+  \end{gather}
+  Da $U$ und $V$ orthogonal sind, gilt damit
+  \begin{gather}
+    \norm{A-A_k}_2 = \sigma_{k+1}.
+  \end{gather}
+  Nun müssen wir zeigen, dass für jede Matrix $B$ mit $\rank B\le k$ gilt
+  \begin{gather}
+    \norm{A-B}_2 \ge \sigma_{k+1}.
+  \end{gather}
+  Es gilt $\dim \ker B \ge n-k$. Daher hat dieser Nullraum einen
+  nichtleeren Schnitt mit dem Erzeugnis der ersten $k+1$
+  Spaltenvektoren von $V$. Sei $w$ ein Vektor in dieser Schnittmenge
+  mit $\norm{w}_2=1$. Es gilt dann $Bw=0$. Schreiben wir
+  \begin{gather}
+    w = \sum_{i=1}^{k+1} z_i v^{(i)},
+  \end{gather}
+  so gilt nach der Parsevalschen Gleichung
+  $\norm{z}_2 = \norm{w}_2 = 1$ und wir erhalten
+  \begin{gather}
+    Aw = \sum_{i=1}^{k+1} \sigma_i z_i u^{(i)}.
+  \end{gather}
+  Es folgt
+  \begin{multline}
+    \norm{A-B}_2^2
+    \ge \norm{(A-B)w}_2^2
+    = \norm{Aw}_2^2 \\
+    = \sum_{i=1}^{k+1} \sigma_i^2 z_i^2
+    \ge \sigma_{k+1}^2 \norm{z}_2^2 = \sigma_{k+1}^2.
+  \end{multline}
+  Für die zweite Ungleichung haben wir ausgenutzt, dass die
+  Singulärwerte der Größe nach sortiert sind.
+\end{proof}
+
+\begin{Korollar}{epsilon-rang}
+  Der $\epsilon$-Rang einer Matrix $A$ mit Singulärwertzerlegung
+  $A=U\Sigma V^T$ ist die Anzahl $r$ der Singulärwerte $\sigma_k>\epsilon$. Es gilt also
+  \begin{gather}
+    \sigma_1 \ge \dots \ge \sigma_{r}
+    > \epsilon \ge \sigma_{r+1} \ge \cdots
+  \end{gather}
+\end{Korollar}
+
+\begin{proof}
+  Im vorherigen Satz haben wir bewiesen, dass für die Matrix $A_{r} = U\Sigma_r V^T$ gilt
+  \begin{gather}
+    \norm{A-A_r}_2 = \sigma_{r+1} \le \epsilon.
+  \end{gather}
+  Damit gilt also bereits
+  \begin{gather}
+    \rank_\epsilon A \le \rank A_r = r.
+  \end{gather}
+  Gäbe es nun eine Matrix $B$ vom Rang $k<r$ mit
+  $\norm{A-B}_2 \le \epsilon$, so gälte nach dem
+  Bestapproximationsresultat
+  \begin{gather}
+    \sigma_{k+1} = \norm{A-A_k} \le \norm{A-B} \le \epsilon < \sigma_r
+  \end{gather}
+  im Widerspruch zur Annahme, dass die Singulärwerte der Größe nach
+  sortiert sind.
+\end{proof}
+
+\begin{remark}
+  Das Korollar bietet eine einfachere Definition des $\epsilon$-Rangs
+  einer Matrix, nämlich als Anzahl aller Singulärwerte größer als
+  $\epsilon$. Das ist konsistent mit der Aussage, dass der Rang einer
+  Matrix die Anzahl der von null verschiedenen Singulärwerte ist.
+\end{remark}
+
+\begin{remark}
+  Die Bedeutung des $\epsilon$-Rangs besteht darin, dass bei der
+  Berechnung der Pseudoinversen die Invertierung der Diagonalelemente
+  nicht erst bei $\sigma_k=0$, sondern bereits bei
+  $\sigma_k\le \epsilon$ stoppen sollte, also
+  \begin{gather}
+    \Sigma^+_\epsilon = \diag\left(\tfrac1{\sigma_1},\tfrac1{\sigma_2},\dots,\tfrac1{\sigma_{r_\epsilon}}\right).
+  \end{gather}
+  Die folgenden von null verschiedenen Singulärwerte
+  $\sigma_k\le \epsilon$ dürfen nicht invertiert werden, da sonst das
+  Ergebnis der Multiplikation mit der Matrix
+  $A^+ = V\Sigma^+_\epsilon U^T$ von diesen Werten dominiert
+  würde. Die Elemente von $\Sigma^+$ an diesen Stellen setzen wir zu
+  null, da wir die Singulärwerte ja numerisch als null ansehen.
+
+  Die Singulärwertzerelgung bietet also neben der Möglichkeit, die
+  Pseudoinverse zu berechnen auch Kontrolle darüber, wie groß die Norm
+  der inversen einer fast singulären Matrix werden darf.
+\end{remark}
 
 %%% Local Variables:
 %%% mode: latex
