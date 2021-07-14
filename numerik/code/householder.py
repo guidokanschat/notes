@@ -15,12 +15,25 @@ def householder_apply (u,x):
 
 def householder_qr (A):
   (m,n) = A.shape
-  D = np.zeros(m)
-  for k in range(0,m-1):
-    D[k] = householder_compute(A[k:n,k])
+  D = np.zeros(n)
+  for k in range(0,n-1):
+    D[k] = householder_compute(A[k:m,k])
     for i in range (k+1,n):
-      householder_apply(A[k:n,k],A[k:n,i])
+      householder_apply(A[k:m,k],A[k:m,i])
   return D
+
+def householder_solve (QR,D,b)
+  (m,n) = QR.shape
+  for k in range (0,n-1):
+    householder_apply(QR[k:m,k],b[k:m])
+  x = np.zeros(n)
+  for k in range(n-1,-1,-1):
+    x[k] = b[k]
+    for j in range(k+1,n):
+      x[k] -= A[k,j]*x[j]
+    x[k] /= D[k]   
+  return x
+
 
 x = np.array([3.,4.,5.])
 print (x.shape)

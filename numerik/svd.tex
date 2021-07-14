@@ -1,0 +1,262 @@
+\begin{Notation}{diag}
+  Mit $\diag(a_1,a_2,\dots,a_r) \in \R^{m\times n}$ sei allgemein die $m\times n$-Matrix $A$ bezeichnet, deren erste $r$ Diagonalelemente die Werte $a_i$ annehmen. Alle anderen Einträge sind null. Sie hat die Darstellung
+  \begin{gather}
+    A = \diag(a_1,a_2,\dots,a_r)
+    = \left(
+      \begin{array}{ccc|c}
+        a_1&& \mathbf 0&\\
+        &\ddots&& \mathbf 0\\
+        \mathbf 0&&a_r&\\\hline
+        & \mathbf 0 && \mathbf 0
+      \end{array}
+      \right),
+    \end{gather}
+    wobei untere und rechte Nullblöcke leer sein dürfen.
+\end{Notation}
+
+\begin{Definition}{svd}
+  Die \define{Singulärwertzerlegung} (engl.: \define{singular value decomposition}, \define{SVD}) einer Matrix
+  $A\in \R^{m\times n}$ hat die Form
+  \begin{gather}
+    \label{eq:svd:1}
+    A = U \Sigma V^T
+  \end{gather}
+  mit orthogonalen Matrizen $U\in \R^{m\times m}$ und
+  $V\in \R^{n\times n}$. Die Matrix $\Sigma\in\R^{m\times n}$ ist
+  \begin{gather}
+    \Sigma = \diag(\sigma_1,\dots,\sigma_r)
+  \end{gather}
+  mit positiven, reellen Einträgen $\sigma_1,\dots,\sigma_r$
+  und $r\le \min\{m,n\}$, den \define{Singulärwerten}.
+  Die Singulärwerte seien der Größe nach fallend sortiert.
+\end{Definition}
+
+
+\begin{Satz}{svd}
+  Jede Matrix $A\in \R^{m\times n}$ besitzt eine Singulärwertzerlegung.
+\end{Satz}
+
+\begin{proof}
+  Siehe auch~\cite[Satz 4.11]{Rannacher17}.
+  Der Beweis läuft induktiv über die Spalten von $U$ und $V$. Wir
+  bemerken zunächst, dass es wegen der Stetigkeit der Norm einen
+  Vektor $x\in \R^n$ mit $\norm{x}_2 = 1$ gibt, so dass
+  \begin{gather}
+    \norm{Ax}_2 = \norm{A}_2\norm{x}_2.
+  \end{gather}
+  Wir definieren $\sigma_1 = \norm{A}$ und es sei $y\in \R^m$ so dass
+  $\sigma_1y=Ax$. Wir ergänzen $x$ und $y$ jeweils zu Orthogonalbasen
+  und nennen die Matrizen der Basisvektoren $U^{(1)}$ und
+  $V^{(1)}$. Es gilt dann
+  \begin{gather}
+    \left(U^{(1)}\right)^T A^{(1)} V^{(1)} =
+    \begin{pmatrix}
+      \sigma& w^T\\0 & B
+    \end{pmatrix}
+  \end{gather}
+  mit einem Vektor $w\in \R^{n-1}$ und einer Matrix
+  $b\in \R^{m-1\times n-1}$. Da $U$ und $V$ orthogonal sind, gilt
+  \begin{gather}
+    \norm{A^{(1)}} = \norm{A} = \sigma.
+  \end{gather}
+  Multipliziert man die Matrix $A^{(1)}$ mit dem Vektor
+  $ z=(\sigma,w)^T$, so erhält man
+  \begin{gather}
+    A^{(1)}z = 
+    \begin{pmatrix}
+    \sigma&w^T\\0&B
+  \end{pmatrix}
+  \begin{pmatrix}
+    \sigma\\w
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    \sigma^2+\norm{w}^2\\
+    Bw
+  \end{pmatrix}
+\end{gather}
+Daher gilt
+\begin{gather}
+  \norm{A^{(1)}z}_2^2 = \bigl(\sigma^2+\norm{w}^2\bigr)^2 + \norm{Bw}_2^2
+  \ge (\sigma^2+\norm{w}^2) \norm{z}_2^2.
+\end{gather}
+Daher muss $\norm{w}=0$ und damit $w=0$ gelten. Die Matrix hat also
+die Gestalt
+  \begin{gather}
+    \left(U^{(1)}\right)^T A^{(1)} V^{(1)} =
+    \begin{pmatrix}
+      \sigma& 0\\0 & B
+    \end{pmatrix}.
+  \end{gather}
+  Nun wenden wir induktiv dasselbe Verfahren auf $B$ an.
+
+  An einem Punkt kann es vorkommen, dass $\norm{B}=0$. In diesem Fall
+  können wir die Konstruktion bereits abbrechen, da nun alle weiteren
+  Vektoren im Kern der Matrix liegen. Zu diesen können wir beliebige
+  Bildvektoren im orthogonalen Komplement des bereits konstruierten
+  Raums wählen.
+\end{proof}
+
+\begin{Lemma}{svd-eigenschaften}
+  Für die Singulärwertzerlegung $A=U\Sigma V^T$ gilt für die Spalten
+  von $U$ und $V$
+  \begin{gather}
+    \label{eq:svd:2}
+    A v^{(i)} = \sigma_i u^{(i)}, \qquad
+    A^T u^{(i)} = \sigma v^{(i)},\qquad
+    i \le \min\{m,n\}.
+  \end{gather}
+  Sei $\sigma_r\neq0$ der letzte von null verschiedene
+  Singulärwert. Dann gilt für den \putindex{Rang} $\operatorname{rg}(A) = r$
+  und
+  \begin{gather}
+    \label{eq:svd:3}
+    \begin{aligned}
+      \range A &= \span\{u^{(1)},\dots,u^{(r)}\}&&
+      \ker A &= \span\{v^{(r+1)},\dots,v^{(n)}\}\\
+      \range{A^T} &= \span\{v^{(1)},\dots,v^{(r)}\}&&
+      \ker{A^T} &= \span\{u^{(r+1)},\dots,u^{(m)}\}
+    \end{aligned}
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  Die Eigenschaften~\eqref{eq:svd:2} liest man direkt der Darstellung
+  ab, denn aufgrund der Orthogonalität gilt
+  $V^T v^{(i)} = e_i \in \R^n$. Damit gilt
+  $\Sigma V^Tv^{(i)} = \sigma_i e_i \in \R^m$. Schliesslich selektiert
+  $Ue_i$ den $i$-ten Spaltenvektor von $U$. Für die transponierte
+  Matrix gilt dies wegen
+  \begin{gather}
+    A^T = V \Sigma^T U^T,
+  \end{gather}
+  wobei bei der Transposition von $\Sigma$ nur die Dimensionen
+  getauscht werden, die Diagonalelemente bleiben natürlich gleich.
+
+  Die Aussage~\eqref{eq:svd:3} ist dann eine direkte
+  Folge. Insbesondere ist der Rang der Matrix durch den Index des
+  letzten positiven Singulärwerts charakterisiert.
+\end{proof}
+
+\begin{remark}
+  Aus Gleichung~\eqref{eq:svd:3} lesen wir direkt die bekannten
+  Beziehungen aus der linearen Algebra ab. Oder umgekehrt, die
+  Singulärwertzerlegung erzeugt Orthonormalbasen der Vektorräume, die
+  in Kern und orthogonales Komplement zerlegen. Zusätzlich wird der
+  (eingeschränkte) Isomorphismus noch diagonalisiert.
+\end{remark}
+
+\begin{Satz}{minimalloesung}
+  Sei $A\in\R^{m\times n}$ mit Singulärwertzerlegung $A=U\Sigma V^T$
+  und Rang $r$. Sei
+  \begin{gather}
+    \Sigma^+ = \diag\left(\tfrac1{\sigma_1},\tfrac1{\sigma_2},\dots,\tfrac1{\sigma_r}\right) \in \R^{m\times n}.
+  \end{gather}
+  Dann ist der Vektor $x^*\in \R^n$ mit
+  \begin{gather}
+    \label{eq:svd:4}
+    x^* = V \Sigma^+ U^T b
+  \end{gather}
+  die eindeutig bestimmte Lösung der Normalengleichungen mit minimaler
+  Norm. Für das Residuum gilt
+  \begin{gather}
+    \label{eq:svd:5}
+    \norm{Ax^*-b}_2^2 = \sum_{i=r+1}^m \Bigl(\bigl(u^{(i)}\bigr)^T b\Bigr)^2.
+  \end{gather}
+\end{Satz}
+
+\begin{proof}
+  Sei $x\in \R^n$ und $z=V^T x$ sei seine Koordinatendarstellung in
+  der Basis $V$. Dann gilt
+  \begin{align}
+    \norm{Ax-b}_2^2
+    &= \norm{AVV^Tx - b}_2^2\\
+    &= \norm{U^TAV z - U^Tb}_2^2\\
+    &= \norm{\Sigma z - U^T b}_2^2\\
+    &= \sum_{i=1}^r \Bigl(\sigma_iz_i - \bigl(u^{(i)}\bigr)^T b\Bigr)^2
+      +\sum_{i=r+1}^m \Bigr(\bigl(u^{(i)}\bigr)^T b\Bigr)^2.
+  \end{align}
+  Da alle Summanden nichtnegativ sind, wird das Minimum für
+  \begin{gather}
+    z_i = \frac1{\sigma_i}\bigl(u^{(i)}\bigr)^T b, \qquad i=1,\dots,r
+  \end{gather}
+  angenommen. Damit verschwindet die erste Summe und~\eqref{eq:svd:5}
+  ist für den so bestimmten Vektor $z$ bewiesen. Offensichtlich ist
+  die Norm des Vektors $z$ minimal, wenn alle weiteren Komponenten
+  verschwinden, also
+  \begin{gather}
+    z_i=0,\qquad i=r+1,\dots,n.
+  \end{gather}
+  Damit können wir zusammenfassend schreiben
+  \begin{gather}
+    z = \Sigma^+ U^T b.
+  \end{gather}
+  Da $V$ orthogonal ist, überträgt sich die Minimalitätseigenschaft auf $x^*=Vz$
+\end{proof}
+
+\begin{remark}
+  Für den Fall eine invertierbaren Matrix $A\in\R^{n\times n}$
+  entspricht~\eqref{eq:svd:4} gerade der Inversen des Produkts. Im
+  Falle das $A$ vollen Rank hat mit $m\ge n$ bekommen wir die
+  eindeutige Lösung der Normalengleichungen und die Bedingung \glqq
+  mit minimaler Norm\grqq{} entfällt.
+\end{remark}
+
+\begin{Definition}{pseudoinverse}
+  Die Matrix $A^+ = V\Sigma^+ U^T \in \R^{n\times m}$ ist eine
+  Verallgemeinerung der Inversen, die als \define{Pseudoinverse}, auch
+  als \define{Moore-Penrose-Inverse} bezeichnet wird. Sie ist für jede
+  Matrix $A\in \R^{m\times n}$ definiert.
+\end{Definition}
+
+\begin{Satz*}{penrose}{Penrose-Axiome}
+  Für die Pseudoinverse $A^+\in \R^{n\times m}$ einer Matrix
+  $A\in \R^{m\times n}$ gelten folgende Gleichungen:
+  \begin{align}
+    \bigl(A^+A\bigr)^T &= A^+A,\\
+    \bigl(AA^+\bigr)^T &= AA^+,\\
+    \label{eq:svd:6c}
+    A^+AA^+ &= A^+,\\
+    AA^+A &= A.
+  \end{align}
+  Insbesondere ist $A^+A$ die orthogonale Projektion auf $\range{A^T}$
+  und $AA^+$ die orthogonale Projektion auf $\range A$.
+\end{Satz*}
+
+\begin{proof}
+  Es gilt
+  \begin{gather}
+    A^+A = V\Sigma^+U^T U \Sigma V^T = V \Sigma^+\Sigma V^T = V E_r V^T,
+  \end{gather}
+  wobei $E_r\in \R^{n\times n}$ mit
+  \begin{gather}
+    E_r = \diag(\underbrace{1,\dots,1}_{r \text{ mal}}).
+  \end{gather}
+  Daraus folgen sofort Symmetrie und Projektionseigenschaft, sowie aus
+  letzterer~\eqref{eq:svd:6c}. Dieseben Argumente bleiben korrekt,
+  wenn man $A^+$ und $A$ vertauscht, wobei dann
+  $E_r\in \R^{m\times m}$ ist.
+\end{proof}
+
+\begin{remark}
+  Die Eigenschaft eines Vektors, im Nullraum der Matrix $A$ zu liegen
+  ist natürlich nicht invariant unter Störungen von $A$. Im Gegenteil
+  wird im Allgemeinen die kleinste Störung dazu führen, dass alle
+  Eigenwerte von null verschieden sind. Daher benötigen wir für die
+  stabile Zerelgung eines Vektorraums in den Kern und sein
+  orthogonales Komplement ein neues Konzept des Nullraums bzw. des
+  Rangs einer Matrix.
+\end{remark}
+
+\begin{Definition}{eps-rang}
+  Der $\epsilon$-Rang einer Matrix $A$ ist definiert als???
+\end{Definition}
+
+\begin{Satz}{rang-approximation}
+  
+\end{Satz}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

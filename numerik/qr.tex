@@ -251,7 +251,7 @@
   wegen~\eqref{eq:qr:3} für einen geeigneten Reflexionsvektor $w$:
   \begin{gather}
     \alpha e_1 = Q_{w} y = y-2 \frac{ww^Ty}{w^Tw}
-    = y-2\left(\frac{w^Ty}{w^Tw}\right)w.
+    = y-2\left(\frac{w^Ty}{w^Tw}\right)y.
   \end{gather}
   Daher ist $w$ ein Vielfaches von $y - \alpha e_1$. Da durch die Norm
   von $w$ geteilt wird, isd die Länge beliebig und wir wählen
@@ -285,7 +285,7 @@
   Das Verfahren berechnet eine Folge von Matrizen $A^{(k)}$ aus der
   Matrix $A^{0} = A$ nach der Vorschrift
   \begin{gather}
-    A^{(k+1)} = Q_{k+1} A^{(k)}, \qquad Q_k =
+    A^{(k+1)} = Q_{k} A^{(k)}, \qquad Q_k =
     \begin{bmatrix}
       \id_k\\& \id_{n-k}-uu^T
     \end{bmatrix},
@@ -298,7 +298,11 @@
   Es gilt, dass der obere linke Block der Dimension $k$ der Matrix
   $A^{(k)}$ obere Dreicksgestalt hat. Insbesondere ist
   \begin{gather}
-    A^{(n-1)} = R.
+    A^{(n-2)} = R.
+  \end{gather}
+  Für die Matrix $Q$ der QR-Zerlegung gilt
+  \begin{gather}
+    Q = Q_0 \cdots Q_{n-2}.
   \end{gather}
 \end{Lemma}
 
@@ -321,10 +325,20 @@
   Achtung! Ungetestet!
 \end{Algorithmus*}
 
+\begin{Lemma}{householder-loesung}
+  Liegt die Matrix $A=QR$ als QR-Zerlegung vor, so berechnet sich die
+  Lösung des linearen Gleichungssystems $Ax=b$ in den Schritten
+  \begin{align}
+    y &= Q_{n-2} \cdots Q_0 b\\
+    Rx &= y.
+  \end{align}
+\end{Lemma}
+
+
 \begin{Algorithmus*}{householder-3}{Lösung mit Householder-QR-Zerlegung}
-%  \lstinputlisting[firstline=16,lastline=23]{code/householder.py}
+  \lstinputlisting[firstline=25,lastline=35]{code/householder.py}
   
-%  Achtung! Ungetestet!
+  Achtung! Ungetestet!
 \end{Algorithmus*}
 
 

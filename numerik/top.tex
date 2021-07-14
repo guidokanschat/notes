@@ -122,6 +122,44 @@
 \section{Lineare Ausgleichsrechnung}
 \input{least-squares}
 
+\section{Die Singulärwertzerlegung}
+
+\begin{intro}
+  Nach den Überlegungen zur Lösung von überbestimmten
+  Gleichungssystemen stellt sich die Frage, ob wir das Konzept auch
+  auf Systeme ohne Eindeutige Lösung erweitern können. Zu diesem Zweck
+  müssen wir im Lösungsraum Elemente auszeichnen, zum Beispiel durch
+  Minimierung ihrer Norm.
+  Als Vorbereitung für das kommende erinnern wir uns an zwei Tatsachen
+  aus der linearen Algebra:
+
+  \begin{enumerate}
+  \item Betrachten wir die Matrix $A\in \R^{m\times n}$ als lineare
+    Abbildung $A\colon \R^n\to \R^m$, so ist die eingeschränkte
+    Abbildung
+    \begin{gather}
+      \hat A\colon (\ker A)^\perp \to \range A
+    \end{gather}
+    ein Isomorphismus, kann also nach Wahl einer Basis in beiden
+    Räumen als invertierbare Matrix geschrieben werden.
+  \item Es gelten die Beziehungen
+    \begin{gather}
+      \begin{aligned}
+        (\ker A)^\perp &= \range{A^T},\\
+        (\range A)^\perp &= \ker{A^T}.
+      \end{aligned}
+    \end{gather}
+  \end{enumerate}
+  
+  Unser Ziel wird es also sein, Projektionen auf die Bildräume von $A$
+  und $A^T$ zu bestimmen und auf diesen dann $A^{-1}$ zu
+  berechnen. Ein mächtiges Werkzeug dafür ist die
+  Singulärwertzerlegung.
+\end{intro}
+
+\input{numerik/svd}
+
+
 \bibliographystyle{alpha}
 \bibliography{all}
 \printindex

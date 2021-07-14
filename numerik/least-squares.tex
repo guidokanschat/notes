@@ -51,7 +51,7 @@
 
 
 \begin{Lemma}{qr-rectangular}
-  Zu jeder Matrix $A\in \R^{m\times n}$ maximalen Rangs mit $m\le n$
+  Zu jeder Matrix $A\in \R^{m\times n}$ maximalen Rangs mit $m\ge n$
   gibt es eine QR-Zerlegung
   \begin{gather}
   A = QR
@@ -61,8 +61,8 @@
   diese Zerlegung eindeutig.
 \end{Lemma}
 
-\begin{Satz}
-  Sei $QR=A$ eine QR-Zerlegung. Dann kann die Lösung der Normalengleichungenvberechnet werden durch die Lösung des Systems
+\begin{Satz}{qr-normal}
+  Sei $QR=A$ eine QR-Zerlegung. Dann kann die Lösung der Normalengleichungen berechnet werden durch die Lösung des Systems
   \begin{gather}
     Rx = Q^Tb.
   \end{gather}
@@ -76,9 +76,34 @@
   Da $R^T$ invertierbar ist, können wir die Inverse von links anwenden und erhalten das Resultat.
 \end{proof}
 
-% \begin{Definition}{pseudo-inverse}
-%   Die \define{Pseudoinverse} $A^\dagger\in \R^{n\times m}$ einer Matrix $A\in\R^{m\times n}$ ist definiert dadurch, dass $x=a^\dagger b$ die Lösung des Minimierungsproblems 
-% \end{Definition}
+\begin{remark}
+  Bei der linearen Ausgleichsrechnung (engl.: \define{least-squares})
+  erweitern wir den Lösungsbegriff für lineare Gleichungssysteme auf
+  überbestimmte Systeme, indem wir die Bedingung \glqq Residuum gleich
+  null\grqq{} durch die Bedingung \glqq Residuum minimal\grqq{}
+  ersetzen.
+
+  Zur definition von \glqq minimal\grqq{} haben wir dabei ganz
+  selbstverständlich die euklidische Norm benutzt. Das ist aber
+  willkürlich. Zunächst können wir die Definition und alle weiteren
+  Argumente auf allgemeine Skalarprodukte und ihre zugehörigen Normen
+  ersetzen. Dazu müssen wir die transponierte Matrix $A^T$ durch die
+  im Skalarprodukt adjungierte Matrix $A^*$ definiert durch
+  \begin{gather}
+    \scal(A^*x,y) = \scal(x,Ay) \qquad\forall x,y\in \R^n
+  \end{gather}
+  ersetzen. Ebenso müssen dann natürlich die Spalten von $Q$
+  orthonormal bezüglich dieses Skalarprodukts sein.
+
+  Normen, die nicht durch Skalarprodukte definiert sind, führen auf
+  nichtlineare Bestimmungsgleichungen. Solche Aufgaben behandelt die
+  Optimierung.
+
+  Ein wichtiger Schluss aus dieser Bemerkung ist, dass wir zwar den
+  Begriff der Lösung erweitert haben, dabei aber nicht nur die Matrix
+  und die rechte Seite die Lösung bestimmen, sondern zusätzlich die
+  gewählte Norm die Lösung beeinflusst.
+\end{remark}
 
 %%% Local Variables:
 %%% mode: latex
