@@ -287,10 +287,10 @@
   \begin{gather}
     A^{(k+1)} = Q_{k} A^{(k)}, \qquad Q_k =
     \begin{bmatrix}
-      \id_k\\& \id_{n-k}-uu^T
+      \id_k\\& \id_{n-k}-2uu^T
     \end{bmatrix},
   \end{gather}
-  wobei $u$ der Vektor der Householder-Reflexion zu den letzten $n-k$
+  wobei $u$ der normierte Vektor der Householder-Reflexion zu den letzten $n-k$
   Komponenten der $k$-ten Spalte von $A$ ist.
 \end{Definition*}
 
@@ -398,7 +398,7 @@
   zweite Komponente eliminiert werden, indem man wählt
   \begin{gather}
     r = \sqrt{x_j^2+x_k^2},\qquad
-    c = \frac{x_j}r,\quad s=c = \frac{x_k}r.
+    c = \frac{x_j}r,\quad s = \frac{x_k}r.
   \end{gather}
   Man erhält dann
   \begin{gather}
@@ -441,7 +441,7 @@
   \end{gather}
   so dass $A^{(n)}=R$ obere Dreiecksgestalt hat. Es gilt
   \begin{gather}
-    Q_k^T = \Omega_{n-1,n}\Omega_{n-1,n-2}\cdots\Omega_{k,k+1}
+    Q_k^T = \Omega_{k,k+1}\Omega_{k+1,k+2}\cdots\Omega_{n-1,n-2}\Omega_{n-1,n}
   \end{gather}
   mit den Givens-Rotationen $\Omega_{j-1,j}$, die jeweils das aktuelle
   Element $a_{jk}$ zu null setzen.
