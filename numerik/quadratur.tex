@@ -627,8 +627,8 @@ Abschätzung aber in der stärkeren Form
   linearen Gleichungssystem
   \begin{gather}
     \begin{aligned}
-      \log c + p \log h_1 &= \log e(h_1),\\
-      \log c + p \log h_2 &= \log e(h_2).
+      \log c + p \log h_1 &= \log \bigl(e(h_1)\bigr),\\
+      \log c + p \log h_2 &= \log \bigl(e(h_2)\bigr).
     \end{aligned}
   \end{gather}
   bestimmen. Da hier die unbekannten Terme $\smallo(h)$ weggelassen
@@ -657,13 +657,14 @@ Abschätzung aber in der stärkeren Form
     Konvergenzordnung}\index{Konvergenzordnung!intrinsisch} zu
   betrachten. Dazu betrachten wir zum Beispiel die Folge
   \begin{gather}
-    d_k = \abs{T(2^kh) - T(2^{k-1}h)}, \qquad k=1,\dots
+    d_k = \abs{T(2^{-k}h) - T(2^{-(k+1)}h)}, \qquad k=1,\dots
   \end{gather}
-  Gilt $d_k \approx 2^p$ mit $p>0$, so gilt aufgrund der Konvergenz
+  Gilt $d_k \approx 2^{-pk}$ mit $p>0$, so gilt aufgrund der Konvergenz
   der geometrischen Reihe
   \begin{gather}
-    \abs{T(h)-T(0)} \le \sum_{k=1}^\infty \abs{T(2^kh) - T(2^{k-1}h}
-    \le 2 \abs{T(h)-T(h/2)}.
+    \abs{T(h)-T(0)}
+    \le \sum_{k=1}^\infty \abs*{T\bigl(2^{-k}h\bigr) - T\bigl(2^{-(k+1)}h\bigr)}
+    \le \frac1{1-2^p} \abs{T(h)-T(h/2)}.
   \end{gather}
   Daraus schließt man, dass auch die Konvergenzordnung etwa gleich $p$
   ist. Auch dies funktioniert nur, wenn $h$ bereits im asymptotischen
