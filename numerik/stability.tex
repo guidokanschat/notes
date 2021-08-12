@@ -201,6 +201,18 @@
 
 \subsection{Einführung der Konditionierung}
 
+\begin{notation}
+  Zur besseren Unterscheidung verwenden wir in diesem Abschnitt die
+  Vektornotation mit Fettbuchstaben, also
+  \begin{gather*}
+    \vec x =
+    \begin{pmatrix}
+      x_1\\\vdots\\x_n
+    \end{pmatrix}
+    .
+  \end{gather*}
+\end{notation}
+
 \begin{Definition}{aufgabe}
   Eine \define{numerische Aufgabe} ist die Berechnung endlich vieler
   \define{Ausgabedaten} $y_i$, $i=1,\dots,n$ aus ebenfalls endlich
@@ -210,31 +222,76 @@
   \end{gather}
   Zur Lösung der Aufgabe verwenden wir als Rechenvorschrift einen
   \define{Algorithmus}, bzw.\ seine Implementation $f$ auf einem Computer.
+  Der Algorithmus ist dabei eine Verkettung von Zwischenschritten:
+  \begin{xalignat}2
+    \vec z^{(0)} &= \vec x,\\
+    \vec z^{(k)} &= \vec f^{(k)}\bigl(\vec z^{(k-1)}\bigr),&k&=1,\dots,N\\
+    \vec y &= \vec z^{(N)}.
+  \end{xalignat}
 \end{Definition}
 
-\begin{Definition}{datenfehler}
+\begin{Definition}{Hadamard}
+  Eine Rechenaufgabe ist \define{wohlgestellt}, wenn die folgenden
+  Bedinungen erfüllt sind:
+  \begin{enumerate}
+  \item Zu jedem Eingabedatum $\vec x$ existiert die Lösung $\vec y$.
+  \item Diese Lösung ist eindeutig
+  \item Bei geringer Abweichung der Eingabedaten weicht auch die Lösung nur wenig ab (stetige Abhängigkeit).
+  \end{enumerate}
+  Diese Eigenschaften sind auch als \define{Hadamard'sche Bedingungen} bekannt.
+\end{Definition}
+
+\begin{remark}
+  Die Hadamard'schen Bedingungen sind qualitativ formuliert und daher
+  für uns in der Regel nicht klar genug. Stattdessen würden wir auch
+  bei wohlgestellten Aufgaben ausdrücken können, ob sie
+  \glqq{}besser\grqq{} oder \glqq{}schlechter\grqq{} gestellt sind.
+
+  Zu diesem Zweck führen wir nun die Konditionszahl ein.
+\end{remark}
+
+\begin{Definition}{datenfehler-absolut}
   Aus der Verwendung fehlerhafter Eingabedaten $x+\delta x$ ergeben
   sich fehlerhafte Resultate $y+\delta y$. Mit $\delta x$ und
   $\delta y$ bezeichnen wir die \textbf{absoluten
-    Fehler}\index{Fehler!absolut}. Die
-  \textbf{relativen Fehler}\index{Fehler!relativ} sind
-  $\nicefrac{\delta x}{\norm{x}}$, und $\nicefrac{\delta y}{\norm{y}}$ bzw.\
-  $\nicefrac{\delta x_j}{\abs{x_j}}$ und $\nicefrac{\delta y_i}{\abs{y_i}}$.
+    Fehler}\index{Fehler!absolut}.
 
-  Eine numerische Aufgabe heißt \define{gut konditioniert}, wenn es
-  eine moderate Konstante $\kappa$ bzw. Konstanten $\kappa_{ij}$ gibt, so dass die Abschätzung
+  Als \textbf{absolute Konditionszahl}\index{Konditionszahl!absolut} der numerischen Aufgabe bezeichnen wir eine Konstante $\kappa$, so dass gilt
   \begin{gather}
-    \frac{\norm{\delta y}}{\norm{y}}
-    \le \kappa \frac{\norm{\delta x}}{\norm{x}}
+    \norm{\delta \vec y}
+    \le \kappa \norm{\delta \vec x}.
+  \end{gather}
+  Wir führen auch die komponentenweisen (absoluten) Konditionszahlen
+  $\kappa_{ij}$ ein, so dass gilt:
+  \begin{gather}
+    \abs{\delta y_i}
+    \le \kappa_{ij} \abs{\delta x_j}
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{datenfehler-relativ}
+  Die \textbf{relativen Fehler}\index{Fehler!relativ} sind
+  $\nicefrac{\delta \vec x}{\norm{\vec x}}$, und
+  $\nicefrac{\delta \vec y}{\norm{\vec y}}$ bzw.\
+  $\nicefrac{\delta x_j}{\abs{x_j}}$ und
+  $\nicefrac{\delta y_i}{\abs{y_i}}$ für die Eingabedaten $\vec x$ und
+  die Ausgabedaten $\vec y$.
+
+  Die \textbf{relativen Konditionszahlen}\index{Konditionszahl!relativ} sind dann definiert durch die Abschätzungen
+  \begin{gather}
+    \frac{\norm{\delta \vec y}}{\norm{\vec y}}
+    \le \kappa \frac{\norm{\delta \vec x}}{\norm{\vec x}}
     \qquad\text{bzw.}\qquad
     \frac{\abs{\delta y_i}}{\abs{y_i}}
     \le \kappa_{ij} \frac{\abs{\delta x_j}}{\abs{x_j}}
   \end{gather}
-  für den bestmöglichen Algorithmus zur Lösung der Aufgabe
-  gilt. Andernfalls heißt sie \define{schlecht konditioniert}.
 \end{Definition}
 
 \begin{remark}
+  Man bezeichnet nun eine Aufgabe als \define{gut konditioniert}, wenn
+  die zugehörige Konditionszahl klein ist. Andernfalls bezeichnen wir
+  sie als \define{schlecht konditioniert}.
+
   Die Begriffe \glqq gut\grqq, bzw. \glqq schlecht
   konditioniert\grqq{} sind nicht scharf definiert. In der Tat hängt
   die Grenze, ab der die Konstante $\kappa$ nicht mehr als \glqq
@@ -443,6 +500,10 @@ wobei wir im letzten Beispiel Information veschenkt haben.
 
 \section{Stabilität eines Algorithmus}
 
+\begin{todo}
+  Darstellung der Fehlerfortpflanzung, Argument, dass algorithmischer
+  Fehler immer größer als Konditionierung.
+\end{todo}
 \begin{intro}
   Im letzten Abschnitt haben wir untersucht, wie sich die Fehler von
   Eingabedaten bei der Anwendung eines mathematisch exakten
