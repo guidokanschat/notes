@@ -1,0 +1,144 @@
+\begin{intro}
+  The following results can be found in any book on linear
+  algeba. Thus, we will just keep the arguments short. There will be a
+  focus on normal matrices justified by results on conditioning of
+  eigenvalue problems later on.
+
+  Thus, spectral theory based on module theory will not be needed in
+  this class. The spectral theorem for normal matrices on the other
+  hand is fairly simple and can be proved without too much overhead.
+\end{intro}
+
+\begin{Definition}{eigenvalue}
+  An \define{eigenvalue} of a matrix $\mata\in \C^{n\times n}$ is a
+  complex number $\lambda$ such that the matrix $\mata-\lambda\id$ is
+  singular.
+
+  The set of all eigenvalues of $\mata$ is called the
+  \define{spectrum} $\sigma(\mata)$.
+
+  The \define{eigenspace} for $\lambda$ is the kernel of
+  $A-\lambda\id$, that is, the set
+\begin{gather}
+    \esp{\lambda} = \bigl\{
+    \vv \in \C^n \;\big\vert\;
+    \mata\vv = \lambda\vv \bigr\}.
+\end{gather}
+The \define{geometric multiplicity} of $\lambda$ is the dimension of
+$\esp{\lambda}$.
+
+
+An \define{eigenvector} for $\lambda$ is a (normed) vector in
+$\esp\lambda$. We refer to an eigenvector $\lambda$ and a
+corresponding eigenvector $\vv$ as \define{eigenpair}.
+\end{Definition}
+
+\begin{Definition}{eigenvalue-algebraic}
+  An \define{eigenvalue} of a matrix $\mata\in \C^{n\times n}$ is a root of the characteristic polynomial $\chi(\lambda) = \det(\mata-\lambda\id)$.
+  
+  The \define{algebraic multiplicity} of an eigenvalue is the multiplicity of the corresponding root of the characteristic polynomial.
+\end{Definition}
+
+\begin{Lemma}{eigenvalue-equivalent}
+  The two definitions of an eigenvalue are consistent.
+\end{Lemma}
+
+\begin{Theorem}{eigenvalue-count}
+  Every matrix in $\C^{n\times n}$ has at most $n$ eigenvalues. The algebraic multiplicities of all eigenvalues add up to $n$.
+\end{Theorem}
+
+\begin{proof}
+  The ``at most'' follows from the fact that a polynomial contains
+  linear factors $x-\lambda_i$ for each of its roots
+  $\lambda_i$. Thus, if the characteristic polynomial has $k$ roots it
+  has at least degree $k$. On the other hand, the characteristic
+  polynomial has degree $n$, such that $k\le n$.
+
+  The second statement is due to the fact that every polynomial over
+  $\C$ is a product of linear factors.
+\end{proof}
+
+\begin{remark}
+  The last theorem is not true in $\R$, as it is not algebraically
+  closed. Thus, even a real matrix may have complex eigenvalues and
+  eigenvectors. Therefore, all results in this chapter will be on
+  complex matrices, but some simplifications for real matrices will be
+  pointed out.
+\end{remark}
+
+\begin{Definition}{eigenvalue-simple}
+  An eigenvalue is \define{simple}, if its algebraic and geometric multiplicity are one. It is \define{semi-simple}, if its algebraic and geometric multiplicities are equal.
+\end{Definition}
+
+\begin{remark}
+  It is possible to refine the concept of eigenvalues and eigenvectors by distinguishing between right eigenvalues and vectors solving
+  \begin{gather}
+      \mata \vv = \lambda \vv,
+  \end{gather}
+  and left eigenvalues and vectors solving
+  \begin{gather}
+    \vu \mata = \lambda \vu,
+  \end{gather}
+  where $\vu$ is now a row vector. By taking the transpose of this equation\footnote{Here, we refer to the real transpose obtained by simply exchanging indices, not the complex conjugate transpose.},
+  \begin{gather}
+    \label{eq:evp:1}
+    \mata^T \vu^T = \lambda \vu^T,
+  \end{gather}
+  we see that $\vu$ is a left eigenvector of $\mata$ if and only if
+  $\vu^T$ is a right eigenvector of $\mata^T$.
+\end{remark}
+
+\begin{Lemma}{eigenvalues-conjugate}
+  For every eigenpair $(\lambda,\vv)$ of $\mata\in\C^{n\times n}$, there is an eigenpair $(\overline\lambda,\overline{\vv})$ of $\mata^*$, and vice versa.
+\end{Lemma}
+
+\begin{proof}
+  The determinant does not change when the matrix is transposed, therefore
+  \begin{gather}
+    \chi(\mata^T)
+    = \det(\mata^T-\lambda \id)
+    = \det(\mata-\lambda \id)
+    = \chi(\mata).
+  \end{gather}
+  Thus, the eigenvalues of $\mata$ and of $\mata^T$ coincide, which
+  by~\eqref{eq:evp:1} implies the result, if we not only transpose,
+  but also take the complex conjugate.
+\end{proof}
+
+\subsection{Normal and Hermitian matrices}
+
+\begin{Definition}{normal-Hermitian}
+  A matrix $\mata\in\C^{n\times n}$ is called \define{normal} if there holds
+  \begin{gather}
+      A^*A = AA^*.
+  \end{gather}
+  It is called \define{Hermitian} or \define{complex symmetric}, if there holds
+  \begin{gather}
+      A=A^*.
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem*}{normal-diagonalizable}{Spectral theorem for normal matrices}
+  A matrix $\mata\in\C^{n\times n}$ is normal if and only if it is diagonalizable by a unitary matrix.
+  
+  It is normal if and only if there exists an orthonormal basis of eigenvectors.
+\end{Theorem*}
+
+\begin{proof}
+  
+\end{proof}
+
+\begin{Corollary*}{symmetric-diagonalizable}{Spectral theorem for Hermitian matrices}
+  A Hermitian matrix $\mata\in\C^{n\times n}$ is diagonalizable with
+  an orthogonal basis of eigenvectors and real eigenvalues.  
+\end{Corollary*}
+
+\begin{proof}
+  Hermitian matrices are a special case of normal matrices, such that
+  \slideref{Theorem}{normal-diagonalizable} applies.
+\end{proof}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

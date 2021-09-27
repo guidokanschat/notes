@@ -1,0 +1,87 @@
+In this section, we study the conditioning of finding eigenvalues and eigenvectors. While we will not cover the full theory, we will provide examples for ill-posed problems as well as exemplary proofs for well-posedness.
+
+In all cases, we will investigate the change of eigenvalues or eigenvectors whne the matrix $\mata$ is perturbed by a small matrix $\mate$ of norm $\epsilon$.
+
+\begin{Example}{conditioning-Jordan-block}
+  Consider the matrix
+  \begin{gather}
+  \mata_\epsilon =
+      \begin{pmatrix}
+        0&1\\
+        &0&1\\
+        &&\ddots&\ddots\\
+        &&&0&1\\
+        \epsilon &&&&0
+      \end{pmatrix}
+      \in\C^{n\times n},
+  \end{gather}
+  For $\epsilon=0$, it has a single eigenvalue of geometric multiplicity one and algebraic multiplicity $n$.
+  
+  For $\epsilon>0$, it has $n$ simple eigenvalues
+  \begin{gather}
+      \lambda_j = \sqrt[n]{\epsilon} \,e^{2\frac jni\pi}
+  \end{gather}
+\end{Example}
+
+\begin{proof}
+  For $\epsilon=0$, the matrix is the generic Jordan-block of an eigenvalue which is not semi-simple, thus the ill-posedness of this example implies the ill-posedness for not semi-simple eigenvalues in the general case. Note that this statement holds notwithstanding that special perturbations may be benign.
+  
+  The characteristic polynomial of this matrix is
+  \begin{gather}
+      \chi(\lambda) = \det(\mata-\lambda\id)
+      = \det\begin{pmatrix}
+      -\lambda&1\\  
+        &\ddots&\ddots\\
+        &&-\lambda&1\\
+        \epsilon &&&-\lambda
+      \end{pmatrix}.
+  \end{gather}
+  Applying Laplace expansion to the first column yields
+  \begin{gather}
+      \chi(\lambda)
+      = -\lambda \det\begin{pmatrix}
+        -\lambda&1\\
+        &\ddots&\ddots\\
+        &&-\lambda&1\\
+        &&&-\lambda
+      \end{pmatrix}
+      + (-1)^{n+1} \epsilon\det\begin{pmatrix}
+        1 \\
+        -\lambda &1\\
+        &\ddots&\ddots\\
+        &&-\lambda&1
+      \end{pmatrix},
+  \end{gather}
+  where both matrices are of dimension $n-1$. Since they are triangular, recursion of Laplace expansion is particularly simple and yields the product of the diagonal elements. Thus
+  \begin{gather}
+      \chi(\lambda) = (-1)^n \lambda^n
+      + (-1)^{n+1} \epsilon.
+  \end{gather}
+  Its roots are determined by the condition
+  \begin{gather}
+      \lambda^n = \epsilon.
+  \end{gather}
+  Thus, $\lambda$ can be computed as an $n$th root of unity times the (real) $n$th root of $\epsilon$.
+\end{proof}
+
+\begin{Theorem}{Jordan-block-ill-conditioned}
+  The eigenvalue problem for eigenvalues which are not semi-simple is
+  in general ill-posed.
+\end{Theorem}
+
+\begin{proof}
+  The analysis in \slideref{Example}{conditioning-Jordan-block} is
+  generic in the sense that it applies to nonzero eigenvalues and also
+  to matrices which are similar to such a block. Thus, we can conclude
+  that for every matrix $\mata$ which is similar to a matrix with a
+  nontrivial Jordan block for eigenvalue $\lambda$, there is a
+  perturbation $\mate$ such that the derivative of the function
+  $\lambda(\epsilon) = \lambda(A+\epsilon\mate)$ at zero is unbounded.
+\end{proof}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

@@ -7,16 +7,57 @@
 \author{Guido Kanschat}
 \date{\today}
 
+\def\esp#1{V_{#1}}
+
 \begin{document}
 \maketitle
 \tableofcontents
-\chapter{Small Algebraic Eigenvalue Problems}
+\chapter{Dense Algebraic Eigenvalue Problems}
+\begin{intro}
+  We refer to problems in linear algebra which allow storing the
+  complete matrix as \define{dense linear algebra}. They are typically
+  characterized by dimensions into the hundreds, possibly thousands,
+  and any entry in the matrix may have a nonzero value. Such matrices
+  are typically stored as a rectangular or quadratic array of numbers,
+  and we can perform manipulations based on the matrix entry.
+
+  In contrast, we will turn to \define{sparse linear algebra} in the
+  later chapters, where dimensions got up to millions and billions
+  ($10^9$). Since currently no computer on earth can store a matrix
+  with $10^{18}$ entries, those matrices will be characterized by the
+  fact that each row only contains very few nonzero entries, or that
+  the matrix is not stored, but only available algorithmically in the
+  form of a function performing the action $\vx\mapsto \mata
+  \vx$. Thus, access to and manipulation of matrix entries is not
+  possible, and we have to focus on methods only using the properties
+  of the matrix as a linear mapping.
+\end{intro}
+
+\section{Mathematical properties}
+\subsection{Definition of Eigenvalue Problems}
+\input{def-evp}
+\subsection{Well-posedness}
+\input{conditioning}
+
+\section{Vector iterations}
+
+\section{Simultaneous vector iterations and the QR method}
+
 %\input{orthopoly}
 
 \chapter{Solving Large Linear Systems}
 
 \chapter{Large Eigenvalue Problems}
 
+\appendix
+\chapter{Basics from Linear Algebra}
+\section{Inner products and orthogonality}
+\input{inner}
+\section{Projections}
+\section{Bases and matrices}
+\input{bases}
+\section{Similarity transformations}
+\input{similarity}
 
 \bibliographystyle{alpha}
 \bibliography{all}

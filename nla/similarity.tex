@@ -1,0 +1,68 @@
+\begin{Definition}{similar-matrix}
+  Two matrices $\mata,\matb\in\C^{n\times n}$ are called \define{similar}, if there is a nonsingular matrix $\matv\in\C^{n\times n}$, such that
+  \begin{gather}
+      \mata = \matv \matb \matv^{-1}.
+  \end{gather}
+  We call the mapping
+  \begin{gather}
+      \matb \mapsto \matv \matb \matv^{-1}
+  \end{gather}
+  a \define{similarity transformation}.
+\end{Definition}
+
+\begin{Lemma}{basis-change}
+  A similarity transformation corresponds to a change of basis, where the columns of the matrix $\matv$ are the coefficients of the new basis vectors with respect to the old basis.
+  \begin{todo}
+ Check!
+  \end{todo}
+\end{Lemma}
+
+\begin{Definition}{diagonalizable}
+  A matrix is called \define{diagonalizable}, if it is similar to a diagonal matrix.
+\end{Definition}
+
+\begin{Theorem}{matrix-functions}
+  Let $\mata\in \C^{n\times n}$ be diagonalizable such that
+  \begin{gather}
+    \mata = \matv \matlambda \matv^{-1},
+    \qquad \matlambda = \diag(\lambda_1,\dots,\lambda_n).
+  \end{gather}
+  Then, for any analytic function $f\colon \C \to \C$, the matrix
+  $f(\mata)$ is well defined by
+  \begin{gather}
+    f(\mata) = \matv f(\matlambda) \matv^{-1},
+    \qquad f(\matlambda) = \diag\bigl(f(\lambda_1),\dots,f(\lambda_n)\bigr),
+  \end{gather}
+  if all eigenvalues are in the domain of convergence of the Tayor
+  series of $f$.
+\end{Theorem}
+
+\begin{proof}
+  First, we observe that
+  \begin{gather}
+    \mata^2 = \matv \matlambda \matv^{-1} \matv \matlambda \matv^{-1}
+    = \matv \matlambda^2 \matv^{-1}.
+  \end{gather}
+  The square of the diagonal matrix $\matlambda$ is easily computed.
+  By induction $\mata^k =  \matv \matlambda^k \matv^{-1}$.
+
+  Let now $f(x) = \sum a_k x^k$ be the Taylor series of $f$. Then,
+  \begin{gather}
+    \begin{split}
+      f(\mata)
+      &= \sum_{k=0}^\infty a_k  \matv \matlambda^k \matv^{-1}\\
+      &= \matv \left(\sum_{k=0}^\infty a_k \matlambda^k\right) \matv^{-1}\\
+      &= \matv \diag\left(
+        \sum_{k=0}^\infty a_k \lambda_1^k,\dots,
+        \sum_{k=0}^\infty a_k\lambda_n^k
+      \right)  \matv^{-1}.
+    \end{split}
+  \end{gather}
+  All limits are well defined since we assume that all eigenvalues are
+  in the domain of convergence.
+\end{proof}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

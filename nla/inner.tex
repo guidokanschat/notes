@@ -1,0 +1,50 @@
+\begin{Definition}{sesqui}
+  A \define{sesquilinear form} on a complex vector space $V$ is a mapping
+  \begin{gather}
+      a\colon V\times V \to \C,
+  \end{gather}
+  which is \define{linear} and \define{semi-linear} in the first and second argument, respectively. That is, for all $\vu,\vv,\vw\in V$ and $\alpha\in\C$ holds
+  \begin{xalignat}2
+  a(\vu+\vv,\vw) &= a(\vu,\vw)+a(\vv,\vw),
+  & a(\alpha \vu,\vw) &= \alpha a(\vu,\vw),\\
+  a(\vu,\vv+\vw) &= a(\vu,\vv)+a(\vu,\vw),
+  & a(\vu,\alpha \vw) &= \overline\alpha a(\vu,\vw).
+  \end{xalignat}
+  It is \define{Hermitian} or \define{complex symmetric}, if in addition there holds
+  \begin{gather}
+      \label{eq:inner:symmetry}
+      a(\vu,\vv) = \overline{a(\vv,\vu)}.
+  \end{gather}
+\end{Definition}
+
+\begin{remark}
+  A sesquilinear form can be defined equivalently as being semi-linear in the second argument and linear in the first. Both versions can be found in the literature and we follow the convention in the book of Saad.
+  
+  The author prefers the term ``complex symmetric'' over the common and pompous ``Hermitian'', since it is the natural extension of symmetry to complex vector spaces, as the following asserts. The author would even prefer the term ``symmetric'', which is unfortunately understood in the real way in other publications. In particular,~\eqref{eq:inner:symmetry} implies that $a(\vu,\vu)$ is always real, such that the following makes sense:
+\end{remark}
+
+\begin{Definition}{inner-product}
+  An \define{inner product} on the complex vector space $V$ is a sesqui-linear form $\scal(\cdot,\cdot)$ on $V$ which in addition is definite, namely, for all $\vv\in V$ there holds
+  \begin{gather}
+      \scal(\vv,\vv) \ge 0,
+  \end{gather}
+  and $\scal(\vv,\vv)=0$ implies $\vv=0$.
+\end{Definition}
+
+\begin{todo}
+  Euclidean inner product
+\end{todo}
+
+\begin{todo}
+  Define conjugate $\mata^*$
+\end{todo}
+
+\begin{todo}
+  Define orthonormal set, unitary matrix
+\end{todo}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
