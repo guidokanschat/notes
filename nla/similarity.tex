@@ -10,11 +10,18 @@
   a \define{similarity transformation}.
 \end{Definition}
 
-\begin{Lemma}{basis-change}
-  A similarity transformation corresponds to a change of basis, where the columns of the matrix $\matv$ are the coefficients of the new basis vectors with respect to the old basis.
-  \begin{todo}
- Check!
-  \end{todo}
+\begin{Lemma}{matrix-basis-change}
+  Let $\phi\colon \C^n\to \C^n$ be a linear mapping represented with
+  respect to the canonical basis by the matrix $\mata$, such that
+  \begin{gather}
+    \phi(\vx) = \mata \vx.
+  \end{gather}
+  Then, the matrix $\matb = \matv^{-1}\mata\matv$ represents $\phi$
+  with respect to the basis $\matv$, namely, if $\vu = \matv \vy$ and
+  $\phi(\vu) = \matv \vz$, then
+  \begin{gather}
+    \vz = \matb \vy.
+  \end{gather}
 \end{Lemma}
 
 \begin{Definition}{diagonalizable}

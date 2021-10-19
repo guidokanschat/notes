@@ -9,7 +9,7 @@
   \end{gather}
 \end{Notation}
 
-\begin{Lemma}{matrix-linear-combination}
+\begin{Notation}{matrix-linear-combination}
   Let $\vv_1,\dots,\vv_k$ be a set of vectors in $\C^n$ and let the matrix $\matv=(v_1,\dots,v_k) \in \C^{n\times k}$. Then, for vectors $\va\in\C^k$ there holds
   \begin{gather}
       \vu = \sum_{i=1}^k a_i \vv_i
@@ -17,12 +17,35 @@
       u = \matv \va.
   \end{gather}
   Thus, we can write linear combinations as matrix vector products.
-\end{Lemma}
 
-\begin{proof}
-  Direct application of the definition of the matrix product.
-\end{proof}
+  We will abuse notation in a way that we refer to a matrix $\matv$
+  used in this way as a set of vectors or as a basis.
+\end{Notation}
 
+\begin{Lemma*}{change-of-basis}{Change of basis}
+  Let $\matv = (v_1,\dots, v_n)$ and $\matw = (w_1,\dots, w_n)$ be
+  bases of $\C^n$. Let $u\in C^n$ be given by coefficient vectors
+  $\vx,vy\in \C^n$, such that
+  \begin{gather}
+    \vu = \matv\vx = \matw\vy.
+  \end{gather}
+  Then,
+  \begin{gather}
+    \vx = \matc \vy,
+  \end{gather}
+  where the columns of $\matc\in \C^{n\times n}$ are the coefficient
+  vectors of the basis vectors $\vw_j$ with respect to the basis
+  vectors $\matv$.
+\end{Lemma*}
+
+\begin{Corollary}{change-of-basis}
+  Let $\vv\in \C^n$ and $W$ be a basis for $\C^n$. Then, the
+  coefficient vector $\vy$ of a vector $\vx$ with respect to the
+  basis $W$ is obtained by
+  \begin{gather}
+    \vy = \matw^{-1} \vx.
+  \end{gather}
+\end{Corollary}
 
 %%% Local Variables:
 %%% mode: latex

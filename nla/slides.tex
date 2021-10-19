@@ -1,0 +1,80 @@
+\documentclass[ignorenonframetext,notheorems,hidelinks,aspectratio=1610]{beamer}
+%\usetheme[compress]{JuanLesPins}
+\usetheme{JuanLesPins}
+\usecolortheme{iwr}
+\usepackage{mathsim}
+\lstset{language=Python}
+\usetikzlibrary{snakes}
+\input{mixed/fig/tikzsettings}
+\def\esp#1{V_{#1}}
+
+\usepackage{times}
+\usepackage{xr}
+\externaldocument{main}
+\usepackage{mfirstuc}
+\usepackage{mathtools}  
+\mathtoolsset{showonlyrefs}
+
+\newcommand{\rd}{\operatorname{rd}}
+\newcommand{\eps}{\texttt{eps}}
+
+\def\footnote#1{}
+\def\putindex#1{#1}
+\title{Numerical Linear Algebra}
+\author{Guido Kanschat}
+\date{\today}
+\begin{document}
+\frame{\maketitle}
+%\frame{\frametitle{Inhalt}\tableofcontents[hideallsubsections]}
+\section{Dense Algebraic Eigenvalue Problems}
+\frame{\sectoc}
+
+\subsection{Mathematical background}
+\subsubsection{Definition of EVP}
+\frame {\input {blocks/Definition-eigenvalue.tex}}
+\frame {\input {blocks/Definition-eigenvalue-algebraic.tex}
+  \pause
+  \input {blocks/Lemma-eigenvalue-equivalent.tex}}
+\frame {\input {blocks/Theorem-eigenvalue-count.tex}
+  \pause
+  \input {blocks/Definition-eigenvalue-simple.tex}}
+
+\subsubsection{Bases and matrices}
+\frame{\subtoc}
+\frame {\input {blocks/Notation-column-vectors.tex}}
+\frame {\input {blocks/Notation-matrix-linear-combination.tex}}
+\frame {\input {blocks/Lemma-change-of-basis.tex}}
+\frame {\input {blocks/Corollary-change-of-basis.tex}}
+\frame {\input {blocks/Definition-similar-matrix.tex}}
+\frame {\input {blocks/Lemma-matrix-basis-change.tex}}
+\frame {\input {blocks/Definition-diagonalizable.tex}}
+\frame {\input {blocks/Theorem-matrix-functions.tex}}
+
+\subsubsection{Normal and Hermitian matrices}
+\frame{\subtoc}
+
+\subsection{Well-posedness of the EVP}
+\frame{\subtoc}
+
+\subsection{Vector iterations}
+\frame{\subtoc}
+
+\subsection{Simultaneous vector iterations}
+\frame{\subtoc}
+
+\section{Konditionierung und Stabilität}
+\frame{\sectoc}
+
+
+\section{Bibliography}
+\frame{\bibliographystyle{alpha}
+\bibliography{all}}
+
+%\frame {\input {blocks/Satz-trigonometrische-interpolation.tex}}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
