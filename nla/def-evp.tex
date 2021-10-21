@@ -11,8 +11,11 @@
 
 \begin{Definition}{eigenvalue}
   An \define{eigenvalue} of a matrix $\mata\in \C^{n\times n}$ is a
-  complex number $\lambda$ such that the matrix $\mata-\lambda\id$ is
-  singular.
+  complex number $\lambda$ such that the matrix
+  \begin{gather}
+   \mata-\lambda\id 
+  \end{gather}
+  is singular.
 
   The set of all eigenvalues of $\mata$ is called the
   \define{spectrum} $\sigma(\mata)$.
@@ -89,7 +92,7 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
 \end{remark}
 
 \begin{Lemma}{eigenvalues-conjugate}
-  For every eigenpair $(\lambda,\vv)$ of $\mata\in\C^{n\times n}$, there is an eigenpair $(\overline\lambda,\overline{\vv})$ of $\mata^*$, and vice versa.
+  Every eigenvalue $\lambda$ of $\mata\in\C^{n\times n}$ is also an eigenvalue of $\mata^T$.
 \end{Lemma}
 
 \begin{proof}
@@ -100,9 +103,7 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
     = \det(\mata-\lambda \id)
     = \chi(\mata).
   \end{gather}
-  Thus, the eigenvalues of $\mata$ and of $\mata^T$ coincide, which
-  by~\eqref{eq:evp:1} implies the result, if we not only transpose,
-  but also take the complex conjugate.
+  Thus, the eigenvalues of $\mata$ and of $\mata^T$ coincide.
 \end{proof}
 
 \subsection{Normal and Hermitian matrices}

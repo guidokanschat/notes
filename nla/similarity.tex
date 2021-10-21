@@ -24,8 +24,33 @@
   \end{gather}
 \end{Lemma}
 
+\begin{Lemma}{similarity-equivalence}
+  Similarity is an equivalence relation, that is, it is reflexive,
+  symmetric, and transitive.
+\end{Lemma}
+
+\begin{Theorem*}{Jordan-canonical-form}{Jordan canonical form}
+  Every matrix $A\in\C^{n\times n}$ is ismilar to a matrix with block structure
+  \begin{gather}
+    \begin{pmatrix}
+      J_1\\&J_2\\&&\ddots\\&&&J_k
+    \end{pmatrix},
+  \end{gather}
+  where each block has the form
+  \begin{gather}
+    J_i = \begin{pmatrix}
+      \lambda_i&1\\&\ddots&\ddots\\
+      &&\lambda_i&1\\
+      &&&\lambda_i
+    \end{pmatrix}.
+  \end{gather}
+\end{Theorem*}
+
+
 \begin{Definition}{diagonalizable}
   A matrix is called \define{diagonalizable}, if it is similar to a diagonal matrix.
+  
+  Equivalently, a diagonalizable matrix has a basis of eigenvectors.
 \end{Definition}
 
 \begin{Theorem}{matrix-functions}

@@ -25,7 +25,7 @@
 \date{\today}
 \begin{document}
 \frame{\maketitle}
-%\frame{\frametitle{Inhalt}\tableofcontents[hideallsubsections]}
+\frame{\frametitle{Overview}\tableofcontents[hideallsubsections]}
 \section{Dense Algebraic Eigenvalue Problems}
 \frame{\sectoc}
 
@@ -38,6 +38,7 @@
 \frame {\input {blocks/Theorem-eigenvalue-count.tex}
   \pause
   \input {blocks/Definition-eigenvalue-simple.tex}}
+\frame {\input {blocks/Lemma-eigenvalues-conjugate.tex}}
 
 \subsubsection{Bases and matrices}
 \frame{\subtoc}
@@ -45,13 +46,25 @@
 \frame {\input {blocks/Notation-matrix-linear-combination.tex}}
 \frame {\input {blocks/Lemma-change-of-basis.tex}}
 \frame {\input {blocks/Corollary-change-of-basis.tex}}
-\frame {\input {blocks/Definition-similar-matrix.tex}}
+\frame {\input {blocks/Definition-similar-matrix.tex}
+  \input {blocks/Lemma-similarity-equivalence.tex}}
 \frame {\input {blocks/Lemma-matrix-basis-change.tex}}
-\frame {\input {blocks/Definition-diagonalizable.tex}}
-\frame {\input {blocks/Theorem-matrix-functions.tex}}
+\frame {\input {blocks/Theorem-Jordan-canonical-form.tex}}
+\frame {\input {blocks/Definition-diagonalizable.tex}
+  \input {blocks/Theorem-matrix-functions.tex}}
 
 \subsubsection{Normal and Hermitian matrices}
 \frame{\subtoc}
+
+\frame {\input {blocks/Definition-sesqui.tex}}
+\frame {\input {blocks/Definition-inner-product.tex}
+  \input {blocks/Example-Euclidean-ip.tex}}
+\frame {\input {blocks/Definition-conjugate-matrix.tex}}
+\frame {\input {blocks/Definition-rothonormal-unitary.tex}}
+
+\frame {\input {blocks/Definition-normal-Hermitian.tex}}
+\frame {\input {blocks/Theorem-normal-diagonalizable.tex}}
+\frame {\input {blocks/Corollary-symmetric-diagonalizable.tex}}
 
 \subsection{Well-posedness of the EVP}
 \frame{\subtoc}
@@ -59,14 +72,17 @@
 \subsection{Vector iterations}
 \frame{\subtoc}
 
-\subsection{Simultaneous vector iterations}
+\subsection{Simultaneous vector iterations, the QR-method}
 \frame{\subtoc}
 
-\section{Konditionierung und Stabilität}
+\section{Solving Large Sparse Linear Systems}
+\frame{\sectoc}
+
+\section{Large Sparse Eigenvalue Problems}
 \frame{\sectoc}
 
 
-\section{Bibliography}
+\section*{Bibliography}
 \frame{\bibliographystyle{alpha}
 \bibliography{all}}
 

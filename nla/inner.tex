@@ -31,17 +31,37 @@
   and $\scal(\vv,\vv)=0$ implies $\vv=0$.
 \end{Definition}
 
-\begin{todo}
-  Euclidean inner product
-\end{todo}
+\begin{Example*}{Euclidean-ip}{Euclidean inner product}
+  The bilinear form
+  \begin{gather}
+    \scal(\vx,\vy) = \sum_{i=1}^n x_i \overline{y}_i
+  \end{gather}
+  defines an inner product on $\C^n$.
+\end{Example*}
 
-\begin{todo}
-  Define conjugate $\mata^*$
-\end{todo}
+\begin{Definition}{conjugate-matrix}
+  The conjugate $\mata^*\in C^{n\times m}$ of a matrix $\mata\in C^{m\times n}$
+  is defined by the relation
+  \begin{gather}
+    \scal(\vx,\mata^*\vy)_{\C^n} = \scal(\mata\vx,\vy)_{\C^m},
+    \qquad\forall \vx\in\C^n,\;\vy\in\C^m.
+  \end{gather}
+  The conjugate with respect to the Euclidean inner product is
+  $\overline\mata^T$, often abbreviated as $\mata^H$.
+\end{Definition}
 
-\begin{todo}
-  Define orthonormal set, unitary matrix
-\end{todo}
+\begin{Definition}{rothonormal-unitary}
+  Given an inner product $\scal(\cdot,\cdot)$ in $\C^n$. A set of
+  vectors $\vv_1,\dots,\vv_k$ is called \define{orthonormal}, if
+  \begin{gather}
+    \scal(\vv_i,\vv_j) = \delta_{ij}, \qquad i,j=1,\dots,k.
+  \end{gather}
+  A matrix $\matq\in C^{n\times n}$ with orthonormal columns is called
+  \define{unitary}. There holds
+  \begin{gather}
+    \matq^*\matq = \id.
+  \end{gather}
+\end{Definition}
 
 
 %%% Local Variables:
