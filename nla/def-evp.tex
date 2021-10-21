@@ -119,6 +119,21 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
   \end{gather}
 \end{Definition}
 
+\begin{Theorem*}{symmetric-diagonalizable}{Spectral theorem for Hermitian matrices}
+  A Hermitian matrix $\mata\in\C^{n\times n}$ is diagonalizable with
+  an orthogonal basis of eigenvectors and real eigenvalues. That is,
+  there is a real, diagonal matrix $\matlambda$ and a unitary matrix
+  $\matq$ such that
+  \begin{gather}
+    \mata = \matq^T \matlambda\matq.
+  \end{gather}
+\end{Theorem*}
+
+\begin{proof}
+  Hermitian matrices are a special case of normal matrices, such that
+  \slideref{Theorem}{normal-diagonalizable} applies.
+\end{proof}
+
 \begin{Theorem*}{normal-diagonalizable}{Spectral theorem for normal matrices}
   A matrix $\mata\in\C^{n\times n}$ is normal if and only if it is diagonalizable by a unitary matrix.
   
@@ -129,15 +144,7 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
   
 \end{proof}
 
-\begin{Corollary*}{symmetric-diagonalizable}{Spectral theorem for Hermitian matrices}
-  A Hermitian matrix $\mata\in\C^{n\times n}$ is diagonalizable with
-  an orthogonal basis of eigenvectors and real eigenvalues.  
-\end{Corollary*}
 
-\begin{proof}
-  Hermitian matrices are a special case of normal matrices, such that
-  \slideref{Theorem}{normal-diagonalizable} applies.
-\end{proof}
 
 %%% Local Variables:
 %%% mode: latex
