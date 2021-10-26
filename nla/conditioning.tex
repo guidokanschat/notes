@@ -1,6 +1,37 @@
-In this section, we study the conditioning of finding eigenvalues and eigenvectors. While we will not cover the full theory, we will provide examples for ill-posed problems as well as exemplary proofs for well-posedness.
+\subsection{Conditioning of the eigenvalue problem}
+In this section, we study the conditioning of finding eigenvalues and
+eigenvectors. While we will not cover the full theory, we will provide
+examples for ill-posed problems as well as exemplary proofs for
+well-posedness.
 
-In all cases, we will investigate the change of eigenvalues or eigenvectors whne the matrix $\mata$ is perturbed by a small matrix $\mate$ of norm $\epsilon$.
+In all cases, we will investigate the change of eigenvalues or
+eigenvectors when the matrix $\mata$ is perturbed by a small matrix
+$\mate$ of norm $\epsilon$.
+
+\begin{Example}{characteristic-polynomial}
+  Take a matrix of dimension 20 with eigenvalues $1,2,\ldots,20$. Its
+  characteristic polynomial is
+  \begin{gather}
+    \chi(\lambda) = (\lambda-1)\dots(\lambda-20).
+  \end{gather}
+  The coefficient in front of $\lambda^{20}$ is one, the constant term is $20! > 10^{19}$.
+  We perturbe it in the form
+  \begin{gather}
+    \tilde \chi(\lambda) = \chi(\lambda) - 10^{-23}\lambda^{19}.
+  \end{gather}
+  Their greatest roots are
+  \begin{gather}
+    \begin{array}{l@{\qquad}l@{\,}c@{\,}l}
+      \multicolumn{1}{c}{\chi}&
+      \multicolumn{3}{c}{\tilde \chi}\\
+      20&20.847\\
+      19,18&19.502&\pm&1.940i\\
+      17,16&16.731&\pm&2.813i\\
+      15,14&13.992&\pm&2.519i\\
+    \end{array}
+  \end{gather}
+  {\tiny Source: \cite{DeuflhardHohmann08}}
+\end{Example}
 
 \begin{Example}{conditioning-Jordan-block}
   Consider the matrix
@@ -79,7 +110,80 @@ In all cases, we will investigate the change of eigenvalues or eigenvectors whne
   $\lambda(\epsilon) = \lambda(A+\epsilon\mate)$ at zero is unbounded.
 \end{proof}
 
+\begin{Theorem*}{bauer-fike}{Bauer-Fike}
+  Let $\mata\in \Cnn$ be diagonalizable with matrix of eigenvectors
+  $\matv \in \Cnn$ and diagonal matrix
+  $\matlambda = \diag(\lambda_1\dots,\lambda_n)$. Let $\mata+\mate$ be
+  a perturbation of $\mata$. Then, for any eigenvalue $\mu$ of
+  $\mata+\mate$, there is an eigenvalue $\lambda_i$ of $\mata$ such
+  that
+  \begin{gather}
+    \abs{\mu-\lambda_i} \le \cond_2(\matv) \norm{\mate}_2.
+  \end{gather}
+\end{Theorem*}
 
+\begin{proof}
+  Wikipedia
+\end{proof}
+
+\begin{Corollary}{conditioning-eigenvalues-normal}
+  The eigenvalue problem of a normal matrix $\mata\in\Cnn$ is
+  well-conditioned in the sense that for every eigenvalue $\mu$ of the
+  perturbed matrix $\mata+\mate$, there is an eigenvalue $\lambda$ of
+  $\mata$ such that
+  \begin{gather}
+    \abs{\mu-\lambda} \le \norm{E}_2.
+  \end{gather}
+\end{Corollary}
+
+The Bauer-Fike theorem provides a general estimate for diagonalizable
+matrices in terms of the condition number of the matrix of
+eigenvectors. The following theorem is less general, since it only
+applies to simple eigenvalues, but it provides geometric intuition of
+the issue.
+
+\begin{Theorem}{conditioning-eigenvalue-single}
+  Let $\mata+\epsilon\mate$
+\end{Theorem}
+
+\subsection{Bounds on eigenvalues}
+
+\begin{Lemma}{bound-by-norm}
+  Let $\norm{\cdot}$ be a vector norm and denote by the same symbol
+  the operator norm for matrices. Then, for any matrix $\mata\in\Cnn$
+  and for any eigenvalue $\lambda\in\sigma(\mata)$ there holds
+  \begin{gather}
+    \abs{\lambda} \le \norm{\mata}.
+  \end{gather}
+\end{Lemma}
+
+\begin{Lemma}{pre-gershgorin}
+  Let $\mata,\matb\in\Cnn$ and let $\norm{\cdot}$ be an operator norm
+  on the space of matrices corresponding to a vector norm denoted by
+  $\norm{\cdot}$ as well. Then, for any eigenvalue
+  $\lambda\in\sigma(\mata)$ such that $\lambda\not\in\sigma(\matb)$
+  there holds
+  \begin{gather}
+    \norm*{(\lambda\id-\matb)^{-1}(A-B)} \ge 1.
+  \end{gather}
+\end{Lemma}
+
+
+\begin{Theorem*}{gershgorin}{Gershgorin circle theorem}
+  All eigenvalues of a matrix $\mata\in\Cnn$ are contained in the
+  union of the \define{Gershgorin Circle}s
+  \begin{gather}
+    G_j = \left\{ z\in \C \middle| \abs{z-a_{jj}} \le \sum_{k\neq j} \abs{a_{jk}}\right\}. 
+  \end{gather}
+  Furthermore, if there is a subset of $m$ circles disjoint from the
+  other circles, then this subset contains $m$ eigenvalues.
+\end{Theorem*}
+
+\subsection{The Rayleigh quotient}
+
+\begin{Definition}{rayleigh-quotient}
+  
+\end{Definition}
 
 %%% Local Variables:
 %%% mode: latex
