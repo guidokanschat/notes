@@ -1,3 +1,62 @@
+\subsection{Bounds on eigenvalues}
+
+\begin{Lemma}{bound-by-norm}
+  Let $\norm{\cdot}$ be a vector norm and denote by the same symbol
+  a consistent norm for matrices. Then, for any matrix $\mata\in\Cnn$
+  and for any eigenvalue $\lambda\in\sigma(\mata)$ there holds
+  \begin{gather}
+    \abs{\lambda} \le \norm{\mata}.
+  \end{gather}
+\end{Lemma}
+
+\begin{Lemma}{pre-gershgorin}
+  Let $\mata,\matb\in\Cnn$ and let $\norm{\cdot}$ be an operator norm
+  on the space of matrices corresponding to a vector norm denoted by
+  $\norm{\cdot}$ as well. Then, for any eigenvalue
+  $\lambda\in\sigma(\mata)$ such that $\lambda\not\in\sigma(\matb)$
+  there holds
+  \begin{gather}
+    \norm*{(\lambda\id-\matb)^{-1}(A-B)} \ge 1.
+  \end{gather}
+\end{Lemma}
+
+
+\begin{Theorem*}{gershgorin}{Gershgorin circle theorem}
+  All eigenvalues of a matrix $\mata\in\Cnn$ are contained in the
+  union of the \define{Gershgorin Circle}s
+  \begin{gather}
+    G_j = \left\{ z\in \C \middle| \abs{z-a_{jj}} \le \sum_{k\neq j} \abs{a_{jk}}\right\}. 
+  \end{gather}
+  Furthermore, if there is a subset of $m$ circles disjoint from the
+  other circles, then this subset contains $m$ eigenvalues.
+\end{Theorem*}
+
+\subsection{The Rayleigh quotient}
+
+\begin{Definition}{rayleigh-quotient}
+  For a matrix $\mata\in\Cnn$ and a vector $\vx\in\C^n$, the
+  \define{Rayleigh quotient} is defined as
+  \begin{gather}
+    R_\mata(\vx) = \frac{\scal(\mata\vx,\vx)}{\scal(\vx,\vx)}.
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem*}{minmax}{Courant-Fischer min-max theorem}
+  Let $\mata\in\Cnn$ be Hermitian with eigenvalues
+  $\lambda_1 \le \lambda_2\le\dots\le \lambda_n$. Then, for $k=1,\dots,n$
+  \begin{align}
+    \lambda_k
+    &= \min_{\substack{V \subset \C^n\\\dim V = k}} \max_{\vx\in V} R_\mata(\vx),\\
+    &= \max_{\substack{V \subset \C^n\\\dim V = n-k+1}} \min_{\vx\in V} R_\mata(\vx).
+  \end{align}
+  In particular,
+  \begin{gather}
+    \lambda_{\min}(\mata) = \min_{\vx\in\C^n} R_\mata(\vx),
+    \qquad
+    \lambda_{\max}(\mata) = \max_{\vx\in\C^n} R_\mata(\vx).
+  \end{gather}
+\end{Theorem*}
+
 \subsection{Conditioning of the eigenvalue problem}
 In this section, we study the conditioning of finding eigenvalues and
 eigenvectors. While we will not cover the full theory, we will provide
@@ -146,44 +205,42 @@ the issue.
   Let $\mata+\epsilon\mate$
 \end{Theorem}
 
-\subsection{Bounds on eigenvalues}
+\subsection{Conditioning of eigenvectors and eigenspaces}
 
-\begin{Lemma}{bound-by-norm}
-  Let $\norm{\cdot}$ be a vector norm and denote by the same symbol
-  the operator norm for matrices. Then, for any matrix $\mata\in\Cnn$
-  and for any eigenvalue $\lambda\in\sigma(\mata)$ there holds
+\begin{intro}
+  Positive results on the conditioning of eigenvectors require
+  additional tools which go beyond the exposition planned for this
+  class. We will thus only discuss this question at hand of an example
+  and conclude a rule of thumb.
+\end{intro}
+
+\begin{Example}{conditioning-eigenvectors}
+  Consider the two matrices
   \begin{gather}
-    \abs{\lambda} \le \norm{\mata}.
+    A =
+    \begin{pmatrix}
+      1-\epsilon & 0\\ 0 & 1+\epsilon
+    \end{pmatrix},
+    \qquad
+    B =
+    \begin{pmatrix}
+      1&\epsilon\\\epsilon&1
+    \end{pmatrix}.
   \end{gather}
-\end{Lemma}
+  Their eigenvalues are $1-\epsilon$ and $1+\epsilon$, but their
+  eigenvectors are differ by an angle of $\pi/4$ independent of
+  $\epsilon$.
+\end{Example}
 
-\begin{Lemma}{pre-gershgorin}
-  Let $\mata,\matb\in\Cnn$ and let $\norm{\cdot}$ be an operator norm
-  on the space of matrices corresponding to a vector norm denoted by
-  $\norm{\cdot}$ as well. Then, for any eigenvalue
-  $\lambda\in\sigma(\mata)$ such that $\lambda\not\in\sigma(\matb)$
-  there holds
-  \begin{gather}
-    \norm*{(\lambda\id-\matb)^{-1}(A-B)} \ge 1.
-  \end{gather}
-\end{Lemma}
+\begin{Remark}
+  The problem of finding eigenvectors for tight clusters of
+  eigenvalues is ill-posed. Nevertheless, finding the invariant
+  subspace associated to all eigenvalues in such a cluster is
+  well-posed.
 
-
-\begin{Theorem*}{gershgorin}{Gershgorin circle theorem}
-  All eigenvalues of a matrix $\mata\in\Cnn$ are contained in the
-  union of the \define{Gershgorin Circle}s
-  \begin{gather}
-    G_j = \left\{ z\in \C \middle| \abs{z-a_{jj}} \le \sum_{k\neq j} \abs{a_{jk}}\right\}. 
-  \end{gather}
-  Furthermore, if there is a subset of $m$ circles disjoint from the
-  other circles, then this subset contains $m$ eigenvalues.
-\end{Theorem*}
-
-\subsection{The Rayleigh quotient}
-
-\begin{Definition}{rayleigh-quotient}
-  
-\end{Definition}
+  Conditioning of the eigenvector problem depends on the separation of
+  eigenvalues.
+\end{Remark}
 
 %%% Local Variables:
 %%% mode: latex
