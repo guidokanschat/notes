@@ -202,7 +202,18 @@ applies to simple eigenvalues, but it provides geometric intuition of
 the issue.
 
 \begin{Theorem}{conditioning-eigenvalue-single}
-  Let $\mata+\epsilon\mate$
+  Let $\mata_\epsilon = \mata+\epsilon\mate\in\Cnn$ be a perturbation
+  of $\mata\in\Cnn$. Let $\lambda(0)$ and let $\lambda(0)$ be a single
+  eigenvalue of $\mata$. Then, there exists a uniquely defined
+  differentiable continuation $\lambda(\epsilon)$ for small $\epsilon$
+  such that $\lambda(\epsilon) \in \sigma(\mata_\epsilon)$ and with
+  its left and right eigenvectors $u$, and $w$, respectively, there
+  holds
+  \begin{gather}
+    \abs*{\tfrac{d}{d\epsilon} \lambda(0)}
+    \le \norm{E}_2\frac{\norm{u}_2\norm{w}_2}{\abs{\scal(u,w)}}
+    = \norm{E}_2 \frac1{\cos\angle(u,w)}.
+  \end{gather}
 \end{Theorem}
 
 \subsection{Conditioning of eigenvectors and eigenspaces}
@@ -228,11 +239,11 @@ the issue.
     \end{pmatrix}.
   \end{gather}
   Their eigenvalues are $1-\epsilon$ and $1+\epsilon$, but their
-  eigenvectors are differ by an angle of $\pi/4$ independent of
+  eigenvectors differ by an angle of $\pi/4$ independent of
   $\epsilon$.
 \end{Example}
 
-\begin{Remark}
+\begin{Remark}{conditioning-eigenvectors}
   The problem of finding eigenvectors for tight clusters of
   eigenvalues is ill-posed. Nevertheless, finding the invariant
   subspace associated to all eigenvalues in such a cluster is

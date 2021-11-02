@@ -1,0 +1,54 @@
+
+\subsection{Simple iterations}
+
+\begin{Algorithm*}{vector-iteration}{Vector iteration}
+  
+\end{Algorithm*}
+
+\begin{Theorem}{vector-iteration}
+  Lat $\mata\in\Cnn$ be diagonalizable such that $\lambda_1$ is the
+  unique eigenvalue with maximal modulus. Let furthermore the
+  component of $v^{(0)}$ in direction of the first eigenvector be
+  nonzero. Then, the factors $\alpha_k$ and vectors $v^{(k)}$ of the
+  vector iteration converge to the eigenvalue $\lambda_1$ and its
+  associated eigenvector. Moreover, there holds
+  \begin{align}
+    \abs{\alpha_{k+1}-\lambda_1}
+    &\le \frac{\abs{\lambda_1}}{\abs{\lambda_2}} \abs{\alpha_{k}-\lambda_1}\\
+    \norm{v^{(k+1)}-u_1}
+    &\le \frac{\abs{\lambda_1}}{\abs{\lambda_2}} \norm{v^{(k)}-u_1}
+  \end{align}
+\end{Theorem}
+
+\begin{Remark}{vector-iteration}
+  The proof actually requires, that the entry defining $\alpha_k$
+  remains the same during the iteration, at least during the steps
+  used for detecting convergence.
+
+  The result does not actually require that $\mata$ is diagonalizable,
+  as long as $\lambda_1$ is single and of largest modulus.
+\end{Remark}
+
+\begin{Algorithm*}{shifted-vector-iteration}{Shifted vector iteration}
+  The vector iteration can be applied to the matrix $\mata-\sigma\id$
+  for some $\sigma\in\C$.
+
+  Then, $\alpha_k$ converges to the eigenvalue $\lambda$ such that
+  $\lambda-\sigma$ has largest modulus. $v^{(k)}$ converges to an
+  eigenvector for this eigenvalue.
+\end{Algorithm*}
+
+\begin{Algorithm*}{inverse-iteration}{The inverse power method}
+  
+\end{Algorithm*}
+
+\begin{Algorithm*}{Rayleigh-iteration}{The Rayleigh quotient iteration}
+  
+\end{Algorithm*}
+
+\subsection{Deflation}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
