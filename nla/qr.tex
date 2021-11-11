@@ -1,9 +1,22 @@
 \begin{Algorithm*}{subspace-iteration}{Orthogonal subspace iteration}
-  
+
+  Let $\mata\in\Cnn$, $\matx_0 \in \C^{n\times m}$.\\
+  For $k=0,\ldots$ until convergence repeat
+  \begin{itemize}
+  \item $\matz_k = \mata \matx_k$.
+  \item $\matq_k\matr_k = \matz_k$ (QR factorization)
+  \item $\matx_{k+1} = \matq_k$
+  \end{itemize}
 \end{Algorithm*}
 
 \begin{Algorithm*}{qr-iteration}{QR iteration}
   
+  Let $\mata_1 = \mata\in\Cnn$.\\
+  For $k=1,\ldots$ until convergence repeat
+  \begin{itemize}
+  \item $\matq_k\matr_k = \mata_k$ (QR factorization)
+  \item $\mata_{k+1} = \matr_k\matq_k$
+  \end{itemize}
 \end{Algorithm*}
 
 \begin{Theorem*}{schur-canonical}{Schur canonical form}
@@ -11,14 +24,73 @@
   $\matq\in\Cnn$ and an upper triangular matrix $\matr\in\Cnn$ such
   that
   \begin{gather}
-    \mata = \matq^* \mata \matq.
+    \mata = \matq \matr \matq^*.
   \end{gather}
+  The diagonal entries of $\matr$ are the eigenvalues of $A$. The
+  column vectors of $\matq$ are called \define{Schur vectors}.
 \end{Theorem*}
 
 \begin{Lemma}{schur-canonical-1}
-  For any $k\le n$ the span of the \define{Schur vector}s
+  For any $k\le n$ the span of the Schur vectors
   $\vq_1,\dots,\vq_k$ is invariant under the action of $\mata$.
+
+  For $\matq_k = (\vq_1\dots\vq_k)$ and $R_k$ the upper left $k\times k$ block of $\matr$, there holds
+  \begin{gather}
+    \mata\matq_k = \matq_k \matr_k.
+  \end{gather}
 \end{Lemma}
+
+\begin{Lemma}{schur-canonical-2}
+  The Schur vectors depend on the order chosen for the eigenvalues,
+  and in case of geometric multiplicity, the eigenvectors,
+  respectively. They are determined up to factors $e^{i\phi}$
+\end{Lemma}
+
+\begin{Theorem}{convergence-subspace-iteration}
+  Let $\mata\in\Cnn$ and
+  \begin{gather}
+    \abs{\lambda_1} >
+    \abs{\lambda_2}>\dots>\abs{\lambda_m}>\abs{\lambda}
+  \end{gather}
+  for all
+  remaining eigenvalues $\lambda\in\sigma(\mata)$. Let
+  $\matq = (\vq_1\dots\vq_m)$ be the Schur vectors associated with the
+  first $m$ eigenvalues and $\esp{1,\dots,j}$ be the space spanned by
+  the first $j$ eigenvectors and $P_j$ the orthogonal projector
+  onto this space. Let the set of start vectors of the orthogonal subspace iteration
+  $\matx_0 = (\vx_1\dots\vx_m)$ be chosen that
+  \begin{gather}
+    \operatorname{span}\{P_1 \vx_1,\dots,P_j\vx_j\} = \esp{1,\dots,j},\qquad j=1,\dots,m.
+  \end{gather}
+  Then, the $j$-th column of $\matx_k$ converges to $\vq_j$ for $j=1,\dots,m$ up to a factor $e^{i\phi}$.
+\end{Theorem}
+
+\begin{Lemma}{qr-1}
+  The matrices $\mata_k$ of the QR-iteration have the following properties:
+  \begin{enumerate}
+  \item $\mata_{k+1} = \matq_k\mata_k\matq_k^* = \matq_k\dots\matq_1A\matq_1^*\dots\matq_k^*$.
+  \item $\mata^k=\matq_1\dots\matq_k\matr_k\dots\matr_1$.
+  \item If $\mata$ is symmetric, so is $\mata_k$ for any $k$.
+  \end{enumerate}
+\end{Lemma}
+
+\begin{Theorem}{convergence-qr-iteration}
+  Let $\mata\in\Cnn$ symmetric and
+  \begin{gather}
+    \abs{\lambda_1} >
+    \abs{\lambda_2}>\dots>\abs{\lambda_n} \neq 0.
+  \end{gather}
+  Then, the sequences of the QR-iteration admit the following estimates:
+  \begin{align}
+    \lim_{k\to\infty} \matq_k &= \id,\\
+    \lim_{k\to\infty} \matr_k &= \Lambda,\\
+    a_{ij}^{(k)} &= \bigo \left(\abs*{\frac{\lambda_i}{\lambda_j}}^k\right),
+                   \qquad i>j.
+  \end{align}
+  Here, $\Lambda$ is the diagonal matrix of eigenvalues of $\mata$ and
+  $a_{ij}^{(k)}$ are the entries of $\mata_k$.
+\end{Theorem}
+
 
 %%% Local Variables:
 %%% mode: latex
