@@ -91,6 +91,51 @@
   $a_{ij}^{(k)}$ are the entries of $\mata_k$.
 \end{Theorem}
 
+\begin{intro}
+  In each step of the QR-iteration, a QR-decomposition of the matrix
+  is needed, which requires $\bigo(n^3)$ operations. Thus, the
+  complexity of the iteration is highly unfavorable. The following
+  discussion will provide us with means to reduce the complexity of
+  the QR-decomposition to $\bigo(n^2)$, in the symmetric case even to
+  $\bigo(n)$.
+\end{intro}
+
+\begin{Definition}{hessenberg}
+  A matrix is in \define{Hessenberg form} or is a \define{Hessenberg
+    matrix}, if all its entries below the first subdiagonal are zero. Visually,
+  \begin{gather}
+    H = 
+    \begin{pmatrix}
+      *&*&*&*&*&*&*\\
+      *&*&*&*&*&*&*\\
+      0&*&*&*&*&*&*\\
+      0&0&*&*&*&*&*\\
+      0&0&0&*&*&*&*\\
+      0&0&0&0&*&*&*
+    \end{pmatrix}
+  \end{gather}
+  A symmetric or Hermitian Hessenberg matrix is \define{tridiagonal}.
+\end{Definition}
+
+\begin{Theorem}{Hessenberg-qr}
+  The QR-decomposition of a Hessenberg matrix $\matH$ can be obtained
+  by $n-1$ givens rotations. The matrix $\matr\matq$ is again in
+  Hessenberg form. For a (complex) symmetric matrix $\matH$, the
+  matrix $\matr\matq$ is even tridiagonal and (complex) symmetric.
+\end{Theorem}
+
+\begin{Corollary}{Hessenberg-qr}
+  The complexity of each step of a QR-iteration for Hessenberg matrices is $\bigo(n^2)$. For tridiagonal (complex) symmetric matrices, it is $\bigo(n)$.
+\end{Corollary}
+
+\begin{Theorem}{Hessenberg-householder}
+  Every matrix $\mata\in\Cnn$ is unitarily similar to a Hessenberg matrix $\matH$, that is,
+  \begin{gather}
+    \matH = \matq \mata \matq^*.
+  \end{gather}
+  The matrix $\matq$ can be obtained by $n-2$ \putindex{Householder
+    reflections}.
+\end{Theorem}
 
 %%% Local Variables:
 %%% mode: latex
