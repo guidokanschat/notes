@@ -1,3 +1,5 @@
+
+\subsection{Definition and existence}
 \begin{Definition}{qr-decomposition}
   The \define{QR decomposition} of a matrix $\mata\in\C^{m\times n}$
   with $m\ge n$ is the product
@@ -28,6 +30,66 @@
   admits a QR decomposition. It is unique under the condition that for
   all $i$ there holds $r_{ii} > 0$.
 \end{Theorem}
+
+\subsection{Householder transformations}
+
+\begin{Definition}{householder-transformation}
+  The \define{Householder transformation}
+  associated with a vector $\vw\in\C^n$ is
+  \begin{gather}
+    \matq_w = \id - 2\frac{\vw\vw^*}{\vw^*\vw}
+  \end{gather}
+  It is also called \define{Householder matrix} or, particularly in
+  the real case, \define{Householder reflection}.
+\end{Definition}
+
+\begin{Lemma}{householder-symmetry}
+  For any vector $\vw\in\C^n$ the Householder transformation
+  $\matq_{\vw}$ is Hermitian and orthogonal, that is,
+  \begin{gather}
+    \matq^{-1} = \matq^* = \matq.
+  \end{gather}
+\end{Lemma}
+
+\begin{Lemma}{householder-qr}
+  For any vector $\vy\in\C^n$ there are vectors $\vw_\phi\in\C^n$ such
+  that $\matq_{\vw_\phi} \vy$ is a multiple of $\ve_1$.
+
+  The vector of choice for numerical stability is
+  \begin{gather}
+    \vw = \vy + e^{i\phi} \norm{\vy}_2\ve_1,
+  \end{gather}
+  where $\phi$ is the phase of $y_1$.
+\end{Lemma}
+
+\begin{proof}
+  The statement of the lemma says that for a suitable vector $\vw$ there is a complex number
+  $\alpha$ such that $\matq_{\vw} \vy = \alpha \ve_1$. Since
+  $\matq_{\vw}$ preserves the Euclidean norm, we already know
+  \begin{gather}
+    \abs{\alpha} = \norm{\vy}_2.
+  \end{gather}
+  There holds
+  \begin{gather}
+    \alpha\ve_1 = \matq_{\vw} \vy
+    = \vy - 2 \frac{\vw\vw^*\vy}{\vw^*\vw}
+    = \vy - w \frac{\vw^*\vy}{\vw^*\vw}\vw.
+  \end{gather}
+  Thus, $\vw$ is in the span of $\vy-\alpha \ve_1$. Since we divide by
+  its norm, its length does not matter and we let
+  \begin{gather}
+    \vw_\phi =
+    \begin{pmatrix}
+      y_1 - e^{i\phi} \norm{\vy}_2\\y_2\\\vdots\\y_n
+    \end{pmatrix},
+    \qquad
+    \matq_{\vw_\phi}\vy =
+    \begin{pmatrix}
+      e^{i\phi} \norm{\vy}_2\\0\\\vdots\\0
+    \end{pmatrix}.
+  \end{gather}
+  Since the computation of the first component of $\vw_\phi$ is prone to loss of significance, we choose $\phi$ as the phase of $-y_1$.
+\end{proof}
 
 %%% Local Variables:
 %%% mode: latex
