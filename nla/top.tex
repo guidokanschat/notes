@@ -64,8 +64,35 @@
 \section{Projections}
 
 \chapter{Basics from Numerical Analysis}
+
 \section{QR decomposition}
 \input{qr-decomposition}
+
+\section{Matrix norms and spectral radius}
+
+\begin{Definition}{spectral-radius}
+  The \define{spectral radius} of a matrix $\mata\in\Cnn$ is the
+  maximal absolute value of its eigenvalues, that is
+  \begin{gather}
+    \rho(\mata) = \max_{\lambda\in\sigma(\mata)} \abs{\lambda}.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma*}{spectral-radius}{Properties of the spectral radius}
+  For any matrix norm $\norm\cdot$ and for any matrix $\mata\in\Cnn$ there holds
+  \begin{gather}
+    \rho(\mata) = \lim_{k\to\infty} \norm{\mata^k}^{1/k}.
+  \end{gather}
+
+  The sequence $\vx^{(k)} = A^k\vx$ converges to zero for all
+  $\vx\in\C^n$ if and only if $\rho(\mata)<1$.
+
+  For any $\epsilon>0$
+  there is a matrix norm $\norm\cdot$ such that
+  \begin{gather}
+    \norm{\mata} \le (1+\epsilon) \rho(\mata) \qquad \forall \mata\in\Cnn.
+  \end{gather}
+\end{Lemma*}
 
 \bibliographystyle{alpha}
 \bibliography{all}
