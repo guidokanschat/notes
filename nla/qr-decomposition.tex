@@ -91,6 +91,80 @@
   Since the computation of the first component of $\vw_\phi$ is prone to loss of significance, we choose $\phi$ as the phase of $-y_1$.
 \end{proof}
 
+\subsection{Givens rotation}
+
+\begin{Definition}{givens}
+  The \define{Givens-Rotation} $\Omega_{jk}$ for $j<k$ with angle $\theta$ is the matrix
+  \begin{gather}
+      \Omega_{jk} =
+    \begin{pmatrix}
+      \id \\
+      &c&\cdots&s\\
+      &\vdots&\id &\vdots\\
+      &-s&\cdots&c\\
+      &&&&\id
+    \end{pmatrix}
+    \in\Cnn.
+  \end{gather}
+  The corresponding mapping $\Omega_{jk}\colon x\mapsto y$ is defined by
+  \begin{gather}
+    y_i =
+    \begin{cases}
+      c x_j + s x_k & i=j\\
+      -s x_j + c x_k & i=k\\
+      x_i &\text{else}
+    \end{cases}
+  \end{gather}
+  where $c = \cos\theta$ and $s = \sin\theta$.
+\end{Definition}
+
+\begin{remark}
+  The entries $c$ and $s$ of the rotation matrix are in rows and
+  columns $j$ and $k$.  The identity matrices $\id$ are of
+  corresponding dimensions.
+
+  Applying $\Omega_{jk}$ to a matrix $\mata$ from the left modifies rows  $j$ and $k$ of $\mata$. Thus, it is a row operation similar to Gauss elimination.
+
+  The action of $\Omega_{jk}$ on a vector corresponds to the rotation
+  in the plane spanned by $\ve_j$ und $\ve_k$. Thus, it is sufficient to investigated $2\times2$-matrices.
+
+  Note that the notation $\Omega_{jk}$ misses the angle $\theta$. This
+  is due to the fact that it is always determined such that $y_k=0$.
+\end{remark}
+
+\begin{Lemma}{givens-computation}
+  Givens rotation $\Omega_{jk}^*$ eliminates the second component of the vector
+  $(x_j,x_k)^T$ by choosing
+  \begin{gather}
+    r = \sqrt{x_j^2+x_k^2},\qquad
+    c = \frac{x_j}r,\quad s = \frac{x_k}r.
+  \end{gather}
+  We obtain
+  \begin{gather}
+    \begin{pmatrix}
+      c & s \\ -s & c
+    \end{pmatrix}
+    \begin{pmatrix}
+      x_j\\x_k
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      r\\0
+    \end{pmatrix}
+    .
+  \end{gather}
+\end{Lemma}
+
+\begin{remark}
+  Computation of $r$ in the previous lemma is prone to numerical
+  overflow due to computation of $x_j^2$ or $x_k^2$, even if $r$
+  itself is within the numerical range. For the implementation, we can
+  use the function \lstinline!hypot!. It computes the hypothenuse of a
+  right-angled triangle without overflow.
+\end{remark}
+
+
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"

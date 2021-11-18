@@ -1,3 +1,5 @@
+\subsection{Definition of the methods}
+
 \begin{Algorithm*}{subspace-iteration}{Orthogonal subspace iteration}
 
   Let $\mata\in\Cnn$, $\matx_0 \in \C^{n\times m}$.\\
@@ -19,6 +21,7 @@
   \end{itemize}
 \end{Algorithm*}
 
+\subsection{Analysis}
 \begin{Theorem*}{schur-canonical}{Schur canonical form}
   For every matrix $\mata\in\Cnn$ there are a unitary matrix
   $\matq\in\Cnn$ and an upper triangular matrix $\matr\in\Cnn$ such
@@ -70,6 +73,7 @@
   \begin{enumerate}
   \item $\mata_{k+1} = \matq_k^*\mata_k\matq_k = \matq_k^*\dots\matq_1^*A\matq_1\dots\matq_k$.
   \item $\mata^k=\matq_1\dots\matq_k\matr_k\dots\matr_1$.
+  \item If $\mata$ is normal, so is $\mata_k$ for any $k$.
   \item If $\mata$ is symmetric, so is $\mata_k$ for any $k$.
   \end{enumerate}
 \end{Lemma}
@@ -91,6 +95,7 @@
   $a_{ij}^{(k)}$ are the entries of $\mata_k$.
 \end{Theorem}
 
+\subsection{Implementation issues}
 \begin{intro}
   In each step of the QR-iteration, a QR-decomposition of the matrix
   is needed, which requires $\bigo(n^3)$ operations. Thus, the
@@ -136,6 +141,27 @@
   The matrix $\matq$ can be obtained by $n-2$ \putindex{Householder
     reflections}.
 \end{Theorem}
+
+\begin{Algorithm*}{qr-method}{The QR-Method}
+  Compute the spectrum of a matrix $\mata\in\Cnn$ by
+  \begin{enumerate}
+  \item Use $n-2$ Householder transformations to transform $\mata$ to
+    Hessenberg form
+    \begin{gather}
+     \matH = \matq\mata\matq^*.
+   \end{gather}
+ \item QR-iteration: let $\matH_{0}=\matH$ and perform until convergence
+   \begin{align}
+     \Omega^{(k)}_{1,2}\times\dots\times\Omega^{(k)}_{n-1,n} \matr &= \matH_k\\
+     \matH_{k+1} &= \matr \Omega^{(k)}_{1,2}\times\dots\times\Omega^{(k)}_{n-1,n}.
+   \end{align}
+ \item Store Householder vectors as well as $r$ and $c$ for each
+   Givens rotation if the eigenvectors are desired in the end.
+  \end{enumerate}
+\end{Algorithm*}
+
+\subsection{Shifts and deflation}
+
 
 %%% Local Variables:
 %%% mode: latex

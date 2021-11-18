@@ -103,13 +103,15 @@
 \subsection{Subspace iterations, the QR-iteration}
 \frame{\subtoc}
 
+\subsubsection{Definition of the methods}
 \frame {\input {blocks/Algorithm-subspace-iteration.tex}}
 
 \frame {\input {blocks/Definition-qr-decomposition.tex}}
 \frame {\input {blocks/Lemma-qr-columns.tex}}
 \frame {\input {blocks/Theorem-qr-existence.tex}}
-
 \frame {\input {blocks/Algorithm-qr-iteration.tex}}
+
+\subsubsection{Analysis}
 \frame {\input {blocks/Theorem-schur-canonical.tex}}
 \frame {\input {blocks/Lemma-schur-canonical-1.tex}}
 \frame {\input {blocks/Lemma-schur-canonical-2.tex}}
@@ -128,10 +130,17 @@
 \frame {\input {blocks/Lemma-qr-1.tex}}
 \frame {\input {blocks/Theorem-convergence-qr-iteration.tex}}
 
+\subsubsection{Implementation issues}
 \frame {\input {blocks/Definition-hessenberg.tex}}
 \frame {\input {blocks/Theorem-Hessenberg-qr.tex}}
 \frame {\input {blocks/Corollary-Hessenberg-qr.tex}}
 \frame {\input {blocks/Theorem-Hessenberg-householder.tex}}
+\frame {\input {blocks/Definition-givens.tex}}
+\frame {\input {blocks/Lemma-givens-computation.tex}}
+\frame {\input {blocks/Algorithm-qr-method.tex}}
+
+
+\subsubsection{Shitfs and deflation}
 
 \section{Solving Large Sparse Linear Systems}
 \frame{\sectoc}
