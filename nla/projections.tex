@@ -1,0 +1,72 @@
+\begin{Definition}{projection}
+  A matrix $\matp\in\Cnn$ is called a \define{projection matrix} if
+  \begin{gather}
+    \matp^2 = \matp.
+  \end{gather}
+
+  It is called \define{orthogonal projection matrix} if in addition
+  \begin{gather}
+    \matp^* = \matp.
+  \end{gather}
+
+  The associated operators are called (orthogonal) projection or
+  (orthogonal) projector.
+\end{Definition}
+
+\begin{Lemma}{projection-range}
+  Let $\matp\in\Cnn$ be an orthogonal projection matrix and
+  $V = \range \matp$. Then, for any $\vx\in\C^n$ there holds
+  \begin{gather}
+    (\id-\matp)\vx \in V^\perp.
+  \end{gather}
+  
+  Furthermore, the orthogonal projection $\matp$ is uniquely
+  determined by its range.
+\end{Lemma}
+
+\begin{proof}
+  Let $\vx,\vy\in \C^n$ arbitrary. Then,
+  \begin{gather}
+    \scal(\matp\vy,{(\id-\matp)}\vx) = \scal(\vy,\matp{(\id-\matp)}\vx)
+    = \scal(\vv,{(\matp-\matp^2)}\vx) = \scal(\vv,{(\matp-\matp)}\vx) = 0.
+  \end{gather}
+  Since $V=\range \matp$, this implies that $(\id-\matp)\vx \in V^\perp$.
+
+  Let now $\matp_1,\matp_2$ be orthogonal projectors. Then, for any
+  $\vx\in\C^n$ there holds
+  \begin{align}
+    \norm{(\matp_1-\matp_2)\vx}_2^2
+    &= \scal({(\matp_1-\matp_2)}\vx,{(\matp_1-\matp_2)}\vx)\\
+    &= \scal(\matp_1\vx,{(\matp_1-\matp_2)}\vx) - \scal(\matp_2\vx,{(\matp_1-\matp_2)}\vx)\\
+    &= \scal(\matp_1\vx,{(\id-\matp_2)}\vx)
+      + \scal(\matp_2\vx,{(\id-\matp_1)}\vx).
+  \end{align}
+  if now $\range{\matp_1}=\range{\matp_2}$, then both inner products
+  vanish. Thus, the operator norm of $\matp_1-\matp_2$ is zero and the
+  projectors must be equal.
+\end{proof}
+
+\begin{Definition}{projection-distance}
+  Let $U,V\subset \C^n$ be two subspaces with orthogonal projectors
+  $\matp_U$ and $\matp_V$, respectively. Then, we define their
+  \define{distance} as\index{dist}
+  \begin{gather}
+    \dist(U,V) = \norm{\matp_U-\matp_V}_2.
+  \end{gather}
+\end{Definition}
+
+% \begin{Example}{projection-distance}
+%   Let $U = \spann \vu$ and $V=\spann\vv$ with
+%   $\norm{\vu} = \norm{\vv} = 1$. Then,
+%   \begin{align}
+%     \dist(U,V)^2
+%     &= \sup_{\vx\in\C^n}\frac{\norm{\matp_U\vx-\matp_V\vx}^2}{\norm{\vx}^2}\\
+%     &= \sup_{\vx\in\C^n}\frac{\norm{\scal(\vx,\vu)\vu - \scal(\vx,\vv)\vv}^2}{\norm{\vx}^2}\\
+%     &= \sup_{\vx\in\C^n}\frac{\scal(\vx,\vu)^2+\scal(\vx,\vv)^2 - 2\scal(\vx,\vu)\scal(\vx,\vv)\scal(\vu,\vv)}{\norm{\vx}^2}\\
+%   \end{align}
+% \end{Example}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

@@ -79,20 +79,7 @@
 \end{Lemma}
 
 \begin{Theorem}{convergence-qr-iteration}
-  Let $\mata\in\Cnn$ symmetric and
-  \begin{gather}
-    \abs{\lambda_1} >
-    \abs{\lambda_2}>\dots>\abs{\lambda_n} \neq 0.
-  \end{gather}
-  Then, the sequences of the QR-iteration admit the following estimates:
-  \begin{align}
-    \lim_{k\to\infty} \matq_k &= \id,\\
-    \lim_{k\to\infty} \matr_k &= \Lambda,\\
-    a_{ij}^{(k)} &= \bigo \left(\abs*{\frac{\lambda_i}{\lambda_j}}^k\right),
-                   \qquad i>j.
-  \end{align}
-  Here, $\Lambda$ is the diagonal matrix of eigenvalues of $\mata$ and
-  $a_{ij}^{(k)}$ are the entries of $\mata_k$.
+Removed
 \end{Theorem}
 
 \subsection{Implementation issues}
@@ -111,12 +98,12 @@
   \begin{gather}
     H = 
     \begin{pmatrix}
-      *&*&*&*&*&*&*\\
-      *&*&*&*&*&*&*\\
-      0&*&*&*&*&*&*\\
-      0&0&*&*&*&*&*\\
-      0&0&0&*&*&*&*\\
-      0&0&0&0&*&*&*
+      *&*&*&*&*&*\\
+      *&*&*&*&*&*\\
+      0&*&*&*&*&*\\
+      0&0&*&*&*&*\\
+      0&0&0&*&*&*\\
+      0&0&0&0&*&*
     \end{pmatrix}
   \end{gather}
   A symmetric or Hermitian Hessenberg matrix is \define{tridiagonal}.
@@ -160,7 +147,67 @@
   \end{enumerate}
 \end{Algorithm*}
 
+\begin{Theorem}{hessenberg-qr-convergence}
+    Let $\matH\in\Cnn$ be a Hessenberg matrix with eigenvalues such that
+  \begin{gather}
+    \abs{\lambda_1} >
+    \abs{\lambda_2}>\dots>\abs{\lambda_n}.
+  \end{gather}
+  Then, the sequences of the QR-iteration admit the following estimates:
+  \begin{align}
+    \dist(\esp{1,\dots,j},\spann{\vq_1^{(k)},\dots,\vq_j^{(k)}}) &= \bigo \left(\abs*{\frac{\lambda_{j+1}}{\lambda_j}}^k\right),
+    \\
+    h_{j+1,j}^{(k)} &= \bigo \left(\abs*{\frac{\lambda_{j+1}}{\lambda_j}}^k\right)
+                      .
+  \end{align}
+  Here, $h_{ij}^{(k)}$ are the entries of $\matH_k$.
+\end{Theorem}
+
+\begin{proof}
+  See~\cite[Theorem 7.3-1]{GolubVanloan83}.
+\end{proof}
+
 \subsection{Shifts and deflation}
+
+\begin{Theorem}{qr-reduction}
+  Let the matrix $\matH^{(k)}\in\Cnn$ in the QR iteration be of the
+  form
+  \begin{gather}
+    \matH^{(k)} =
+    \begin{pmatrix}
+      \matH_{11} & \mata_{12}\\0 & \matH_{22}
+    \end{pmatrix}
+  \end{gather}
+  with Hessenberg matrices $\matH_{11}\in\C^{p\times p}$,
+  $\matH_{22}\in \C^{n-p\times n-p}$ and an arbitrary matrix
+  $\mata_{12}\in \C^{p\times n-p}$. Then, the matrix $\matq^{(k)}$
+  decouples into two diagonal blocks and $\matH^{(k+1)}$ has the same
+  form. Thus, the iteration decouples into two separate iterations.
+\end{Theorem}
+
+
+
+
+\subsection{Methods in real arithmetic}
+
+\begin{Theorem*}{real-schur-form}{The real Schur form}
+  For every matrix $\mata\in \Rnn$ there is an orthogonal matrix
+  $\matq\in\Rnn$ and a matrix $\matr\in\Rnn$ such that
+  \begin{gather}
+    \mata = \matq\matr\matq^*,
+    \qquad
+    \matr =
+    \begin{pmatrix}
+      R_{11} &* & *&*\\
+      &R_{22}&*&*\\
+      &&\ddots&*\\
+      &&& R_{jj}
+    \end{pmatrix},
+  \end{gather}
+  where the diagonal blocks are either of dimension one containing the
+  real eigenvalues or of dimension 2 for complex conjugate eigenvalue
+  pairs.
+\end{Theorem*}
 
 
 %%% Local Variables:
