@@ -169,6 +169,15 @@ Removed
 
 \subsection{Shifts and deflation}
 
+\begin{intro}
+  The goal of this section is the development and justification of a
+  method which accelerates convergence of the QR-iteration and
+  reducing the effort at the same time. It is based on shifts, like
+  for the simple or inverse power method. But, shifts are much more
+  powerful here, since we compute not only ``converging subspace'',
+  but also its complement.
+\end{intro}
+
 \begin{Theorem}{qr-reduction}
   Let the matrix $\matH^{(k)}\in\Cnn$ in the QR iteration be of the
   form
@@ -184,6 +193,21 @@ Removed
   decouples into two diagonal blocks and $\matH^{(k+1)}$ has the same
   form. Thus, the iteration decouples into two separate iterations.
 \end{Theorem}
+
+\begin{Definition}{hessenberg-unreduced}
+  A Hessenberg matrix is called \define{unreduced} if all entries on
+  the first subdiagonal are nonzero. It is called \define{reduced}
+  otherwise.
+\end{Definition}
+
+\begin{Algorithm*}{shifted-qr-iteration}{QR iteration with shift}
+  Let $\matH_1 = \matq_0^*\mata\matq_0\in\Cnn$.\\
+  For $k=1,\ldots$ until convergence repeat
+  \begin{itemize}
+  \item $\matq_k\matr_k = \matH_k - \sigma\id$ (QR factorization)
+  \item $\mata_{k+1} = \matr_k\matq_k + \sigma\id$
+  \end{itemize}
+\end{Algorithm*}
 
 
 
