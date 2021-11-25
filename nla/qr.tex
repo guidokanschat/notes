@@ -175,7 +175,8 @@ Removed
   reducing the effort at the same time. It is based on shifts, like
   for the simple or inverse power method. But, shifts are much more
   powerful here, since we compute not only ``converging subspace'',
-  but also its complement.
+  but also its complement. The presentation follows
+  mostly~\cite{GolubVanLoan83}.
 \end{intro}
 
 \begin{Theorem}{qr-reduction}
@@ -201,15 +202,72 @@ Removed
 \end{Definition}
 
 \begin{Algorithm*}{shifted-qr-iteration}{QR iteration with shift}
+  
   Let $\matH_1 = \matq_0^*\mata\matq_0\in\Cnn$.\\
   For $k=1,\ldots$ until convergence repeat
   \begin{itemize}
   \item $\matq_k\matr_k = \matH_k - \sigma\id$ (QR factorization)
-  \item $\mata_{k+1} = \matr_k\matq_k + \sigma\id$
+  \item $\matH_{k+1} = \matr_k\matq_k + \sigma\id$
   \end{itemize}
 \end{Algorithm*}
 
+\begin{Lemma}{shifted-qr-convergence}
+  The shifted QR-iteration admits the estimate
+  \begin{gather}
+    h_{j+1,j}^{(k)} = \bigo \left(\abs*{\frac{\lambda_{j+1}-\sigma}{\lambda_j-\sigma}}^k\right)
+  \end{gather}
+\end{Lemma}
 
+\begin{Example*}{rayleigh-shift}{Rayleigh shift}
+  The Rayleigh quotient for the smallest eigenvalue by magnitude
+  converges to $h_{nn}$, as
+  \begin{gather}
+    \ve_n^* H^{(k)} \ve_n = h_{nn}^{(k)}
+  \end{gather}
+  and $\vq_n$ is orthogonal to all eigenvectors for eigenvalues of
+  greater magnitude. Therefore, using $\sigma_k = h_{nn}^{(k)}$ seems
+  a good idea, and often is. But it is not reliable, as in the example
+  \begin{gather}
+    H =
+    \begin{pmatrix}
+      0 & 1 \\ 1 & 0
+    \end{pmatrix}.
+  \end{gather}
+\end{Example*}
+
+\begin{Definition*}{wilkinson-shift}{Wilkinson shift}
+  Let
+  \begin{gather}
+    \matm =
+    \begin{pmatrix}
+      h_{n-1,n-1}^{(k)}&h_{n-1,n}^{(k)}\\h_{n,n-1}^{(k)}&h_{nn}^{(k)}
+    \end{pmatrix}.
+  \end{gather}
+  Then, for $\sigma_k$ use the eigenvalue of $\matm$ which is closer
+  to $h_{nn}^{(k)}$.
+\end{Definition*}
+
+\begin{Remark}{wilkinson-shift}
+  The Wilkinson shift is reliable and the $h_{n,n-1}$ and $h_{nn}$
+  converge to zero and the smallest eigenvalue by magnitude,
+  respectively. They converge at least quadratically and cubically in
+  the symmetric case~\cite[Section 8.2]{GolubVanLoan83}.
+\end{Remark}
+
+\begin{Algorithm*}{qr-deflation}{Deflation}
+  After each step of the shifted QR-iteration monitor the subdiagonal
+  elements of $\matH^{(k)}$. Whenever
+  \begin{gather}
+    \abs{h_{j,j-1}} \le \eps \bigl(\abs{h_{j-1,j-1}}+\abs{h_{jj}}\bigr)
+  \end{gather}
+  set $h_{j,j-1}=0$.
+
+  If this happens in the last row, consider $h_{nn}=\lambda_n$
+  converged and proceed with a matrix of dimension $n-1\times n-1$.
+
+  If this happens in the center of the matrix, proceed with both
+  remaining diagonal blocks separately.
+\end{Algorithm*}
 
 
 \subsection{Methods in real arithmetic}
@@ -230,8 +288,31 @@ Removed
   \end{gather}
   where the diagonal blocks are either of dimension one containing the
   real eigenvalues or of dimension 2 for complex conjugate eigenvalue
-  pairs.
+  pairs. The latter correspond to scaled rotation matrices with the
+  according eigenvalue pair.
 \end{Theorem*}
+
+\begin{Remark}{francis-qr}
+  Using double shifts, the QR-iteration can be made to converge to the
+  real Schur form using double shifts in real arithmetic. This method
+  is also known as the \define{Francis QR step}~\cite[Algorithm
+  7.5-1]{GolubVanLoan83}.
+\end{Remark}
+
+\begin{Remark*}{real-symmetric-qr}{QR-Iteration for real, symmetric matrices}
+  In this case, many things simplify
+  \begin{enumerate}
+  \item Hessenberg form is tridiagonal
+  \item The Schur normal form is
+    \begin{gather}
+      \mata = \matq^T\matd\matq
+    \end{gather}
+    with real, diagonal matrix $\matd$
+  \item QR-decomposition uses $\bigo(n)$ operations and $\matr$
+    consists only of the main diagonal and one upper diagonal.
+  \end{enumerate}
+  Accumulating the matrix $\matq$ still needs $\bigo(n^2)$ operations
+\end{Remark*}
 
 
 %%% Local Variables:
