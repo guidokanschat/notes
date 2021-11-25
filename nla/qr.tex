@@ -314,6 +314,83 @@ Removed
   Accumulating the matrix $\matq$ still needs $\bigo(n^2)$ operations
 \end{Remark*}
 
+\subsection{Singular Value Decomposition (SVD)}
+
+\begin{Definition}{svd}
+  The \define{singular value decomposition} (\define{SVD}) of a matrix $\mata\in\C^{m\times n}$ is a facorization
+  \begin{gather}
+    \mata = \matu\matsigma\matv^*
+  \end{gather}
+  with unitary matrices $\matu\in\C^{m\times m}$ and $\matv\in\Cnn$ as
+  well as a real, diagonal matrix $\matsigma$ with diagonal entries
+  \begin{gather}
+    \sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_p \ge 0,
+  \end{gather}
+  where $p = \min\{m,n\}$.
+\end{Definition}
+
+\begin{Theorem}{svd}
+  Every matrix $\mata\in\C^{m\times n}$ admits a singular value
+  decomposition. Every real matrix admits a singular value
+  decomposition with orthogonal matrices $\matu$, $\matv$.
+\end{Theorem}
+
+\begin{Corollary}{svd-rank}
+  Let $\mata = \matu\matsigma\matv^*$ be the SVD of $\mata$ with
+  \begin{gather}
+    \sigma_1 \ge \dots \ge \sigma_r > \sigma_{r+1} = \dots = \sigma_p = 0.
+  \end{gather}
+  Then, $\rank \mata = r$
+\end{Corollary}
+
+\begin{Corollary}{svd-inverse}
+  If $\mata\in\Cnn$ is invertible, then
+  \begin{gather}
+    \mata^{-1} = \matv\matsigma^{-1}\matu^*,
+  \end{gather}
+  where
+  \begin{gather}
+    \matsigma^{-1} = \diag\left(\frac1{\sigma_1},\dots,\frac1{\sigma_n}\right).
+  \end{gather}
+\end{Corollary}
+
+\begin{Remark}{svd-geometry}
+  Let
+  \begin{gather}
+    E = \bigl\{ \vy\in \R^m \big| \vy=\mata\vx, \norm{\vx}_2 = 1 \bigr\},
+  \end{gather}
+  be the ellipsoid obtained by mapping the unit sphere though
+  $\mata$. Then, the column vectors of $\matu$ and the singular values
+  $\sigma_i$ are the directions and lengths of the semi-axes of this
+  ellipsoid, respectively.
+\end{Remark}
+
+\begin{Lemma}{svd-ata}
+  The singular values of $\mata$ are the square roots of the
+  eigenvalues of $\mata^*\mata$ and of $\mata\mata^*$, respectively. For $m\ge n$ there holds
+  \begin{align}
+    \matv^*(\mata^*\mata)\matv &= \diag(\sigma_1^2,\dots,\sigma_n^2)
+    &&\in \R^{n\times n}\\
+    \matu^*(\mata\mata^*)\matu &= \diag(\sigma_1^2,\dots,\sigma_n^2, 0,\dots,0)
+    &&\in \R^{m\times m}
+  \end{align}
+\end{Lemma}
+
+\begin{Theorem*}{implicit-Q}{Implicit Q-theorem}
+  Let $\mata\in\Cnn$ arbitrary, let $\matq,\matv\in\Cnn$ unitary such that
+  \begin{gather}
+    \matq^*\mata\matq = \matH,\qquad \matv^*\mata\matv = \matg,
+  \end{gather}
+  where $\matH$ and $\matg$ are Hessenberg matrices. Let $k$ denote
+  the smallest integer such that $h_{k+1,k} = 0$, or $k=n$ if $\matH$
+  is unreduced. Assume $\vv_1 = \vq_1$. Then,
+  $\vv_j = e^{i_j\phi}\vq_j$ and $\abs{h_{j,j-1}} = \abs{g_{j,j-1}}$
+  for $j=1,\dots,k$. if $k<n$, then $g_{k+1,k} = 0$.
+\end{Theorem*}
+
+\begin{proof}
+  See \cite[Theorem 7.4-2]{GolubVanLoan83}.
+\end{proof}
 
 %%% Local Variables:
 %%% mode: latex
