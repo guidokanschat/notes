@@ -1,0 +1,42 @@
+\begin{Definition}{sparse-matrix}
+  We call a matrix \textbf{sparse}\index{sparse matrix}, if the number
+  of nonzero entries is much less than the total number of entries,
+  typically $\bigo(n)$ instead of $\bigo(n^2)$. The distribution of nonzero entries is called \define{sparsity pattern}.
+
+  More abstractly, the application of a sparse matrix to a vector
+  requires considerably less than $n^2$ operations.
+\end{Definition}
+
+\begin{Example*}{csr}{Compressed row storage (CSR)}
+  A sparse matrix can be stored using two integer fields defining the
+  sparsity pattern and a field of floating point values for its
+  entries. Let \lstinline!n! be the dimension of the matrix and
+  \lstinline!n_nonzero! the total number of nonzero entries.
+  \begin{lstlisting}[language=Python]
+    import numpy as np
+    row_start = np.empty(n, dtype=np.uint)
+    column = np.empty(n_nonzero, dtype=np.uint)
+    entries = np.emtpy(n_nonzero, dtype=np.double)
+  \end{lstlisting}
+
+  The operation $\vy=\mata\vx$ is then implemented as
+  \begin{lstlisting}[language=Python]
+    for i in range(0,n):
+    y[i] = 0.
+    for j in range (row_start[i],row_start[i+1):
+      y[i] += entries[j]*x[column[j]]
+  \end{lstlisting}  
+\end{Example*}
+
+\begin{Remark}{algorithmic-matrix}
+  In cases where the sparsity pattern and the entries of a matrix are
+  known at compile time, a compressed stored matrix can be substituted
+  by an algorithm performing the multiplication.
+
+  Thus, we start viewing matrices more as linear operators than as
+  rectangular schemes of numbers.
+\end{Remark}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

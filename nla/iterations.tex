@@ -1,0 +1,90 @@
+
+\begin{Definition}{jacobi}
+  The \define{Jacobi iteration} for a matrix $\mata\in\Rnn$ and a
+  right hand side vector $\vb\in \R^n$ generates the iterate
+  $\vx^{(k+1)}\in \R^n$ from $\vx^{(k)}\in \R^n$ as follows:
+  \begin{gather}
+     x^{(k+1)}_i = \frac1{a_{ii}}\left( b_i - \sum_{j\neq i} a_{ij}x^{(k)}_j\right).
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{gauss-seidel}
+  The \define{Gauss-Seidel iteration} for a matrix $\mata\in\Rnn$ and a
+  right hand side vector $\vb\in \R^n$ generates the iterate
+  $\vx^{(k+1)}\in \R^n$ from $\vx^{(k)}\in \R^n$ as follows:
+  \begin{gather}
+    x^{(k+1)}_i = \frac1{a_{ii}}
+    \left( b_i
+      - \sum_{j< i} a_{ij}x^{(k+1)}_j
+      - \sum_{j> i} a_{ij}x^{(k)}_j
+  \right).
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{richardson-iteration}
+  The \define{Richardson iteration} for a matrix $\mata\in\Rnn$ and a
+  right hand side vector $\vb\in \R^n$ generates the iterate
+  $\vx^{(k+1)}\in \R^n$ from $\vx^{(k)}\in \R^n$ as follows:
+  \begin{gather}
+    \vx^{(k+1)} = \vx^{(k)} - 
+    \alpha_k\left( \mata\vx^{(k)} - \vb
+  \right).
+\end{gather}
+The relaxation parameter $\alpha_k$ must be chosen carefully to obtain
+convergence.
+\end{Definition}
+
+\begin{Definition}{matrix-iteration}
+  We call a \define{matrix iteration} any iterative method of the structure
+  \begin{gather}
+    \vx^{(k+1)} = \matm \vx^{(k)} + \vg,
+  \end{gather}
+  with an \define{iteration matrix} $\matm\in\Rnn$ and an inhomogeneity $\vg$.
+\end{Definition}
+
+\begin{Theorem*}{bfpt}{Banach fixed-point theorem}
+  Let $V$ be a vector space with norm $\norm{\cdot}$ and $M$ be a
+  closed subset of $V$. Let $F\colon M\to M$ be a \define{contraction},
+  that is, ther is a number $q\in[0,1)$ such that
+  \begin{gather}
+    \norm{F(\vx)-F(\vy)} \le q \norm{\vx-\vy}\qquad\forall \vx,\vy\in M.
+  \end{gather}
+  Then, there is a unique \define{fixed-point} $\vx^*\in M$ with the property
+  \begin{gather}
+    F(\vx^*) = \vx^*.
+  \end{gather}
+  The \define{fixed-point iteration}
+  \begin{gather}
+    \vx^{(k+1)} = F\bigl(\vx^{(k)}\bigr)
+  \end{gather}
+  converges to $\vx^*$ for any $\vx^{(0)}\in M$.
+%and there holds
+%  \begin{gather}
+%    \norm{\vx^{(k)}-x^*} \le \frac{q^n}{1-q}\norm{\vx^{(1)}-\vx^{(0)}}.
+%  \end{gather}
+\end{Theorem*}
+
+\begin{Corollary}{matrix-norm-convergence}
+  Let $\norm{\matm} < 1$ for some operator norm of a vector norm $\norm{\cdot}$ on $\R^n$. Then, the matrix iteration
+  \begin{gather}
+    \vx^{(k+1)} = \matm \vx^{(k)} + \vg
+  \end{gather}
+  converges for any initial value $\vx^{(0)}\in\R^n$.
+\end{Corollary}
+
+\begin{Theorem}{matrix-radius-convergence}
+  The matrix iteration
+  \begin{gather}
+    \vx^{(k+1)} = \matm \vx^{(k)} + \vg
+  \end{gather}
+  converges,
+  if and only if for the spectral radius there holds
+  \begin{gather}
+    \rho(\matm) < 1.
+  \end{gather}
+\end{Theorem}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
