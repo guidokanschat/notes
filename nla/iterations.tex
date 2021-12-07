@@ -45,7 +45,7 @@ convergence.
 \begin{Theorem*}{bfpt}{Banach fixed-point theorem}
   Let $V$ be a vector space with norm $\norm{\cdot}$ and $M$ be a
   closed subset of $V$. Let $F\colon M\to M$ be a \define{contraction},
-  that is, ther is a number $q\in[0,1)$ such that
+  that is, there is a \define{contraction number} $q\in[0,1)$ such that
   \begin{gather}
     \norm{F(\vx)-F(\vy)} \le q \norm{\vx-\vy}\qquad\forall \vx,\vy\in M.
   \end{gather}
@@ -64,6 +64,12 @@ convergence.
 %  \end{gather}
 \end{Theorem*}
 
+\begin{todo}
+\begin{Corollary}{bfp-estimates}
+  Let $F$ define a fixed-point iteration with contraction number $q<1$. Then, the following 
+\end{Corollary}  
+\end{todo}
+
 \begin{Corollary}{matrix-norm-convergence}
   Let $\norm{\matm} < 1$ for some operator norm of a vector norm $\norm{\cdot}$ on $\R^n$. Then, the matrix iteration
   \begin{gather}
@@ -72,17 +78,62 @@ convergence.
   converges for any initial value $\vx^{(0)}\in\R^n$.
 \end{Corollary}
 
+\begin{Example}{matrix-norm-convergence}
+  Let $\mata\in\R^{2\times 2}$ be a rotation by 45\textdegree combined
+  with a scaling,
+  \begin{gather}
+    \mata = 0.9
+    \begin{pmatrix}
+      \cos \tfrac\pi4 &\sin\tfrac\pi4\\
+      -\sin\tfrac\pi4&\cos\tfrac\pi4
+    \end{pmatrix}.
+  \end{gather}
+  Its spectral norm is
+  \begin{gather}
+    \norm{\mata}_2 = 0.9,
+  \end{gather}
+  while
+  \begin{gather}
+    \norm{\mata}_1 \ge 0.9\sqrt2 > 1.2
+  \end{gather}
+  which can be seen by mapping the vector $(1,0)^T$. We conclude, that
+  a matrix iteration might be a contraction with respect to one norm,
+  but not with respect to another.
+\end{Example}
+
+\begin{remark}
+  The statement of \slideref{Corollary}{matrix-norm-convergence}
+  implies, that it is sufficient to find one vector norm such that the
+  iteration is a contraction to prove convergence. The example shows
+  that this can only be a sufficient condition, but not a necessary
+  one.
+\end{remark}
+
 \begin{Theorem}{matrix-radius-convergence}
   The matrix iteration
   \begin{gather}
     \vx^{(k+1)} = \matm \vx^{(k)} + \vg
   \end{gather}
-  converges,
+  converges to a fixed-point $x^*$ for any start vector $x^{(0)}$,
   if and only if for the spectral radius there holds
   \begin{gather}
     \rho(\matm) < 1.
   \end{gather}
+  Then, there holds asymptotically only
+  \begin{gather}
+    \lim_{k\to\infty} \frac{\norm{x^{(k+1)}-x^*}}{\norm{x^{(k)}-x^*}}
+    < \rho(\matm).
+  \end{gather}
 \end{Theorem}
+
+\begin{remark}
+  While \slideref{Theorem}{matrix-radius-convergence} has the
+  mathematically more pleasing statement ``if and only if'', its
+  assumptions do not establish a contraction. In particular, the norms
+  of iterates may grow in early steps of the iteration and only then
+  start decreasing, something which is not desired from a practical
+  point of view.
+\end{remark}
 
 %%% Local Variables:
 %%% mode: latex
