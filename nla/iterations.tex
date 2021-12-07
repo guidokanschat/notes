@@ -64,11 +64,15 @@ convergence.
 %  \end{gather}
 \end{Theorem*}
 
-\begin{todo}
 \begin{Corollary}{bfp-estimates}
-  Let $F$ define a fixed-point iteration with contraction number $q<1$. Then, the following 
+  Let $F$ define a fixed-point iteration with contraction number $q<1$
+  and let $x^*$ be the unique fixed-point. Then, the following
+  estimates hold:
+  \begin{align}
+    \norm{x^{(k)} - x^*} &\le \frac{q}{1-q} \norm{x^{(k)}-x^{(k-1)}}\\
+    \norm{x^{(k)} - x^*} &\le \frac{q^k}{1-q} \norm{x^{(1)}-x^{(0)}}
+  \end{align}
 \end{Corollary}  
-\end{todo}
 
 \begin{Corollary}{matrix-norm-convergence}
   Let $\norm{\matm} < 1$ for some operator norm of a vector norm $\norm{\cdot}$ on $\R^n$. Then, the matrix iteration
@@ -107,7 +111,23 @@ convergence.
   iteration is a contraction to prove convergence. The example shows
   that this can only be a sufficient condition, but not a necessary
   one.
+
+  After the following Lemma, we will prove a result which provides us
+  with a sufficiant \emph{and} necessary condition.
 \end{remark}
+
+\begin{Lemma}{norm-spectral-radius}
+  For any matrix $\mata\in\Rnn$ and for any $\epsilon>0$ there exist a
+  vector norm $\norm{\cdot}_{\mata,\epsilon}$ and associated operator norm
+  denoted by the same symbol, such that
+  \begin{gather}
+    \rho(\mata) \le \norm{\mata}_{\mata,\epsilon} \le \rho(\mata)+\epsilon.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  See~\cite[Lemma 3.1]{Rannacher18nla}.
+\end{proof}
 
 \begin{Theorem}{matrix-radius-convergence}
   The matrix iteration
@@ -121,7 +141,7 @@ convergence.
   \end{gather}
   Then, there holds asymptotically only
   \begin{gather}
-    \lim_{k\to\infty} \frac{\norm{x^{(k+1)}-x^*}}{\norm{x^{(k)}-x^*}}
+    \operatorname*{lim\,sup}_{k\to\infty} \frac{\norm{x^{(k+1)}-x^*}}{\norm{x^{(k)}-x^*}}
     < \rho(\matm).
   \end{gather}
 \end{Theorem}
