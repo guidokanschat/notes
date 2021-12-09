@@ -4,13 +4,17 @@
     \matp^2 = \matp.
   \end{gather}
 
-  It is called \define{orthogonal projection matrix} if in addition
+  It is called \define{orthogonal projection matrix}\index{orthogonal}
+  if in addition
   \begin{gather}
     \matp^* = \matp.
   \end{gather}
 
   The associated operators are called (orthogonal) projection or
-  (orthogonal) projector.
+  (orthogonal) \define{projector}. If a projector is not orthogonal,
+  it is also called \define{oblique}.
+  \index{projector!orthogonal}
+  \index{projector!oblique}
 \end{Definition}
 
 \begin{Lemma}{projection-range}
@@ -65,6 +69,85 @@
 %     &= \sup_{\vx\in\C^n}\frac{\scal(\vx,\vu)^2+\scal(\vx,\vv)^2 - 2\scal(\vx,\vu)\scal(\vx,\vv)\scal(\vu,\vv)}{\norm{\vx}^2}\\
 %   \end{align}
 % \end{Example}
+
+
+\begin{Lemma}{projection-complement}
+  If $\matp\in\Cnn$ is a projection operator, so is
+  $\id-\matp$, and there holds
+  \begin{gather}
+    \ker{\matp} = \range{\id-\matp}.
+  \end{gather}
+  Furthermore, there holds
+  \begin{gather}
+    \C^n = \ker{\matp} \oplus \range{\matp}.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  \cite[Section 1.12.1]{Saad00}.
+\end{proof}
+
+\begin{Lemma}{projection-spaces}
+  Any pair of subspaces $N,R\subset \C^n$ such that $\C^n = N\oplus R$
+  uniquely defines a projector $\matp$, such that $N = \ker\matp$ and
+  $R=\range\matp$. There holds for $\vx\in\C^n$
+  \begin{align}
+    \matp \vx &\in R\\
+    \vx - \matp \vx &\in N.
+  \end{align}
+  We say $\matp$ projects onto $R$ along $N$.
+\end{Lemma}
+
+\begin{proof}
+  \cite[Section 1.12.1]{Saad00}.
+\end{proof}
+
+\begin{Definition}{projection-spaces-orthogonal}
+  Given two subspaces $R,S\subset\C^n$ of equal dimension, a
+  projector $\matp$ is said to project onto $R$ orthogonal to $S$, if
+  for any $\vx\in\C^n$ there holds
+  \begin{align}
+    \matp\vx &\in R\\
+    \vx-\matp\vx &\perp S.
+  \end{align}
+\end{Definition}
+
+\begin{Lemma}{projection-spaces-orthogonal}
+  Let $R,S\subset\C^n$ be two subspaces of equal dimension. Then, the
+  projection of any vector $\vx\in\C^n$ onto $R$ orthogonal to $S$ is
+  uniquely defined if and only if no vector in $R$ is orthogonal to
+  $L$.
+\end{Lemma}
+
+\begin{proof}
+  \cite[Lemma 1.36]{Saad00}.
+\end{proof}
+
+\begin{Definition}{biorthogonal}
+  Two sets of vectors $\{\vv_1,\dots,\vv_m\}$ and  $\{\vw_1,\dots,\vw_m\}$ are called \define{biorthogonal}, if
+  \begin{gather}
+    \scal(\vv_i,\vw_j) = \delta_{ij}, \qquad i,j=1,\dots,m.
+  \end{gather}
+  In matrix notation
+  \begin{gather}
+    \matw^*\matv = \matv^*\matw = \id
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{projection-basis}
+  Let $R,S\subset\C^n$ be two subspaces of equal dimension and let
+  $\matp$ be the projector onto $R$ orthogonal to $S$. Let
+  $\{\vv_1,\dots,\vv_m\}$ and $\{\vw_1,\dots,\vw_m\}$ be biorthogonal
+  and bases of $R$ and $S$, respectively. Then,
+  \begin{gather}
+    \matp = \matv\matw^*.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  \cite[Section 1.12.2]{Saad00}.
+\end{proof}
+
 
 %%% Local Variables:
 %%% mode: latex

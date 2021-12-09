@@ -1,0 +1,52 @@
+\subsection{Projection methods}
+
+\begin{Definition}{galerkin-method}
+  Let $\mata\in\Rnn$ and $\vb\vx\in\R^n$ with $\mata\vx=\vb$. Then,
+  the vector $\tilde\vx\in\R^n$ is called the \define{Galerkin
+    approximation} of $\vx$ in a subspace $K$ orthogonal to a subspace
+  $L$, if there holds
+  \begin{align}
+    \tilde\vx &\in K,\\
+    \vb-\mata\tilde\vx &\perp L.
+                         \label{eq:krylov:1}
+  \end{align}
+  This type of approximation is called \define{Galerkin method}, more
+  specifically \define{Ritz-Galerkin method} in the case $K=L$ and
+  \define{Petrov-Galerkin method} in the case $K\neq L$.
+\end{Definition}
+
+\begin{remark}
+  For the case $K=L$ we deduce from the optimization property of
+  orthogonal projections that $\mata\tilde x$ in~\eqref{eq:krylov:1}
+  is the vector in the subspace $\mata K$ closest to $\vb$. Thus,
+  $\tilde\vx$ minimizes the \putindex{residual} $\vb-\mata\vy$ over
+  all choices $\vy\in K$.
+
+ Note that this does not hold for $K\neq L$.
+\end{remark}
+
+\begin{Definition}{projection-step}
+  Given a vector $\vx^{(k)}\in\R^n$ and its residual
+  $\vb-\mata\vx^{(k)}$. Then, we say that the vector
+  $\vx^{(k+1)}\in\R^n$ is obtained by a \define{projection step}, if
+  \begin{gather}
+    \vx^{(k+1)} = \vx^{(k)} + \vy,
+  \end{gather}
+  where after the choice of subspaces $K$ and $L$ the update $\vy$ is
+  determined by the condition
+  \begin{align}
+    \vy&\in K\\
+    \vr^{(k)} - \mata\vy &\perp L.
+  \end{align}
+\end{Definition}
+
+\begin{Example}{projection-gauss-seidel}
+  The Gauss-Seidel substep is a projection step with the choice
+  \begin{gather}
+    K=L=\spann{\ve_i}.
+  \end{gather}
+\end{Example}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
