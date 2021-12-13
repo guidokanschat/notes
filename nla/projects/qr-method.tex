@@ -1,0 +1,79 @@
+\documentclass[a4paper]{article}
+\usepackage{amsmath}
+\usepackage{background}
+
+\addtolength{\textwidth}{2cm}
+\addtolength{\oddsidemargin}{-1cm}
+
+
+\begin{document}
+\begin{center}
+  \textbf{\Large Programming-Exam Numerical Linear Algebra}
+  
+  \textbf{Winter 2021/22}
+\end{center}
+
+\subsection*{Assignment}
+Implement the QR-method following Algorithm 1.4.14 in the notes and
+verify your implementation. Choose one of the following options
+\begin{enumerate}
+\item General complex matrices with transformation to Hessenberg form
+\item General real matrices with transformation to Hessenberg form and
+  double shifts for complex eigenvalues
+\item Symmetric real matrices with transformation to tridiagonal form
+  with optimized storage
+\end{enumerate}
+
+\subsection*{Dates}
+
+The program(s) should be submitted electronically by Feb 12th,
+2022. Oral presentations will be scheduled for the week of Feb 14th.
+
+\subsection*{Minimal requirements}
+\begin{itemize}
+\item The program must run without crashing and you must be able to
+  change parameters like the matrix size
+\item The program must be subdivided into functions of well-defined
+  purpose
+\item You must be able to describe how you verify the correctness of
+  your program
+\end{itemize}
+
+If your program works for several matrices and you can explain it, you will pass the exam, but only with the minimal passing grade.
+
+\subsection*{Improving your grade}
+You can improve your grade by putting more effort into the
+implementation. You can consider items from the following list, but
+you can also think of other improvements:
+\begin{itemize}
+\item Use shifts to accelerate convergence (Wilkinson shifts)
+\item Use double shifts to avoid complex arithmetic (necessary for option 2)
+\item Use deflation when the subdiagonal element in the last row is
+  sufficiently small (implementation may be hard if not option 3)
+\item Use deflation, if any other subdiagonal element is small (seems very hard)
+\item Compute not only eigenvalues but also eigenvectors
+\item Add SVD capability to option 3
+\item Apply your program to several suitable matrices from the ``Matrix Market''\footnote{\texttt{https://math.nist.gov/MatrixMarket/}}. Use suitable library functions for reading the matrices.
+\item Well-chosen tests for correctness
+\item Investigation into convergence
+\item Write very well structured code
+\item Well-prepared jupyter notebooks with code, accompanying text, and results
+\item Object-oriented programming: is it possible to implement
+  algorithm 1.4.14 in a way, that $\boldmath H$ is either Hessenberg or
+  tridiagonal, either real or complex, but encapsulate the differences
+  inside the QR-decompositions applied in every step.
+\end{itemize}
+
+\subsection*{Additional rules}
+\begin{itemize}
+\item You can prepare the assignment by yourself or in a team of two
+  students.
+\item There will be short oral tests with the authors of each program
+  in order to verify authorship and help determining a grade. You will
+  have to demonstrate the running program. Both students of a team
+  will have to contribute equally!
+\item Please submit at the oral test a signed declaration: ``I/We have
+  prepared the assignment myself/ourselves and I/we have only used the
+  sources declared in comments to the program''.
+\end{itemize}
+\end{document}
