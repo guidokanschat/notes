@@ -46,6 +46,45 @@
     K=L=\spann{\ve_i}.
   \end{gather}
 \end{Example}
+
+\begin{notation}
+  We will mostly only consider a single step of the method in
+  \slideref{Definition}{projection-step}. Therefore, we will consider
+  the step from an initial guess $\vx^{(0)}$ to an approximate solution
+  $\tilde \vx$ to simplify the notation.
+\end{notation}
+
+\begin{Definition}{projection-method-matrix}
+  Let $\matv=(\vv_1,\dots,\vv_m)$ and $\matw=(\vw_1,\dots,\vw_m)$ be bases for
+  the subspaces $K$ and $L$, respectively. Then, the solution
+  $\tilde \vx$ to the projection step is determined by $\vy\in\R^m$ and
+  \begin{align}
+    \tilde\vx &= \vx^{(0)} + \matv\vy\\
+    \matw^*\mata\matv \vy &= \matv^* \vr^{(0)}.
+  \end{align}
+  It is thus obtained by solving an $m$-by-$m$ linear system, called
+  the projected system or the \define{Galerkin
+    equations}. $\matw^*\mata\matv\in\R^{m\times m}$ is the
+  \define{projected matrix}.
+\end{Definition}
+
+\begin{proof}
+  See \cite[Section 5.1.2]{Saad00}.
+\end{proof}
+
+\begin{Theorem}{projected-invertible}
+  Let one of the following conditions hold:
+  \begin{enumerate}
+  \item $\mata$ is symmetric, positive definite and $L=K$.
+  \item $\mata$ is invertible and $L = \mata K$.
+  \end{enumerate}
+  Then, the projected matrix $\matw^*\mata\matv$ is invertible for any
+  bases $\matv$ and $\matw$ of $K$ and $L$, respectively.
+\end{Theorem}
+
+
+
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
