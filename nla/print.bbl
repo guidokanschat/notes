@@ -1,8 +1,24 @@
-\begin{thebibliography}{DH08}
+\begin{thebibliography}{GvL83}
 
 \bibitem[DH08]{DeuflhardHohmann08}
 P.~Deuflhard and A.~Hohmann.
 \newblock {\em Numerische Mathematik 1}.
 \newblock de Gruyter, Berlin, 2008.
+
+\bibitem[GvL83]{GolubVanLoan83}
+G.~H. Golub and C.~F. van Loan.
+\newblock {\em Matrix Computations}.
+\newblock The Johns Hopkins University Press, 1983.
+
+\bibitem[Ran18]{Rannacher18nla}
+R.~Rannacher.
+\newblock {\em Numerical Linear Algebra}.
+\newblock Lecture Notes Mathematik. Heidelberg University Publishing,
+  Heidelberg, 2018.
+
+\bibitem[Saa00]{Saad00}
+Y.~Saad.
+\newblock {\em Iterative Methods for Sparse Linear Systems}.
+\newblock Oxford University Press, 2nd edition edition, 2000.
 
 \end{thebibliography}
