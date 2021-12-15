@@ -82,8 +82,47 @@
   bases $\matv$ and $\matw$ of $K$ and $L$, respectively.
 \end{Theorem}
 
+\begin{Theorem}{projection-orthogonal-optimal}
+  Let $\mata\in\Rnn$ be symmetric, positive definite. Then,
+  $\tilde \vx$ is the result of the orthogonal ($L=K$) projection
+  method with initial vector $\vx^{(0)}$ if and only if it minimizes
+  the \putindex{A-norm} of the error over the space $\vx^{(0)}+K$. Namely, for the
+  solution $\vx$ of $\mata\vx=\vb$ there holds
+  \begin{gather}
+    \norm{\tilde\vx-\vx}_A = \min_{\vy\in\vx^{(0)}+K} \norm{\vy-\vx}_A.
+  \end{gather}
+  Here, $\norm\vy_A = \sqrt{\vy^*\mata\vy}$.
+\end{Theorem}
 
+\begin{Theorem}{projection-oblique-optimal}
+  Let $\mata\in\Rnn$ and $L=\mata K$. Then, $\tilde \vx$ is the result
+  of the (oblique) projection method with initial vector $\vx^{(0)}$
+  if and only if it minimizes the Euclidean norm of the residual
+  $\vb-\mata\tilde\vx$ over the space $\vx^{(0)}+K$. Namely, there
+  holds
+  \begin{gather}
+    \norm{\vb-\mata\tilde\vx}_2
+    = \min_{\vy\in\vx^{(0)}+K} \norm{\vb-\mata\vy}_2
+  \end{gather}
+\end{Theorem}
 
+\begin{Example}{projection-1d}
+  A one-dimensional projection method can be characterized by two
+  vectors $\vv$ and $\vw$. Then,
+  \begin{gather}
+    K = \spann\vv,
+    \qquad L = \spann\vw.
+  \end{gather}
+  The new solution is
+  \begin{gather}
+    \tilde\vx = \vx^{(0)}+\alpha \vv,
+  \end{gather}
+  where
+  \begin{gather}
+    \alpha = \frac{\scal(\vr^{(0)},\vw)}{\scal(\mata\vv,\vw)}
+  \end{gather}
+  is determined from the Galerkin condition $\vr^{(0)}-\mata\vy \perp \vw$
+\end{Example}
 
 %%% Local Variables:
 %%% mode: latex
