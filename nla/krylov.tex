@@ -124,6 +124,169 @@
   is determined from the Galerkin condition $\vr^{(0)}-\mata\vy \perp \vw$
 \end{Example}
 
+\begin{Algorithm*}{steepest-descent-algol}{The steepest descent method}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Rnn$ s.p.d.; $\quad\vx,\vb\in\R^n$
+    \State $\vr\gets \vb-\mata\vx$
+    \Repeat
+    \State $\alpha\gets\frac{\scal(\vr,\vr)}{\scal(\mata\vr,\vr)}$
+    \State $\vx \gets \vx + \alpha\vr$
+    \State $\vr \gets \vr-\alpha\mata\vr$
+    \Until convergence
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{remark}
+  In this algorithm, the operation $\mata\vr$ is applied twice. Since
+  in most implementations this will be the part with the most
+  computational operations, we introduce an auxiliary vector
+  $\vp = \mata\vr$, which can be used in lines 3 and 5. At the cost of
+  one additional vector, the numerical effort per step is almost
+  cut in half.
+\end{remark}
+
+\begin{Remark}{convergence-residual}
+  The residual $\vr = \vb - \mata\tilde\vx$ of the current iterate
+  $\tilde\vx$ measures the misfit of $\tilde\vx$ in the equation
+  $\mata\vx = \vb$. Since the error $\tilde\vx-\vx$ is unknown, we can
+  use it as criterion for the accuracy of the current
+  solution. Indeed, there holds
+  \begin{gather}
+    \norm{\vx-\tilde\vx}
+    = \norm*{\mata^{-1}\bigl(\mata\vx - \mata\tilde\vx\bigr)}
+    = \norm*{\mata^{-1}\bigl(\vb - \mata\tilde\vx\bigr)}
+    \le \norm{\mata^{-1}}\norm{\vr}.
+  \end{gather}
+  Therefore, the criterion for convergence of the algorithm is typically
+  \begin{gather}
+    \norm{\vr} \le \text{TOL},
+  \end{gather}
+  where TOL is a tolerance chosen by the user.
+
+  Note, that the computation of $\vr$ is subject to roundoff
+  errors. Thus, the tolerance should always be chosen
+  \begin{gather}
+    \text{TOL} > c\norm{\vb}\eps,
+  \end{gather}
+  where $\eps$ is the machine accuracy and $c$ should account for
+  error accumulation in the matrix-vector product.
+\end{Remark}
+
+\begin{Algorithm*}{steepest-descent-python1}{Steepest descent in Python}
+  \lstinputlisting{python/steepest-descent.py}
+\end{Algorithm*}
+
+\begin{remark}
+  Depending on the quality of the compiler/interpreter, the code line
+  \begin{lstlisting}[language=Python,numbers=none]
+    x += alpha*r
+  \end{lstlisting}
+  may involve creating an auxiliary vector $\vp = \alpha \vr$ and
+  adding this vector to $\vx$.  Obviously, this could be avoided by
+  directly implementing
+  \begin{lstlisting}[language=Python,numbers=none]
+    for i in range(0,n):
+      x[i] += alpha*r[i]
+  \end{lstlisting}
+  Since operations like this are ubuquitous in scientific computing,
+  they were standardized early on in the BLAS (basic linear algebra
+  subroutines) library. It contains the FORTRAN function
+  \begin{lstlisting}[language=Fortran,numbers=none]
+    SUBROUTINE DAXPY( n, alpha, x, incx, y, incy)
+  \end{lstlisting}
+  which computes $\vy\gets\vy+\alpha\vx$ for double precision vectors
+  of length $n$ (the increment arguments allow to skip elements). For
+  usage in Python, there is a wrapper
+  \begin{lstlisting}[language=Python,numbers=none]
+    scipy.linalg.blas.daxpy(x, y[, n, a, offx, incx, offy, incy])
+  \end{lstlisting}
+\end{remark}
+
+\begin{Algorithm*}{steepest-descent-python2}{Steepest descent with daxpy}
+  \lstinputlisting{python/steepest-descent-axpy.py}
+\end{Algorithm*}
+
+\begin{Lemma}{steepest-descent}
+  Each step of the steepest descent method computes the minimum of
+  $F(\vy) = \norm{\vy-\vx}_A^2$ along the line from the current
+  iterate $\vx^{(k)}$ in direction $-\nabla F(\vx^{(k)})$.
+\end{Lemma}
+
+\begin{Algorithm*}{minimal-residual-algol}{The minimal residual method}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Rnn$; $\quad\vx,\vb\in\R^n$
+    \State $\vr\gets \vb-\mata\vx$
+    \Repeat
+    \State $\alpha\gets\frac{\scal(\mata\vr,\vr)}{\scal(\mata\vr,\mata\vr)}$
+    \State $\vx \gets \vx + \alpha\vr$
+    \State $\vr \gets \vr-\alpha\mata\vr$
+    \Until convergence
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{Lemma}{minimal-residual}
+  Each step of the minimal method computes the minimum of
+  $F(\vy) = \norm{\vb-\mata\vy}_2^2$ along the line from the current
+  iterate $\vx^{(k)}$ in direction $\vr$.
+\end{Lemma}
+
+\begin{Lemma*}{kantorovich-inequality}{Kantorovich inequality}
+  Let $\mata\in\Rnn$ be symmetric, positive definite with minnimal and
+  maximal eigenvalues $\lambda_{\min}$ and $\lambda_{\max}$. Then, for
+  $\vx\in\R^n$ there holds
+  \begin{gather}
+    \frac{\scal(\mata\vx,\vx)\scal(\mata^{-1}\vx,\vx)}{\scal(\vx,\vx)^2}
+    \le \frac{(\lambda_{\min}+\lambda_{\max})^2}{4\lambda_{\min}\lambda_{\max}}
+  \end{gather}
+\end{Lemma*}
+
+\begin{Theorem}{steepest-descent-convergence}
+  Let $\mata\in\R^nn$ be symmetric, positive definite with extremal
+  eigenvalues $\lambda_{\min}$ and $\lambda_{\max}$. Then, the error
+  $\ve^{(k)} = \vx-\vx^{(k)}$ of the steepest descent method admits
+  the estimate
+  \begin{gather}
+    \norm{\ve^{(k+1)}}_A \le \rho \norm{\ve^{(k)}}_A,
+  \end{gather}
+  where the contraction number is
+  \begin{gather}
+    \rho
+    = \frac{\lambda_{\max}-\lambda_{\min}}{\lambda_{\max}+\lambda_{\min}}
+    = \frac{\cond_2\mata - 1}{\cond_2\mata+1}
+  \end{gather}
+\end{Theorem}
+
+\begin{Theorem}{minimal-residual-convergence}
+  Let $\mata\in\Rnn$ such that its symmetric part $(\mata+\mata^T)/2$
+  is positive definite. Then, the residuals $\vr^{(k)}$ of the minimal
+  residual method admit the estimate
+  \begin{gather}
+    \norm{\vr^{(k+1)}}_2 \le \rho \norm{\vr^{(k)}}_2,
+  \end{gather}
+  where the contraction number is
+  \begin{gather}
+    \rho = \left(1-\frac{\norm{\mata}^2}{\sigma^2}\right)^{\nicefrac12}
+  \end{gather}
+  and $\sigma$ is the smallest eigenvalue of $(\mata+\mata^T)/2$.
+\end{Theorem}
+
+\begin{remark}
+  Let $e_k$ be some measure of the error of a fixed-point iteration
+  with contraction number $\rho$ after $k$ steps. Then, there holds
+  \begin{gather}
+    e_k \le \rho^k e_0.
+  \end{gather}
+  Thus, the number of steps needed to obtain a (relative) reduction
+  $\epsilon = e_k/e_0$ of the error is
+  \begin{gather}
+    k \ge \frac{\log\eps}{\log\rho}.
+  \end{gather}
+  From this formula, we realize that the number of steps of such a
+  method grows linearly with the logarithm of the tolerance. Further,
+  it is inverse proportional to the logarithm of the contraction
+  number $\rho$.
+\end{remark}
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
