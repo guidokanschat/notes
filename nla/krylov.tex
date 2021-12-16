@@ -136,6 +136,12 @@
   \end{algorithmic}
 \end{Algorithm*}
 
+\begin{Lemma}{steepest-descent}
+  Each step of the steepest descent method computes the minimum of
+  $F(\vy) = \norm{\vy-\vx}_A^2$ along the line from the current
+  iterate $\vx^{(k)}$ in direction $-\nabla F(\vx^{(k)})$.
+\end{Lemma}
+
 \begin{remark}
   In this algorithm, the operation $\mata\vr$ is applied twice. Since
   in most implementations this will be the part with the most
@@ -206,12 +212,6 @@
   \lstinputlisting{python/steepest-descent-axpy.py}
 \end{Algorithm*}
 
-\begin{Lemma}{steepest-descent}
-  Each step of the steepest descent method computes the minimum of
-  $F(\vy) = \norm{\vy-\vx}_A^2$ along the line from the current
-  iterate $\vx^{(k)}$ in direction $-\nabla F(\vx^{(k)})$.
-\end{Lemma}
-
 \begin{Algorithm*}{minimal-residual-algol}{The minimal residual method}
   \begin{algorithmic}[1]
     \Require $\mata\in\Rnn$; $\quad\vx,\vb\in\R^n$
@@ -228,6 +228,16 @@
   Each step of the minimal method computes the minimum of
   $F(\vy) = \norm{\vb-\mata\vy}_2^2$ along the line from the current
   iterate $\vx^{(k)}$ in direction $\vr$.
+\end{Lemma}
+
+\begin{Lemma}{lucky-breakdown}
+  The iteration sequences $\{\vx^{(k)}\}$ of the steppest descent and
+minimal residual methods, respectively, are well defined except for
+the case where $\vx^{(k)}$ is the exact solution $\vx$ and thus
+$\vr^{(k)} = 0$.
+
+We refer to this phenomenon as \define{lucky breakdown}, since the
+method only fails after the exact solution has been found.
 \end{Lemma}
 
 \begin{Lemma*}{kantorovich-inequality}{Kantorovich inequality}
@@ -253,6 +263,7 @@
     \rho
     = \frac{\lambda_{\max}-\lambda_{\min}}{\lambda_{\max}+\lambda_{\min}}
     = \frac{\cond_2\mata - 1}{\cond_2\mata+1}
+    = 1-\frac2{\cond_2\mata+1}
   \end{gather}
 \end{Theorem}
 
