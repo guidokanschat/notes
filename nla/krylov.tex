@@ -231,7 +231,7 @@
 \end{Lemma}
 
 \begin{Lemma}{lucky-breakdown}
-  The iteration sequences $\{\vx^{(k)}\}$ of the steppest descent and
+  The iteration sequences $\{\vx^{(k)}\}$ of the steepest descent and
 minimal residual methods, respectively, are well defined except for
 the case where $\vx^{(k)}$ is the exact solution $\vx$ and thus
 $\vr^{(k)} = 0$.
@@ -241,7 +241,7 @@ method only fails after the exact solution has been found.
 \end{Lemma}
 
 \begin{Lemma*}{kantorovich-inequality}{Kantorovich inequality}
-  Let $\mata\in\Rnn$ be symmetric, positive definite with minnimal and
+  Let $\mata\in\Rnn$ be symmetric, positive definite with minimal and
   maximal eigenvalues $\lambda_{\min}$ and $\lambda_{\max}$. Then, for
   $\vx\in\R^n$ there holds
   \begin{gather}
@@ -276,9 +276,9 @@ method only fails after the exact solution has been found.
   \end{gather}
   where the contraction number is
   \begin{gather}
-    \rho = \left(1-\frac{\norm{\mata}^2}{\sigma^2}\right)^{\nicefrac12}
+    \rho = \left(1-\frac{\mu^2}{\norm{\mata}^2}\right)^{\nicefrac12}
   \end{gather}
-  and $\sigma$ is the smallest eigenvalue of $(\mata+\mata^T)/2$.
+  and $\mu$ is the smallest eigenvalue of $(\mata+\mata^T)/2$.
 \end{Theorem}
 
 \begin{remark}
