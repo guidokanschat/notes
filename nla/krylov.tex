@@ -409,7 +409,7 @@ method only fails after the exact solution has been found.
   See \cite[Proposition 6.3]{Saad00}.
 \end{proof}
 
-\subsection{The Arnoldi procedure}
+\subsection{The Arnoldi procedure and GMRES}
 
 \begin{Algorithm*}{arnoldi-1}{Arnoldi Gram-Schmidt}
   \algtext*{EndIf}
@@ -515,6 +515,129 @@ method only fails after the exact solution has been found.
     \norm{\vb-\mata\vx^{(m)}}_2 = h_{m+1,m} \abs{\ve_m^T \vy_m}.
   \end{gather}  
 \end{Theorem}
+
+
+\begin{Algorithm*}{gmres}{Generalized Minimal Residual}
+  Given $\vx^{(0)}\in\R^n$, the ``iterate'' $\vx^{(m)}$ of the
+  \define{GMRES} method is computed by the following steps.
+  \begin{enumerate}
+  \item Compute the Arnoldi basis $\matv_{m+1}$ of
+    $\krylov_{m+1}(\mata,\vr^{(0)})$ and the matrix $\overline\matH_m\in\R^{m+1\times m}$.
+  \item Solve the least squares problem
+    \begin{gather}
+      \norm{\beta\ve_1 - \overline\matH_m \vy}_2 \stackrel{!}{=} \min
+    \end{gather}
+    in $\R^m$ with $\beta = \norm{\vr^{(0)}}_2$.
+  \item Let
+    \begin{gather}
+      \vx^{(m)} = \vx^{(0)} + \matv_{m}\vy
+    \end{gather}
+  \end{enumerate}
+\end{Algorithm*}
+
+\begin{remark}
+  The GMRES method is not really an iterative method. Indeed, the
+  intermediate iterates $\vx^{(k)}$ may not even be computed, since
+  the norm of the residual can be computed by
+  \slideref{Theorem}{arnoldi-linear-residual}.
+\end{remark}
+
+\begin{Theorem}{gmres-breakdown}
+  If the GMRES method breaks down at step $m$, then
+  $\vr^{(m)}=0$. Thus, the GMRES method only encounters a
+  \putindex{lucky breakdown}.
+\end{Theorem}
+
+\begin{remark}
+  The GMRES method encounters a problem if convergence is slow: the
+  effort for computing the last basis vector in $\matv_m$ is of order
+  $mn$, the effort for solving the least-squares problem is
+  $m^3$. Similarly, the storage requirement for $\matv_m$ is $mn$ and
+  for $\overline \matH_m$, it is $m^2$. Thus, the algorithm is
+  feasible for large sparse matrices only if $m\ll n$.
+
+  Therefore, we introduce two variants of the GMRES algorithm:
+  \begin{itemize}
+  \item Restarted GMRES simply deletes the whole basis $\matv_m$ and the matrix $\overline\matH_m$ every $k$-th step starts fresh.
+  \item Truncated GMRES orthogonalizes only with respect to the last
+    $k$ basis vectors.
+  \end{itemize}
+\end{remark}
+
+\begin{Algorithm*}{gmres-restart}{Restarted GMRES}
+  
+\end{Algorithm*}
+
+\begin{Algorithm*}{gmres-truncated}{Truncated GMRES}
+  
+\end{Algorithm*}
+
+
+\subsection{The Lanczos procedure and the conjugate gradient method}
+
+\begin{Lemma}{arnoldi-symmetric}
+  If the matrix $\mata$ is symmetric, the vectors of the Arnoldi
+  procedure admit the three-term recurrence relation
+  \begin{gather}
+    \beta_{j+1}\vv_{j+1} = \mata \vv_j - \alpha_j \vv_j - \beta_j\vv_{j-1}
+  \end{gather}
+  with $\vv_0 = 0$, $\beta_1 = 0$ and
+  \begin{gather}
+    \alpha_j =  h_{jj}, \qquad \beta_j = h_{j-1,j},
+    \qquad j=1,\dots
+  \end{gather}
+  In particular, orthogonalization is only necessary with respect to
+  the previous two basis vectors.
+\end{Lemma}
+
+\begin{proof}
+  See \cite[Section 6.6.1]{Saad00}.
+\end{proof}
+
+\begin{Algorithm*}{lanczos}{Lanczos}
+  \algtext*{EndIf}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Rnn$; $\quad\vv_1\in\R^n, \norm{\vv_1}_2 = 1$, $\vv_0=0$, $\beta_1=0$.
+    \For{$j=1,\dots,m$}
+    \State $\vw_j \gets \mata\vv_j - \beta_j \vv_{j-1}$
+    \State $\alpha_{j} \gets \scal(\vw_j,\vv_j)$
+    \State $\vw_j \gets \vw_j - \alpha_j\vv_i$
+    \State $\beta_{j+1} \gets \norm{\vw_j}_2$
+    \If{$\beta_{j+1}=0$} \textbf{stop}\EndIf
+    \State $\vv_{j+1} = \nicefrac{\vw_j}{\beta_{j+1}}$
+    \EndFor
+  \end{algorithmic}  
+\end{Algorithm*}
+
+\begin{Lemma}{lanczos-linear}
+  The Galerkin approximation   \begin{align}
+    x^{(m)} &\in x^{(0)} + \krylov_m(\mata,r^{(0)})\\
+    b-\mata x^{(m)} &\perp \krylov_m(\mata,r^{(0)}),
+  \end{align}
+  is obtained as $\vx^{(m)} = \vx^{(0)} + \matv_m \vy_m$, where $\matv_m$ is the basis obtained from the Lanczos process and $\vy_m$ solves
+  \begin{gather}
+    \matH_m\vy_m = \beta\ve_1,
+    \qquad \matH_m =
+    \begin{pmatrix}
+      \alpha_1 & \beta_2\\
+      \beta_2 & \alpha_2 & \ddots\\
+      &\ddots&\ddots&\beta_m\\
+      &&\beta_{m}&\alpha_m
+    \end{pmatrix}.
+  \end{gather}
+  For the residual, there holds
+  \begin{gather}
+    \vr^{(m)} = \vb-\mata\vx^{(m)} = -\beta_{m+1} \ve_m^T \vy_m \vv_{m+1}.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  These are the statements of
+  \slideref{Theorem}{arnoldi-linear-system} and
+  \slideref{Theorem}{arnoldi-linear-residual}. Since the Lanczos
+  process is just a specialization of the Arnoldi process, they still
+  hold.
+\end{proof}
 
 
 
