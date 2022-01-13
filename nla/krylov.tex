@@ -459,6 +459,32 @@ method only fails after the exact solution has been found.
   See \cite[Proposition 6.5]{Saad00}.
 \end{proof}
 
+\begin{remark}
+  The next step of the Arnoldi method can always be computed if
+  $h_{j+1,j}\neq 0$ in line 9. If it cannot be, we speak of a
+  \define{breakdown} of the method.
+\end{remark}
+
+\begin{Lemma}{arnoldi-breakdown}
+  The Arnoldi method breaks down at step $j$ if and only if the subspace $\krylov_j$ is invariant under $\mata$ or equivalently, the minimal polynomial of $\vv_1$ is of degree $j$.
+\end{Lemma}
+
+\begin{proof}
+  See \cite[Proposition 6.6]{Saad00}.
+\end{proof}
+
+\begin{Remark}{arnoldi-householder}
+  The orthogonalization in Arnoldi's method is better performed by
+  Householder reflections. This corresponds to performing a
+  QR-factorization on the matrix
+  \begin{gather}
+    \left(\vv_1,\mata\vv_1, \mata^2\vv_1,\dots,\mata^{m-1}\vv_1\right).
+  \end{gather}
+  It does not produche the matrix $\matH$ in the same obvious way as
+  the Gram-Schmidt version, but \cite[Algorithm 6.3]{Saad00} shows how
+  to generate it.
+\end{Remark}
+
 \begin{Theorem}{arnoldi-linear-system}
   Given an initial vector $\vx^{(0)}$ and
   $\vr^{(0)} = \vb - \mata \vx^{(0)}$. Let $\beta=\norm{\vr^{(0)}}$
@@ -470,13 +496,27 @@ method only fails after the exact solution has been found.
   \end{align}
   is obtained in two steps. Solve in $\R^m$
   \begin{gather}
-    \matH_m\vy = \beta\ve_1,
+    \matH_m\vy_m = \beta\ve_1,
   \end{gather}
   and let
   \begin{gather}
-    \vx^{(m)} = \vx^{(0)} + \matv_m \vy.
+    \vx^{(m)} = \vx^{(0)} + \matv_m \vy_m.
   \end{gather}
 \end{Theorem}
+
+\begin{Theorem}{arnoldi-linear-residual}
+  Let $\vx^{(m)}$ be the Galerkin solution in
+  \slideref{Theorem}{arnoldi-linear-system}. Then, there holds
+  \begin{gather}
+    \vb-\mata\vx^{(m)} = -h_{m+1,m} \ve_m^T \vy_m \vv_{m+1},
+  \end{gather}
+  and therefore
+  \begin{gather}
+    \norm{\vb-\mata\vx^{(m)}}_2 = h_{m+1,m} \abs{\ve_m^T \vy_m}.
+  \end{gather}  
+\end{Theorem}
+
+
 
 %%% Local Variables:
 %%% mode: latex
