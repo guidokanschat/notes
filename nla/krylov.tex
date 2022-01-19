@@ -864,6 +864,77 @@ method only fails after the exact solution has been found.
   orthogonal vectors.
 \end{proof}
 
+\subsection{Convergence analysis}
+
+\begin{Lemma}{cg-optimality}
+  For the error $\ve^{(k)} = \vx^{(k)}-\vx$ after $k$ steps of the cg
+  method there holds
+  \begin{align}
+    \norm{\ve^{(k)}}_A
+    & = \min_{p\in \P_{k-1}}
+      \norm{\ve^{(0)} + \mata p(\mata) \ve^{(0)}}_A\\
+    &= \min_{\substack{p\in\P_k\\p(0) = 0}} \norm{p(\mata)\ve^{(0)}}_A.
+  \end{align}
+\end{Lemma}
+
+\begin{proof}
+  There holds $\vx^{(k)} = \vx^{(0)} + \vw$ with
+  $\vw \in \krylov_k(\mata,\vr^{(0)})$. Then, by
+  \slideref{Lemma}{krylov-polynomial}, there is $p\in\P_{k-1}$ such
+  that $\vw = -p(\mata) \vr^{(0)}$. Thus
+  \begin{align}
+    \vx^{(k)} - \vx
+    &= \vx^{(0)} - \vx - p(\mata)\vr^{(0)}\\
+    &= \vx^{(0)} - \vx - p(\mata) (\vb-\mata\vx^{(0)})\\
+    &= \vx^{(0)} - \vx - p(\mata) (\mata\vx-\mata\vx^{(0)})\\
+    &= \vx^{(0)} - \vx - \mata p(\mata) (\vx^{(0)}-\vx).
+  \end{align}
+  On the other hand, we have the optimality of projection methods in
+  \slideref{Theorem}{projection-orthogonal-optimal}, which states
+  \begin{align}
+    \norm{\ve^{(k)} -\vx}_A
+    &= \min_{\vw\in \krylov_k(\mata,\vr^{(0)})} \norm{\vx^{(0)}+\vw-\vx}_A\\
+    &= \min_{\vw\in \krylov_k(\mata,\vr^{(0)})} \norm{\ve^{(0)}+\vw}_A.
+  \end{align}
+  Thus, we obtain the first expression. The second follows by noticing
+  that the set of polynomials $q(x) = 1+xp(x)$ with $p\in\P_{k-1}$ is
+  just the set of polynomials in $\P_k$ with coefficient $a_0 = 1$.
+\end{proof}
+
+
+
+\begin{Satz}{cg-kondition}
+  Der Fehler des cg-Verfahrens genügt der Abschätzung
+  \begin{gather}
+    \norm{e^{(k)}}_A \le 2 \left(
+      \frac{\sqrt{\cond_2(A)}-1}{\sqrt{\cond_2(A)}+1}\right)^k
+    \norm{e^{(0)}}_A
+  \end{gather}
+\end{Satz}
+
+\begin{proof}
+  Für die Tschebyscheff-Polynome gilt die Darstellung
+  \begin{gather}
+    \pchebyshev_k = \frac12
+    \left(
+      \left(x-\sqrt{x^2-1}\right)^k
+      +
+      \left(x+\sqrt{x^2-1}\right)^k
+    \right),\qquad\abs{x}\ge 1.
+  \end{gather}
+  Es gilt
+  \begin{gather}
+    \frac{\lambda_{\max}+\lambda_{\min}}{\lambda_{\max}-\lambda_{\min}}
+    = \frac{\cond_2(A)+1}{\cond_2(A)-1}.
+  \end{gather}
+  Einsetzen in~\eqref{eq:chebyshev-cg1} mit $a=\lambda_{\min}$ und $b=\lambda_{\max}$ ergibt
+  \begin{gather}
+    \pchebyshev_k\left(\frac{\cond_2(A)+1}{\cond_2(A)-1}\right)
+    = 
+  \end{gather}
+\end{proof}
+
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
