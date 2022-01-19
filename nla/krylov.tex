@@ -565,13 +565,23 @@ method only fails after the exact solution has been found.
 \end{remark}
 
 \begin{Algorithm*}{gmres-restart}{Restarted GMRES}
-  
+  \begin{enumerate}
+  \item Choose a maximal dimension $m$ of the Krylov space
+  \item Begin with an initial guess $\vx^{(0)}$.
+  \item For $k>0$, given $\vx^{(km)}$, perform the GMRES method with
+    basis size $m$ to obtain $\vx^{((k+1)m)}$.
+  \item Check the stopping criterion as usual inside the GMRES method
+  \end{enumerate}
 \end{Algorithm*}
 
 \begin{Algorithm*}{gmres-truncated}{Truncated GMRES}
-  
+  Run the GMRES method as usual, but in the Arnoldi process, only
+  orthogonalize with respect to the last $k$ vectors for fixed $k$.
 \end{Algorithm*}
 
+\begin{remark}
+  Note that both modifications destroy the minimization property of the method.
+\end{remark}
 
 \subsection{The Lanczos procedure and the conjugate gradient method}
 
@@ -609,7 +619,7 @@ method only fails after the exact solution has been found.
   \end{algorithmic}  
 \end{Algorithm*}
 
-\begin{Lemma}{lanczos-linear}
+\begin{Lemma*}{lanczos-linear}{Lanczos solver}
   The Galerkin approximation   \begin{align}
     x^{(m)} &\in x^{(0)} + \krylov_m(\mata,r^{(0)})\\
     b-\mata x^{(m)} &\perp \krylov_m(\mata,r^{(0)}),
@@ -629,7 +639,7 @@ method only fails after the exact solution has been found.
   \begin{gather}
     \vr^{(m)} = \vb-\mata\vx^{(m)} = -\beta_{m+1} \ve_m^T \vy_m \vv_{m+1}.
   \end{gather}
-\end{Lemma}
+\end{Lemma*}
 
 \begin{proof}
   These are the statements of
@@ -639,7 +649,220 @@ method only fails after the exact solution has been found.
   hold.
 \end{proof}
 
+\begin{remark}
+  The main difference between Arnoldi and Lanczos is the fact that
+  every step of the Lanczos process onle requires the previous two
+  vectors, while Arnoldi requires storing the whole history.
 
+  This implies, that Lanczos itself is much closer to the concept of
+  an iterative method than Arnoldi, weren't it for the computation of
+  $\vy_m$.
+
+  We will now develop a new algorithm based on the observation that
+  also the corrections for $\vx^{(m)}$ can be computed incrementally.
+\end{remark}
+
+\begin{Lemma}{lanczos-incremental}
+  Given the vector $\vx^{(m)}$ in the Lanczos solver, the vector
+  $\vx^{(m+1)}$ can be computed incrementally by an update of the form
+  \begin{gather}
+    \vx^{(m+1)} = \vx^{(m)} + \zeta_{m+1}\vp^{(m+1)},
+  \end{gather}
+  where the vector $\vp^{(m+1)}$ itself is computed only using the
+  vectors $\vp^{(m)}$ and $\vv^{(m+1)}$.
+\end{Lemma}
+
+\begin{proof}
+  See \cite[Section 6.7.1]{Saad00}.
+
+  First, we compute the LU factorization of $\matH_m$ as
+  \begin{gather}
+    \matH_m =
+    \begin{pmatrix}
+      1\\\lambda_2&1\\
+      &\ddots&\ddots\\
+      &&\lambda_m&1
+    \end{pmatrix}
+    \times
+    \begin{pmatrix}
+      \eta_1&\beta_2\\
+      &\ddots&\ddots\\
+      &&\eta_{m-1}&\beta_m\\
+      &&&\eta_m
+    \end{pmatrix},
+  \end{gather}
+  where
+  \begin{gather}
+    \lambda_k = \frac{\beta_k}{\eta_{k-1}},
+    \qquad
+    \eta_k = \alpha_k - \lambda_k \beta_k.
+  \end{gather}
+  We note that LU decomposition works from top to bottom and left to
+  right, such that already processed rows do not change when adding
+  more steps to the algorithm.
+
+  Now we introduce matrices and vectors
+  \begin{gather}
+    \matp_m = \matv_m \matu_m^{-1} \in \R^{n\times m},
+    \qquad \vz_m = \matl_m^{-1} \beta \ve_1\in \R^m,
+  \end{gather}
+  such that
+  \begin{align}
+    \vx^{(m)}
+    &= \vx^{(0)} + \matv_m \matu_m^{-1} \matl_m^{-1} \beta \ve_1\\
+    &= \vx^{(0)} + \matp_m \vz_m
+  \end{align}
+  With $\zeta_k$ following the recursion
+  $\zeta_k = - \lambda_k \zeta_{k-1}$, we realize
+  \begin{gather}
+    \vz_m =
+    \begin{pmatrix}
+      \zeta_1\\\vdots\\\zeta_m
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      \vz_{m-1}\\\zeta_m
+    \end{pmatrix}.
+  \end{gather}
+  Let $\vp_k$ be the column vectors of $\matp_m$. Writing the
+  definition of $\matp_m$ in the form $\matp_m \matu_m = \matv_m$, we
+  obtain the relation
+  \begin{gather}
+    \label{eq:nla:krylov:lanczos-p}
+    \vp_k = \frac1{\eta_k}\bigl(\vv_k - \beta_k \vp_{k-1}\bigr).
+  \end{gather}
+  Thus,
+  \begin{gather}
+    \matp_m =
+    \begin{pmatrix}
+      \vp_1,\dots,\vp_m
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      \matp_{m-1},\vp_m
+    \end{pmatrix}.
+  \end{gather}
+  There holds
+  \begin{align}
+    \vx^{(m)}
+    &= \vx^{(0)} + \sum_{k=1}^m \zeta_k \vp_k,\\
+    &= \vx^{(m-1)} + \zeta_m \vp_m.
+  \end{align}
+\end{proof}
+
+\begin{remark}
+  Thus, we have proven a simple update formula for the iterates
+  $\vx^{(m)}$ based on an additional vector $\vp_m$, which is again
+  obtained by an update formula.
+
+  We have used an LU decomposition without pivoting though in the
+  derivation of this algorithm, which might suffer from numerical
+  instability. Therefore, we will now analyze the main properties of
+  the sequences $\vv_m$, $\vp_m$ and $\vr_m$ and then write a new
+  algorithm to obtain these sequences.
+\end{remark}
+
+\begin{Lemma}{lanczos-orthogonality}
+  The sequences of vector $\vr_m = \vb-\mata\vx^{(m)}$ and $\vp_m$
+  constructed in the preceding lemma have the following orthogonality
+  properties:
+  \begin{xalignat}2
+    \scal(\vr_i,\vr_k) &= 0 & i&\neq k\\
+    \scal(\mata\vp_i,\vp_k) &= 0 & i&\neq k.
+  \end{xalignat}
+\end{Lemma}
+
+\begin{proof}
+  Orthogonality of the residuals follows from
+  \slideref{Lemma}{lanczos-linear}, since $\vr_m$ is aligned with
+  $\vv_{m+1}$.
+
+  The second orthogonality relation is equivalent to the fact that
+  $\matp_m^T\mata\matp_m$ is diagonal.
+  \begin{align}
+    \matp_m^T\mata\matp_m
+    &= \matu_m^{-T}\matv_m^T\mata\matv_m\matu_m^{-1}\\
+    &= \matu_m^{-T}\matH_m\matu_m^{-1}\\
+    &= \matu_m^{-T}\matl_m.
+  \end{align}
+  The first term is symmetric.  The last is the product of two lower
+  triangular matrices and thus lower triangular. Thus, the matrix must
+  be diagonal.
+\end{proof}
+
+\begin{Algorithm*}{cg}{Conjugate Gradient Method}
+  \begin{algorithmic}[1]
+    \State $\vr_0 = b-\mata \vx_0$
+    \State $\vp_0 = \vr_0$
+    \For{$j=0,1,\dots$}
+    \State $\alpha_j = \frac{\scal(\vr_j,\vr_j)}{\scal(\mata\vp_j,\vp_j)}$
+    \State $\vx_{j+1} = \vx_j + \alpha_j \vp_j$
+    \State $\vr_{j+1} = \vr_j - \alpha_j \mata \vp_j$
+    \State $\beta_j =\frac{\scal(\vr_{j+1},\vr_{j+1})}{\scal(\vr_j,\vr_j)}$
+    \State $\vp_{j+1} = r_{j+1} + \beta_j \vp_j$
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{remark}
+  Note the index shift for the vectors $\vp_j$!
+\end{remark}
+
+\begin{Lemma}{cg-orthogonality}
+  The sequences $\vx_j$ and $\vr_j$ produced by the cg method coincide
+  with those of the Lanczos solver (in exact arithmetic). The sequence
+  $\vp_j$ of the cg method coincides up to scalar factors with the one
+  in \slideref{Lemma}{lanczos-incremental}.
+\end{Lemma}
+
+\begin{proof}
+  Note that the vectors $\vp_j$ refers to the cg algorithm, the
+  vectors from \slideref{Lemma}{lanczos-incremental} will be
+  distinguished clearly.
+
+  We start with the update formula
+  $\vx_{j+1} = \vx_j + \alpha_j \vp_j$, which immediately implies
+  \begin{gather}
+    \vr_{j+1} = \vr_j - \alpha_j \mata\vp_j.
+  \end{gather}
+  Orthogonality between $\vr_{j+1}$ and $\vr_j$ implies
+  \begin{gather}
+    \alpha_j = \frac{\scal(\vr_j,\vr_j)}{\scal(\mata\vp_j,\vr_j)}.
+  \end{gather}
+  Since $\vr_j$ is a multiple of $\vv_{j+1}$, the update
+  formula~\eqref{eq:nla:krylov:lanczos-p} for $\vp_{j+1}$ (after index
+  shift) implies that the direction is a linear combination of
+  $\vr_{j+1}$ and $\vp_j$. After arbitrary scaling,
+  \begin{gather}
+    \vp_{j+1} = \vr_{j+1} + \beta_j \vp_{j}.
+  \end{gather}
+  A-orthogonality implies
+  \begin{gather}
+    \beta_j = -\frac{\scal(\mata \vp_j,\vr_{j+1})}{\scal(\mata \vp_j,\vp_j)}.
+  \end{gather}
+  Note that the orthogonality relation determines $\vp_{j+1}$ uniquely
+  up to scaling in this subspace. After the scaling has been chosen,
+  $\vp_{j+1}$ the orthogonality relation for $\vr_{j+1}$ uniquely
+  determines the update for $\vx_{j+1}$, such that the sequences
+  indeed coincide.
+
+  The definition of the coefficients still differs from the cg
+  algorithm. But, we observe
+  \begin{gather}
+    \scal(\mata\vp_j,\vr_j) = \scal(\mata\vp_j,\vp_j-\beta_{j-1}\vp_{j-1})
+    = \scal(\mata\vp_j,\vp_j).
+  \end{gather}
+  Similarly, from the update formula for the residual, we get
+  \begin{gather}
+    \mata\vp_j = \frac1{\alpha_j}\bigl(\vr_j-\vr_{j+1}\bigr),
+  \end{gather}
+  and thus,
+  \begin{gather}
+    \beta_j = \frac1{\alpha_j}\frac{\scal(\vr_{j+1},\vr_{j+1}-\vr_j)}{\scal(\mata\vp_j,\vp_j)} = \frac{\scal(\vr_{j+1},\vr_{j+1})}{\scal(\vr_{j},\vr_{j})}.
+  \end{gather}
+  Note that these forms avoid inner products of possibly almost
+  orthogonal vectors.
+\end{proof}
 
 %%% Local Variables:
 %%% mode: latex
