@@ -183,7 +183,7 @@
     & j&\text{ ungerade}.
   \end{xalignat}
   Therefore, 
-  $q_n$ changes sigh at at least $n$ points and thus has at least $n$ roots.
+  $q_n$ changes sign at at least $n$ points and thus has at least $n$ roots.
   From
   $q_n\in\P_{n-1}$ we deduce $q_n=0$ and thus $p=\pchebyshev_n$ as a contradiction.
   After scaling by $2^{n-1}$ we obtain
@@ -227,7 +227,7 @@
   Let $[a,b]$ be an interval with $0 < a$. Then, the polynomial
   \begin{gather}
     \widehat \pchebyshev_n(x)
-    = \frac{\pchebyshev_n\left(\frac{a+b-2t}{b-a}\right)}%
+    = \frac{\pchebyshev_n\left(\frac{a+b-2x}{b-a}\right)}%
     {\pchebyshev_n\left(\frac{a+b}{b-a}\right)}
   \end{gather}
   solves the minimization problem
@@ -237,12 +237,39 @@
     \max_{x\in[a,b]}{\abs{p(x)}}.
   \end{gather}
   There holds
-  \begin{gather}
+  \begin{align}
     \label{eq:chebyshev-cg1}
     \max_{x\in[a,b]}{\abs{\widehat \pchebyshev_n(x)}}
-    = \left(\pchebyshev_n\left(\frac{a+b}{b-a}\right)\right)^{-1}
-  \end{gather}
+    &= \left(\pchebyshev_n\left(\frac{a+b}{b-a}\right)\right)^{-1}\\
+    & \le \left(\frac{\sqrt b-\sqrt a}{\sqrt b + \sqrt a}\right)^n.
+  \end{align}
 \end{Corollary}
+
+\begin{proof}
+  The Chebysshev polynomial $\pchebyshev_n$ is the one with minimal maximum on $[-1,1]$ and maximal growth outside this interval. Thus, if we transform it to the interval $[a,b]$ by mapping
+  \begin{gather}
+    x \mapsto \frac{a+b-2x}{b-a},
+  \end{gather}
+  it is the polynomial with maximal absolute value 1 inside $[a,b]$
+  with maximal value at 0. Dividing by this value, it solves the
+  stated minimization problem and \eqref{eq:chebyshev-cg1} holds.
+
+  To further estimate this value note that
+  \begin{align}
+    \pchebyshev_n(x)
+    &= \frac12
+      \left(x-\sqrt{x^2-1}\right)^n
+      +
+      \left(x+\sqrt{x^2-1}\right)^n\\
+    &\ge \left(x+\sqrt{x^2-1}\right)^n.
+  \end{align}
+  Entering $x = \frac{a+b}{b-a}$ yields
+  \begin{align}
+    \frac{a+b+\sqrt{(a+b)^2-(b-a)^2}}{b-a}
+    &= \frac{(\sqrt a + \sqrt b)^2}{b-a}\\
+    &= \frac{\sqrt b + \sqrt a}{\sqrt b-\sqrt a}.
+  \end{align}
+\end{proof}
 
 \bibliographystyle{alpha}
 \bibliography{all}

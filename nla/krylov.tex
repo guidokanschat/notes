@@ -866,16 +866,22 @@ method only fails after the exact solution has been found.
 
 \subsection{Convergence analysis}
 
-\begin{Lemma}{cg-optimality}
+\begin{intro}
+  Here, we will develop a sequence of error estimates for the
+  conjugate gradient method based on its optimality as a projection
+  method stated in \slideref{Theorem}{projection-orthogonal-optimal}. These
+\end{intro}
+
+\begin{Theorem}{cg-optimality}
   For the error $\ve^{(k)} = \vx^{(k)}-\vx$ after $k$ steps of the cg
   method there holds
   \begin{align}
     \norm{\ve^{(k)}}_A
     & = \min_{p\in \P_{k-1}}
       \norm{\ve^{(0)} + \mata p(\mata) \ve^{(0)}}_A\\
-    &= \min_{\substack{p\in\P_k\\p(0) = 0}} \norm{p(\mata)\ve^{(0)}}_A.
+    &= \min_{\substack{p\in\P_k\\p(0) = 1}} \norm{p(\mata)\ve^{(0)}}_A.
   \end{align}
-\end{Lemma}
+\end{Theorem}
 
 \begin{proof}
   There holds $\vx^{(k)} = \vx^{(0)} + \vw$ with
@@ -901,37 +907,88 @@ method only fails after the exact solution has been found.
   just the set of polynomials in $\P_k$ with coefficient $a_0 = 1$.
 \end{proof}
 
+\begin{Corollary}{cg-optimality-spectrum}
+  Let $\sigma(\mata) = \{\lambda_1,\dots,\lambda_n\} \subset \R^+$ be
+  the spectrum of $\mata$. Then, the error after $k$ steps of the
+  conjugate gradient method follows the estimate
+  \begin{gather}
+    \norm{\ve^{(k)}}_A \le \rho_k \norm{\ve^{(0)}}_A,
+  \end{gather}
+  where
+  \begin{gather}
+    \rho_k = \min_{\substack{p\in\P_k\\p(0) = 1}} \max_{\lambda\in\sigma(\mata)} \abs{p(\lambda)}.
+  \end{gather}
+\end{Corollary}
 
+\begin{proof}
+  First, since we apply the cg iteration to s.p.d. matrices, there is
+  an orthogonal basis $\{\vv_1,\dots,\vv_n\}$ of eigenvectors of
+  $\mata$ with real, positive eigenvalues $\lambda_i$. Thus, we can
+  write with some coefficients $\alpha_i$:
+  \begin{gather}
+    \ve^{(0)} = \sum_{i=1}^n \alpha_i \vv_i,
+    \qquad
+    \ve^{(k)} = \sum_{i=1}^n \alpha_i p(\lambda_i) \vv_i.    
+  \end{gather}
+  Hence, we can estimate
+  \begin{align}
+    \norm{\ve^{(k)}}_A^2
+    &= \sum_{i=1}^n \lambda_i\alpha_i^2 p(\lambda_i)^2 \norm{\vv_i}_A^2\\
+    & \le \max_i p(\lambda_i)^2 \sum_{i=1}^n \lambda_i\alpha_i^2\norm{\vv_i}_A^2\\
+    &= \max_i p(\lambda_i)^2 \norm{\ve^{(0)}}_A^2.
+  \end{align}
+  The statement now follows from \slideref{Theorem}{cg-optimality}.
+\end{proof}
 
-\begin{Satz}{cg-kondition}
-  Der Fehler des cg-Verfahrens genügt der Abschätzung
+\begin{remark}
+  It is important to note that the preceding corollary is close to
+  optimal. In particular, it can exploit any information which is
+  known about the spectrum. In particular, the following statements are true:
+  \begin{enumerate}
+  \item If the matrix $\mata$ only has $k$ distinct eigenvalues, then
+    the cg iteration converges to the solution in $k$ steps.
+  \item If the eigenvalues are clustered around $k$ values, then the
+    gain in the first $k$ steps will be large.
+  \item If the spectrum consists of a continuum plus a single outlier,
+    the method will perform almost as if the outlier did not exist.
+  \end{enumerate}
+  The following corollary now deals with the case that the spectrum
+  has no particular structure, but fills a continuous interval
+  somewhat evenly.
+\end{remark}
+
+\begin{Corollary}{cg-condition-number}
+  The error after $k$ steps of the cg method admits the estimate
   \begin{gather}
     \norm{e^{(k)}}_A \le 2 \left(
       \frac{\sqrt{\cond_2(A)}-1}{\sqrt{\cond_2(A)}+1}\right)^k
-    \norm{e^{(0)}}_A
+    \norm{e^{(0)}}_A.
   \end{gather}
-\end{Satz}
+\end{Corollary}
 
 \begin{proof}
-  Für die Tschebyscheff-Polynome gilt die Darstellung
+  We make no further assumtions on the spectrum of $\mata$ except that
+  all eigenvalues are in the interval
+  $[\lambda_{\min},\lambda_{\max}]$. Thus, we estimate the factors $\rho_k$ in \slideref{Corollary}{cg-optimality-spectrum} by
   \begin{gather}
-    \pchebyshev_k = \frac12
-    \left(
-      \left(x-\sqrt{x^2-1}\right)^k
-      +
-      \left(x+\sqrt{x^2-1}\right)^k
-    \right),\qquad\abs{x}\ge 1.
+    \rho_k \le \min_{\substack{p\in\P_k\\p(0) = 1}}
+    \max_{\lambda\in[\lambda_{\min},\lambda_{\max}]} \abs{p(\lambda)}.
   \end{gather}
-  Es gilt
-  \begin{gather}
-    \frac{\lambda_{\max}+\lambda_{\min}}{\lambda_{\max}-\lambda_{\min}}
-    = \frac{\cond_2(A)+1}{\cond_2(A)-1}.
-  \end{gather}
-  Einsetzen in~\eqref{eq:chebyshev-cg1} mit $a=\lambda_{\min}$ und $b=\lambda_{\max}$ ergibt
-  \begin{gather}
-    \pchebyshev_k\left(\frac{\cond_2(A)+1}{\cond_2(A)-1}\right)
-    = 
-  \end{gather}
+  
+  We use the optimality property of Chebyshev polynomials stated in
+  \slideref{Corollary}{chebyshev-minimal-2} and note that the
+  optimality stated there is exactly what we need. Thus,
+  $p = \widehat\pchebyshev_k(\lambda)$ solves the minimization
+  problem and there holds
+  \begin{align}
+    \rho_k
+    &\le \left(\pchebyshev_k\left(
+      \frac{\lambda_{\max}+\lambda_{\min}}{\lambda_{\max}-\lambda_{\min}}
+      \right)\right)^{-1}\\
+    & \le \left(\frac{\sqrt{\lambda_{\max}}-\sqrt{\lambda_{\min}}}{\sqrt{\lambda_{\max}}+\sqrt{\lambda_{\min}}}
+      \right)^k
+  \end{align}
+  Dividing both sides of the fraction by $\sqrt{\lambda_{\min}}$ yields the result.
 \end{proof}
 
 
