@@ -991,6 +991,126 @@ method only fails after the exact solution has been found.
   Dividing both sides of the fraction by $\sqrt{\lambda_{\min}}$ yields the result.
 \end{proof}
 
+\begin{Theorem}{gmres-optimality}
+  For the residual $\vr^{(k)} = \vb-\mata\vx^{(k)}$ after $k$ steps of
+  the GMRES method, there holds
+  \begin{gather}
+    \norm{\vr^{(k)}}_2 = \min_{\substack{p\in\P_k\\p(0) = 1}}
+    \norm{p(\mata)\vr^{(0)}}_2.
+  \end{gather}
+  If the matrix $\mata$ is diagonalizable, then there holds
+    \begin{gather}
+    \norm{\vr^{(k)}}_2 \le \rho_k \cond_2(\matv) \norm{\vr^{(0)}}_2,
+  \end{gather}
+  where $\matv$ is the matrix of eigenvectors and
+  \begin{gather}
+    \rho_k = \min_{\substack{p\in\P_k\\p(0) = 1}} \max_{\lambda\in\sigma(\mata)} \abs{p(\lambda)}.
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  See \cite[Proposition 6.32]{Saad00}.
+\end{proof}
+
+\begin{Corollary}{gmres-estimate}
+  Let $\mata$ be diagonalizable such that its spectrum is contained in
+  al ellips in the complex plane with center $c$, focal distance $d$
+  and semimajor axis $a$. Then,
+  \begin{gather}
+     \rho_k \approx \left(
+      \frac{a+\sqrt{a^2-d^2}}{c+\sqrt{c^2-d^2}}
+      \right)^k.
+  \end{gather}
+\end{Corollary}
+
+\begin{proof}
+  See \cite[Corollary 6.33]{Saad00}.
+\end{proof}
+
+\begin{remark}
+  This theorem is analogue to \slideref{Theorem}{cg-optimality} and
+  \slideref{Corollary}{cg-optimality-spectrum} and the proofs are
+  identical, based on \slideref{Lemma}{krylov-polynomial} and
+  \slideref{Theorem}{projection-oblique-optimal}.
+
+  Note that the step from minimizing over $p(\mata)$ to $p(\lambda)$
+  requires that the matrix $\mata$ is diagonalizable and produces
+  optimal results only if it is normal. While this condition is not
+  strictly necessary, there are examples of arbitrarily bad
+  convergence. Indeed, for every nonincreasing sequence of $n-1$
+  numbers, you can find a sequence such that the norms of residuals of
+  the GMRES method will follow that
+  sequence~\cite{GreenbaumPtakStrakos96}.
+\end{remark}
+
+\begin{Theorem}{gmres-pos-def}
+  If $\mata$ is positive definite, then the GMRES method as well as
+  the restarted GMRES method converge.
+\end{Theorem}
+
+\begin{proof}
+  See \cite[Theorem 6.30]{Saad00}.
+\end{proof}
+
+\begin{remark}
+  The main practical difference between the conjugate gradient and
+  GMRES methods is the short recurrence. While running hundreds of
+  steps of cg is not an issue, GMRES becomes infeasible beyond some 30
+  steps due to the extensive storage and the explicit
+  orthogonalization. There has been research into finding solutions
+  for this problem, but having both optimization and short recurrence
+  is impossible in general (in your homework you saw an example of
+  nonsymmetric matrices where it is possible).
+\end{remark}
+
+\subsection{Bi-Lanczos and BiCG-stab}
+
+\begin{intro}
+  The problem of short recurrence for nonsymmetric matrices has been
+  addressed by biorthogonalization methods. Some of them involve the
+  multiplication with $\mata$ as well as with $\mata^*$, others are
+  ``transpose-free''.
+
+  They all have some disadvantages in common: they do not minimize the
+  error or the residual in each step. Worse, they suffer from
+  breakdowns which are not lucky, thus not close to the solution. Even
+  worse, there might be a near breakdown, where a denominator is
+  almost zero, which must be detected, since after such an incident,
+  the future convergence might suffer.
+
+  This has spurred the development of a whole bunch of algorithms,
+  from BiCG to BiCG-stab (already involving 8 auxiliary vectors) to
+  BiCG-stab($m$), which combines $m$ GMRES steps win an outer
+  BiCG-stab algorithm.
+\end{intro}
+
+\subsection{Preconditioning}
+
+\begin{intro}
+  If matrices are extremely ill-conditioned, convergence of cg or
+  GMRES will still be slow, even if considerable faster than steepest
+  descent or minimal residual. No general purpose algorithms with a
+  better dependence on the condition number have been found.
+
+  Thus, the only way out lies in a positive answer to the question:
+  given a linear system $\mata\vx = \vb$, can we modify the system
+  into one with better convergence properties?
+\end{intro}
+
+\begin{Definition}{preconditioner}
+  A \define{preconditioner} is a matrix $\matb^{-1}$ such that the
+  condition number of
+  \begin{gather}
+    \matb^{-1}\mata
+  \end{gather}
+  is much better than the one of $\mata$. Furthermore, the evaluation
+  of $\matb^{-1}$ is at least much cheaper than the one of
+  $\mata^{-1}$, ideally not much more expensive than the product
+  $\mata\vx$.
+\end{Definition}
+
+
+
 
 %%% Local Variables:
 %%% mode: latex
