@@ -61,8 +61,21 @@
 \input{Krylov}
 
 \chapter{Large Sparse Eigenvalue Problems}
+
+\begin{intro}
+  In this chapter we study algorithms for finding a small number
+  $n_{\text{ev}}$ of eigenvalues and corresponding eigenvectors of a
+  large matrix $\mata\in\Rnn$, where $n$ is large, for instance
+  $n>10^6$. Like in the previous chapter, this is achieved by
+  projecting thw peoblem into smaller subspaces, where we can solve
+  the eigenvalue problem using the methods of the first chapter.
+\end{intro}
+
 \section{Projected subspace iteration}
 \input{ev-projection}
+
+\section{The Arnoldi/Lanczos method}
+\input{ev-arnoldi}
 
 
 \appendix

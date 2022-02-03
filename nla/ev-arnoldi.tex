@@ -1,0 +1,28 @@
+\begin{Lemma}{ev-arnoldi-a-posteriori}
+  Let $(\lambda_i^{(m)},\vy_i^{(m)})$ be an eigenpair of the projected
+  matrix $\matH_m$ of Arnoldi's method. Then, the Ritz vector
+  $\vu_i^{(m)} = \matv_m \vy_i^{(m)}$ has a residual represented as
+  \begin{gather}
+    \left(A-\lambda_i^{(m)}\identity\right)\vu_i^{(m)}
+    = h_{m+1,m}\ve_m^*\vy_i^{(m)}\vv_{m+1}.
+  \end{gather}
+  In particular, its norm is
+  \begin{gather}
+    \norm*{\left(A-\lambda_i^{(m)}\identity\right)\vu_i^{(m)}}_2
+    = h_{m+1,m} \abs{\ve_m^*\vy_i^{(m)}}.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  See~\cite[Proposition 6.8]{Saad11}.
+\end{proof}
+
+\begin{Corollary}{ev-arnoldi-breakdown}
+  If the Arnoldi algorithm breaks down, the generated Ritz vectors are
+  eigenvectors.
+\end{Corollary}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
