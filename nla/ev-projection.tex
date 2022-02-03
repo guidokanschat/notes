@@ -1,0 +1,44 @@
+\begin{Algorithm*}{ev-projection}{Projected subspace iteration}
+  \begin{algorithmic}[1]
+    \Require $\matx^{(0)} = (\vx_1,\dots,\vx_m)$
+    \For $k=1,\dots$ until convergence
+    \State $\matw \gets \mata\matx^{(k-1)}$
+    \State $\matv \gets ONB(\matw)$
+    \State $\matb \gets \matv^*\mata\matv$
+    \State $\maty \gets ONB(\matb)$
+    \State $\matx^{(k)} \gets \matv\maty$
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{Definition}{ritz-values}
+  Let $\mata$ be a matrix and $\matb = \matv^*\mata\matv$ be its
+  projection to the subspace spanned by the orthonormal basis
+  $\matv$. Then, we refer to the eigenvalues of $\matb$ as
+  \define{Ritz values}.
+
+  For each eigenvector $\vy_i$ of $\matb$, we refer to the vector
+  $\vx_i = \matv\vy_i$ as \define{Ritz vector}.
+\end{Definition}
+
+\begin{Theorem}{ritz-convergence}
+  Let $\esp{1,\dots,m}$ be the space spanned by the first (by
+  magnitude of eigenvalue) $m$ eigenvectors and let $\matp$ be the
+  orthogonal projector onto it. Let $S_k$ be the subspace spanned by
+  the basis $\matx^{(k)}$.
+  
+  If $\matp S_0 = \esp{1,\dots,m}$, then there holds: for each
+  eigenvector $\vv_i$ of $\mata$, $i=1,\dots,m$, there is a vector
+  $\vy_i\in S_0$ such that $\matp\vy_i = \vv_i$. Furthermore,
+  \begin{gather}
+    \norm{\vv_i - \matp_{S_k} \vv_i}_2 \le \norm{\vv_i-\vy_i}
+    \left(\abs*{\frac{\lambda_{m+1}}{\lambda_i}}+\epsilon_k\right)^k,
+  \end{gather}
+  where $\matp_{S_k}$ is the orthogonal projector onto $S_k$ and
+  $\epsilon_k\to 0$ as $k \to \infty$.
+\end{Theorem}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
