@@ -2,7 +2,7 @@
 \begin{Algorithm*}{ev-projection}{Projected subspace iteration}
   \begin{algorithmic}[1]
     \Require $\matx^{(0)} = (\vx_1,\dots,\vx_m)$
-    \For $k=1,\dots$ until convergence
+    \For {$k=1,\dots$ until convergence}
     \State $\matw \gets \mata\matx^{(k-1)}$
     \State $\matv \gets ONB(\matw)$
     \State $\matb \gets \matv^*\mata\matv$
