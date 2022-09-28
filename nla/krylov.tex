@@ -27,7 +27,7 @@
 
 \begin{Definition}{projection-step}
   Given a vector $\vx^{(k)}\in\R^n$ and its residual
-  $\vb-\mata\vx^{(k)}$. Then, we say that the vector
+  $\vr^{(k)}=\vb-\mata\vx^{(k)}$. Then, we say that the vector
   $\vx^{(k+1)}\in\R^n$ is obtained by a \define{projection step}, if
   \begin{gather}
     \vx^{(k+1)} = \vx^{(k)} + \vy,
@@ -60,7 +60,7 @@
   $\tilde \vx$ to the projection step is determined by $\vy\in\R^m$ and
   \begin{align}
     \tilde\vx &= \vx^{(0)} + \matv\vy\\
-    \matw^*\mata\matv \vy &= \matv^* \vr^{(0)}.
+    \matw^*\mata\matv \vy &= \matw^* \vr^{(0)}.
   \end{align}
   It is thus obtained by solving an $m$-by-$m$ linear system, called
   the projected system or the \define{Galerkin
@@ -492,7 +492,7 @@ method only fails after the exact solution has been found.
   method. Then, the Galerkin approximation
   \begin{align}
     x^{(m)} &\in x^{(0)} + \krylov_m(\mata,r^{(0)})\\
-    b-\mata x^{(m)} &\perp \krylov_m(\mata,r^{(0)}),
+    b-\mata x^{(m)} &\perp \mata \krylov_m(\mata,r^{(0)}),
   \end{align}
   is obtained in two steps. Solve in $\R^m$
   \begin{gather}

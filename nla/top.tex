@@ -127,8 +127,9 @@
   The \define{Chebyshev polynomials} $\pchebyshev_k$ are defined by the
   three-term recurrence relation
   \begin{gather}
-    \pchebyshev_{k} = 2x \pchebyshev_{k-1}(x) - \pchebyshev_{k-2}(x).
+    \pchebyshev_{k}(x) = 2x \pchebyshev_{k-1}(x) - \pchebyshev_{k-2}(x),
   \end{gather}
+  with $T_0 \equiv 1$ and $T_1(x) = x$.
   They are orthogonal with respect to the inner product
   \begin{gather}
     \scal(p,q) = \int_{-1}^1 \tfrac1{\sqrt{1-x^2}} \,p(x)q(x)\dx.
@@ -136,7 +137,7 @@
 \end{Definition}
 
 \begin{Lemma}{chebyshev-representation}
-  Chebyshev polynomials admit the trigonomwtric representation
+  Chebyshev polynomials admit the trigonometric representation
   \begin{gather}
     \pchebyshev_k(x) = \cos(k \operatorname{arccos} x).
   \end{gather}
@@ -154,7 +155,7 @@
 
 \begin{Lemma}{chebyshev-abscissae}
   The Chebyshev polynomial $\pchebyshev_n$ has $n$ roots in the
-  interval $9-1,1)$ at
+  interval $(-1,1)$ at
   \begin{gather}
     x_k = \cos\left(\pi\frac{(k-\nicefrac12)}{n}\right),
     \qquad k=1,\dots,n.
@@ -257,7 +258,7 @@
     \label{eq:chebyshev-cg1}
     \max_{x\in[a,b]}{\abs{\widehat \pchebyshev_n(x)}}
     &= \left(\pchebyshev_n\left(\frac{a+b}{b-a}\right)\right)^{-1}\\
-    & \le \left(\frac{\sqrt b-\sqrt a}{\sqrt b + \sqrt a}\right)^n.
+    & \le 2 \left(\frac{\sqrt b-\sqrt a}{\sqrt b + \sqrt a}\right)^n.
   \end{align}
 \end{Corollary}
 
