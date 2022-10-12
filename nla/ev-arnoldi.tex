@@ -144,6 +144,70 @@
   \end{algorithmic}
 \end{Algorithm*}
 
+\begin{remark}
+  In every step of the outer loop of \slideref{Algorithm}{irlm} we
+  apply a polynomial $\psi_\nu$ of $\mata$ to the initial
+  vector. Decomposing this vector with respect to eigenvectors of
+  $\mata$, we see that each component gets multiplied with
+  $\psi_\nu(\lambda_i)$. Thus, after scaling by the dominant
+  eigenvector, these components get weighted with factors
+  \begin{gather}
+    \prod_\nu\frac{\psi_\nu(\lambda_i)}{\psi_\nu(\lambda_1)}.
+  \end{gather}
+  By the choice of the shifts, these polynomials ensure that the first
+  $k$ desired eigenvalues become dominant, while the latter ones will
+  be suppressed.
+\end{remark}
+
+\begin{remark}
+  Once an eigenpair of $\mata$ has been identified to sufficient
+  accuracy, we should keep it and continue the algorithm without
+  changing this pair anymore. This technique is called
+  \define{locking} of converged eigenvalues.
+
+  Let $\tau$ be an eigenvalue of $\matH_k$ with corresponding
+  \putindex{Ritz vector} $\vv_1$ such that
+  $\norm{\mata\vv_1 - \tau\vv_1}$ sufficiently small. Then, we will
+  consider $\tau$ converged and $\vv_1$ is a good approximation to an
+  eigenvector. Thus, the algorithm can be continued without
+  consideration of $\tau$ and $\vv_1$.
+
+  Let $\matq$ be an orthogonal matrix such that
+  \begin{gather}
+    \tilde \matH_k = \matq^*
+    \begin{pmatrix}
+      \tau \\&\hat \matH_k
+    \end{pmatrix} \matq.
+  \end{gather}
+
+  Similar to implicit restart, we can use this matrix $\matq$ to
+  modify the basis $\matv_k$ to obtain a new set of Lanczos vectors
+  such that $\vv_1$ is the first of them. We can now continue the
+  implicitly restarted Lanczos method using the matrix $\hat\matH_k$
+  and the vectors $\vv_2,\dots,\vv_k$. Just in the case of
+  reorthogonalization, we will involve the vector $\vv_1$ as well.
+\end{remark}
+
+\begin{remark}
+  We have so far neglected two important cases. First, if the initial
+  vector of the Lanczos method does not have any component in the
+  direction of a desired eigenvector, the method in exact arithmetic
+  will not be able to produce this eigenvector. Here, roundoff errors
+  come to our rescue. They will produce spurious components in
+  direction of such an eigenvector and due to the amplification in
+  each step, will become dominant.
+  
+  Second, if $\mata$ has multiple eigenvalues,
+  \slideref{Algorithm}{irlm} will only identify a single vector in its
+  eigenspace. This is due to the fact that the algorithm cannot
+  distinguish between vectors in the same eigenspace and operates on
+  each of them equally. Nevertheless, once we lock such an
+  eigenvector, it is treated differently and a possible second
+  eigenvector for the same eigenvalue may come up in subsequent
+  iterations due to roundoff errors.
+\end{remark}
+
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
