@@ -73,26 +73,23 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
   An eigenvalue is \define{simple}, if its algebraic and geometric multiplicity are one. It is \define{semi-simple}, if its algebraic and geometric multiplicities are equal.
 \end{Definition}
 
-\begin{remark}
-  It is possible to refine the concept of eigenvalues and eigenvectors by distinguishing between right eigenvalues and vectors solving
-  \begin{gather}
-      \mata \vv = \lambda \vv,
-  \end{gather}
-  and left eigenvalues and vectors solving
-  \begin{gather}
-    \vu \mata = \lambda \vu,
-  \end{gather}
-  where $\vu$ is now a row vector. By taking the transpose of this equation\footnote{Here, we refer to the real transpose obtained by simply exchanging indices, not the complex conjugate transpose.},
-  \begin{gather}
-    \label{eq:evp:1}
-    \mata^T \vu^T = \lambda \vu^T,
-  \end{gather}
-  we see that $\vu$ is a left eigenvector of $\mata$ if and only if
-  $\vu^T$ is a right eigenvector of $\mata^T$.
-\end{remark}
+\begin{Definition}{right-left-ev}
+  Refining \slideref{Definition}{eigenvalue}, we distinguish between a right eigenvector $\vv$ such that
+  \begin{gather*}
+    \mata \vv = \lambda \vv,
+  \end{gather*}
+  and a left eigenvector $\vu$ such that
+  \begin{gather*}
+    \vu^T \mata = \lambda \vu^T.
+  \end{gather*}
+  
+\end{Definition}
 
 \begin{Lemma}{eigenvalues-conjugate}
-  Every eigenvalue $\lambda$ of $\mata\in\C^{n\times n}$ is also an eigenvalue of $\mata^T$.
+  Every eigenvalue $\lambda$ of $\mata\in\C^{n\times n}$ is also an
+  eigenvalue of $\mata^T$. Furthermore, a left eigenvector of $\mata$
+  is a right eigenvector of $\mata^T$ for the same eigenvalue and vice
+  versa.
 \end{Lemma}
 
 \begin{proof}

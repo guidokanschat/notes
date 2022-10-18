@@ -10,7 +10,7 @@
 \end{Notation}
 
 \begin{Notation}{matrix-linear-combination}
-  Let $\vv_1,\dots,\vv_k$ be a set of vectors in $\C^n$ and let the matrix $\matv=(v_1,\dots,v_k) \in \C^{n\times k}$. Then, for vectors $\va\in\C^k$ there holds
+  Let $\vv_1,\dots,\vv_k$ be a set of vectors in $\C^n$ and let the matrix $\matv=(\vv_1,\dots,\vv_k) \in \C^{n\times k}$. Then, for vectors $\va\in\C^k$ there holds
   \begin{gather}
       \vu = \sum_{i=1}^k a_i \vv_i
       \qquad \Longleftrightarrow \qquad
@@ -23,9 +23,9 @@
 \end{Notation}
 
 \begin{Lemma*}{change-of-basis}{Change of basis}
-  Let $\matv = (v_1,\dots, v_n)$ and $\matw = (w_1,\dots, w_n)$ be
-  bases of $\C^n$. Let $u\in C^n$ be given by coefficient vectors
-  $\vx,vy\in \C^n$, such that
+  Let $\matv = (\vv_1,\dots, \vv_n)$ and $\matw = (\vw_1,\dots, \vw_n)$ be
+  bases of $\C^n$. Let $\vu\in C^n$ be given by coefficient vectors
+  $\vx,\vy\in \C^n$, such that
   \begin{gather}
     \vu = \matv\vx = \matw\vy.
   \end{gather}
@@ -39,9 +39,9 @@
 \end{Lemma*}
 
 \begin{Corollary}{change-of-basis}
-  Let $\vv\in \C^n$ and $W$ be a basis for $\C^n$. Then, the
+  Let $\vv\in \C^n$ and $\matw$ be a basis for $\C^n$. Then, the
   coefficient vector $\vy$ of a vector $\vx$ with respect to the
-  basis $W$ is obtained by
+  basis $\matw$ is obtained by
   \begin{gather}
     \vy = \matw^{-1} \vx.
   \end{gather}
