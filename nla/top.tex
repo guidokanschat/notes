@@ -97,6 +97,17 @@
 
 \section{Matrix norms and spectral radius}
 
+\begin{Definition*}{matrix-norm}{Matrix norm}
+  The space of matrices $\Cnn$ is a vector space of dimension $n^2$ and thus any vector space norm is a norm on this space. For an actual matrix norm, we require compatibility with matrix multiplication, namely
+  \begin{gather}
+    \norm{\mata\matb} \le \norm{\mata}\norm{\matb},
+  \end{gather}
+  for any matrices where this makes sense. A matrix norm is called \define{operator norm} or \define{induced norm}, if $\mata\colon V\to W$ and
+  \begin{gather}
+    \norm\mata = \norm{\mata}_{V\to W} = \sup_{\vv\in V}\frac{\norm{\mata\vv}_W}{\norm{\vv}_V}.
+  \end{gather}
+\end{Definition*}
+
 \begin{Definition}{spectral-radius}
   The \define{spectral radius} of a matrix $\mata\in\Cnn$ is the
   maximal absolute value of its eigenvalues, that is
