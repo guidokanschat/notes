@@ -83,15 +83,18 @@
 
 \subsubsection{Conditioning of the EVP}
 
+\frame {\input {blocks/Definition-conditioning-eigenvalue.tex}}
 \frame {\input {blocks/Example-characteristic-polynomial.tex}}
-\frame {\input {blocks/Example-conditioning-Jordan-block.tex}}
-\frame {\input {blocks/Theorem-Jordan-block-ill-conditioned.tex}}
-\frame {\input {blocks/Theorem-bauer-fike.tex}}
-\frame {\input {blocks/Corollary-conditioning-eigenvalues-normal.tex}}
+\frame {\input {blocks/Example-conditioning-Jordan-block.tex}
+  \input {blocks/Theorem-Jordan-block-ill-conditioned.tex}}
+\frame {\input {blocks/Theorem-bauer-fike.tex}
+  \only<1>{\input {blocks/Definition-matrix-condition.tex}}
+  \only<2>{\input {blocks/Corollary-conditioning-eigenvalues-normal.tex}}}
 \frame {\input {blocks/Theorem-conditioning-eigenvalue-single.tex}}
 
-\frame {\input {blocks/Example-conditioning-eigenvectors.tex}}
-\frame {\input {blocks/Remark-conditioning-eigenvectors.tex}}
+\frame {\input {blocks/Example-conditioning-eigenvectors.tex}
+  \pause
+  \input {blocks/Remark-conditioning-eigenvectors.tex}}
 
 \subsection{Vector iterations}
 \frame{\subtoc}
