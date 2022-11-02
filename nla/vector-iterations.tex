@@ -29,6 +29,16 @@
   as long as $\lambda_1$ is single and of largest modulus.
 \end{Remark}
 
+\begin{Lemma}{Rayleigh-approximation}
+  Let $(\lambda,\vv)$ be an eigenpair of the Hermitian matrix
+  $\mata\in\Cnn$, and let $\vw\i\C^n$. Then, there is a constant $C$ depending only on the matrix $\mata$ such that there holds
+  \begin{gather}
+    \abs{R_\mata(\vw)-\lambda} \le C \norm{\vw-\vv}^2,
+  \end{gather}
+  where $R_\mata(\vw)$ is the \putindex{Rayleigh quotient} from
+  \slideref{Definition}{rayleigh-quotient}.
+\end{Lemma}
+
 \begin{Algorithm*}{shifted-vector-iteration}{Shifted vector iteration}
   The vector iteration can be applied to the matrix $\mata-\sigma\id$
   for some $\sigma\in\C$.

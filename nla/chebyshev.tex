@@ -1,0 +1,169 @@
+\begin{Definition}{chebyshev-polynomials}
+  The \define{Chebyshev polynomials} $\pchebyshev_k$ are defined by the
+  three-term recurrence relation
+  \begin{gather}
+    \pchebyshev_{k}(x) = 2x \pchebyshev_{k-1}(x) - \pchebyshev_{k-2}(x),
+  \end{gather}
+  with $T_0 \equiv 1$ and $T_1(x) = x$.
+  They are orthogonal with respect to the inner product
+  \begin{gather}
+    \scal(p,q) = \int_{-1}^1 \tfrac1{\sqrt{1-x^2}} \,p(x)q(x)\dx.
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{chebyshev-representation}
+  Chebyshev polynomials admit the trigonometric representation
+  \begin{gather}
+    \pchebyshev_k(x) = \cos(k \operatorname{arccos} x).
+  \end{gather}
+  
+  Furthermore, there holds
+    \begin{gather}
+    \pchebyshev_k = \frac12
+    \left(
+      \left(x-\sqrt{x^2-1}\right)^k
+      +
+      \left(x+\sqrt{x^2-1}\right)^k
+    \right),\qquad\abs{x}\ge 1.
+  \end{gather}
+\end{Lemma}
+
+\begin{Lemma}{chebyshev-abscissae}
+  The Chebyshev polynomial $\pchebyshev_n$ has $n$ roots in the
+  interval $(-1,1)$ at
+  \begin{gather}
+    x_k = \cos\left(\pi\frac{(k-\nicefrac12)}{n}\right),
+    \qquad k=1,\dots,n.
+  \end{gather}
+  It alternatingly assumes the values $\pm1$ at the \define{Chebyshev abscissae}
+  \begin{gather}
+    x_k = \cos\left(\pi\frac kn\right),
+  \end{gather}
+  wiyh $\pchebyshev_n(1) = 1$ and $\pchebyshev_n(-1) = (-1)^n$.
+\end{Lemma}
+
+\begin{Theorem}{chebyshev-minimal-1}
+  For every polynomial $p\in \P_n$ with leading coefficient 1 there is $x\in[-1,1]$ such that $\abs{p(x)} \ge \nicefrac1{2^{n-1}}$. There holds
+  \begin{gather}
+   \frac1{2^{n-1}} \pchebyshev_n(x)
+   = \operatorname*{arg min}_{\substack{p\in\P_n\\p = x^n+\cdots}}
+   \max_{x\in[-1,1]}\abs{p(x)}.
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  See \cite[Satz 7.19]{DeuflhardHohmann08}.  The three-term recursion
+  for Chebyshev polynomials implies that the leading coefficient of
+  $\pchebyshev_n$ is $2^{n-1}$.
+
+  Assume that there is another polynomial $p\in \P_n$ with leading
+  coefficient $2^{n-1}$ such that
+  \begin{gather}
+    \max_{x\in[-1,1]} \abs{p(x)} < 1.
+  \end{gather}
+  Then, $q_n = \pchebyshev_n-p \in \P_{n-1}$. Furthermore, for the
+  Chebyshev abscissae $\tilde x_j = \cos(\nicefrac{j\pi}{n})$ with
+  $j=0,\dots,n$ there holds
+  \begin{xalignat}4
+    \pchebyshev_n(\tilde x_j) &= 1,
+    & p(\tilde x_j) &< 1
+    & q_n(\tilde x_j) &> 0,
+    & j&\text{ gerade}\\
+    \pchebyshev_n(\tilde x_j) &= -1,
+    & p(\tilde x_j) &> -1
+    & q_n(\tilde x_j) &< 0,
+    & j&\text{ ungerade}.
+  \end{xalignat}
+  Therefore, 
+  $q_n$ changes sign at at least $n$ points and thus has at least $n$ roots.
+  From
+  $q_n\in\P_{n-1}$ we deduce $q_n=0$ and thus $p=\pchebyshev_n$ as a contradiction.
+  After scaling by $2^{n-1}$ we obtain
+  \begin{gather}
+    \operatorname*{min}_{\substack{p\in\P_n\\p = x^n+\cdots}}
+   \max_{x\in[-1,1]}\abs{p(x)} \ge 1,
+ \end{gather}
+ with equality for the scaled Chebyshev polynomial.
+\end{proof}
+
+\begin{Lemma}{chebyshev-growth}
+  Let
+  \begin{gather}
+    K = \bigl\{ p\in \P_n \;\big|\; \max_{x\in[-1,1]} \abs{p(x)} =1 \bigr\}.
+  \end{gather}
+  Then,
+  \begin{gather}
+    \abs{\pchebyshev_n(x)} \ge p(x) \qquad \forall p\in K, \quad \forall \abs{x} > 1.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  We conduct the proof for $x>1$ where $\pchebyshev_n(x) > 0$.
+  Let $\tilde p\in K$ such that
+  $\abs{\tilde p(y)} \ge \pchebyshev_n(y)$ for some $y>1$. Let
+  $\gamma = \pchebyshev_n(y)/\tilde p(y)$ and
+  $p(x) = \tilde p(x)\gamma$, such that
+  $q(x) = p(x) - \pchebyshev_n(x) \in \P_n$ has a root in $y$.
+  Furthermore,
+  \begin{gather}
+    \max_{x\in[-1,1]} \abs{p(x)} =\gamma < 1
+  \end{gather}
+
+  Thus, $q(x)$ has alternating sign in the $n+1$ Chebyshev abscissae and due to continuity $n$ roots in
+  $(-1,1)$. Hence, it has $n+1$ roots and therefore
+  $q \equiv 0$. We conclude $p \equiv \pchebyshev_n$ and since
+  $\norm{p}_{\infty;[0,1]} = 1$ there holds $\tilde p = p$.
+\end{proof}
+
+\begin{Corollary}{chebyshev-minimal-2}
+  Let $[a,b]$ be an interval with $0 < a$. Then, the polynomial
+  \begin{gather}
+    \widehat \pchebyshev_n(x)
+    = \frac{\pchebyshev_n\left(\frac{a+b-2x}{b-a}\right)}%
+    {\pchebyshev_n\left(\frac{a+b}{b-a}\right)}
+  \end{gather}
+  solves the minimization problem
+  \begin{gather}
+    \widehat \pchebyshev_n(x)
+    = \operatorname*{argmin}_{\substack{p\in\P_n\\p(0) = 1}}
+    \max_{x\in[a,b]}{\abs{p(x)}}.
+  \end{gather}
+  There holds
+  \begin{align}
+    \label{eq:chebyshev-cg1}
+    \max_{x\in[a,b]}{\abs{\widehat \pchebyshev_n(x)}}
+    &= \left(\pchebyshev_n\left(\frac{a+b}{b-a}\right)\right)^{-1}\\
+    & \le 2 \left(\frac{\sqrt b-\sqrt a}{\sqrt b + \sqrt a}\right)^n.
+  \end{align}
+\end{Corollary}
+
+\begin{proof}
+  The Chebysshev polynomial $\pchebyshev_n$ is the one with minimal maximum on $[-1,1]$ and maximal growth outside this interval. Thus, if we transform it to the interval $[a,b]$ by mapping
+  \begin{gather}
+    x \mapsto \frac{a+b-2x}{b-a},
+  \end{gather}
+  it is the polynomial with maximal absolute value 1 inside $[a,b]$
+  with maximal value at 0. Dividing by this value, it solves the
+  stated minimization problem and \eqref{eq:chebyshev-cg1} holds.
+
+  To further estimate this value note that
+  \begin{align}
+    \pchebyshev_n(x)
+    &= \frac12
+      \left(x-\sqrt{x^2-1}\right)^n
+      +
+      \left(x+\sqrt{x^2-1}\right)^n\\
+    &\ge \left(x+\sqrt{x^2-1}\right)^n.
+  \end{align}
+  Entering $x = \frac{a+b}{b-a}$ yields
+  \begin{align}
+    \frac{a+b+\sqrt{(a+b)^2-(b-a)^2}}{b-a}
+    &= \frac{(\sqrt a + \sqrt b)^2}{b-a}\\
+    &= \frac{\sqrt b + \sqrt a}{\sqrt b-\sqrt a}.
+  \end{align}
+\end{proof}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

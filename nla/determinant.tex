@@ -1,0 +1,57 @@
+\begin{Theorem}{determinant-properties}
+  For any matrix $\mata\in\Cnn$ there holds
+  \begin{gather}
+    \det(\mata) = \det(\mata^T).
+  \end{gather}
+  If $\det(\mata)\neq 0$, then $\mata$ is invertible and
+  \begin{gather}
+    \det(\mata^{-1}) = \frac1{\det(\mata)}.
+  \end{gather}
+  If additionally $\matb\in\Cnn$, then
+  \begin{gather}
+    \det(\mata\matb) = \det(\mata)\det(\matb).
+  \end{gather}
+\end{Theorem}
+
+\begin{Theorem}{laplace-expansion}
+  The determinant of a matrix $\mata\in\Cnn$ can be computed
+  recursively using \define{Laplace expansion}. Let
+  $i\in\{1,\dots,n\}$ be fixed, then
+  \begin{gather}
+    \det(\mata) = \sum_{j=1}^n a_{ij} C_{ij},
+  \end{gather}
+  with \define{cofactor}s $C_{ij}=(-1)^{i+j}\det(\tilde\mata_{ij})$ and $\tilde\mata_{ij}$ is the matrix obtained by deleting the $i$-th row and $j$-th column from $\mata$.
+
+  The expansion can also be over a fixed column, summing over rows.
+\end{Theorem}
+
+\begin{Corollary}{determinant-triangular}
+  The determinant of a \putindex{triangular matrix} is the product of its diagonal entries.
+\end{Corollary}
+
+\begin{Lemma}{determinant-blockmatrix}
+  Let $\mata\in\Cnn$ be a block matrix
+  \begin{gather}
+    \mata =
+    \begin{pmatrix}
+      \matb & \matc\\ 0 & \matd
+    \end{pmatrix},
+  \end{gather}
+  with $\matb\in\C^{k,k}$, $\matd\in\C^{n-k,n-k}$, and $\matc\in\C^{k,n-k}$. Then,
+  \begin{gather}
+    \det(\mata) = \det(\matb)\det(\matd).
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  The proof is by induction over $k$. For $k=1$, the result
+  immediately follows from Laplace expansion over the first
+  column. For the induction step, we again use Laplace expansion over
+  the first column. Then, the cofactor matrices for each nonzero entry
+  have the same block structure with $\matb\in\C^{k-1,k-1}$.
+\end{proof}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
