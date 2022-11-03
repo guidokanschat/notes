@@ -6,10 +6,14 @@
   For $k=0,\ldots$ until convergence repeat
   \begin{itemize}
   \item $\matz_k = \mata \matx_k$.
-  \item $\matq_k\matr_k = \matz_k$ (QR factorization)
-  \item $\matx_{k+1} = \matq_k$
+%  \item $\matq_k\matr_k = \matz_k$ (QR factorization)
+  \item $\matx_{k+1}$ is orthonormalization of $\matz_k$
   \end{itemize}
 \end{Algorithm*}
+
+\begin{remark}
+  \slideref{Algorithm}{subspace-iteration} requires the choice of initial vectors. In principle, any choice of a linearly independent set $\matx_0$ is ok. But, in particular when all eigenvalues are desired, there is a special choice, which are the columns of $\mata$. This leads to the QR iteration.
+\end{remark}
 
 \begin{Algorithm*}{qr-iteration}{QR iteration}
   
@@ -37,7 +41,7 @@
   For any $k\le n$ the span of the Schur vectors
   $\vq_1,\dots,\vq_k$ is invariant under the action of $\mata$.
 
-  For $\matq_k = (\vq_1\dots\vq_k)$ and $R_k$ the upper left $k\times k$ block of $\matr$, there holds
+  For $\matq_k = (\vq_1\dots\vq_k)$ and $\matr_k$ the upper left $k\times k$ block of $\matr$, there holds
   \begin{gather}
     \mata\matq_k = \matq_k \matr_k.
   \end{gather}
@@ -77,10 +81,6 @@
   \item If $\mata$ is symmetric, so is $\mata_k$ for any $k$.
   \end{enumerate}
 \end{Lemma}
-
-\begin{Theorem}{convergence-qr-iteration}
-Removed
-\end{Theorem}
 
 \subsection{Implementation issues}
 \begin{intro}

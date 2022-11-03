@@ -19,11 +19,31 @@
   If $r_{ii}\neq 0$ for $i=1,\dots,k$, this relation is uniquely
   invertible. In particular,
   \begin{gather}
-    \operatorname{span}\{\vq_1,\dots,\vq_k\}
+    \spann{\vq_1,\dots,\vq_k}
     = 
-    \operatorname{span}\{\va_1,\dots,\va_k\}.
+    \spann{\va_1,\dots,\va_k}.
   \end{gather}
 \end{Lemma}
+
+\begin{Algorithm*}{gram-schmidt}{Gram-Schmidt Orthogonalization}
+  Let $\vx_1, \dots,\vx_k\in\C^n$ with $k\le n$ be linearly independent.
+
+  For $j=1,\dots,k$
+  \begin{align*}
+    \vw_j &= \vx_j - \sum_{i=1}^{j-1} \scal(vx_j,\vv_i)\vv_i\\
+    \vv_j &= \frac{\vw_j}{\norm{\vw_j}_2}.
+  \end{align*}
+\end{Algorithm*}
+
+\begin{Theorem}{gram-schmidt}
+  If the input vectors $\vx_1, \dots,\vx_k\in\C^n$ are linearly
+  independent, then the Gram-Schmidt orthogonalization generates an
+  orthonormal set $\vv_1, \dots,\vv_k\in\C^n$. Furthermore, for
+  $j=1,\dots,k$ there holds
+  \begin{gather}
+    \spann{\vv_1, \dots,\vv_j} = \spann{\vx_1, \dots,\vx_j}.
+  \end{gather}
+\end{Theorem}
 
 \begin{Theorem}{qr-existence}
   Every matrix $\mata\in\C^{m\times n}$ with $m\ge n$ of full rank
