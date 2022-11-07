@@ -1,3 +1,8 @@
+\begin{intro}
+  The facts in this section can be found in~\cite[Chapter
+  5]{GolubVanLoan83}. In particular, the QR factorization in section
+  5.2, Housholder transformations and Givens rotations in 5.1 there.
+\end{intro}
 
 \subsection{Definition and existence}
 \begin{Definition}{qr-decomposition}
@@ -114,9 +119,9 @@
 \subsection{Givens rotation}
 
 \begin{Definition}{givens}
-  The \define{Givens-Rotation} $\Omega_{jk}$ for $j<k$ with angle $\theta$ is the matrix
+  The real \textbf{Givens-Rotation}\index{Givens rotation!real} $\givens_{jk}$ for $j<k$ with angle $\theta$ is the matrix
   \begin{gather}
-      \Omega_{jk} =
+      \givens_{jk} =
     \begin{pmatrix}
       \id \\
       &c&\cdots&s\\
@@ -124,18 +129,18 @@
       &-s&\cdots&c\\
       &&&&\id
     \end{pmatrix}
-    \in\Cnn.
+    \in\Rnn.
   \end{gather}
-  The corresponding mapping $\Omega_{jk}\colon x\mapsto y$ is defined by
+    where $c = \cos\theta$ and $s = \sin\theta$.
+  The corresponding mapping $\givens_{jk}\colon x\mapsto y$ is defined by
   \begin{gather}
     y_i =
     \begin{cases}
       c x_j + s x_k & i=j\\
       -s x_j + c x_k & i=k\\
       x_i &\text{else}
-    \end{cases}
+    \end{cases}.
   \end{gather}
-  where $c = \cos\theta$ and $s = \sin\theta$.
 \end{Definition}
 
 \begin{remark}
@@ -143,17 +148,17 @@
   columns $j$ and $k$.  The identity matrices $\id$ are of
   corresponding dimensions.
 
-  Applying $\Omega_{jk}$ to a matrix $\mata$ from the left modifies rows  $j$ and $k$ of $\mata$. Thus, it is a row operation similar to Gauss elimination.
+  Applying $\givens_{jk}$ to a matrix $\mata$ from the left modifies rows  $j$ and $k$ of $\mata$. Thus, it is a row operation similar to Gauss elimination.
 
-  The action of $\Omega_{jk}$ on a vector corresponds to the rotation
+  The action of $\givens_{jk}$ on a vector corresponds to the rotation
   in the plane spanned by $\ve_j$ und $\ve_k$. Thus, it is sufficient to investigated $2\times2$-matrices.
 
-  Note that the notation $\Omega_{jk}$ misses the angle $\theta$. This
+  Note that the notation $\givens_{jk}$ misses the angle $\theta$. This
   is due to the fact that it is always determined such that $y_k=0$.
 \end{remark}
 
 \begin{Lemma}{givens-computation}
-  Givens rotation $\Omega_{jk}^*$ eliminates the second component of the vector
+  Givens rotation $\givens_{jk}^T$ eliminates the second component of the vector
   $(x_j,x_k)^T$ by choosing
   \begin{gather}
     r = \sqrt{x_j^2+x_k^2},\qquad
@@ -163,7 +168,7 @@
   \begin{gather}
     \begin{pmatrix}
       c & s \\ -s & c
-    \end{pmatrix}
+    \end{pmatrix}^T
     \begin{pmatrix}
       x_j\\x_k
     \end{pmatrix}
@@ -183,7 +188,94 @@
   right-angled triangle without overflow.
 \end{remark}
 
+\begin{Definition}{givens-complex}
+  The complex \textbf{Givens-Rotation}\index{Givens rotation!complex} $\givens_{jk}$ for $j<k$ with angles $\varphi,\theta$ is the matrix
+  \begin{gather}
+      \givens_{jk} =
+    \begin{pmatrix}
+      \id \\
+      &c&\cdots&s\\
+      &\vdots&\id &\vdots\\
+      &-\overline s&\cdots&c\\
+      &&&&\id
+    \end{pmatrix}
+    \in\Cnn.
+  \end{gather}
+    where $c = \cos\theta$ and $s = e^{i\varphi}\sin\theta$.
+\end{Definition}
 
+\begin{Lemma}{givens-computation-complex}
+  Let $u,v\in \C$ such that $u=u_1+iu_2$ and $v=v_1+iv_2$. Then, the second component of $(u,v)^T$ can be eliminated, such that
+  \begin{gather}
+    \begin{pmatrix}
+      c & s\\-\overline s&c
+    \end{pmatrix}^*
+    \begin{pmatrix}
+      u\\v
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      r\\0
+    \end{pmatrix}
+  \end{gather}
+  by three real Givens rotations
+  \begin{gather}
+    \begin{pmatrix}
+      c_\alpha & s_\alpha\\-s_\alpha & c_\alpha
+    \end{pmatrix}^T
+    \begin{pmatrix}
+      u_1\\u_2
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      r_u\\0
+    \end{pmatrix}
+    ,\quad
+    \begin{pmatrix}
+      c_\beta & s_\beta\\-s_\beta & c_\beta
+    \end{pmatrix}^T
+    \begin{pmatrix}
+      v_1\\v_2
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      r_v\\0
+    \end{pmatrix},
+    \\
+    \begin{pmatrix}
+      c_\theta & s_\theta \\-s_\theta  & c_\theta
+    \end{pmatrix}^T
+    \begin{pmatrix}
+      r_u\\r_v
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      r\\0
+    \end{pmatrix}
+    ,
+  \end{gather}
+  choosing $\varphi = \beta-\alpha$ and $c=c_\theta$,
+  $s=s_\theta e^{i\phi}$.
+\end{Lemma}
+
+\begin{proof}
+  Note that the first two rotations map a complex number to a real number, hence
+  \begin{gather}
+    u = r_u e^{-i\alpha}, \qquad v = r_v e^{-i\beta}.
+  \end{gather}
+  Let now $\varphi = \beta-\alpha$, then,
+  \begin{gather}
+    \begin{aligned}
+      c u - s v
+      &= c_\theta e^{-i\alpha} r_u - s_\theta e^{i\phi} e^{-i\beta} r_v
+      &&= e^{-i\alpha}\bigl(c_\theta r_u - s_\theta r_v\bigr) = r,
+      \\
+      c v + \overline s u
+      &= c_\theta e^{-i\beta} r_v + s_\theta e^{-i\phi} e^{-i\alpha} r_u
+      &&= e^{-i\beta}\bigl(c_\theta r_v + s_\theta r_u\bigr) = 0.      
+    \end{aligned}
+  \end{gather}
+\end{proof}
 
 %%% Local Variables:
 %%% mode: latex

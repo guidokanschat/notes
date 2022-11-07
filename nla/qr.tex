@@ -68,7 +68,7 @@
   $\matq\in\Cnn$ and an upper triangular matrix $\matr\in\Cnn$ such
   that
   \begin{gather}
-    \mata = \matq \matr \matq^*.
+    \mata = \matq^* \matr \matq.
   \end{gather}
   The diagonal entries of $\matr$ are the eigenvalues of $A$. The
   column vectors of $\matq$ are called \define{Schur vectors}.
@@ -180,7 +180,7 @@
 
 \begin{Theorem}{Hessenberg-qr}
   The QR factorization of a Hessenberg matrix $\matH$ can be obtained
-  by $n-1$ givens rotations. The matrix $\matr\matq$ is again in
+  by $n-1$ Givens rotations. The matrix $\matr\matq$ is again in
   Hessenberg form. For a (complex) symmetric matrix $\matH$, the
   matrix $\matr\matq$ is even tridiagonal and (complex) symmetric.
 \end{Theorem}
@@ -192,7 +192,7 @@
 \begin{Theorem}{Hessenberg-householder}
   Every matrix $\mata\in\Cnn$ is unitarily similar to a Hessenberg matrix $\matH$, that is,
   \begin{gather}
-    \matH = \matq \mata \matq^*.
+    \matH = \matq^* \mata \matq.
   \end{gather}
   The matrix $\matq$ can be obtained by $n-2$ \putindex{Householder
     reflections}.
@@ -204,12 +204,12 @@
   \item Use $n-2$ Householder transformations to transform $\mata$ to
     Hessenberg form
     \begin{gather}
-     \matH = \matq\mata\matq^*.
+     \matH = \matq^*\mata\matq.
    \end{gather}
  \item QR-iteration: let $\matH_{0}=\matH$ and perform until convergence
    \begin{align}
-     \Omega^{(k)}_{1,2}\times\dots\times\Omega^{(k)}_{n-1,n} \matr &= \matH_k\\
-     \matH_{k+1} &= \matr \Omega^{(k)}_{1,2}\times\dots\times\Omega^{(k)}_{n-1,n}.
+     \givens^{(k)}_{1,2}\times\dots\times\givens^{(k)}_{n-1,n} \matr &= \matH_k\\
+     \matH_{k+1} &= \matr \givens^{(k)}_{1,2}\times\dots\times\givens^{(k)}_{n-1,n}.
    \end{align}
  \item Store Householder vectors as well as $r$ and $c$ for each
    Givens rotation if the eigenvectors are desired in the end.
