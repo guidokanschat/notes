@@ -113,7 +113,7 @@
   $\matq_0 = (\vq^{(0)}_1,\dots,\vq^{(0)}_{m})$ such that these vectors span
   the \putindex{dominant invariant subspace} $D_m(\mata)$. Then, for $j=1,\dots,m$
   \begin{gather}
-    \dist\left(D_j(\mata),\spann{\vq^{(k)}_1,\dots,\vq^{(k)}_{m}}\right)
+    \dist\left(D_j(\mata),\ran{\matq^{(k)}}\right)
     = \bigo \left(\abs*{\frac{\lambda_{j+1}}{\lambda_j}}^k\right).
   \end{gather}
   The constant depends on the separation of the eigenvalues and the deviation of $\mata$ from normality.
@@ -224,7 +224,7 @@
   \end{gather}
   Then, the sequences of the QR-iteration admit the following estimates:
   \begin{align}
-    \dist(\esp{1,\dots,j},\spann{\vq_1^{(k)},\dots,\vq_j^{(k)}}) &= \bigo \left(\abs*{\frac{\lambda_{j+1}}{\lambda_j}}^k\right),
+    \dist(\esp{1,\dots,j},\ran{\matq^{(k)}}) &= \bigo \left(\abs*{\frac{\lambda_{j+1}}{\lambda_j}}^k\right),
     \\
     h_{j+1,j}^{(k)} &= \bigo \left(\abs*{\frac{\lambda_{j+1}}{\lambda_j}}^k\right)
                       .
