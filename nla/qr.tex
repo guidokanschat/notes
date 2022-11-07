@@ -1,31 +1,68 @@
 \subsection{Definition of the methods}
 
-\begin{Algorithm*}{subspace-iteration}{Orthogonal subspace iteration}
+% \begin{Algorithm*}{subspace-iteration}{Orthogonal subspace iteration}
+%   Let $\mata\in\Cnn$, $\matx_0 \in \C^{n\times m}$.\\
+%   For $k=0,\ldots$ until convergence repeat
+%   \begin{itemize}
+%   \item $\matz_k = \mata \matx_k$.
+%   \item $\matx_{k+1}$ is orthonormalization of $\matz_k$
+%   \end{itemize}
+% \end{Algorithm*}
 
-  Let $\mata\in\Cnn$, $\matx_0 \in \C^{n\times m}$.\\
-  For $k=0,\ldots$ until convergence repeat
-  \begin{itemize}
-  \item $\matz_k = \mata \matx_k$.
-%  \item $\matq_k\matr_k = \matz_k$ (QR factorization)
-  \item $\matx_{k+1}$ is orthonormalization of $\matz_k$
-  \end{itemize}
+\begin{Algorithm*}{subspace-iteration}{Orthogonal subspace iteration}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$ and choose $\matq_0 \in \C^{n\times m}$ orthonormal.
+    \For {$k=1,\ldots$ until convergence}
+    \State $\matz_k \gets \mata \matq_{k-1}$
+    \State $\matq_k\matr_k \gets \matz_k$ \Comment{QR factorization}
+    \State {$\lambda_i \approx \vq_{k,i}^* \mata \vq_{k,i},\qquad i=1,\dots,m$}\
+    \Comment{Rayleigh quotient}
+    \EndFor
+  \end{algorithmic}
 \end{Algorithm*}
 
 \begin{remark}
-  \slideref{Algorithm}{subspace-iteration} requires the choice of initial vectors. In principle, any choice of a linearly independent set $\matx_0$ is ok. But, in particular when all eigenvalues are desired, there is a special choice, which are the columns of $\mata$. This leads to the QR iteration.
+  If the iteration converges, then there is an orthogonal matrix $\matq$ such that $\matq_k\to \matq$.
+  From the two assignments of the algorithm, we get
+  \begin{gather}
+    \matq^* \mata \matq = \matq^* \matz = \matq^*\matq\matr = \matr,
+  \end{gather}
+  where $\matr\leftarrow\matr_k$, that is, the matrices
+  $\mata_k = \matq_k^*\mata\matq_k$ converge to an upper triangular
+  matrix with the converged eigenvalues on the diagonal. Our next goal
+  ist the modification of the orthogonal subspace iteration, such that
+  we compute the sequence $\mata_k$ directly, without the intermediate
+  $\matz_k$. To this end, we assume $m=n$, that is, we compute the
+  whole spectrum of $\mata$. By lines 2 and 3 of the algorithm, we have
+  \begin{gather*}
+    \mata_{k-1} = \matq_{k-1}^*\mata\matq_{k-1} = \left(\matq_{k-1}^*\matq_{k}\right)\matr_k,
+  \end{gather*}
+  where we see that on the right we have obtained the QR factorization of $\mata_{k-1}$.
+  On the other hand,
+  \begin{align*}
+    \mata_k
+    &= \matq_k^*\mata\matq\\
+    &= \matq_k^*\mata\matq_{k-1}\matq_{k-1}^*\matq_k\\
+    &= \matq_k^*\matz_k\matq_{k-1}^*\matq_k\\
+    &= \matr_k \left(\matq_{k-1}^*\matq_k\right).
+  \end{align*}
+  Thus, we see that $\mata_k$ is obtained by multiplying the QR
+  factorization of $\mata_{k-1}$ in reverse order. Note that $\matq_k$
+  in the following algorithm differs from $\matq_k$ in the previous!
 \end{remark}
 
 \begin{Algorithm*}{qr-iteration}{QR iteration}
-  
-  Let $\mata_1 = \mata\in\Cnn$.\\
-  For $k=1,\ldots$ until convergence repeat
-  \begin{itemize}
-  \item $\matq_k\matr_k = \mata_k$ (QR factorization)
-  \item $\mata_{k+1} = \matr_k\matq_k$
-  \end{itemize}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$ and choose $\matq_0 = \id$.
+    \State $\mata_0 \gets \matq_0^*\mata\matq_0$
+    \For{$k=1,\dots$ until convergence}
+    \State $\matq_k\matr_k \gets \mata_{k-1}$ \Comment{QR factorization}
+    \State $\mata_{k} = \matr_k\matq_k$
+    \EndFor
+  \end{algorithmic}
 \end{Algorithm*}
 
-\subsection{Analysis}
+%\subsection{Analysis}
 \begin{Theorem*}{schur-canonical}{Schur canonical form}
   For every matrix $\mata\in\Cnn$ there are a unitary matrix
   $\matq\in\Cnn$ and an upper triangular matrix $\matr\in\Cnn$ such
@@ -53,24 +90,39 @@
   respectively. They are determined up to factors $e^{i\phi}$
 \end{Lemma}
 
+\begin{Definition}{dominant-invariant-subspace}
+  Let $\mata\in\Cnn$ be a matrix with Schur decomposition
+  $\mata = \matq^*\matr\matq$ where the eigenvalues are such that
+  \begin{gather}
+    \abs{\lambda_1}\ge\abs{\lambda_2}\ge\dots\ge\abs{\lambda_n}.
+  \end{gather}
+  If $\abs{\lambda_r}>\abs{\lambda_{r+1}}$, we define the
+  \define{dominant invariant subspace} of dimension $r$ as
+  \begin{gather}
+    D_r(\mata) = \spann{\vq_1,\dots,\vq_r}.
+  \end{gather}
+\end{Definition}
+
 \begin{Theorem}{convergence-subspace-iteration}
   Let $\mata\in\Cnn$ and
   \begin{gather}
     \abs{\lambda_1} >
     \abs{\lambda_2}>\dots>\abs{\lambda_m}>\abs{\lambda}
   \end{gather}
-  for all
-  remaining eigenvalues $\lambda\in\sigma(\mata)$. Let
-  $\matq = (\vq_1\dots\vq_m)$ be the Schur vectors associated with the
-  first $m$ eigenvalues and $\esp{1,\dots,j}$ be the space spanned by
-  the first $j$ eigenvectors and $P_j$ the orthogonal projector
-  onto this space. Let the set of start vectors of the orthogonal subspace iteration
-  $\matx_0 = (\vx_1\dots\vx_m)$ be chosen that
+  for all remaining eigenvalues $\lambda\in\sigma(\mata)$. Choose
+  $\matq_0 = (\vq^{(0)}_1,\dots,\vq^{(0)}_{m})$ such that these vectors span
+  the \putindex{dominant invariant subspace} $D_m(\mata)$. Then, for $j=1,\dots,m$
   \begin{gather}
-    \operatorname{span}\{P_1 \vx_1,\dots,P_j\vx_j\} = \esp{1,\dots,j},\qquad j=1,\dots,m.
+    \dist\left(D_j(\mata),\spann{\vq^{(k)}_1,\dots,\vq^{(k)}_{m}}\right)
+    = \bigo \left(\abs*{\frac{\lambda_{j+1}}{\lambda_j}}^k\right).
   \end{gather}
-  Then, the $j$-th column of $\matx_k$ converges to $\vq_j$ for $j=1,\dots,m$ up to a factor $e^{i\phi}$.
+  The constant depends on the separation of the eigenvalues and the deviation of $\mata$ from normality.
+%   Then, the $j$-th column of $\matx_k$ converges to $\vq_j$ for $j=1,\dots,m$ up to a factor $e^{i\phi}$.
 \end{Theorem}
+
+\begin{proof}
+  See~\cite[Theorem 7.3-1]{GolubVanLoan83}.
+\end{proof}
 
 \begin{Lemma}{qr-1}
   The matrices $\mata_k$ of the QR-iteration have the following properties:
@@ -78,17 +130,34 @@
   \item $\mata_{k+1} = \matq_k^*\mata_k\matq_k = \matq_k^*\dots\matq_1^*A\matq_1\dots\matq_k$.
   \item $\mata^k=\matq_1\dots\matq_k\matr_k\dots\matr_1$.
   \item If $\mata$ is normal, so is $\mata_k$ for any $k$.
-  \item If $\mata$ is symmetric, so is $\mata_k$ for any $k$.
+  \item If $\mata$ is complex symmetric, so is $\mata_k$ for any $k$.
   \end{enumerate}
 \end{Lemma}
 
+\begin{proof}
+  For the first relation, we compute
+  \begin{gather}
+    \matq_k\mata_{k+1}\matq_k^* = \matq_k\matr_k\matq_k\matq_k^* = \mata_k.
+  \end{gather}
+  The second, we prove by induction, where
+  $\mata = \mata_0 = \matq_1\matr_1$ follows directly from the first
+  stek of the algorithm. For the induction step, we abbreviate
+  \begin{gather}
+    \matp_k = \matq_1\dots\matq_k,\qquad \matu_k = \matr_k\dots\matr_1.
+  \end{gather}
+  Assuming $\mata^k = \matp_k\matu_k$, we obtain
+  \begin{gather}
+    \mata^{k+1} = \mata\matp_k\matu_k = \matp_k\mata_{k+1}\matu_k
+    = \matp_k\matq_{k+1}\matr_{k+1}\matu_k = \matp_{k+1}\matu_{k+1}.
+  \end{gather}
+\end{proof}
 \subsection{Implementation issues}
 \begin{intro}
-  In each step of the QR-iteration, a QR-decomposition of the matrix
+  In each step of the QR-iteration, a QR factorization of the matrix
   is needed, which requires $\bigo(n^3)$ operations. Thus, the
   complexity of the iteration is highly unfavorable. The following
   discussion will provide us with means to reduce the complexity of
-  the QR-decomposition to $\bigo(n^2)$, in the symmetric case even to
+  the QR factorization to $\bigo(n^2)$, in the symmetric case even to
   $\bigo(n)$.
 \end{intro}
 
@@ -110,7 +179,7 @@
 \end{Definition}
 
 \begin{Theorem}{Hessenberg-qr}
-  The QR-decomposition of a Hessenberg matrix $\matH$ can be obtained
+  The QR factorization of a Hessenberg matrix $\matH$ can be obtained
   by $n-1$ givens rotations. The matrix $\matr\matq$ is again in
   Hessenberg form. For a (complex) symmetric matrix $\matH$, the
   matrix $\matr\matq$ is even tridiagonal and (complex) symmetric.
@@ -308,7 +377,7 @@
       \mata = \matq^T\matd\matq
     \end{gather}
     with real, diagonal matrix $\matd$
-  \item QR-decomposition uses $\bigo(n)$ operations and $\matr$
+  \item QR factorization uses $\bigo(n)$ operations and $\matr$
     consists only of the main diagonal and one upper diagonal.
   \end{enumerate}
   Accumulating the matrix $\matq$ still needs $\bigo(n^2)$ operations
