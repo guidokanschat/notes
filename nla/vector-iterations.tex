@@ -2,7 +2,15 @@
 \subsection{Simple iterations}
 
 \begin{Algorithm*}{vector-iteration}{Vector iteration (power method)}
-  
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$, initial vector $\vv^{(0)}\in\C^n$
+    \For{$k=1,\dots$ until convergence}
+    \State $\vy \gets \mata \vv^{(k-1)}$
+    \State $\alpha_k = \frac{\vy_i}{\vv^{(k-1)}_i}$
+    where $\abs{\vv^{(k)}_i}$ is maximal
+    \State $\vv^{(k)} = \frac{\vy}{\norm{\vy}}$
+    \EndFor
+  \end{algorithmic}
 \end{Algorithm*}
 
 \begin{Theorem}{vector-iteration}
@@ -49,11 +57,25 @@
 \end{Algorithm*}
 
 \begin{Algorithm*}{inverse-iteration}{The inverse power method}
-  
+    \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$, $\sigma\in\C$, initial vector $\vv^{(0)}\in\C^n$
+    \For{$k=1,\dots$ until convergence}
+    \State Solve $(\mata-\sigma\id) \vy = \vv^{(k-1)}$
+    \State $\vv^{(k)} = \frac{\vy}{\norm{\vy}}$
+    \State $\alpha_k = R_\mata(\vv^{(k)})$
+    \EndFor
+  \end{algorithmic}
 \end{Algorithm*}
 
 \begin{Algorithm*}{Rayleigh-iteration}{The Rayleigh quotient iteration}
-  
+    \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$, $\sigma_0\in\C$, initial vector $\vv^{(0)}\in\C^n$
+    \For{$k=1,\dots$ until convergence}
+    \State Solve $(\mata-\sigma_{k-1}\id) \vy = \vv^{(k-1)}$
+    \State $\vv^{(k)} = \frac{\vy}{\norm{\vy}}$
+    \State $\sigma_k = R_\mata(\vv^{(k)})$
+    \EndFor
+  \end{algorithmic}  
 \end{Algorithm*}
 
 
