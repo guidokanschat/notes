@@ -5,6 +5,9 @@
 \usepackage{mathsim}
 \lstset{language=Python}
 \usetikzlibrary{snakes}
+\usetikzlibrary{matrix,fit}
+\pgfdeclarelayer{bg}
+\pgfsetlayers{bg,main}
 \input{mixed/fig/tikzsettings}
 \def\esp#1{V_{#1}}
 
@@ -124,8 +127,10 @@
 \frame {\input {blocks/Lemma-schur-canonical-2.tex}}
 
 \frame {\input {blocks/Definition-dominant-invariant-subspace.tex}}
+\frame {\input {blocks/Definition-projection-distance.tex}
+  \input {blocks/Example-projection-distance.tex}}
+
 \frame {\input {blocks/Theorem-convergence-subspace-iteration.tex}}
-\frame {\input {blocks/Definition-projection-distance.tex}}
 
 \frame {\input {blocks/Algorithm-qr-iteration.tex}
   \input {blocks/Lemma-qr-1.tex}}
@@ -135,13 +140,34 @@
 \frame {\input {blocks/Definition-householder-transformation.tex}}
 \frame {\input {blocks/Lemma-householder-symmetry.tex}}
 \frame {\input {blocks/Lemma-householder-qr.tex}}
+\frame {\input {blocks/Algorithm-householder-multiplication.tex}}
 
 \frame {\input {blocks/Definition-givens.tex}}
 \frame {\input {blocks/Lemma-givens-computation.tex}}
 \frame {\input {blocks/Definition-givens-complex.tex}}
 \frame {\input {blocks/Lemma-givens-computation-complex.tex}}
+\frame {\input {blocks/Algorithm-givens-multiplication.tex}}
 
 \frame {\input {blocks/Definition-hessenberg.tex}}
+\frame {\input {blocks/Algorithm-Hessenberg-qr.tex}}
+
+\begin{frame}
+  \frametitle{Example: 4-by-4-matrix}
+  \begin{gather*}
+    \matH \to \givens_{12}^*\matH
+    \visible<2->{\to \givens_{23}^*\givens_{12}^*\matH}
+    \visible<3->{\to \givens_{34}^*\givens_{23}^*\givens_{12}^*\matH = \matr}\\
+    \visible<3->{\matr\matq = \matr\givens_{12}\givens_{23}\givens_{34}}\\
+  \end{gather*}
+    \only<1>{\begin{tikzpicture}\input{fig/hessenberg-givens-1};\end{tikzpicture}}
+    \only<2>{\begin{tikzpicture}\input{fig/hessenberg-givens-2};\end{tikzpicture}}
+    \only<3>{\begin{tikzpicture}\input{fig/hessenberg-givens-3};\end{tikzpicture}}
+    \only<4>{
+      \begin{tikzpicture}\input{fig/hessenberg-givens-4};\end{tikzpicture}
+      \begin{tikzpicture}\input{fig/hessenberg-givens-5};\end{tikzpicture}
+      \begin{tikzpicture}\input{fig/hessenberg-givens-6};\end{tikzpicture}
+      \begin{tikzpicture}\input{fig/hessenberg-givens-6-result};\end{tikzpicture}}
+  \end{frame}
 \frame {\input {blocks/Theorem-Hessenberg-qr.tex}}
 \frame {\input {blocks/Corollary-Hessenberg-qr.tex}}
 \frame {\input {blocks/Theorem-Hessenberg-householder.tex}}

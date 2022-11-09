@@ -59,6 +59,17 @@
   \end{gather}
 \end{Definition}
 
+\begin{Example}{projection-distance}
+  Since the orthogonal projection is uniquely defined by its range, there holds
+  \begin{gather}
+    \dist(U,U) = \norm{\matp_U-\matp_U}_2 = 0.
+  \end{gather}
+  If $U$ contains a vector $\vx$  which is orthogonal to $V$, then $\matp_U\vx=\vx$ and $\matp_V\vx = 0$, thus
+  \begin{gather}
+    \norm{\matp_U-\matp_V}_2 = \sup_{\vx\in\C^n} \frac{\norm{\matp_U\vx-\matp_V\vx}}{\norm{\vx}} \ge 1.
+  \end{gather}
+\end{Example}
+
 % \begin{Example}{projection-distance}
 %   Let $U = \spann \vu$ and $V=\spann\vv$ with
 %   $\norm{\vu} = \norm{\vv} = 1$. Then,

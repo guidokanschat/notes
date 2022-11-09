@@ -1,0 +1,35 @@
+\documentclass{article}
+\def\matH{H}
+\def\matg{G}
+\usepackage{tikz}
+\usetikzlibrary{matrix,fit}
+\pgfdeclarelayer{bg}
+\pgfsetlayers{bg,main}
+\begin{document}
+\begin{tikzpicture}
+  \input{hessenberg-givens-1};
+\end{tikzpicture}
+
+
+\begin{tikzpicture}
+  \input{hessenberg-givens-2};
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \input{hessenberg-givens-3};
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \input{hessenberg-givens-4};
+\end{tikzpicture}
+\begin{tikzpicture}
+  \input{hessenberg-givens-5};
+\end{tikzpicture}
+\begin{tikzpicture}
+  \input{hessenberg-givens-6};
+\end{tikzpicture}
+\begin{tikzpicture}
+  \input{hessenberg-givens-6-result};
+\end{tikzpicture}
+
+\end{document}

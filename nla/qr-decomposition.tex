@@ -98,7 +98,7 @@
   \begin{gather}
     \alpha\ve_1 = \matq_{\vw} \vy
     = \vy - 2 \frac{\vw\vw^*\vy}{\vw^*\vw}
-    = \vy - w \frac{\vw^*\vy}{\vw^*\vw}\vw.
+    = \vy - 2 \frac{\vw^*\vy}{\vw^*\vw}\vw.
   \end{gather}
   Thus, $\vw$ is in the span of $\vy-\alpha \ve_1$. Since we divide by
   its norm, its length does not matter and we let
@@ -115,6 +115,17 @@
   \end{gather}
   Since the computation of the first component of $\vw_\phi$ is prone to loss of significance, we choose $\phi$ as the phase of $-y_1$.
 \end{proof}
+
+\begin{Algorithm}{householder-multiplication}
+  Computation of $\matq_w\vx$:
+  \begin{algorithmic}[1]
+    \Require $\vx\in\C^n$, Householder vector $\vw\in \C^n$, $\beta = \nicefrac2{\norm{w}^2}$
+    \State $\alpha \gets \beta \vw^*\vx$
+    \State $\vx \gets \vx - \alpha \vw$
+  \end{algorithmic}
+  This algorithm requires $2n$ multiplications and additions compared
+  to $n^2$ for a general matrix vector product.
+\end{Algorithm}
 
 \subsection{Givens rotation}
 
@@ -276,6 +287,45 @@
     \end{aligned}
   \end{gather}
 \end{proof}
+
+\begin{Algorithm}{givens-multiplication}
+  The multiplication
+  \begin{gather}
+    \givens_{jk}\mata\qquad\qquad\qquad\qquad \mata\givens_{jk}
+  \end{gather}
+  affects only two rows/columns of $\mata\in\C^{m\times n}$ and can be
+  implemented with $6n/6m$ multiplications and additions.
+
+  \hrulefill
+  \vspace*{2mm}
+  
+  \begin{minipage}{.49\textwidth}
+    \begin{algorithmic}[1]
+      \Require $c,s$ Givens rotation
+      \For{$i=1,\dots,n$}
+      \State $\alpha \gets a_{ji}$
+      \State $\beta \gets a_{ki}$
+      \State $a_{ji} \gets c\alpha-s\beta$
+      \State $a_{ki} \gets s\alpha+c\beta$
+      \EndFor
+    \end{algorithmic}      
+  \end{minipage}
+  \begin{minipage}{.49\textwidth}
+    \begin{algorithmic}[1]
+      \Require $c,s$ Givens rotation
+      \For{$i=1,\dots,n$}
+      \State $\alpha \gets a_{ij}$
+      \State $\beta \gets a_{ik}$
+      \State $a_{ij} \gets c\alpha-s\beta$
+      \State $a_{ik} \gets s\alpha+c\beta$
+      \EndFor
+    \end{algorithmic}      
+  \end{minipage}
+\end{Algorithm}
+
+\begin{remark}
+  There is a compressed way of storing $c$ and $s$ of a Givens rotation in a single number, see~\cite[5.1.11]{GolubVanLoan83}.
+\end{remark}
 
 %%% Local Variables:
 %%% mode: latex

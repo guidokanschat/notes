@@ -110,8 +110,8 @@
     \abs{\lambda_2}>\dots>\abs{\lambda_m}>\abs{\lambda}
   \end{gather}
   for all remaining eigenvalues $\lambda\in\sigma(\mata)$. Choose
-  $\matq_0 = (\vq^{(0)}_1,\dots,\vq^{(0)}_{m})$ such that these vectors span
-  the \putindex{dominant invariant subspace} $D_m(\mata)$. Then, for $j=1,\dots,m$
+  $\matq_0 \in \C^{n\times m}$ such that
+  $\dist(D_m(\mata),\ran{\matq^{(0)}}) < 1$. Then, for $j=1,\dots,m$
   \begin{gather}
     \dist\left(D_j(\mata),\ran{\matq^{(k)}}\right)
     = \bigo \left(\abs*{\frac{\lambda_{j+1}}{\lambda_j}}^k\right).
@@ -127,8 +127,8 @@
 \begin{Lemma}{qr-1}
   The matrices $\mata_k$ of the QR-iteration have the following properties:
   \begin{enumerate}
-  \item $\mata_{k+1} = \matq_k^*\mata_k\matq_k = \matq_k^*\dots\matq_1^*A\matq_1\dots\matq_k$.
-  \item $\mata^k=\matq_1\dots\matq_k\matr_k\dots\matr_1$.
+  \item $\mata_{k} = \matq_k^*\mata_{k-1}\matq_k = \matq_k^*\dots\matq_0^*A\matq_0\dots\matq_k$.
+  \item If $\matq_0=\id$, then $\mata^k=\matq_1\dots\matq_k\matr_k\dots\matr_1$.
   \item If $\mata$ is normal, so is $\mata_k$ for any $k$.
   \item If $\mata$ is complex symmetric, so is $\mata_k$ for any $k$.
   \end{enumerate}
@@ -137,7 +137,7 @@
 \begin{proof}
   For the first relation, we compute
   \begin{gather}
-    \matq_k\mata_{k+1}\matq_k^* = \matq_k\matr_k\matq_k\matq_k^* = \mata_k.
+    \matq_k\mata_{k}\matq_k^* = \matq_k\matr_k\matq_k\matq_k^* = \mata_{k-1}.
   \end{gather}
   The second, we prove by induction, where
   $\mata = \mata_0 = \matq_1\matr_1$ follows directly from the first
@@ -177,6 +177,55 @@
   \end{gather}
   A symmetric or Hermitian Hessenberg matrix is \define{tridiagonal}.
 \end{Definition}
+
+\begin{Algorithm*}{Hessenberg-qr}{Hessenberg QR step}
+  \begin{algorithmic}[1]
+    \Require $\matH\in\Cnn$ in Hessenberg form
+    \For{$k=1,\dots,n-1$}
+    \Comment{factorization $\matq\matr = \matH$, $\matr$ stored in $\matH$}
+    \State $\givens_{k,k+1} \gets$ Givens rotation for $h_{kk},h_{k+1,k}$
+    \State $\matH\gets \givens_{k,k+1}\matH$
+    \EndFor
+    \For{$k=1,\dots,n-1$}
+    \Comment{$\matH = \matr\matq$}
+    \State $\matH\gets \matH\givens_{k,k+1}$    
+    \EndFor
+  \end{algorithmic}  
+\end{Algorithm*}
+
+\begin{example}
+  At the example of a 4-by-4-matrix, we show how this algorithm works.
+  \begin{enumerate}
+  \item Apply a Givens rotation from the left which eliminates the value $Y$ from the matrix. It affects the two top rows.
+    
+    {\small\begin{tikzpicture}
+      \input{fig/hessenberg-givens-1};
+    \end{tikzpicture}}
+    
+  \item Do the same with the second and third rows.
+    
+    {\small\begin{tikzpicture}
+        \input{fig/hessenberg-givens-2};
+      \end{tikzpicture}}
+    
+    {\small\begin{tikzpicture}
+        \input{fig/hessenberg-givens-3};
+      \end{tikzpicture}}
+
+    Note that columns with two zero entries remain unchanged and will not have to be processed.
+  \item Now the matrix is upper triangular and the transformation was
+    \begin{gather*}
+      \matq^* = \givens_{34}^*\givens_{23}^*\givens_{12}^*.
+    \end{gather*}
+
+  \item When we go back, we apply Givens rotations from the right, thus affecting columns of the matrices.
+
+    {\small\begin{tikzpicture}\input{fig/hessenberg-givens-4};\end{tikzpicture}
+        \begin{tikzpicture}\input{fig/hessenberg-givens-5};\end{tikzpicture}
+        \begin{tikzpicture}\input{fig/hessenberg-givens-6};\end{tikzpicture}
+        \begin{tikzpicture}\input{fig/hessenberg-givens-6-result};\end{tikzpicture}}
+  \end{enumerate}
+\end{example}
 
 \begin{Theorem}{Hessenberg-qr}
   The QR factorization of a Hessenberg matrix $\matH$ can be obtained

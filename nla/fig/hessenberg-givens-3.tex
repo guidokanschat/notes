@@ -1,0 +1,24 @@
+\matrix
+[matrix of math nodes,left delimiter=(,right delimiter=)] (m)
+{
+  X&X&X&X\\
+  0&X&X&X\\
+  0&0&X&X\\
+  0&0&Y&X\\
+};
+
+\node
+[matrix of math nodes,left delimiter=(,right delimiter=)] (r)  at (5,0)
+{
+  X&X&X&X\\
+  0&X&X&X\\
+  0&0&X&X\\
+  0&0&0&X\\
+};
+
+\draw[->,thick] (2,0) -- node[above] {$\matg_{34}^*\matH$} (3,0);
+
+\begin{pgfonlayer}{bg}
+  \node[fit={(m-3-3.north west) (m-4-4.south east)},fill=yellow,inner sep=0,rounded corners=1mm]{};
+  \node[fit={(m-3-3.north west) (m-4-3.south east)},fill=green,inner sep=0,rounded corners=1mm]{};
+\end{pgfonlayer}
