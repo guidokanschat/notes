@@ -285,7 +285,7 @@
   See~\cite[Theorem 7.3-1]{GolubVanLoan83}.
 \end{proof}
 
-\subsection{Shifts and deflation}
+\subsection{Deflation and shifts}
 
 \begin{intro}
   The goal of this section is the development and justification of a
@@ -310,8 +310,33 @@
   $\matH_{22}\in \C^{n-p\times n-p}$ and an arbitrary matrix
   $\mata_{12}\in \C^{p\times n-p}$. Then, the matrix $\matq^{(k)}$
   decouples into two diagonal blocks and $\matH^{(k+1)}$ has the same
-  form. Thus, the iteration decouples into two separate iterations.
+  form. Thus, the iteration decouples into two separate iterations. If
+  $p=n-1$, then $h_{nn}$ approximates an eigenvalue.
 \end{Theorem}
+
+\begin{Algorithm*}{qr-deflation}{Deflation}
+  After each step of the shifted QR-iteration monitor the subdiagonal
+  elements of $\matH^{(k)}$. Whenever
+  \begin{gather}
+    \abs{h_{j,j-1}} \le \eps \bigl(\abs{h_{j-1,j-1}}+\abs{h_{jj}}\bigr)
+  \end{gather}
+  set $h_{j,j-1}=0$.
+
+  If this happens in the last row, consider $h_{nn}=\lambda_n$
+  converged and proceed with a matrix of dimension $n-1\times n-1$.
+
+  If this happens in the center of the matrix, proceed with both
+  remaining diagonal blocks separately.
+\end{Algorithm*}
+
+\begin{remark}
+  The purpose of deflation is removing Schur vectors from the
+  iteration. Thus, if one of the Schur vectors for a multiple
+  eigenvalue has converged, the remaining iterations will deal with
+  reduced multiplicity. Deflation will also help us to deal with the
+  requirement that all eigenvalues must have different modulus, but
+  this is solved below in combination with shifts.
+\end{remark}
 
 \begin{Definition}{hessenberg-unreduced}
   A Hessenberg matrix is called \define{unreduced} if all entries on
@@ -319,13 +344,33 @@
   otherwise.
 \end{Definition}
 
+\begin{Theorem*}{implicit-Q}{Implicit Q-theorem}
+  Let $\mata\in\Cnn$ arbitrary, let $\matq,\matv\in\Cnn$ unitary such that
+  \begin{gather}
+    \matq^*\mata\matq = \matH,\qquad \matv^*\mata\matv = \matg,
+  \end{gather}
+  where $\matH$ and $\matg$ are Hessenberg matrices. Let $k$ denote
+  the smallest integer such that $h_{k+1,k} = 0$, or $k=n$ if $\matH$
+  is unreduced. Assume $\vv_1 = \vq_1$. Then,
+  $\vv_j = e^{i_j\phi}\vq_j$ and $\abs{h_{j,j-1}} = \abs{g_{j,j-1}}$
+  for $j=1,\dots,k$. if $k<n$, then $g_{k+1,k} = 0$.
+\end{Theorem*}
+
+\begin{proof}
+  See \cite[Theorem 7.4-2]{GolubVanLoan83}.
+\end{proof}
+
+\begin{remark}
+  The \putindex{Implicit Q-Theorem} says that two Hessenberg forms of $\mata$ with the same initial reduction vector are essentially equal in the sense that they only differ by the diagonal scaling $\matg = \matd^{-1}\matH\matd$ where $\matd=\diag(d_1,\dots,d_n)$ matrix with $\abs{d_{i}} = 1$.
+\end{remark}
+
 \begin{Algorithm*}{shifted-qr-iteration}{QR iteration with shift}
   
-  Let $\matH_1 = \matq_0^*\mata\matq_0\in\Cnn$.\\
+  Let $\matH_0 = \matq_0^*\mata\matq_0\in\Cnn$.\\
   For $k=1,\ldots$ until convergence repeat
   \begin{itemize}
-  \item $\matq_k\matr_k = \matH_k - \sigma_k\id$ (QR factorization)
-  \item $\matH_{k+1} = \matr_k\matq_k + \sigma_k\id$
+  \item $\matq_k\matr_k = \matH_{k-1} - \sigma_k\id$ (QR factorization)
+  \item $\matH_{k} = \matr_k\matq_k + \sigma_k\id$
   \end{itemize}
 \end{Algorithm*}
 
@@ -372,20 +417,6 @@
   the symmetric case~\cite[Section 8.2]{GolubVanLoan83}.
 \end{Remark}
 
-\begin{Algorithm*}{qr-deflation}{Deflation}
-  After each step of the shifted QR-iteration monitor the subdiagonal
-  elements of $\matH^{(k)}$. Whenever
-  \begin{gather}
-    \abs{h_{j,j-1}} \le \eps \bigl(\abs{h_{j-1,j-1}}+\abs{h_{jj}}\bigr)
-  \end{gather}
-  set $h_{j,j-1}=0$.
-
-  If this happens in the last row, consider $h_{nn}=\lambda_n$
-  converged and proceed with a matrix of dimension $n-1\times n-1$.
-
-  If this happens in the center of the matrix, proceed with both
-  remaining diagonal blocks separately.
-\end{Algorithm*}
 
 
 \subsection{Methods in real arithmetic}
@@ -493,22 +524,6 @@
     &&\in \R^{m\times m}
   \end{align}
 \end{Lemma}
-
-\begin{Theorem*}{implicit-Q}{Implicit Q-theorem}
-  Let $\mata\in\Cnn$ arbitrary, let $\matq,\matv\in\Cnn$ unitary such that
-  \begin{gather}
-    \matq^*\mata\matq = \matH,\qquad \matv^*\mata\matv = \matg,
-  \end{gather}
-  where $\matH$ and $\matg$ are Hessenberg matrices. Let $k$ denote
-  the smallest integer such that $h_{k+1,k} = 0$, or $k=n$ if $\matH$
-  is unreduced. Assume $\vv_1 = \vq_1$. Then,
-  $\vv_j = e^{i_j\phi}\vq_j$ and $\abs{h_{j,j-1}} = \abs{g_{j,j-1}}$
-  for $j=1,\dots,k$. if $k<n$, then $g_{k+1,k} = 0$.
-\end{Theorem*}
-
-\begin{proof}
-  See \cite[Theorem 7.4-2]{GolubVanLoan83}.
-\end{proof}
 
 %%% Local Variables:
 %%% mode: latex
