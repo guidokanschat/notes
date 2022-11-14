@@ -191,6 +191,7 @@
   \end{gather}
 \end{Lemma}
 
+
 \begin{remark}
   Computation of $r$ in the previous lemma is prone to numerical
   overflow due to computation of $x_j^2$ or $x_k^2$, even if $r$
@@ -326,6 +327,17 @@
 \begin{remark}
   There is a compressed way of storing $c$ and $s$ of a Givens rotation in a single number, see~\cite[5.1.11]{GolubVanLoan83}.
 \end{remark}
+
+\begin{todo}
+  Move the following notation to after the definition
+\end{todo}
+
+\begin{Notation}{givens-specific}
+  In the more general case, that a Givens rotation $\givens_{jk}^T$ is not chosen to eliminate $x_k$ using $x_j$, but more generally eliminating a number $b$ using a number $a$, we write more specifically
+  \begin{gather}
+    \givens_{jk}[a,b].
+  \end{gather}
+\end{Notation}
 
 %%% Local Variables:
 %%% mode: latex

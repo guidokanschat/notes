@@ -1,0 +1,218 @@
+\subsection{The real symmetric eigenvalue problem}
+
+\begin{Lemma}{qr-tridiagonal}
+  Let $\matt\in\Rnn$ be a real, symmetric, tridiagonal matrix and
+  $\matq\matr=\matt$ its QR factorization. Then, $\tilde\matt=\matr\matq$ is also
+  symmetric and tridiagonal. Furthermore, $\matr$ is zero except for
+  its main and the first two upper diagonals.
+
+  The same holds for the shifted version with $\sigma\in\R$,
+  \begin{gather}
+    \matq\matr = \matt-\sigma\id,\qquad \tilde\matt = \matr\matq+\sigma\id.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  See homework.
+\end{proof}
+
+\begin{Lemma*}{perfect-shift}{Perfect shift}
+  Let $\matt\in\Rnn$ be an unreduced, symmetric, tridiagonal matrix,
+  $\sigma\in\sigma(\matt)$, and $\matr\matq=\matt-\sigma\id$ the
+  shifted QR factorization. Then, $r_{nn}=0$. Furthermore, the last
+  column of $\tilde\matt = \matr\matq+\sigma\id$ is equal to
+  $\sigma\ve_n$.
+\end{Lemma*}
+
+\begin{proof}
+  \begin{todo}
+  If $\matt$ is unreduced, the first $n-1$ columns of
+  $\matt-\sigma\id$ are linearly independent for any $\sigma$.    
+  \end{todo}
+\end{proof}
+
+\begin{Remark*}{real-symmetric-qr}{QR-Iteration for real, symmetric matrices}
+  In this case, many things simplify
+  \begin{enumerate}
+  \item Hessenberg form is tridiagonal
+  \item The Schur normal form is
+    \begin{gather}
+      \mata = \matq^T\matd\matq
+    \end{gather}
+    with real, diagonal matrix $\matd$
+  \item QR factorization uses $\bigo(n)$ operations and $\matr$
+    consists only of the main diagonal and one upper diagonal.
+  \end{enumerate}
+  Accumulating the matrix $\matq$ still needs $\bigo(n^2)$ operations
+\end{Remark*}
+
+\begin{Algorithm*}{qr-explicit-shift}{QR iteration with explicit shift}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Rnn$ symmetric
+    \State $\matt_0 = \matq_0^*\mata\matq_0$\Comment{tridiagonal}
+    \For {$k=1,\ldots$ until convergence}
+    \State $\matq_k\matr_k = \matt_{k-1} - \sigma_k\id$\Comment{QR factorization}
+    \State $\matt_{k} = \matr_k\matq_k + \sigma_k\id$
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{Lemma}{wilkinson-shift}
+  Let
+  \begin{gather}
+    \matt =
+    \begin{pmatrix}
+      a_1&b_1\\
+      b_1&\ddots&\ddots\\
+      &\ddots&a_{n-1}&b_{n-1}\\
+      &&b_{n-1}&a_n
+    \end{pmatrix}.
+  \end{gather}
+  Then, the \putindex{Wilkinson shift} $\sigma$ can be computed as
+  \begin{gather}
+    \sigma = a_n + d - \operatorname{sign}(d) \sqrt{d^2+b_{n-1}^2},
+    \qquad d=\frac{a_{n-1}-a_n}2.
+  \end{gather}
+\end{Lemma}
+
+\begin{Algorithm*}{implicit-symmetric-shift}{Symmetric QR step with implicit shift}
+  \begin{algorithmic}[1]
+    \Require $\matt\in\Rnn$ symmetric, unreduced, tridiagonal; $\sigma\in\R$
+    \State Compute $\matg_{12} = \matg_{12}[t_{11}-\sigma,t_{21}]$\Comment{Givens rotation}
+    \State $\matt \gets \matg_{12}^T\matt\matg_{12}$
+    \For {$k=2,\dots,n-1$} \Comment{Bulge chasing}
+    \State $\matg_{k,k+1} = \matg_{k,k+1}[t_{k,k-1},t_{k+1,k-2}]$
+    \State $\matt \gets \matg_{k,k+1}^T\matt\matg_{k,k+1}$
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{example}
+  \begin{todo}
+    Graphical representation of bulge chasing
+  \end{todo}
+\end{example}
+
+\begin{Theorem}{implicit-symmetric-shift}
+  Given $\matt\in\Rnn$ symmetric, unreduced, and tridiagonal. Let
+  \begin{gather}
+    \matt^{(e)} = \matq^*\matt\matq,
+    \qquad
+    \matt^{(i)} = \matz^*\matt\matz,
+  \end{gather}
+  where $\matt_e$ is computed by the QR step with explicit shift and
+  $\matz=\matg_1\matg_2\dots\matg_{n-1}$ is the matrix of the QR step
+  with implicit shift. Then, there holds
+  \begin{xalignat}2
+    \vz_1&=\vq_1,\\
+    \vz_i&=\pm \vq_i,& i&=2,\dots,n,\\
+    \abs{t_{i,i-1}^{(i)}}&=\abs{t_{i,i-1}^{(e)}},& i&=2,\dots,n.
+  \end{xalignat}
+\end{Theorem}
+
+\begin{proof}
+  Without loss of generality, we can assume that the QR factorization
+  in the explicit shift step is computed by Givens rotations.  Then,
+  the matrices $\matq$ and $\matz$ are both defined as a product of
+  Givens rotations $\matg_{12}\matg_{23}\dots\matg_{k-1,k}$, where the
+  first column is defined by the first rotation only. And the first
+  rotation matrix is the same for both algorithms, such that
+  $\vz_1 = \vq_1$. For the remaining results, we can use the
+  \putindex{Implicit Q Theorem}.
+\end{proof}
+
+\subsection{The eigenvalue problem for nonsymmetric real matrices}
+
+\begin{Theorem*}{real-schur-form}{The real Schur form}
+  For every matrix $\mata\in \Rnn$ there is an orthogonal matrix
+  $\matq\in\Rnn$ and a matrix $\matr\in\Rnn$ such that
+  \begin{gather}
+    \mata = \matq\matr\matq^*,
+    \qquad
+    \matr =
+    \begin{pmatrix}
+      R_{11} &* & *&*\\
+      &R_{22}&*&*\\
+      &&\ddots&*\\
+      &&& R_{jj}
+    \end{pmatrix},
+  \end{gather}
+  where the diagonal blocks are either of dimension one containing the
+  real eigenvalues or of dimension 2 for complex conjugate eigenvalue
+  pairs. The latter correspond to scaled rotation matrices with the
+  according eigenvalue pair.
+\end{Theorem*}
+
+\begin{Remark}{francis-qr}
+  Using double shifts, the QR-iteration can be made to converge to the
+  real Schur form using double shifts in real arithmetic. This method
+  is also known as the \define{Francis QR step}~\cite[Algorithm
+  7.5-1]{GolubVanLoan83}.
+\end{Remark}
+
+\subsection{Singular Value Decomposition (SVD)}
+
+\begin{Definition}{svd}
+  The \define{singular value decomposition} (\define{SVD}) of a matrix $\mata\in\C^{m\times n}$ is a facorization
+  \begin{gather}
+    \mata = \matu\matsigma\matv^*
+  \end{gather}
+  with unitary matrices $\matu\in\C^{m\times m}$ and $\matv\in\Cnn$ as
+  well as a real, diagonal matrix $\matsigma$ with diagonal entries
+  \begin{gather}
+    \sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_p \ge 0,
+  \end{gather}
+  where $p = \min\{m,n\}$.
+\end{Definition}
+
+\begin{Theorem}{svd}
+  Every matrix $\mata\in\C^{m\times n}$ admits a singular value
+  decomposition. Every real matrix admits a singular value
+  decomposition with orthogonal matrices $\matu$, $\matv$.
+\end{Theorem}
+
+\begin{Corollary}{svd-rank}
+  Let $\mata = \matu\matsigma\matv^*$ be the SVD of $\mata$ with
+  \begin{gather}
+    \sigma_1 \ge \dots \ge \sigma_r > \sigma_{r+1} = \dots = \sigma_p = 0.
+  \end{gather}
+  Then, $\rank \mata = r$
+\end{Corollary}
+
+\begin{Corollary}{svd-inverse}
+  If $\mata\in\Cnn$ is invertible, then
+  \begin{gather}
+    \mata^{-1} = \matv\matsigma^{-1}\matu^*,
+  \end{gather}
+  where
+  \begin{gather}
+    \matsigma^{-1} = \diag\left(\frac1{\sigma_1},\dots,\frac1{\sigma_n}\right).
+  \end{gather}
+\end{Corollary}
+
+\begin{Remark}{svd-geometry}
+  Let
+  \begin{gather}
+    E = \bigl\{ \vy\in \R^m \big| \vy=\mata\vx, \norm{\vx}_2 = 1 \bigr\},
+  \end{gather}
+  be the ellipsoid obtained by mapping the unit sphere though
+  $\mata$. Then, the column vectors of $\matu$ and the singular values
+  $\sigma_i$ are the directions and lengths of the semi-axes of this
+  ellipsoid, respectively.
+\end{Remark}
+
+\begin{Lemma}{svd-ata}
+  The singular values of $\mata$ are the square roots of the
+  eigenvalues of $\mata^*\mata$ and of $\mata\mata^*$, respectively. For $m\ge n$ there holds
+  \begin{align}
+    \matv^*(\mata^*\mata)\matv &= \diag(\sigma_1^2,\dots,\sigma_n^2)
+    &&\in \R^{n\times n}\\
+    \matu^*(\mata\mata^*)\matu &= \diag(\sigma_1^2,\dots,\sigma_n^2, 0,\dots,0)
+    &&\in \R^{m\times m}
+  \end{align}
+\end{Lemma}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

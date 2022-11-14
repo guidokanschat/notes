@@ -244,7 +244,7 @@
     \matH = \matq^* \mata \matq.
   \end{gather}
   The matrix $\matq$ can be obtained by $n-2$ \putindex{Householder
-    reflections}.
+    reflection}s.
 \end{Theorem}
 
 \begin{Algorithm*}{qr-method}{The QR-Method}
@@ -344,7 +344,7 @@
   otherwise.
 \end{Definition}
 
-\begin{Theorem*}{implicit-Q}{Implicit Q-theorem}
+\begin{Theorem*}{implicit-Q}{Implicit Q Theorem}
   Let $\mata\in\Cnn$ arbitrary, let $\matq,\matv\in\Cnn$ unitary such that
   \begin{gather}
     \matq^*\mata\matq = \matH,\qquad \matv^*\mata\matv = \matg,
@@ -361,17 +361,18 @@
 \end{proof}
 
 \begin{remark}
-  The \putindex{Implicit Q-Theorem} says that two Hessenberg forms of $\mata$ with the same initial reduction vector are essentially equal in the sense that they only differ by the diagonal scaling $\matg = \matd^{-1}\matH\matd$ where $\matd=\diag(d_1,\dots,d_n)$ matrix with $\abs{d_{i}} = 1$.
+  The \putindex{Implicit Q Theorem} says that two Hessenberg forms of $\mata$ with the same initial reduction vector are essentially equal in the sense that they only differ by the diagonal scaling $\matg = \matd^{-1}\matH\matd$ where $\matd=\diag(d_1,\dots,d_n)$ matrix with $\abs{d_{i}} = 1$.
 \end{remark}
 
 \begin{Algorithm*}{shifted-qr-iteration}{QR iteration with shift}
-  
-  Let $\matH_0 = \matq_0^*\mata\matq_0\in\Cnn$.\\
-  For $k=1,\ldots$ until convergence repeat
-  \begin{itemize}
-  \item $\matq_k\matr_k = \matH_{k-1} - \sigma_k\id$ (QR factorization)
-  \item $\matH_{k} = \matr_k\matq_k + \sigma_k\id$
-  \end{itemize}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$
+    \State $\matH_0 = \matq_0^*\mata\matq_0$\Comment{Hessenberg form}
+    \For {$k=1,\ldots$ until convergence}
+    \State $\matq_k\matr_k = \matH_{k-1} - \sigma_k\id$\Comment{QR factorization}
+    \State $\matH_{k} = \matr_k\matq_k + \sigma_k\id$
+    \EndFor
+  \end{algorithmic}
 \end{Algorithm*}
 
 \begin{Lemma}{shifted-qr-convergence}
@@ -419,111 +420,6 @@
 
 
 
-\subsection{Methods in real arithmetic}
-
-\begin{Theorem*}{real-schur-form}{The real Schur form}
-  For every matrix $\mata\in \Rnn$ there is an orthogonal matrix
-  $\matq\in\Rnn$ and a matrix $\matr\in\Rnn$ such that
-  \begin{gather}
-    \mata = \matq\matr\matq^*,
-    \qquad
-    \matr =
-    \begin{pmatrix}
-      R_{11} &* & *&*\\
-      &R_{22}&*&*\\
-      &&\ddots&*\\
-      &&& R_{jj}
-    \end{pmatrix},
-  \end{gather}
-  where the diagonal blocks are either of dimension one containing the
-  real eigenvalues or of dimension 2 for complex conjugate eigenvalue
-  pairs. The latter correspond to scaled rotation matrices with the
-  according eigenvalue pair.
-\end{Theorem*}
-
-\begin{Remark}{francis-qr}
-  Using double shifts, the QR-iteration can be made to converge to the
-  real Schur form using double shifts in real arithmetic. This method
-  is also known as the \define{Francis QR step}~\cite[Algorithm
-  7.5-1]{GolubVanLoan83}.
-\end{Remark}
-
-\begin{Remark*}{real-symmetric-qr}{QR-Iteration for real, symmetric matrices}
-  In this case, many things simplify
-  \begin{enumerate}
-  \item Hessenberg form is tridiagonal
-  \item The Schur normal form is
-    \begin{gather}
-      \mata = \matq^T\matd\matq
-    \end{gather}
-    with real, diagonal matrix $\matd$
-  \item QR factorization uses $\bigo(n)$ operations and $\matr$
-    consists only of the main diagonal and one upper diagonal.
-  \end{enumerate}
-  Accumulating the matrix $\matq$ still needs $\bigo(n^2)$ operations
-\end{Remark*}
-
-\subsection{Singular Value Decomposition (SVD)}
-
-\begin{Definition}{svd}
-  The \define{singular value decomposition} (\define{SVD}) of a matrix $\mata\in\C^{m\times n}$ is a facorization
-  \begin{gather}
-    \mata = \matu\matsigma\matv^*
-  \end{gather}
-  with unitary matrices $\matu\in\C^{m\times m}$ and $\matv\in\Cnn$ as
-  well as a real, diagonal matrix $\matsigma$ with diagonal entries
-  \begin{gather}
-    \sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_p \ge 0,
-  \end{gather}
-  where $p = \min\{m,n\}$.
-\end{Definition}
-
-\begin{Theorem}{svd}
-  Every matrix $\mata\in\C^{m\times n}$ admits a singular value
-  decomposition. Every real matrix admits a singular value
-  decomposition with orthogonal matrices $\matu$, $\matv$.
-\end{Theorem}
-
-\begin{Corollary}{svd-rank}
-  Let $\mata = \matu\matsigma\matv^*$ be the SVD of $\mata$ with
-  \begin{gather}
-    \sigma_1 \ge \dots \ge \sigma_r > \sigma_{r+1} = \dots = \sigma_p = 0.
-  \end{gather}
-  Then, $\rank \mata = r$
-\end{Corollary}
-
-\begin{Corollary}{svd-inverse}
-  If $\mata\in\Cnn$ is invertible, then
-  \begin{gather}
-    \mata^{-1} = \matv\matsigma^{-1}\matu^*,
-  \end{gather}
-  where
-  \begin{gather}
-    \matsigma^{-1} = \diag\left(\frac1{\sigma_1},\dots,\frac1{\sigma_n}\right).
-  \end{gather}
-\end{Corollary}
-
-\begin{Remark}{svd-geometry}
-  Let
-  \begin{gather}
-    E = \bigl\{ \vy\in \R^m \big| \vy=\mata\vx, \norm{\vx}_2 = 1 \bigr\},
-  \end{gather}
-  be the ellipsoid obtained by mapping the unit sphere though
-  $\mata$. Then, the column vectors of $\matu$ and the singular values
-  $\sigma_i$ are the directions and lengths of the semi-axes of this
-  ellipsoid, respectively.
-\end{Remark}
-
-\begin{Lemma}{svd-ata}
-  The singular values of $\mata$ are the square roots of the
-  eigenvalues of $\mata^*\mata$ and of $\mata\mata^*$, respectively. For $m\ge n$ there holds
-  \begin{align}
-    \matv^*(\mata^*\mata)\matv &= \diag(\sigma_1^2,\dots,\sigma_n^2)
-    &&\in \R^{n\times n}\\
-    \matu^*(\mata\mata^*)\matu &= \diag(\sigma_1^2,\dots,\sigma_n^2, 0,\dots,0)
-    &&\in \R^{m\times m}
-  \end{align}
-\end{Lemma}
 
 %%% Local Variables:
 %%% mode: latex
