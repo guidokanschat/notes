@@ -143,12 +143,26 @@
   according eigenvalue pair.
 \end{Theorem*}
 
-\begin{Remark}{francis-qr}
-  Using double shifts, the QR-iteration can be made to converge to the
-  real Schur form using double shifts in real arithmetic. This method
-  is also known as the \define{Francis QR step}~\cite[Algorithm
-  7.5-1]{GolubVanLoan83}.
-\end{Remark}
+\begin{intro}{double-shift}
+  When applying the QR step with Wilkinson shift, the shift parameter
+  might be complex, thus leading to a bad approximation and
+  consequently to slow convergence. Therefore, we have to circumvent
+  this situation and find a working method in real arithmetic. 
+%  Using double shifts, the QR-iteration can be made to converge to the
+%  real Schur form using double shifts in real arithmetic. This method
+%  is also known as the \define{Francis QR step}~\cite[Algorithm
+%  7.5-1]{GolubVanLoan83}.
+\end{intro}
+
+\begin{Lemma}{double-shift-matrix}
+  Let $\sigma_1,\sigma_2\in\C$ be the eigenvalues of the $2\times2$-matrix
+  \begin{gather}
+    \matg =
+    \begin{pmatrix}
+      h_{n-1,n-1}&h_{n-1,n}\\h_{n,n-1}&h_{n,n}
+    \end{pmatrix}.
+  \end{gather}
+\end{Lemma}
 
 \subsection{Singular Value Decomposition (SVD)}
 
