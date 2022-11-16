@@ -24,12 +24,12 @@
   $\sigma\ve_n$.
 \end{Lemma*}
 
-\begin{proof}
-  \begin{todo}
-  If $\matt$ is unreduced, the first $n-1$ columns of
-  $\matt-\sigma\id$ are linearly independent for any $\sigma$.    
-  \end{todo}
-\end{proof}
+%  \begin{todo}
+%\begin{proof}
+%  If $\matt$ is unreduced, the first $n-1$ columns of
+%  $\matt-\sigma\id$ are linearly independent for any $\sigma$.    
+%\end{proof}
+%  \end{todo}
 
 \begin{Remark*}{real-symmetric-qr}{QR-Iteration for real, symmetric matrices}
   In this case, many things simplify
@@ -87,11 +87,11 @@
   \end{algorithmic}
 \end{Algorithm*}
 
-\begin{example}
-  \begin{todo}
-    Graphical representation of bulge chasing
-  \end{todo}
-\end{example}
+%  \begin{todo}
+%\begin{example}
+%    Graphical representation of bulge chasing
+%\end{example}
+%  \end{todo}
 
 \begin{Theorem}{implicit-symmetric-shift}
   Given $\matt\in\Rnn$ symmetric, unreduced, and tridiagonal. Let
@@ -154,6 +154,16 @@
 %  7.5-1]{GolubVanLoan83}.
 \end{intro}
 
+\begin{Algorithm*}{double-shift-step}{Explicit double-shift QR step}
+  \begin{algorithmic}[1]
+    \Require $\matH\in\Rnn$ Hessenberg form, $\sigma_1,\sigma_2\in\C$ shifts
+    \State $\matq_1\matr_1 \gets \matH - \sigma_1\id$ \Comment{QR factorization}
+    \State $\matH_1 \gets \matr_1\matq_1 + \sigma_1\id$
+    \State $\matq_2\matr_2 \gets \matH_1 - \sigma_2\id$ \Comment{QR factorization}
+    \State $\matH_2 \gets \matr_2\matq_2 + \sigma_2\id$
+  \end{algorithmic}
+\end{Algorithm*}
+
 \begin{Lemma}{double-shift-matrix}
   Let $\sigma_1,\sigma_2\in\C$ be the eigenvalues of the $2\times2$-matrix
   \begin{gather}
@@ -162,7 +172,61 @@
       h_{n-1,n-1}&h_{n-1,n}\\h_{n,n-1}&h_{n,n}
     \end{pmatrix}.
   \end{gather}
+  Then, the unitary matrices $\matq_1,\matq_2$ of the double shift
+  algorithm with shifts $\sigma_1,\sigma_2$ can be chosen such that
+  $\matz = \matq_1\matq_2$ and thus $\matH_2 = \matz^T\matH\matz$ are
+  real matrices in exact arithmetic.
 \end{Lemma}
+
+\begin{proof}
+  First, we realize (homework) that
+  \begin{gather}
+    \matq_1\matq_2\matr_2\matr_1 = \matm = (\matH-\sigma_1\id)(\matH-\sigma_2\id).
+  \end{gather}
+  Hence,
+  \begin{gather}
+    \matm = \matH^2-s\matH+t\id,
+  \end{gather}
+  where
+  \begin{gather}
+    \begin{aligned}
+      s &= \sigma_1+\sigma_2 = \operatorname{tr}(\matg)&\in&\R,\\
+      t &= \sigma_1\sigma_2 = \det(\matg)&\in&\R.
+    \end{aligned}
+  \end{gather}
+  Thus, $\matm\in\Rnn$. Since there is a real QR factorization of
+  $\matm$, we can choose $\matz = \matq_1\matq_2\in\Rnn$. Thus, we
+  conclude
+  \begin{gather}
+    \matH_2 = \matq_2^*\matH_1\matq_2 = (\matq_1\matq_2)^*\matH(\matq_1\matq_2) = \matz^T\matH\matz.
+  \end{gather}
+\end{proof}
+
+\begin{remark}
+  The explicit double step has several drawbacks. First, the algorithm
+  must choose $\matq_1$ and $\matq_2$ such that their product is
+  real. But then, roundoff errors will cause imaginary contributions
+  in the result of the double step.
+
+  We could also explicitly compute $\matm$ and then $\matz$ by real QR
+  factorization. But here, we need a matrix vector product with
+  $\bigo(n^3)$ operations.
+\end{remark}
+
+\begin{Theorem}{implicit-double-shift}{Implicit double-shift}
+  The following QR step is essentialy equivalent to the explicit double-shift:
+  \begin{enumerate}
+  \item Compute the first column of $\vm_1$ of $\matm$.
+  \item Compute a Householder matrix $\matq_0$ such that $\matq_0\vm_1$ is a multiple of $\ve_1$.
+  \item Compute Householder matrices $\matq_1,\dots,\matq_{n-2}$ such
+    that for $\matp = \matq_0\dots\matq_{n-2}$ there holds
+    \begin{enumerate}
+    \item $\matp^T\matH\matp$ is a Hessenberg matrix
+    \item The first columns of $\matp$ and of $\matz = \matq_1\matq_2$
+      of the explicit shift algorithm coincide.
+    \end{enumerate}
+  \end{enumerate}
+\end{Theorem}
 
 \subsection{Singular Value Decomposition (SVD)}
 
