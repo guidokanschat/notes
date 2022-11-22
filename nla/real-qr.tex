@@ -214,7 +214,7 @@
 \end{remark}
 
 \begin{Theorem}{implicit-double-shift}{Implicit double-shift}
-  The following QR step is essentialy equivalent to the explicit double-shift:
+  The following QR step is essentially equivalent to the explicit double-shift:
   \begin{enumerate}
   \item Compute the first column of $\vm_1$ of $\matm$.
   \item Compute a Householder matrix $\matq_0$ such that $\matq_0\vm_1$ is a multiple of $\ve_1$.
@@ -228,67 +228,56 @@
   \end{enumerate}
 \end{Theorem}
 
-\subsection{Singular Value Decomposition (SVD)}
+\begin{remark}
+  The matrix $\matm$ in the double shift algorithm is not Hessenberg,
+  but it has two nonzero lower diagonals. Thus, we use Householder
+  reflection for $\matq_0$ and eliminate $h_{21}$ and $h_{31}$. The
+  resulting matrix will have an additional entry $h_{31}$.
 
-\begin{Definition}{svd}
-  The \define{singular value decomposition} (\define{SVD}) of a matrix $\mata\in\C^{m\times n}$ is a facorization
-  \begin{gather}
-    \mata = \matu\matsigma\matv^*
-  \end{gather}
-  with unitary matrices $\matu\in\C^{m\times m}$ and $\matv\in\Cnn$ as
-  well as a real, diagonal matrix $\matsigma$ with diagonal entries
-  \begin{gather}
-    \sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_p \ge 0,
-  \end{gather}
-  where $p = \min\{m,n\}$.
-\end{Definition}
+  The subsequent Householder reflections $\matq_k$ are used to
+  eliminate the additional lower diagonal entry $h_{k+2,k}$ in the
+  same fashion as the ``bulge chasing'' for the symmetric implicit
+  shift. This method is often named \define{Francis QR step} after its
+  inventor.
+\end{remark}
 
-\begin{Theorem}{svd}
-  Every matrix $\mata\in\C^{m\times n}$ admits a singular value
-  decomposition. Every real matrix admits a singular value
-  decomposition with orthogonal matrices $\matu$, $\matv$.
-\end{Theorem}
-
-\begin{Corollary}{svd-rank}
-  Let $\mata = \matu\matsigma\matv^*$ be the SVD of $\mata$ with
+\begin{Algorithm*}{deflation-francis}{Deflation for Francis QR iteration}
+  In each step of the Francis QR iteration, first set
   \begin{gather}
-    \sigma_1 \ge \dots \ge \sigma_r > \sigma_{r+1} = \dots = \sigma_p = 0.
+    h_{i,i-1} = 0, \qquad \text{where}\quad
+    \abs{h_{i,i-1}} \le \text{tol} (\abs{h_{i,i}}+\abs{h_{i-1,i-1}}).
   \end{gather}
-  Then, $\rank \mata = r$
-\end{Corollary}
 
-\begin{Corollary}{svd-inverse}
-  If $\mata\in\Cnn$ is invertible, then
+  Then, partition the matrix
+  $\matH$ as
   \begin{gather}
-    \mata^{-1} = \matv\matsigma^{-1}\matu^*,
+    \matH =
+    \begin{pmatrix}
+      \matH_{11} & \matH_{12} & \matH_{13} \\
+      & \matH_{22} & \matH_{23}\\
+      && \matH_{33}
+    \end{pmatrix},
   \end{gather}
-  where
-  \begin{gather}
-    \matsigma^{-1} = \diag\left(\frac1{\sigma_1},\dots,\frac1{\sigma_n}\right).
-  \end{gather}
-\end{Corollary}
+  where $\matH_{22}\in\R^{q\times q}$ and
+  $\matH_{22}\in\R^{p\times p}$ are chosen maximal such that
+  $\matH_{33}$ is upper \putindex{quasi-triangular} and $\matH_{22}$
+  is unreduced.
 
-\begin{Remark}{svd-geometry}
-  Let
-  \begin{gather}
-    E = \bigl\{ \vy\in \R^m \big| \vy=\mata\vx, \norm{\vx}_2 = 1 \bigr\},
-  \end{gather}
-  be the ellipsoid obtained by mapping the unit sphere though
-  $\mata$. Then, the column vectors of $\matu$ and the singular values
-  $\sigma_i$ are the directions and lengths of the semi-axes of this
-  ellipsoid, respectively.
-\end{Remark}
+  The Francis QR step is then applied to $\matH_{22}$ only. If the
+  eigenvectors are not computed, even the transformations of
+  $\matH_{12}$ and $\matH_{23}$ can be eliminated.
+\end{Algorithm*}
 
-\begin{Lemma}{svd-ata}
-  The singular values of $\mata$ are the square roots of the
-  eigenvalues of $\mata^*\mata$ and of $\mata\mata^*$, respectively. For $m\ge n$ there holds
-  \begin{align}
-    \matv^*(\mata^*\mata)\matv &= \diag(\sigma_1^2,\dots,\sigma_n^2)
-    &&\in \R^{n\times n}\\
-    \matu^*(\mata\mata^*)\matu &= \diag(\sigma_1^2,\dots,\sigma_n^2, 0,\dots,0)
-    &&\in \R^{m\times m}
-  \end{align}
-\end{Lemma}
+\begin{remark}
+  Both the symmetric and the unsymmetric algorithms become more
+  efficient, if eigenvectors are not computed by accumulating the
+  necessary transformations.
+
+  A way around this is the application of the shifted inverse
+  iteration with the approximated eigenvalues, which typically
+  converges in one step for well-conditioned problems.
+\end{remark}
+
 
 %%% Local Variables:
 %%% mode: latex
