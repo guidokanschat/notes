@@ -150,6 +150,21 @@
  $\cond_2\mata = \norm{\mata}_2\norm{\mata^{-1}}_2$.
 \end{Definition}
 
+\begin{Example}{matrix-norms}
+  The operator norm induced by the maximum norm is the \define{row sum norm}
+  \begin{gather}
+    \norm{\mata}_\infty = \max_i \sum_j \abs{a_{ij}}.
+  \end{gather}
+  The operator norm induced by the 1-norm is the \define{column sum norm}
+  \begin{gather}
+    \norm{\mata}_\infty = \max_j \sum_i \abs{a_{ij}}.
+  \end{gather}
+  The operator norm induced by the \putindex{Euclidean norm} is the \define{spectral norm}
+  \begin{gather}
+    \norm{\mata}_2 = \lambda_{\max}(\mata^*\mata).
+  \end{gather}
+\end{Example}
+
 \section{Chebyshev polynomials}
 \input{chebyshev}
 

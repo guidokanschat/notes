@@ -81,7 +81,7 @@
     \State Compute $\matg_{12} = \matg_{12}[t_{11}-\sigma,t_{21}]$\Comment{Givens rotation}
     \State $\matt \gets \matg_{12}^T\matt\matg_{12}$
     \For {$k=2,\dots,n-1$} \Comment{Bulge chasing}
-    \State $\matg_{k,k+1} = \matg_{k,k+1}[t_{k,k-1},t_{k+1,k-2}]$
+    \State $\matg_{k,k+1} = \matg_{k,k+1}[t_{k,k-1},t_{k+1,k-1}]$
     \State $\matt \gets \matg_{k,k+1}^T\matt\matg_{k,k+1}$
     \EndFor
   \end{algorithmic}

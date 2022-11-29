@@ -42,6 +42,20 @@ convergence.
   with an \define{iteration matrix} $\matm\in\Rnn$ and an inhomogeneity $\vg$.
 \end{Definition}
 
+\begin{Lemma}{Jacobi-gs-matrices}
+  Let $\mata = \matd +\matl+\matu$ be the decomposition of $\mata$
+  into the diagonal, and the strict upper and lower triangles,
+  respectively. Let $\vb$ be the right hand side of the linear system
+  $\mata\vx=\vb$. Then, Jacobi iteration has the matrix form
+  \begin{gather}
+    x^{k+1} = \bigl(\id-\matd^{-1}\mata\bigr) x^{k} + \matd^{-1} \vb.
+  \end{gather}
+  The Gauss-Seidel iteration has the matrix form
+  \begin{gather}
+    x^{k+1} = \bigl(\id-(\matd+\matl)^{-1}\mata\bigr) x^{k} + (\matd+\matl)^{-1} \vb.
+  \end{gather}
+\end{Lemma}
+
 \begin{Theorem*}{bfpt}{Banach fixed-point theorem}
   Let $V$ be a vector space with norm $\norm{\cdot}$ and $M$ be a
   closed subset of $V$. Let $F\colon M\to M$ be a \define{contraction},
@@ -81,6 +95,21 @@ convergence.
   \end{gather}
   converges for any initial value $\vx^{(0)}\in\R^n$.
 \end{Corollary}
+
+\begin{Example}{convergence-row-sum}
+  If the matrix $\mata\in\Rnn$ is irreducibly diagonally dominant, that is,
+  \begin{gather}
+    \abs{a_{ii}} \ge \sum_{j=1}^n \abs{a_{ij}},\qquad i=1,\dots,n,
+  \end{gather}
+  the inequality holds strictly in at least one row, and the matrix is
+  irreducible in the sense that for any two indices $i$ and $j$ there
+  is a chain of nonzero entries, such that
+  \begin{gather}
+    a_{i,k_{1}}, a_{k_{1},k_{2}}, a_{k_{2},k_{3}},\dots, a_{k_{m},j}.
+  \end{gather}
+  Then, the Jacobi and Gauss-Seidel methods are contractions in the
+  \putindex{row sum norm} and thus convergent.
+\end{Example}
 
 \begin{Example}{matrix-norm-convergence}
   Let $\mata\in\R^{2\times 2}$ be a rotation by 45\textdegree combined
@@ -142,7 +171,7 @@ convergence.
   Then, there holds asymptotically only
   \begin{gather}
     \operatorname*{lim\,sup}_{k\to\infty} \frac{\norm{x^{(k+1)}-x^*}}{\norm{x^{(k)}-x^*}}
-    < \rho(\matm).
+    \le \rho(\matm).
   \end{gather}
 \end{Theorem}
 
@@ -150,15 +179,33 @@ convergence.
   See~\cite[Theorem 3.1]{Rannacher18nla}.
 \end{proof}
 
-\begin{remark}
+\begin{Remark}{contraction-vs-convergence}
   While \slideref{Theorem}{matrix-radius-convergence} has the
   mathematically more pleasing statement ``if and only if'', its
   assumptions do not establish a contraction. In particular, the norms
   of iterates may grow in early steps of the iteration and only then
   start decreasing, something which is not desired from a practical
   point of view.
-\end{remark}
 
+  For practical purposes, we typically investigate contraction with
+  respect to a suitably chosen norm.
+\end{Remark}
+
+\begin{Theorem}{richardson-convergence}
+  Let $\mata$ be symmetric, positive definite, such that
+  $\sigma(\mata)\subset [\lambda_{\min},\lambda_{\max}]$. Then, the Richarson method converges for
+  \begin{gather}
+    \omega_k = \omega < \frac2{\lambda_{\max}}.
+  \end{gather}
+  The optimal relaxation parameter is
+  \begin{gather}
+    \omega = \frac1{\lambda_{\min}+\lambda_{\max}}.
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  Homework.
+\end{proof}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
