@@ -193,7 +193,7 @@ convergence.
 
 \begin{Theorem}{richardson-convergence}
   Let $\mata$ be symmetric, positive definite, such that
-  $\sigma(\mata)\subset [\lambda_{\min},\lambda_{\max}]$. Then, the Richarson method converges for
+  $\sigma(\mata)\subset [\lambda_{\min},\lambda_{\max}]$. Then, the Richardson method converges for
   \begin{gather}
     \omega_k = \omega < \frac2{\lambda_{\max}}.
   \end{gather}
@@ -201,11 +201,27 @@ convergence.
   \begin{gather}
     \omega = \frac1{\lambda_{\min}+\lambda_{\max}}.
   \end{gather}
+  The contraction number and spectral radius of the iteration matrix are both
+  \begin{gather}
+    \rho = \frac{\lambda_{max}-\lambda_{\min}}{\lambda_{max}+\lambda_{\min}}
+    =\frac{\cond_2(\mata) -1}{\cond_2(\mata) +1}.
+  \end{gather}
 \end{Theorem}
 
 \begin{proof}
   Homework.
 \end{proof}
+
+\begin{Remark}{richardson-convergence}
+  The qualitative statement of
+  \slideref{Theorem}{richardson-convergence} holds under the weaker
+  assumption that $\mata$ is diagonalizable and that the real part of
+  all eigenvalues is positive.
+
+  An estimate for the spectral radius can be obtained even without
+  assuming that $\mata$ is diagonalizable.
+\end{Remark}
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"

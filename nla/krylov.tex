@@ -1,7 +1,7 @@
 \subsection{Projection methods}
 
 \begin{Definition}{galerkin-method}
-  Let $\mata\in\Rnn$ and $\vb\vx\in\R^n$ with $\mata\vx=\vb$. Then,
+  Let $\mata\in\Rnn$ and $\vb, \vx\in\R^n$ with $\mata\vx=\vb$. Then,
   the vector $\tilde\vx\in\R^n$ is called the \define{Galerkin
     approximation} of $\vx$ in a subspace $K$ orthogonal to a subspace
   $L$, if there holds
@@ -28,11 +28,11 @@
 \begin{Definition}{projection-step}
   Given a vector $\vx^{(k)}\in\R^n$ and its residual
   $\vr^{(k)}=\vb-\mata\vx^{(k)}$. Then, we say that the vector
-  $\vx^{(k+1)}\in\R^n$ is obtained by a \define{projection step}, if
+  $\vx^{(k+m)}\in\R^n$ is obtained by a \define{projection step}, if
   \begin{gather}
-    \vx^{(k+1)} = \vx^{(k)} + \vy,
+    \vx^{(k+m)} = \vx^{(k)} + \vy,
   \end{gather}
-  where after the choice of subspaces $K$ and $L$ the update $\vy$ is
+  where after the choice of $m$-dimensional subspaces $K$ and $L$ the update $\vy$ is
   determined by the condition
   \begin{align}
     \vy&\in K\\
