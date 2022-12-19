@@ -251,6 +251,7 @@
 \frame {\input {blocks/Definition-convergence-rate-logarithmic.tex}}
 
 \subsection{Krylov-space methods}
+\subsubsection{Projection methods}
 \frame{\subtoc}
 \frame {\input {blocks/Definition-projection.tex}}
 \frame {\input {blocks/Lemma-projection-complement.tex}}
@@ -277,28 +278,54 @@
 \frame {\input {blocks/Algorithm-steepest-descent-python2.tex}}
 \frame {\input {blocks/Algorithm-minimal-residual-algol.tex}
   \input {blocks/Lemma-minimal-residual.tex}}
+\begin{frame}
+  \begin{columns}
+    \begin{column}{.48\textwidth}
+      \input {blocks/Algorithm-steepest-descent-algol.tex}
+    \end{column}
+    \begin{column}{.48\textwidth}
+      \input {blocks/Algorithm-minimal-residual-algol.tex}
+    \end{column}
+  \end{columns}
+\end{frame}
 \frame {\input {blocks/Lemma-lucky-breakdown.tex}}
 \frame {\input {blocks/Lemma-kantorovich-inequality.tex}}
 \frame {\input {blocks/Theorem-steepest-descent-convergence.tex}}
 \frame {\input {blocks/Theorem-minimal-residual-convergence.tex}}
 
+\subsubsection{Krylov space methods}
+\frame{\subsubtoc}
 \frame {\input {blocks/Definition-krylov-space.tex}}
 \frame {\input {blocks/Definition-grade-of-v.tex}}
-\frame {\input {blocks/Lemma-krylov-invariant.tex}}
 \frame {\input {blocks/Lemma-krylov-polynomial.tex}}
 \frame {\input {blocks/Lemma-krylov-projector.tex}}
+
+\subsubsection{Arnoldi process and GMRES}
+\frame{\subsubtoc}
 \frame {\input {blocks/Algorithm-arnoldi-1.tex}}
-\frame {\input {blocks/Lemma-arnoldi-krylov.tex}}
+\frame {\input {blocks/Lemma-arnoldi-krylov.tex}
+  \pause
+  \input{blocks/Theorem-gram-schmidt}
+}
+\frame {\input {blocks/Algorithm-arnoldi-householder.tex}}
+\frame {\input {blocks/Lemma-arnoldi-householder.tex}
+  \pause
+  \input{blocks/Lemma-qr-columns}
+}
 \frame {\input {blocks/Theorem-arnoldi-projection.tex}}
 \frame {\input {blocks/Lemma-arnoldi-breakdown.tex}}
-\frame {\input {blocks/Remark-arnoldi-householder.tex}}
 \frame {\input {blocks/Theorem-arnoldi-linear-system.tex}}
 \frame {\input {blocks/Theorem-arnoldi-linear-residual.tex}}
 
+\frame {\input {blocks/Theorem-normal-equations.tex}}
+\frame {\input {blocks/Lemma-oblique-normal.tex}}
 \frame {\input {blocks/Algorithm-gmres.tex}}
 \frame {\input {blocks/Theorem-gmres-breakdown.tex}}
 \frame {\input {blocks/Algorithm-gmres-restart.tex}}
 \frame {\input {blocks/Algorithm-gmres-truncated.tex}}
+
+\subsubsection{Lanczos process and cg}
+\frame{\subsubtoc}
 \frame {\input {blocks/Lemma-arnoldi-symmetric.tex}}
 \frame {\input {blocks/Algorithm-lanczos.tex}}
 \frame {\input {blocks/Lemma-lanczos-linear.tex}}

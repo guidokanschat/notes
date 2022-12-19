@@ -1,6 +1,6 @@
 all: print.pdf slides.pdf
 
-slides.pdf: print.pdf
+slides.pdf: print.pdf slides.tex
 	pdflatex ./slides
 	pdflatex ./slides
 	pdfjam --landscape --outfile slides-2.pdf slides.pdf 1,110-199,206

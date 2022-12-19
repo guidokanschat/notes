@@ -5,64 +5,65 @@
 \addtolength{\textwidth}{2cm}
 \addtolength{\oddsidemargin}{-1cm}
 
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 1ex}
 
 \begin{document}
 \begin{center}
   \textbf{\Large Programming-Exam Numerical Linear Algebra}
   
-  \textbf{Winter 2021/22}
+  \textbf{Winter 2022/23}
 \end{center}
 
 \subsection*{Assignment}
-Implement the QR-method following Algorithm 1.4.14 in the notes and
-verify your implementation. Choose one of the following options
-\begin{enumerate}
-\item General complex matrices with transformation to Hessenberg form
-\item General real matrices with transformation to Hessenberg form and
-  double shifts for complex eigenvalues
-\item Symmetric real matrices with transformation to tridiagonal form
-  with optimized storage
-\end{enumerate}
+Minimum: implement the QR-method following Algorithm 1.4.17 in the notes and
+verify your implementation.
 
+Gold standard: implement the Francis-QR-iteration with double shifts
+and deflation in Algorithm 1.5.15.
 \subsection*{Dates}
 
-The program(s) should be submitted electronically by Feb 12th,
-2022. Oral presentations will be scheduled for the week of Feb 14th.
+The program(s) should be submitted electronically before the last week of classes. Details in early January.
+% by Feb 12th,
+%2022. Oral presentations will be scheduled for the week of Feb 14th.
 
 \subsection*{Minimal requirements}
 \begin{itemize}
-\item The program must run without crashing and you must be able to
-  change parameters like the matrix size
+\item The program must run with several example matrices without
+  crashing and you must be able to change parameters like the matrix
+  size
 \item The program must be subdivided into functions of well-defined
   purpose
 \item You must be able to describe how you verify the correctness of
   your program
 \end{itemize}
 
-If your program works for several matrices and you can explain it, you will pass the exam, but only with the minimal passing grade.
+If your program following algorithm 1.4.17 works for several matrices and you can explain it, you will pass the exam, but only with the minimal passing grade (4,0).
 
 \subsection*{Improving your grade}
 You can improve your grade by putting more effort into the
 implementation. You can consider items from the following list, but
 you can also think of other improvements:
-\begin{itemize}
-\item Use shifts to accelerate convergence (Wilkinson shifts)
-\item Use double shifts to avoid complex arithmetic (necessary for option 2)
+\begin{enumerate}
+\item Use implicit single shifts to accelerate convergence (Algorithm 1.5.6)
+\item Use double shifts to avoid complex arithmetic (Theorem 1.5.13)
 \item Use deflation when the subdiagonal element in the last row is
-  sufficiently small (implementation may be hard if not option 3)
-\item Use deflation, if any other subdiagonal element is small (seems very hard)
+  sufficiently small
+\item Use deflation, if any other subdiagonal element is small (somewhat more difficult)
 \item Compute not only eigenvalues but also eigenvectors
-\item Add SVD capability to option 3
-\item Apply your program to several suitable matrices from the ``Matrix Market''\footnote{\texttt{https://math.nist.gov/MatrixMarket/}}. Use suitable library functions for reading the matrices.
 \item Well-chosen tests for correctness
 \item Investigation into convergence
 \item Write very well structured code
 \item Well-prepared jupyter notebooks with code, accompanying text, and results
-\item Object-oriented programming: is it possible to implement
-  algorithm 1.4.14 in a way, that $\boldmath H$ is either Hessenberg or
+\item Object-oriented programming: it is possible to implement
+  algorithm 1.4.17 in a way, that $\boldmath H$ is either Hessenberg or
   tridiagonal, either real or complex, but encapsulate the differences
   inside the QR-decompositions applied in every step.
-\end{itemize}
+\end{enumerate}
+
+Note that combining for instance options 1 and 2 is not really helpful. Choose wisely!
+
+If you implement the QR iteration based on Algorithm 1.5.15 observing items 2, 3, 4, 6, 7, and 8 of the previous list, and you can explain your work, the result will be a top grade (1,0). But, going all the way may not be necessary.
 
 \subsection*{Additional rules}
 \begin{itemize}

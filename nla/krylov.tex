@@ -16,13 +16,12 @@
 \end{Definition}
 
 \begin{remark}
-  For the case $K=L$ we deduce from the optimization property of
-  orthogonal projections that $\mata\tilde x$ in~\eqref{eq:krylov:1}
+  For the case $L=\mata K$ we deduce from the optimization property of
+  orthogonal projections that $\mata\tilde \vx$ in~\eqref{eq:krylov:1}
   is the vector in the subspace $\mata K$ closest to $\vb$. Thus,
   $\tilde\vx$ minimizes the \putindex{residual} $\vb-\mata\vy$ over
   all choices $\vy\in K$.
-
- Note that this does not hold for $K\neq L$.
+ Note that this does not hold for $L\neq \mata K$.
 \end{remark}
 
 \begin{Definition}{projection-step}
@@ -30,15 +29,23 @@
   $\vr^{(k)}=\vb-\mata\vx^{(k)}$. Then, we say that the vector
   $\vx^{(k+m)}\in\R^n$ is obtained by a \define{projection step}, if
   \begin{gather}
-    \vx^{(k+m)} = \vx^{(k)} + \vy,
+    \vx^{(k+m)} = \vx^{(k)} + \vv,
   \end{gather}
-  where after the choice of $m$-dimensional subspaces $K$ and $L$ the update $\vy$ is
+  where after the choice of $m$-dimensional subspaces $K$ and $L$ the update $\vv$ is
   determined by the condition
   \begin{align}
-    \vy&\in K\\
-    \vr^{(k)} - \mata\vy &\perp L.
+    \vv &\in K\\
+    \vr^{(k)} - \mata\vv &\perp L.
   \end{align}
 \end{Definition}
+
+Note that the notation $\vx^{(k+m)}$ in the previous definition is
+quite arbitrary and we could have written $\vx^{(k+1)}$ as
+well. Nevertheless, algorithms we will study later have a structure
+where the $m$-dimensional projection step will resemble $m$
+one-dimensional steps, at least from the algorithmic point of
+view. Thus, we adopt the view of a single step in dimension $m$ as an
+$m$-fold step.
 
 \begin{Example}{projection-gauss-seidel}
   The Gauss-Seidel substep is a projection step with the choice
@@ -110,18 +117,21 @@
   A one-dimensional projection method can be characterized by two
   vectors $\vv$ and $\vw$. Then,
   \begin{gather}
-    K = \spann\vv,
-    \qquad L = \spann\vw.
+    K = \spann{\vv^{(k)}},
+    \qquad L = \spann{\vw^{(k)}}.
   \end{gather}
   The new solution is
   \begin{gather}
-    \tilde\vx = \vx^{(0)}+\alpha \vv,
+    \vx^{(k+1)} = \vx^{(k)}+\alpha \vv^{(k)},
   \end{gather}
   where
   \begin{gather}
-    \alpha = \frac{\scal(\vr^{(0)},\vw)}{\scal(\mata\vv,\vw)}
+    \alpha = \frac{\scal(\vr^{(k)},\vw)}{\scal(\mata\vv,\vw)}
   \end{gather}
-  is determined from the Galerkin condition $\vr^{(0)}-\mata\vy \perp \vw$
+  is determined from the Galerkin condition
+  \begin{gather}
+    \vr^{(k)}-\mata\vv^{(k)} \perp \vw^{(k)}
+  \end{gather}
 \end{Example}
 
 \begin{Algorithm*}{steepest-descent-algol}{The steepest descent method}
@@ -140,6 +150,11 @@
   Each step of the steepest descent method computes the minimum of
   $F(\vy) = \norm{\vy-\vx}_A^2$ along the line from the current
   iterate $\vx^{(k)}$ in direction $-\nabla F(\vx^{(k)})$.
+  Furthermore, there holds
+  \begin{gather}
+    \vr^{(k+1)} \perp \vr^{(k)}.
+  \end{gather}
+  
 \end{Lemma}
 
 \begin{remark}
@@ -227,7 +242,10 @@
 \begin{Lemma}{minimal-residual}
   Each step of the minimal method computes the minimum of
   $F(\vy) = \norm{\vb-\mata\vy}_2^2$ along the line from the current
-  iterate $\vx^{(k)}$ in direction $\vr$.
+  iterate $\vx^{(k)}$ in direction $\vr$. Furthermore, there holds
+  \begin{gather}
+    \vr^{(k+1)} \perp \mata \vr^{(k)}
+  \end{gather}
 \end{Lemma}
 
 \begin{Lemma}{lucky-breakdown}
@@ -250,8 +268,12 @@ method only fails after the exact solution has been found.
   \end{gather}
 \end{Lemma*}
 
+\begin{proof}
+  See~\cite[Lemma 5.8]{Saad00}.
+\end{proof}
+
 \begin{Theorem}{steepest-descent-convergence}
-  Let $\mata\in\R^nn$ be symmetric, positive definite with extremal
+  Let $\mata\in\Rnn$ be symmetric, positive definite with extremal
   eigenvalues $\lambda_{\min}$ and $\lambda_{\max}$. Then, the error
   $\ve^{(k)} = \vx-\vx^{(k)}$ of the steepest descent method admits
   the estimate
@@ -266,6 +288,10 @@ method only fails after the exact solution has been found.
     = 1-\frac2{\cond_2\mata+1}
   \end{gather}
 \end{Theorem}
+
+\begin{proof}
+  See~\cite[Theorem 5.9]{Saad00}.
+\end{proof}
 
 \begin{Theorem}{minimal-residual-convergence}
   Let $\mata\in\Rnn$ such that its symmetric part $(\mata+\mata^T)/2$
@@ -305,7 +331,7 @@ method only fails after the exact solution has been found.
 \begin{Lemma}{krylov-polynomial}
   Let $\mu$ be the grade of $\vv$ with respect to $\mata$.  The Krylov
   space $\krylov_m(\mata,\vv)$ is isomorphic to $\P_{m-1}$ if and only
-  if $m\le \mu$. In particular, for any $\vw\in\krylov_m(\mata,\vv)$
+  if $m\le \mu$. In this case, for any $\vw\in\krylov_m(\mata,\vv)$
   there is a unique polynomial $p\in\P_{m-1}$ such that
   \begin{gather}
     \label{eq:krylov-polynomial-1}
@@ -322,7 +348,7 @@ method only fails after the exact solution has been found.
   \begin{gather}
     \vw = \sum_{i=0}^{m-1} \alpha_i \mata^i\vv =: p_{\vw}(\mata) \vv.
   \end{gather}
-  Since the vectors in this sum span $\krylov_m$, its definition is
+  Since the vectors in this sum span $\krylov_m$, its dimension is
   $m$ if and only if they are linearly independent, which in turn is
   the case if and only if there is a nonzero polynomial
   $p_0\in\P_{m-1}$ such that
@@ -341,28 +367,60 @@ method only fails after the exact solution has been found.
 \end{proof}
 
 \begin{Lemma}{krylov-projector}
-  Let $\matq_m$ be a projector onto $\krylov_m$ and define
+  Let $\matq_m$ be a projector onto $\krylov_m=\krylov_m(\mata,\vv)$ and define
   \begin{align}
     \mata_m\colon \krylov_m &\to \krylov_m\\
     \vv&\mapsto \matq_m \mata.
   \end{align}
   Then, for any polynomial $q\in\P_{m-1}$ there holds
   \begin{gather}
+    \label{eq:krylov-projector-1}
     q(\mata)\vv = q(\mata_m)\vv.
   \end{gather}
   For any polynomial $p\in\P_m$, there holds
   \begin{gather}
-    \matq_m p(\mata)\vv = p(\mata_m)\vv
+    \label{eq:krylov-projector-2}
+    \matq_m p(\mata)\vv = p(\mata_m)\vv.
   \end{gather}
 \end{Lemma}
 
 \begin{proof}
-  See \cite[Proposition 6.3]{Saad00}.
+  See \cite[Proposition 6.3]{Saad00}.  First, we
+  prove~\eqref{eq:krylov-projector-1} by proving it for the monomial
+  basis $q_i(x) = x^i$. It is obviously true for $q_0\equiv 1$. Now,
+  we assume it is true for $q_i$ and conclude for $q_{i+1}$. To this
+  end, we observe
+  \begin{gather}
+    q_{i+1}(\mata)\vv = \mata q_i(\mata)\vv = \mata q_i(\mata_m)\vv.
+  \end{gather}
+  Since $i<m-1$, this vector is in $\krylov_m$ and we obtain
+  \begin{gather}
+    q_{i+1}(\mata)\vv
+    = \matq_m q_{i+1}(\mata)\vv
+    = \matq_m \mata q_i(\mata_m)\vv
+    = q_{i+1}(\mata_m)\vv,
+  \end{gather}
+  since $q_i(\mata_m)\vv\in\krylov_m$. Thus, we have proven the
+  statement for $q\in\P_{m-1}$. The proof for $q_{m}(x) = x^m$ uses
+  the same induction step, just with the exception that the action of
+  $\matq_m$ on the left is not the identity anymore, since
+  $q_m(\mata)\vv$ may not be in $\krylov_m$.
 \end{proof}
 
 \subsection{The Arnoldi procedure and GMRES}
 
-\begin{Algorithm*}{arnoldi-1}{Arnoldi Gram-Schmidt}
+\begin{intro}
+  We now develop algorithms which for a given matrix $\mata\in\Rnn$
+  and initial vector $\vv\in\R^n$ construct the Krylov space
+  $\krylov_m$ and an orthogonal basis dimension by dimension. This
+  algorithm is named after Walter E. Arnoldi in the general case and
+  after Cornelius Lanczos in the symmetric case. We begin with the
+  Arnoldi process, which leads to the GMRES iteration in thsi section
+  and continue with the conjugate gradient method, which is based on
+  the Lanczos process in the next one.
+\end{intro}
+
+\begin{Algorithm*}{arnoldi-1}{Arnoldi with modified Gram-Schmidt}
   \algtext*{EndIf}
   \begin{algorithmic}[1]
     \Require $\mata\in\Rnn$; $\quad\vv_1\in\R^n, \norm{\vv_1}_2 = 1$
@@ -389,6 +447,36 @@ method only fails after the exact solution has been found.
   See \cite[Proposition 6.4]{Saad00}.
 \end{proof}
 
+\begin{Algorithm*}{arnoldi-householder}{Arnoldi with Householder}
+  \algtext*{EndIf}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Rnn$; $\quad\vv_1\in\R^n, \norm{\vv_1}_2 = 1$
+    \State Choose $\matq_1$ such that $\matq_1\vv_1 = \ve_1$.
+    \For{$j=1,\dots,m$}
+    \State $\vv_j \gets \matq_1\dots\matq_j\ve_j$
+    \State $\matq_{j+1}^*\matr \gets \matq_j\dots\matq_1(\vv_1,\mata\vv_1,\dots,\mata\vv_m)$
+    \Comment{Householder}
+    \If{$r_{j+1,j+1}=0$} \textbf{stop}\EndIf
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{Lemma}{arnoldi-householder}
+  If the Arnoldi algorithm with Householder orthogonalization did not
+  stop before step $m$, then the set $\vv_1,\dots,\vv_m$ is an
+  orthonormal basis for $\krylov_m(\mata,\vv_1)$.
+\end{Lemma}
+
+\begin{proof}
+  By line 4 of the algorithm, for $j=1,\dots,m$
+  \begin{gather}
+    \matq_1^*\dots\matq_{j+1}^* \matr = (\vv_1,\mata\vv_1,\dots,\mata\vv_j)
+  \end{gather}
+  is a QR factorization of the (rectangular) matrix on the
+  right. Therefore, we can apply \slideref{Lemma}{qr-columns}, which
+  readily implies the result.
+\end{proof}
+
 \begin{Theorem}{arnoldi-projection}
   Let $\matv_m = (\vv_1,\dots,\vv_m)$ be the matrix of basis vectors
   generated by the Arnoldi method and let
@@ -397,17 +485,49 @@ method only fails after the exact solution has been found.
   $\matH_m\in\R^{m\times m}$ be the same matrix without the last
   row. Then, there holds
   \begin{align}
+    \label{eq:arnoldi-projection-1}
     \mata\matv_m &= \matv_m\matH_m+\vw_m\ve_m^T\\
-                 &= \matv_{m+1}\overline{\matH}_m\\
+    \label{eq:arnoldi-projection-2}
+                 &= \matv_{m+1}\overline{\matH}_m
   \end{align}
   and
   \begin{gather}
-    \matH_m = \matv_m^T\mata\matv.
+    \label{eq:arnoldi-projection-3}
+    \matH_m = \matv_m^T\mata\matv_m.
   \end{gather}
 \end{Theorem}
 
 \begin{proof}
-  See \cite[Proposition 6.5]{Saad00}.
+  See also \cite[Proposition 6.5]{Saad00}.
+  From lines 2--6 of \slideref{Algorithm}{arnoldi-1}, we deduce
+  \begin{gather}
+    \mata \vv_j = \vw_j + \sum_{i=1}^j h_{ij} \vv_i,
+    \qquad j=1,\dots,m.
+    =  \sum_{i=1}^{j+1} h_{ij} \vv_i,
+  \end{gather}
+  For $j<m$, we use line 9 to obtain
+  \begin{gather}
+    \mata \vv_j =  \sum_{i=1}^{j+1} h_{ij} \vv_i.
+  \end{gather}
+  Since $\mata \vv_j$ is the $j$th column of $\mata\matv_m$ and
+  $\matH_m$ is Hessenberg, we can rewrite this as
+  \begin{gather}
+    \mata\matv_m\ve_j = \matv_m\matH\ve_j,\qquad j=1,\dots,m-1.
+  \end{gather}
+  For $j=m$, we cannot replace $\vw_m$, therefore,
+  \begin{gather}
+    \mata\matv_m\ve_m = \matv_m\matH\ve_m + \vw_m.
+  \end{gather}
+  Using $\ve_m^T\ve_j=0$ for $j<m$, we can combine these to the matrix
+  representation
+  \begin{gather}
+    \mata\matv_m = \matv_m\matH + \vw_m\ve_m^T.
+  \end{gather}
+  Adding the vector $\vv_{m+1}$ from the next step of the algorithm,
+  we get the alternative formulation~\eqref{eq:arnoldi-projection-2}.
+  In order to prove~\eqref{eq:arnoldi-projection-3}, we multiply from
+  the left with $\matv_m^T$. The proof is finished by observing that
+  $\matv_m^T\matv_m$ is the identity on $\R^m$ and $\matv_m^T\vw_m=0$.
 \end{proof}
 
 \begin{remark}
@@ -417,24 +537,15 @@ method only fails after the exact solution has been found.
 \end{remark}
 
 \begin{Lemma}{arnoldi-breakdown}
-  The Arnoldi method breaks down at step $j$ if and only if the subspace $\krylov_j$ is invariant under $\mata$ or equivalently, the minimal polynomial of $\vv_1$ is of degree $j$.
+  The Arnoldi method stops at step $j$ if and only if the subspace $\krylov_j$ is invariant under $\mata$ or equivalently, the minimal polynomial of $\vv_1$ is of degree $j$.
 \end{Lemma}
 
 \begin{proof}
-  See \cite[Proposition 6.6]{Saad00}.
+  The algorithm stops in line 8 if and only if $\mata\vv_j$ is a
+  linear combination of the previously computed basis vectors, such
+  that $\vw_j=0$ in line 5 at the end of the loop. This happens
+  exactly when the Krylov space is invariant.
 \end{proof}
-
-\begin{Remark}{arnoldi-householder}
-  The orthogonalization in Arnoldi's method is better performed by
-  Householder reflections. This corresponds to performing a
-  QR-factorization on the matrix
-  \begin{gather}
-    \left(\vv_1,\mata\vv_1, \mata^2\vv_1,\dots,\mata^{m-1}\vv_1\right).
-  \end{gather}
-  It does not produche the matrix $\matH$ in the same obvious way as
-  the Gram-Schmidt version, but \cite[Algorithm 6.3]{Saad00} shows how
-  to generate it.
-\end{Remark}
 
 \begin{Theorem}{arnoldi-linear-system}
   Given an initial vector $\vx^{(0)}$ and
@@ -443,7 +554,7 @@ method only fails after the exact solution has been found.
   method. Then, the Galerkin approximation
   \begin{align}
     x^{(m)} &\in x^{(0)} + \krylov_m(\mata,r^{(0)})\\
-    b-\mata x^{(m)} &\perp \mata \krylov_m(\mata,r^{(0)}),
+    b-\mata x^{(m)} &\perp \krylov_m(\mata,r^{(0)}),
   \end{align}
   is obtained in two steps. Solve in $\R^m$
   \begin{gather}
@@ -467,6 +578,60 @@ method only fails after the exact solution has been found.
   \end{gather}  
 \end{Theorem}
 
+\begin{proof}
+  See also~\cite[Proposition 6.7]{Saad00}
+  We use the definition of the residual of $\vx^{(m)}$ and the representation of \slideref{Theorem}{arnoldi-projection} to obtain
+  \begin{align}
+    \vr^{m} = b-\mata\vx^{(m)}
+    &= b- \mata\left(\vx^{(0)} + \matv_m\vy_m\right)\\
+    &=\vr^{(0)} - \mata\matv_m\vy_m\\
+    &= \beta\vv_1 - \matv_m\matH_m\vy_m - \vw_m\ve_m^T\vy_m.
+  \end{align}
+  Since $\vy_m$ solves the projected system
+  $\matH_m\vy_m = \beta\ve_1$, there holds
+  \begin{gather}
+    \beta\vv_1 - \matv_m\matH_m\vy_m = \beta\vv_1 - \beta \matv_m\ve_1 = 0.
+  \end{gather}
+  Furthermore, we rewrite
+  \begin{gather}
+    \vw_m\bigl(\ve_m^T\vy_m\bigr) = h_{m+1,m} \bigl(\ve_m^T\vy_m\bigr) \vv_{m+1}.
+  \end{gather}
+\end{proof}
+
+\begin{remark}
+  Following \slideref{Theorem}{projected-invertible} this algorithm
+  works reliably only for $\mata$ symmetric, positive definite. We
+  will study this case in more detail in the next section and derive a
+  much improved version there. Here, we continue adapting it for the
+  nonsymmetric case.
+\end{remark}
+
+\begin{Theorem}{normal-equations}
+  Let $\mata\in\R^{m\times n}$ with $m\ge n$ and $\vb\in\R^m$. Then, a vector $\vx$ is the solution to the minimization problem
+  \begin{gather}
+    \norm{\vb-\mata\vx}_2 \stackrel{!}{=} \min,
+  \end{gather}
+  if an only if $\vx$ solves the \define{normal equations}
+  \begin{gather}
+    \mata^T\mata\vx = \mata^T \vb.
+  \end{gather}
+\end{Theorem}
+
+\begin{Lemma}{oblique-normal}
+  Let $\mata\in\Rnn$ be invertible. Let $K$ be a subspace of $\Rnn$. Then, the oblique projection
+  \begin{gather}
+    \vv\in K, \qquad \vb-\mata\vv \perp \mata K,
+  \end{gather}
+  and the orthogonal projection
+  \begin{gather}
+    \vw\in K, \qquad \mata^T \vb-\mata^T\mata\vw \perp K,
+  \end{gather}
+  are identical.
+\end{Lemma}
+
+\begin{proof}
+  Homework.
+\end{proof}
 
 \begin{Algorithm*}{gmres}{Generalized Minimal Residual}
   Given $\vx^{(0)}\in\R^n$, the ``iterate'' $\vx^{(m)}$ of the
@@ -486,12 +651,9 @@ method only fails after the exact solution has been found.
   \end{enumerate}
 \end{Algorithm*}
 
-\begin{remark}
-  The GMRES method is not really an iterative method. Indeed, the
-  intermediate iterates $\vx^{(k)}$ may not even be computed, since
-  the norm of the residual can be computed by
-  \slideref{Theorem}{arnoldi-linear-residual}.
-\end{remark}
+\begin{Theorem}{gmres-projection}
+  
+\end{Theorem}
 
 \begin{Theorem}{gmres-breakdown}
   If the GMRES method breaks down at step $m$, then
