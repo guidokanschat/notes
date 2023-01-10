@@ -1,4 +1,8 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Projection methods}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{Definition}{galerkin-method}
   Let $\mata\in\Rnn$ and $\vb, \vx\in\R^n$ with $\mata\vx=\vb$. Then,
@@ -307,7 +311,11 @@ method only fails after the exact solution has been found.
   and $\mu$ is the smallest eigenvalue of $(\mata+\mata^T)/2$.
 \end{Theorem}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Krylov spaces}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{Definition}{krylov-space}
   For a matrix $\mata\in\Rnn$ and a vector $\vv\in\R^n$, we define the
@@ -407,7 +415,21 @@ method only fails after the exact solution has been found.
   $q_m(\mata)\vv$ may not be in $\krylov_m$.
 \end{proof}
 
+\begin{todo}
+  Reorganize as follows:
+  \begin{enumerate}
+  \item Arnoldi and Lanczos process here
+  \item Derivation of cg from Lanczos
+  \item General Arnoldi and GMRES
+  \item Comments on Bi-Lanczos
+  \end{enumerate}
+\end{todo}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Arnoldi procedure and GMRES}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{intro}
   We now develop algorithms which for a given matrix $\mata\in\Rnn$
@@ -566,6 +588,10 @@ method only fails after the exact solution has been found.
   \end{gather}
 \end{Theorem}
 
+\begin{todo}
+  Move this to Lanczos as it is irrelevant here
+\end{todo}
+
 \begin{Theorem}{arnoldi-linear-residual}
   Let $\vx^{(m)}$ be the Galerkin solution in
   \slideref{Theorem}{arnoldi-linear-system}. Then, there holds
@@ -582,7 +608,7 @@ method only fails after the exact solution has been found.
   See also~\cite[Proposition 6.7]{Saad00}
   We use the definition of the residual of $\vx^{(m)}$ and the representation of \slideref{Theorem}{arnoldi-projection} to obtain
   \begin{align}
-    \vr^{m} = b-\mata\vx^{(m)}
+    \vr^{(m)} = b-\mata\vx^{(m)}
     &= b- \mata\left(\vx^{(0)} + \matv_m\vy_m\right)\\
     &=\vr^{(0)} - \mata\matv_m\vy_m\\
     &= \beta\vv_1 - \matv_m\matH_m\vy_m - \vw_m\ve_m^T\vy_m.
@@ -605,6 +631,10 @@ method only fails after the exact solution has been found.
   much improved version there. Here, we continue adapting it for the
   nonsymmetric case.
 \end{remark}
+
+\begin{todo}
+  Put this into an appendix
+\end{todo}
 
 \begin{Theorem}{normal-equations}
   Let $\mata\in\R^{m\times n}$ with $m\ge n$ and $\vb\in\R^m$. Then, a vector $\vx$ is the solution to the minimization problem
@@ -633,6 +663,10 @@ method only fails after the exact solution has been found.
   Homework.
 \end{proof}
 
+\begin{todo}
+  Write in incremental form? Add pseudocode version in incremental form?
+\end{todo}
+
 \begin{Algorithm*}{gmres}{Generalized Minimal Residual}
   Given $\vx^{(0)}\in\R^n$, the ``iterate'' $\vx^{(m)}$ of the
   \define{GMRES} method is computed by the following steps.
@@ -641,26 +675,99 @@ method only fails after the exact solution has been found.
     $\krylov_{m+1}(\mata,\vr^{(0)})$ and the matrix $\overline\matH_m\in\R^{m+1\times m}$.
   \item Solve the least squares problem
     \begin{gather}
-      \norm{\beta\ve_1 - \overline\matH_m \vy}_2 \stackrel{!}{=} \min
+      \norm{\beta\ve_1 - \overline\matH_m \vy_m}_2 \stackrel{!}{=} \min
     \end{gather}
     in $\R^m$ with $\beta = \norm{\vr^{(0)}}_2$.
   \item Let
     \begin{gather}
-      \vx^{(m)} = \vx^{(0)} + \matv_{m}\vy
+      \vx^{(m)} = \vx^{(0)} + \matv_{m}\vy_m
     \end{gather}
   \end{enumerate}
 \end{Algorithm*}
 
 \begin{Theorem}{gmres-projection}
   The GMRES method computes the update of the $m$-dimensional oblique
-  projection step.
+  projection step. It minimizes the residual over the search space
+  $\vx^{(0)} +\krylov_m(\mata,\vr^{(0)}$ and there holds
+  \begin{gather}
+    \label{eq:gmres-norm}
+    \norm{\vr^{(m)}}_2 = \norm{\vb-\mata\vx^{(m)}}_2 =
+    \norm{\beta\ve_1 - \overline\matH \vy_m}_2.
+  \end{gather}
 \end{Theorem}
 
-\begin{Theorem}{gmres-breakdown}
+\begin{proof}
+  We use the equivalence between minimizing the residual and the
+  solution to the normal equations, namely
+  \slideref{Theorem}{normal-equations}. According to
+  \slideref{Theorem}{arnoldi-projection}, we obtain
+  \begin{gather}
+    \matv_m^T\mata^T\mata\matv_m
+    = \overline\matH_m^T \matv_{m+1}^T\matv_{m+1}\overline\matH_m
+    = \overline\matH_m^T\overline\matH_m.
+  \end{gather}
+  Thus, $\overline\matH_m^T\overline\matH_m$ is the Galerkin
+  projection of $\mata^T\mata$ to the subspace generated by
+  $\matv_m$. Furthermore, it is symmetric, positive definite, the
+  latter assuming $\mata$ is invertible.  Furthermore,
+  $\vr^{(0)} = \vb-\mata\vx^{(0)} = \beta\matv_{m+1}\ve_1$, such that
+  \begin{gather}
+    \matv_m^T\mata^T\vr^{(0)} = \beta\overline\matH_m \ve_1.
+  \end{gather}
+  Thus, the linear system
+  \begin{gather}
+    \overline\matH_m^T\overline\matH_m \vy_m = \beta\overline\matH_m \ve_1
+  \end{gather}
+  is the (orthogonal) Galerkin projection of the normal equations to
+  the search space. On the other hand, its solution solves the
+  minimization problem in the GMRES algorithm.
+
+  By the minimization property of the orthogonal projection, the error
+  after the projection step is minimal in the $\mata^T\mata$ norm,
+  which is equal to the Euclidean norm of the residual.
+
+  Finally, we have
+  \begin{align}
+    \vr^{(m)}
+    &= \vb-\mata\vx^{(0)} - \mata\matv_m\vy_m\\
+    &=\beta\matv_{m+1}\ve_1 - \matv_{m+1}\overline\matH_m\vy_m\\
+    &= \matv_{m+1}\left(\beta\ve_1 - \overline\matH_m\vy_m\right).
+  \end{align}
+  Since $\matv_{m+1}$ is orthogonal, this implies that
+  \begin{gather}
+    \norm{\vr^{(m)}}_2 = \norm{\beta\ve_1 - \overline\matH_m\vy_m}_2
+  \end{gather}
+\end{proof}
+
+\begin{remark}
+  \slideref{Algorithm}{gmres} should not be implemented as it is
+  presented, but rather in the fashion of an iterative method, where
+  $m$ is increased step by step. To this end, we observe that the
+  generation of the Arnoldi basis proceeds incrementally, adding new
+  vectors, but not changing the previous ones.
+
+  Therefore, $\overline\matH_{m+1}$ differs from $\overline\matH_{m}$
+  only by adding an additional row and column. Then, the least-squares
+  system is solved by computing the QR factorization of
+  $\overline\matH_{m+1}$, which again amounts to updating the last
+  column only.
+\end{remark}
+
+\begin{remark}
+  Equation~\eqref{eq:gmres-norm} implies in particular, that the norm
+  of the residual in the GMRES method can be computed without
+  computing a ``big'' matrix-vector operation $\mata\vx^{(m)}$, but is
+  indeed the misfit of the $m$-dimensional least-squares problem for
+  $\vy_m$. This implies on the other hand, that even the solution
+  $\vx^{(m)}$ should only be computed as soon as the resiudal is
+  sufficiently small.
+\end{remark}
+
+\begin{Lemma}{gmres-breakdown}
   If the GMRES method breaks down at step $m$, then
   $\vr^{(m)}=0$. Thus, the GMRES method only encounters a
   \putindex{lucky breakdown}.
-\end{Theorem}
+\end{Lemma}
 
 \begin{remark}
   The GMRES method encounters a problem if convergence is slow: the
@@ -682,8 +789,8 @@ method only fails after the exact solution has been found.
   \begin{enumerate}
   \item Choose a maximal dimension $m$ of the Krylov space
   \item Begin with an initial guess $\vx^{(0)}$.
-  \item For $k>0$, given $\vx^{(km)}$, perform the GMRES method with
-    basis size $m$ to obtain $\vx^{((k+1)m)}$.
+  \item For $k>0$, given $\vx^{(k)}$, perform the GMRES method with
+    basis size $m$ to obtain $\vx^{(k+m)}$.
   \item Check the stopping criterion as usual inside the GMRES method
   \end{enumerate}
 \end{Algorithm*}
@@ -697,7 +804,11 @@ method only fails after the exact solution has been found.
   Note that both modifications destroy the minimization property of the method.
 \end{remark}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Lanczos procedure and the conjugate gradient method}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{Lemma}{arnoldi-symmetric}
   If the matrix $\mata$ is symmetric, the vectors of the Arnoldi
@@ -710,12 +821,21 @@ method only fails after the exact solution has been found.
     \alpha_j =  h_{jj}, \qquad \beta_j = h_{j-1,j},
     \qquad j=1,\dots
   \end{gather}
-  In particular, orthogonalization is only necessary with respect to
+  In particular, explicit orthogonalization is only necessary with respect to
   the previous two basis vectors.
 \end{Lemma}
 
+\begin{todo}
+  Add reference to QR method for symmetrix matrices.
+\end{todo}
 \begin{proof}
-  See \cite[Section 6.6.1]{Saad00}.
+  See also~\cite[Section 6.6.1]{Saad00}. From
+  \slideref{Theorem}{arnoldi-projection}, we realize that the
+  projected matrix $\matH_m$ of the Arnoldi method is symmetric if
+  $\mata$ is symmetric. Since it is Hessenberg by construction, we
+  conclude that it is tridiagonal. Since it is also the matrix of
+  coefficients in the Gram-Schmidt orthogonalization, the statement
+  becomes evident.
 \end{proof}
 
 \begin{Algorithm*}{lanczos}{Lanczos}
@@ -780,10 +900,10 @@ method only fails after the exact solution has been found.
   Given the vector $\vx^{(m)}$ in the Lanczos solver, the vector
   $\vx^{(m+1)}$ can be computed incrementally by an update of the form
   \begin{gather}
-    \vx^{(m+1)} = \vx^{(m)} + \zeta_{m+1}\vp^{(m+1)},
+    \vx^{(m+1)} = \vx^{(m)} + \zeta_{m+1}\vg^{(m+1)},
   \end{gather}
-  where the vector $\vp^{(m+1)}$ itself is computed only using the
-  vectors $\vp^{(m)}$ and $\vv^{(m+1)}$.
+  where the vector $\vg^{(m+1)}$ itself is computed only using the
+  vectors $\vg^{(m)}$ and $\vv^{(m+1)}$.
 \end{Lemma}
 
 \begin{proof}
@@ -817,14 +937,14 @@ method only fails after the exact solution has been found.
 
   Now we introduce matrices and vectors
   \begin{gather}
-    \matp_m = \matv_m \matu_m^{-1} \in \R^{n\times m},
+    \matg_m = \matv_m \matu_m^{-1} \in \R^{n\times m},
     \qquad \vz_m = \matl_m^{-1} \beta \ve_1\in \R^m,
   \end{gather}
   such that
   \begin{align}
     \vx^{(m)}
     &= \vx^{(0)} + \matv_m \matu_m^{-1} \matl_m^{-1} \beta \ve_1\\
-    &= \vx^{(0)} + \matp_m \vz_m
+    &= \vx^{(0)} + \matg_m \vz_m
   \end{align}
   With $\zeta_k$ following the recursion
   $\zeta_k = - \lambda_k \zeta_{k-1}$, we realize
@@ -838,51 +958,51 @@ method only fails after the exact solution has been found.
       \vz_{m-1}\\\zeta_m
     \end{pmatrix}.
   \end{gather}
-  Let $\vp_k$ be the column vectors of $\matp_m$. Writing the
-  definition of $\matp_m$ in the form $\matp_m \matu_m = \matv_m$, we
+  Let $\vg_k$ be the column vectors of $\matg_m$. Writing the
+  definition of $\matg_m$ in the form $\matg_m \matu_m = \matv_m$, we
   obtain the relation
   \begin{gather}
     \label{eq:nla:krylov:lanczos-p}
-    \vp_k = \frac1{\eta_k}\bigl(\vv_k - \beta_k \vp_{k-1}\bigr).
+    \vg_k = \frac1{\eta_k}\bigl(\vv_k - \beta_k \vg_{k-1}\bigr).
   \end{gather}
   Thus,
   \begin{gather}
-    \matp_m =
+    \matg_m =
     \begin{pmatrix}
-      \vp_1,\dots,\vp_m
+      \vg_1,\dots,\vg_m
     \end{pmatrix}
     =
     \begin{pmatrix}
-      \matp_{m-1},\vp_m
+      \matg_{m-1},\vg_m
     \end{pmatrix}.
   \end{gather}
   There holds
   \begin{align}
     \vx^{(m)}
-    &= \vx^{(0)} + \sum_{k=1}^m \zeta_k \vp_k,\\
-    &= \vx^{(m-1)} + \zeta_m \vp_m.
+    &= \vx^{(0)} + \sum_{k=1}^m \zeta_k \vg_k,\\
+    &= \vx^{(m-1)} + \zeta_m \vg_m.
   \end{align}
 \end{proof}
 
 \begin{remark}
   Thus, we have proven a simple update formula for the iterates
-  $\vx^{(m)}$ based on an additional vector $\vp_m$, which is again
+  $\vx^{(m)}$ based on an additional vector $\vg_m$, which is again
   obtained by an update formula.
 
   We have used an LU decomposition without pivoting though in the
   derivation of this algorithm, which might suffer from numerical
   instability. Therefore, we will now analyze the main properties of
-  the sequences $\vv_m$, $\vp_m$ and $\vr_m$ and then write a new
+  the sequences $\vv_m$, $\vg_m$ and $\vr_m$ and then write a new
   algorithm to obtain these sequences.
 \end{remark}
 
 \begin{Lemma}{lanczos-orthogonality}
-  The sequences of vector $\vr_m = \vb-\mata\vx^{(m)}$ and $\vp_m$
+  The sequences of vector $\vr_m = \vb-\mata\vx^{(m)}$ and $\vg_m$
   constructed in the preceding lemma have the following orthogonality
   properties:
   \begin{xalignat}2
     \scal(\vr_i,\vr_k) &= 0 & i&\neq k\\
-    \scal(\mata\vp_i,\vp_k) &= 0 & i&\neq k.
+    \scal(\mata\vg_i,\vg_k) &= 0 & i&\neq k.
   \end{xalignat}
 \end{Lemma}
 
@@ -892,9 +1012,9 @@ method only fails after the exact solution has been found.
   $\vv_{m+1}$.
 
   The second orthogonality relation is equivalent to the fact that
-  $\matp_m^T\mata\matp_m$ is diagonal.
+  $\matg_m^T\mata\matg_m$ is diagonal.
   \begin{align}
-    \matp_m^T\mata\matp_m
+    \matg_m^T\mata\matg_m
     &= \matu_m^{-T}\matv_m^T\mata\matv_m\matu_m^{-1}\\
     &= \matu_m^{-T}\matH_m\matu_m^{-1}\\
     &= \matu_m^{-T}\matl_m.
@@ -929,6 +1049,14 @@ method only fails after the exact solution has been found.
   in \slideref{Lemma}{lanczos-incremental}.
 \end{Lemma}
 
+\begin{todo}
+  The structure of the argument is not very clear. We are jumping
+  back and forth between the algorithms. It would be better to show
+  that CG produces the same orthogonality with respect to the
+  previous vectors, then use uniqueness. Where to put equality of
+  the coefficients?
+\end{todo}
+  
 \begin{proof}
   Note that the vectors $\vp_j$ refers to the cg algorithm, the
   vectors from \slideref{Lemma}{lanczos-incremental} will be
@@ -939,24 +1067,26 @@ method only fails after the exact solution has been found.
   \begin{gather}
     \vr_{j+1} = \vr_j - \alpha_j \mata\vp_j.
   \end{gather}
-  Orthogonality between $\vr_{j+1}$ and $\vr_j$ implies
+  Orthogonality between $\vr_{j+1}$ and $\vr_j$ due to the projection
+  property implies the choice
   \begin{gather}
     \alpha_j = \frac{\scal(\vr_j,\vr_j)}{\scal(\mata\vp_j,\vr_j)}.
   \end{gather}
-  Since $\vr_j$ is a multiple of $\vv_{j+1}$, the update
-  formula~\eqref{eq:nla:krylov:lanczos-p} for $\vp_{j+1}$ (after index
-  shift) implies that the direction is a linear combination of
-  $\vr_{j+1}$ and $\vp_j$. After arbitrary scaling,
+  Since $\vr_j$ is a multiple of $\vv_{j+1}$ by the residual
+  representation in \slideref{Theorem}{arnoldi-linear-residual}, the
+  update formula~\eqref{eq:nla:krylov:lanczos-p} for $\vg_{j+1}$
+  (after index shift) implies that the direction is a linear
+  combination of $\vr_{j+1}$ and $\vp_j$. After arbitrary scaling,
   \begin{gather}
     \vp_{j+1} = \vr_{j+1} + \beta_j \vp_{j}.
   \end{gather}
-  A-orthogonality implies
+  A-orthogonality implies the choice
   \begin{gather}
     \beta_j = -\frac{\scal(\mata \vp_j,\vr_{j+1})}{\scal(\mata \vp_j,\vp_j)}.
   \end{gather}
-  Note that the orthogonality relation determines $\vp_{j+1}$ uniquely
+  Note that in each step, the orthogonality relation determines $\vp_{j+1}$ uniquely
   up to scaling in this subspace. After the scaling has been chosen,
-  $\vp_{j+1}$ the orthogonality relation for $\vr_{j+1}$ uniquely
+  the orthogonality relation for $\vr_{j+1}$ uniquely
   determines the update for $\vx_{j+1}$, such that the sequences
   indeed coincide.
 
@@ -978,7 +1108,11 @@ method only fails after the exact solution has been found.
   orthogonal vectors.
 \end{proof}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Convergence analysis}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{intro}
   Here, we will develop a sequence of error estimates for the
@@ -1128,7 +1262,7 @@ method only fails after the exact solution has been found.
 
 \begin{Corollary}{gmres-estimate}
   Let $\mata$ be diagonalizable such that its spectrum is contained in
-  al ellips in the complex plane with center $c$, focal distance $d$
+  an ellipse in the complex plane with center $c$, focal distance $d$
   and semimajor axis $a$. Then,
   \begin{gather}
      \rho_k \approx \left(
@@ -1177,7 +1311,11 @@ method only fails after the exact solution has been found.
   nonsymmetric matrices where it is possible).
 \end{remark}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Bi-Lanczos and BiCG-stab}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{intro}
   The problem of short recurrence for nonsymmetric matrices has been
@@ -1198,7 +1336,11 @@ method only fails after the exact solution has been found.
   BiCG-stab algorithm.
 \end{intro}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Preconditioning}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{intro}
   If matrices are extremely ill-conditioned, convergence of cg or

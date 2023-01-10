@@ -184,7 +184,7 @@
     \For{$k=1,\dots,n-1$}
     \Comment{factorization $\matq\matr = \matH$, $\matr$ stored in $\matH$}
     \State $\givens_{k,k+1} \gets$ Givens rotation for $h_{kk},h_{k+1,k}$
-    \State $\matH\gets \givens_{k,k+1}\matH$
+    \State $\matH\gets \givens^*_{k,k+1}\matH$
     \EndFor
     \For{$k=1,\dots,n-1$}
     \Comment{$\matH = \matr\matq$}
