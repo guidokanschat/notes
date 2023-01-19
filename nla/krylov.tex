@@ -1044,8 +1044,8 @@ method only fails after the exact solution has been found.
 
 \begin{Lemma}{cg-orthogonality}
   The sequences $\vx_j$ and $\vr_j$ produced by the cg method coincide
-  with those of the Lanczos solver (in exact arithmetic). The sequence
-  $\vp_j$ of the cg method coincides up to scalar factors with the one
+  with those of the Lanczos solver (in exact arithmetic). The vectors
+  $\vp_j$ of the cg method coincide up to scalar factors with the vectors $\vg_{j+1}$
   in \slideref{Lemma}{lanczos-incremental}.
 \end{Lemma}
 
@@ -1155,6 +1155,29 @@ method only fails after the exact solution has been found.
   just the set of polynomials in $\P_k$ with coefficient $a_0 = 1$.
 \end{proof}
 
+\begin{Corollary}{cg-vs-descent}
+  The error after $k$ steps of the conjugate gradient method is never
+  greater than the error after equally many steps of the steepest
+  descent method.
+\end{Corollary}
+
+\begin{proof}
+  The error of the steepest descent method is
+  \begin{gather}
+    \ve^{(k)} = \prod_{i=k}^{1} (\id-\alpha_k\mata) \ve^{(0)}.
+  \end{gather}
+  This can be rewritten as
+  \begin{gather}
+    \ve^{(k)} = p_k(\mata) \ve^{(0)},
+  \end{gather}
+  where $p_k\in\P_k$ is the polynomial of degree $k$ defined by
+  \begin{gather}
+    p_k(x) = \prod_{i=k}^{1} (1-\alpha_kx).
+  \end{gather}
+  There holds $p_k(0)=1$ and thus this polynomial is in the set over
+  which the conjugate gradient method minimizes.
+\end{proof}
+
 \begin{Corollary}{cg-optimality-spectrum}
   Let $\sigma(\mata) = \{\lambda_1,\dots,\lambda_n\} \subset \R^+$ be
   the spectrum of $\mata$. Then, the error after $k$ steps of the
@@ -1239,6 +1262,20 @@ method only fails after the exact solution has been found.
   Dividing both sides of the fraction by $\sqrt{\lambda_{\min}}$ yields the result.
 \end{proof}
 
+\begin{remark}
+  Note that the estimate in \slideref{Corollary}{cg-condition-number}
+  is not a classical contraction estimate which allows us to deduce
+  the error reduction from step $k$ to $k+1$. Indeed, the factor 2
+  before the quotient renders this exercise impossible, and the
+  estimate for the steepest descent method is our rescue.
+
+  Instead, the estimate shows that with growing dimension of the
+  Krylov space, eventually the factor 2 is compensated by the first
+  $k$ powers of the quotient and then the additional powers guarantee
+  faster convergence.
+\end{remark}
+
+
 \begin{Theorem}{gmres-optimality}
   For the residual $\vr^{(k)} = \vb-\mata\vx^{(k)}$ after $k$ steps of
   the GMRES method, there holds
@@ -1319,22 +1356,81 @@ method only fails after the exact solution has been found.
 
 \begin{intro}
   The problem of short recurrence for nonsymmetric matrices has been
-  addressed by biorthogonalization methods. Some of them involve the
-  multiplication with $\mata$ as well as with $\mata^*$, others are
-  ``transpose-free''.
+  addressed by biorthogonalization methods. They go back to
+  \slideref{Lemma}{projection-basis} in the non-orthogonal case and
+  build two biorthogonal sequences.
+\end{intro}
 
-  They all have some disadvantages in common: they do not minimize the
-  error or the residual in each step. Worse, they suffer from
-  breakdowns which are not lucky, thus not close to the solution. Even
-  worse, there might be a near breakdown, where a denominator is
-  almost zero, which must be detected, since after such an incident,
-  the future convergence might suffer.
+\begin{Algorithm*}{bi-lanczos}{Lanczos Biorthogonalization}
+  \algtext*{EndIf}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Rnn$; $\quad\vv_1,\vw_1\in\R^n, \scal(\vv_1,\vw_1) = 1$, $\vv_0=\vw_0=0$, $\beta_1=\delta_1=0$.
+    \For{$j=1,\dots,m$}
+    \State $\alpha_{j} \gets \scal(\mata \vv_j,\vw_j)$
+    \State $\hat\vv_{j+1} \gets \mata\vv_j - \alpha_j\vv_j - \beta_j \vv_{j-1}$
+    \State $\hat\vw_{j+1} \gets \mata^T\vw_j - \alpha_j\vw_j - \delta_j \vw_{j-1}$
+    \State $\delta_{j+1} \gets \sqrt{\abs{\scal(\hat\vv_{j+1},\hat\vw_{j+1})}}$
+    \If{$\delta_{j+1}=0$} \textbf{stop}\EndIf
+    \State $\beta_{j+1} \gets \nicefrac{\scal(\hat\vv_{j+1},\hat\vw_{j+1})}{\delta_{j+1}}$
+    \State $\vv_{j+1} = \nicefrac{\hat\vv_{j+1}}{\beta_{j+1}}$
+    \State $\vw_{j+1} = \nicefrac{\vw_{j+1}}{\delta_{j+1}}$
+    \EndFor
+  \end{algorithmic}  
+\end{Algorithm*}
 
+\begin{Theorem}{bi-lanczos-projection}
+  If the Lanczos biorthogonalization does not break down before step
+  $m$, then, the sequences $\{\vv_k\}_{k=1,\dots,m}$ and
+  $\{\vw_k\}_{k=1,\dots,m}$ are bases for $\krylov_m(\mata,\vv_1)$ and
+  $\krylov_m(\mata^T,\vw_1)$, respectively. They form a biorthogonal system and there holds
+  \begin{align}
+    \mata\matv_m &= \matv_m \matt_m + \delta_{m+1}\vv_{m+1\ve_m^T},\\
+    \mata^T\matw_m &= \matw_m \matt_m^T + \beta_{m+1}\vw_{m+1\ve_m^T},\\
+    \matw_m^T \mata \matv_m &= \matt_m,
+  \end{align}
+  where
+  \begin{gather}\small
+    \matt_m =
+    \begin{pmatrix}
+      \alpha_1 & \beta_2\\
+      \delta_2 & \alpha_2 & \beta_2\\
+      &\ddots & \ddots & \ddots\\
+      &&\delta_{m-1} & \alpha_{m-1}&\beta_{m-1}\\
+      &&&\delta_m&\alpha_m
+    \end{pmatrix}.
+  \end{gather}
+\end{Theorem}
+
+\begin{remark}
+  The norms of the vectors $\vv_k$ and $\vw_k$ generated by Lanczos
+  biorthogonalization are not controlled and may grow or shrink in an
+  undesired way. This situation can be improved, since upon closer
+  inspection of lines 8 and 9, biorthogonality is maintained as long
+  as the coefficients $\beta_j$ and $\delta_j$ are chosen such that
+  \begin{gather}
+    \beta_{j+1}\delta_{j+1} = \scal(\hat\vv_{j+1},\hat\vw_{j+1}).
+  \end{gather}
+  
+  Nevertheless, there is no mechanism which prevents this inner
+  product from being zero before the Krylov spaces become
+  invariant. Thus, Lanczos biorthogonalization can suffer from unlucky
+  breakdowns.
+\end{remark}
+
+\begin{remark}  
+  All biorthogonalization methods have some disadvantages in common:
+  they do not minimize the error or the residual in each step. There
+  might also be near breakdowns, where a denominator is almost zero,
+  which must be detected, since after such an incident, the future
+  convergence might suffer.
+
+  Often, the necessity to multiply with $\mata^T$ is considered a downside.
+  
   This has spurred the development of a whole bunch of algorithms,
-  from BiCG to BiCG-stab (already involving 8 auxiliary vectors) to
+  from BiCG to QMR to BiCG-stab (already involving 8 auxiliary vectors) to
   BiCG-stab($m$), which combines $m$ GMRES steps win an outer
   BiCG-stab algorithm.
-\end{intro}
+\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1353,17 +1449,76 @@ method only fails after the exact solution has been found.
   into one with better convergence properties?
 \end{intro}
 
+\begin{Definition}{preconditioned-system}
+  We say that a linear system $\mata\vx=\vb$ is preconditioned from
+  the left by the matrix $\matb^{-1}$, if we solve instead
+  \begin{gather}
+    \matb^{-1}\mata\vx = \matb^{-1}\vb.
+  \end{gather}
+  It is preconditioned from the right, if we solve
+  \begin{gather}
+    \mata\matb^{-1}\vy = \vb,\qquad \vx = \matb^{-1}\vy.
+  \end{gather}
+\end{Definition}
+
 \begin{Definition}{preconditioner}
   A \define{preconditioner} is a matrix $\matb^{-1}$ such that the
   condition number of
   \begin{gather}
-    \matb^{-1}\mata
+    \matb^{-1}\mata\qquad\text{or}\qquad \mata\matb^{-1}
   \end{gather}
   is much better than the one of $\mata$. Furthermore, the evaluation
   of $\matb^{-1}$ is at least much cheaper than the one of
   $\mata^{-1}$, ideally not much more expensive than the product
   $\mata\vx$.
 \end{Definition}
+
+\begin{Lemma}{preconditioner-symmetry}
+  Let $\mata$ and $\matb$ be symmetric, positive definite matrices. Then, $\matb^{-1}\mata$ is self-adjoint with respect to the $\matb$-inner product, i.~e.
+  \begin{gather}
+    \scal(\matb^{-1}\mata\vx,\vx)_{\matb}
+    = \scal(\mata\vx,\vx)_2
+    = \scal(\vx,\mata\vx)_2
+    = \scal(\vx,\matb\matb^{-1}\mata\vx)_2
+    =\scal(\vx,\matb^{-1}\mata\vx)_{\matb}.
+  \end{gather}
+\end{Lemma}
+
+\begin{remark}
+  The term ``orthogonality'' in the Lanczos procedure can be in
+  reference to any inner product, if orthogonalization is performed
+  with that inner product. In that case, the property ``symmetric'' of
+  the matrix must be replaced by ``self-adjoint with respect to the inner product''
+
+  We can now construct a preconditioned conjugate gradient method by
+  changing the inner products and introducing the residual of the
+  preconditioned equation as a new auxiliary vector
+  \begin{gather}
+    \vz_{j} = \matb^{-1} \vr_{j} = \matb^{-1}\vb - \matb^{-1}\mata\vx_{j}.
+  \end{gather}
+  Then, we obtain
+  \begin{align}
+    \scal(\vz_j,\vz_j)_{\matb} &= \scal(\matb\matb^{-1}\vr_j,\vz_j)_2 = \scal(\vr_j,\vz_j)_2,\\
+    \scal(\matb^{-1}\mata\vp_j,\vp_j)_{\matb} &= \scal(\mata\vp_j,\vp_j)_2 = \scal(\vp_j,\vp_j)_{\mata}.
+  \end{align}
+  Thus, the algorithm can be implemented without application of the
+  matrix $\matb$, which may not be easy to implement.
+\end{remark}
+
+\begin{Algorithm*}{pcg}{Preconditioned Conjugate Gradient}
+  \begin{algorithmic}[1]
+    \State $\vr_0 = \vb-\mata \vx_0$, $\vz_0 = \matb^{-1}\vr_0$
+    \State $\vp_0 \gets \vz_0$
+    \For{$j=0,1,\dots$}
+    \State $\alpha_j \gets \frac{\scal(\vr_j,\vz_j)}{\scal(\mata\vp_j,\vp_j)}$
+    \State $\vx_{j+1} \gets \vx_j + \alpha_j \vp_j$
+    \State $\vr_{j+1} \gets \vr_j - \alpha_j \mata \vp_j$
+    \State $\vz_{j+1} \gets \matb^{-1} \vr_{j+1}$
+    \State $\beta_j =\frac{\scal(\vr_{j+1},\vz_{j+1})}{\scal(\vr_j,\vz_j)}$
+    \State $\vp_{j+1} = \vz_{j+1} + \beta_j \vp_j$
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
 
 
 

@@ -1,15 +1,30 @@
+\begin{Definition}{galerkin-ev}
+  Let $\mata\in\Rnn$. Then, the solutions to the eigenvalue problem
+  \begin{align}
+    \tilde\vx &\in K,\\
+    \mata\tilde\vx - \mu\tilde\vx&\perp L.
+  \end{align}
+  are called the \define{Galerkin
+    approximation} of the eigenvalue value problem in a subspace $K$ orthogonal to a subspace
+  $L$. In the case $K=L$, it is also called the \define{Rayleigh-Ritz approximation}.
+\end{Definition}
 
-\begin{Algorithm*}{ev-projection}{Projected subspace iteration}
-  \begin{algorithmic}[1]
-    \Require $\matx^{(0)} = (\vx_1,\dots,\vx_m)$
-    \For {$k=1,\dots$ until convergence}
-    \State $\matw \gets \mata\matx^{(k-1)}$
-    \State $\matv \gets ONB(\matw)$
-    \State $\matb \gets \matv^*\mata\matv$
-    \State $\maty \gets ONB(\matb)$
-    \State $\matx^{(k)} \gets \matv\maty$
-    \EndFor
-  \end{algorithmic}
+\begin{Algorithm*}{rayleigh-ritz}{Rayleigh-Ritz method}
+  \begin{enumerate}
+  \item Compute an orthonormal basis $\matv_m$ for the subspace $K$ and let
+    \begin{gather}
+      \matb_m = \matv_m^T\mata\matv_m \in \R^{m\times m}.
+    \end{gather}
+  \item Compute the eigenvalues of $\matb_m$ and select $k\le m$ ``desired'' eigenvalues
+    \begin{gather}
+      \mu_1, \dots,\mu_k.
+    \end{gather}
+  \item Compute the eigenvectors $\vy_1,\dots,\vy_k\in\R^m$ of $\matb$
+    and the corresponding approximate eigenvectors of $\mata$:
+    \begin{gather}
+      \tilde\vu_i = \matv_m \vy_i,\qquad i=1,\dots,k.
+    \end{gather}
+  \end{enumerate}
 \end{Algorithm*}
 
 \begin{Definition}{ritz-values}
@@ -17,18 +32,67 @@
   projection to the subspace spanned by the orthonormal basis
   $\matv$. Then, we refer to the eigenvalues of $\matb$ as
   \define{Ritz values}.
-
   For each eigenvector $\vy_i$ of $\matb$, we refer to the vector
   $\vx_i = \matv\vy_i$ as \define{Ritz vector}.
 \end{Definition}
 
+\begin{Lemma}{ritz-invariant}
+  Let $K\subset\R^n$ be an invariant subspace under the action of
+  $\mata$. Then, the Ritz values and associated Ritz vectors of the
+  Rayleigh-Ritz approximation are exact eigenpairs of $\mata$.
+\end{Lemma}
+
 \begin{remark}
-  A variation of \slideref{Algorithm}{ev-projection} computes the
-  eigenvectors of $\matb$ instead of the Schur vectors. For symmetric
+  A variation of \slideref{Algorithm}{rayleigh-ritz} computes the
+  Schur vectors of $\matb$ instead of the eigenvectors. For symmetric
   matrices, they are actually the same vectors, but for
-  non-diagonalizable matrices, this variant is infeasible and would
-  require the much more cumbersome computation of invariant subspaces.
+  non-diagonalizable matrices, this variant is preferred as it does
+  not require cumbersome computation of invariant subspaces.
 \end{remark}
+
+\begin{intro}
+  We now focus on the Rayleigh-Ritz approximation of real, symmetric
+  matrices. The results transfer immediately to the complex symmetric
+  (Hermitian) case, but we avoid formulating with complex numbers.
+\end{intro}
+
+\begin{Lemma}{Courant-Fischer-Ritz}
+  Let the eigenvalues of a symmetric matrix $\mata\in\Rnn$ be ordered such that
+  \begin{gather}
+    \lambda_1\ge \lambda_2\ge \dots \ge \lambda_n.
+  \end{gather}
+  Let $\mu_1,\dots,\mu_m$ be their Rayleigh-Ritz approximation in the
+  subspace $K$. Then, there holds
+  \begin{gather}
+    \lambda_i \ge \mu_i, \qquad i=1,\dots,m.
+  \end{gather}
+\end{Lemma}
+
+\begin{Lemma}{ritz-rayleigh-estimate}
+  Let $(\lambda,\vu)$ be an eigenpair of the symmetric matrix
+  $\mata\in\Rnn$. Let $\P_K$ be the orthogonal projection to the
+  subspace $K$. Then, the \putindex{Rayleigh quotient}
+  $R_\mata(P_K \vu)$ admits the estimate
+  \begin{gather}
+    \abs*{\lambda-R_\mata(P_K \vu)}
+    \le \norm{\mata-\lambda\id}
+    \frac{\norm{\vu-P_K\vu}^2}{\norm{P_K\vu}^2}.
+  \end{gather}
+\end{Lemma}
+
+
+\begin{Algorithm*}{ev-projection}{Projected subspace iteration}
+  \begin{algorithmic}[1]
+    \Require $\matx^{(0)} = (\vx_1,\dots,\vx_m)$
+    \For {$k=1,\dots$ until convergence}
+    \State $\matw \gets \mata\matx^{(k-1)}$
+    \State $\matv \gets ONB(\matw)$ \Comment{QR factorization}
+    \State $\matb \gets \matv^*\mata\matv$ \Comment{Projected matrix}
+    \State $\maty \gets EV(\matb)$ \Comment{Eigenvectors}
+    \State $\matx^{(k)} \gets \matv\maty$
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
 
 \begin{Theorem}{ritz-convergence}
   Let $\esp{1,\dots,m}$ be the space spanned by the first (by

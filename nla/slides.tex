@@ -343,7 +343,12 @@
 \frame {\input {blocks/Theorem-projection-orthogonal-optimal.tex}}
 \frame {\input {blocks/Lemma-krylov-polynomial.tex}}
 
-\frame {\input {blocks/Theorem-cg-optimality.tex}}
+\subsubsection{Error analysis}
+\frame{\subsubtoc}
+
+\frame {\input {blocks/Theorem-cg-optimality.tex}
+  \pause
+  \input {blocks/Corollary-cg-vs-descent}}
 \frame {\input {blocks/Corollary-cg-optimality-spectrum.tex}}
 
 \frame {\input {blocks/Definition-chebyshev-polynomials.tex}}
@@ -358,11 +363,20 @@
 \frame {\input {blocks/Corollary-gmres-estimate.tex}}
 \frame {\input {blocks/Theorem-gmres-pos-def.tex}}
 
-\subsection{Preconditioning}
+\subsubsection{Lanczos Biorthogonalization}
+\frame{\subsubtoc}
+\frame {\input {blocks/Lemma-projection-basis.tex}}
+\frame {\input {blocks/Algorithm-bi-lanczos.tex}}
+\frame {\input {blocks/Theorem-bi-lanczos-projection.tex}}
+
+\subsubsection{Preconditioning}
+\frame{\subsubtoc}
+\frame {\input {blocks/Definition-preconditioned-system.tex}}
 \frame {\input {blocks/Definition-preconditioner.tex}}
-
-\frame {\input {blocks/Algorithm-steepest-descent-algol.tex}}
-
+\frame {\input {blocks/Lemma-preconditioner-symmetry}
+  \pause
+  \input {blocks/Algorithm-lanczos.tex}}
+\frame {\input {blocks/Algorithm-pcg.tex}}
 
 \section{Large Sparse Eigenvalue Problems}
 \frame{\sectoc}
