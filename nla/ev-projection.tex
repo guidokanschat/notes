@@ -76,10 +76,28 @@
   \begin{gather}
     \abs*{\lambda-R_\mata(P_K \vu)}
     \le \norm{\mata-\lambda\id}
-    \frac{\norm{\vu-P_K\vu}^2}{\norm{P_K\vu}^2}.
+    \frac{\norm{\vu-P_K\vu}^2}{\norm{P_K\vu}^2}
+    = \norm{\mata-\lambda\id} \tan^2\theta
+    ,
   \end{gather}
+  where $\theta$ is the angle between $K$ and the subspace spanned by the eigenvector $\vu$.
 \end{Lemma}
 
+\begin{proof}
+  See~\cite[Lemma 4.1]{Saad11}.
+\end{proof}
+
+\begin{Lemma}{ritz-estimate-sine}
+  Let $(\lambda,\vu)$ be an eigenpair of the symmetric matrix
+  $\mata\in\Rnn$, and let $\tilde\lambda,\tilde\vu)$ be the eigenpair
+  of the projected problem such that $\tilde\lambda$ is the closest
+  approximated eigenvalue to $\lambda$.  Then,
+  \begin{gather}
+    \abs{\lambda-\tilde\lambda}
+    \le \norm{\mata-\lambda\id} \sin^2\theta,
+  \end{gather}
+  where $\theta$ is the angle between $\vu$ and $\tilde\vu$.
+\end{Lemma}
 
 \begin{Algorithm*}{ev-projection}{Projected subspace iteration}
   \begin{algorithmic}[1]
