@@ -1,7 +1,168 @@
 \begin{Lemma}{cg-tridiagonal}
-  
+  Let $\alpha_k$ and $\beta_k$ be the sequences of coefficients in the conjugate gradient method
+  \slideref{Algorithm}{cg}. Then, the entries of the projected matrix
+  \begin{gather}
+    \matH_m =
+    \begin{pmatrix}
+            \gamma_1 & \delta_2\\
+      \delta_2 & \gamma_2 & \ddots\\
+      &\ddots&\ddots&\delta_m\\
+      &&\delta_{m}&\gamma_m
+    \end{pmatrix}
+  \end{gather}
+  are computed by the formulas
+  \begin{gather}
+    \delta_{k+1} = \frac{\sqrt{\beta_{k-1}}}{\alpha_{k-1}},
+    \qquad
+    \gamma_{k+1} =
+    \begin{cases}
+      \tfrac1{\alpha_0}&k=0,\\
+      \tfrac1{\alpha_k} + \tfrac{\beta_{k-1}}{\alpha_{k-1}} &k>0.\\
+    \end{cases}
+  \end{gather}
 \end{Lemma}
 
+\begin{proof}
+  See~\cite[Section 6.7.3]{Saad00}.
+\end{proof}
+
+\begin{remark}
+  The previous lemma allows us to compute eigenvalues on the fly while
+  solving a linear system with the conjugate gradient method. We could
+  also run the Lanczos process \slideref{Algorithm}{lanczos} itself.
+
+  In both cases, if $m$ becomes very large, orthogonality may be lost
+  due to round-off errors.
+\end{remark}
+
+\begin{Lemma}{lanczos-angle}
+  Let $\mata\in\Rnn$ be symmetric, positive definite with eigenvalues
+  \begin{gather}
+    \lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n.
+  \end{gather}
+  Let $P_i$ be the projector to the subspace spanned by the
+  eigenvector(s) for $\lambda_i$. Let the initial vector in Lanczos
+  method be chosen such that $P_i \vv_1\neq 0$. Then, the angle
+  $\theta_i^{(m)}$ between the eigenvector(s) $\vu_i$ and the Krylov space
+  $\krylov_m(\mata,\vv_1)$ admits the estimate
+  \begin{gather}
+    \tan\theta_i^{(m)} = \min_{\substack{p\in\P_{m-1}\\p(\lambda_i)=1}} \norm{p(\mata)\vy_i} \tan \theta_i^{(1)}.
+  \end{gather}
+  Here,
+  \begin{gather}
+    \vy_i = \frac{(\id-P_i)\vv_1}{\norm{(\id-P_i)\vv_1}},
+  \end{gather}
+  or $\vy_i=0$ if the norm in the denominator is zero.
+\end{Lemma}
+
+\begin{proof}
+  See~\cite[Lemma 6.1]{Saad11}
+\end{proof}
+
+\begin{Theorem}{lanczos-angle}
+  With the notation and assumptions of \slideref{Lemma}{lanczos-angle}, there holds for $i\le m < n$
+  \begin{gather}
+    \tan\theta_i^{(m)} \le \frac{\kappa_i}{\pchebyshev_{m-i}(1+2\gamma_i)}\tan\theta_i^{(1)},
+  \end{gather}
+  where $\pchebyshev_{m-i}$ is the Chebyshev polynomial of degree $m-i$ and
+  \begin{gather}
+    \kappa_i=\prod_{\lambda_k < \lambda_i} \frac{\lambda_k-\lambda_n}{\lambda_k-\lambda_i},
+    \qquad \gamma_i = \frac{\lambda_{i}-\lambda_{i+1}}{\lambda_{i+1}-\lambda_{n}}.
+  \end{gather}
+  The same result holds for $\vu_{n-i}$ by replacing
+  \begin{gather}
+    \kappa_i=\prod_{\lambda_k > \lambda_i} \frac{\lambda_1-\lambda_k}{\lambda_i-\lambda_k},
+    \qquad \gamma_i = \frac{\lambda_{i-1}-\lambda_{i}}{\lambda_{1}-\lambda_{i-1}}.
+  \end{gather}  
+\end{Theorem}
+
+\begin{proof}
+  See also~\cite[Theorem 6.3]{Saad11}.
+  First, we expand the vector $\vy_i$ in the basis of eigenvectors,
+  \begin{gather}
+    \vy_i = \sum_{k\neq i} \alpha_k \vu_k.
+  \end{gather}
+  Since $\vy_i$ is normalized, $\sum \abs{\alpha_k}^2 = 1$. Thus,
+  \begin{gather}
+    \norm{p(\mata)\vy_i}^2 = \sum_{k\neq i} \abs{p(\lambda_k)\alpha_k}^2
+    \le \max_{k\neq i} \abs{p(\lambda_k)}^2 \sum_{k\neq i} \abs{\alpha_k}^2
+    = \max_{k\neq i} \abs{p(\lambda_k)}^2.
+  \end{gather}
+
+  Now, we would like to mimick the proof of
+  \slideref{Corollary}{cg-condition-number}, but we can only do this
+  for the two extremal eigenvalues $\lambda_1$ and $\lambda_n$. Hence,
+  we continue as follows:
+  \begin{gather}
+    \norm{p(\mata)\vy_1}^2 \le \min_{\substack{p\in\P_{m-1}\\p(\lambda_1)=1}}
+    \max_{\lambda\in[\lambda_n,\lambda_2]} \abs{p(\lambda)}^2.
+  \end{gather}
+  Using the shifted Chebyshev polynomials of
+  \slideref{Corollary}{chebyshev-minimal-2} for the interval
+  $[\lambda_n,\lambda_2]$ and observing that normalization takes place
+  at $\lambda_1$ instead of zero, we indeed obtain
+  \begin{gather}
+    \norm{p(\mata)\vy_1}
+    \le \frac1{\pchebyshev_{m-1}\left(\tfrac{\lambda_2+\lambda_n}{\lambda_2-\lambda_n}+\lambda_1\right)}
+    = \frac1{\pchebyshev_{m-1}(1+2\gamma_1)}.
+  \end{gather}
+  A similar estimate is obtained for $\vu_n$ by exchanging $\lambda_n$
+  for $\lambda_1$ and $[\lambda_{n-1},\lambda_1]$ for
+  $[\lambda_n,\lambda_2]$, respectively.
+
+  For eigenvalues $\lambda_2,\dots,\lambda_m$ this approach does not work, since there is no result for polynomials minimizing on both sides of a point. Therefore, we construct a polynomial
+  \begin{gather}
+    p(\lambda) = z(\lambda) q(\lambda),
+  \end{gather}
+  where $z(\lambda)$ is zero in all eigenvalues greater than
+  $\lambda_i$ and $q(\lambda)$ minimizes on all eigenvalues less than
+  $\lambda_i$. Choose
+  \begin{gather}
+    z(\lambda) = \prod_{\lambda_k>\lambda_i} \frac{\lambda_k-\lambda}{\lambda_k-\lambda_i},
+  \end{gather}
+  which is of degree $i-1$ and there holds $z(\lambda_i) = 1$. The
+  remainder $q(\lambda)$ is the solution to the minimization problem
+  \begin{gather}
+    \min_{\substack{q\in\P_{m-i}\\q(\lambda_i) = 1}} \max_{\lambda\in[\lambda_n,\lambda_{i+1}]} \abs{q(\lambda)},
+  \end{gather}
+  which is again solved by the shifted Chebyshev polynomial. Again, we
+  can apply the same construction from the other end of the spectrum
+  to obtein estimates for $\vu_{n-1},\dots,\vu_{n-m}$.
+\end{proof}
+
+\begin{remark}
+  Note that if $m<\nicefrac{n}2$, there are eigenvectors for which
+  \slideref{Theorem}{lanczos-angle} does not provide an
+  estimate. Moreover, since $\pchebyshev_0\equiv 1$ and $\kappa_i>1$
+  for $i>1$, the estimate for $\theta_m^{(m)}$ is worse than
+  $\theta_m^{(1)}$, which is clearly suboptimal, since the angle does
+  not get larger if we increase the dimension of the subspace. Thus,
+  the estimate is most useful for the eigenvalues at the ends of the
+  spectrum.
+
+  Changing the angle of view, the theorem provides estimates for $2m$
+  eigenvectors with an $m$-dimensional subspace. Therefore, we should
+  not be surprised that some of the estimates are useless.
+
+  The theorem holds for multiple eigenvalues, and inspecting the
+  structure more closely, the index $i$ refers to the $i$-th
+  \textbf{distinct} eigenvalue.
+\end{remark}
+
+\begin{Theorem}{lanczos-eigenvalue-estimate}
+  The discrete eigenvalues $\lambda_i^{(m)}$ after $m$ steps of the Lanczos method satisfy the estimate
+  \begin{gather}
+    0\le \lambda_i-\lambda_i^{(m)}
+    \le (\lambda_1-\lambda_n) \left(
+      \frac{\kappa_i^{(m)}}{\pchebyshev(1+2\gamma_i)}
+      \tan\theta_i^{(1)}\right)^2,
+    \end{gather}
+    where $\gamma_i$ is defined as before and
+    \begin{gather}
+    \kappa_i^{(m)}=\prod_{k=1}^{i-1} \frac{\lambda_k^{(m)}-\lambda_n}{\lambda_k^{(m)}-\lambda_i}.
+  \end{gather}
+  Again, a similar estimate can be obtained for $\lambda_{n-i}^{(m)} - \lambda_{n-i}$.
+\end{Theorem}
 
 %%% Local Variables:
 %%% mode: latex
