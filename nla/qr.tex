@@ -422,6 +422,22 @@
   the symmetric case~\cite[Section 8.2]{GolubVanLoan83}.
 \end{Remark}
 
+\begin{Lemma*}{perfect-shift}{Perfect shift}
+  Let $\matH\in\Cnn$ be an unreduced Hessenberg matrix with eigenvalue
+  $\sigma$. Let $\matq\matr = \matH - \sigma\id$ be a QR factorization
+  and $\widetilde\matH = \matr\matq+\sigma\id$. Then,
+  $\tilde h_{n,n-1}=0$ and $\tilde h_{nn} =\sigma$.
+\end{Lemma*}
+
+\begin{proof}
+  See also~\cite[Theorem 7.5.1]{GolubVanLoan83}.  Since $\matH$ is
+  unreduced, its first $n-1$ columns are linearly independent. Hence,
+  if $\matq\matr=\matH-\sigma\id$ is a QR factorization, then
+  $r_{ii} = 0$ for $i=1,\dots,n-1$.
+
+  Since $\matH-\sigma\id$ is singular, we conclude $r_{nn}=0$. Thus,
+  the last row of $\matr\matq$ is zero and the statement holds.
+\end{proof}
 
 
 

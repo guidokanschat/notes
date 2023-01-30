@@ -22,23 +22,6 @@
   eigenvectors.
 \end{Corollary}
 
-\begin{Algorithm*}{ev-lanczos}{Lanczos algorithm for eigenvalues}
-  \begin{algorithmic}[1]
-    \Require $\vr\in\C^n$ and $\beta_0=\norm{\vr}_2$
-    \For {$j=1,\dots$ until convergence}
-    \State $\vv_j \gets \frac{\vr}{\beta_{j-1}}$
-    \State $\vr \gets \mata\vv_j$
-    \State $\vr \gets \vr-\beta_{j-1}\vv_{j-1}$
-    \State $\alpha_j = \scal(\vr,\vv_j)$
-    \State $\vr \gets \vr-\alpha_j\vv_j$
-    \State Reorthogonalization if necessary
-    \State $\beta_j \gets \norm{\vr}_2$
-    \EndFor
-    \State Compute Ritz values $\matH_j = \maty\matd^{(j)}\maty^*$
-    \State Compute Ritz vectors $\matx=\matv_j\maty$
-  \end{algorithmic}
-\end{Algorithm*}
-
 \begin{remark}
   Reorthogonalization will be necessary once the Krylov space
   approximates an invariant subspace, which in turn is a sign for

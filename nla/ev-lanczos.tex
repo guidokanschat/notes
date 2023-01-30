@@ -164,6 +164,29 @@
   Again, a similar estimate can be obtained for $\lambda_{n-i}^{(m)} - \lambda_{n-i}$.
 \end{Theorem}
 
+\begin{todo}
+  Move this to the beginning.
+\end{todo}
+
+\begin{Algorithm*}{ev-lanczos}{Lanczos algorithm for eigenvalues}
+  \begin{algorithmic}[1]
+    \Require $\vr\in\C^n$ and $\delta_0=\norm{\vr}_2$
+    \For {$m=1,\dots$ until convergence}
+    \State $\vv^{(m)} \gets \frac{\vr}{\delta_{m-1}}$
+    \State $\vr \gets \mata\vv^{(m)}$
+    \State $\vr \gets \vr-\delta_{m-1}\vv^{(m-1)}$
+    \State $\gamma_m = \scal(\vr,\vv^{(m)})$
+    \State $\vr \gets \vr-\gamma_m\vv^{(m)}$
+    \State Reorthogonalization if necessary
+    \State $\delta_m \gets \norm{\vr}_2$
+    \EndFor
+    \State $\matH_m = \maty\matd_m\maty^*$ \Comment{Compute Ritz values}
+    \State $\matx=\matv_m\maty$ \Comment{Compute Ritz vectors}
+  \end{algorithmic}
+\end{Algorithm*}
+
+
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
