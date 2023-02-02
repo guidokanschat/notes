@@ -1,3 +1,51 @@
+\begin{Algorithm*}{ev-arnoldi}{Arnoldi for eigenvalues}
+  Given an initial vector $\vv_1$ with $\norm{\vv_1}=1$.
+  \begin{enumerate}
+  \item Compute the arnoldi basis $\matv_{m+1}$ and the projected matrix
+    \begin{gather}
+      \matH_m = \matv_m^*\mata\matv_m.
+    \end{gather}
+  \item Compute the Schur form of $\matH_m$ by QR iteration
+    \begin{gather}
+      \matr_m = \matq_m^* \matH_m\matq_m.
+    \end{gather}
+  \item Use the Ritz values $\lambda_i^{(m)}=r_{ii}^{(m)}$ .
+  \item Compute the approximate Schur vectors $\matv_m\matq_m$.
+  \end{enumerate}
+\end{Algorithm*}
+
+\begin{remark}
+  The previous algorithm only shows the basic version of Arnoldi's
+  method for eigenvalues in complex arithmetic. Modifications which we
+  have applied to the QR iteration can be applied here as well. In
+  particular,
+  \begin{enumerate}
+  \item If the matrix $\mata$ is normal, we can compute the
+    eigenvalues and eigenvectors of $\matH_m$ in step 2, such that
+    step 4 yields the Ritz vectors right away. This is not advisable
+    if $\mata$ is not normal, since eigenvector computation might be
+    unstable.
+  \item The method can be applied in real arithmetic. If then $\mata$
+    is nonsymmetric and has compex eigenvalues, $\matr_m$ is the real
+    Schur form and the computation of Ritz values is modified
+    accordingly.
+  \end{enumerate}
+\end{remark}
+
+\begin{Definition}{arnoldi-factorization}
+  The result of $k$ steps of the Arnoldi algorithm is the
+  \define{Arnoldi factorization}
+  \begin{gather}
+    \mata\matv_k = \matv_k\matH_k + \beta\vv_{k+1}\ve_k^*,
+  \end{gather}
+  where $\matv_k\in\C^{n\times k}$ is the matrix of mutually
+  orthogonal \define{Arnoldi vectors} and $\matH_k\in\R^{k\times k}$
+  is symmetric and tridiagonal. There holds
+  \begin{gather}
+    \matv_k^*\vv_{k+1} = 0.
+  \end{gather}
+\end{Definition}
+
 \begin{Lemma}{ev-arnoldi-a-posteriori}
   Let $(\lambda_i^{(m)},\vy_i^{(m)})$ be an eigenpair of the projected
   matrix $\matH_m$ of Arnoldi's method. Then, the Ritz vector
@@ -23,34 +71,19 @@
 \end{Corollary}
 
 \begin{remark}
-  Reorthogonalization will be necessary once the Krylov space
-  approximates an invariant subspace, which in turn is a sign for
-  convergence and thus desirable. Then, $\vr$ will be almost linearly
-  dependent and its norm after orthogonalization will be small,
-  indicating cancellation.
+  While this breakdown was ``lucky'' for linear solvers, it actually
+  breaks the algorithm if the number of desired eigenvalues is higher
+  than the dimension of the Krylov space. In this case, we will have
+  to insert a new initial vector during the computation of the Krylov
+  space.
 
-  Note that this differs from the conjugate gradient method, where the
-  Lanczos algorithm was modified as to avoid cancellation. But there
-  is a more fundamental difference between the two algorithms. When we
-  solve a linear system, we only compute a single vector, which is
-  represented by the current state of the iteration. For the
-  eigenvalue problem, we must keep the whole set of vectors $\matv_j$
-  and we must make sure they are orthogonal with sufficient accuracy
-  to compute the eigenvector approximation.
-\end{remark}
-
-\begin{remark}
-  Like the vector iteration, this algorithm will put a focus on large
-  eigenvalues. Thus, we can also apply the shift and invert technology
-  in order to approximate other eigenvalues. To this end, line 3 of
-  the algorithm is replaced by
-  \begin{algorithmic}
-    \State Solve $(\mata-\mu\id)\vr = \vv_j$.
-  \end{algorithmic}
+  As always with numerical computations, a clear breakdown is
+  unlikely, but a near breakdown may happen more likely. Detecting
+  this is related to loss of orthogonality.
 \end{remark}
 
 \begin{intro}
-  The size of the matrix $\matv_k$ of the Lanczos algorithm is growing
+  The size of the matrix $\matv_k$ of the Arnoldi algorithm is growing
   in each step. Thus, if the algorithm is converging slowly, memory
   and reorthogonalization become a limiting factor. Thus, we have to
   avoid growth of this basis. The two most obvious options have
@@ -68,27 +101,58 @@
   presented after some preliminary considerations.
 \end{intro}
 
-\begin{Definition}{lanczos-factorization}
-  The result of $k$ steps of the Lanczos algorithm is the
-  \define{Lanczos factorization}
-  \begin{gather}
-    \mata\matv_k = \matv_k\matH_k + \vr_k\ve_k^*,
-  \end{gather}
-  where $\matv_k\in\C^{n\times k}$ is the matrix of mutually
-  orthogonal \define{Lanczos vectors} and $\matH_k\in\R^{k\times k}$
-  is symmetric and tridiagonal. There holds
-  \begin{gather}
-    \matv_k^*\vr_k = 0.
-  \end{gather}
-\end{Definition}
+\begin{intro}
+  As with linear solvers, the main drawback of Arnoldi's algorithm is
+  the growth of the basis and thus the increasing effort for
+  orthogonalization of the new basis vectors. Therefore, our next
+  effort must be a modification of the algorithm such that the length
+  of the basis remains bounded by a constant number $m$.
 
-\begin{Lemma}{lanczos-truncation}
-  Let $m=k+p$ and let the result of $m$ Lanczos steps be given by
+  In the previous chapter, we have seen the restart of GMRES in
+  \slideref{Algorithm}{gmres-restart}. This algorithm can be applied
+  here, if only a single eigenpair is needed. But, if several
+  eigenvectors are to be computed, all additional information on
+  convergence of the other vectors is lost, if we apply standard
+  restart.
+
+  Then, we saw the truncation of GMRES in
+  \slideref{Algorithm}{gmres-truncated}. Here, we see again the
+  fundamental difference between a linear solver and an eigenvalue
+  solver: while in GMRES we only care for the convergence of the
+  approximate solution vector $\vx^{(m)}$, solution of the eigenvalue
+  problem requires that $\matH_m$ is obtaind from $\mata$ by
+  orthogonal projection. As soon as the matrix $\matv_m$ is not
+  orthogonal anymore, the eigenvalue problem for $\matH_m$ loses
+  connection to the one for $\mata$.
+
+  The following ``implicitly restarted Arnoldi method'' (IRAM) combines the
+  ideas of truncation and restart into an efficient method.
+\end{intro}
+
+\begin{Algorithm*}{iram-concept}{Implicitly restarted Arnoldi method}
+  Let $k$ be the number of desired eigenvalues and let $m$ be the
+  maximal admissible dimension of an Arnoldi basis.  Assume that a
+  basis $\matv_k$ has been obtained by $k$ steps of the Arnoldi
+  method.
+  \begin{enumerate}
+  \item Perform additional $p=m-k$ steps of the Arnoldi method to
+    obtain $\matv_m$.
+  \item Compute eigenvalues of $\matH_m = \matv_m^*\mata\matv$.
+  \item Select $k$ wanted and $p$ unwanted eigenvalues of $\matH_m$.
+  \item Eliminate the unwanted Ritz vectors from the range of
+    $\matv_m$ to obtain an updated basis $\matv_k$.
+  \end{enumerate}
+\end{Algorithm*}
+
+
+
+\begin{Lemma}{arnoldi-truncation}
+  Let $m=k+p$ and let the result of $m$ Arnoldi steps be given by
   \begin{gather}
     \mata\matv_m = \matv_m\matH_m + \vr_m\ve_m^*.
   \end{gather}
   This factorization can be truncated by $p$ shifted QR steps to a
-  Lanczos factorization
+  Arnoldi factorization
     \begin{gather}
     \tilde\mata\tilde\matv_k = \tilde\matv_k\tilde\matH_k + \tilde\vr_k\ve_k^*,
   \end{gather}
@@ -104,10 +168,47 @@
   See~\cite[Section 4.5.1]{BaiDemmelDongarraRuhevanderVorst00}.
 \end{proof}
 
-\begin{Algorithm*}{irlm}{Implicitly restarted Lanczos method}
+
+\begin{Algorithm*}{arnoldi-reorthogonalization}{Arnoldi with reorthogonalization}
+  \algtext*{EndIf}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Rnn$; $\quad\vv_1\in\R^n, \norm{\vv_1}_2 = 1$
+    \For{$j=1,\dots,m$}
+    \State $\vw_j \gets \mata\vv_j$
+    \State $\vh_{j} \gets \matv_j^*\vw_j$
+    \State $\vw_j \gets \vw_j - \matv_j\vh_{j}$
+    \If{$\norm{\vw_j} < \eta \norm{\vh_j}$} \Comment{Reorthogonalization}
+    \State $\vg = \matv_j^*\vw_j$
+    \State $\vw_j \gets \vw_j - \matv_j\vg$
+    \State $\vh \gets \vh + \vg$.
+    \EndIf
+    \If{$\norm{\vw_j} < \eta \norm{\vg}$}\Comment{Failure}
+    \State Choose random $\vv_{j+1}$
+    \State $h_{j+1,j} \gets 0$
+    \Else
+    \State $h_{j+1,j} \gets \norm{\vw_j}_2$
+    \State $\vv_{j+1} = \nicefrac{\vw_j}{h_{j+1,j}}$
+    \EndIf
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{remark}
+  In exact arithmetic, $\matv_j\vh_j$ and $\vw_j$ are the projections
+  of $\mata\vv_j$ onto the range of $\matv_j$ and its orthogonal
+  complement, respectively. Thus, if $\theta$ is the angle between
+  $\mata\vv_j$ and the range of $\matv_j$, we have
+  \begin{gather}
+    \cot\theta = \frac{\norm{\vw_j}}{\norm{\vh_j}}.
+  \end{gather}
+  Thus, the condition in line 5 of the algorithm enforces a
+  reorthogonalization, if the angle $\theta$ is too small.
+\end{remark}
+
+\begin{Algorithm*}{irlm}{Implicitly restarted Arnoldi method}
   \begin{algorithmic}[1]
     \Require Initial vector $\vv\in\C^n$ with $\norm{\vv}_2=1$.
-    \State Compute Lanczos factorization
+    \State Compute Arnoldi factorization
     $\mata\matv_m = \matv_m\matH_m + \vr_m\ve_m^*$
     \Repeat
     \State Compute $\sigma(\matH_m)$
@@ -121,7 +222,7 @@
     \State $\matv_k = \bigl[\matv_m\matq\bigr](:,1:k)$
     \State $\matH_k = \matH_m(1:k,1:k)$
     \State $\vr_k= [\matH_m]_{k+1,k}\vv_{k+1} + q_{mk}\vr_m$
-    \State Continue $p$ steps Lanczos factorization
+    \State Continue $p$ steps Arnoldi factorization
     $\mata\matv_m = \matv_m\matH_m + \vr_m\ve_m^*$
     \Until $T_k$ diagonal
   \end{algorithmic}
@@ -164,16 +265,16 @@
   \end{gather}
 
   Similar to implicit restart, we can use this matrix $\matq$ to
-  modify the basis $\matv_k$ to obtain a new set of Lanczos vectors
+  modify the basis $\matv_k$ to obtain a new set of Arnoldi vectors
   such that $\vv_1$ is the first of them. We can now continue the
-  implicitly restarted Lanczos method using the matrix $\hat\matH_k$
+  implicitly restarted Arnoldi method using the matrix $\hat\matH_k$
   and the vectors $\vv_2,\dots,\vv_k$. Just in the case of
   reorthogonalization, we will involve the vector $\vv_1$ as well.
 \end{remark}
 
 \begin{remark}
   We have so far neglected two important cases. First, if the initial
-  vector of the Lanczos method does not have any component in the
+  vector of the Arnoldi method does not have any component in the
   direction of a desired eigenvector, the method in exact arithmetic
   will not be able to produce this eigenvector. Here, roundoff errors
   come to our rescue. They will produce spurious components in

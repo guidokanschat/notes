@@ -185,6 +185,33 @@
   \end{algorithmic}
 \end{Algorithm*}
 
+\begin{remark}
+  Reorthogonalization will be necessary once the Krylov space
+  approximates an invariant subspace, which in turn is a sign for
+  convergence and thus desirable. Then, $\vr$ will be almost linearly
+  dependent and its norm after orthogonalization will be small,
+  indicating cancellation.
+
+  Note that this differs from the conjugate gradient method, where the
+  Lanczos algorithm was modified as to avoid cancellation. But there
+  is a more fundamental difference between the two algorithms. When we
+  solve a linear system, we only compute a single vector, which is
+  represented by the current state of the iteration. For the
+  eigenvalue problem, we must keep the whole set of vectors $\matv_j$
+  and we must make sure they are orthogonal with sufficient accuracy
+  to compute the eigenvector approximation.
+\end{remark}
+
+\begin{remark}
+  Like the vector iteration, this algorithm will put a focus on large
+  eigenvalues. Thus, we can also apply the shift and invert technology
+  in order to approximate other eigenvalues. To this end, line 3 of
+  the algorithm is replaced by
+  \begin{algorithmic}
+    \State Solve $(\mata-\mu\id)\vr = \vv_j$.
+  \end{algorithmic}
+\end{remark}
+
 
 
 %%% Local Variables:
