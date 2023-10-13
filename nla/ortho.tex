@@ -174,7 +174,9 @@
   need the complex versions.
 \end{intro}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Householder reflection}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{Definition}{householder-transformation}
   The \define{Householder transformation}
@@ -212,26 +214,30 @@
   \begin{gather}
     \abs{\alpha} = \norm{\vy}_2.
   \end{gather}
-  There holds
+  We now construct the vector $\vw$. First, we want to achieve
   \begin{gather}
+    \label{eq:ortho:householder:1}
     \alpha\ve_1 = \matq_{\vw} \vy
     = \vy - 2 \frac{\vw\vw^*\vy}{\vw^*\vw}
     = \vy - 2 \frac{\vw^*\vy}{\vw^*\vw}\vw.
   \end{gather}
-  Thus, $\vw$ is in the span of $\vy-\alpha \ve_1$. Since we divide by
-  its norm, its length does not matter and we let
+  Thus, $\vw$ must be in the span of $\vy-\alpha \ve_1$. Since we divide by
+  its norm, its length does not matter and we let for some angle $\phi$
   \begin{gather}
     \vw_\phi =
     \begin{pmatrix}
       y_1 - e^{i\phi} \norm{\vy}_2\\y_2\\\vdots\\y_n
-    \end{pmatrix},
-    \qquad
-    \matq_{\vw_\phi}\vy =
-    \begin{pmatrix}
-      e^{i\phi} \norm{\vy}_2\\0\\\vdots\\0
     \end{pmatrix}.
   \end{gather}
-  Since the computation of the first component of $\vw_\phi$ is prone to loss of significance, we choose $\phi$ as the phase of $-y_1$.
+  If we compare the leftmost and rightmost terms in~\eqref{eq:ortho:householder:1}, we see that the quotient of inner products must be equal to $\nicefrac12$ auch that $y_2,\dots,y_n$ are canceled. Since
+  \begin{align}
+    \vw^*\vy &= \norm{\vy}_2^2 - y_1 e^{-i\phi} \norm{\vy}_2
+    \\
+    \vw^*\vw &= 2\norm{\vy}_2^2 - (y_1^*e^{i\phi} + y_1 e^{-i\phi})\norm{\vy}_2,
+  \end{align}
+  this can only hold if $y_1 e^{-i\phi}$ is real or equivalently, if $\phi$ is the phase of the complex number $y_1$ or of $-y_1$.
+  
+  Since the computation of the first component of $\vw_\phi$ is prone to loss of significance, we choose $\phi$ as the phase of $-y_1$. In the real case, this simplifies to $e^{i\phi} = -1$.
 \end{proof}
 
 \begin{Algorithm}{householder-multiplication}
