@@ -569,69 +569,6 @@ method only fails after the exact solution has been found.
   exactly when the Krylov space is invariant.
 \end{proof}
 
-\begin{Theorem}{arnoldi-linear-system}
-  Given an initial vector $\vx^{(0)}$ and
-  $\vr^{(0)} = \vb - \mata \vx^{(0)}$. Let $\beta=\norm{\vr^{(0)}}$
-  and choose $\vv_1 =\nicefrac{\vr^{(0)}}{\beta}$ in Arnoldi's
-  method. Then, the Galerkin approximation
-  \begin{align}
-    x^{(m)} &\in x^{(0)} + \krylov_m(\mata,r^{(0)})\\
-    b-\mata x^{(m)} &\perp \krylov_m(\mata,r^{(0)}),
-  \end{align}
-  is obtained in two steps. Solve in $\R^m$
-  \begin{gather}
-    \matH_m\vy_m = \beta\ve_1,
-  \end{gather}
-  and let
-  \begin{gather}
-    \vx^{(m)} = \vx^{(0)} + \matv_m \vy_m.
-  \end{gather}
-\end{Theorem}
-
-\begin{todo}
-  Move this to Lanczos as it is irrelevant here
-\end{todo}
-
-\begin{Theorem}{arnoldi-linear-residual}
-  Let $\vx^{(m)}$ be the Galerkin solution in
-  \slideref{Theorem}{arnoldi-linear-system}. Then, there holds
-  \begin{gather}
-    \vb-\mata\vx^{(m)} = -h_{m+1,m} \ve_m^T \vy_m \vv_{m+1},
-  \end{gather}
-  and therefore
-  \begin{gather}
-    \norm{\vb-\mata\vx^{(m)}}_2 = h_{m+1,m} \abs{\ve_m^T \vy_m}.
-  \end{gather}  
-\end{Theorem}
-
-\begin{proof}
-  See also~\cite[Proposition 6.7]{Saad00}
-  We use the definition of the residual of $\vx^{(m)}$ and the representation of \slideref{Theorem}{arnoldi-projection} to obtain
-  \begin{align}
-    \vr^{(m)} = b-\mata\vx^{(m)}
-    &= b- \mata\left(\vx^{(0)} + \matv_m\vy_m\right)\\
-    &=\vr^{(0)} - \mata\matv_m\vy_m\\
-    &= \beta\vv_1 - \matv_m\matH_m\vy_m - \vw_m\ve_m^T\vy_m.
-  \end{align}
-  Since $\vy_m$ solves the projected system
-  $\matH_m\vy_m = \beta\ve_1$, there holds
-  \begin{gather}
-    \beta\vv_1 - \matv_m\matH_m\vy_m = \beta\vv_1 - \beta \matv_m\ve_1 = 0.
-  \end{gather}
-  Furthermore, we rewrite
-  \begin{gather}
-    \vw_m\bigl(\ve_m^T\vy_m\bigr) = h_{m+1,m} \bigl(\ve_m^T\vy_m\bigr) \vv_{m+1}.
-  \end{gather}
-\end{proof}
-
-\begin{remark}
-  Following \slideref{Theorem}{projected-invertible} this algorithm
-  works reliably only for $\mata$ symmetric, positive definite. We
-  will study this case in more detail in the next section and derive a
-  much improved version there. Here, we continue adapting it for the
-  nonsymmetric case.
-\end{remark}
-
 \begin{todo}
   Put this into an appendix
 \end{todo}
@@ -810,15 +747,77 @@ method only fails after the exact solution has been found.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{Theorem}{arnoldi-linear-system}
+  Given an initial vector $\vx^{(0)}$ and
+  $\vr^{(0)} = \vb - \mata \vx^{(0)}$. Let $\beta=\norm{\vr^{(0)}}$
+  and choose $\vv_1 =\nicefrac{\vr^{(0)}}{\beta}$ in Arnoldi's
+  method. Then, the Galerkin approximation
+  \begin{align}
+    x^{(m)} &\in x^{(0)} + \krylov_m(\mata,r^{(0)})\\
+    b-\mata x^{(m)} &\perp \krylov_m(\mata,r^{(0)}),
+  \end{align}
+  is obtained in two steps. Solve in $\R^m$
+  \begin{gather}
+    \matH_m\vy_m = \beta\ve_1,
+  \end{gather}
+  and let
+  \begin{gather}
+    \vx^{(m)} = \vx^{(0)} + \matv_m \vy_m.
+  \end{gather}
+\end{Theorem}
+
+\begin{todo}
+  Move this to Lanczos as it is irrelevant here
+\end{todo}
+
+\begin{Theorem}{arnoldi-linear-residual}
+  Let $\vx^{(m)}$ be the Galerkin solution in
+  \slideref{Theorem}{arnoldi-linear-system}. Then, there holds
+  \begin{gather}
+    \vb-\mata\vx^{(m)} = -h_{m+1,m} \ve_m^T \vy_m \vv_{m+1},
+  \end{gather}
+  and therefore
+  \begin{gather}
+    \norm{\vb-\mata\vx^{(m)}}_2 = h_{m+1,m} \abs{\ve_m^T \vy_m}.
+  \end{gather}  
+\end{Theorem}
+
+\begin{proof}
+  See also~\cite[Proposition 6.7]{Saad00}
+  We use the definition of the residual of $\vx^{(m)}$ and the representation of \slideref{Theorem}{arnoldi-projection} to obtain
+  \begin{align}
+    \vr^{(m)} = b-\mata\vx^{(m)}
+    &= b- \mata\left(\vx^{(0)} + \matv_m\vy_m\right)\\
+    &=\vr^{(0)} - \mata\matv_m\vy_m\\
+    &= \beta\vv_1 - \matv_m\matH_m\vy_m - \vw_m\ve_m^T\vy_m.
+  \end{align}
+  Since $\vy_m$ solves the projected system
+  $\matH_m\vy_m = \beta\ve_1$, there holds
+  \begin{gather}
+    \beta\vv_1 - \matv_m\matH_m\vy_m = \beta\vv_1 - \beta \matv_m\ve_1 = 0.
+  \end{gather}
+  Furthermore, we rewrite
+  \begin{gather}
+    \vw_m\bigl(\ve_m^T\vy_m\bigr) = h_{m+1,m} \bigl(\ve_m^T\vy_m\bigr) \vv_{m+1}.
+  \end{gather}
+\end{proof}
+
+\begin{remark}
+  Following \slideref{Theorem}{projected-invertible} this algorithm
+  works reliably only for $\mata$ symmetric, positive definite. This
+  is the case we study here and we will improve the algorithm
+  considerably.
+\end{remark}
+
 \begin{Lemma}{arnoldi-symmetric}
   If the matrix $\mata$ is symmetric, the vectors of the Arnoldi
   procedure admit the three-term recurrence relation
   \begin{gather}
-    \beta_{j+1}\vv_{j+1} = \mata \vv_j - \alpha_j \vv_j - \beta_j\vv_{j-1}
+    \delta_{j+1}\vv_{j+1} = \mata \vv_j - \gamma_j \vv_j - \delta_j\vv_{j-1}
   \end{gather}
-  with $\vv_0 = 0$, $\beta_1 = 0$ and
+  with $\vv_0 = 0$, $\delta_1 = 0$ and
   \begin{gather}
-    \alpha_j =  h_{jj}, \qquad \beta_j = h_{j-1,j},
+    \gamma_j =  h_{jj}, \qquad \delta_j = h_{j-1,j},
     \qquad j=1,\dots
   \end{gather}
   In particular, explicit orthogonalization is only necessary with respect to
@@ -841,14 +840,14 @@ method only fails after the exact solution has been found.
 \begin{Algorithm*}{lanczos}{Lanczos}
   \algtext*{EndIf}
   \begin{algorithmic}[1]
-    \Require $\mata\in\Rnn$; $\quad\vv_1\in\R^n, \norm{\vv_1}_2 = 1$, $\vv_0=0$, $\beta_1=0$.
+    \Require $\mata\in\Rnn$; $\quad\vv_1\in\R^n, \norm{\vv_1}_2 = 1$, $\vv_0=0$, $\delta_1=0$.
     \For{$j=1,\dots,m$}
-    \State $\vw_j \gets \mata\vv_j - \beta_j \vv_{j-1}$
-    \State $\alpha_{j} \gets \scal(\vw_j,\vv_j)$
-    \State $\vw_j \gets \vw_j - \alpha_j\vv_i$
-    \State $\beta_{j+1} \gets \norm{\vw_j}_2$
-    \If{$\beta_{j+1}=0$} \textbf{stop}\EndIf
-    \State $\vv_{j+1} = \nicefrac{\vw_j}{\beta_{j+1}}$
+    \State $\vw_j \gets \mata\vv_j - \delta_j \vv_{j-1}$
+    \State $\gamma_{j} \gets \scal(\vw_j,\vv_j)$
+    \State $\vw_j \gets \vw_j - \gamma_j\vv_i$
+    \State $\delta_{j+1} \gets \norm{\vw_j}_2$
+    \If{$\delta_{j+1}=0$} \textbf{stop}\EndIf
+    \State $\vv_{j+1} = \nicefrac{\vw_j}{\delta_{j+1}}$
     \EndFor
   \end{algorithmic}  
 \end{Algorithm*}
@@ -863,15 +862,15 @@ method only fails after the exact solution has been found.
     \matH_m\vy_m = \beta\ve_1,
     \qquad \matH_m =
     \begin{pmatrix}
-      \alpha_1 & \beta_2\\
-      \beta_2 & \alpha_2 & \ddots\\
-      &\ddots&\ddots&\beta_m\\
-      &&\beta_{m}&\alpha_m
+      \gamma_1 & \delta_2\\
+      \delta_2 & \gamma_2 & \ddots\\
+      &\ddots&\ddots&\delta_m\\
+      &&\delta_{m}&\gamma_m
     \end{pmatrix}.
   \end{gather}
   For the residual, there holds
   \begin{gather}
-    \vr^{(m)} = \vb-\mata\vx^{(m)} = -\beta_{m+1} \ve_m^T \vy_m \vv_{m+1}.
+    \vr^{(m)} = \vb-\mata\vx^{(m)} = -\delta_{m+1} \ve_m^T \vy_m \vv_{m+1}.
   \end{gather}
 \end{Lemma*}
 
@@ -902,14 +901,12 @@ method only fails after the exact solution has been found.
   \begin{gather}
     \vx^{(m+1)} = \vx^{(m)} + \zeta_{m+1}\vg^{(m+1)},
   \end{gather}
-  where the vector $\vg^{(m+1)}$ itself is computed only using the
-  vectors $\vg^{(m)}$ and $\vv^{(m+1)}$.
+  where the vector $\vg^{(m)}$ itself is computed only using the
+  vectors $\vg^{(m-1)}$ and $\vv^{(m)}$.
 \end{Lemma}
 
 \begin{proof}
-  See \cite[Section 6.7.1]{Saad00}.
-
-  First, we compute the LU factorization of $\matH_m$ as
+  See also \cite[Section 6.7.1]{Saad00}. First, we compute the LU factorization of $\matH_m$ as
   \begin{gather}
     \matH_m =
     \begin{pmatrix}
@@ -919,17 +916,17 @@ method only fails after the exact solution has been found.
     \end{pmatrix}
     \times
     \begin{pmatrix}
-      \eta_1&\beta_2\\
+      \eta_1&\delta_2\\
       &\ddots&\ddots\\
-      &&\eta_{m-1}&\beta_m\\
+      &&\eta_{m-1}&\delta_m\\
       &&&\eta_m
     \end{pmatrix},
   \end{gather}
   where
   \begin{gather}
-    \lambda_k = \frac{\beta_k}{\eta_{k-1}},
+    \lambda_k = \frac{\delta_k}{\eta_{k-1}},
     \qquad
-    \eta_k = \alpha_k - \lambda_k \beta_k.
+    \eta_k = \gamma_k - \lambda_k \delta_k.
   \end{gather}
   We note that LU decomposition works from top to bottom and left to
   right, such that already processed rows do not change when adding
@@ -949,13 +946,13 @@ method only fails after the exact solution has been found.
   With $\zeta_k$ following the recursion
   $\zeta_k = - \lambda_k \zeta_{k-1}$, we realize
   \begin{gather}
-    \vz_m =
+    \vz_{m+1} =
     \begin{pmatrix}
-      \zeta_1\\\vdots\\\zeta_m
+      \zeta_1\\\vdots\\\zeta_{m+1}
     \end{pmatrix}
     =
     \begin{pmatrix}
-      \vz_{m-1}\\\zeta_m
+      \vz_{m}\\\zeta_{m+1}
     \end{pmatrix}.
   \end{gather}
   Let $\vg_k$ be the column vectors of $\matg_m$. Writing the
@@ -963,24 +960,25 @@ method only fails after the exact solution has been found.
   obtain the relation
   \begin{gather}
     \label{eq:nla:krylov:lanczos-p}
-    \vg_k = \frac1{\eta_k}\bigl(\vv_k - \beta_k \vg_{k-1}\bigr).
+    \vg_k = \frac1{\eta_k}\bigl(\vv_k - \delta_k \vg_{k-1}\bigr).
   \end{gather}
   Thus,
   \begin{gather}
-    \matg_m =
+    \matg_{m+1} =
     \begin{pmatrix}
-      \vg_1,\dots,\vg_m
+      \vg_1,\dots,\vg_{m+1}
     \end{pmatrix}
     =
     \begin{pmatrix}
-      \matg_{m-1},\vg_m
+      \matg_{m},\vg_{m+1}
     \end{pmatrix}.
   \end{gather}
   There holds
   \begin{align}
-    \vx^{(m)}
-    &= \vx^{(0)} + \sum_{k=1}^m \zeta_k \vg_k,\\
-    &= \vx^{(m-1)} + \zeta_m \vg_m.
+    \vx^{(m+1)}
+    &= \vx^{(0)} + \matg_{m+1}\vz_{m+1}\\
+    &= \vx^{(0)} + \sum_{k=1}^{m+1} \zeta_k \vg_k,\\
+    &= \vx^{(m)} + \zeta_{m+1} \vg_{m+1}.
   \end{align}
 \end{proof}
 
@@ -1037,10 +1035,6 @@ method only fails after the exact solution has been found.
     \EndFor
   \end{algorithmic}
 \end{Algorithm*}
-
-\begin{remark}
-  Note the index shift for the vectors $\vp_j$!
-\end{remark}
 
 \begin{Lemma}{cg-orthogonality}
   The sequences $\vx_j$ and $\vr_j$ produced by the cg method coincide

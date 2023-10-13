@@ -1,43 +1,22 @@
 \begin{intro}
-  The facts in this section can be found in~\cite[Chapter
+  The facts in this chapter can be found in many textbooks on
+  numerical linear algebra, for instance in~\cite[Chapter
   5]{GolubVanLoan83}. In particular, the QR factorization in section
   5.2, Housholder transformations and Givens rotations in 5.1 there.
 \end{intro}
 
-\subsection{Definition and existence}
-\begin{Definition}{qr-decomposition}
-  The \define{QR factorization} of a matrix $\mata\in\C^{m\times n}$
-  with $m\ge n$ is the product
-  \begin{gather}
-    \mata = \matq\matr,
-  \end{gather}
-  such that $\matq \in\C^{m\times n}$ is unitary and
-  $\matr\in \C^{n\times n}$ is upper triangular.
-\end{Definition}
-
-\begin{Lemma}{qr-columns}
-  Let $\mata = \matq\matr$. Then, the column vectors of $\mata$ and
-  $\matq$ admit the relation
-  \begin{gather}
-    \va_k = \sum_{i=1}^k r_{ik} \vq_i.
-  \end{gather}
-  If $r_{ii}\neq 0$ for $i=1,\dots,k$, this relation is uniquely
-  invertible. In particular,
-  \begin{gather}
-    \spann{\vq_1,\dots,\vq_k}
-    = 
-    \spann{\va_1,\dots,\va_k}.
-  \end{gather}
-\end{Lemma}
+\section{The Gram-Schmidt Algorithm}
 
 \begin{Algorithm*}{gram-schmidt}{Gram-Schmidt Orthogonalization}
   Let $\vx_1, \dots,\vx_k\in\C^n$ with $k\le n$ be linearly independent.
 
   For $j=1,\dots,k$
-  \begin{align*}
-    \vw_j &= \vx_j - \sum_{i=1}^{j-1} \scal(vx_j,\vv_i)\vv_i\\
+  \begin{align}
+    \label{eq:ortho:gs:1}
+    \vw_j &= \vx_j - \sum_{i=1}^{j-1} \scal(\vx_j,\vv_i)\vv_i\\
+    \label{eq:ortho:gs:2}
     \vv_j &= \frac{\vw_j}{\norm{\vw_j}_2}.
-  \end{align*}
+  \end{align}
 \end{Algorithm*}
 
 \begin{Theorem}{gram-schmidt}
@@ -50,13 +29,152 @@
   \end{gather}
 \end{Theorem}
 
+\begin{Algorithm}{gram-schmidt-implementation}
+  \slideref{Algorithm}{gram-schmidt} can be implemented in two mathematically equivalent ways:
+
+  \hrulefill
+  \vspace*{2mm}
+  
+  \begin{minipage}{.49\textwidth}
+    \begin{algorithmic}[1]
+      \For{$j=1,\dots,k$}
+      \State $\vy = 0$
+      \For{$i=1,\dots,j-1$}
+      \State $r \gets \scal(\vx_j,\vv_i)$
+      \State $\vy \gets \vy + r \vv_i$
+      \EndFor
+      \State $\vv_j = \frac{\vx_j-\vy}{\norm{\vx_j-\vy}_2}$
+      \EndFor
+    \end{algorithmic}      
+  \end{minipage}
+  \begin{minipage}{.49\textwidth}
+    \begin{algorithmic}[1]
+      \For{$j=1,\dots,k$}
+      \State $\vw \gets \vx_j$
+      \For{$i=1,\dots,j-1$}
+      \State $r \gets \scal(\vw,\vv_i)$
+      \State $\vw \gets \vw- r \vv_i$
+      \EndFor
+      \State $\vv_j = \frac{\vw}{\norm{\vw}_2}$
+      \EndFor
+    \end{algorithmic}      
+  \end{minipage}
+\end{Algorithm}
+
+
+\begin{Problem}{gram-schmidt-implementation}
+  \begin{enumerate}
+  \item Implement both methods in
+    \slideref{Algorithm}{gram-schmidt-implementation}.
+  \item Apply them to the
+    vectors $\vx_1,\dots,\vx_n\in\R^n$, where $n=10$ and
+  \begin{gather*}
+    \vx_j = \left(\frac1j,\frac1{j+1},\dots,\frac1{j+n-1}\right)^T.
+  \end{gather*}
+\item Compute the \define{Gramian matrix} $\matg$ with entries
+  $g_{ij} = \scal(\vv_j,\vv_j)$ of the resulting vectors.
+\item Discuss the result. Why are the off-diagonal entries not zero? Why are the algorithms different?
+\item Rewrite the algorithms by repeating rows 2--7 with $\vv_j$ instead of $\vx_j$ (\define{reorthogonalization}). What changes?
+  \end{enumerate}
+\end{Problem}
+
+\begin{remark}
+  The previous problem shows, that the Gram-Schmidt algorithm is
+  highly susceptible to round-off errors. This is particularly true to
+  the implementation on the left. The one on the right, often called
+  \define{modified Gram-Schmidt algorithm}\index{Gram-Schmidt
+    Orthogonalization!modified}, albeit it is the more natural
+  implementation of the same \slideref{Algorithm}{gram-schmidt}.
+
+  The vectors in \slideref{Problem}{gram-schmidt-implementation} form
+  the so-called \define{Hilbert matrix}, which is notoriously
+  ill-conditioned. Nevertheless, the example shows that either
+  orthogonalization is very hard or we have to search for a better
+  algorithm.
+\end{remark}
+
+\begin{intro}
+  If we give names $r_{ij} = \scal(\vx_j,\vv_j)$ for $i<j$ to the
+  coefficients of the Gram-Schmidt algorithm and let
+  $r_{jj} = \norm{\vw_j}_2$ in equation~\eqref{eq:ortho:gs:2}, then
+  equation~\eqref{eq:ortho:gs:2} becomes
+  \begin{gather*}
+    \vx_j = r_{jj} \vv_j + \sum_{i=1}^{j-1} r_{ij} \vv_i
+    = \sum_{i=1}^{j} r_{ij} \vv_i.
+  \end{gather*}
+  Moreover, with the matrix notation
+  $\matx = (\vx_1,\dots,\vx_k)$ and $\matv=(\vv_1,\dots,\vv_k)$, we
+  obtain the equation
+  \begin{gather*}
+    \matx = \matv \matr,
+  \end{gather*}
+  where $\matr \in \R^{k\times k}$ is the upper triangular matrix with
+  entries $r_{ij}$ as defined above. This gives rise to the definition
+  of the QR factorization of a matrix.
+\end{intro}
+
+\begin{Definition}{qr-decomposition}
+  The \define{QR factorization} of a matrix $\mata\in\C^{m\times n}$
+  with $m\ge n$ is the product
+  \begin{gather}
+    \mata = \matq\matr,
+  \end{gather}
+  such that $\matq \in\C^{m\times n}$ is unitary and
+  $\matr\in \C^{n\times n}$ is upper triangular.
+\end{Definition}
+
+\begin{intro}
+  The existence of a QR factorization of an invertible matrix $\mata$
+  follows constructively from \slideref{Theorem}{gram-schmidt}. For a
+  singular matrix, the column vectors are linearly dependent, which
+  will result in $r_{jj}=0$ for some index $j$.
+  \begin{todo}
+    QR for singular matrices?
+  \end{todo}
+
+  The following lemma rephrases the same statement we have already
+  learned about the Gram-Schmidt orthogonalization.
+\end{intro}
+
+\begin{Lemma}{qr-columns}
+  Let $\mata = \matq\matr$. Then, the column vectors of $\mata$ and
+  $\matq$ admit the relation
+  \begin{gather}
+    \va_j = \sum_{i=1}^j r_{ij} \vq_i.
+  \end{gather}
+  If $r_{ii}\neq 0$ for $i=1,\dots,j$, this relation is uniquely
+  invertible. In particular,
+  \begin{gather}
+    \spann{\vq_1,\dots,\vq_j}
+    = 
+    \spann{\va_1,\dots,\va_j}.
+  \end{gather}
+\end{Lemma}
+
 \begin{Theorem}{qr-existence}
   Every matrix $\mata\in\C^{m\times n}$ with $m\ge n$ of full rank
-  admits a QR factorization. It is unique under the condition that for
-  all $i$ there holds $r_{ii} > 0$.
+  admits a QR factorization. The columns of the matrix $\matq$ are
+  uniquely determined up to unit factors. The factorization is unique
+  under the condition that for all $j$ there holds $r_{jj} > 0$.
 \end{Theorem}
 
-\subsection{Householder transformations}
+\begin{intro}
+  The QR factorization can be used to solve linear systems. It will
+  also be an important component of eigenvalue solvers in
+  chapter~\ref{chap:dense-eigen}.
+
+  It is thus important to find ways to compute QR factorizations in a
+  numerically stable way. The remainder of this chapter is devoted to
+  this question. The key will be to replace the projections of the
+  Gram-Schmidt algorithm by orthogonal transformations, namely
+  reflections and rotations.
+
+  While these methods are often also subjects of introductory courses
+  on numerical methods, we discuss them here in detail since we also
+  need the complex versions.
+\end{intro}
+
+\section{Householder reflection}
 
 \begin{Definition}{householder-transformation}
   The \define{Householder transformation}
@@ -127,7 +245,7 @@
   to $n^2$ for a general matrix vector product.
 \end{Algorithm}
 
-\subsection{Givens rotation}
+\section{Givens rotation}
 
 \begin{Definition}{givens}
   The real \textbf{Givens-Rotation}\index{Givens rotation!real} $\givens_{jk}$ for $j<k$ with angle $\theta$ is the matrix
@@ -167,6 +285,14 @@
   Note that the notation $\givens_{jk}$ misses the angle $\theta$. This
   is due to the fact that it is always determined such that $y_k=0$.
 \end{remark}
+
+\begin{Notation}{givens-specific}
+  In the more general case, that a Givens rotation $\givens_{jk}^T$ is not chosen to eliminate $x_k$ using $x_j$, but more generally eliminating a number $b$ using a number $a$, we write more specifically
+  \begin{gather}
+    \givens_{jk}[a,b].
+  \end{gather}
+\end{Notation}
+
 
 \begin{Lemma}{givens-computation}
   Givens rotation $\givens_{jk}^T$ eliminates the second component of the vector
@@ -328,16 +454,7 @@
   There is a compressed way of storing $c$ and $s$ of a Givens rotation in a single number, see~\cite[5.1.11]{GolubVanLoan83}.
 \end{remark}
 
-\begin{todo}
-  Move the following notation to after the definition
-\end{todo}
 
-\begin{Notation}{givens-specific}
-  In the more general case, that a Givens rotation $\givens_{jk}^T$ is not chosen to eliminate $x_k$ using $x_j$, but more generally eliminating a number $b$ using a number $a$, we write more specifically
-  \begin{gather}
-    \givens_{jk}[a,b].
-  \end{gather}
-\end{Notation}
 
 %%% Local Variables:
 %%% mode: latex

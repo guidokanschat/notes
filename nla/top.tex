@@ -16,7 +16,13 @@
 \begin{document}
 \maketitle
 \tableofcontents
+\chapter{QR Factorization}
+\label{chap:qr}
+\input{ortho}
+
 \chapter{Dense Algebraic Eigenvalue Problems}
+\label{chap:dense-eigen}
+
 \begin{intro}
   We refer to problems in linear algebra which allow storing the
   complete matrix as \define{dense linear algebra}. They are typically
@@ -55,6 +61,7 @@
 %\input{orthopoly}
 
 \chapter{Solving Large Sparse Linear Systems}
+\label{chap:sparse}
 
 \section{Sparse matrices}
 
@@ -67,6 +74,7 @@
 \input{Krylov}
 
 \chapter{Large Sparse Eigenvalue Problems}
+\label{chap:sparse-eigen}
 
 \begin{intro}
   In this chapter we study algorithms for finding a small number
@@ -107,8 +115,6 @@
 
 \chapter{Basics from Numerical Analysis}
 
-\section{QR decomposition}
-\input{qr-decomposition}
 
 \section{Matrix norms and spectral radius}
 
