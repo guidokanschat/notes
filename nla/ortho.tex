@@ -34,7 +34,7 @@
 
   \hrulefill
   \vspace*{2mm}
-  
+
   \begin{minipage}{.49\textwidth}
     \begin{algorithmic}[1]
       \For{$j=1,\dots,k$}
@@ -45,7 +45,7 @@
       \EndFor
       \State $\vv_j = \frac{\vx_j-\vy}{\norm{\vx_j-\vy}_2}$
       \EndFor
-    \end{algorithmic}      
+    \end{algorithmic}
   \end{minipage}
   \begin{minipage}{.49\textwidth}
     \begin{algorithmic}[1]
@@ -57,7 +57,7 @@
       \EndFor
       \State $\vv_j = \frac{\vw}{\norm{\vw}_2}$
       \EndFor
-    \end{algorithmic}      
+    \end{algorithmic}
   \end{minipage}
 \end{Algorithm}
 
@@ -128,10 +128,9 @@
   follows constructively from \slideref{Theorem}{gram-schmidt}. For a
   singular matrix, the column vectors are linearly dependent, which
   will result in $r_{jj}=0$ for some index $j$.
-  \begin{todo}
+\begin{todo} % Indent on todo removed since it failed to compile otherwise
     QR for singular matrices?
-  \end{todo}
-
+\end{todo}
   The following lemma rephrases the same statement we have already
   learned about the Gram-Schmidt orthogonalization.
 \end{intro}
@@ -146,7 +145,7 @@
   invertible. In particular,
   \begin{gather}
     \spann{\vq_1,\dots,\vq_j}
-    = 
+    =
     \spann{\va_1,\dots,\va_j}.
   \end{gather}
 \end{Lemma}
@@ -410,7 +409,7 @@
       \\
       c v + \overline s u
       &= c_\theta e^{-i\beta} r_v + s_\theta e^{-i\phi} e^{-i\alpha} r_u
-      &&= e^{-i\beta}\bigl(c_\theta r_v + s_\theta r_u\bigr) = 0.      
+      &&= e^{-i\beta}\bigl(c_\theta r_v + s_\theta r_u\bigr) = 0.
     \end{aligned}
   \end{gather}
 \end{proof}
@@ -425,7 +424,7 @@
 
   \hrulefill
   \vspace*{2mm}
-  
+
   \begin{minipage}{.49\textwidth}
     \begin{algorithmic}[1]
       \Require $c,s$ Givens rotation
@@ -435,7 +434,7 @@
       \State $a_{ji} \gets c\alpha-s\beta$
       \State $a_{ki} \gets s\alpha+c\beta$
       \EndFor
-    \end{algorithmic}      
+    \end{algorithmic}
   \end{minipage}
   \begin{minipage}{.49\textwidth}
     \begin{algorithmic}[1]
@@ -446,7 +445,7 @@
       \State $a_{ij} \gets c\alpha-s\beta$
       \State $a_{ik} \gets s\alpha+c\beta$
       \EndFor
-    \end{algorithmic}      
+    \end{algorithmic}
   \end{minipage}
 \end{Algorithm}
 
