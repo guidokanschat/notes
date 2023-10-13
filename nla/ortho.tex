@@ -182,7 +182,7 @@
   The \define{Householder transformation}
   associated with a vector $\vw\in\C^n$ is
   \begin{gather}
-    \matq_w = \id - 2\frac{\vw\vw^*}{\vw^*\vw}
+    \matq_{\vw} = \id - 2\frac{\vw\vw^*}{\vw^*\vw}
   \end{gather}
   It is also called \define{Householder matrix} or, particularly in
   the real case, \define{Householder reflection}.
@@ -192,9 +192,20 @@
   For any vector $\vw\in\C^n$ the Householder transformation
   $\matq_{\vw}$ is Hermitian and orthogonal, that is,
   \begin{gather}
-    \matq^{-1} = \matq^* = \matq.
+    \matq_{\vw}^{-1} = \matq_{\vw}^* = \matq_{\vw}.
   \end{gather}
 \end{Lemma}
+
+\begin{proof}
+  The complex symmetry follows immediately from the rule for the
+  adjoints of matrix products. Furthermore,
+  \begin{multline}
+    \matq_{\vw}^2 = \left(\id - 2\frac{\vw\vw^*}{\vw^*\vw}\right)^2
+    = \id - 4\frac{\vw\vw^*}{\vw^*\vw} + 4\frac{\vw\vw^*\vw\vw^*}{\vw^*\vw\vw^*\vw}
+    \\
+    = \id - 4\frac{\vw\vw^*}{\vw^*\vw} + 4\frac{\vw\vw^*}{\vw^*\vw} = \id.
+  \end{multline}
+\end{proof}
 
 \begin{Lemma}{householder-qr}
   For any vector $\vy\in\C^n$ there are vectors $\vw_\phi\in\C^n$ such
