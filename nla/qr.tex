@@ -1,4 +1,28 @@
 \subsection{Definition of the methods}
+\begin{todo}
+  GM:
+  How to write matrix columns?
+\end{todo}
+
+\begin{Algorithm*}{normal-subspace-iteration}{Subspace Iteration}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$, initial subspace $\mathbf{S}^{(0)}\in\C^{n \times m}$
+    \For{$k=0,\dots$ until convergence}
+    \State $\mathbf{S}^{(k+1)} \gets p(\mata) \mathbf{S}^{(k)}$
+    \EndFor
+    \State {$\lambda_i \approx \vq_{k_{\max},i}^* \mata \vq_{k_{\max},i},\qquad i=1,\dots,m$}\
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{todo}
+  GM:
+  Does this get a convergence theorem
+\end{todo}
+\begin{todo}
+  GM:
+  Why not use the notation in the superscript here? \(q_{k,i}\) looks like an entry rather than a column. \\
+  Why use \(\lambda\) now and \(\alpha\) earlier?
+\end{todo}
 
 % \begin{Algorithm*}{subspace-iteration}{Orthogonal subspace iteration}
 %   Let $\mata\in\Cnn$, $\matx_0 \in \C^{n\times m}$.\\
@@ -9,41 +33,52 @@
 %   \end{itemize}
 % \end{Algorithm*}
 
+\begin{todo}
+  GM:
+  Changed, I came across this as the simultaneous iteration
+\end{todo}
 \begin{Algorithm*}{subspace-iteration}{Orthogonal subspace iteration}
   \begin{algorithmic}[1]
-    \Require $\mata\in\Cnn$ and choose $\matq_0 \in \C^{n\times m}$ orthonormal.
+    \Require $\mata\in\Cnn$ and choose $\mathbf{S}_0 \in \C^{n\times m}$.
     \For {$k=1,\ldots$ until convergence}
-    \State $\matz_k \gets \mata \matq_{k-1}$
-    \State $\matq_k\matr_k \gets \matz_k$ \Comment{QR factorization}
-    \State {$\lambda_i \approx \vq_{k,i}^* \mata \vq_{k,i},\qquad i=1,\dots,m$}\
-    \Comment{Rayleigh quotient}
+    \State $\matq_k\matr_k \gets \mathbf{S}_{k-1}$ \Comment{QR factorization}
+    \State $\mathbf{S}_{k} \gets p(\mata) \matq_{k}$
     \EndFor
+    \State {$\lambda_i \approx \vq_{k_{\max},i}^* \mata \vq_{k_{\max},i},\qquad i=1,\dots,m$}\
+    \Comment{Rayleigh quotient}
   \end{algorithmic}
 \end{Algorithm*}
 
+\begin{todo}
+  GM:
+  Q converges because the QR decomposition is unique for matrices with l.i. columns correct? \\
+  This does not work with the matrix polynomial.
+\end{todo}
 \begin{remark}
-  If the iteration converges, then there is an orthogonal matrix $\matq$ such that $\matq_k\to \matq$.
+  If the iteration converges, then there is an orthogonal matrix $\matq$ such that $\lim_{k \to
+  \infty} \matq_k = \matq$.
   From the two assignments of the algorithm, we get
   \begin{gather}
-    \matq^* \mata \matq = \matq^* \matz = \matq^*\matq\matr = \matr,
+    \lim_{k \to \infty} \matq_k^* \mata \matq_k = \lim_{k \to \infty} \matq_k^* \mathbf{S}_k = \lim_{k \to \infty}
+    \matq_k^*\matq_{k+1}\matr_{k+1} = \matr,
   \end{gather}
   where $\matr\leftarrow\matr_k$, that is, the matrices
   $\mata_k = \matq_k^*\mata\matq_k$ converge to an upper triangular
   matrix with the converged eigenvalues on the diagonal. Our next goal
   ist the modification of the orthogonal subspace iteration, such that
   we compute the sequence $\mata_k$ directly, without the intermediate
-  $\matz_k$. To this end, we assume $m=n$, that is, we compute the
+  $\mathbf{S}_k$. To this end, we assume $m=n$, that is, we compute the
   whole spectrum of $\mata$. By lines 2 and 3 of the algorithm, we have
   \begin{gather*}
-    \mata_{k-1} = \matq_{k-1}^*\mata\matq_{k-1} = \left(\matq_{k-1}^*\matq_{k}\right)\matr_k,
+    \mata_{k-1} = \matq_{k-1}^*\mata\matq_{k-1} = \matq_{k-1}^* \mathbf{S}_{k-1} = \left(\matq_{k-1}^*\matq_{k}\right)\matr_k,
   \end{gather*}
   where we see that on the right we have obtained the QR factorization of $\mata_{k-1}$.
   On the other hand,
   \begin{align*}
     \mata_k
-    &= \matq_k^*\mata\matq\\
+    &= \matq_k^*\mata\matq_k\\
     &= \matq_k^*\mata\matq_{k-1}\matq_{k-1}^*\matq_k\\
-    &= \matq_k^*\matz_k\matq_{k-1}^*\matq_k\\
+    &= \matq_k^*\mathbf{S}_{k-1} \matq_{k-1}^*\matq_k\\
     &= \matr_k \left(\matq_{k-1}^*\matq_k\right).
   \end{align*}
   Thus, we see that $\mata_k$ is obtained by multiplying the QR
@@ -53,8 +88,7 @@
 
 \begin{Algorithm*}{qr-iteration}{QR iteration}
   \begin{algorithmic}[1]
-    \Require $\mata\in\Cnn$ and choose $\matq_0 = \id$.
-    \State $\mata_0 \gets \matq_0^*\mata\matq_0$
+    \Require $\mata_0\in\Cnn$.
     \For{$k=1,\dots$ until convergence}
     \State $\matq_k\matr_k \gets \mata_{k-1}$ \Comment{QR factorization}
     \State $\mata_{k} = \matr_k\matq_k$
@@ -64,7 +98,7 @@
 
 %\subsection{Analysis}
 \begin{Theorem*}{schur-canonical}{Schur canonical form}
-  For every matrix $\mata\in\Cnn$ there are a unitary matrix
+  For every matrix $\mata\in\Cnn$ there exists a unitary matrix
   $\matq\in\Cnn$ and an upper triangular matrix $\matr\in\Cnn$ such
   that
   \begin{gather}
@@ -165,7 +199,7 @@
   A matrix is in \define{Hessenberg form} or is a \define{Hessenberg
     matrix}, if all its entries below the first subdiagonal are zero. Visually,
   \begin{gather}
-    H = 
+    H =
     \begin{pmatrix}
       *&*&*&*&*&*\\
       *&*&*&*&*&*\\
@@ -188,26 +222,26 @@
     \EndFor
     \For{$k=1,\dots,n-1$}
     \Comment{$\matH = \matr\matq$}
-    \State $\matH\gets \matH\givens_{k,k+1}$    
+    \State $\matH\gets \matH\givens_{k,k+1}$
     \EndFor
-  \end{algorithmic}  
+  \end{algorithmic}
 \end{Algorithm*}
 
 \begin{example}
   At the example of a 4-by-4-matrix, we show how this algorithm works.
   \begin{enumerate}
   \item Apply a Givens rotation from the left which eliminates the value $Y$ from the matrix. It affects the two top rows.
-    
+
     {\small\begin{tikzpicture}
       \input{fig/hessenberg-givens-1};
     \end{tikzpicture}}
-    
+
   \item Do the same with the second and third rows.
-    
+
     {\small\begin{tikzpicture}
         \input{fig/hessenberg-givens-2};
       \end{tikzpicture}}
-    
+
     {\small\begin{tikzpicture}
         \input{fig/hessenberg-givens-3};
       \end{tikzpicture}}
