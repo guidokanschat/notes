@@ -175,6 +175,11 @@
 
 \section{Householder reflection}
 
+\begin{todo}
+  GM:
+  We later need \(Q_w^* x = \alpha e_1\), Instead of \(Q_w x = \alpha e_1\). \\
+  For Givens it is already defined as such.
+\end{todo}
 \begin{Definition}{householder-transformation}
   The \define{Householder transformation}
   associated with a vector $\vw\in\C^n$ is
@@ -204,6 +209,10 @@
   where $\phi$ is the phase of $y_1$.
 \end{Lemma}
 
+\begin{todo}
+  GM:
+  Should the proof include, that the choice of \(\phi\) is restricted to a factor of \(-1\)? Maybe as a remark?
+\end{todo}
 \begin{proof}
   The statement of the lemma says that for a suitable vector $\vw$ there is a complex number
   $\alpha$ such that $\matq_{\vw} \vy = \alpha \ve_1$. Since
@@ -292,7 +301,10 @@
   \end{gather}
 \end{Notation}
 
-
+\begin{todo}
+  GM:
+  Note that this computation is only correct in the real case.
+\end{todo}
 \begin{Lemma}{givens-computation}
   Givens rotation $\givens_{jk}^T$ eliminates the second component of the vector
   $(x_j,x_k)^T$ by choosing
@@ -340,7 +352,37 @@
   \end{gather}
     where $c = \cos\theta$ and $s = e^{i\varphi}\sin\theta$.
 \end{Definition}
+\begin{todo}
+  GM:
+  Added Lemma for complex Givens computation
+\end{todo}
+\begin{Lemma}{givens-computation-complex}
+  Givens rotation $\givens_{jk}^T$ eliminates the second component of the vector
+  $(x_j,x_k)^T$ by choosing
+  \begin{gather}
+    r = \sqrt{x_j^2+x_k^2},\qquad
+    c = \frac{|x_j|}r,\quad s = \frac{x_j}{|x_j|}\frac{x_k}r.
+  \end{gather}
+  We obtain
+  \begin{gather}
+    \begin{pmatrix}
+      c & s \\ -s & c
+    \end{pmatrix}^*
+    \begin{pmatrix}
+      x_j\\x_k
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      r\\0
+    \end{pmatrix}
+    .
+  \end{gather}
+\end{Lemma}
 
+\begin{todo}
+  GM:
+  Ich habe nicht verstanden, wie man es so implementiert.
+\end{todo}
 \begin{Lemma}{givens-computation-complex}
   Let $u,v\in \C$ such that $u=u_1+iu_2$ and $v=v_1+iv_2$. Then, the second component of $(u,v)^T$ can be eliminated, such that
   \begin{gather}
@@ -414,6 +456,10 @@
   \end{gather}
 \end{proof}
 
+\begin{todo}
+  GM:
+  Not correct for complex rotation
+\end{todo}
 \begin{Algorithm}{givens-multiplication}
   The multiplication
   \begin{gather}
