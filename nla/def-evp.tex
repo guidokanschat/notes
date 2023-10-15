@@ -1,6 +1,9 @@
+\begin{todo}
+  GM: Fixed a typo
+\end{todo}
 \begin{intro}
   The following results can be found in any book on linear
-  algeba. Thus, we will just keep the arguments short. There will be a
+  algebra. Thus, we will just keep the arguments short. There will be a
   focus on normal matrices justified by results on conditioning of
   eigenvalue problems later on.
 
@@ -13,7 +16,7 @@
   An \define{eigenvalue} of a matrix $\mata\in \C^{n\times n}$ is a
   complex number $\lambda$ such that the matrix
   \begin{gather}
-   \mata-\lambda\id 
+   \mata-\lambda\id
   \end{gather}
   is singular.
 
@@ -38,7 +41,7 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
 
 \begin{Definition}{eigenvalue-algebraic}
   An \define{eigenvalue} of a matrix $\mata\in \C^{n\times n}$ is a root of the characteristic polynomial $\chi(\lambda) = \det(\mata-\lambda\id)$.
-  
+
   The \define{algebraic multiplicity} of an eigenvalue is the multiplicity of the corresponding root of the characteristic polynomial.
 \end{Definition}
 
@@ -73,6 +76,15 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
   An eigenvalue is \define{simple}, if its algebraic and geometric multiplicity are one. It is \define{semi-simple}, if its algebraic and geometric multiplicities are equal.
 \end{Definition}
 
+\begin{todo}
+  GM:
+  Added Definition of Dominant Eigenvalue
+\end{todo}
+\begin{Definition}{dominant_ev}
+  The \(r\) largest Eigenvalues by magnitude \(\lambda_1, \ldots \lambda_r\) are called \define{dominant eigenvalues}, if
+  \[ |\lambda_1| = \cdots = |\lambda_r|\]
+  Their corresponding eigenvectors are called \define{dominant eigenvectors}.
+\end{Definition}
 \begin{Definition}{right-left-ev}
   Refining \slideref{Definition}{eigenvalue}, we distinguish between a right eigenvector $\vv$ such that
   \begin{gather*}
@@ -82,7 +94,7 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
   \begin{gather*}
     \vu^T \mata = \lambda \vu^T.
   \end{gather*}
-  
+
 \end{Definition}
 
 \begin{Lemma}{eigenvalues-conjugate}
@@ -140,12 +152,15 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
 
 \begin{Theorem*}{normal-diagonalizable}{Spectral theorem for normal matrices}
   A matrix $\mata\in\C^{n\times n}$ is normal if and only if it is diagonalizable by a unitary matrix.
-  
+
   It is normal if and only if there exists an orthonormal basis of eigenvectors.
 \end{Theorem*}
 
+\begin{todo}
+  GM: Proof Missing?
+\end{todo}
 \begin{proof}
-  
+
 \end{proof}
 
 

@@ -1,25 +1,43 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Simple iterations}
 
+\begin{todo}
+  GM:
+  In this section it is inconsistent how the eigenvalue is computed for a given eigenvector. For the Power Method the
+  computation inside of the loop is confusing to me. Also the initial vector is not normalised, which is no problem but feels
+  inconsistent.
+\end{todo}
+
 \begin{Algorithm*}{vector-iteration}{Vector iteration (power method)}
   \begin{algorithmic}[1]
-    \Require $\mata\in\Cnn$, initial vector $\vv^{(0)}\in\C^n$
-    \For{$k=1,\dots$ until convergence}
-    \State $\vy \gets \mata \vv^{(k-1)}$
-    \State $\alpha_k = \frac{\vy_i}{\vv^{(k-1)}_i}$
-    where $\abs{\vv^{(k)}_i}$ is maximal
-    \State $\vv^{(k)} = \frac{\vy}{\norm{\vy}}$
+    \Require $\mata\in\Cnn$, initial vector $\vy^{(0)}\in\C^n$
+    \For{$k=0,\dots$ until convergence}
+    \State $\vv^{(k)} = \frac{\vy^{(k)}}{\norm{\vy^{(k)}}}$
+    \State $\vy^{(k+1)} \gets \mata \vv^{(k)}$
     \EndFor
+    \State $\alpha = R_\mata(\vv^{(k_{\max})})$
+%    \State $\alpha = \frac{\vy^{(k_\max +1)}}{\vv^{(k_{\max})}_i}$
+%    where $\abs{\vv^{(k_{\max})}_i}$ is maximal
   \end{algorithmic}
 \end{Algorithm*}
 
+\begin{todo}
+  GM:
+  Fixed typo and
+  Used dominant eigenvalue instead of its definition
+  Maybe use argmax for i?
+\end{todo}
 \begin{Theorem}{vector-iteration}
-  Lat $\mata\in\Cnn$ be diagonalizable such that $\lambda_1$ is the
-  unique eigenvalue with maximal modulus. Let furthermore the
+  Let $\mata\in\Cnn$ be diagonalizable such that $\lambda_1$ is the
+  unique dominant eigenvalue. Let furthermore the
   component of $v^{(0)}$ in direction of the first eigenvector be
-  nonzero. Then, the factors $\alpha_k$ and vectors $v^{(k)}$ of the
+  nonzero. Then, the factors
+  \[\alpha_k := \frac{\vy^{(k+1)}_i}{\vv_i^{(k)}} \; \text{where} \; |\vv_i^{(k)|}| \; \text{is maximal}\]
+  and vectors $v^{(k)}$ of the
   vector iteration converge to the eigenvalue $\lambda_1$ and its
   associated eigenvector. Moreover, there holds
+    %\State $\alpha = \frac{\vy^{(k_\max +1)}}{\vv^{(k_{\max})}_i}$
+    %where $\abs{\vv^{(k_{\max})}_i}$ is maximal
   \begin{align}
     \abs{\alpha_{k+1}-\lambda_1}
     &\le \frac{\abs{\lambda_1}}{\abs{\lambda_2}} \abs{\alpha_{k}-\lambda_1}\\
@@ -28,6 +46,11 @@
   \end{align}
 \end{Theorem}
 
+\begin{todo}
+  GM:
+  Why is it required, that the eigenvalue is single? That is not included in the previous Theorem? \\
+  Espacially a diagonalizable matrix can have multiple eigenvalues
+\end{todo}
 \begin{Remark}{vector-iteration}
   The proof actually requires, that the entry defining $\alpha_k$
   remains the same during the iteration, at least during the steps
@@ -37,9 +60,13 @@
   as long as $\lambda_1$ is single and of largest modulus.
 \end{Remark}
 
+\begin{todo}
+  GM:
+  Fixed a Symbol
+\end{todo}
 \begin{Lemma}{Rayleigh-approximation}
   Let $(\lambda,\vv)$ be an eigenpair of the Hermitian matrix
-  $\mata\in\Cnn$, and let $\vw\i\C^n$. Then, there is a constant $C$ depending only on the matrix $\mata$ such that there holds
+  $\mata\in\Cnn$, and let $\vw\in\C^n$. Then, there is a constant $C$ depending only on the matrix $\mata$ such that there holds
   \begin{gather}
     \abs{R_\mata(\vw)-\lambda} \le C \norm{\vw-\vv}^2,
   \end{gather}
@@ -56,27 +83,20 @@
   eigenvector for this eigenvalue.
 \end{Algorithm*}
 
-\begin{Algorithm*}{inverse-iteration}{The inverse power method}
-    \begin{algorithmic}[1]
-    \Require $\mata\in\Cnn$, $\sigma\in\C$, initial vector $\vv^{(0)}\in\C^n$
-    \For{$k=1,\dots$ until convergence}
-    \State Solve $(\mata-\sigma\id) \vy = \vv^{(k-1)}$
-    \State $\vv^{(k)} = \frac{\vy}{\norm{\vy}}$
-    \State $\alpha_k = R_\mata(\vv^{(k)})$
-    \EndFor
-  \end{algorithmic}
-\end{Algorithm*}
+\begin{todo}
+  GM: added the shifted matrix polynomial
+\end{todo}
+\begin{Definition}{shifted-matrix-polynomial}{Shifted Matrix Polynomial}
+  Let \(\mata \in \C^{n \times n}\) be a square matrix.
+  The \define{matrix polynomial} of degree \(m\), with shift parameter \(\rho_1, \ldots, \rho_m\) is defined by
+  \[ \mathbf{p(A)} := \left( A - \varrho_1 \id \right) \dots \left( A - \rho_m\right).\]
+\end{Definition}
 
-\begin{Algorithm*}{Rayleigh-iteration}{The Rayleigh quotient iteration}
-    \begin{algorithmic}[1]
-    \Require $\mata\in\Cnn$, $\sigma_0\in\C$, initial vector $\vv^{(0)}\in\C^n$
-    \For{$k=1,\dots$ until convergence}
-    \State Solve $(\mata-\sigma_{k-1}\id) \vy = \vv^{(k-1)}$
-    \State $\vv^{(k)} = \frac{\vy}{\norm{\vy}}$
-    \State $\sigma_k = R_\mata(\vv^{(k)})$
-    \EndFor
-  \end{algorithmic}  
-\end{Algorithm*}
+\begin{todo}
+  GM:
+  Moved the inverse iteration back after the QR Iteration, and instead inserted the subspace iteration.\\
+  Insert an exercise to show why the shifted matrix polynomial is required.
+\end{todo}
 
 
 %%% Local Variables:
