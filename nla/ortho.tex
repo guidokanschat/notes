@@ -168,9 +168,100 @@
   Gram-Schmidt algorithm by orthogonal transformations, namely
   reflections and rotations.
 
+  The construction of such methods starts with the idea that if I find
+  an orthogonal transformation of the matrix $\mata$ such that
+  $\matq^*\mata=\matr$ is upper triangular, then
+  $\mata=\matq\matr$. What is left, is the construction of
+  $\matq^*$. Note that by \slideref{Theorem}{qr-existence}, all
+  possible matrices $\matq$ of such factorizations are essentially
+  equal (columns are equal upto scalar factors of size unity).
+
   While these methods are often also subjects of introductory courses
   on numerical methods, we discuss them here in detail since we also
   need the complex versions.
+\end{intro}
+
+\begin{intro}
+  The matrix $\matq$ of a QR factorization can be obtained by an
+  algorithm progressing over the columns of $\mata$. It progresses as
+  follows: first, find a matrix $\matq_1$ such that $\matq_1^*\mata$
+  has the structure
+  \begin{gather}
+    \mata_1 = \matq_1^* \mata =
+    \begin{pmatrix}
+      * & * & * & \dots & * & * \\
+      0 & * & * & \dots & * & * \\
+      0 & * & * & \dots & * & * \\
+      0 & * & * & \dots & * & * \\
+      \vdots & \vdots & \vdots & \cdots & \vdots & \vdots \\
+      0 & * & * & \dots & * & *
+    \end{pmatrix}.
+  \end{gather}
+  Hence, in the matrix $\mata_1$ all elements of the first column have
+  been eliminated. The stars indicate unknown values usually not
+  identical with the entries of $\mata$.
+
+  In the next step, find a matrix $\matq_2$ such that
+  \begin{gather}
+    \mata_2 = \matq_2^* \mata_1
+    =
+    \begin{pmatrix}
+      1 & 0 \\ 0 & \widetilde\matq_2^*
+    \end{pmatrix}
+    \mata_1
+    =
+    \begin{pmatrix}
+      x & x & x & \cdots & x & x \\
+      0 & * & * & \cdots & * & * \\
+      0 & 0 & * & \cdots & * & * \\
+      0 & 0 & * & \cdots & * & * \\
+      \vdots & \vdots & \vdots & \cdots & \vdots & \vdots \\
+      0 & 0 & * & \cdots & * & * \\
+    \end{pmatrix}.
+  \end{gather}
+  Since the upper left block of $\matq_2^*$ is the
+  identity, the multiplication from the left does not change the first
+  row of $\mata_1$, such that the values indicated with $x$ are equal
+  to the corresponding entries of $\mata_1$. This algorithm continues with
+  \begin{gather}
+    \matq_3^* \mata_2 =
+    \begin{pmatrix}
+      1&&\\
+      &1&\\
+      &&\widetilde\matq_3^*
+    \end{pmatrix}
+    \mata_2
+        =
+    \begin{pmatrix}
+      x & x & x & \dots & x & x \\
+      0 & x & x & \dots & x & x \\
+      0 & 0 & * & \dots & * & * \\
+      0 & 0 & 0 & \dots & * & * \\
+      \vdots & \vdots & \vdots & \cdots & \vdots & \vdots \\
+      0 & 0 & 0 & \dots & * & * \\
+    \end{pmatrix}.
+    ,
+  \end{gather}
+  until
+  \begin{gather}
+    \matq_{n-1}\mata_{n-2}
+    =
+    \begin{pmatrix}
+      \id_{n-2}&\\
+      &\widetilde\matq_{n-1}^*
+    \end{pmatrix}\mata_{n-2}
+    =
+    \begin{pmatrix}
+      x & x & x & \dots & x & x \\
+      0 & x & x & \dots & x & x \\
+      0 & 0 & x & \dots & x & x \\
+      0 & 0 & 0 & \dots & x & x \\
+      \vdots & \vdots & \vdots & \cdots & \vdots & \vdots \\
+      0 & 0 & 0 & \dots & * & * \\
+      0 & 0 & 0 & \dots & 0 & * \\
+    \end{pmatrix},
+  \end{gather}
+  where $\widetilde\matq_{n-1}$ is a 2-by-2 matrix.
 \end{intro}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -222,10 +313,6 @@
   where $\phi$ is the phase of $y_1$.
 \end{Lemma}
 
-\begin{todo}
-  GM:
-  Should the proof include, that the choice of \(\phi\) is restricted to a factor of \(-1\)? Maybe as a remark?
-\end{todo}
 \begin{proof}
   The statement of the lemma says that for a suitable vector $\vw$ there is a complex number
   $\alpha$ such that $\matq_{\vw} \vy = \alpha \ve_1$. Since
@@ -260,16 +347,29 @@
 \end{proof}
 
 \begin{Algorithm}{householder-multiplication}
-  Computation of $\matq_w\vx$:
+  Computation of $\matq_{\vw}\vx$:
+  
+  \hrulefill
+  \vspace*{2mm}
   \begin{algorithmic}[1]
     \Require $\vx\in\C^n$, Householder vector $\vw\in \C^n$, $\beta = \nicefrac2{\norm{w}^2}$
     \State $\alpha \gets \beta \vw^*\vx$
     \State $\vx \gets \vx - \alpha \vw$
   \end{algorithmic}
-  This algorithm requires $2n$ multiplications and additions compared
-  to $n^2$ for a general matrix vector product.
+   \hrulefill
+  %\vspace*{2mm}
+
+   This algorithm requires $2n+1$ multiplications and $2n$ additions
+   compared to $n^2$ for a general matrix vector product. The
+   ``matrix'' $\matq_{\vw}$ can be stored using $n+1$ floating point
+   numbers.
 \end{Algorithm}
 
+\begin{intro}
+  
+\end{intro}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Givens rotation}
 
 \begin{Definition}{givens}
