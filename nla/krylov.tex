@@ -1287,6 +1287,10 @@ method only fails after the exact solution has been found.
   \end{gather}
 \end{Theorem}
 
+\begin{todo}
+  Check from here since there was a stash conflict
+\end{todo}
+
 \begin{proof}
   See \cite[Proposition 6.32]{Saad00}.
 \end{proof}
@@ -1514,8 +1518,35 @@ method only fails after the exact solution has been found.
   \end{algorithmic}
 \end{Algorithm*}
 
+\begin{todo}
+  Middle of the stash conflict
+\end{todo}
 
+\begin{Algorithm*}{gmres}{Generalized Minimal Residual}
+  Given $\vx^{(0)}\in\R^n$, the ``iterate'' $\vx^{(m)}$ of the
+  \define{GMRES} method is computed by the following steps.
+  \begin{enumerate}
+  \item Compute the Arnoldi basis $\matv_{m+1}$ of
+    $\krylov_{m+1}(\mata,\vr^{(0)})$ and the matrix $\overline\matH_m\in\R^{m+1\times m}$.
+  \item Solve the least squares problem
+    \begin{gather}
+      \norm{\beta\ve_1 - \overline\matH_m \vy}_2 \stackrel{!}{=} \min
+    \end{gather}
+    in $\R^m$ with $\beta = \norm{\vr^{(0)}}_2$.
+  \item Let
+    \begin{gather}
+      \vx^{(m)} = \vx^{(0)} + \matv_{m}\vy
+    \end{gather}
+  \end{enumerate}
+\end{Algorithm*}
 
+\begin{remark}
+  The GMRES methof is not really an iterative method. indeed, the intermediate iterates $\vx^{(k)}$ may not even be computed, since the norm of the residual can be computed by \slideref{}{}
+\end{remark}
+
+\begin{todo}
+  End of stash conflict
+\end{todo}
 
 %%% Local Variables:
 %%% mode: latex

@@ -25,6 +25,23 @@
   used in this way as a set of vectors or as a basis.
 \end{Notation}
 
+\begin{Notation}{colon-notation}
+  A common way of specifying parts of a matrix is the so-called \define{colon notation}. We define
+  \begin{gather}
+    \mata(i:j,k:l) =
+    \begin{pmatrix}
+      a_{ik}&\cdots&a_{il}\\
+      \vdots&&\vdots\\
+      a_{jk}&\cdots&a_{jl}
+    \end{pmatrix}.
+  \end{gather}
+  If in one dimension we span the whole matrix, we omit the indices,
+  such that $\mata(i,:)$ is the $i$-th row and $\mata(:,k)$ is the $k$-th
+  column of the matrix.
+
+  We also use the notation $a_{i:j,k:l}$ instead.
+\end{Notation}
+
 \begin{Lemma*}{change-of-basis}{Change of basis}
   Let $\matv = (\vv_1,\dots, \vv_n)$ and $\matw = (\vw_1,\dots, \vw_n)$ be
   bases of $\C^n$. Let $\vu\in \C^n$ be given by coefficient vectors

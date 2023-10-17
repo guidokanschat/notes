@@ -182,6 +182,7 @@
 \end{intro}
 
 \begin{intro}
+  \label{intro:ortho:1}
   The matrix $\matq$ of a QR factorization can be obtained by an
   algorithm progressing over the columns of $\mata$. It progresses as
   follows: first, find a matrix $\matq_1$ such that $\matq_1^*\mata$
@@ -275,7 +276,8 @@
     \matq_{\vw} = \id - 2\frac{\vw\vw^*}{\vw^*\vw}
   \end{gather}
   It is also called \define{Householder matrix} or, particularly in
-  the real case, \define{Householder reflection}.
+  the real case, \define{Householder reflection}, since it reflects
+  the vector $\vx$ at the subspace perpendicular to $\vw$.
 \end{Definition}
 
 \begin{Lemma}{householder-symmetry}
@@ -298,79 +300,151 @@
 \end{proof}
 
 \begin{Lemma}{householder-qr}
-  For any vector $\vy\in\C^n$ there are vectors $\vw_\phi\in\C^n$ such
-  that $\matq_{\vw_\phi} \vy$ is a multiple of $\ve_1$.
+  For any vector $\vx\in\C^n$ there are vectors $\vw_\phi\in\C^n$ such
+  that $\matq_{\vw_\phi} \vx$ is a multiple of $\ve_1$.
 
   The vector of choice for numerical stability is
   \begin{gather}
-    \vw = \vy + e^{i\phi} \norm{\vy}_2\ve_1,
+    \label{eq:ortho:householder:1}
+    \vw = \vx + e^{i\phi} \norm{\vx}_2\ve_1,
   \end{gather}
-  where $\phi$ is the phase of $y_1$.
+  where $\phi$ is the phase of $x_1$. We call this vector \define{Householder vector} for $\vx$.
 \end{Lemma}
 
 \begin{proof}
   The statement of the lemma says that for a suitable vector $\vw$ there is a complex number
-  $\alpha$ such that $\matq_{\vw} \vy = \alpha \ve_1$. Since
+  $\alpha$ such that $\matq_{\vw} \vx = \alpha \ve_1$. Since
   $\matq_{\vw}$ preserves the Euclidean norm, we already know
   \begin{gather}
-    \abs{\alpha} = \norm{\vy}_2.
+    \abs{\alpha} = \norm{\vx}_2.
   \end{gather}
   We now construct the vector $\vw$. First, we want to achieve
   \begin{gather}
     \label{eq:ortho:householder:1}
-    \alpha\ve_1 = \matq_{\vw} \vy
-    = \vy - 2 \frac{\vw\vw^*\vy}{\vw^*\vw}
-    = \vy - 2 \frac{\vw^*\vy}{\vw^*\vw}\vw.
+    \alpha\ve_1 = \matq_{\vw} \vx
+    = \vx - 2 \frac{\vw\vw^*\vx}{\vw^*\vw}
+    = \vx - 2 \frac{\vw^*\vx}{\vw^*\vw}\vw.
   \end{gather}
-  Thus, $\vw$ must be in the span of $\vy-\alpha \ve_1$. Since we divide by
+  Thus, $\vw$ must be in the span of $\vx-\alpha \ve_1$. Since we divide by
   its norm, its length does not matter and we let for some angle $\phi$
   \begin{gather}
     \vw_\phi =
     \begin{pmatrix}
-      y_1 - e^{i\phi} \norm{\vy}_2\\y_2\\\vdots\\y_n
+      x_1 - e^{i\phi} \norm{\vx}_2\\x_2\\\vdots\\x_n
     \end{pmatrix}.
   \end{gather}
-  If we compare the leftmost and rightmost terms in~\eqref{eq:ortho:householder:1}, we see that the quotient of inner products must be equal to $\nicefrac12$ auch that $y_2,\dots,y_n$ are canceled. Since
+  If we compare the leftmost and rightmost terms
+  in~\eqref{eq:ortho:householder:1}, we see that the quotient of inner
+  products must be equal to $\nicefrac12$ such that $x_2,\dots,x_n$
+  are canceled. Since
   \begin{align}
-    \vw^*\vy &= \norm{\vy}_2^2 - y_1 e^{-i\phi} \norm{\vy}_2
+    \vw^*\vx &= \norm{\vx}_2^2 - x_1 e^{-i\phi} \norm{\vx}_2
     \\
-    \vw^*\vw &= 2\norm{\vy}_2^2 - (y_1^*e^{i\phi} + y_1 e^{-i\phi})\norm{\vy}_2,
+    \vw^*\vw &= 2\norm{\vx}_2^2 - (x_1^*e^{i\phi} + x_1 e^{-i\phi})\norm{\vx}_2,
   \end{align}
-  this can only hold if $y_1 e^{-i\phi}$ is real or equivalently, if $\phi$ is the phase of the complex number $y_1$ or of $-y_1$.
-
-  Since the computation of the first component of $\vw_\phi$ is prone to loss of significance, we choose $\phi$ as the phase of $-y_1$. In the real case, this simplifies to $e^{i\phi} = -1$.
+  this can only hold if $x_1 e^{-i\phi}$ is real or equivalently, if
+  $\phi$ is the phase of the complex number $x_1$ or of $-x_1$.
+  
+  Since the computation of the first component of $\vw_\phi$ is prone
+  to loss of significance, we choose $\phi$ as the phase of $-x_1$. In
+  the real case, this simplifies to $e^{i\phi} = -1$.
 \end{proof}
+
 \begin{todo}
   GM: \\
   To avoid loss of significance in the computation of the first component of \(\vw_\phi\), we choose \(\phi\) as the phase of
   \(-y_1\). In the real case, this simplifies to \(e^{i \phi} = -1\).
 \end{todo}
 
-\begin{Algorithm}{householder-multiplication}
-  Computation of $\matq_{\vw}\vx$:
+\begin{intro}
+  \label{intro:ortho:householder-storage}
+  The Householder vector $\vw$ is determined up to its length, which
+  means we have the freedom to normalize it to some criterion when we
+  compute it. A common normalization is $\vw_1 = 1$, such that this
+  value does not have to be stored. In its position, we can store the
+  normalization factor $\beta = \nicefrac2{\norm{\vw}^2}$.
 
+  Let $\vv$ be the vector computed according
+  to~\eqref{eq:ortho:householder:1} without normalization. Then,
+  \begin{gather}
+    \label{eq:ortho:householder:2a}
+    v_1 = x_1 \left(1+ \frac{\norm{\vx}}{\abs{x_1}}\right) =: \alpha.
+  \end{gather}
+  Hence,
+  \begin{gather}
+    \vw = \frac1{x_1 \left(1+ \frac{\norm{\vx}}{\abs{x_1}}\right)}
+    \begin{pmatrix}
+      v_1\\x_2\\\vdots\\x_n
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      1 \\\nicefrac{x_2}{\alpha}\\\vdots\\\nicefrac{x_n}{\alpha}
+    \end{pmatrix}
+    .
+  \end{gather}
+  Since the ``1'' in the first row is known, there is no need to store
+  it. This will be important for the implementation of the QR
+  factorization below. The Householder reflection will thus be stored in the format
+  \begin{gather}
+    \label{eq:ortho:householder:2b}
+    \vw(2:) = \left(\tfrac{x_2}{\alpha},\dots,\tfrac{x_n}{\alpha}\right)^T, \qquad \beta = \tfrac2{\norm{\vw}^2}.
+  \end{gather}
+  A functioning code will also have to distinguish some special
+  cases. The first is, where $\norm{\vx(2:n)}=0$. In this case, we
+  could indeed let $w = (1,0,\dots,0)^T$ and reflect the vector at
+  itself. Thus, $\beta = 2$. A more sophisticated programmer might
+  notice that no operation is necessary at all and therefore,
+  $\matq_{\vw}$ should be the identity. But the identity is not a
+  reflection and thus, the code for applying $\matq_{\vw}$ must handle
+  this case. We can indicate it by letting $\beta=0$.
+
+  Second, if $x_1=0$, we cannot compute $\alpha$ according to
+  \eqref{eq:ortho:householder:2a}. This is not a problem though, since
+  we can revert to the formula in\eqref{eq:ortho:householder:1}.
+
+  Note that in all those cases, the vector $\vw$ in
+  \eqref{eq:ortho:householder:2b} contains all information of
+  $\matq_{\vw}$, but instead of $n^2$ numbers, we only store
+  $n$. Therefore, we should \textbf{never} store a Householder
+  reflection as an $n\times n$ field of numbers.
+\end{intro}  
+
+\begin{Problem}{householder-compute}
+  Write a function \textsc{householder\_compute} which takes a vector
+  $\vx$, replaces $\vx(2:)$ by the Householder vector $\vw(2:0)$
+  according to the discussion in
+  section~\ref{intro:ortho:householder-storage}, and returns $\beta$.
+\end{Problem}
+
+\begin{Algorithm}{householder-multiplication}
+  Computation of $\matq_{\vw}\vx$. The result is updated in the vector
+  $\vx$. $\vw$ is in the format of \eqref{eq:ortho:householder:2b}.
+  
   \hrulefill
   \vspace*{2mm}
   \begin{algorithmic}[1]
-    \Require $\vx\in\C^n$, Householder vector $\vw\in \C^n$, $\beta = \nicefrac2{\norm{w}^2}$
-    \State $\alpha \gets \beta \vw^*\vx$
-    \State $\vx \gets \vx - \alpha \vw$
+    \Function{householder}{$\vx,\beta,\vw$}
+    \If{$\beta \neq 0$}
+    \State $\alpha \gets \beta \bigl( x_1 + \vw(2:)^*\vx(2:)\bigr)$
+    \State $x_1 \gets x_1 - \alpha$
+    \State $\vx(2:) \gets \vx(2:) - \alpha \vw(2:)$
+    \EndIf
+    \EndFunction
   \end{algorithmic}
    \hrulefill
   %\vspace*{2mm}
 
    This algorithm requires $2n+1$ multiplications and $2n$ additions
-   compared to $n^2$ for a general matrix vector product. The
-   ``matrix'' $\matq_{\vw}$ can be stored using $n+1$ floating point
-   numbers.
+   compared to $n^2$ for a general matrix vector product.
 \end{Algorithm}
 \begin{todo}
   GM: The matrix can be stored in \(n\) floating point values, by storing \(w\). Storage of \(\beta\) is not required.
 \end{todo}
 
 \begin{intro}
-
 \end{intro}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Givens rotation}
