@@ -28,8 +28,50 @@
 \begin{document}
 \frame{\maketitle}
 \frame{\frametitle{Overview}\tableofcontents[hideallsubsections]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{QR Factorization}
+\frame{\sectoc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Gram-Schmidt algorithm}
+\frame {\input {blocks/Algorithm-gram-schmidt.tex}
+  \input {blocks/Theorem-gram-schmidt.tex}}
+
+\frame {\input {blocks/Algorithm-gram-schmidt-implementation.tex}}
+\frame {\input {blocks/Problem-gram-schmidt-implementation.tex}}
+
+\frame {\input {blocks/Notation-column-vectors.tex}}
+\frame {\input {blocks/Notation-matrix-linear-combination.tex}}
+
+\frame {\input {blocks/Definition-qr-decomposition.tex}}
+\frame {\input {blocks/Lemma-qr-columns.tex}
+  \input {blocks/Theorem-qr-existence.tex}}
+
+\subsection{Householder reflection}
+
+\frame {\input {blocks/Definition-householder-transformation.tex}}
+\frame {\input {blocks/Lemma-householder-symmetry.tex}}
+\frame {\input {blocks/Lemma-householder-qr.tex}}
+\frame {\input {blocks/Notation-colon-notation.tex}}
+\frame {\input {blocks/Problem-householder-compute.tex}}
+\frame {\input {blocks/Algorithm-householder-multiplication.tex}}
+\frame {\input {blocks/Problem-householder-product.tex}}
+
+\subsection{Givens rotation}
+\frame {\input {blocks/Definition-givens.tex}}
+\frame {\input {blocks/Lemma-givens-computation.tex}}
+\frame {\input {blocks/Definition-givens-complex.tex}}
+\frame {\input {blocks/Lemma-givens-computation-complex.tex}}
+\frame {\input {blocks/Algorithm-givens-multiplication.tex}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Dense Algebraic Eigenvalue Problems}
 \frame{\sectoc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Mathematical background}
 \subsubsection{Definition of EVP}
@@ -46,8 +88,6 @@
 
 \subsubsection{Bases and matrices}
 \frame{\subsubtoc}
-\frame {\input {blocks/Notation-column-vectors.tex}}
-\frame {\input {blocks/Notation-matrix-linear-combination.tex}}
 \frame {\input {blocks/Lemma-change-of-basis.tex}}
 \frame {\input {blocks/Corollary-change-of-basis.tex}}
 \frame {\input {blocks/Definition-similar-matrix.tex}
@@ -112,15 +152,10 @@
 \subsection{Subspace iterations, the QR-iteration}
 \frame{\subtoc}
 
+\frame {\input {blocks/Algorithm-qr-iteration.tex}}
+
 \subsubsection{Definition of the methods}
 \frame {\input {blocks/Algorithm-subspace-iteration.tex}}
-\frame {\input {blocks/Algorithm-gram-schmidt.tex}
-  \input {blocks/Theorem-gram-schmidt.tex}}
-
-\frame {\input {blocks/Definition-qr-decomposition.tex}}
-\frame {\input {blocks/Lemma-qr-columns.tex}
-  \input {blocks/Theorem-qr-existence.tex}}
-\frame {\input {blocks/Algorithm-qr-iteration.tex}}
 
 \frame {\input {blocks/Theorem-schur-canonical.tex}}
 \frame {\input {blocks/Lemma-schur-canonical-1.tex}}
@@ -137,16 +172,6 @@
 
 \subsubsection{Implementation issues}
 \frame{\subsubtoc}
-\frame {\input {blocks/Definition-householder-transformation.tex}}
-\frame {\input {blocks/Lemma-householder-symmetry.tex}}
-\frame {\input {blocks/Lemma-householder-qr.tex}}
-\frame {\input {blocks/Algorithm-householder-multiplication.tex}}
-
-\frame {\input {blocks/Definition-givens.tex}}
-\frame {\input {blocks/Lemma-givens-computation.tex}}
-\frame {\input {blocks/Definition-givens-complex.tex}}
-\frame {\input {blocks/Lemma-givens-computation-complex.tex}}
-\frame {\input {blocks/Algorithm-givens-multiplication.tex}}
 
 \frame {\input {blocks/Definition-hessenberg.tex}}
 \frame {\input {blocks/Algorithm-Hessenberg-qr.tex}}
