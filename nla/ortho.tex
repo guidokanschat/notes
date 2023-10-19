@@ -596,6 +596,24 @@
     \end{pmatrix}
     .
   \end{gather}
+  \begin{todo}
+  Furthermore, we have
+  \begin{gather}
+    c = -\frac{x_j}r,\quad s = -\frac{x_k}r
+    \qquad \Rightarrow \qquad
+    \begin{pmatrix}
+      c & s \\ -s & c
+    \end{pmatrix}^T
+    \begin{pmatrix}
+      x_j\\x_k
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      -r\\0
+    \end{pmatrix}
+    .    
+  \end{gather}    
+  \end{todo}
 \end{Lemma}
 
 \begin{remark}
@@ -605,7 +623,8 @@
   use the function \lstinline!hypot!. It computes the hypothenuse of a
   right-angled triangle without overflow.
 
-  An alternative implementation avoids the overflow:
+  An alternative implementation avoids the overflow, but changes the
+  sign in some cases.
 \end{remark}
 
 \begin{Algorithm}{givens-computation}
@@ -714,15 +733,12 @@
   \end{gather}
 \end{proof}
 
-\begin{todo}
-  GM:
-  Added Lemma for complex Givens computation
 \begin{Lemma}{givens-computation-complex}
   The complex Givens rotation $\givens_{jk}^*$ eliminates the second
   component of the vector $(x_j,x_k)^T$ by choosing
   \begin{gather}
-    r = \sqrt{x_j^2+x_k^2},\qquad
-    c = \frac{|x_j|}r,\quad s = - \frac{x_j}{|x_j|}\frac{\overline{x_k}}r.
+    r = \sqrt{\abs{x_j}^2+\abs{x_k}^2},\qquad
+    c = \frac{|x_j|}r,\quad s = - \frac{x_j}{|x_j|}\frac{\overline{x}_k}r.
   \end{gather}
   We obtain
   \begin{gather}
@@ -739,49 +755,7 @@
     .
   \end{gather}
 \end{Lemma}
-\end{todo}
 
-\begin{todo}
-  GM:
-  Not correct for complex rotation
-\end{todo}
-\begin{Algorithm}{givens-multiplication}
-  The multiplication
-  \begin{gather}
-    \givens_{jk}\mata\qquad\qquad\qquad\qquad \mata\givens_{jk}
-  \end{gather}
-  affects only two rows/columns of $\mata\in\C^{m\times n}$ and can be
-  implemented with $6n/6m$ multiplications and additions.
-
-  \hrulefill
-  \vspace*{2mm}
-
-  \begin{minipage}{.49\textwidth}
-    \begin{algorithmic}[1]
-      \Require $c,s$ Givens rotation
-      \For{$i=1,\dots,n$}
-      \State $\alpha \gets a_{ji}$
-      \State $\beta \gets a_{ki}$
-      \State $a_{ji} \gets c\alpha-s\beta$
-      \State $a_{ki} \gets s\alpha+c\beta$
-      \EndFor
-    \end{algorithmic}
-  \end{minipage}
-  \begin{minipage}{.49\textwidth}
-    \begin{algorithmic}[1]
-      \Require $c,s$ Givens rotation
-      \For{$i=1,\dots,n$}
-      \State $\alpha \gets a_{ij}$
-      \State $\beta \gets a_{ik}$
-      \State $a_{ij} \gets c\alpha-s\beta$
-      \State $a_{ik} \gets s\alpha+c\beta$
-      \EndFor
-    \end{algorithmic}
-  \end{minipage}
-\end{Algorithm}
-
-\begin{todo}
-  GM
 \begin{Algorithm}{givens-multiplication}
   The multiplication
   \begin{gather}
@@ -816,10 +790,10 @@
     \end{algorithmic}
   \end{minipage}
 \end{Algorithm}
-\end{todo}
 
 \begin{remark}
-  There is a compressed way of storing $c$ and $s$ of a Givens rotation in a single number, see~\cite[5.1.11]{GolubVanLoan83}.
+  There is a compressed way of storing $c$ and $s$ of a Givens
+  rotation in a single number, see~\cite[5.1.11]{GolubVanLoan83}.
 \end{remark}
 
 
