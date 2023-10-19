@@ -1,6 +1,3 @@
-\begin{todo}
-  GM: Fixed a typo
-\end{todo}
 \begin{intro}
   The following results can be found in any book on linear
   algebra. Thus, we will just keep the arguments short. There will be a
@@ -76,14 +73,23 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
   An eigenvalue is \define{simple}, if its algebraic and geometric multiplicity are one. It is \define{semi-simple}, if its algebraic and geometric multiplicities are equal.
 \end{Definition}
 
-\begin{todo}
-  GM:
-  Added Definition of Dominant Eigenvalue
-\end{todo}
 \begin{Definition}{dominant_ev}
-  The \(r\) largest Eigenvalues by magnitude \(\lambda_1, \ldots \lambda_r\) are called \define{dominant eigenvalues}, if
-  \[ |\lambda_1| = \cdots = |\lambda_r|\]
-  Their corresponding eigenvectors are called \define{dominant eigenvectors}.
+  We call $\lambda$ the \define{dominant eigenvalue} if for any other
+  eigenvalue $\mu\in\sigma(\mata)$, there holds
+  \begin{gather}
+    \abs{\lambda} > \abs{\mu}.
+  \end{gather}
+  This definition naturally extends to several eigenvalues: let the
+  eigenvalues be ordered by magnitude,
+  \begin{gather}
+    \abs{\lambda_{1}} \ge \abs{\lambda_{2}} \ge \dots \ge \abs{\lambda_{n}}.
+  \end{gather}
+  Then, the first $r$ eigenvalues are called dominant if there holds
+  \begin{gather}
+    \abs{\lambda_{r}} \ge\abs{\lambda_{r+1}}.  
+  \end{gather}
+  Their corresponding eigenvectors are called \define{dominant
+    eigenvectors}.
 \end{Definition}
 \begin{Definition}{right-left-ev}
   Refining \slideref{Definition}{eigenvalue}, we distinguish between a right eigenvector $\vv$ such that
