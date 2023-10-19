@@ -359,7 +359,7 @@
   \end{align}
   this can only hold if $x_1 e^{-i\phi}$ is real or equivalently, if
   $\phi$ is the phase of the complex number $x_1$ or of $-x_1$.
-  
+
   Since the computation of the first component of $\vw_\phi$ is prone
   to loss of significance, we choose $\phi$ as the phase of $-x_1$. In
   the real case, this simplifies to $e^{i\phi} = -1$.
@@ -422,7 +422,7 @@
   $\matq_{\vw}$, but instead of $n^2$ numbers, we only store
   $n$. Therefore, we should \textbf{never} store a Householder
   reflection as an $n\times n$ field of numbers.
-\end{intro}  
+\end{intro}
 
 \begin{Problem}{householder-compute}
   Write a function \textsc{householder\_compute} which takes a vector
@@ -434,7 +434,7 @@
 \begin{Algorithm}{householder-multiplication}
   Computation of $\matq_{\vw}\vx$. The result is updated in the vector
   $\vx$. $\vw$ is in the format of \eqref{eq:ortho:householder:2b}.
-  
+
   \hrulefill
   \vspace*{2mm}
   \begin{algorithmic}[1]
@@ -498,7 +498,7 @@
       r_{11} &r_{12} &r_{13} &r_{14} \\
       w_{1;2} & * & * & * \\
       w_{1;3} & * & *& * \\
-      w_{1;4} & * & *& * \\      
+      w_{1;4} & * & *& * \\
     \end{pmatrix}
     \\
     \to
@@ -506,15 +506,15 @@
       r_{11} &r_{12} &r_{13} &r_{14} \\
       w_{1;2} & r_{22} & r_{23} & r_{24} \\
       w_{1;3} & w_{2;2} & * & * \\
-      w_{1;4} & w_{2;3} & *& * \\      
-    \end{pmatrix}    
+      w_{1;4} & w_{2;3} & *& * \\
+    \end{pmatrix}
     \to
     \begin{pmatrix}
       r_{11} &r_{12} &r_{13} &r_{14} \\
       w_{1;2} & r_{22} & r_{23} & r_{24} \\
       w_{1;3} & w_{2;2} & r_{33} & r_{34} \\
-      w_{1;4} & w_{2;3} & w_{3;2} & r_{44} \\      
-    \end{pmatrix}    
+      w_{1;4} & w_{2;3} & w_{3;2} & r_{44} \\
+    \end{pmatrix}
   \end{multline}
 \end{intro}
 
@@ -722,7 +722,7 @@
   component of the vector $(x_j,x_k)^T$ by choosing
   \begin{gather}
     r = \sqrt{x_j^2+x_k^2},\qquad
-    c = \frac{|x_j|}r,\quad s = - \frac{x_j}{|x_j|}\frac{x_k}r.
+    c = \frac{|x_j|}r,\quad s = - \frac{x_j}{|x_j|}\frac{\overline{x_k}}r.
   \end{gather}
   We obtain
   \begin{gather}
@@ -799,8 +799,8 @@
       \For{$i=1,\dots,n$}
       \State $\alpha \gets a_{ji}$
       \State $\beta \gets a_{ki}$
-      \State $a_{ji} \gets c\alpha+s\beta$
-      \State $a_{ki} \gets -\overline{s}\alpha+c\beta$
+      \State $a_{ji} \gets c\alpha-s\beta$
+      \State $a_{ki} \gets \overline{s}\alpha+c\beta$
       \EndFor
     \end{algorithmic}
   \end{minipage}
@@ -810,8 +810,8 @@
       \For{$i=1,\dots,n$}
       \State $\alpha \gets a_{ij}$
       \State $\beta \gets a_{ik}$
-      \State $a_{ij} \gets c\alpha+\overline{s}\beta$
-      \State $a_{ik} \gets -s\alpha+c\beta$
+      \State $a_{ij} \gets c\alpha-\overline{s}\beta$
+      \State $a_{ik} \gets s\alpha+c\beta$
       \EndFor
     \end{algorithmic}
   \end{minipage}
