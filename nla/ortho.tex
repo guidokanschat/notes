@@ -328,25 +328,27 @@
 \end{Lemma}
 
 \begin{proof}
-  The statement of the lemma says that for a suitable vector $\vw$ there is a complex number
-  $\alpha$ such that $\matq_{\vw} \vx = \alpha \ve_1$. Since
-  $\matq_{\vw}$ preserves the Euclidean norm, we already know
+  The statement of the lemma says that for a suitable vector $\vw$
+  there is a complex number $\alpha$ such that
+  $\matq_{\vw} \vx = -\alpha \ve_1$, where the sign is chosen for
+  later convenience. Since $\matq_{\vw}$ preserves the Euclidean norm,
+  we already know
   \begin{gather}
     \abs{\alpha} = \norm{\vx}_2.
   \end{gather}
   We now construct the vector $\vw$. First, we want to achieve
   \begin{gather}
     \label{eq:ortho:householder:2}
-    \alpha\ve_1 = \matq_{\vw} \vx
+    -\alpha\ve_1 = \matq_{\vw} \vx
     = \vx - 2 \frac{\vw\vw^*\vx}{\vw^*\vw}
     = \vx - 2 \frac{\vw^*\vx}{\vw^*\vw}\vw.
   \end{gather}
-  Thus, $\vw$ must be in the span of $\vx-\alpha \ve_1$. Since we divide by
+  Thus, $\vw$ must be in the span of $\vx+\alpha \ve_1$. Since we divide by
   its norm, its length does not matter and we let for some angle $\phi$
   \begin{gather}
     \vw_\phi =
     \begin{pmatrix}
-      x_1 - e^{i\phi} \norm{\vx}_2\\x_2\\\vdots\\x_n
+      x_1 + e^{i\phi} \norm{\vx}_2\\x_2\\\vdots\\x_n
     \end{pmatrix}.
   \end{gather}
   If we compare the leftmost and rightmost terms
@@ -362,8 +364,8 @@
   $\phi$ is the phase of the complex number $x_1$ or of $-x_1$.
 
   Since the computation of the first component of $\vw_\phi$ is prone
-  to loss of significance, we choose $\phi$ as the phase of $-x_1$. In
-  the real case, this simplifies to $e^{i\phi} = -1$.
+  to loss of significance, we choose $\phi$ as the phase of $x_1$. In
+  the real case, this simplifies to $e^{i\phi} = 1$.
 \end{proof}
 
 
