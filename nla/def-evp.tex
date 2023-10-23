@@ -121,7 +121,7 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
 \end{proof}
 
 \begin{Theorem}{invariant-eigenvalues}
-  For $\lambda_i\sigma(\mata)$ with algebraic multiplicity $m_i$, the
+  For $\lambda_i\in \sigma(\mata)$ with algebraic multiplicity $m_i$, the
   nullspace $V_i$ of $(\mata-\lambda_i\id)^{m_i}$ is an invariant subspace
   of $\C^n$. There holds
   \begin{gather}
@@ -160,6 +160,15 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
   All eigenvalues of a Hermitian matrix are real.
 \end{Lemma}
 
+\begin{proof}
+  There holds
+  \begin{gather}
+    \lambda\scal(\vv,\vv) = \scal(\lambda \vv,\vv) = \scal(\mata \vv,\vv)
+    = \scal(\vv,\mata\vv) = \scal(\vv,\lambda\vv) = \overline\lambda\scal(\vv,\vv).
+  \end{gather}
+  Hence, $\lambda=\overline\lambda$.
+\end{proof}
+
 \begin{Theorem*}{Hermitian-diagonalizable}{Spectral theorem for Hermitian matrices}
   A Hermitian matrix $\mata\in\C^{n\times n}$ is diagonalizable with
   an orthogonal basis of eigenvectors and real eigenvalues. That is,
@@ -170,8 +179,44 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
   \end{gather}
 \end{Theorem*}
 
-%\begin{proof}
-%\end{proof}
+\begin{proof}
+  We prove the theorem by induction over $n$. For $n = 1$, the statement is obvious.
+
+  Now, let $n>1$. Every matrix has at least one eigenpair, say
+  $(\lambda_n,\vq_n)$ with real $\lambda_n$. Now introduce the space $W\subset \C^n$
+  orthogonal to $\vq_n$. For any $\vw\in W$, there holds
+  \begin{gather}
+    \scal(\vq_n,\mata\vw) = \scal(\mata\vq_n,\vw) = \lambda_n\scal(\vq_n,\vw) = 0.
+  \end{gather}
+  Hence, $W$ is an invariant subspace with respect to $\mata$. With an
+  orthonormal basis $\vw_1,\dots,\vw_{n-1}$ for $W$, we can introduce
+  an orthonormal basis $\widetilde Q = \vw_1,\dots,\vw_{n-1},\vq_n$, such that
+  \begin{gather}
+    \widetilde \matq^* \mata \widetilde \matq =
+    \begin{pmatrix}
+      \widetilde A & 0 \\ 0 & \lambda_n
+    \end{pmatrix}.
+  \end{gather}
+  Since $\widetilde A$ is of dimension $n-1$, we can use the induction
+  argument to deduce that there is an orthonormal basis
+  $\vq_1,\dots,\vq_{n-1}\in\C^{n-1}$ which converts it to a diagonal matrix with
+  real eigenvalues. Introducing $\matq_{n-1} = \vq_1,\dots,\vq_{n-1}$, we obtain
+  \begin{gather}
+    \begin{pmatrix}
+      \lambda_1&&\\
+      &\ddots&\\
+      &&\lambda_n
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      1 &\\ &\matq_{n-1}
+    \end{pmatrix}^*
+    \widetilde \matq^* A \widetilde \matq
+    \begin{pmatrix}
+      1 &\\ &\matq_{n-1}
+    \end{pmatrix}
+  \end{gather}
+\end{proof}
 
 \begin{Corollary}{symmetric-diagonalizable}
   A symmetric matrix $\mata\in\R^{n\times n}$ is diagonalizable with
