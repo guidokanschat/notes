@@ -32,10 +32,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{QR Factorization}
-\frame{\sectoc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Gram-Schmidt algorithm}
+\frame{\sectoc}
+
 \frame {\input {blocks/Algorithm-gram-schmidt.tex}
   \input {blocks/Theorem-gram-schmidt.tex}}
 
@@ -49,7 +50,10 @@
 \frame {\input {blocks/Lemma-qr-columns.tex}
   \input {blocks/Theorem-qr-existence.tex}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Householder reflection}
+\frame{\subtoc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \frame {\input {blocks/Definition-householder-transformation.tex}}
 \frame {\input {blocks/Lemma-householder-symmetry.tex}}
@@ -59,11 +63,18 @@
 \frame {\input {blocks/Algorithm-householder-multiplication.tex}}
 \frame {\input {blocks/Problem-householder-product.tex}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Givens rotation}
+\frame{\subtoc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \frame {\input {blocks/Definition-givens.tex}}
 \frame {\input {blocks/Lemma-givens-computation.tex}}
+\frame {\input {blocks/Notation-givens-specific.tex}}
+\frame {\input {blocks/Algorithm-givens-computation.tex}}
 \frame {\input {blocks/Definition-givens-complex.tex}}
 \frame {\input {blocks/Lemma-givens-computation-complex.tex}}
+\frame {\input {blocks/Lemma-givens-computation-complex-2.tex}}
 \frame {\input {blocks/Algorithm-givens-multiplication.tex}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -72,7 +83,6 @@
 \frame{\sectoc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \subsection{Mathematical background}
 \subsubsection{Definition of EVP}
 \frame{\subsubtoc}
@@ -85,6 +95,10 @@
   \input {blocks/Definition-eigenvalue-simple.tex}}
 \frame {\input {blocks/Definition-right-left-ev.tex}
 \input {blocks/Lemma-eigenvalues-conjugate.tex}}
+\frame {\input {blocks/Definition-invariant-subspace.tex}}
+\frame {\input {blocks/Theorem-invariant-eigenvalues.tex}}
+\frame {\input {blocks/Definition-spectral-projector.tex}}
+\frame {\input {blocks/Definition-dominant_ev.tex}}
 
 \subsubsection{Bases and matrices}
 \frame{\subsubtoc}
@@ -113,8 +127,10 @@
 \input {blocks/Corollary-symmetric-diagonalizable.tex}}
 \frame {\input {blocks/Theorem-normal-diagonalizable.tex}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Well-posedness and bounds}
 \frame{\subtoc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Bounds on eigenvalues}
 \frame {\input {blocks/Definition-matrix-norm.tex}}
 \frame {\input {blocks/Lemma-bound-by-norm.tex}}
@@ -139,15 +155,17 @@
   \pause
   \input {blocks/Remark-conditioning-eigenvectors.tex}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Vector iterations}
 \frame{\subtoc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame {\input {blocks/Algorithm-vector-iteration.tex}}
 \frame {\input {blocks/Theorem-vector-iteration.tex}}
 \frame {\input {blocks/Remark-vector-iteration.tex}}
 \frame {\input {blocks/Lemma-Rayleigh-approximation.tex}}
 \frame {\input {blocks/Algorithm-shifted-vector-iteration.tex}}
-\frame {\input {blocks/Algorithm-inverse-iteration.tex}}
-\frame {\input {blocks/Algorithm-Rayleigh-iteration.tex}}
+% \frame {\input {blocks/Algorithm-inverse-iteration.tex}}
+% \frame {\input {blocks/Algorithm-Rayleigh-iteration.tex}}
 
 \subsection{Subspace iterations, the QR-iteration}
 \frame{\subtoc}

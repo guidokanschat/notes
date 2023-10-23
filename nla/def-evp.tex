@@ -100,7 +100,6 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
   \begin{gather*}
     \vu^T \mata = \lambda \vu^T.
   \end{gather*}
-
 \end{Definition}
 
 \begin{Lemma}{eigenvalues-conjugate}
@@ -121,7 +120,30 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
   Thus, the eigenvalues of $\mata$ and of $\mata^T$ coincide.
 \end{proof}
 
+\begin{Theorem}{invariant-eigenvalues}
+  For $\lambda_i\sigma(\mata)$ with algebraic multiplicity $m_i$, the
+  nullspace $V_i$ of $(\mata-\lambda_i\id)^{m_i}$ is an invariant subspace
+  of $\C^n$. There holds
+  \begin{gather}
+    \C^n = \bigoplus_{i} V_i,
+  \end{gather}
+  where the sum is over all distinct eigenvalues.
+\end{Theorem}
+
+\begin{Definition}{spectral-projector}
+  Let $\vv_1,\dots,\vv_n$ be a basis of $\C^n$ observing the invariant
+  subspace structure of t he previous theorem. Let in particular
+  $\vv_{j_{i_1}},\dots,\vv_{j_{i_{m_i}}}$ be the basis vectors spanning
+  $V_i$. Then, the \define{spectral projector} of a vector $\vv = \sum \alpha_j \vv_j$ to
+  $V_i$ is defined by:
+  \begin{gather}
+    \Pi_i \vv = \sum_{k=1}^{m_i} \alpha_{j_{i_k}} \vv_{j_{i_k}}.
+  \end{gather}
+\end{Definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Normal and Hermitian matrices}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{Definition}{normal-Hermitian}
   A matrix $\mata\in\C^{n\times n}$ is called \define{normal} if there holds

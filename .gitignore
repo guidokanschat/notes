@@ -17,6 +17,7 @@ png
 *-blx.bib
 *.bcf
 *.run.xml
+*.synctex.gz
 main-blx.bib
 *.bbl
 comment.cut

@@ -42,6 +42,23 @@
   We also use the notation $a_{i:j,k:l}$ instead.
 \end{Notation}
 
+\begin{Definition}{invariant-subspace}
+  An \define{invariant subspace} $V\subset\C^n$ for the matrix
+  $\mata\in\Cnn$ is defined by the property
+  \begin{gather}
+    \mata\vv \in V \qquad \forall\;\vv\in V,
+  \end{gather}
+  or equivalently $\mata V \subseteq V$.
+  For a matrix with the block structure
+  \begin{gather}
+    \begin{pmatrix}
+      \mata & \matb\\ 0 & \matc,
+    \end{pmatrix}
+  \end{gather}
+  where $\mata\in\C^{k\times k}$ and $\matc\in\C^{(n-k)\times (n-k)}$,
+  the vectors $\ve_{k+1},\dots,\ve_{n}$ span an invariant subspace.
+\end{Definition}
+
 \begin{Lemma*}{change-of-basis}{Change of basis}
   Let $\matv = (\vv_1,\dots, \vv_n)$ and $\matw = (\vw_1,\dots, \vw_n)$ be
   bases of $\C^n$. Let $\vu\in \C^n$ be given by coefficient vectors
