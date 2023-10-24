@@ -335,7 +335,7 @@
   \end{gather}
   We now construct the vector $\vw$. First, we want to achieve
   \begin{gather}
-    \label{eq:ortho:householder:1}
+    \label{eq:ortho:householder:2}
     \alpha\ve_1 = \matq_{\vw} \vx
     = \vx - 2 \frac{\vw\vw^*\vx}{\vw^*\vw}
     = \vx - 2 \frac{\vw^*\vx}{\vw^*\vw}\vw.
@@ -349,7 +349,7 @@
     \end{pmatrix}.
   \end{gather}
   If we compare the leftmost and rightmost terms
-  in~\eqref{eq:ortho:householder:1}, we see that the quotient of inner
+  in~\eqref{eq:ortho:householder:2}, we see that the quotient of inner
   products must be equal to $\nicefrac12$ such that $x_2,\dots,x_n$
   are canceled. Since
   \begin{align}
@@ -425,10 +425,18 @@
 \end{intro}
 
 \begin{Problem}{householder-compute}
-  Write a function \textsc{householder\_compute} which takes a vector
-  $\vx$, replaces $\vx(2:)$ by the Householder vector $\vw(2:0)$
-  according to the discussion in
-  section~\ref{intro:ortho:householder-storage}, and returns $\beta$.
+  \begin{enumerate}
+  \item Write a function \textsc{householder\_compute} which takes a
+    vector $\vx$, replaces $\vx(2:)$ by the Householder vector
+    $\vw(2:)$ according to the discussion in
+    section~\ref{intro:ortho:householder-storage}, and returns
+    $\beta$.
+
+  \item Apply the function to the vector $\vx=(10,9,8,7,6,5,4,3,2,1)^T$.
+  \item Test this function by implementing
+    \slideref{Algorithm}{householder-multiplication} and applying the
+    multiplication to the vector $\vx$.
+  \end{enumerate}
 \end{Problem}
 
 \begin{Algorithm}{householder-multiplication}
