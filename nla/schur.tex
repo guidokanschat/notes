@@ -1,0 +1,86 @@
+\begin{Theorem*}{schur-canonical}{Schur canonical form}
+  For every matrix $\mata\in\Cnn$ there exists a unitary matrix
+  $\matq\in\Cnn$ and an upper triangular matrix $\matr\in\Cnn$ such
+  that
+  \begin{gather}
+    \mata = \matq \matr \matq^*.
+  \end{gather}
+  The diagonal entries of $\matr$ are the eigenvalues of $A$. The
+  column vectors of $\matq$ are called \define{Schur vectors}.
+\end{Theorem*}
+
+\begin{proof}
+    We prove the theorem by induction over $n$. For $n = 1$, the statement is obvious.
+
+    Now, let $n>1$. Every matrix has at least one eigenpair, say
+    $(\lambda_1,\vq_1)$. We complete $\vq_n$ to an orthonormal basis
+    $\matx = (\vq_1,\vw_1,\dots,\vw_{n-1,})$ of $\C^n$.  Since
+    $\mata\matq_1 = \lambda_1\matq_1$, there holds
+  \begin{gather}
+    \matx^* \mata \matx =
+    \begin{pmatrix}
+      \lambda_1 & \widetilde\va \\
+      0 & \widetilde A
+    \end{pmatrix},
+  \end{gather}
+  with a vector $\widetilde\va\in\C^{n-1}$.  Since $\widetilde A$ is
+  of dimension $n-1$, we can use the induction argument to deduce that
+  there is an orthonormal basis $\vq_1,\dots,\vq_{n-1}\in\C^{n-1}$
+  which transforms it by similarity to an upper triangular
+  matrix. Introducing $\widetilde \matq = \vq_1,\dots,\vq_{n-1}$, we obtain
+  \begin{gather}
+    \begin{pmatrix}
+      \lambda_1& *& *\\
+      &\ddots& * \\
+      &&\lambda_n
+    \end{pmatrix}
+    = \matq^*\mata\matq,
+    \qquad\text{with}\qquad
+    \matq = \matx
+    \begin{pmatrix}
+      1 &\\ &\widetilde \matq
+    \end{pmatrix}
+  \end{gather}
+  Since $\matx$ and and $\widetilde \matq$ are unitary, so is $\matq$, such
+  that we have proven that there is a unitary similarity
+  transformation to an upper triangular matrix.
+
+  The eigenvalues of a triangular matrix are necessarily its diagonal
+  elements. Therefore, $\lambda_1,\dots,\lambda_n$ are indeed the
+  eigenvalues of $\mata$. Note though that the columns of $\matq$ are
+  not necessarily its eigenvectors!
+\end{proof}
+
+\begin{Lemma}{schur-canonical-1}
+  For any $k\le n$ the span of the Schur vectors
+  $\vq_1,\dots,\vq_k$ is invariant under the action of $\mata$.
+
+  For $\matq_k = (\vq_1\dots\vq_k)$ and $\matr_k$ the upper left $k\times k$ block of $\matr$, there holds
+  \begin{gather}
+    \mata\matq_k = \matq_k \matr_k.
+  \end{gather}
+\end{Lemma}
+
+\begin{Lemma}{schur-canonical-2}
+  The Schur vectors depend on the order chosen for the eigenvalues,
+  and in case of geometric multiplicity, the eigenvectors,
+  respectively. They are determined up to factors $e^{i\phi}$
+\end{Lemma}
+
+\begin{Definition}{dominant-invariant-subspace}
+  Let $\mata\in\Cnn$ be a matrix with Schur decomposition
+  $\mata = \matq^*\matr\matq$ where the eigenvalues are such that
+  \begin{gather}
+    \abs{\lambda_1}\ge\abs{\lambda_2}\ge\dots\ge\abs{\lambda_n}.
+  \end{gather}
+  If $\abs{\lambda_r}>\abs{\lambda_{r+1}}$, we define the
+  \define{dominant invariant subspace} of dimension $r$ as
+  \begin{gather}
+    D_r(\mata) = \spann{\vq_1,\dots,\vq_r}.
+  \end{gather}
+\end{Definition}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

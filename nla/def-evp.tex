@@ -142,6 +142,11 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
 \end{Definition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Schur canonical form}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{schur}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Normal and Hermitian matrices}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -175,7 +180,7 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
   there is a real, diagonal matrix $\matlambda$ and a unitary matrix
   $\matq$ such that
   \begin{gather}
-    \mata = \matq^T \matlambda\matq.
+    \mata = \matq \matlambda\matq^T.
   \end{gather}
 \end{Theorem*}
 
@@ -223,17 +228,42 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
   an orthogonal basis of eigenvectors and real eigenvalues.
 \end{Corollary}
 
+\begin{Lemma}{normal-properties}
+  If the matrix $\mata\in\Cnn$ is normal, then the matrix
+  $\matq^*\mata\matq$ is normal for any unitary matrix $\matq\in\Cnn$.
+
+  Any diagonal matrix is normal.
+
+  Any triangular matrix, which is normal, is diagonal.
+\end{Lemma}
+
+\begin{proof}
+  For the first statement, we observe that
+  \begin{multline}
+    (\matq^*\mata\matq)^* \matq^*\mata\matq
+    = \matq^*\mata^*\matq\matq^*\mata\matq
+    = \matq^*\mata^*\mata\matq\\
+    = \matq^*\mata\mata^*\matq
+    = \matq^*\mata\matq\matq^*\mata^*\matq 
+    = \matq^*\mata\matq(\matq^*\mata\matq)^*. 
+  \end{multline}
+
+  The second statement is obvious.
+\end{proof}
+
 \begin{Theorem*}{normal-diagonalizable}{Spectral theorem for normal matrices}
   A matrix $\mata\in\C^{n\times n}$ is normal if and only if it is diagonalizable by a unitary matrix.
 
   It is normal if and only if there exists an orthonormal basis of eigenvectors.
+
+  For normal matrices, Schur canonical form and Jordan canonical form coincide.
 \end{Theorem*}
 
-\begin{todo}
-  GM: Proof Missing?
-\end{todo}
 \begin{proof}
-
+  Let $\mata = \matq\matr\matq^*$ be the Schur canonical form of
+  $\mata$. Since $\mata$ is orthogonally similar to $\matr$, the
+  latter is normal as well. Hence, it is diagonal, which implies that
+  $\matq$ diagonalizes $\mata$.
 \end{proof}
 
 
