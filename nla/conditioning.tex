@@ -1,4 +1,13 @@
-\subsection{Bounds on eigenvalues}
+\subsection{Conditioning of the eigenvalue problem}
+
+In this section, we study the conditioning of finding eigenvalues and
+eigenvectors. While we will not cover the full theory, we will provide
+examples for ill-posed problems as well as exemplary proofs for
+well-posedness.
+
+In all cases, we will investigate the change of eigenvalues or
+eigenvectors when the matrix $\mata$ is perturbed by a small matrix
+$\mate$ of norm $\epsilon$.
 
 \begin{Lemma}{bound-by-norm}
   Let $\norm{\cdot}$ be a vector norm and denote by the same symbol
@@ -16,69 +25,35 @@
   $\lambda\in\sigma(\mata)$ such that $\lambda\not\in\sigma(\matb)$
   there holds
   \begin{gather}
-    \norm*{(\lambda\id-\matb)^{-1}(A-B)} \ge 1.
+    \norm*{(\lambda\id-\matb)^{-1}(\mata-\matb)} \ge 1.
   \end{gather}
 \end{Lemma}
 
-
-\begin{Theorem*}{gershgorin}{Gershgorin circle theorem}
-  All eigenvalues of a matrix $\mata\in\Cnn$ are contained in the
-  union of the \define{Gershgorin Circle}s
+\begin{proof}
+  Let $(\lambda,\vv)$ be an eigenpair of $\mata$. Then,
   \begin{gather}
-    G_j = \left\{ z\in \C \middle| \abs{z-a_{jj}} \le \sum_{k\neq j} \abs{a_{jk}}\right\}.
+    (\mata-\matb)\vv = (\lambda\id-\matb) \vv.
   \end{gather}
-  Furthermore, if there is a subset of $m$ circles disjoint from the
-  other circles, then this subset contains $m$ eigenvalues.
-\end{Theorem*}
-
-\subsection{The Rayleigh quotient}
-
-\begin{Definition}{rayleigh-quotient}
-  For a matrix $\mata\in\Cnn$ and a vector $\vx\in\C^n$, the
-  \define{Rayleigh quotient} is defined as
+  If $\lambda$ is not an eigenvalue of $\matb$, the second matrix is invertible and there holds
   \begin{gather}
-    R_\mata(\vx) = \frac{\scal(\mata\vx,\vx)}{\scal(\vx,\vx)}.
+    (\lambda\id-\matb)^{-1}(\mata-\matb)\vv = \vv.
   \end{gather}
-\end{Definition}
-
-\begin{Theorem*}{minmax}{Courant-Fischer min-max theorem}
-  Let $\mata\in\Cnn$ be Hermitian with eigenvalues
-  $\lambda_1 \le \lambda_2\le\dots\le \lambda_n$. Then, for $k=1,\dots,n$
-  \begin{align}
-    \lambda_k
-    &= \min_{\substack{V \subset \C^n\\\dim V = k}} \max_{\vx\in V} R_\mata(\vx),\\
-    &= \max_{\substack{V \subset \C^n\\\dim V = n-k+1}} \min_{\vx\in V} R_\mata(\vx).
-  \end{align}
-  In particular,
-  \begin{gather}
-    \lambda_{\min}(\mata) = \min_{\vx\in\C^n} R_\mata(\vx),
-    \qquad
-    \lambda_{\max}(\mata) = \max_{\vx\in\C^n} R_\mata(\vx).
-  \end{gather}
-\end{Theorem*}
-
-\subsection{Conditioning of the eigenvalue problem}
-
-In this section, we study the conditioning of finding eigenvalues and
-eigenvectors. While we will not cover the full theory, we will provide
-examples for ill-posed problems as well as exemplary proofs for
-well-posedness.
-
-In all cases, we will investigate the change of eigenvalues or
-eigenvectors when the matrix $\mata$ is perturbed by a small matrix
-$\mate$ of norm $\epsilon$.
+  Hence, we use the definition of an operator norm to obtain conclude
+  that the norm of the matrix on the left must be not less than one.
+\end{proof}
 
 \begin{Definition}{conditioning-eigenvalue}
-  Let $\mata\in\Cnn$ and let $\mata+\mate$ be a small perturbation of $\mata$. Then, we define the \define{absolute conditioning}\index{conditioning!absolute} of the eigenvalue problem as follows: let $\mu$ be an eigenvalue of $\mata+\mate$, then, there is an eigenvalue $\lambda$ of $\mata$ and a constant $C_{\text{abs}}$ called \define{condition number}, such that
+  Let $\mata\in\Cnn$ and let $\mata+\mate$ be a perturbation of $\mata$. Then, we define the \define{absolute conditioning}\index{conditioning!absolute} of the eigenvalue problem as follows: let $\mu$ be an eigenvalue of $\mata+\mate$, then, there is an eigenvalue $\lambda$ of $\mata$ and a constant $C_{\text{abs}}$ called \define{condition number}, such that
   \begin{gather*}
     \abs{\lambda-\mu} \le C_{\text{abs}} \norm{E},
   \end{gather*}
-  for a suitable matrix norm. The \define{relative conditioning}\index{conditioning!relative} is defined by
-  the estimate
-  \begin{gather*}
-    \frac{\abs{\lambda-\mu}}{\lambda}
-    \le C_{\text{rel}} \frac{\norm{E}}{\norm{A}}.
-  \end{gather*}
+  for a suitable matrix norm.
+  %The \define{relative conditioning}\index{conditioning!relative} is defined by
+  %the estimate
+  %\begin{gather*}
+  %  \frac{\abs{\lambda-\mu}}{\lambda}
+  %  \le C_{\text{rel}} \frac{\norm{E}}{\norm{A}}.
+  %\end{gather*}
 \end{Definition}
 
 \begin{Example}{characteristic-polynomial}
@@ -123,7 +98,7 @@ $\mate$ of norm $\epsilon$.
 
   For $\epsilon>0$, it has $n$ simple eigenvalues
   \begin{gather}
-      \lambda_j = \sqrt[n]{\epsilon} \,e^{2\frac jni\pi}
+      \lambda_j = \sqrt[n]{\epsilon} \,e^{2\frac jni\pi}.
   \end{gather}
 \end{Example}
 
@@ -196,7 +171,23 @@ $\mate$ of norm $\epsilon$.
 \end{Theorem*}
 
 \begin{proof}
-  Wikipedia
+  We rewrite the eigenvalue equations $\mata\vv_i = \lambda_i \vv_i$ in matrix form
+  \begin{gather}
+    \mata\matv = \matv \matlambda.
+  \end{gather}
+  Without loss of generality, we assume $\mu \not\in\sigma(\mata)$. Therefore,
+  \begin{align}
+    \norm{(\mu\id-\mata)^{-1}}_2
+    &= \norm{\matv(\mu\id-\mata)^{-1}\matv^{-1})}_2\\
+    & \le \norm{\matv}_2\norm{(\lambda\id-\matlambda)^{-1}}\norm{\matv^{-1}}_2\\
+    &\le \cond_2(\matv) \max_i{\abs{\mu-\lambda_i}^{-1}}.
+  \end{align}
+  Using \slideref{Lemma}{pre-gershgorin}, we conclude
+  \begin{align}
+    \min\abs{\mu-\lambda_i}
+    &\le \cond_2(\matv) \frac1{\norm{(\mu\id-\mata)^{-1}}_2} \norm{(\mu\id-\mata)^{-1}\mate}\\
+    & \le \cond_2(\matv)\norm{\mate}_2.
+  \end{align}
 \end{proof}
 
 \begin{Corollary}{conditioning-eigenvalues-normal}
@@ -230,17 +221,23 @@ the issue.
   \end{gather}
 \end{Theorem}
 
-\begin{Problem}{almost-parallel}
-  Consider the matrix 
-  \begin{gather} 
-    M = 
-    \begin{pmatrix}
-      \eta & 1\\  \eta &\eta
-    \end{pmatrix}
-   \end{gather}
-   with $|\eta| << 1$.\\
-  Explain why the problem of finding eigenvectors is \textit{not} well-posed in this example.
-\end{Problem}
+\begin{Theorem}{eigenvalues-continuous}
+  Let $\mata,\matb\in\Cnn$. Let $\matc(t) = \mata + t \matb$. Then,
+  the spectrum of $\matc(t)$ depends continuously on $t$.
+\end{Theorem}
+
+\begin{proof}
+  The proof relies on another theorem that the set of roots of a polynomial $p_t(x)$ of the form
+  \begin{gather}
+    p_t(x) = a_0(t) + a_1(t) x + \dots + a_n(t) x^n,
+  \end{gather}
+  with continuous coefficient functions $a_i(t)$ depends continuously on $t$.
+
+  If we are willing to make the assumption that the matrices
+  $\matc(t)$ are diagonalizable for any $t$ with a uniform bound on
+  the condition number of the transformation matrix $\matv(t)$, this
+  result is a consequence of the Bauer-Fike theorem.
+\end{proof}
 
 \subsection{Conditioning of eigenvectors and eigenspaces}
 
@@ -278,6 +275,59 @@ the issue.
   Conditioning of the eigenvector problem depends on the separation of
   eigenvalues.
 \end{Remark}
+
+\begin{Problem}{almost-parallel}
+  Consider the matrix 
+  \begin{gather} 
+    M = 
+    \begin{pmatrix}
+      \eta & 1\\  \eta &\eta
+    \end{pmatrix}
+   \end{gather}
+   with $|\eta| << 1$.\\
+  Explain why the problem of finding eigenvectors is \textit{not} well-posed in this example.
+\end{Problem}
+
+
+\subsection{Bounds on eigenvalues}
+
+
+\begin{Theorem*}{gershgorin}{Gershgorin circle theorem}
+  All eigenvalues of a matrix $\mata\in\Cnn$ are contained in the
+  union of the \define{Gershgorin Circle}s
+  \begin{gather}
+    G_j = \left\{ z\in \C \middle| \abs{z-a_{jj}} \le \sum_{k\neq j} \abs{a_{jk}}\right\}.
+  \end{gather}
+  Furthermore, if there is a subset of $m$ circles disjoint from the
+  other circles, then this subset contains $m$ eigenvalues.
+\end{Theorem*}
+
+\subsection{The Rayleigh quotient}
+
+\begin{Definition}{rayleigh-quotient}
+  For a matrix $\mata\in\Cnn$ and a vector $\vx\in\C^n$, the
+  \define{Rayleigh quotient} is defined as
+  \begin{gather}
+    R_\mata(\vx) = \frac{\scal(\mata\vx,\vx)}{\scal(\vx,\vx)}.
+  \end{gather}
+\end{Definition}
+
+\begin{Theorem*}{minmax}{Courant-Fischer min-max theorem}
+  Let $\mata\in\Cnn$ be Hermitian with eigenvalues
+  $\lambda_1 \le \lambda_2\le\dots\le \lambda_n$. Then, for $k=1,\dots,n$
+  \begin{align}
+    \lambda_k
+    &= \min_{\substack{V \subset \C^n\\\dim V = k}} \max_{\vx\in V} R_\mata(\vx),\\
+    &= \max_{\substack{V \subset \C^n\\\dim V = n-k+1}} \min_{\vx\in V} R_\mata(\vx).
+  \end{align}
+  In particular,
+  \begin{gather}
+    \lambda_{\min}(\mata) = \min_{\vx\in\C^n} R_\mata(\vx),
+    \qquad
+    \lambda_{\max}(\mata) = \max_{\vx\in\C^n} R_\mata(\vx).
+  \end{gather}
+\end{Theorem*}
+
 
 %%% Local Variables:
 %%% mode: latex

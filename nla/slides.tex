@@ -143,29 +143,34 @@
 \subsection{Well-posedness and bounds}
 \frame{\subtoc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Bounds on eigenvalues}
+\subsubsection{Conditioning of the EVP}
+
 \frame {\input {blocks/Definition-matrix-norm.tex}}
 \frame {\input {blocks/Lemma-bound-by-norm.tex}}
 \frame {\input {blocks/Lemma-pre-gershgorin.tex}}
+
+\frame {\input {blocks/Definition-conditioning-eigenvalue.tex}}
+\frame {\input {blocks/Example-characteristic-polynomial.tex}}
+\frame {\input {blocks/Example-conditioning-Jordan-block.tex}}
+\frame {\input {blocks/Theorem-Jordan-block-ill-conditioned.tex}}
+\frame {\input {blocks/Theorem-bauer-fike.tex}
+  \only<1>{\input {blocks/Definition-matrix-condition.tex}}
+  \only<2>{\input {blocks/Corollary-conditioning-eigenvalues-normal.tex}}}
+\frame {\input {blocks/Theorem-conditioning-eigenvalue-single.tex}}
+\frame {\input {blocks/Theorem-eigenvalues-continuous.tex}}
+
+\subsubsection{Conditioning of eigenvectors}
+
+\frame {\input {blocks/Example-conditioning-eigenvectors.tex}
+  \pause
+  \input {blocks/Remark-conditioning-eigenvectors.tex}}
+
+\subsubsection{Bounds on eigenvalues}
 \frame {\input {blocks/Theorem-gershgorin.tex}}
 \subsubsection{The Rayleigh quotient}
 \frame {\input {blocks/Definition-rayleigh-quotient.tex}}
 \frame {\input {blocks/Theorem-minmax.tex}}
 
-\subsubsection{Conditioning of the EVP}
-
-\frame {\input {blocks/Definition-conditioning-eigenvalue.tex}}
-\frame {\input {blocks/Example-characteristic-polynomial.tex}}
-\frame {\input {blocks/Example-conditioning-Jordan-block.tex}
-  \input {blocks/Theorem-Jordan-block-ill-conditioned.tex}}
-\frame {\input {blocks/Theorem-bauer-fike.tex}
-  \only<1>{\input {blocks/Definition-matrix-condition.tex}}
-  \only<2>{\input {blocks/Corollary-conditioning-eigenvalues-normal.tex}}}
-\frame {\input {blocks/Theorem-conditioning-eigenvalue-single.tex}}
-
-\frame {\input {blocks/Example-conditioning-eigenvectors.tex}
-  \pause
-  \input {blocks/Remark-conditioning-eigenvectors.tex}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Vector iterations}
