@@ -266,7 +266,27 @@ corresponding eigenvector $\vv$ as \define{eigenpair}.
   $\matq$ diagonalizes $\mata$.
 \end{proof}
 
+\begin{Problem}{normal-triangular-diagonal}
+	Show that a normal triangular matrix is diagonal. \textit{Hint:}
+	look at the norms of $\mata \ve_i$ and $\mata^*\ve_i$.
+	% Add a hint to Lemma {normal-properties}?
+\end{Problem}
 
+\begin{Problem}{hermitian-unitary-operator}
+	Consider a Hermitian matrix $\mata\in\C^{n\times n}$ and a unitary
+	linear operator $\matq\in\C^m\to\C^n$, $m<n$. Prove, that an
+	eigenvalue $\lambda_k(\matb)$ of the matrix
+	$\matb=\matq^*\mata\matq\in\C^{m\times m}$ is either equal to 0,
+	or the following estimate holds
+	\begin{gather*}
+	\abs{\lambda_{\min}(\mata)}
+	\leq \abs{\lambda_{k}(\matb)}
+	\leq \abs{\lambda_{\max}(\mata)},
+	\end{gather*}
+	where $\lambda_{\min}(\mata)$ and $\lambda_{\max}(\mata)$ denote
+	the smallest and largest eigenvalues of $\mata$ measured by their
+	magnitude.
+\end{Problem}
 
 %%% Local Variables:
 %%% mode: latex
