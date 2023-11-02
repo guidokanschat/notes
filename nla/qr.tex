@@ -1,56 +1,6 @@
 \subsection{Definition of the methods}
 \begin{todo}
   GM:
-  How to write matrix columns?
-\end{todo}
-
-\begin{Algorithm*}{normal-subspace-iteration}{Subspace Iteration}
-  \begin{algorithmic}[1]
-    \Require $\mata\in\Cnn$, initial subspace $\mathbf{S}^{(0)}\in\C^{n \times m}$
-    \For{$k=0,\dots$ until convergence}
-    \State $\mathbf{S}^{(k+1)} \gets p(\mata) \mathbf{S}^{(k)}$
-    \EndFor
-    \State {$\lambda_i \approx \vq_{k_{\max},i}^* \mata \vq_{k_{\max},i},\qquad i=1,\dots,m$}\
-  \end{algorithmic}
-\end{Algorithm*}
-
-\begin{todo}
-  GM:
-  Does this get a convergence theorem
-\end{todo}
-\begin{todo}
-  GM:
-  Why not use the notation in the superscript here? \(q_{k,i}\) looks like an entry rather than a column. \\
-  Why use \(\lambda\) now and \(\alpha\) earlier?
-\end{todo}
-
-% \begin{Algorithm*}{subspace-iteration}{Orthogonal subspace iteration}
-%   Let $\mata\in\Cnn$, $\matx_0 \in \C^{n\times m}$.\\
-%   For $k=0,\ldots$ until convergence repeat
-%   \begin{itemize}
-%   \item $\matz_k = \mata \matx_k$.
-%   \item $\matx_{k+1}$ is orthonormalization of $\matz_k$
-%   \end{itemize}
-% \end{Algorithm*}
-
-\begin{todo}
-  GM:
-  Changed, I came across this as the simultaneous iteration
-\end{todo}
-\begin{Algorithm*}{subspace-iteration}{Orthogonal subspace iteration}
-  \begin{algorithmic}[1]
-    \Require $\mata\in\Cnn$ and choose $\mathbf{S}_0 \in \C^{n\times m}$.
-    \For {$k=1,\ldots$ until convergence}
-    \State $\matq_k\matr_k \gets \mathbf{S}_{k-1}$ \Comment{QR factorization}
-    \State $\mathbf{S}_{k} \gets p(\mata) \matq_{k}$
-    \EndFor
-    \State {$\lambda_i \approx \vq_{k_{\max},i}^* \mata \vq_{k_{\max},i},\qquad i=1,\dots,m$}\
-    \Comment{Rayleigh quotient}
-  \end{algorithmic}
-\end{Algorithm*}
-
-\begin{todo}
-  GM:
   Q converges because the QR decomposition is unique for matrices with l.i. columns correct? \\
   This does not work with the matrix polynomial.
 \end{todo}

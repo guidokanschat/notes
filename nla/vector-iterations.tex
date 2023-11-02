@@ -35,34 +35,29 @@
 	\end{enumerate}
 \end{Problem}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Simple iterations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{todo}
-  GM:
-  In this section it is inconsistent how the eigenvalue is computed for a given eigenvector. For the Power Method the
-  computation inside of the loop is confusing to me. Also the initial vector is not normalised, which is no problem but feels
-  inconsistent.
-\end{todo}
+\begin{intro}
+  The eigenspace of a dominant eigenvalue seems to get amplified
+  whenever we multiply with the matrix $\mata$. Hence, we should be a
+  able to approximate this eigenspace by a simple iteration.
+\end{intro}
 
 \begin{Algorithm*}{vector-iteration}{Vector iteration (power method)}
   \begin{algorithmic}[1]
-    \Require $\mata\in\Cnn$, initial vector $\vy^{(0)}\in\C^n$
-    \For{$k=0,\dots$ until convergence}
+    \Require $\mata\in\Cnn$, initial vector $\vv^{(0)}\in\C^n$ with $\norm{\vv}=1$
+    \For{$k=1,\dots$ until convergence}
+    \State $\vy^{(k)} \gets \mata \vv^{(k-1)}$
     \State $\vv^{(k)} = \frac{\vy^{(k)}}{\norm{\vy^{(k)}}}$
-    \State $\vy^{(k+1)} \gets \mata \vv^{(k)}$
+    \State $\alpha_k = \frac{\bigl(\vy^{(k)}\bigr)_i}{\bigl(\vv^{(k)}\bigr)_i}$ where $\abs*{\bigl(\vv^{(k)}\bigr)_i} = \norm*{\vv^{(k)}}_\infty $
     \EndFor
-    \State $\alpha = R_\mata(\vv^{(k_{\max})})$
 %    \State $\alpha = \frac{\vy^{(k_\max +1)}}{\vv^{(k_{\max})}_i}$
 %    where $\abs{\vv^{(k_{\max})}_i}$ is maximal
   \end{algorithmic}
 \end{Algorithm*}
 
-\begin{todo}
-  GM:
-  Fixed typo and
-  Used dominant eigenvalue instead of its definition
-  Maybe use argmax for i?
-\end{todo}
 \begin{Theorem}{vector-iteration}
   Let $\mata\in\Cnn$ be diagonalizable such that $\lambda_1$ is the
   unique dominant eigenvalue. Let furthermore the
@@ -81,6 +76,43 @@
     &\le \frac{\abs{\lambda_1}}{\abs{\lambda_2}} \norm{v^{(k)}-u_1}
   \end{align}
 \end{Theorem}
+
+\begin{remark}
+  The previous theorem actually holds eveon for matrices, which are
+  not diagonalizable, but then the proof becomes more involved. Since
+  we are not interested in eigenvalues, which are not semi-simple, we
+  decided for the simpler version.
+
+  The proof can be easily improved to cover the case that $\lambda_1$
+  is not a single eigenvalue. In exact arithmetic, there will be no
+  change of the result. When computing with floating point numbers,
+  there will be a small glitch. It is left to the reader to find it.
+\end{remark}
+
+\begin{remark}
+  The algorithm can be improved in several ways. First, we saw in the
+  proof that it generates a converging sequence of vectors. Threfore,
+  we can save the effort of computing eigenvalues inside the iteration
+  and postpone it until the end.
+
+  Second, if $\mata$ is a Hermitian matrix, the computation of the
+  eigenvalue can be improved by usig the Rayleigh quotient.
+
+  Using both statements, we obtain an optimized version of the vector
+  iteration.
+\end{remark}
+
+\begin{Algorithm*}{vector-iteration-rayleigh}{Power method (optimized)}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$ Hermitian, initial vector $\vv^{(0)}\in\C^n$ with $\norm{\vv}=1$
+    \For{$k=1,\dots$ until convergence}
+    \State $\vy^{(k)} \gets \mata \vv^{(k-1)}$
+    \State $\vv^{(k)} = \frac{\vy^{(k)}}{\norm{\vy^{(k)}}}$
+    \EndFor
+    \State $\lambda_1 \approx R_\mata(\vv^{(k_{\max})} = \scal(\mata\vv^{(k_{\max})},\vv^{(k_{\max})})$
+  \end{algorithmic}
+\end{Algorithm*}
+
 
 \begin{todo}
   GM:
@@ -128,11 +160,32 @@
   \[ \mathbf{p(A)} := \left( A - \varrho_1 \id \right) \dots \left( A - \rho_m\right).\]
 \end{Definition}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Subspace iterations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{intro}
+  
+\end{intro}
+
 \begin{todo}
   GM:
   Moved the inverse iteration back after the QR Iteration, and instead inserted the subspace iteration.\\
   Insert an exercise to show why the shifted matrix polynomial is required.
 \end{todo}
+
+\begin{Algorithm*}{subspace-iteration-polynomial}{Orthogonal subspace iteration}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$ and choose $\matx_0 \in \C^{n\times m}$.
+    \For {$k=1,\ldots$ until convergence}
+    \State $\matq_k\matr_k \gets \matx_{k-1}$ \Comment{QR factorization}
+    \State $\matx_{k} \gets p(\mata) \matq_{k}$
+    \EndFor
+    \State {$\lambda_i \approx \vq_{k_{\max},i}^* \mata \vq_{k_{\max},i},\qquad i=1,\dots,m$}\
+    \Comment{Rayleigh quotient}
+  \end{algorithmic}
+\end{Algorithm*}
+
 
 
 %%% Local Variables:

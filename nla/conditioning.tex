@@ -314,11 +314,11 @@ the issue.
 
 \begin{Theorem*}{minmax}{Courant-Fischer min-max theorem}
   Let $\mata\in\Cnn$ be Hermitian with eigenvalues
-  $\lambda_1 \le \lambda_2\le\dots\le \lambda_n$. Then, for $k=1,\dots,n$
+  $\lambda_1 \ge \lambda_2\ge\dots\ge \lambda_n$. Then, for $k=1,\dots,n$
   \begin{align}
     \lambda_k
-    &= \min_{\substack{V \subset \C^n\\\dim V = k}} \max_{\vx\in V} R_\mata(\vx),\\
-    &= \max_{\substack{V \subset \C^n\\\dim V = n-k+1}} \min_{\vx\in V} R_\mata(\vx).
+    &= \max_{\substack{V \subset \C^n\\\dim V = k}} \min_{\vx\in V} R_\mata(\vx),\\
+    &= \min_{\substack{V \subset \C^n\\\dim V = n-k+1}} \max_{\vx\in V} R_\mata(\vx).
   \end{align}
   In particular,
   \begin{gather}
@@ -328,6 +328,63 @@ the issue.
   \end{gather}
 \end{Theorem*}
 
+\begin{proof}
+  Since $\mata$ is Hermitian, we make use of the fact that there is an
+  orthonormal basis $\matq$ of eigenvectors such that
+  $\mata\vq_k = \lambda_k\vq_k$. Let
+  \begin{gather}
+    W_k = \spann{\vq_{k},\dots,\vq_{n}}
+  \end{gather}
+  be the space spanned by the last eiqenvectors and let
+  $V_k\subset\C^n$ an arbitrary subspace of dimension $k$. By
+  comparing dimensions, we see that for the intersection there holds
+  $W_k\cap V_k \neq \{0\}$. Any vector $\vv$ in this intersection can
+  be expressed as a linear combination
+  \begin{gather}
+    \vv = \alpha_k \vq_k + \dots + \alpha_n \vq_n.
+  \end{gather}
+  Hence,
+  \begin{gather}
+    \scal(\mata\vv,\vv)
+    = \lambda_k \abs{\alpha_k}^2 + \dots + \lambda_n \abs{\alpha_n}^2
+    \le \lambda_k \left(
+       \abs{\alpha_k}^2 + \dots +  \abs{\alpha_n}^2
+     \right)
+     = \lambda_k\norm{\vv}^2,
+   \end{gather}
+   where all norms are Euclidean. Thus, the minimum of the Rayleigh
+   quotient on the space $V_k$ is bounded from above by
+   $\lambda_k$. Since $V_k$ was chosen arbitrarily of dimension $k$,
+   we have
+   \begin{gather}
+     \max_{\substack{V \subset \C^n\\\dim V = k}} \min_{\vx\in V} R_\mata(\vx)
+     \le \lambda_k.
+   \end{gather}
+
+   It remains to show that the maximum is gerater or equal. To this
+   end, define a new subspace
+   \begin{gather}
+     X_k = \spann{\vq_1,\dots,\vq_k},
+   \end{gather}
+   which is a subspace of dimension $k$. For any
+   $\vx = \beta_1\vq_1+\dots+\beta_k\vq_k\in X_k$, there holds
+   \begin{gather}
+     \scal(\mata\vx,\vx)
+     = \lambda_1\abs{\beta_1}^2 + \dots + \lambda_k\abs{\beta_k}^2
+     \ge \lambda_k \norm{\vx}^2.
+   \end{gather}
+   Thus, we have proven the first characterization of $\lambda_k$. The
+   second is proven the same way by vonsidering the matrix $-\mata$.
+ \end{proof}
+
+ \begin{remark}
+   The eigenvalues in the Courant-Fischer theorem are not ordered by
+   their absolute values! This is possible, since they are real. The
+   theorem is wrong if formulated with absolute values.
+
+   In many sources, the eigenvalues in the Courant-Fischer theorem are
+   ordered the other way round.
+ \end{remark}
 
 %%% Local Variables:
 %%% mode: latex
