@@ -128,19 +128,15 @@
   as long as $\lambda_1$ is single and of largest modulus.
 \end{Remark}
 
-\begin{todo}
-  GM:
-  Fixed a Symbol
-\end{todo}
-\begin{Lemma}{Rayleigh-approximation}
-  Let $(\lambda,\vv)$ be an eigenpair of the Hermitian matrix
-  $\mata\in\Cnn$, and let $\vw\in\C^n$. Then, there is a constant $C$ depending only on the matrix $\mata$ such that there holds
-  \begin{gather}
-    \abs{R_\mata(\vw)-\lambda} \le C \norm{\vw-\vv}^2,
-  \end{gather}
-  where $R_\mata(\vw)$ is the \putindex{Rayleigh quotient} from
-  \slideref{Definition}{rayleigh-quotient}.
-\end{Lemma}
+% \begin{Lemma}{Rayleigh-approximation}
+%   Let $(\lambda,\vv)$ be an eigenpair of the Hermitian matrix
+%   $\mata\in\Cnn$, and let $\vw\in\C^n$. Then, there is a constant $C$ depending only on the matrix $\mata$ such that there holds
+%   \begin{gather}
+%     \abs{R_\mata(\vw)-\lambda} \le C \norm{\vw-\vv}^2,
+%   \end{gather}
+%   where $R_\mata(\vw)$ is the \putindex{Rayleigh quotient} from
+%   \slideref{Definition}{rayleigh-quotient}.
+% \end{Lemma}
 
 \begin{Algorithm*}{shifted-vector-iteration}{Shifted vector iteration}
   The vector iteration can be applied to the matrix $\mata-\sigma\id$
@@ -151,14 +147,24 @@
   eigenvector for this eigenvalue.
 \end{Algorithm*}
 
-\begin{todo}
-  GM: added the shifted matrix polynomial
-\end{todo}
 \begin{Definition}{shifted-matrix-polynomial}{Shifted Matrix Polynomial}
   Let \(\mata \in \C^{n \times n}\) be a square matrix.
-  The \define{matrix polynomial} of degree \(m\), with shift parameter \(\rho_1, \ldots, \rho_m\) is defined by
-  \[ \mathbf{p(A)} := \left( A - \varrho_1 \id \right) \dots \left( A - \rho_m\right).\]
+  The \define{matrix polynomial} of degree \(m\), with shift parameter \(\sigma_1, \ldots, \sigma_m\) is defined by
+  \[ \mathbf{p(A)} := \left( A - \sigma_1 \id \right) \dots \left( A - \sigma_m\right).\]
 \end{Definition}
+
+\begin{Algorithm*}{vector-iteration-polynomial}{Power method for matrix polynomials}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$ Hermitian, initial vector $\vv^{(0)}\in\C^n$ with $\norm{\vv}=1$
+    \For{$k=1,\dots$ until convergence}
+    \State $\vy^{(k)} \gets p(\mata) \vv^{(k-1)}$
+    \State $\vv^{(k)} = \frac{\vy^{(k)}}{\norm{\vy^{(k)}}}$
+    \EndFor
+    \State $\lambda_1 \approx R_\mata(\vv^{(k_{\max})} = \scal(\mata\vv^{(k_{\max})},\vv^{(k_{\max})})$
+  \end{algorithmic}
+\end{Algorithm*}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Subspace iterations}

@@ -348,43 +348,60 @@ the issue.
     \scal(\mata\vv,\vv)
     = \lambda_k \abs{\alpha_k}^2 + \dots + \lambda_n \abs{\alpha_n}^2
     \le \lambda_k \left(
-       \abs{\alpha_k}^2 + \dots +  \abs{\alpha_n}^2
-     \right)
-     = \lambda_k\norm{\vv}^2,
-   \end{gather}
-   where all norms are Euclidean. Thus, the minimum of the Rayleigh
-   quotient on the space $V_k$ is bounded from above by
-   $\lambda_k$. Since $V_k$ was chosen arbitrarily of dimension $k$,
-   we have
-   \begin{gather}
-     \max_{\substack{V \subset \C^n\\\dim V = k}} \min_{\vx\in V} R_\mata(\vx)
-     \le \lambda_k.
-   \end{gather}
+      \abs{\alpha_k}^2 + \dots +  \abs{\alpha_n}^2
+    \right)
+    = \lambda_k\norm{\vv}^2,
+  \end{gather}
+  where all norms are Euclidean. Thus, the minimum of the Rayleigh
+  quotient on the space $V_k$ is bounded from above by
+  $\lambda_k$. Since $V_k$ was chosen arbitrarily of dimension $k$,
+  we have
+  \begin{gather}
+    \max_{\substack{V \subset \C^n\\\dim V = k}} \min_{\vx\in V} R_\mata(\vx)
+    \le \lambda_k.
+  \end{gather}
+  
+  It remains to show that the maximum is gerater or equal. To this
+  end, define a new subspace
+  \begin{gather}
+    X_k = \spann{\vq_1,\dots,\vq_k},
+  \end{gather}
+  which is a subspace of dimension $k$. For any
+  $\vx = \beta_1\vq_1+\dots+\beta_k\vq_k\in X_k$, there holds
+  \begin{gather}
+    \scal(\mata\vx,\vx)
+    = \lambda_1\abs{\beta_1}^2 + \dots + \lambda_k\abs{\beta_k}^2
+    \ge \lambda_k \norm{\vx}^2.
+  \end{gather}
+  Thus, we have proven the first characterization of $\lambda_k$. The
+  second is proven the same way by vonsidering the matrix $-\mata$.
+\end{proof}
 
-   It remains to show that the maximum is gerater or equal. To this
-   end, define a new subspace
-   \begin{gather}
-     X_k = \spann{\vq_1,\dots,\vq_k},
-   \end{gather}
-   which is a subspace of dimension $k$. For any
-   $\vx = \beta_1\vq_1+\dots+\beta_k\vq_k\in X_k$, there holds
-   \begin{gather}
-     \scal(\mata\vx,\vx)
-     = \lambda_1\abs{\beta_1}^2 + \dots + \lambda_k\abs{\beta_k}^2
-     \ge \lambda_k \norm{\vx}^2.
-   \end{gather}
-   Thus, we have proven the first characterization of $\lambda_k$. The
-   second is proven the same way by vonsidering the matrix $-\mata$.
- \end{proof}
-
- \begin{remark}
+\begin{remark}
    The eigenvalues in the Courant-Fischer theorem are not ordered by
    their absolute values! This is possible, since they are real. The
    theorem is wrong if formulated with absolute values.
 
    In many sources, the eigenvalues in the Courant-Fischer theorem are
    ordered the other way round.
- \end{remark}
+\end{remark}
+
+\begin{Lemma}{Rayleigh-approximation}
+  Let $\vx = \vv + \epsilon \vw$ be an approximation to an eigenvector
+  $\vv$ with eigenvalue $\lambda$, where $\vw\perp\vv$. Then, there holds
+  \begin{gather}
+    \abs{\lambda - R_\mata(\vx)} = \mathcal O(\epsilon^2).
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  Define $\vy = \mata \vw$, such that $\mata \vx = \lambda \vv + \epsilon \vy$. There holds $\vy\perp\vv$ and
+  \begin{gather}
+    R_\mata(\vx) = \frac{\scal(\lambda\vv+\epsilon\vy,\vv+\epsilon \vw)}{\norm{\vv+\epsilon \vw}_2^2}
+    = \frac{\lambda\norm{\vv}_2^2 + \epsilon^2 \norm{\vy}_2^2}{\norm{\vv}_2^2 + \epsilon^2\norm{\vw}_2^2}.
+  \end{gather}
+  Subtracting from $\lambda$, the result becomes obvious.
+\end{proof}
 
 %%% Local Variables:
 %%% mode: latex
