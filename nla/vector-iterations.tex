@@ -39,6 +39,10 @@
 \subsection{Simple iterations}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{todo}
+  Rename the vectors $\vv$ to $\vq$ to be more consistent with QR later.
+\end{todo}
+
 \begin{intro}
   The eigenspace of a dominant eigenvalue seems to get amplified
   whenever we multiply with the matrix $\mata$. Hence, we should be a
@@ -140,9 +144,11 @@
   eigenvector for this eigenvalue.
 \end{Algorithm*}
 
-\begin{Algorithm*}{rayleigh-iteration}{Rayleigh iteration}
-  
-\end{Algorithm*}
+\begin{intro}
+  \begin{todo}
+    Remove!
+  \end{todo}
+\end{intro}
 
 \begin{Definition*}{shifted-matrix-polynomial}{Matrix Polynomial}
   Let \(\mata \in \C^{n \times n}\) be a square matrix.
@@ -220,22 +226,50 @@
   $\matx^{(k)}$, for $k=1,\dots$ Note that if we normalize each column
   vector separately, they will all converge to the dominant
   eigenvector. Thus, we have to put in a mechanism such that these
-  vectors cannot become parallel.
+  vectors cannot become parallel. The solution is iterating over an
+  orthonormal set of vectors $\matq^{(k)}$.
 \end{intro}
 
-\begin{Algorithm*}{subspace-iteration-polynomial}{Orthogonal subspace iteration}
+\begin{Algorithm*}{subspace-iteration}{Orthogonal subspace iteration}
   \begin{algorithmic}[1]
-    \Require $\mata\in\Cnn$ and choose $\matx_0 \in \C^{n\times m}$.
+    \Require $\mata\in\Cnn$ and choose $\matq_0 \in \C^{n\times m}$ orthogonal.
     \For {$k=1,\ldots$ until convergence}
-    \State $\matq_k\matr_k \gets \matx_{k-1}$ \Comment{QR factorization}
-    \State $\matx_{k} \gets p(\mata) \matq_{k}$
+    \State $\maty_{k} \gets \mata \matq_{k}$
+    \State $\matq_k\matr_k \gets \maty_{k-1}$ \Comment{QR factorization}
     \EndFor
     \State {$\lambda_i \approx \vq_{k_{\max},i}^* \mata \vq_{k_{\max},i},\qquad i=1,\dots,m$}\
     \Comment{Rayleigh quotient}
   \end{algorithmic}
 \end{Algorithm*}
 
+\begin{Theorem}{convergence-subspace-iteration}
+  Let $\mata\in\Cnn$ and
+  \begin{gather}
+    \abs{\lambda_1} \ge
+    \abs{\lambda_2} \ge \dots \ge
+    \abs{\lambda_m}>\abs{\lambda_{m+1}} \ge \dots \ge \abs{\lambda_n}.
+  \end{gather}
+  for all remaining eigenvalues $\lambda\in\sigma(\mata)$. Choose
+  $\matq_0 \in \C^{n\times m}$ such that
+  $\dist(D_m(\mata),\ran{\matq^{(0)}}) < 1$, where $D_m(\mata)$ is the
+  \putindex{dominant invariant subspace} of $\mata$ of dimension
+  $m$. Then,
+  \begin{gather}
+    \dist\left(D_m(\mata),\ran{\matq^{(k)}}\right)
+    = \bigo \left(\abs*{\frac{\lambda_{m+1}}{\lambda_m}}^k\right).
+  \end{gather}
+  The constant depends on the separation of the eigenvalues and the deviation of $\mata$ from normality.
+%   Then, the $j$-th column of $\matx_k$ converges to $\vq_j$ for $j=1,\dots,m$ up to a factor $e^{i\phi}$.
+\end{Theorem}
 
+\begin{proof}
+  See~\cite[Theorem 7.3-1]{GolubVanLoan83}.
+\end{proof}
+
+\begin{Corollary}{convergence-subspace-iteration}
+  The orthogonal subspace iteration converges whenever the first $m$
+  eigenvalues are dominant. Moreover, whenever the first $j<m$ eigenvalues are dominant, then the first $j$ columns of $\matq^{(k)}$ converge to the \putindex{dominant invariant subspace} of dimension $j$.
+\end{Corollary}
 
 %%% Local Variables:
 %%% mode: latex
