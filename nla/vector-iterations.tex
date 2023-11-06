@@ -71,9 +71,9 @@
     %where $\abs{\vv^{(k_{\max})}_i}$ is maximal
   \begin{align}
     \abs{\alpha_{k+1}-\lambda_1}
-    &\le \frac{\abs{\lambda_1}}{\abs{\lambda_2}} \abs{\alpha_{k}-\lambda_1}\\
+    &\le \frac{\abs{\lambda_2}}{\abs{\lambda_1}} \abs{\alpha_{k}-\lambda_1}\\
     \norm{v^{(k+1)}-u_1}
-    &\le \frac{\abs{\lambda_1}}{\abs{\lambda_2}} \norm{v^{(k)}-u_1}
+    &\le \frac{\abs{\lambda_2}}{\abs{\lambda_1}} \norm{v^{(k)}-u_1}
   \end{align}
 \end{Theorem}
 
@@ -113,12 +113,6 @@
   \end{algorithmic}
 \end{Algorithm*}
 
-
-\begin{todo}
-  GM:
-  Why is it required, that the eigenvalue is single? That is not included in the previous Theorem? \\
-  Espacially a diagonalizable matrix can have multiple eigenvalues
-\end{todo}
 \begin{Remark}{vector-iteration}
   The proof actually requires, that the entry defining $\alpha_k$
   remains the same during the iteration, at least during the steps
@@ -128,15 +122,14 @@
   as long as $\lambda_1$ is single and of largest modulus.
 \end{Remark}
 
-% \begin{Lemma}{Rayleigh-approximation}
-%   Let $(\lambda,\vv)$ be an eigenpair of the Hermitian matrix
-%   $\mata\in\Cnn$, and let $\vw\in\C^n$. Then, there is a constant $C$ depending only on the matrix $\mata$ such that there holds
-%   \begin{gather}
-%     \abs{R_\mata(\vw)-\lambda} \le C \norm{\vw-\vv}^2,
-%   \end{gather}
-%   where $R_\mata(\vw)$ is the \putindex{Rayleigh quotient} from
-%   \slideref{Definition}{rayleigh-quotient}.
-% \end{Lemma}
+\begin{Remark}{vector-iteration-roundoff}
+  The convergence proof of the power iteration requires that the
+  initial vector has a component in the direction of the dominant
+  eigenvector. Nevertheless, convergence to the dominant eigenvector
+  is still observed if this condition does not hold. This is due to
+  round-off errors and the exponential growth of rate
+  $\nicefrac{\abs{\lambda_2}}{\abs{\lambda_1}}$.
+\end{Remark}
 
 \begin{Algorithm*}{shifted-vector-iteration}{Shifted vector iteration}
   The vector iteration can be applied to the matrix $\mata-\sigma\id$
@@ -147,11 +140,57 @@
   eigenvector for this eigenvalue.
 \end{Algorithm*}
 
-\begin{Definition}{shifted-matrix-polynomial}{Shifted Matrix Polynomial}
+\begin{Algorithm*}{rayleigh-iteration}{Rayleigh iteration}
+  
+\end{Algorithm*}
+
+\begin{Definition*}{shifted-matrix-polynomial}{Matrix Polynomial}
   Let \(\mata \in \C^{n \times n}\) be a square matrix.
-  The \define{matrix polynomial} of degree \(m\), with shift parameter \(\sigma_1, \ldots, \sigma_m\) is defined by
-  \[ \mathbf{p(A)} := \left( A - \sigma_1 \id \right) \dots \left( A - \sigma_m\right).\]
-\end{Definition}
+  The \define{matrix polynomial} of degree \(k\), with shift parameters \(\sigma_1, \ldots, \sigma_k\) is defined by
+  \begin{gather}
+    p(\mata) := \left(\mata - \sigma_1 \id \right) \cdots \left(\mata - \sigma_k\right).    
+  \end{gather}
+\end{Definition*}
+
+\begin{Lemma}{matrix-polynomial}
+  Let $\mata$ be diagonalizable and $p(\mata)$ be a matrix
+  polynomial. Then, $p(\mata)$ is diagonalizable. Moreover, a vector
+  $\vv$ is an eigenvalue for $p(\mata)$ and eigenvalue $p(\lambda)$,
+  if and only if it is an eigenvector for $\mata$ and eigenvalue $\lambda$.
+\end{Lemma}
+
+\begin{Algorithm*}{polynomial-filtering}{Polynomial filtering}
+  Let $\mu_1,\dots,\mu_k$ be approximations to \putindex{unwanted
+    eigenvalues} $\lambda_1,\dots,\lambda_k$ of the matrix
+  $\mata$. Define the filtering polynomial
+  \begin{gather}
+    p(x) = (x-\mu_1)\cdots(x-\mu_k).
+  \end{gather}
+  Then, the corresponding eigenvalues
+  $p(\lambda_1),\dots,p(\lambda_k)$ of the matrix polynomial
+  $p(\mata)$ will be small and the power method converges to other
+  eigenvalues.
+\end{Algorithm*}
+
+\begin{Example}{polynomial-filtering}
+  Let
+  \begin{gather}
+    \mata =
+    \begin{pmatrix}
+      1&&\\ &2& \\ &&3      
+    \end{pmatrix}.
+  \end{gather}
+  \begin{enumerate}
+  \item The eigenvalue $\lambda=3$ can be computed by the power method.
+  \item The eigenvalue $\lambda=1$ can be computed by the shifted power method with $\sigma>2$.
+  \item The eigenvalue $\lambda=2$ cannot be computed by the shifted power method, but we can use
+    \begin{gather}
+      p(\mata) = (\mata-\id)(\mata-3\id),
+    \end{gather}
+    which has eigenvalues 0 and -1. Since -1 is dominant, the power
+    method converges to its eigenvector in a single step.
+  \end{enumerate}
+\end{Example}
 
 \begin{Algorithm*}{vector-iteration-polynomial}{Power method for matrix polynomials}
   \begin{algorithmic}[1]
@@ -171,14 +210,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{intro}
-  
-\end{intro}
+  Instead of approximating eigenvalues consecutively by filtering
+  previously converged eigenvalues in the power method, we can
+  consider iterating not only a single vector, but instead iterating a
+  higher dimensional subspace.
 
-\begin{todo}
-  GM:
-  Moved the inverse iteration back after the QR Iteration, and instead inserted the subspace iteration.\\
-  Insert an exercise to show why the shifted matrix polynomial is required.
-\end{todo}
+  If we do so, starting with a linearly independent set of $m$ vectors
+  $\matx^{(0)} \in \C^{m\times m}$, we can produce a sequence
+  $\matx^{(k)}$, for $k=1,\dots$ Note that if we normalize each column
+  vector separately, they will all converge to the dominant
+  eigenvector. Thus, we have to put in a mechanism such that these
+  vectors cannot become parallel.
+\end{intro}
 
 \begin{Algorithm*}{subspace-iteration-polynomial}{Orthogonal subspace iteration}
   \begin{algorithmic}[1]

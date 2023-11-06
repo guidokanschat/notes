@@ -1,6 +1,6 @@
 all: print.pdf slides.pdf
 
-slides.pdf: print.pdf slides.tex slides-background.tex slides-conditioning.tex slides-ortho.tex slides-qr.tex 
+slides.pdf: slides-only.tex print.pdf slides.tex slides-background.tex slides-conditioning.tex slides-ortho.tex slides-qr.tex 
 	pdflatex -synctex=1 ./slides
 	pdflatex -synctex=1 ./slides
 
