@@ -45,6 +45,18 @@
     \EndFor
   \end{algorithmic}
 \end{Algorithm*}
+\begin{todo}
+  GM:
+\begin{Algorithm*}{qr-iteration}{QR iteration}
+  \begin{algorithmic}[1]
+    \Require $\mata_0\in\Cnn$.
+    \For{$k=1,\dots$ until convergence}
+    \State $\matq_k\matr_k \gets \mata_{k-1}$ \Comment{QR factorization}
+    \State $\mata_{k} = \matq_k \mata_{k-1} \matq_k$ \Comment{$\mata_{k} = \matr_k\matq_k$}
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
+\end{todo}
 
 %\subsection{Analysis}
 \begin{Lemma}{qr-1}
@@ -56,9 +68,18 @@
   \item If $\mata$ is complex symmetric, so is $\mata_k$ for any $k$.
   \end{enumerate}
 \end{Lemma}
+\begin{todo}
+  GM: I think the index in 2. is wrong, and I am unsure, if it is correct. Also I don't see why it is needed.
+\end{todo}
 
 \begin{proof}
   For the first relation, we compute
+\begin{todo}
+  GM:
+  \begin{gather}
+    \mata_{k} = \matr_k\matq_k = \matq_k^* \matq_k \matr_k \matq_k = \matq_k^* \mata_{k-1} \matq_k.
+  \end{gather}
+\end{todo}
   \begin{gather}
     \matq_k\mata_{k}\matq_k^* = \matq_k\matr_k\matq_k\matq_k^* = \mata_{k-1}.
   \end{gather}
@@ -100,6 +121,91 @@
   \end{gather}
   A symmetric or Hermitian Hessenberg matrix is \define{tridiagonal}.
 \end{Definition}
+
+\begin{todo}
+\begin{Algorithm*}{Hessenberg-qr}{Unoptimized Hessenberg QR step}
+  \begin{algorithmic}[1]
+    \Require $\matH\in\Cnn$ in Hessenberg form
+    \For{$k=1,\dots,n-1$}
+    \Comment{factorization $\matq\matr = \matH$, $\matr$ stored in $\matH$}
+    \State $\givens_{k,k+1} \gets$ Givens rotation for $h_{kk},h_{k+1,k}$
+    \State $\matH\gets \givens^*_{k,k+1}\matH$
+    \EndFor
+    \For{$k=1,\dots,n-1$}
+    \Comment{$\matH = \matr\matq$}
+    \State $\matH\gets \matH\givens_{k,k+1}$
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{Definition}{hessenberg-unreduced}
+  A Hessenberg matrix is called \define{unreduced} if all entries on
+  the first subdiagonal are nonzero. It is called \define{reduced}
+  otherwise.
+\end{Definition}
+
+\begin{Theorem*}{implicit-Q}{Implicit Q Theorem}
+  Let $\mata\in\Cnn$ arbitrary, let $\matq,\matv\in\Cnn$ unitary such that
+  \begin{gather}
+    \matq^*\mata\matq = \matH,\qquad \matv^*\mata\matv = \matg,
+  \end{gather}
+  where $\matH$ and $\matg$ are Hessenberg matrices. Let $k$ denote
+  the smallest integer such that $h_{k+1,k} = 0$, or $k=n$ if $\matH$
+  is unreduced. Assume $\vv_1 = \vq_1$. Then,
+  $\vv_j = e^{i_j\phi}\vq_j$ and $\abs{h_{j,j-1}} = \abs{g_{j,j-1}}$
+  for $j=1,\dots,k$. if $k<n$, then $g_{k+1,k} = 0$.
+\end{Theorem*}
+
+\begin{proof}
+  See \cite[Theorem 7.4-2]{GolubVanLoan83}.
+\end{proof}
+
+\begin{Definition}{essentially-equal}
+  The \putindex{Implicit Q Theorem} says that two Hessenberg forms of $\mata$ with the same initial reduction vector are \define{essentially equal} in the sense that they only differ by the diagonal scaling $\matg = \matd^{-1}\matH\matd$ where $\matd=\diag(d_1,\dots,d_n)$ matrix with $\abs{d_{i}} = 1$.
+\end{Definition}
+
+\begin{Algorithm*}{Hessenberg-qr}{Hessenberg QR step}
+  \begin{algorithmic}[1]
+    \Require $\matH\in\Cnn$ in Hessenberg form
+    \State $\givens_{0,1} \gets$ Givens rotation for $h_{0,0},h_{1,0}$
+    \State $\matH \gets \givens^*_{k,k+1}\matH \givens_{k,k+1}$
+    \For{$k=1,\dots,n-1$}
+    \State $\givens_{k,k+1} \gets$ Givens rotation for $h_{k,k-1},h_{k+1,k-1}$
+    \State $\matH \gets \givens^*_{k,k+1}\matH \givens_{k,k+1}$
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
+Maybe as an exercise prove, that the two Algorithms result in essentially-equal matrices?
+\begin{example}
+  At the example of a 4-by-4-matrix, we show how this algorithm works.
+  \begin{enumerate}
+  \item Apply a Givens rotation from the left which eliminates the value $Y$ from the matrix. It affects the two top rows. By
+    applying the Givens rotation from the left an additional non zero entry below the subdiagonal is created.
+
+    {\small\begin{tikzpicture}
+      \input{fig/hessenberg-givens-1};
+    \end{tikzpicture}}
+  \item Apply a Givens rotation from the left to restore Hessenberg form of the first column.
+
+
+    {\small\begin{tikzpicture}
+        \input{fig/hessenberg-givens-2};
+      \end{tikzpicture}}
+  \item Do the same with the second column.
+
+    {\small\begin{tikzpicture}
+        \input{fig/hessenberg-givens-3};
+      \end{tikzpicture}}
+
+    Note that columns with two zero entries remain unchanged and will not have to be processed.
+  \item The transformation matrix was
+    \begin{gather*}
+      \matq = \givens_{12}\givens_{23}\givens_{34}.
+    \end{gather*}
+
+  \end{enumerate}
+\end{example}
+\end{todo}
 
 \begin{Algorithm*}{Hessenberg-qr}{Hessenberg QR step}
   \begin{algorithmic}[1]
@@ -150,6 +256,9 @@
   \end{enumerate}
 \end{example}
 
+\begin{todo}
+  GM: Theorem does not make sense with this version of the QR
+\end{todo}
 \begin{Theorem}{Hessenberg-qr}
   The QR factorization of a Hessenberg matrix $\matH$ can be obtained
   by $n-1$ Givens rotations. The matrix $\matr\matq$ is again in
@@ -170,6 +279,9 @@
     reflection}s.
 \end{Theorem}
 
+\begin{todo}
+  GM: Step 2 needs to be rewriitten for the new algorithm
+\end{todo}
 \begin{Algorithm*}{qr-method}{The QR-Method}
   Compute the spectrum of a matrix $\mata\in\Cnn$ by
   \begin{enumerate}
@@ -286,6 +398,20 @@
 \begin{Definition}{essentially-equal}
   The \putindex{Implicit Q Theorem} says that two Hessenberg forms of $\mata$ with the same initial reduction vector are \define{essentially equal} in the sense that they only differ by the diagonal scaling $\matg = \matd^{-1}\matH\matd$ where $\matd=\diag(d_1,\dots,d_n)$ matrix with $\abs{d_{i}} = 1$.
 \end{Definition}
+
+\begin{todo}
+  GM: The result, that the QR is the same as the Subspace iteration is not correct at this point anymore.
+\begin{Algorithm*}{shifted-qr-iteration}{QR iteration with shift}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$
+    \State $\matH_0 = \matq_0^*\mata\matq_0$\Comment{Hessenberg form}
+    \For {$k=1,\ldots$ until convergence}
+    \State $\matq_k\matr_k = \matH_{k-1} - \sigma_k\id$\Comment{QR factorization}
+    \State $\matH_{k} = \matq_k^* \matH_{k-1} \matq_k $
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
+\end{todo}
 
 \begin{Algorithm*}{shifted-qr-iteration}{QR iteration with shift}
   \begin{algorithmic}[1]
