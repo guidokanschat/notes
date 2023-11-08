@@ -1,13 +1,9 @@
 \subsection{Derivation from orthogonal subspace iteration}
-\begin{todo}
-  GM:
-  Q converges because the QR decomposition is unique for matrices with l.i. columns correct? \\
-  This does not work with the matrix polynomial.
-\end{todo}
 \begin{remark}
-  If the iteration converges, then there is an orthogonal matrix $\matq$ such that $\lim_{k \to
-  \infty} \matq_k = \matq$.
-  From the two assignments of the algorithm, we get
+  If the \putindex{orthogonal subspace iteration} converges, then
+  there is an orthogonal matrix $\matq$ such that
+  $\lim_{k \to \infty} \matq_k = \matq$.  From the two assignments of
+  the algorithm, we get
   \begin{gather}
     \lim_{k \to \infty} \matq_k^* \mata \matq_k = \lim_{k \to \infty} \matq_k^* \maty_k = \lim_{k \to \infty}
     \matq_k^*\matq_{k+1}\matr_{k+1} = \matr,
@@ -45,20 +41,7 @@
     \EndFor
   \end{algorithmic}
 \end{Algorithm*}
-\begin{todo}
-  GM:
-\begin{Algorithm*}{qr-iteration}{QR iteration}
-  \begin{algorithmic}[1]
-    \Require $\mata_0\in\Cnn$.
-    \For{$k=1,\dots$ until convergence}
-    \State $\matq_k\matr_k \gets \mata_{k-1}$ \Comment{QR factorization}
-    \State $\mata_{k} = \matq_k \mata_{k-1} \matq_k$ \Comment{$\mata_{k} = \matr_k\matq_k$}
-    \EndFor
-  \end{algorithmic}
-\end{Algorithm*}
-\end{todo}
 
-%\subsection{Analysis}
 \begin{Lemma}{qr-1}
   The matrices $\mata_k$ of the QR-iteration have the following properties:
   \begin{enumerate}
@@ -74,14 +57,8 @@
 
 \begin{proof}
   For the first relation, we compute
-\begin{todo}
-  GM:
   \begin{gather}
     \mata_{k} = \matr_k\matq_k = \matq_k^* \matq_k \matr_k \matq_k = \matq_k^* \mata_{k-1} \matq_k.
-  \end{gather}
-\end{todo}
-  \begin{gather}
-    \matq_k\mata_{k}\matq_k^* = \matq_k\matr_k\matq_k\matq_k^* = \mata_{k-1}.
   \end{gather}
   The second, we prove by induction, where
   $\mata = \mata_0 = \matq_1\matr_1$ follows directly from the first
@@ -95,7 +72,10 @@
     = \matp_k\matq_{k+1}\matr_{k+1}\matu_k = \matp_{k+1}\matu_{k+1}.
   \end{gather}
 \end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Implementation issues}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{intro}
   In each step of the QR-iteration, a QR factorization of the matrix
   is needed, which requires $\bigo(n^3)$ operations. Thus, the
@@ -122,92 +102,8 @@
   A symmetric or Hermitian Hessenberg matrix is \define{tridiagonal}.
 \end{Definition}
 
-\begin{todo}
-\begin{Algorithm*}{Hessenberg-qr}{Unoptimized Hessenberg QR step}
-  \begin{algorithmic}[1]
-    \Require $\matH\in\Cnn$ in Hessenberg form
-    \For{$k=1,\dots,n-1$}
-    \Comment{factorization $\matq\matr = \matH$, $\matr$ stored in $\matH$}
-    \State $\givens_{k,k+1} \gets$ Givens rotation for $h_{kk},h_{k+1,k}$
-    \State $\matH\gets \givens^*_{k,k+1}\matH$
-    \EndFor
-    \For{$k=1,\dots,n-1$}
-    \Comment{$\matH = \matr\matq$}
-    \State $\matH\gets \matH\givens_{k,k+1}$
-    \EndFor
-  \end{algorithmic}
-\end{Algorithm*}
-
-\begin{Definition}{hessenberg-unreduced}
-  A Hessenberg matrix is called \define{unreduced} if all entries on
-  the first subdiagonal are nonzero. It is called \define{reduced}
-  otherwise.
-\end{Definition}
-
-\begin{Theorem*}{implicit-Q}{Implicit Q Theorem}
-  Let $\mata\in\Cnn$ arbitrary, let $\matq,\matv\in\Cnn$ unitary such that
-  \begin{gather}
-    \matq^*\mata\matq = \matH,\qquad \matv^*\mata\matv = \matg,
-  \end{gather}
-  where $\matH$ and $\matg$ are Hessenberg matrices. Let $k$ denote
-  the smallest integer such that $h_{k+1,k} = 0$, or $k=n$ if $\matH$
-  is unreduced. Assume $\vv_1 = \vq_1$. Then,
-  $\vv_j = e^{i_j\phi}\vq_j$ and $\abs{h_{j,j-1}} = \abs{g_{j,j-1}}$
-  for $j=1,\dots,k$. if $k<n$, then $g_{k+1,k} = 0$.
-\end{Theorem*}
-
-\begin{proof}
-  See \cite[Theorem 7.4-2]{GolubVanLoan83}.
-\end{proof}
-
-\begin{Definition}{essentially-equal}
-  The \putindex{Implicit Q Theorem} says that two Hessenberg forms of $\mata$ with the same initial reduction vector are \define{essentially equal} in the sense that they only differ by the diagonal scaling $\matg = \matd^{-1}\matH\matd$ where $\matd=\diag(d_1,\dots,d_n)$ matrix with $\abs{d_{i}} = 1$.
-\end{Definition}
-
-\begin{Algorithm*}{Hessenberg-qr}{Hessenberg QR step}
-  \begin{algorithmic}[1]
-    \Require $\matH\in\Cnn$ in Hessenberg form
-    \State $\givens_{0,1} \gets$ Givens rotation for $h_{0,0},h_{1,0}$
-    \State $\matH \gets \givens^*_{k,k+1}\matH \givens_{k,k+1}$
-    \For{$k=1,\dots,n-1$}
-    \State $\givens_{k,k+1} \gets$ Givens rotation for $h_{k,k-1},h_{k+1,k-1}$
-    \State $\matH \gets \givens^*_{k,k+1}\matH \givens_{k,k+1}$
-    \EndFor
-  \end{algorithmic}
-\end{Algorithm*}
-Maybe as an exercise prove, that the two Algorithms result in essentially-equal matrices?
-\begin{example}
-  At the example of a 4-by-4-matrix, we show how this algorithm works.
-  \begin{enumerate}
-  \item Apply a Givens rotation from the left which eliminates the value $Y$ from the matrix. It affects the two top rows. By
-    applying the Givens rotation from the left an additional non zero entry below the subdiagonal is created.
-
-    {\small\begin{tikzpicture}
-      \input{fig/hessenberg-givens-1};
-    \end{tikzpicture}}
-  \item Apply a Givens rotation from the left to restore Hessenberg form of the first column.
-
-
-    {\small\begin{tikzpicture}
-        \input{fig/hessenberg-givens-2};
-      \end{tikzpicture}}
-  \item Do the same with the second column.
-
-    {\small\begin{tikzpicture}
-        \input{fig/hessenberg-givens-3};
-      \end{tikzpicture}}
-
-    Note that columns with two zero entries remain unchanged and will not have to be processed.
-  \item The transformation matrix was
-    \begin{gather*}
-      \matq = \givens_{12}\givens_{23}\givens_{34}.
-    \end{gather*}
-
-  \end{enumerate}
-\end{example}
-\end{todo}
-
-\begin{Algorithm*}{Hessenberg-qr}{Hessenberg QR step}
+\begin{Algorithm*}{Hessenberg-qr-1}{Explicit Hessenberg QR step}
+  \index{Hessenberg QR!explicit}
   \begin{algorithmic}[1]
     \Require $\matH\in\Cnn$ in Hessenberg form
     \For{$k=1,\dots,n-1$}
@@ -257,14 +153,93 @@ Maybe as an exercise prove, that the two Algorithms result in essentially-equal 
 \end{example}
 
 \begin{todo}
-  GM: Theorem does not make sense with this version of the QR
+  Check indices!
 \end{todo}
-\begin{Theorem}{Hessenberg-qr}
-  The QR factorization of a Hessenberg matrix $\matH$ can be obtained
-  by $n-1$ Givens rotations. The matrix $\matr\matq$ is again in
-  Hessenberg form. For a (complex) symmetric matrix $\matH$, the
-  matrix $\matr\matq$ is even tridiagonal and (complex) symmetric.
-\end{Theorem}
+\begin{Algorithm*}{Hessenberg-qr-2}{Implicit Hessenberg QR step}
+  \begin{algorithmic}[1]
+    \Require $\matH\in\Cnn$ in Hessenberg form
+    \State $\givens_{1,2} \gets$ Givens rotation for $h_{11},h_{21}$
+    \State $\matH \gets \givens^*_{1,2}\matH \givens_{1,2}$
+    \For{$k=2,\dots,n-1$}
+    \State $\givens_{k,k+1} \gets$ Givens rotation for $h_{k,k-1},h_{k+1,k-1}$
+    \State $\matH \gets \givens^*_{k,k+1}\matH \givens_{k,k+1}$
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{example}
+  At the example of a 4-by-4-matrix, we show how this algorithm works.
+  \begin{enumerate}
+  \item Apply a Givens rotation from the left which eliminates the value $Y$ from the matrix. It affects the two top rows. By
+    applying the Givens rotation from the left an additional non zero entry below the subdiagonal is created.
+
+    {\small\begin{tikzpicture}
+      \input{fig/hessenberg-bulge-1};
+    \end{tikzpicture}}
+\item Apply a Givens rotation from the left to restore Hessenberg form of the first column.
+  
+    {\small\begin{tikzpicture}
+        \input{fig/hessenberg-bulge-2};
+      \end{tikzpicture}}
+    
+  \item Do the same with the second column.
+    
+    {\small\begin{tikzpicture}
+        \input{fig/hessenberg-bulge-3};
+      \end{tikzpicture}}
+    Note that columns with two zero entries remain unchanged and will not have to be processed.
+  \end{enumerate}
+\end{example}
+
+\begin{remark}
+  This algorithm is called \define{bulge chasing} with the following
+  image in mind. After the application of the first rotation, there is
+  a bulge protruding down from the Hessenberg form in the furst
+  column. This bulge is then ``chased'' down row by row until it
+  leaves the matrix at the bottom.
+\end{remark}
+
+\begin{Definition}{hessenberg-unreduced}
+  A Hessenberg matrix is called \define{unreduced} if all entries on
+  the first subdiagonal are nonzero. It is called \define{reduced}
+  otherwise.
+\end{Definition}
+
+\begin{Theorem*}{implicit-Q}{Implicit Q Theorem}
+  Let $\mata\in\Cnn$ arbitrary, let $\matq,\matv\in\Cnn$ unitary such that
+  \begin{gather}
+    \matq^*\mata\matq = \matH,\qquad \matv^*\mata\matv = \matg,
+  \end{gather}
+  where $\matH$ and $\matg$ are Hessenberg matrices. Let $k$ denote
+  the smallest integer such that $h_{k+1,k} = 0$, or $k=n$ if $\matH$
+  is unreduced. Assume $\vv_1 = \vq_1$. Then,
+  $\vv_j = e^{i_j\phi}\vq_j$ and $\abs{h_{j,j-1}} = \abs{g_{j,j-1}}$
+  for $j=1,\dots,k$. if $k<n$, then $g_{k+1,k} = 0$.
+\end{Theorem*}
+
+\begin{proof}
+  See \cite[Theorem 7.4-2]{GolubVanLoan83}.
+\end{proof}
+
+\begin{Definition}{essentially-equal}
+  The \putindex{Implicit Q Theorem} says that two Hessenberg forms of $\mata$ with the same initial reduction vector are \define{essentially equal} in the sense that they only differ by the diagonal scaling $\matg = \matd^{-1}\matH\matd$ where $\matd=\diag(d_1,\dots,d_n)$ matrix with $\abs{d_{i}} = 1$.
+\end{Definition}
+
+\begin{Corollary}{Hessenberg-qr-equivalence}
+  The two versions of the Hessenberg QR step are essentially equal.
+\end{Corollary}
+
+\begin{todo}
+  What was the final result on Hermitian matrices?
+\end{todo}
+
+\begin{Problem}{Hessenberg-qr-effort}
+  \begin{enumerate}
+  \item How many operations do the two versions of the Hessenberg QR step require?
+  \item Show that if $\matH$ is Hermitian, the result of the
+    Hessenberg QR step is Hermitian as well.
+  \end{enumerate}
+\end{Problem}
 
 \begin{Corollary}{Hessenberg-qr}
   The complexity of each step of a QR-iteration for Hessenberg matrices is $\bigo(n^2)$. For tridiagonal (complex) symmetric matrices, it is $\bigo(n)$.
