@@ -232,7 +232,18 @@
 \end{Theorem*}
 
 \begin{proof}
-  See \cite[Theorem 7.4-2]{GolubVanLoan83}.
+  We define the matrix $\matw = \matv^*\matq$, which is orthogonal as the product of orthogonal matrices. There holds
+  \begin{gather}
+    \matg\matw = \matv^*\mata\matv\matv^*\matq = \matv^*\mata\matq
+    = \matv^*\matq\matq^*\mata\matq = \matw\matH.
+  \end{gather}
+  Spelling out column $j$ of this product, we obtain
+  \begin{gather}
+    \matg\vw_j = \sum_{k=1}^{j+1} h_{kj} \vw_{k}.
+  \end{gather}
+  For $j=1$, we obtain from the orthogonality of $\matq$ and $\matv$
+  and the parallelity of $\vq_1$ and $\vv_1$ that
+  $\vw_1 = e^{i\phi} \ve_1$ for some argument $\phi$.
 \end{proof}
 
 \begin{Definition}{essentially-equal}
