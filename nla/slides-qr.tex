@@ -29,13 +29,15 @@
 \frame{\subsubtoc}
 
 \frame {\input {blocks/Algorithm-qr-iteration.tex}
-  \input {blocks/Lemma-qr-1.tex}}
+  \pause
+  \input {blocks/Lemma-qr-Schur.tex}}
+\frame {\input {blocks/Lemma-qr-1.tex}}
 
-\subsubsection{Implementation issues}
+\subsubsection{Hessenberg matrices}
 \frame{\subsubtoc}
 
 \frame {\input {blocks/Definition-hessenberg.tex}}
-\frame {\input {blocks/Algorithm-Hessenberg-qr.tex}}
+\frame {\input {blocks/Algorithm-Hessenberg-qr-1.tex}}
 
 \begin{frame}
   \frametitle{Example: 4-by-4-matrix}
@@ -45,24 +47,45 @@
     \visible<3->{\to \givens_{34}^*\givens_{23}^*\givens_{12}^*\matH = \matr}\\
     \visible<3->{\matr\matq = \matr\givens_{12}\givens_{23}\givens_{34}}\\
   \end{gather*}
-    \only<1>{\begin{tikzpicture}\input{fig/hessenberg-givens-1};\end{tikzpicture}}
-    \only<2>{\begin{tikzpicture}\input{fig/hessenberg-givens-2};\end{tikzpicture}}
-    \only<3>{\begin{tikzpicture}\input{fig/hessenberg-givens-3};\end{tikzpicture}}
-    \only<4>{
-      \begin{tikzpicture}\input{fig/hessenberg-givens-4};\end{tikzpicture}
-      \begin{tikzpicture}\input{fig/hessenberg-givens-5};\end{tikzpicture}
-      \begin{tikzpicture}\input{fig/hessenberg-givens-6};\end{tikzpicture}
-      \begin{tikzpicture}\input{fig/hessenberg-givens-6-result};\end{tikzpicture}}
-  \end{frame}
-\frame {\input {blocks/Theorem-Hessenberg-qr.tex}}
-\frame {\input {blocks/Corollary-Hessenberg-qr.tex}}
-\frame {\input {blocks/Theorem-Hessenberg-householder.tex}}
+  \only<1>{\begin{tikzpicture}\input{fig/hessenberg-givens-1};\end{tikzpicture}}
+  \only<2>{\begin{tikzpicture}\input{fig/hessenberg-givens-2};\end{tikzpicture}}
+  \only<3>{\begin{tikzpicture}\input{fig/hessenberg-givens-3};\end{tikzpicture}}
+  \only<4>{
+    \begin{tikzpicture}\input{fig/hessenberg-givens-4};\end{tikzpicture}
+    \begin{tikzpicture}\input{fig/hessenberg-givens-5};\end{tikzpicture}
+    \begin{tikzpicture}\input{fig/hessenberg-givens-6};\end{tikzpicture}
+    \begin{tikzpicture}\input{fig/hessenberg-givens-6-result};\end{tikzpicture}}
+\end{frame}
 
+\frame {\input {blocks/Algorithm-Hessenberg-qr-2.tex}}
+\begin{frame}
+  \frametitle{Example: 4-by-4-matrix}
+    \begin{gather*}
+    \matH \to \givens_{12}^*\matH\givens_{12}
+    \visible<2->{\to \givens_{23}^*\givens_{12}^*\matH\givens_{12}\givens_{23}}
+    \visible<3->{\to \givens_{34}^*\givens_{23}^*\givens_{12}^*\matH\givens_{23}\givens_{34}}
+  \end{gather*}
+
+  \only<1>{\begin{tikzpicture}\input{fig/hessenberg-bulge-1};\end{tikzpicture}}
+  \only<2>{\begin{tikzpicture}\input{fig/hessenberg-bulge-2};\end{tikzpicture}}
+  \only<3>{\begin{tikzpicture}\input{fig/hessenberg-bulge-3};\end{tikzpicture}}  
+\end{frame}
+
+
+\frame {\input {blocks/Definition-hessenberg-unreduced.tex}
+  \pause
+  \input {blocks/Theorem-implicit-Q.tex}}
+\frame {\input {blocks/Definition-essentially-equal.tex}
+  \input {blocks/Corollary-Hessenberg-qr-equivalence.tex}}
+\frame {\input {blocks/Problem-Hessenberg-qr-effort.tex}
+  \input {blocks/Corollary-Hessenberg-qr.tex}}
+\frame {\input {blocks/Theorem-Hessenberg-householder.tex}}
 \frame {\input {blocks/Algorithm-qr-method.tex}}
 
-\frame {\input {blocks/Theorem-hessenberg-qr-convergence.tex}}
 
 \subsubsection{Deflation and shifts}
+\frame{\subsubtoc}
+
 \frame {\input {blocks/Theorem-qr-reduction.tex}}
 \frame {\input {blocks/Algorithm-qr-deflation.tex}}
 \frame {\input {blocks/Definition-hessenberg-unreduced.tex}}

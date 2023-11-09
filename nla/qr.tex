@@ -1,5 +1,6 @@
 \subsection{Derivation from orthogonal subspace iteration}
 \begin{remark}
+  \label{par:qr:intro}
   If the \putindex{orthogonal subspace iteration} converges, then
   there is an orthogonal matrix $\matq$ such that
   $\lim_{k \to \infty} \matq_k = \matq$.  From the two assignments of
@@ -42,21 +43,30 @@
   \end{algorithmic}
 \end{Algorithm*}
 
+\begin{Lemma}{qr-Schur}
+  If convergent, the QR iteration converges to the Schur canonical
+  form of the matrix $\mata$ with eigenvalues sorted according to
+  their modulus.
+\end{Lemma}
+
+\begin{proof}
+  See~\ref{par:qr:intro}.
+\end{proof}
+
 \begin{Lemma}{qr-1}
-  The matrices $\mata_k$ of the QR-iteration have the following properties:
+  The matrices $\mata_k$ of the QR-iteration with $\mata_0 = \mata$
+  have the following properties:
   \begin{enumerate}
-  \item $\mata_{k} = \matq_k^*\mata_{k-1}\matq_k = \matq_k^*\dots\matq_0^*A\matq_0\dots\matq_k$.
-  \item If $\matq_0=\id$, then $\mata^k=\matq_1\dots\matq_k\matr_k\dots\matr_1$.
+  \item If $\matq_0=\id$, $\mata_{k} = \matq_k^*\mata_{k-1}\matq_k = \matq_k^*\dots\matq_0^*\mata\matq_0\dots\matq_k$.
+  \item $\mata^k=\matq_1\dots\matq_k\matr_k\dots\matr_1$.
   \item If $\mata$ is normal, so is $\mata_k$ for any $k$.
   \item If $\mata$ is complex symmetric, so is $\mata_k$ for any $k$.
   \end{enumerate}
 \end{Lemma}
-\begin{todo}
-  GM: I think the index in 2. is wrong, and I am unsure, if it is correct. Also I don't see why it is needed.
-\end{todo}
 
 \begin{proof}
-  For the first relation, we compute
+  For the first relation, we observe
+  $\mata_0 = \mata = \matq_0^*\mata\matq_0$ and compute
   \begin{gather}
     \mata_{k} = \matr_k\matq_k = \matq_k^* \matq_k \matr_k \matq_k = \matq_k^* \mata_{k-1} \matq_k.
   \end{gather}
@@ -74,7 +84,7 @@
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Implementation issues}
+\subsection{Hessenberg matrices}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{intro}
   In each step of the QR-iteration, a QR factorization of the matrix
@@ -205,6 +215,10 @@
   otherwise.
 \end{Definition}
 
+\begin{todo}
+  In the next semester, use $\parallel$!
+\end{todo}
+
 \begin{Theorem*}{implicit-Q}{Implicit Q Theorem}
   Let $\mata\in\Cnn$ arbitrary, let $\matq,\matv\in\Cnn$ unitary such that
   \begin{gather}
@@ -212,8 +226,8 @@
   \end{gather}
   where $\matH$ and $\matg$ are Hessenberg matrices. Let $k$ denote
   the smallest integer such that $h_{k+1,k} = 0$, or $k=n$ if $\matH$
-  is unreduced. Assume $\vv_1 = \vq_1$. Then,
-  $\vv_j = e^{i_j\phi}\vq_j$ and $\abs{h_{j,j-1}} = \abs{g_{j,j-1}}$
+  is unreduced. Assume $\vv_1 = e^{i\phi_0}\vq_1$. Then,
+  $\vv_j = e^{i\phi_j}\vq_j$ and $\abs{h_{j,j-1}} = \abs{g_{j,j-1}}$
   for $j=1,\dots,k$. if $k<n$, then $g_{k+1,k} = 0$.
 \end{Theorem*}
 
@@ -254,9 +268,6 @@
     reflection}s.
 \end{Theorem}
 
-\begin{todo}
-  GM: Step 2 needs to be rewriitten for the new algorithm
-\end{todo}
 \begin{Algorithm*}{qr-method}{The QR-Method}
   Compute the spectrum of a matrix $\mata\in\Cnn$ by
   \begin{enumerate}
@@ -265,35 +276,11 @@
     \begin{gather}
      \matH = \matq^*\mata\matq.
    \end{gather}
- \item QR-iteration: let $\matH_{0}=\matH$ and perform until convergence
-   \begin{align}
-     \givens^{(k)}_{1,2}\times\dots\times\givens^{(k)}_{n-1,n} \matr &= \matH_k\\
-     \matH_{k+1} &= \matr \givens^{(k)}_{1,2}\times\dots\times\givens^{(k)}_{n-1,n}.
-   \end{align}
+ \item QR-iteration: let $\matH_{0}=\matH$ and perform the implicit Hessenberg QR step until convergence
  \item Store Householder vectors as well as $r$ and $c$ for each
-   Givens rotation if the eigenvectors are desired in the end.
+   Givens rotation \textbf{only} if the eigenvectors are desired in the end.
   \end{enumerate}
 \end{Algorithm*}
-
-\begin{Theorem}{hessenberg-qr-convergence}
-    Let $\matH\in\Cnn$ be a Hessenberg matrix with eigenvalues such that
-  \begin{gather}
-    \abs{\lambda_1} >
-    \abs{\lambda_2}>\dots>\abs{\lambda_n}.
-  \end{gather}
-  Then, the sequences of the QR-iteration admit the following estimates:
-  \begin{align}
-    \dist(\esp{1,\dots,j},\ran{\matq^{(k)}}) &= \bigo \left(\abs*{\frac{\lambda_{j+1}}{\lambda_j}}^k\right),
-    \\
-    h_{j+1,j}^{(k)} &= \bigo \left(\abs*{\frac{\lambda_{j+1}}{\lambda_j}}^k\right)
-                      .
-  \end{align}
-  Here, $h_{ij}^{(k)}$ are the entries of $\matH_k$.
-\end{Theorem}
-
-\begin{proof}
-  See~\cite[Theorem 7.3-1]{GolubVanLoan83}.
-\end{proof}
 
 \subsection{Deflation and shifts}
 
@@ -347,32 +334,6 @@
   requirement that all eigenvalues must have different modulus, but
   this is solved below in combination with shifts.
 \end{remark}
-
-\begin{Definition}{hessenberg-unreduced}
-  A Hessenberg matrix is called \define{unreduced} if all entries on
-  the first subdiagonal are nonzero. It is called \define{reduced}
-  otherwise.
-\end{Definition}
-
-\begin{Theorem*}{implicit-Q}{Implicit Q Theorem}
-  Let $\mata\in\Cnn$ arbitrary, let $\matq,\matv\in\Cnn$ unitary such that
-  \begin{gather}
-    \matq^*\mata\matq = \matH,\qquad \matv^*\mata\matv = \matg,
-  \end{gather}
-  where $\matH$ and $\matg$ are Hessenberg matrices. Let $k$ denote
-  the smallest integer such that $h_{k+1,k} = 0$, or $k=n$ if $\matH$
-  is unreduced. Assume $\vv_1 = \vq_1$. Then,
-  $\vv_j = e^{i_j\phi}\vq_j$ and $\abs{h_{j,j-1}} = \abs{g_{j,j-1}}$
-  for $j=1,\dots,k$. if $k<n$, then $g_{k+1,k} = 0$.
-\end{Theorem*}
-
-\begin{proof}
-  See \cite[Theorem 7.4-2]{GolubVanLoan83}.
-\end{proof}
-
-\begin{Definition}{essentially-equal}
-  The \putindex{Implicit Q Theorem} says that two Hessenberg forms of $\mata$ with the same initial reduction vector are \define{essentially equal} in the sense that they only differ by the diagonal scaling $\matg = \matd^{-1}\matH\matd$ where $\matd=\diag(d_1,\dots,d_n)$ matrix with $\abs{d_{i}} = 1$.
-\end{Definition}
 
 \begin{todo}
   GM: The result, that the QR is the same as the Subspace iteration is not correct at this point anymore.
