@@ -1,318 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Projection methods}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{Definition}{galerkin-method}
-  Let $\mata\in\Rnn$ and $\vb, \vx\in\R^n$ with $\mata\vx=\vb$. Then,
-  the vector $\tilde\vx\in\R^n$ is called the \define{Galerkin
-    approximation} of $\vx$ in a subspace $K$ orthogonal to a subspace
-  $L$, if there holds
-  \begin{align}
-    \tilde\vx &\in K,\\
-    \vb-\mata\tilde\vx &\perp L.
-                         \label{eq:krylov:1}
-  \end{align}
-  This type of approximation is called \define{Galerkin method}, more
-  specifically \define{Ritz-Galerkin method} in the case $K=L$ and
-  \define{Petrov-Galerkin method} in the case $K\neq L$.
-\end{Definition}
-
-\begin{remark}
-  For the case $L=\mata K$ we deduce from the optimization property of
-  orthogonal projections that $\mata\tilde \vx$ in~\eqref{eq:krylov:1}
-  is the vector in the subspace $\mata K$ closest to $\vb$. Thus,
-  $\tilde\vx$ minimizes the \putindex{residual} $\vb-\mata\vy$ over
-  all choices $\vy\in K$.
- Note that this does not hold for $L\neq \mata K$.
-\end{remark}
-
-\begin{Definition}{projection-step}
-  Given a vector $\vx^{(k)}\in\R^n$ and its residual
-  $\vr^{(k)}=\vb-\mata\vx^{(k)}$. Then, we say that the vector
-  $\vx^{(k+m)}\in\R^n$ is obtained by a \define{projection step}, if
-  \begin{gather}
-    \vx^{(k+m)} = \vx^{(k)} + \vv,
-  \end{gather}
-  where after the choice of $m$-dimensional subspaces $K$ and $L$ the update $\vv$ is
-  determined by the condition
-  \begin{align}
-    \vv &\in K\\
-    \vr^{(k)} - \mata\vv &\perp L.
-  \end{align}
-\end{Definition}
-
-Note that the notation $\vx^{(k+m)}$ in the previous definition is
-quite arbitrary and we could have written $\vx^{(k+1)}$ as
-well. Nevertheless, algorithms we will study later have a structure
-where the $m$-dimensional projection step will resemble $m$
-one-dimensional steps, at least from the algorithmic point of
-view. Thus, we adopt the view of a single step in dimension $m$ as an
-$m$-fold step.
-
-\begin{Example}{projection-gauss-seidel}
-  The Gauss-Seidel substep is a projection step with the choice
-  \begin{gather}
-    K=L=\spann{\ve_i}.
-  \end{gather}
-\end{Example}
-
-\begin{notation}
-  We will mostly only consider a single step of the method in
-  \slideref{Definition}{projection-step}. Therefore, we will consider
-  the step from an initial guess $\vx^{(0)}$ to an approximate solution
-  $\tilde \vx$ to simplify the notation.
-\end{notation}
-
-\begin{Definition}{projection-method-matrix}
-  Let $\matv=(\vv_1,\dots,\vv_m)$ and $\matw=(\vw_1,\dots,\vw_m)$ be bases for
-  the subspaces $K$ and $L$, respectively. Then, the solution
-  $\tilde \vx$ to the projection step is determined by $\vy\in\R^m$ and
-  \begin{align}
-    \tilde\vx &= \vx^{(0)} + \matv\vy\\
-    \matw^*\mata\matv \vy &= \matw^* \vr^{(0)}.
-  \end{align}
-  It is thus obtained by solving an $m$-by-$m$ linear system, called
-  the projected system or the \define{Galerkin
-    equations}. $\matw^*\mata\matv\in\R^{m\times m}$ is the
-  \define{projected matrix}.
-\end{Definition}
-
-\begin{proof}
-  See \cite[Section 5.1.2]{Saad00}.
-\end{proof}
-
-\begin{Theorem}{projected-invertible}
-  Let one of the following conditions hold:
-  \begin{enumerate}
-  \item $\mata$ is symmetric, positive definite and $L=K$.
-  \item $\mata$ is invertible and $L = \mata K$.
-  \end{enumerate}
-  Then, the projected matrix $\matw^*\mata\matv$ is invertible for any
-  bases $\matv$ and $\matw$ of $K$ and $L$, respectively.
-\end{Theorem}
-
-\begin{Theorem}{projection-orthogonal-optimal}
-  Let $\mata\in\Rnn$ be symmetric, positive definite. Then,
-  $\tilde \vx$ is the result of the orthogonal ($L=K$) projection
-  method with initial vector $\vx^{(0)}$ if and only if it minimizes
-  the \putindex{A-norm} of the error over the space $\vx^{(0)}+K$. Namely, for the
-  solution $\vx$ of $\mata\vx=\vb$ there holds
-  \begin{gather}
-    \norm{\tilde\vx-\vx}_A = \min_{\vy\in\vx^{(0)}+K} \norm{\vy-\vx}_A.
-  \end{gather}
-  Here, $\norm\vy_A = \sqrt{\vy^*\mata\vy}$.
-\end{Theorem}
-
-\begin{Theorem}{projection-oblique-optimal}
-  Let $\mata\in\Rnn$ and $L=\mata K$. Then, $\tilde \vx$ is the result
-  of the (oblique) projection method with initial vector $\vx^{(0)}$
-  if and only if it minimizes the Euclidean norm of the residual
-  $\vb-\mata\tilde\vx$ over the space $\vx^{(0)}+K$. Namely, there
-  holds
-  \begin{gather}
-    \norm{\vb-\mata\tilde\vx}_2
-    = \min_{\vy\in\vx^{(0)}+K} \norm{\vb-\mata\vy}_2
-  \end{gather}
-\end{Theorem}
-
-\begin{Example}{projection-1d}
-  A one-dimensional projection method can be characterized by two
-  vectors $\vv$ and $\vw$. Then,
-  \begin{gather}
-    K = \spann{\vv^{(k)}},
-    \qquad L = \spann{\vw^{(k)}}.
-  \end{gather}
-  The new solution is
-  \begin{gather}
-    \vx^{(k+1)} = \vx^{(k)}+\alpha \vv^{(k)},
-  \end{gather}
-  where
-  \begin{gather}
-    \alpha = \frac{\scal(\vr^{(k)},\vw)}{\scal(\mata\vv,\vw)}
-  \end{gather}
-  is determined from the Galerkin condition
-  \begin{gather}
-    \vr^{(k)}-\mata\vv^{(k)} \perp \vw^{(k)}
-  \end{gather}
-\end{Example}
-
-\begin{Algorithm*}{steepest-descent-algol}{The steepest descent method}
-  \begin{algorithmic}[1]
-    \Require $\mata\in\Rnn$ s.p.d.; $\quad\vx,\vb\in\R^n$
-    \State $\vr\gets \vb-\mata\vx$
-    \Repeat
-    \State $\alpha\gets\frac{\scal(\vr,\vr)}{\scal(\mata\vr,\vr)}$
-    \State $\vx \gets \vx + \alpha\vr$
-    \State $\vr \gets \vr-\alpha\mata\vr$
-    \Until convergence
-  \end{algorithmic}
-\end{Algorithm*}
-
-\begin{Lemma}{steepest-descent}
-  Each step of the steepest descent method computes the minimum of
-  $F(\vy) = \norm{\vy-\vx}_A^2$ along the line from the current
-  iterate $\vx^{(k)}$ in direction $-\nabla F(\vx^{(k)})$.
-  Furthermore, there holds
-  \begin{gather}
-    \vr^{(k+1)} \perp \vr^{(k)}.
-  \end{gather}
-  
-\end{Lemma}
-
-\begin{remark}
-  In this algorithm, the operation $\mata\vr$ is applied twice. Since
-  in most implementations this will be the part with the most
-  computational operations, we introduce an auxiliary vector
-  $\vp = \mata\vr$, which can be used in lines 3 and 5. At the cost of
-  one additional vector, the numerical effort per step is almost
-  cut in half.
-\end{remark}
-
-\begin{Remark}{convergence-residual}
-  The residual $\vr = \vb - \mata\tilde\vx$ of the current iterate
-  $\tilde\vx$ measures the misfit of $\tilde\vx$ in the equation
-  $\mata\vx = \vb$. Since the error $\tilde\vx-\vx$ is unknown, we can
-  use it as criterion for the accuracy of the current
-  solution. Indeed, there holds
-  \begin{gather}
-    \norm{\vx-\tilde\vx}
-    = \norm*{\mata^{-1}\bigl(\mata\vx - \mata\tilde\vx\bigr)}
-    = \norm*{\mata^{-1}\bigl(\vb - \mata\tilde\vx\bigr)}
-    \le \norm{\mata^{-1}}\norm{\vr}.
-  \end{gather}
-  Therefore, the criterion for convergence of the algorithm is typically
-  \begin{gather}
-    \norm{\vr} \le \text{TOL},
-  \end{gather}
-  where TOL is a tolerance chosen by the user.
-
-  Note, that the computation of $\vr$ is subject to roundoff
-  errors. Thus, the tolerance should always be chosen
-  \begin{gather}
-    \text{TOL} > c\norm{\vb}\eps,
-  \end{gather}
-  where $\eps$ is the machine accuracy and $c$ should account for
-  error accumulation in the matrix-vector product.
-\end{Remark}
-
-\begin{Algorithm*}{steepest-descent-python1}{Steepest descent in Python}
-  \lstinputlisting{python/steepest-descent.py}
-\end{Algorithm*}
-
-\begin{remark}
-  Depending on the quality of the compiler/interpreter, the code line
-  \begin{lstlisting}[language=Python,numbers=none]
-    x += alpha*r
-  \end{lstlisting}
-  may involve creating an auxiliary vector $\vp = \alpha \vr$ and
-  adding this vector to $\vx$.  Obviously, this could be avoided by
-  directly implementing
-  \begin{lstlisting}[language=Python,numbers=none]
-    for i in range(0,n):
-      x[i] += alpha*r[i]
-  \end{lstlisting}
-  Since operations like this are ubuquitous in scientific computing,
-  they were standardized early on in the BLAS (basic linear algebra
-  subroutines) library. It contains the FORTRAN function
-  \begin{lstlisting}[language=Fortran,numbers=none]
-    SUBROUTINE DAXPY( n, alpha, x, incx, y, incy)
-  \end{lstlisting}
-  which computes $\vy\gets\vy+\alpha\vx$ for double precision vectors
-  of length $n$ (the increment arguments allow to skip elements). For
-  usage in Python, there is a wrapper
-  \begin{lstlisting}[language=Python,numbers=none]
-    scipy.linalg.blas.daxpy(x, y[, n, a, offx, incx, offy, incy])
-  \end{lstlisting}
-\end{remark}
-
-\begin{Algorithm*}{steepest-descent-python2}{Steepest descent with daxpy}
-  \lstinputlisting{python/steepest-descent-axpy.py}
-\end{Algorithm*}
-
-\begin{Algorithm*}{minimal-residual-algol}{The minimal residual method}
-  \begin{algorithmic}[1]
-    \Require $\mata\in\Rnn$; $\quad\vx,\vb\in\R^n$
-    \State $\vr\gets \vb-\mata\vx$
-    \Repeat
-    \State $\alpha\gets\frac{\scal(\mata\vr,\vr)}{\scal(\mata\vr,\mata\vr)}$
-    \State $\vx \gets \vx + \alpha\vr$
-    \State $\vr \gets \vr-\alpha\mata\vr$
-    \Until convergence
-  \end{algorithmic}
-\end{Algorithm*}
-
-\begin{Lemma}{minimal-residual}
-  Each step of the minimal method computes the minimum of
-  $F(\vy) = \norm{\vb-\mata\vy}_2^2$ along the line from the current
-  iterate $\vx^{(k)}$ in direction $\vr$. Furthermore, there holds
-  \begin{gather}
-    \vr^{(k+1)} \perp \mata \vr^{(k)}
-  \end{gather}
-\end{Lemma}
-
-\begin{Lemma}{lucky-breakdown}
-  The iteration sequences $\{\vx^{(k)}\}$ of the steepest descent and
-minimal residual methods, respectively, are well defined except for
-the case where $\vx^{(k)}$ is the exact solution $\vx$ and thus
-$\vr^{(k)} = 0$.
-
-We refer to this phenomenon as \define{lucky breakdown}, since the
-method only fails after the exact solution has been found.
-\end{Lemma}
-
-\begin{Lemma*}{kantorovich-inequality}{Kantorovich inequality}
-  Let $\mata\in\Rnn$ be symmetric, positive definite with minimal and
-  maximal eigenvalues $\lambda_{\min}$ and $\lambda_{\max}$. Then, for
-  $\vx\in\R^n$ there holds
-  \begin{gather}
-    \frac{\scal(\mata\vx,\vx)\scal(\mata^{-1}\vx,\vx)}{\scal(\vx,\vx)^2}
-    \le \frac{(\lambda_{\min}+\lambda_{\max})^2}{4\lambda_{\min}\lambda_{\max}}
-  \end{gather}
-\end{Lemma*}
-
-\begin{proof}
-  See~\cite[Lemma 5.8]{Saad00}.
-\end{proof}
-
-\begin{Theorem}{steepest-descent-convergence}
-  Let $\mata\in\Rnn$ be symmetric, positive definite with extremal
-  eigenvalues $\lambda_{\min}$ and $\lambda_{\max}$. Then, the error
-  $\ve^{(k)} = \vx-\vx^{(k)}$ of the steepest descent method admits
-  the estimate
-  \begin{gather}
-    \norm{\ve^{(k+1)}}_A \le \rho \norm{\ve^{(k)}}_A,
-  \end{gather}
-  where the contraction number is
-  \begin{gather}
-    \rho
-    = \frac{\lambda_{\max}-\lambda_{\min}}{\lambda_{\max}+\lambda_{\min}}
-    = \frac{\cond_2\mata - 1}{\cond_2\mata+1}
-    = 1-\frac2{\cond_2\mata+1}
-  \end{gather}
-\end{Theorem}
-
-\begin{proof}
-  See~\cite[Theorem 5.9]{Saad00}.
-\end{proof}
-
-\begin{Theorem}{minimal-residual-convergence}
-  Let $\mata\in\Rnn$ such that its symmetric part $(\mata+\mata^T)/2$
-  is positive definite. Then, the residuals $\vr^{(k)}$ of the minimal
-  residual method admit the estimate
-  \begin{gather}
-    \norm{\vr^{(k+1)}}_2 \le \rho \norm{\vr^{(k)}}_2,
-  \end{gather}
-  where the contraction number is
-  \begin{gather}
-    \rho = \left(1-\frac{\mu^2}{\norm{\mata}^2}\right)^{\nicefrac12}
-  \end{gather}
-  and $\mu$ is the smallest eigenvalue of $(\mata+\mata^T)/2$.
-\end{Theorem}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Krylov spaces}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -427,7 +114,7 @@ method only fails after the exact solution has been found.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The Arnoldi procedure and GMRES}
+\subsection{The Arnoldi and Lanczos procedures}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -436,10 +123,7 @@ method only fails after the exact solution has been found.
   and initial vector $\vv\in\R^n$ construct the Krylov space
   $\krylov_m$ and an orthogonal basis dimension by dimension. This
   algorithm is named after Walter E. Arnoldi in the general case and
-  after Cornelius Lanczos in the symmetric case. We begin with the
-  Arnoldi process, which leads to the GMRES iteration in thsi section
-  and continue with the conjugate gradient method, which is based on
-  the Lanczos process in the next one.
+  after Cornelius Lanczos in the symmetric case.
 \end{intro}
 
 \begin{Algorithm*}{arnoldi-1}{Arnoldi with Gram-Schmidt}
@@ -569,181 +253,67 @@ method only fails after the exact solution has been found.
   exactly when the Krylov space is invariant.
 \end{proof}
 
-\begin{todo}
-  Put this into an appendix
-\end{todo}
-
-\begin{Theorem}{normal-equations}
-  Let $\mata\in\R^{m\times n}$ with $m\ge n$ and $\vb\in\R^m$. Then, a vector $\vx$ is the solution to the minimization problem
+\begin{Lemma}{arnoldi-symmetric}
+  If the matrix $\mata$ is symmetric, the vectors of the Arnoldi
+  procedure admit the three-term recurrence relation
   \begin{gather}
-    \norm{\vb-\mata\vx}_2 \stackrel{!}{=} \min,
+    \delta_{j+1}\vv_{j+1} = \mata \vv_j - \gamma_j \vv_j - \delta_j\vv_{j-1}
   \end{gather}
-  if an only if $\vx$ solves the \define{normal equations}
+  with $\vv_0 = 0$, $\delta_1 = 0$ and
   \begin{gather}
-    \mata^T\mata\vx = \mata^T \vb.
+    \gamma_j =  h_{jj}, \qquad \delta_j = h_{j-1,j},
+    \qquad j=1,\dots
   \end{gather}
-\end{Theorem}
-
-\begin{Lemma}{oblique-normal}
-  Let $\mata\in\Rnn$ be invertible. Let $K$ be a subspace of $\Rnn$. Then, the oblique projection
-  \begin{gather}
-    \vv\in K, \qquad \vb-\mata\vv \perp \mata K,
-  \end{gather}
-  and the orthogonal projection
-  \begin{gather}
-    \vw\in K, \qquad \mata^T \vb-\mata^T\mata\vw \perp K,
-  \end{gather}
-  are identical.
+  In particular, explicit orthogonalization is only necessary with respect to
+  the previous two basis vectors.
 \end{Lemma}
 
-\begin{proof}
-  Homework.
-\end{proof}
-
 \begin{todo}
-  Write in incremental form? Add pseudocode version in incremental form?
+  Add reference to QR method for symmetrix matrices.
 \end{todo}
-
-\begin{Algorithm*}{gmres}{Generalized Minimal Residual}
-  Given $\vx^{(0)}\in\R^n$, the ``iterate'' $\vx^{(m)}$ of the
-  \define{GMRES} method is computed by the following steps.
-  \begin{enumerate}
-  \item Compute the Arnoldi basis $\matv_{m+1}$ of
-    $\krylov_{m+1}(\mata,\vr^{(0)})$ and the matrix $\overline\matH_m\in\R^{m+1\times m}$.
-  \item Solve the least squares problem
-    \begin{gather}
-      \norm{\beta\ve_1 - \overline\matH_m \vy_m}_2 \stackrel{!}{=} \min
-    \end{gather}
-    in $\R^m$ with $\beta = \norm{\vr^{(0)}}_2$.
-  \item Let
-    \begin{gather}
-      \vx^{(m)} = \vx^{(0)} + \matv_{m}\vy_m
-    \end{gather}
-  \end{enumerate}
-\end{Algorithm*}
-
-\begin{Theorem}{gmres-projection}
-  The GMRES method computes the update of the $m$-dimensional oblique
-  projection step. It minimizes the residual over the search space
-  $\vx^{(0)} +\krylov_m(\mata,\vr^{(0)}$ and there holds
-  \begin{gather}
-    \label{eq:gmres-norm}
-    \norm{\vr^{(m)}}_2 = \norm{\vb-\mata\vx^{(m)}}_2 =
-    \norm{\beta\ve_1 - \overline\matH \vy_m}_2.
-  \end{gather}
-\end{Theorem}
-
 \begin{proof}
-  We use the equivalence between minimizing the residual and the
-  solution to the normal equations, namely
-  \slideref{Theorem}{normal-equations}. According to
-  \slideref{Theorem}{arnoldi-projection}, we obtain
-  \begin{gather}
-    \matv_m^T\mata^T\mata\matv_m
-    = \overline\matH_m^T \matv_{m+1}^T\matv_{m+1}\overline\matH_m
-    = \overline\matH_m^T\overline\matH_m.
-  \end{gather}
-  Thus, $\overline\matH_m^T\overline\matH_m$ is the Galerkin
-  projection of $\mata^T\mata$ to the subspace generated by
-  $\matv_m$. Furthermore, it is symmetric, positive definite, the
-  latter assuming $\mata$ is invertible.  Furthermore,
-  $\vr^{(0)} = \vb-\mata\vx^{(0)} = \beta\matv_{m+1}\ve_1$, such that
-  \begin{gather}
-    \matv_m^T\mata^T\vr^{(0)} = \beta\overline\matH_m \ve_1.
-  \end{gather}
-  Thus, the linear system
-  \begin{gather}
-    \overline\matH_m^T\overline\matH_m \vy_m = \beta\overline\matH_m \ve_1
-  \end{gather}
-  is the (orthogonal) Galerkin projection of the normal equations to
-  the search space. On the other hand, its solution solves the
-  minimization problem in the GMRES algorithm.
-
-  By the minimization property of the orthogonal projection, the error
-  after the projection step is minimal in the $\mata^T\mata$ norm,
-  which is equal to the Euclidean norm of the residual.
-
-  Finally, we have
-  \begin{align}
-    \vr^{(m)}
-    &= \vb-\mata\vx^{(0)} - \mata\matv_m\vy_m\\
-    &=\beta\matv_{m+1}\ve_1 - \matv_{m+1}\overline\matH_m\vy_m\\
-    &= \matv_{m+1}\left(\beta\ve_1 - \overline\matH_m\vy_m\right).
-  \end{align}
-  Since $\matv_{m+1}$ is orthogonal, this implies that
-  \begin{gather}
-    \norm{\vr^{(m)}}_2 = \norm{\beta\ve_1 - \overline\matH_m\vy_m}_2
-  \end{gather}
+  See also~\cite[Section 6.6.1]{Saad00}. From
+  \slideref{Theorem}{arnoldi-projection}, we realize that the
+  projected matrix $\matH_m$ of the Arnoldi method is symmetric if
+  $\mata$ is symmetric. Since it is Hessenberg by construction, we
+  conclude that it is tridiagonal. Since it is also the matrix of
+  coefficients in the Gram-Schmidt orthogonalization, the statement
+  becomes evident.
 \end{proof}
 
-\begin{remark}
-  \slideref{Algorithm}{gmres} should not be implemented as it is
-  presented, but rather in the fashion of an iterative method, where
-  $m$ is increased step by step. To this end, we observe that the
-  generation of the Arnoldi basis proceeds incrementally, adding new
-  vectors, but not changing the previous ones.
-
-  Therefore, $\overline\matH_{m+1}$ differs from $\overline\matH_{m}$
-  only by adding an additional row and column. Then, the least-squares
-  system is solved by computing the QR factorization of
-  $\overline\matH_{m+1}$, which again amounts to updating the last
-  column only.
-\end{remark}
-
-\begin{remark}
-  Equation~\eqref{eq:gmres-norm} implies in particular, that the norm
-  of the residual in the GMRES method can be computed without
-  computing a ``big'' matrix-vector operation $\mata\vx^{(m)}$, but is
-  indeed the misfit of the $m$-dimensional least-squares problem for
-  $\vy_m$. This implies on the other hand, that even the solution
-  $\vx^{(m)}$ should only be computed as soon as the resiudal is
-  sufficiently small.
-\end{remark}
-
-\begin{Lemma}{gmres-breakdown}
-  If the GMRES method breaks down at step $m$, then
-  $\vr^{(m)}=0$. Thus, the GMRES method only encounters a
-  \putindex{lucky breakdown}.
-\end{Lemma}
-
-\begin{remark}
-  The GMRES method encounters a problem if convergence is slow: the
-  effort for computing the last basis vector in $\matv_m$ is of order
-  $mn$, the effort for solving the least-squares problem is
-  $m^3$. Similarly, the storage requirement for $\matv_m$ is $mn$ and
-  for $\overline \matH_m$, it is $m^2$. Thus, the algorithm is
-  feasible for large sparse matrices only if $m\ll n$.
-
-  Therefore, we introduce two variants of the GMRES algorithm:
-  \begin{itemize}
-  \item Restarted GMRES simply deletes the whole basis $\matv_m$ and the matrix $\overline\matH_m$ every $k$-th step starts fresh.
-  \item Truncated GMRES orthogonalizes only with respect to the last
-    $k$ basis vectors.
-  \end{itemize}
-\end{remark}
-
-\begin{Algorithm*}{gmres-restart}{Restarted GMRES}
-  \begin{enumerate}
-  \item Choose a maximal dimension $m$ of the Krylov space
-  \item Begin with an initial guess $\vx^{(0)}$.
-  \item For $k>0$, given $\vx^{(k)}$, perform the GMRES method with
-    basis size $m$ to obtain $\vx^{(k+m)}$.
-  \item Check the stopping criterion as usual inside the GMRES method
-  \end{enumerate}
-\end{Algorithm*}
-
-\begin{Algorithm*}{gmres-truncated}{Truncated GMRES}
-  Run the GMRES method as usual, but in the Arnoldi process, only
-  orthogonalize with respect to the last $k$ vectors for fixed $k$.
+\begin{Algorithm*}{lanczos}{Lanczos}
+  \algtext*{EndIf}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Rnn$; $\quad\vv_1\in\R^n, \norm{\vv_1}_2 = 1$, $\vv_0=0$, $\delta_1=0$.
+    \For{$j=1,\dots,m$}
+    \State $\vw_j \gets \mata\vv_j - \delta_j \vv_{j-1}$
+    \State $\gamma_{j} \gets \scal(\vw_j,\vv_j)$
+    \State $\vw_j \gets \vw_j - \gamma_j\vv_i$
+    \State $\delta_{j+1} \gets \norm{\vw_j}_2$
+    \If{$\delta_{j+1}=0$} \textbf{stop}\EndIf
+    \State $\vv_{j+1} = \nicefrac{\vw_j}{\delta_{j+1}}$
+    \EndFor
+  \end{algorithmic}  
 \end{Algorithm*}
 
 \begin{remark}
-  Note that both modifications destroy the minimization property of the method.
+  The main difference between Arnoldi and Lanczos is the fact that
+  every step of the Lanczos process onle requires the previous two
+  vectors, while Arnoldi requires storing the whole history.
+
+  This implies, that Lanczos itself is much closer to the concept of
+  an iterative method than Arnoldi, weren't it for the computation of
+  $\vy_m$.
+
+  We will now develop a new algorithm based on the observation that
+  also the corrections for $\vx^{(m)}$ can be computed incrementally.
 \end{remark}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The Lanczos procedure and the conjugate gradient method}
+\subsection{The conjugate gradient method}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -809,49 +379,6 @@ method only fails after the exact solution has been found.
   considerably.
 \end{remark}
 
-\begin{Lemma}{arnoldi-symmetric}
-  If the matrix $\mata$ is symmetric, the vectors of the Arnoldi
-  procedure admit the three-term recurrence relation
-  \begin{gather}
-    \delta_{j+1}\vv_{j+1} = \mata \vv_j - \gamma_j \vv_j - \delta_j\vv_{j-1}
-  \end{gather}
-  with $\vv_0 = 0$, $\delta_1 = 0$ and
-  \begin{gather}
-    \gamma_j =  h_{jj}, \qquad \delta_j = h_{j-1,j},
-    \qquad j=1,\dots
-  \end{gather}
-  In particular, explicit orthogonalization is only necessary with respect to
-  the previous two basis vectors.
-\end{Lemma}
-
-\begin{todo}
-  Add reference to QR method for symmetrix matrices.
-\end{todo}
-\begin{proof}
-  See also~\cite[Section 6.6.1]{Saad00}. From
-  \slideref{Theorem}{arnoldi-projection}, we realize that the
-  projected matrix $\matH_m$ of the Arnoldi method is symmetric if
-  $\mata$ is symmetric. Since it is Hessenberg by construction, we
-  conclude that it is tridiagonal. Since it is also the matrix of
-  coefficients in the Gram-Schmidt orthogonalization, the statement
-  becomes evident.
-\end{proof}
-
-\begin{Algorithm*}{lanczos}{Lanczos}
-  \algtext*{EndIf}
-  \begin{algorithmic}[1]
-    \Require $\mata\in\Rnn$; $\quad\vv_1\in\R^n, \norm{\vv_1}_2 = 1$, $\vv_0=0$, $\delta_1=0$.
-    \For{$j=1,\dots,m$}
-    \State $\vw_j \gets \mata\vv_j - \delta_j \vv_{j-1}$
-    \State $\gamma_{j} \gets \scal(\vw_j,\vv_j)$
-    \State $\vw_j \gets \vw_j - \gamma_j\vv_i$
-    \State $\delta_{j+1} \gets \norm{\vw_j}_2$
-    \If{$\delta_{j+1}=0$} \textbf{stop}\EndIf
-    \State $\vv_{j+1} = \nicefrac{\vw_j}{\delta_{j+1}}$
-    \EndFor
-  \end{algorithmic}  
-\end{Algorithm*}
-
 \begin{Lemma*}{lanczos-linear}{Lanczos solver}
   The Galerkin approximation   \begin{align}
     x^{(m)} &\in x^{(0)} + \krylov_m(\mata,r^{(0)})\\
@@ -881,19 +408,6 @@ method only fails after the exact solution has been found.
   process is just a specialization of the Arnoldi process, they still
   hold.
 \end{proof}
-
-\begin{remark}
-  The main difference between Arnoldi and Lanczos is the fact that
-  every step of the Lanczos process onle requires the previous two
-  vectors, while Arnoldi requires storing the whole history.
-
-  This implies, that Lanczos itself is much closer to the concept of
-  an iterative method than Arnoldi, weren't it for the computation of
-  $\vy_m$.
-
-  We will now develop a new algorithm based on the observation that
-  also the corrections for $\vx^{(m)}$ can be computed incrementally.
-\end{remark}
 
 \begin{Lemma}{lanczos-incremental}
   Given the vector $\vx^{(m)}$ in the Lanczos solver, the vector
