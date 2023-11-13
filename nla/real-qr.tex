@@ -30,6 +30,15 @@
   See homework.
 \end{proof}
 
+\begin{Remark}{tridiagonal-storage}
+  While the mathematical structure of a tridiagonal matrix is that of
+  a matrix with its multiplication properties and QR factorization and
+  so on, its storage structure consists of two vectors, a diagonal
+  vector $\va\in\R^n$ and the upper and lower diagonal
+  $\vb\in\R^{n-1}$. Any efficient implementation of the tridiagonal QR
+  iteration must use such a reduced storage structure.
+\end{Remark}
+
 \begin{Lemma*}{perfect-shift-sym}{Perfect shift}
   Let $\matt\in\Rnn$ be an unreduced, symmetric, tridiagonal matrix,
   $\sigma\in\sigma(\matt)$, and $\matq\matr=\matt-\sigma\id$ the
@@ -101,7 +110,15 @@
   \end{algorithmic}
 \end{Algorithm*}
 
-%  \begin{todo}
+\begin{Remark}{tridiagonal-bulge}
+  Note that there is no storage space for the ``bulge element'' if the
+  matrix is stored in the format of two vectors.
+
+  Therefore, the bulge chasing algorithm must store the bulge element
+  separately and keep track of its position.
+\end{Remark}
+
+% \begin{todo}
 %\begin{example}
 %    Graphical representation of bulge chasing
 %\end{example}
@@ -135,7 +152,21 @@
   \putindex{Implicit Q Theorem}.
 \end{proof}
 
+\begin{Theorem}{wilkinson-convergence}
+  The QR iteration with Wilkinson shift and deflation converges for
+  every symmetric, tridiagonal matrix $\mata$.
+
+  Asymptotically, the convergence is quadratic, that is,
+  \begin{gather}
+    \abs{h_{nn}^{(k+1)} - \lambda_n} \le c \abs{h_{nn}^{(k)} - \lambda_n}^2.
+  \end{gather}
+
+  In many cases, it is even cubic.
+\end{Theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The eigenvalue problem for nonsymmetric real matrices}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{Theorem*}{real-schur-form}{The real Schur form}
   For every matrix $\mata\in \Rnn$ there is an orthogonal matrix
@@ -177,6 +208,14 @@
     \State $\matH_2 \gets \matr_2\matq_2 + \sigma_2\id$
   \end{algorithmic}
 \end{Algorithm*}
+
+\begin{Remark}{explicit-double-shift-no}
+  The explicit double-shift QR step is prone to introduce imaginary
+  parts into the matrices due to roundoff errors.
+
+  Never implement the explicit double step! We only introduced it to
+  develop the algorithm.
+\end{Remark}
 
 \begin{Lemma}{double-shift-matrix}
   Let $\sigma_1,\sigma_2\in\C$ be the eigenvalues of the $2\times2$-matrix

@@ -366,6 +366,10 @@
 
   If this happens in the center of the matrix, proceed with both
   remaining diagonal blocks separately.
+
+  Note that deflation changes the matrix in a ``nonorthogonal'' way
+  and thus changes the eigenvalues. Their accuracy will be determined
+  by the parameter $\eps$ in the end.
 \end{Algorithm*}
 
 \begin{remark}
@@ -379,13 +383,14 @@
 
 \begin{Algorithm*}{shifted-qr-iteration}{QR iteration with shift}
   \begin{algorithmic}[1]
-    \Require $\mata\in\Cnn$
-    \State $\matH_0 = \matq_0^*\mata\matq_0$\Comment{Hessenberg form}
+    \Require $\matH_0 in\Cnn$, Hessenberg, unreduced
     \For {$k=1,\ldots$ until convergence}
     \State $\matq_k\matr_k = \matH_{k-1} - \sigma_k\id$\Comment{QR factorization}
     \State $\matH_{k} = \matr_k\matq_k + \sigma_k\id$
     \EndFor
   \end{algorithmic}
+  There is an implicit form of the shifted QR step which follows
+  exactly the version outlined for the unshifted case.
 \end{Algorithm*}
 
 \begin{Lemma}{shifted-qr-similarity}
@@ -509,15 +514,66 @@
   case of Hermitian matrices.
 \end{remark}
 
+\begin{Algorithm*}{qr-step-deflation}{QR step with deflation}
+  In each step of the QR iteration, first set
+  \begin{gather}
+    h_{i,i-1} = 0, \qquad \text{where}\quad
+    \abs{h_{i,i-1}} \le \eps \left(\abs{h_{i,i}}+\abs{h_{i-1,i-1}}_{\vphantom{g}}\right).
+  \end{gather}
+
+  Then, partition the matrix
+  $\matH$ as
+  \begin{gather}
+    \matH =
+    \begin{pmatrix}
+      \matH_{11} & \matH_{12} & \matH_{13} \\
+      & \matH_{22} & \matH_{23}\\
+      && \matH_{33}
+    \end{pmatrix},
+  \end{gather}
+  where $\matH_{22}\in\R^{q\times q}$ and
+  $\matH_{33}\in\R^{p\times p}$ are chosen maximal such that
+  $\matH_{33}$ is upper \putindex{triangular} and $\matH_{22}$
+  is unreduced.
+
+  The shifted QR step is then applied to $\matH_{22}$ only. If the
+  eigenvectors are not computed, even the transformations of
+  $\matH_{12}$ and $\matH_{23}$ can be eliminated.
+\end{Algorithm*}
+
 \begin{remark}
-  At this point, we are missing two items to write a functioning algorithm.
-  \begin{enumerate}
-  \item The shifted QR iteration should be in implicit form.
-  \item We need a way to make sure that the shifted algorithm is only
-    applied to unreduced matrices.
-  \end{enumerate}
-  Both questions will be addressed in the upcoming section on real matrices.
+  When implementing \slideref{Algorithm}{qr-step-deflation}, we have
+  to be able to run a QR step on a submatrix. Allocating new memory
+  and copying the submatrix should be avoided since it comes at
+  considerable cost.
+
+  This means on the other hand, that the matrix $\matH_{22}$ will not
+  be stored as a consecutive array of $q\times q$ numbers. Depending
+  on whether the entries are sorted in row-major or column-major
+  order, there will either be a gap between each consecutive element
+  of a column or between the last element of one column and the first
+  element of the next.
+
+  Thus, the QR step operations must allow for a \define{stride}
+  between rows or columns. This can be achieved either by storing the
+  matrix as a sequence of column vectors, or by using strided versions
+  of the algorithms.
 \end{remark}
+
+\begin{Example*}{daxpy}{DAXPY}
+  The BLAS function daxpy computes
+  \begin{gather}
+    \vx \gets a \vx + \vy.
+  \end{gather}
+  It has the signature
+  \begin{lstlisting}[language=c]
+    int daxpy(int N, double A,
+              double* X, int INCX,
+              double* Y, int INCY);
+  \end{lstlisting}
+  The values \lstinline!INCX! and \lstinline!INCY! are used to
+  implement stride, possibly with different values in both vectors.
+\end{Example*}
 
 %%% Local Variables:
 %%% mode: latex

@@ -99,6 +99,8 @@
 \frame {\input {blocks/Remark-wilkinson-shift.tex}}
 \frame {\input {blocks/Example-wilkinson-failure.tex}}
 \frame {\input {blocks/Algorithm-exceptional-shift.tex}}
+\frame {\input {blocks/Algorithm-qr-step-deflation.tex}}
+\frame {\input {blocks/Example-daxpy.tex}}
 
 \subsection{Methods in real arithmetic}
 \frame{\subtoc}
@@ -106,21 +108,31 @@
 \frame{\subsubtoc}
 
 \frame {\input {blocks/Lemma-qr-tridiagonal.tex}
-  \input {blocks/Lemma-perfect-shift-sym.tex}}
+  \pause
+  \input {blocks/Remark-tridiagonal-storage.tex}}
+
+\frame {\input {blocks/Lemma-perfect-shift-sym.tex}}
 \frame {\input {blocks/Remark-real-symmetric-qr.tex}}
 \frame {\input {blocks/Algorithm-qr-explicit-shift.tex}}
 \frame {\input {blocks/Lemma-wilkinson-shift.tex}}
-\frame {\input {blocks/Notation-givens-specific.tex}
-  \input {blocks/Algorithm-implicit-symmetric-shift.tex}}
+\frame {\input {blocks/Algorithm-implicit-symmetric-shift.tex}
+  \pause
+  \input {blocks/Remark-tridiagonal-bulge.tex}}
 \frame {\input {blocks/Theorem-implicit-symmetric-shift.tex}}
+\frame {\input {blocks/Theorem-wilkinson-convergence.tex}}
 
 \subsubsection{The EVP for nonsymmetric real matrices}
 \frame{\subsubtoc}
 \frame {\input {blocks/Theorem-real-schur-form.tex}}
-\frame {\input {blocks/Algorithm-double-shift-step.tex}}
+\frame {\input {blocks/Algorithm-double-shift-step.tex}
+  \input {blocks/Remark-explicit-double-shift-no.tex}}
 \frame {\input {blocks/Lemma-double-shift-matrix.tex}}
 \frame {\input {blocks/Theorem-implicit-double-shift.tex}}
 \frame {\input {blocks/Algorithm-deflation-francis.tex}}
+
+\subsubsection{Computing eigenvectors}
+\frame{\subsubtoc}
+
 
 % \subsubsection{Singular Value Decomposition (SVD)}
 % \frame{\subsubtoc}
