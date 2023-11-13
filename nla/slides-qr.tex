@@ -1,0 +1,150 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Vector iterations}
+\frame{\subtoc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame {\input {blocks/Algorithm-vector-iteration.tex}}
+\frame {\input {blocks/Theorem-vector-iteration.tex}}
+\frame {\input {blocks/Remark-vector-iteration.tex}}
+\frame {\input {blocks/Lemma-Rayleigh-approximation.tex}}
+\frame {\input {blocks/Algorithm-vector-iteration-rayleigh.tex}}
+\frame {\input {blocks/Remark-vector-iteration.tex}}
+\frame {\input {blocks/Remark-vector-iteration-roundoff.tex}}
+
+\frame {\input {blocks/Algorithm-shifted-vector-iteration.tex}}
+\frame {\input {blocks/Definition-shifted-matrix-polynomial.tex}
+  \input {blocks/Lemma-matrix-polynomial.tex}}
+\frame {\input {blocks/Algorithm-polynomial-filtering.tex}}
+\frame {\input {blocks/Example-polynomial-filtering.tex}}
+\frame {\input {blocks/Algorithm-vector-iteration-polynomial.tex}}
+
+\frame {\input {blocks/Algorithm-subspace-iteration.tex}}
+\frame {\input {blocks/Theorem-convergence-subspace-iteration.tex}}
+\frame {\input {blocks/Definition-projection-distance.tex}
+  \input {blocks/Example-projection-distance.tex}}
+\frame {\input {blocks/Corollary-convergence-subspace-iteration.tex}}
+
+\subsection{The QR-iteration}
+
+\subsubsection{Definition and basic properties}
+\frame{\subsubtoc}
+
+\frame {\input {blocks/Algorithm-qr-iteration.tex}
+  \pause
+  \input {blocks/Lemma-qr-Schur.tex}}
+\frame {\input {blocks/Lemma-qr-1.tex}}
+
+\subsubsection{Hessenberg matrices}
+\frame{\subsubtoc}
+
+\frame {\input {blocks/Definition-hessenberg.tex}}
+\frame {\input {blocks/Algorithm-Hessenberg-qr-1.tex}}
+
+\begin{frame}
+  \frametitle{Example: 4-by-4-matrix}
+  \begin{gather*}
+    \matH \to \givens_{12}^*\matH
+    \visible<2->{\to \givens_{23}^*\givens_{12}^*\matH}
+    \visible<3->{\to \givens_{34}^*\givens_{23}^*\givens_{12}^*\matH = \matr}\\
+    \visible<3->{\matr\matq = \matr\givens_{12}\givens_{23}\givens_{34}}\\
+  \end{gather*}
+  \only<1>{\begin{tikzpicture}\input{fig/hessenberg-givens-1};\end{tikzpicture}}
+  \only<2>{\begin{tikzpicture}\input{fig/hessenberg-givens-2};\end{tikzpicture}}
+  \only<3>{\begin{tikzpicture}\input{fig/hessenberg-givens-3};\end{tikzpicture}}
+  \only<4>{
+    \begin{tikzpicture}\input{fig/hessenberg-givens-4};\end{tikzpicture}
+    \begin{tikzpicture}\input{fig/hessenberg-givens-5};\end{tikzpicture}
+    \begin{tikzpicture}\input{fig/hessenberg-givens-6};\end{tikzpicture}
+    \begin{tikzpicture}\input{fig/hessenberg-givens-6-result};\end{tikzpicture}}
+\end{frame}
+
+\frame {\input {blocks/Algorithm-Hessenberg-qr-2.tex}}
+\begin{frame}
+  \frametitle{Example: 4-by-4-matrix}
+    \begin{gather*}
+    \matH \to \givens_{12}^*\matH\givens_{12}
+    \visible<2->{\to \givens_{23}^*\givens_{12}^*\matH\givens_{12}\givens_{23}}
+    \visible<3->{\to \givens_{34}^*\givens_{23}^*\givens_{12}^*\matH\givens_{23}\givens_{34}}
+  \end{gather*}
+
+  \only<1>{\begin{tikzpicture}\input{fig/hessenberg-bulge-1};\end{tikzpicture}}
+  \only<2>{\begin{tikzpicture}\input{fig/hessenberg-bulge-2};\end{tikzpicture}}
+  \only<3>{\begin{tikzpicture}\input{fig/hessenberg-bulge-3};\end{tikzpicture}}  
+\end{frame}
+
+
+\frame {\input {blocks/Definition-hessenberg-unreduced.tex}
+  \pause
+  \input {blocks/Theorem-implicit-Q.tex}}
+\frame {\input {blocks/Definition-essentially-equal.tex}
+  \input {blocks/Corollary-Hessenberg-qr-equivalence.tex}}
+\frame {\input {blocks/Problem-Hessenberg-qr-effort.tex}
+  \input {blocks/Corollary-Hessenberg-qr.tex}}
+\frame {\input {blocks/Theorem-Hessenberg-householder.tex}}
+\frame {\input {blocks/Algorithm-qr-method.tex}}
+
+
+\subsubsection{Deflation and shifts}
+\frame{\subsubtoc}
+
+\frame {\input {blocks/Theorem-qr-reduction.tex}}
+\frame {\input {blocks/Algorithm-qr-deflation.tex}}
+\frame {\input {blocks/Definition-hessenberg-unreduced.tex}}
+\frame {\input {blocks/Theorem-implicit-Q.tex}}
+
+\frame {\input {blocks/Algorithm-shifted-qr-iteration.tex}
+  \input {blocks/Lemma-shifted-qr-similarity.tex}}
+\frame {\input {blocks/Lemma-perfect-shift.tex}}
+\frame {\input {blocks/Example-rayleigh-shift.tex}}
+\frame {\input {blocks/Definition-wilkinson-shift.tex}}
+\frame {\input {blocks/Remark-wilkinson-shift.tex}}
+\frame {\input {blocks/Example-wilkinson-failure.tex}}
+\frame {\input {blocks/Algorithm-exceptional-shift.tex}}
+\frame {\input {blocks/Algorithm-qr-step-deflation.tex}}
+\frame {\input {blocks/Example-daxpy.tex}}
+
+\subsection{Methods in real arithmetic}
+\frame{\subtoc}
+\subsubsection{The real symmetric EVP}
+\frame{\subsubtoc}
+
+\frame {\input {blocks/Lemma-qr-tridiagonal.tex}
+  \pause
+  \input {blocks/Remark-tridiagonal-storage.tex}}
+
+\frame {\input {blocks/Lemma-perfect-shift-sym.tex}}
+\frame {\input {blocks/Remark-real-symmetric-qr.tex}}
+\frame {\input {blocks/Algorithm-qr-explicit-shift.tex}}
+\frame {\input {blocks/Lemma-wilkinson-shift.tex}}
+\frame {\input {blocks/Algorithm-implicit-symmetric-shift.tex}
+  \pause
+  \input {blocks/Remark-tridiagonal-bulge.tex}}
+\frame {\input {blocks/Theorem-implicit-symmetric-shift.tex}}
+\frame {\input {blocks/Theorem-wilkinson-convergence.tex}}
+
+\subsubsection{The EVP for nonsymmetric real matrices}
+\frame{\subsubtoc}
+\frame {\input {blocks/Theorem-real-schur-form.tex}}
+\frame {\input {blocks/Algorithm-double-shift-step.tex}
+  \input {blocks/Remark-explicit-double-shift-no.tex}}
+\frame {\input {blocks/Lemma-double-shift-matrix.tex}}
+\frame {\input {blocks/Theorem-implicit-double-shift.tex}}
+\frame {\input {blocks/Algorithm-deflation-francis.tex}}
+
+\subsubsection{Computing eigenvectors}
+\frame{\subsubtoc}
+
+
+% \subsubsection{Singular Value Decomposition (SVD)}
+% \frame{\subsubtoc}
+% \frame {\input {blocks/Definition-svd.tex}
+%   \input {blocks/Theorem-svd.tex}}
+% \frame {\input {blocks/Corollary-svd-rank.tex}
+%   \input {blocks/Corollary-svd-inverse.tex}}
+% \frame {\input {blocks/Remark-svd-geometry.tex}}
+% \frame {\input {blocks/Lemma-svd-ata.tex}}
+% \frame {\input {blocks/Theorem-implicit-Q.tex}}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End:

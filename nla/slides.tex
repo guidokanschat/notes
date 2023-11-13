@@ -1,4 +1,4 @@
-\documentclass[ignorenonframetext,notheorems,hidelinks,aspectratio=1610]{beamer}
+\documentclass[notheorems,hidelinks,aspectratio=1610]{beamer}
 %\usetheme[compress]{JuanLesPins}
 \usetheme{JuanLesPins}
 \usecolortheme{iwr}
@@ -25,57 +25,19 @@
 \title{Numerical Linear Algebra}
 \author{Guido Kanschat}
 \date{\today}
+
+\input{slides-only}
+
 \begin{document}
 \frame{\maketitle}
 \frame{\frametitle{Overview}\tableofcontents[hideallsubsections]}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{QR Factorization}
+\section{Orthogonalization and QR Factorization}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The Gram-Schmidt algorithm}
-\frame{\sectoc}
-
-\frame {\input {blocks/Algorithm-gram-schmidt.tex}
-  \input {blocks/Theorem-gram-schmidt.tex}}
-
-\frame {\input {blocks/Algorithm-gram-schmidt-implementation.tex}}
-\frame {\input {blocks/Problem-gram-schmidt-implementation.tex}}
-
-\frame {\input {blocks/Notation-column-vectors.tex}}
-\frame {\input {blocks/Notation-matrix-linear-combination.tex}}
-
-\frame {\input {blocks/Definition-qr-decomposition.tex}}
-\frame {\input {blocks/Lemma-qr-columns.tex}
-  \input {blocks/Theorem-qr-existence.tex}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Householder reflection}
-\frame{\subtoc}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\frame {\input {blocks/Definition-householder-transformation.tex}}
-\frame {\input {blocks/Lemma-householder-symmetry.tex}}
-\frame {\input {blocks/Lemma-householder-qr.tex}}
-\frame {\input {blocks/Notation-colon-notation.tex}}
-\frame {\input {blocks/Problem-householder-compute.tex}}
-\frame {\input {blocks/Algorithm-householder-multiplication.tex}}
-\frame {\input {blocks/Problem-householder-product.tex}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Givens rotation}
-\frame{\subtoc}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\frame {\input {blocks/Definition-givens.tex}}
-\frame {\input {blocks/Lemma-givens-computation.tex}}
-\frame {\input {blocks/Notation-givens-specific.tex}}
-\frame {\input {blocks/Algorithm-givens-computation.tex}}
-\frame {\input {blocks/Definition-givens-complex.tex}}
-\frame {\input {blocks/Lemma-givens-computation-complex.tex}}
-\frame {\input {blocks/Lemma-givens-computation-complex-2.tex}}
-\frame {\input {blocks/Algorithm-givens-multiplication.tex}}
+\include{slides-ortho}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -83,396 +45,27 @@
 \frame{\sectoc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Mathematical background}
-\subsubsection{Definition of EVP}
-\frame{\subsubtoc}
-\frame {\input {blocks/Definition-eigenvalue.tex}}
-\frame {\input {blocks/Definition-eigenvalue-algebraic.tex}
-  \pause
-  \input {blocks/Lemma-eigenvalue-equivalent.tex}}
-\frame {\input {blocks/Theorem-eigenvalue-count.tex}
-  \pause
-  \input {blocks/Definition-eigenvalue-simple.tex}}
-\frame {\input {blocks/Definition-right-left-ev.tex}
-\input {blocks/Lemma-eigenvalues-conjugate.tex}}
-\frame {\input {blocks/Definition-invariant-subspace.tex}}
-\frame {\input {blocks/Theorem-invariant-eigenvalues.tex}}
-\frame {\input {blocks/Definition-spectral-projector.tex}}
-\frame {\input {blocks/Definition-dominant_ev.tex}}
-
-\subsubsection{Bases and matrices}
-\frame{\subsubtoc}
-\frame {\input {blocks/Lemma-change-of-basis.tex}}
-\frame {\input {blocks/Corollary-change-of-basis.tex}}
-\frame {\input {blocks/Definition-similar-matrix.tex}
-  \input {blocks/Lemma-similarity-equivalence.tex}}
-\frame {\input {blocks/Lemma-matrix-basis-change.tex}}
-\frame {\input {blocks/Theorem-Jordan-canonical-form.tex}}
-\frame {\input {blocks/Definition-diagonalizable.tex}
-  \input {blocks/Theorem-matrix-functions.tex}}
-\frame {\input {blocks/Theorem-simultaneous-diagonalization.tex}}
-
-% Move this!
-\frame {\input {blocks/Lemma-similarity-eigenvalues.tex}}
-
-\subsubsection{The Schur canonical form}
-\frame{\subsubtoc}
-
-\frame {\input {blocks/Theorem-schur-canonical.tex}
-  \input {blocks/Lemma-schur-canonical-1.tex}}
-\frame {\input {blocks/Lemma-schur-canonical-2.tex}
-  \input {blocks/Definition-dominant-invariant-subspace.tex}}
-
-\subsubsection{Normal and Hermitian matrices}
-\frame{\subsubtoc}
-
-\frame {\input {blocks/Definition-sesqui.tex}}
-\frame {\input {blocks/Definition-inner-product.tex}
-  \input {blocks/Example-Euclidean-ip.tex}}
-\frame {\input {blocks/Definition-conjugate-matrix.tex}}
-\frame {\input {blocks/Definition-orthonormal-unitary.tex}}
-
-\frame {\input {blocks/Definition-normal-Hermitian.tex}}
-\frame {\input {blocks/Lemma-Hermitian-eigenvalues-real.tex}
-\input {blocks/Theorem-Hermitian-diagonalizable.tex}
-\input {blocks/Corollary-symmetric-diagonalizable.tex}}
-\frame {\input {blocks/Lemma-normal-properties.tex}}
-\frame {\input {blocks/Theorem-normal-diagonalizable.tex}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Well-posedness and bounds}
-\frame{\subtoc}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Bounds on eigenvalues}
-\frame {\input {blocks/Definition-matrix-norm.tex}}
-\frame {\input {blocks/Lemma-bound-by-norm.tex}}
-\frame {\input {blocks/Lemma-pre-gershgorin.tex}}
-\frame {\input {blocks/Theorem-gershgorin.tex}}
-\subsubsection{The Rayleigh quotient}
-\frame {\input {blocks/Definition-rayleigh-quotient.tex}}
-\frame {\input {blocks/Theorem-minmax.tex}}
-
-\subsubsection{Conditioning of the EVP}
-
-\frame {\input {blocks/Definition-conditioning-eigenvalue.tex}}
-\frame {\input {blocks/Example-characteristic-polynomial.tex}}
-\frame {\input {blocks/Example-conditioning-Jordan-block.tex}
-  \input {blocks/Theorem-Jordan-block-ill-conditioned.tex}}
-\frame {\input {blocks/Theorem-bauer-fike.tex}
-  \only<1>{\input {blocks/Definition-matrix-condition.tex}}
-  \only<2>{\input {blocks/Corollary-conditioning-eigenvalues-normal.tex}}}
-\frame {\input {blocks/Theorem-conditioning-eigenvalue-single.tex}}
-
-\frame {\input {blocks/Example-conditioning-eigenvectors.tex}
-  \pause
-  \input {blocks/Remark-conditioning-eigenvectors.tex}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Vector iterations}
-\frame{\subtoc}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame {\input {blocks/Algorithm-vector-iteration.tex}}
-\frame {\input {blocks/Theorem-vector-iteration.tex}}
-\frame {\input {blocks/Remark-vector-iteration.tex}}
-\frame {\input {blocks/Lemma-Rayleigh-approximation.tex}}
-\frame {\input {blocks/Algorithm-shifted-vector-iteration.tex}}
-% \frame {\input {blocks/Algorithm-inverse-iteration.tex}}
-% \frame {\input {blocks/Algorithm-Rayleigh-iteration.tex}}
-
-\subsection{Subspace iterations, the QR-iteration}
-\frame{\subtoc}
-
-\frame {\input {blocks/Algorithm-qr-iteration.tex}}
-
-\subsubsection{Definition of the methods}
-\frame {\input {blocks/Algorithm-subspace-iteration.tex}}
-
-\frame {\input {blocks/Theorem-schur-canonical.tex}}
-\frame {\input {blocks/Lemma-schur-canonical-1.tex}}
-\frame {\input {blocks/Lemma-schur-canonical-2.tex}}
-
-\frame {\input {blocks/Definition-dominant-invariant-subspace.tex}}
-\frame {\input {blocks/Definition-projection-distance.tex}
-  \input {blocks/Example-projection-distance.tex}}
-
-\frame {\input {blocks/Theorem-convergence-subspace-iteration.tex}}
-
-\frame {\input {blocks/Algorithm-qr-iteration.tex}
-  \input {blocks/Lemma-qr-1.tex}}
-
-\subsubsection{Implementation issues}
-\frame{\subsubtoc}
-
-\frame {\input {blocks/Definition-hessenberg.tex}}
-\frame {\input {blocks/Algorithm-Hessenberg-qr.tex}}
-
-\begin{frame}
-  \frametitle{Example: 4-by-4-matrix}
-  \begin{gather*}
-    \matH \to \givens_{12}^*\matH
-    \visible<2->{\to \givens_{23}^*\givens_{12}^*\matH}
-    \visible<3->{\to \givens_{34}^*\givens_{23}^*\givens_{12}^*\matH = \matr}\\
-    \visible<3->{\matr\matq = \matr\givens_{12}\givens_{23}\givens_{34}}\\
-  \end{gather*}
-    \only<1>{\begin{tikzpicture}\input{fig/hessenberg-givens-1};\end{tikzpicture}}
-    \only<2>{\begin{tikzpicture}\input{fig/hessenberg-givens-2};\end{tikzpicture}}
-    \only<3>{\begin{tikzpicture}\input{fig/hessenberg-givens-3};\end{tikzpicture}}
-    \only<4>{
-      \begin{tikzpicture}\input{fig/hessenberg-givens-4};\end{tikzpicture}
-      \begin{tikzpicture}\input{fig/hessenberg-givens-5};\end{tikzpicture}
-      \begin{tikzpicture}\input{fig/hessenberg-givens-6};\end{tikzpicture}
-      \begin{tikzpicture}\input{fig/hessenberg-givens-6-result};\end{tikzpicture}}
-  \end{frame}
-\frame {\input {blocks/Theorem-Hessenberg-qr.tex}}
-\frame {\input {blocks/Corollary-Hessenberg-qr.tex}}
-\frame {\input {blocks/Theorem-Hessenberg-householder.tex}}
-
-\frame {\input {blocks/Algorithm-qr-method.tex}}
-
-\frame {\input {blocks/Theorem-hessenberg-qr-convergence.tex}}
-
-\subsubsection{Deflation and shifts}
-\frame {\input {blocks/Theorem-qr-reduction.tex}}
-\frame {\input {blocks/Algorithm-qr-deflation.tex}}
-\frame {\input {blocks/Definition-hessenberg-unreduced.tex}}
-\frame {\input {blocks/Theorem-implicit-Q.tex}}
-
-\frame {\input {blocks/Algorithm-shifted-qr-iteration.tex}
-  \input {blocks/Lemma-shifted-qr-convergence.tex}}
-\frame {\input {blocks/Lemma-perfect-shift.tex}}
-\frame {\input {blocks/Example-rayleigh-shift.tex}}
-\frame {\input {blocks/Definition-wilkinson-shift.tex}}
-\frame {\input {blocks/Remark-wilkinson-shift.tex}}
-\frame {\input {blocks/Algorithm-qr-deflation.tex}}
-
-\subsection{Methods in real arithmetic}
-\frame{\subtoc}
-\subsubsection{The real symmetric EVP}
-\frame{\subsubtoc}
-
-\frame {\input {blocks/Lemma-qr-tridiagonal.tex}}
-\frame {\input {blocks/Lemma-perfect-shift-sym.tex}}
-\frame {\input {blocks/Remark-real-symmetric-qr.tex}}
-\frame {\input {blocks/Algorithm-qr-explicit-shift.tex}}
-\frame {\input {blocks/Lemma-wilkinson-shift.tex}}
-\frame {\input {blocks/Notation-givens-specific.tex}
-  \input {blocks/Algorithm-implicit-symmetric-shift.tex}}
-\frame {\input {blocks/Theorem-implicit-symmetric-shift.tex}}
-
-\subsubsection{The EVP for nonsymmetric real matrices}
-\frame{\subsubtoc}
-\frame {\input {blocks/Theorem-real-schur-form.tex}}
-\frame {\input {blocks/Algorithm-double-shift-step.tex}}
-\frame {\input {blocks/Lemma-double-shift-matrix.tex}}
-\frame {\input {blocks/Theorem-implicit-double-shift.tex}}
-\frame {\input {blocks/Algorithm-deflation-francis.tex}}
-
-% \subsubsection{Singular Value Decomposition (SVD)}
-% \frame{\subsubtoc}
-% \frame {\input {blocks/Definition-svd.tex}
-%   \input {blocks/Theorem-svd.tex}}
-% \frame {\input {blocks/Corollary-svd-rank.tex}
-%   \input {blocks/Corollary-svd-inverse.tex}}
-% \frame {\input {blocks/Remark-svd-geometry.tex}}
-% \frame {\input {blocks/Lemma-svd-ata.tex}}
-% \frame {\input {blocks/Theorem-implicit-Q.tex}}
+\include{slides-background}
+\include{slides-conditioning}
+\include{slides-qr}
 
 \section{Solving Large Sparse Linear Systems}
 \frame{\sectoc}
-\subsection{Motivation and sparse matrices}
-\frame {\input {blocks/Definition-sparse-matrix.tex}}
-\frame {\input {blocks/Example-page-rank.tex}}
-\frame {\input {blocks/Example-csr.tex}}
-\frame {\input {blocks/Remark-algorithmic-matrix.tex}}
 
-\subsection{Basic iterations}
-\frame{\subtoc}
-\frame {\input {blocks/Definition-jacobi.tex}
-  \input {blocks/Definition-gauss-seidel.tex}}
-\frame {\input {blocks/Definition-richardson-iteration.tex}}
-\frame {\input {blocks/Definition-matrix-iteration.tex}}
-\frame {\input {blocks/Lemma-Jacobi-gs-matrices.tex}}
+\include{slides-sparse}
+\include{slides-krylov}
+\include{slides-arnoldi}
+\include{slides-cg}
+\include{slides-krylov-end}
 
-\frame {\input {blocks/Theorem-bfpt.tex}}
-\frame {\input {blocks/Corollary-bfp-estimates.tex}}
-\frame {\input {blocks/Corollary-matrix-norm-convergence.tex}}
-\frame {\input {blocks/Example-convergence-row-sum.tex}}
-\frame {\input {blocks/Example-matrix-norm-convergence.tex}}
-
-\frame {\input {blocks/Definition-spectral-radius.tex}}
-\frame {\input {blocks/Lemma-spectral-radius.tex}}
-\frame {\input {blocks/Theorem-matrix-radius-convergence.tex}}
-\frame {\input {blocks/Remark-contraction-vs-convergence.tex}}
-\frame {\input {blocks/Theorem-richardson-convergence.tex}}
-\frame {\input {blocks/Remark-richardson-convergence.tex}}
-\frame {\input {blocks/Definition-convergence-rate-logarithmic.tex}}
-
-\subsection{Krylov-space methods}
-\subsubsection{Projection methods}
-\frame{\subtoc}
-\frame {\input {blocks/Definition-projection.tex}}
-\frame {\input {blocks/Lemma-projection-complement.tex}}
-\frame {\input {blocks/Lemma-projection-spaces.tex}}
-\frame {\input {blocks/Definition-projection-spaces-orthogonal.tex}
-  \input {blocks/Lemma-projection-spaces-orthogonal.tex}}
-\frame {\input {blocks/Definition-biorthogonal.tex}}
-\frame {\input {blocks/Lemma-projection-basis.tex}}
-
-\frame {\input {blocks/Definition-galerkin-method.tex}}
-\frame {\input {blocks/Definition-projection-step.tex}}
-\frame {\input {blocks/Example-projection-gauss-seidel.tex}}
-
-\frame {\input {blocks/Definition-projection-method-matrix.tex}}
-\frame {\input {blocks/Theorem-projected-invertible.tex}}
-\frame {\input {blocks/Theorem-projection-orthogonal-optimal.tex}}
-\frame {\input {blocks/Theorem-projection-oblique-optimal.tex}}
-\frame {\input {blocks/Example-projection-1d.tex}}
-
-\frame {\input {blocks/Algorithm-steepest-descent-algol.tex}
-  \input {blocks/Lemma-steepest-descent.tex}}
-\frame {\input {blocks/Remark-convergence-residual.tex}}
-\frame {\input {blocks/Algorithm-steepest-descent-python1.tex}}
-\frame {\input {blocks/Algorithm-steepest-descent-python2.tex}}
-\frame {\input {blocks/Algorithm-minimal-residual-algol.tex}
-  \input {blocks/Lemma-minimal-residual.tex}}
-\begin{frame}
-  \begin{columns}
-    \begin{column}{.48\textwidth}
-      \input {blocks/Algorithm-steepest-descent-algol.tex}
-    \end{column}
-    \begin{column}{.48\textwidth}
-      \input {blocks/Algorithm-minimal-residual-algol.tex}
-    \end{column}
-  \end{columns}
-\end{frame}
-\frame {\input {blocks/Lemma-lucky-breakdown.tex}}
-\frame {\input {blocks/Lemma-kantorovich-inequality.tex}}
-\frame {\input {blocks/Theorem-steepest-descent-convergence.tex}}
-\frame {\input {blocks/Theorem-minimal-residual-convergence.tex}}
-
-\subsubsection{Krylov space methods}
-\frame{\subsubtoc}
-\frame {\input {blocks/Definition-krylov-space.tex}}
-\frame {\input {blocks/Definition-grade-of-v.tex}}
-\frame {\input {blocks/Lemma-krylov-polynomial.tex}}
-\frame {\input {blocks/Lemma-krylov-projector.tex}}
-
-\subsubsection{Arnoldi process and GMRES}
-\frame{\subsubtoc}
-\frame {\input {blocks/Algorithm-arnoldi-1.tex}}
-\frame {\input {blocks/Lemma-arnoldi-krylov.tex}
-  \pause
-  \input{blocks/Theorem-gram-schmidt}
-}
-\frame {\input {blocks/Algorithm-arnoldi-householder.tex}}
-\frame {\input {blocks/Lemma-arnoldi-householder.tex}
-  \pause
-  \input{blocks/Lemma-qr-columns}
-}
-\frame {\input {blocks/Theorem-arnoldi-projection.tex}}
-\frame {\input {blocks/Lemma-arnoldi-breakdown.tex}}
-\frame {\input {blocks/Theorem-arnoldi-linear-system.tex}}
-\frame {\input {blocks/Theorem-arnoldi-linear-residual.tex}}
-
-\frame {\input {blocks/Theorem-normal-equations.tex}}
-\frame {\input {blocks/Lemma-oblique-normal.tex}}
-\frame {\input {blocks/Algorithm-gmres.tex}}
-\frame {\input {blocks/Theorem-gmres-projection.tex}
-\footnotesize\input {blocks/Theorem-arnoldi-projection.tex}}
-\frame {\input {blocks/Lemma-gmres-breakdown.tex}}
-\frame {\input {blocks/Algorithm-gmres-restart.tex}}
-\frame {\input {blocks/Algorithm-gmres-truncated.tex}}
-
-\subsubsection{Lanczos process and cg}
-\frame{\subsubtoc}
-\frame {\input {blocks/Lemma-arnoldi-symmetric.tex}}
-\frame {\input {blocks/Algorithm-lanczos.tex}}
-
-\frame {\input {blocks/Theorem-arnoldi-linear-system.tex}}
-\frame {\input {blocks/Theorem-arnoldi-linear-residual.tex}}
-
-\frame {\input {blocks/Lemma-lanczos-linear.tex}}
-\frame {\input {blocks/Lemma-lanczos-incremental.tex}}
-\frame {\input {blocks/Lemma-lanczos-orthogonality.tex}}
-\frame {\input {blocks/Algorithm-cg.tex}}
-\frame {\input {blocks/Lemma-cg-orthogonality.tex}}
-
-\frame {\input {blocks/Theorem-projection-orthogonal-optimal.tex}}
-\frame {\input {blocks/Lemma-krylov-polynomial.tex}}
-
-\subsubsection{Error analysis}
-\frame{\subsubtoc}
-
-\frame {\input {blocks/Theorem-cg-optimality.tex}
-  \pause
-  \input {blocks/Corollary-cg-vs-descent}}
-\frame {\input {blocks/Corollary-cg-optimality-spectrum.tex}}
-
-\frame {\input {blocks/Definition-chebyshev-polynomials.tex}}
-\frame {\input {blocks/Lemma-chebyshev-representation.tex}}
-\frame {\input {blocks/Lemma-chebyshev-abscissae.tex}}
-\frame {\input {blocks/Theorem-chebyshev-minimal-1.tex}}
-\frame {\input {blocks/Lemma-chebyshev-growth.tex}}
-\frame {\input {blocks/Corollary-chebyshev-minimal-2.tex}}
-
-\frame {\input {blocks/Corollary-cg-condition-number.tex}}
-\frame {\input {blocks/Theorem-gmres-optimality.tex}}
-\frame {\input {blocks/Corollary-gmres-estimate.tex}}
-\frame {\input {blocks/Theorem-gmres-pos-def.tex}}
-
-\subsubsection{Lanczos Biorthogonalization}
-\frame{\subsubtoc}
-\frame {\input {blocks/Lemma-projection-basis.tex}}
-\frame {\input {blocks/Algorithm-bi-lanczos.tex}}
-\frame {\input {blocks/Theorem-bi-lanczos-projection.tex}}
-
-\subsubsection{Preconditioning}
-\frame{\subsubtoc}
-\frame {\input {blocks/Definition-preconditioned-system.tex}}
-\frame {\input {blocks/Definition-preconditioner.tex}}
-\frame {\input {blocks/Lemma-preconditioner-symmetry}
-  \pause
-  \input {blocks/Algorithm-lanczos.tex}}
-\frame {\input {blocks/Algorithm-pcg.tex}}
 
 \section{Large Sparse Eigenvalue Problems}
 \frame{\sectoc}
 
-\subsection{Projected subspace iteration}
-\frame {\input {blocks/Definition-galerkin-ev.tex}}
-\frame {\input {blocks/Algorithm-rayleigh-ritz.tex}}
-\frame {\input {blocks/Definition-ritz-values.tex}}
-\frame {\input {blocks/Lemma-ritz-invariant.tex}}
-\frame {\input {blocks/Lemma-Courant-Fischer-Ritz.tex}}
-\frame {\input {blocks/Lemma-ritz-rayleigh-estimate.tex}}
-\frame {\input {blocks/Lemma-ritz-estimate-sine.tex}}
 
-\frame {\input {blocks/Algorithm-ev-projection.tex}}
-\frame {\input {blocks/Definition-ritz-values.tex}}
-\frame {\input {blocks/Theorem-ritz-convergence.tex}}
-
-\subsection{The Lanczos method}
-
-\frame {\input {blocks/Algorithm-lanczos.tex}}
-\frame {\input {blocks/Algorithm-ev-lanczos.tex}}
-\frame {\input {blocks/Algorithm-cg.tex}}
-\frame {\input {blocks/Lemma-cg-tridiagonal.tex}}
-\frame {\input {blocks/Lemma-lanczos-angle.tex}}
-\frame {\input {blocks/Theorem-lanczos-angle.tex}}
-\frame {\input {blocks/Theorem-lanczos-eigenvalue-estimate.tex}}
-
-\subsection{The Arnoldi method}
-
-\frame {\input {blocks/Algorithm-ev-arnoldi.tex}}
-\frame {\input {blocks/Definition-arnoldi-factorization.tex}}
-\frame {\input {blocks/Lemma-ev-arnoldi-a-posteriori.tex}}
-\frame {\input {blocks/Corollary-ev-arnoldi-breakdown.tex}}
-\frame {\input {blocks/Algorithm-iram-concept.tex}}
-\frame {\input {blocks/Theorem-arnoldi-projection.tex}}
-\frame {\input {blocks/Lemma-perfect-shift.tex}}
-\frame {\input {blocks/Lemma-arnoldi-truncation.tex}}
-\frame {\input {blocks/Algorithm-arnoldi-reorthogonalization}}
-\frame {\input {blocks/Algorithm-irlm.tex}}
+\include{slides-ritz}
+\include{slides-evp-lanczos}
+\include{slides-evp-arnoldi}
 
 
 \section*{Bibliography}

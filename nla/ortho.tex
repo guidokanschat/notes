@@ -365,11 +365,6 @@
   the real case, this simplifies to $e^{i\phi} = -1$.
 \end{proof}
 
-\begin{todo}
-  GM: \\
-  To avoid loss of significance in the computation of the first component of \(\vw_\phi\), we choose \(\phi\) as the phase of
-  \(-y_1\). In the real case, this simplifies to \(e^{i \phi} = -1\).
-\end{todo}
 
 \begin{intro}
   \label{intro:ortho:householder-storage}
@@ -460,9 +455,6 @@
    This algorithm requires $2n+1$ multiplications and $2n$ additions
    compared to $n^2$ for a general matrix vector product.
 \end{Algorithm}
-\begin{todo}
-  GM: The matrix can be stored in \(n\) floating point values, by storing \(w\). Storage of \(\beta\) is not required.
-\end{todo}
 
 \begin{Problem}{householder-product}
   According to section~\ref{sec:ortho:qr:q-product}, the matrix
@@ -620,8 +612,11 @@
     \begin{pmatrix}
       -r\\0
     \end{pmatrix}
-    .    
-  \end{gather}    
+    .
+  \end{gather}
+\end{todo}
+\begin{todo}
+  GM: In the definition of \(s\) the minus has to be removed
 \end{todo}
 
 \begin{remark}

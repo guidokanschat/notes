@@ -1,0 +1,35 @@
+\node
+[matrix of math nodes,left delimiter=(,right delimiter=)] (m)  at (0,0)
+{
+  X&X&X&X\\
+  Y&X&X&X\\
+  0&X&X&X\\
+  0&0&X&X\\
+};
+
+\node
+[matrix of math nodes,left delimiter=(,right delimiter=)] (r)  at (4.5,0)
+{
+  X&X&X&X\\
+  0&X&X&X\\
+  0&X&X&X\\
+  0&0&X&X\\
+};
+\node
+[matrix of math nodes,left delimiter=(,right delimiter=)] (e)  at (9,0)
+{
+  X&X&X&X\\
+  X&X&X&X\\
+  X&X&X&X\\
+  0&0&X&X\\
+};
+
+\draw[->,thick] (1.75,0) -- node[above] {$\matg_{12}^*\matH$} (2.75,0);
+\draw[->,thick] (6.25,0) -- node[above] {$\matH \matg_{12}$} (7.25,0);
+
+\begin{pgfonlayer}{bg}
+  \node[fit={(m-1-1.north west) (m-2-4.south east)},fill=yellow,inner sep=0,rounded corners=1mm]{};
+  \node[fit={(m-1-1.north west) (m-2-1.south east)},fill=green,inner sep=0,rounded corners=1mm]{};
+  \node[fit={(r-1-1.north west) (r-4-2.south east)},fill=yellow,inner sep=0,rounded corners=1mm]{};
+\end{pgfonlayer}
+
