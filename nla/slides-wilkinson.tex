@@ -1,0 +1,300 @@
+\begin{frame}{QR factorization of a triangular matrix}
+  \small
+  \begin{gather*}
+    \overline \mata_1 = \mata-\sigma \id,\qquad
+    \overline \mata_j = \matg_{j-1,j}^* \overline \mata_{j-1},\qquad
+    \overline a_k = a_{kk}-\sigma,\qquad
+    b_k = a_{k-1,k} = a_{k,k-1}
+  \end{gather*}
+  \begin{columns}
+    \begin{column}{.49\textwidth}
+      \begin{gather*}
+        \overline\mata_{%
+          \only<1>{1}
+          \only<2-3>{2}
+          \only<4-5>{3}
+          \only<6-7>{4}
+          \only<8>{{n-1}}
+          \only<9>{{n}}
+        } =
+        \only<1>{%
+          \begin{pmatrix}
+            \overline a_1 & b_2 & \\
+            b_2 & \overline a_2 & b_3 \\
+            & b_3 & \overline a_3 & b_4 \\
+            && b_4 & \overline a_4 & b_5 \\
+            &&& \ddots & \ddots & \ddots \\
+            &&&& b_{n-1} & \overline a_{n-1} & b_n \\
+            &&&&& b_n & \overline a_n
+          \end{pmatrix}
+        }
+        \only<2-3>{%
+          \begin{pmatrix}
+            p_1 & q_1 & r_1 \\
+            0 & x_2 & y_2 \\
+            & b_3 & \overline a_3 & b_4 \\
+            && b_4 & \overline a_4 & b_5 \\
+            &&& \ddots & \ddots & \ddots \\
+            &&&& b_{n-1} & \overline a_{n-1} & b_n \\
+            &&&&& b_n & \overline a_n
+          \end{pmatrix}
+        }
+        \only<4-5>{%
+          \begin{pmatrix}
+            p_1 & q_1 & r_1 \\
+            0 &p_2 & q_2 & r_2 \\
+            & 0 & x_3 & y_3 \\
+            && b_4 & \overline a_4 & b_5 \\
+            &&& \ddots & \ddots & \ddots \\
+            &&&& b_{n-1} & \overline a_{n-1} & b_n \\
+            &&&&& b_n & \overline a_n
+          \end{pmatrix}
+        }
+        \only<6-7>{%
+          \begin{pmatrix}
+            p_1 & q_1 & r_1 \\
+            0 &p_2 & q_2 & r_2 \\
+            & 0 & p_3 & p_3 &r_3 \\
+            && 0 & x_4 & y_5 \\
+            &&& \ddots & \ddots & \ddots \\
+            &&&& b_{n-1} & \overline a_{n-1} & b_n \\
+            &&&&& b_n & \overline a_n
+          \end{pmatrix}
+        }
+        \only<8>{%
+          \begin{pmatrix}
+            p_1 & q_1 & r_1 \\
+            0 &p_2 & q_2 & r_2 \\
+            & 0 & p_3 & q_3 &r_3 \\
+            && 0 & p_4 & q_4 & r_4 \\
+            &&& \ddots & \ddots & \ddots & \ddots \\
+            &&&& 0 & x_{n-1} & y_{n-1} \\
+            &&&&& b_n & \overline a_n
+          \end{pmatrix}
+        }
+        \only<9>{%
+          \begin{pmatrix}
+            p_1 & q_1 & r_1 \\
+            0 &p_2 & q_2 & r_2 \\
+            & 0 & p_3 & q_3 &r_3 \\
+            && 0 & p_4 & q_4 & r_4 \\
+            &&& \ddots & \ddots & \ddots &\ddots \\
+            &&&& 0 & p_{n-1} & q_{n-1} \\
+            &&&&& 0 & x_n
+          \end{pmatrix}
+        }
+      \end{gather*}
+    \end{column}
+    \begin{column}{.49\textwidth}
+      \begin{align*}
+        \only<1-2>{%
+        \matg_{12}^*
+        &=
+          \begin{pmatrix}
+            c_2 & s_2\\
+            -s_2 & c_2\\
+            &&1\\ &&&1\\ &&&& \ddots
+          \end{pmatrix}
+        \\
+        p_1 &= \sqrt{\overline a_1² + b_2²}\\
+        c_2 &= \nicefrac{a_1}{p_1}, \quad
+        s_2 = \nicefrac{b_2}{p_1}\\
+        \visible<2>{%
+        x_2 &= c_2 \overline a_2 - s_2 b_2\\
+        y_2 &= c_2 b_3\\
+        q_1 &= \ldots, \quad
+        r_1 = \ldots
+              }
+              } 
+       \only<3-4>{%
+        \matg_{23}^*
+        &=
+          \begin{pmatrix}
+            1\\
+            &c_3 & s_3\\
+            &-s_3 & c_3\\
+            &&&1\\ &&&& \ddots
+          \end{pmatrix}
+        \\
+        p_2 &= \sqrt{x_2² + b_3²}\\
+        c_3 &= \nicefrac{x_2}{p_2}, \quad
+        s_3 = \nicefrac{b_3}{p_2}
+        \\
+        \visible<4>{%
+        x_3 &= c_3 \overline a_3 - s_3 y_2\\
+        y_3 &= c_3 b_4\\
+        q_2 &= \ldots, \quad
+        r_2 = \ldots\\
+        }}
+       \only<5-6>{%
+        \matg_{34}^*
+        &=
+          \begin{pmatrix}
+            1\\ &1\\
+            &&c_4 & s_4\\
+            &&-s_4 & c_4\\
+            &&&& \ddots
+          \end{pmatrix}
+        \\
+        p_3 &= \sqrt{x_3² + b_4²}\\
+        c_4 &= \nicefrac{x_3}{p_3}, \quad
+        s_4 = \nicefrac{b_4}{p_3}
+        \\
+        \visible<6>{%
+        x_4 &= c_4 \overline a_4 - s_4 y_3\\
+        y_4 &= c_4 b_5\\
+        q_3 &= \ldots, \quad
+        r_3 = \ldots\\
+        }}
+       \only<7-9>{%
+        \matg_{n-1,n}^*
+        &=
+          \begin{pmatrix}
+            1 \\ &\ddots \\ &&1\\
+            &&&c_n & s_n\\
+            &&&-s_n & c_n\\
+          \end{pmatrix}
+        \\
+        p_{n-1} &= \sqrt{x_{n-1}² + b_n²}\\
+        c_n &= \nicefrac{x_{n-1}}{p_{n-1}}, \quad
+        s_n = \nicefrac{b_n}{p_{n-1}}
+        \\
+        \visible<9>{%
+        x_n &= c_n \overline a_n - s_n y_{n-1}\\
+        \color{red} y_{n-1} &\color{red} = c_{n-1} b_n\\
+        q_{n-1} &= \ldots, \quad
+        r_{n-1} = \ldots\\
+        }}
+      \end{align*}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Applying RQ}
+  \begin{gather*}
+    \tilde \mata_1 = \matr, \quad
+    \tilde\mata_j = \tilde\mata_{j-1}\matg_{j-1,j}
+  \end{gather*}
+  \begin{columns}
+    \begin{column}{.49\textwidth}
+      \begin{gather*}
+        \tilde\mata_{%
+          \only<1>{1}
+          \only<2-3>{2}
+          \only<4>{3}
+          \only<5>{{n-1}}
+          \only<6>{{n}}}
+          =
+          \only<1>{%
+            \begin{pmatrix}
+              p_1 & q_1 & r_1 \\
+               &p_2 & q_2 & r_2 \\
+              &  & p_3 & q_3 &r_3 \\
+              &&& p_4 & q_4 & r_4 \\
+              &&& & \ddots & \ddots &\ddots \\
+              &&&&  & p_{n-1} & q_{n-1} \\
+             &&&&&  & x_n
+            \end{pmatrix}
+          }
+          \only<2-3>{%
+            \begin{pmatrix}
+              \tilde a_1 & \tilde y_1 & r_1 \\
+              \tilde b_2 & \tilde x_2 & q_2 & r_2 \\
+              &  & p_3 & q_3 &r_3 \\
+              &&& p_4 & q_4 & r_4 \\
+              &&& & \ddots & \ddots &\ddots \\
+              &&&&  & p_{n-1} & q_{n-1} \\
+             &&&&&  & x_n
+            \end{pmatrix}
+          }
+          \only<4>{%
+            \begin{pmatrix}
+              \tilde a_1 & \tilde b_2 \\
+              \tilde b_2 & \tilde a_2 & \tilde y_2 & r_2 \\
+              & \tilde b_3 & \tilde x_3 & q_3 &r_3 \\
+              &&& p_4 & q_4 & r_4 \\
+              &&& & \ddots & \ddots &\ddots \\
+              &&&&  & p_{n-1} & q_{n-1} \\
+             &&&&&  & x_n
+            \end{pmatrix}
+          }
+          \only<5>{%
+            \begin{pmatrix}
+              \tilde a_1 & \tilde b_2 \\
+              \tilde b_2 & \tilde a_2 & \tilde b_3 \\
+              & \tilde b_3 & \tilde a_3 & \tilde b_4 \\
+              && \tilde b_4 & \tilde a_4 & \tilde b_5 \\
+              &&& \ddots & \ddots &\ddots \\
+              &&&& \tilde b_{n-1} & \tilde x_{n-1} &  q_{n-1} \\
+             &&&&&  & x_n
+            \end{pmatrix}
+          }
+          \only<6>{%
+            \begin{pmatrix}
+              \tilde a_1 & \tilde b_2 \\
+              \tilde b_2 & \tilde a_2 & \tilde b_3 \\
+              & \tilde b_3 & \tilde a_3 & \tilde b_4 \\
+              && \tilde b_4 & \tilde a_4 & \tilde b_5 \\
+              &&& \ddots & \ddots &\ddots \\
+              &&&& \tilde b_{n-1} & \tilde a_{n-1}& \tilde b_n \\
+             &&&&&  \tilde b_n & \tilde a_n
+            \end{pmatrix}
+          }
+      \end{gather*}
+    \end{column}
+    \begin{column}{.49\textwidth}
+      \begin{align*}
+        \only<1-2>{%
+        \matg_{12}
+        &=
+          \begin{pmatrix}
+            c_2 & -s_2\\
+            s_2 & c_2\\
+            &&1\\ &&&1\\ &&&& \ddots
+          \end{pmatrix}
+        \\
+        \visible<2>{%
+        \tilde b_2 &= s_2 p_2\\
+        \tilde a_1 &= c_2 p_1 + s_2 q_1\\
+        \tilde x_2 &= c_2 p_2
+        }
+        }
+       \only<3-4>{%
+        \matg_{23}
+        &=
+          \begin{pmatrix}
+            1\\
+            &c_3 & -s_3\\
+            &s_3 & c_3\\
+            &&&1\\ &&&& \ddots
+          \end{pmatrix}
+        \\
+        \visible<4>{%
+        \tilde b_3 &= s_3 p_3\\
+        \tilde a_2 &= c_3 \tilde x_2 + s_3 q_2\\
+        \tilde x_3 &= c_3 p_3
+        }
+        }
+       \only<5-6>{%
+        \matg_{n-1,n}
+        &=
+          \begin{pmatrix}
+            1\\ &\ddots \\ &&1\\
+            &&&c_n & -s_n\\
+            &&&s_n & c_n
+          \end{pmatrix}
+        \\
+        \visible<6>{%
+        \tilde b_n &= s_n x_n\\
+        \tilde a_n &= c_n x_n\\
+        }
+        }
+      \end{align*}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End:

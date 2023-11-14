@@ -4,7 +4,7 @@
     \For{$k=1,\dots$ until convergence}
     \State Solve $(\mata-\sigma\id) \vy = \vv^{(k-1)}$
     \State $\vv^{(k)} = \frac{\vy}{\norm{\vy}}$
-    \State $\alpha_k = R_\mata(\vv^{(k)})$
+%    \State $\alpha_k = R_\mata(\vv^{(k)})$
     \EndFor
   \end{algorithmic}
 \end{Algorithm*}
@@ -55,3 +55,8 @@
   eigenvalues are well separated. When it is very slow, we are in a
   regime where the eigenvector problem itself is not well-conditioned.
 \end{remark}
+ 
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

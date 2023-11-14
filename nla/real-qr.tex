@@ -164,6 +164,287 @@
   In many cases, it is even cubic.
 \end{Theorem}
 
+\begin{proof}
+  The proof is straight from~\cite{Wilkinson68}.  Applying Givens
+  rotations $G_{n-1,n}\dots G_{12}$ to the matrix
+  $\overline \mata = \mata^{(k)} - \sigma \id$ with diagonal
+  $\overline a_j = a_{jj}-\sigma$ and off-diagonal
+  $b_j = a_{j-1,j} = a_{j,j-1}$, we obtain
+  \begin{gather}
+    \matr^{(k)} =
+    \begin{pmatrix}
+      p_1 & q_1 & r_1 \\
+      0 &p_2 & q_2 & r_2 \\
+      & 0 & p_3 & q_3 &r_3 \\
+      && 0 & p_4 & q_4 & r_4 \\
+      &&& \ddots & \ddots & \ddots &\ddots \\
+      &&&& 0 & p_{n-1} & q_{n-1} \\
+      &&&&& 0 & x_n
+    \end{pmatrix},
+  \end{gather}
+  where with entries generated inductively from $x_1 = \overline a_1$,
+  $y_1= \overline b_2$ by
+  \begin{xalignat}2
+    \label{eq:real:wilkinson:1}
+    p_{j-1} &= \sqrt{x_{j-1} +b_{j}}\\
+    \label{eq:real:wilkinson:2}
+    c_{j} &= \tfrac{x_{j-1}}{p_{j-1}}
+    & s_{j} &= \tfrac{-b_{j}}{p_{j-1}}
+    \\
+    \label{eq:real:wilkinson:3}
+    x_j &= c_j \overline a_j - s_j y_{j-1}
+    & y_j &= c_j b_{j+1}.
+  \end{xalignat}
+  Here, $c_j$ and $s_j$ are the cosine and sine from
+  $\givens_{j-1,j}$. The elements $q_j$ and $r_j$ do not contribute to
+  the argument and are therefore not computed here.
+
+  Computing now the product
+  $\mata^{(k+1)} = \matr\givens_{12}^*\dots\givens_{n-1,n}^* +
+  \sigma\id$ with entries $\tilde a_{j}$ and $\tilde b_j$, we obtain
+  \begin{gather}
+    \mata^{(k+1)} =
+    \begin{pmatrix}
+      \tilde a_1 & \tilde b_2 \\
+      \tilde b_2 & \tilde a_2 & \tilde b_3 \\
+      & \tilde b_3 & \tilde a_3 & \tilde b_4 \\
+      && \tilde b_4 & \tilde a_4 & \tilde b_5 \\
+      &&& \ddots & \ddots &\ddots \\
+      &&&& \tilde b_{n-1} & \tilde a_{n-1}& \tilde b_n \\
+      &&&&&  \tilde b_n & \tilde a_n
+    \end{pmatrix},
+  \end{gather}
+  where
+  \begin{xalignat}2
+    \label{eq:real:wilkinson:5}
+    \tilde a_n &= c_n x_n + \sigma
+    & \tilde b_n &= s_n x_n\\
+    \label{eq:real:wilkinson:6}
+    \tilde b_j &= s_j p_j & j &= 2,\dots,n-1.
+  \end{xalignat}
+
+  Since $\sigma$ is a root of t he characteristic polynomial of the
+  lower right block, we have for the entries of $\mata^{(k)}-\sigma\id$
+  \begin{gather}
+    \label{eq:real:wilkinson:4}
+    \overline a_{n-1}\overline a_n - b_n^2 = 0,
+    \qquad\text{or}\qquad
+    \overline a_n = \frac{b_n^2}{\overline a_{n-1}}
+  \end{gather}
+  Furthermore, since $\sigma$ is the closest eigenvalue to $a_n$, we have
+  \begin{gather}
+    \label{eq:real:wilkinson:10}
+    \abs{\overline a_{n-1}} \ge \abs{b_n}.
+  \end{gather}
+  We now show that the product $\abs{b_{n-1}^{(k)}b_{n}^{(k)}}$ is
+  monotonically decreasing. To this end, we observe
+  \begin{align}
+    x_n
+    &= c_n \overline a_n - s_n y_{n-1}\\
+    &= c_n\frac{b_n^2}{\overline a_{n-1}} - s_n c_{n-1} b_n\\
+    &= \frac{b_n}{\overline a_{n-1}}
+      \left(c_n b_n - s_n c_{n-1} \overline a_{n-1}\right)\\
+    &= \frac{b_n}{\overline a_{n-1}}
+      \left(s_n x_{n-1} - s_n c_{n-1} \overline a_{n-1}\right)\\
+    &= \frac{b_n}{\overline a_{n-1}}
+      \left(s_n c_{n-1} \overline a_{n-1} - s_n s_{n-1}y_{n-2}
+      - s_n c_{n-1} \overline a_{n-1}\right)\\
+    &= - \frac{b_n}{\overline a_{n-1}} s_n s_{n-1}y_{n-2}\\
+    &= - \frac{b_n}{\overline a_{n-1}} s_n s_{n-1} c_{n-2} b_{n-1}.
+  \end{align}
+  Here, we have used the definition of $x_n$ and $x_{n-1}$
+  in~\eqref{eq:real:wilkinson:3} in the first and firth line,
+  respectively. The definition of $y_{n-1}$ and $y_{n-2}$ in
+  equation~\eqref{eq:real:wilkinson:3} was used in the second and
+  seventh line, respectively.  In the second line, we also used
+  equation~\eqref{eq:real:wilkinson:4}. In the fourth line, we resolve
+  both equations in~\eqref{eq:real:wilkinson:2} for $x_{n-1}$ and
+  $b_n$ to obtain
+  \begin{gather}
+    c_n e_n = s_n x_{n-1}.
+  \end{gather}
+
+Now that we are looking at the iteration, all variables will be at
+step $k$ unless explicitly noted. By~\eqref{eq:real:wilkinson:5},
+\begin{gather}
+  b_n^{k+1} = s_n x_n
+  = - \frac{b_n}{\overline a_{n-1}} s_n^2 s_{n-1} c_{n-2} b_{n-1}.
+\end{gather}
+Since all other factors are bounded by one, we obtain
+\begin{gather}
+  \label{eq:real:wilkinson:7}
+  \abs*{b_n^{(k+1)}} \le \abs*{b_{n-1}^{(k)}}.
+\end{gather}
+By~\eqref{eq:real:wilkinson:6} and the definition of $s_{n}$
+in~\eqref{eq:real:wilkinson:2}, we have
+\begin{gather}
+  b_{n-1}^{(k+1)} = s_{n-1} p_{n-1} = \frac{s_{n-1}b_n}{s_n}.
+\end{gather}
+Hence,
+\begin{align}
+  \abs*{b_{n-1}^{(k+1)}b_{n}^{(k+1)}}
+  &= \abs*{\frac{s_{n-1}b_{n}}{s_n}
+    \frac{b_nc_{n-2}s_n^2s_{n-1}b_{n-1}}{\overline a_{n-1}}}\\
+  \label{eq:real:wilkinson:8}
+  &= \abs*{b_{n-1}^{(k)}b_{n}^{(k)}}\abs*{\frac{b_n}{\overline a_{n-1}}}
+    \abs*{c_{n-2}s_{n-1}^2s_n}\\
+  \label{eq:real:wilkinson:9}
+    &\le \abs*{b_{n-1}^{(k)}b_{n}^{(k)}}.
+\end{align}
+Thus, the sequence $\abs{b_{n-1}^{(k)}b_{n}^{(k)}}$ is monotonically
+decreasing and, since it is bounded from below, convergent.
+Next, we rule out the case where the limit is nonzero. Let
+us make this assumption and derive a contradiction. We have
+\begin{gather}
+  \lim_{k\to\infty}
+  \frac{\abs*{b_{n-1}^{(k+1)}b_{n}^{(k+1)}}}%
+  {\abs*{b_{n-1}^{(k)}b_{n}^{(k+1)}}}
+  = 1,
+\end{gather}
+which by~\eqref{eq:real:wilkinson:8} implies
+\begin{gather}
+  \abs*{\frac{b_n}{\overline a_{n-1}}}
+  \abs*{c_{n-2}}\abs*{s_{n-1}^2}\abs*{s_n} \to 1.
+\end{gather}
+
+Since each of these terms is bounded by one, they must converge to one
+individually,
+\begin{gather}
+  \abs*{\frac{b_n}{\overline a_{n-1}}} \to 1,\qquad
+  \abs*{c_{n-2}} \to 1,\qquad
+  \abs*{s_{n-1}^2} \to 1,\qquad
+  \abs*{s_n} \to 1.
+\end{gather}
+Since the two sines converge to one, the corresponding cosines converge
+\begin{gather}
+  \abs*{c_{n-1}^2} \to 0,\qquad \abs*{c_n} \to 0.
+\end{gather}
+Furthermore,
+\begin{gather}
+  \abs*{s_n} = \frac{b_n^2}{b_n^2+x_n^2} \to 1
+\end{gather}
+implies $\abs{x_{n-1}} \to 0$ and
+\begin{gather}
+  0 = \lim x_{n-1}
+  = \lim \Bigl(c_{n-1}\overline a_{n-1} - c_{n-2}s_{n-1}b_{n-1}\Bigr)
+  = 0 - 1\cdot \lim b_{n-1},
+\end{gather}
+yields the contradiction through $b_{n-1} \to 0$.
+
+Hence, the limit is zero and we observe that for any given $\epsilon$
+there will be an index $k$ such that $\abs{b_{n-1}^{(k)}b_{n}^{(k)}}$,
+which in turn implies that either $\abs{b_{n}^{(k)}}<\epsilon$ or
+$\abs{b_{n-1}^{(k)}}<\epsilon$. In the second case, we
+apply~\eqref{eq:real:wilkinson:6} to deduce that
+$\abs{b_{n}^{(k+1)}}<\epsilon$. In both cases, we reach a regime where
+the proof of quadratic convergence below will apply.
+
+Now we tend to the second part of the theorem, namely asymptotic
+quadratic convergence. To this end, we assume that the iteration has yielded a matrix
+\begin{gather}
+  \mata^{(k)} =
+  \begin{pmatrix}
+    \matb &
+    \begin{matrix}
+      0\\ \epsilon
+    \end{matrix}
+    \\
+    \begin{matrix}
+      0 & \epsilon
+    \end{matrix}
+    & \frac{\epsilon^2}{\overline a_{n-1}}
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    \matb&\\&\frac{\epsilon^2}{\overline a_{n-1}}
+  \end{pmatrix}
+  +
+  \begin{pmatrix}
+    \\
+    &&\epsilon\\
+    &\epsilon
+  \end{pmatrix}
+  .
+\end{gather}
+Hence, we can use the Bauer-Fike theorem and its
+~\slideref{Corollary}{conditioning-eigenvalues-normal} to estimate the
+eigenvalue $\lambda_1,\dots,\lambda_n$ of $\mata^{(k)}$ which are also
+the eigenvalues of $\mata$. Let $\mu_1,\dots,\mu_{n-1}$ be the
+eigenvalues of $\matb$. Then, there is an ordering such that
+\begin{gather}
+  \begin{aligned}
+  \abs*{\lambda_i-\mu_i} & \le \epsilon & i&=1,\dots,n-1\\
+  \abs*{\lambda_n - \tfrac{\epsilon^2}{\overline a_{n-1}}} &\le\epsilon.
+  \end{aligned}
+\end{gather}
+All eigenvalues of an unreduced Hessenberg matrix are simple, hence
+there is a gap between $\lambda_n$ and all other eigenvalues of
+$\mata$, say $\abs{\lambda_i-\lambda_n}\ge \delta$.  Since
+\begin{gather}
+  \mu_i = \mu_i = \mabda_i+\lambda_i-\lambda_n+\lambda_n
+  -\tfrac{\epsilon^2}{\overline a_{n-1}}+\tfrac{\epsilon^2}{\overline a_{n-1}},
+\end{gather}
+there holds
+\begin{align}
+  \abs*{\mu_i}
+  &\ge \abs*{\lambda_i-\lambda_n} - \abs*{\mu_i-\lambda_i}
+    - \abs*{\lambda_n - \tfrac{\epsilon^2}{\overline a_{n-1}}}
+    - \abs*{\tfrac{\epsilon^2}{\overline a_{n-1}}}\\
+  &\ge \delta - \epsilon - \epsilon -\epsilon = \delta-3\epsilon.
+\end{align}
+We apply QR factorization to $\mata^{(k)}$ to obtain
+$\mata^{(k+1)}$. Before the last givens rotation, the matrix is
+\begin{gather}
+  \begin{pmatrix}
+    \ddots&\ddots&\\
+    * & x_{n-1} & \epsilon c_{n-1}\\
+    & \epsilon & \tfrac{\epsilon^2}{\overline a_{n-1}}
+  \end{pmatrix},
+\end{gather}
+where by \slideref{Lemma}{tridiagonal-rnn} $\abs{x_{n-1}} \ge \delta-3\epsilon$. Since
+\begin{gather}
+  \abs{s_n} = \frac{\epsilon}{\sqrt{x_{n-1}^2+\epsilon^2}} \le \frac{\epsilon}{\delta-3\epsilon},
+\end{gather}
+we conclude
+\begin{align}
+  \abs*{b_n^{k+1}}
+  &= \left(\frac{\epsilon^2}{\overline a_{n-1}} - \epsilon c_{n-1}s_n \right) s_n\\
+  &\le \frac{\epsilon^2}{\overline a_{n-1}} \frac{\epsilon}{\delta-3\epsilon}
+    + \frac{\epsilon^3}{(\delta-3\epsilon)^2}.
+\end{align}
+The second term behaves like $\epsilon^3$ as $\epsilon\to0$. For the
+first term, we can use~\eqref{eq:real:wilkinson:10} to bound
+$\abs{\overline a_{n-1}}\ge\epsilon$ and thus get a term behaving like
+$\epsilon^2$, which is the statement of the theorem. On the other
+hand, this is not, what is observed when the algorithm is used. The
+reason for this discrepancy lies in the fact that the
+estimate~\eqref{eq:real:wilkinson:10} is too pessimistic and that the
+Wilkinson shift approximates $a_n$, not $a_{n-1}$. But then,
+$\abs{\overline a_{n-1}}$ is bounded from below independent of
+$\epsilon$. Unfortunately, this behavior cannot be guaranteed.
+\end{proof}
+
+\begin{Lemma}{tridiagonal-rnn}
+  Let $\mata\in\Rnn$ be symmetric and tridiagonal. If
+  $\matq\matr=\mata$ is its QR factorization, then there holds
+  \begin{gather}
+    \abs{r_{nn}} \ge \min_{\lambda\in\sigma(\mata)} \abs{\lambda}.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  There holds
+  \begin{gather}
+    \abs*{r_{nn}} = \norm*{\matr^*\ve_n}_2 = \norm*{\mata\matq^*\ve_n}_2.
+  \end{gather}
+  Since by \slideref{Theorem}{minmax}
+  \begin{gather}
+    \min_{\lambda\in\sigma(\mata)}\abs*{\lambda}
+    = \min_{\norm{\vx}=1} \norm{\mata\vx},
+  \end{gather}
+  we immediately conclude the result.
+\end{proof}
+  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The eigenvalue problem for nonsymmetric real matrices}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
