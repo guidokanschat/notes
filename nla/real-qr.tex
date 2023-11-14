@@ -50,7 +50,7 @@
 %  \begin{todo}
 %\begin{proof}
 %  If $\matt$ is unreduced, the first $n-1$ columns of
-%  $\matt-\sigma\id$ are linearly independent for any $\sigma$.    
+%  $\matt-\sigma\id$ are linearly independent for any $\sigma$.
 %\end{proof}
 %  \end{todo}
 
@@ -192,7 +192,7 @@
   When applying the QR step with Wilkinson shift, the shift parameter
   might be complex, thus leading to a bad approximation and
   consequently to slow convergence. Therefore, we have to circumvent
-  this situation and find a working method in real arithmetic. 
+  this situation and find a working method in real arithmetic.
 %  Using double shifts, the QR-iteration can be made to converge to the
 %  real Schur form using double shifts in real arithmetic. This method
 %  is also known as the \define{Francis QR step}~\cite[Algorithm
@@ -280,6 +280,23 @@
     \end{enumerate}
   \end{enumerate}
 \end{Theorem}
+
+\begin{todo}
+\begin{Algorithm*}{francis-qr-step}{Francis QR Step}
+  \begin{algorithmic}[1]
+    \Require \( \matH \in \Rnn\) unreduced Hessenberg Form
+    \State \( t \gets \operatorname{tr}(\matH_{n-1:n-2, n-1:n-2})\)
+    \State \( s \gets \det(\matH_{n-1:n-2, n-1:n-2})\)
+    \State \(\vw \gets \left(\matH^2 - s \matH + t \id\right)_{:,1}\)
+    \State \(\matq \gets \mathtt{Householder\_Matrix}(\vw)\)
+    \State \( \matH \gets \matq^\mathsf{T} \matH \matq\)
+    \For{\(i = 1, \ldots , n-3\)}
+      \State \(\matq \gets \mathtt{Householder\_Matrix}(\matH_{i+1:n-1,i})\)
+      \State \( \matH \gets \matq^\mathsf{T} \matH \matq\)
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
+\end{todo}
 
 \begin{remark}
   The matrix $\matm$ in the double shift algorithm is not Hessenberg,
