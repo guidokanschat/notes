@@ -1,0 +1,10 @@
+\begin{Algorithm*}{inverse-iteration}{The inverse power method}
+    \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$, $\sigma\in\C$, initial vector $\vv^{(0)}\in\C^n$
+    \For{$k=1,\dots$ until convergence}
+    \State Solve $(\mata-\sigma\id) \vy = \vv^{(k-1)}$
+    \State $\vv^{(k)} = \frac{\vy}{\norm{\vy}}$
+    \State $\alpha_k = R_\mata(\vv^{(k)})$
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
