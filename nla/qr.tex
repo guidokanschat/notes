@@ -324,6 +324,24 @@
   to a symmetric tridiagonal matrix with real entries.
 \end{Problem}
 
+\begin{Lemma}{Hessenberg-rank}
+  The rank of an unreduced Hessenberg matrix of dimension $n$ is at
+  least $n-1$. In particular, the geometric multiplicity of any
+  eigenvalue of such a matrix is one.
+\end{Lemma}
+
+\begin{proof}
+  If $\mata$ is in Hessenberg form and unreduced, the $k+1$-st entry
+  of the $k$-th column vector $\va_k$ for $k\le n-1$ is nonzero, while
+  the same entry of all previous column vectors is zero. Hnece, the
+  first $n-1$ column vectors are linearly independent and the rank of
+  $\mata$ is at least $n-1$. Note that this argument does not apply to
+  the last column.
+
+  If $\mata$ is unreduced Hessenberg, so is $\mata-\lambda\id$, chich
+  proves the second statement.
+\end{proof}
+
 \subsection{Deflation and shifts}
 
 \begin{intro}
