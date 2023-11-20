@@ -8,3 +8,50 @@
     \EndFor
   \end{algorithmic}
 \end{Algorithm*}
+
+\begin{remark}
+  Applying the inverse iteration, we have to solve an almost singular
+  linear system, which in itself may be the cause of round-off
+  errors. Nevertheless, we have some tools helping us to see that this
+  is not a hopeless endeavor.
+
+  First, we can use the Hessenberg form $\matH$ of the matrix $\mata$
+  in the inverse iteration. This requires computing the orthogonal
+  transformation, when we compute it, but it makes a factorization
+  here much cheaper.
+
+  Next, the perfect shift (\slideref{Lemma}{perfect-shift} and
+  \slideref{Lemma}{perfect-shift-sym}) indicates that in the singular
+  case, the QR factorization of a singular Hessenberg matrix is
+  possible, if the matrix is unreduced.
+
+  If the Hessenberg matrix $\matH$ is reduced, then it is
+  straightforward that eigenvectors of the diagonal blocks are
+  eigenvectors of the whole matrix if padded with zeros. Hence, it is
+  sufficient to compute a factorization of the unreduced diagonal
+  blocks.
+
+  Finally, there are results showing that the error of the solution
+  produced by the QR and even the LU factorization is mostly in
+  direction of the eigenvectors related to small eigenvalues, which is
+  not an issue here due to normalization.
+\end{remark}
+
+\begin{remark}
+  The last entry $r_{nn}$ of the QR factorization
+  $QR = \matH-\tilde\lambda\id$ with the approximate eigenvalue
+  $\tilde\lambda$ is of the size
+  \begin{gather}
+    \abs{r_{nn}} \approx \abs{\lambda-\tilde\lambda}
+  \end{gather}
+  for some exact eigenvalue $\lambda$. Hence, if the approximation is
+  very good, the corresponding vector $\vq_n$ will be strongly
+  amplified and corrected by the subsequent process of backward
+  elimination. Since the convergence speed is dominated by
+  \begin{gather}
+    \frac{\abs{\lambda-\tilde\lambda}}{\abs{\mu-\tilde\mu}},
+  \end{gather}
+  for all other eigenvalues $\mu$ it will be very fast, if the
+  eigenvalues are well separated. When it is very slow, we are in a
+  regime where the eigenvector problem itself is not well-conditioned.
+\end{remark}
