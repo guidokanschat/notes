@@ -38,4 +38,9 @@ Y.~Saad.
 \newblock {\em Numerical Methods for Large Eigenvalue Problems}.
 \newblock Classics in Applied Mathematics. SIAM, Philadelphia, 2011.
 
+\bibitem[Wil68]{Wilkinson68}
+J.~H. Wilkinson.
+\newblock Global convergence of trdiagonal {QR} algorithm with origin shifts.
+\newblock {\em Lin. Alg. Appl.}, 1:409--420, 1968.
+
 \end{thebibliography}
