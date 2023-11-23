@@ -1,19 +1,7 @@
-\begin{Definition}{sparse-matrix}
-  We call a matrix \textbf{sparse}\index{sparse matrix} in strict
-  sense, if the number of nonzero entries is much less than the total
-  number of entries, typically $\bigo(n)$ instead of $\bigo(n^2)$. The
-  distribution of nonzero entries is called \define{sparsity pattern}.
-
-  More broadly, a sparse matrix has the property that its application
-  to a vector requires considerably less than $n^2$, typically
-  $\bigo(n)$ operations. It also can be stored with considerably less
-  than $n^2$ floating point numbers.
-\end{Definition}
-
 \begin{Example*}{page-rank}{The PageRank Algorithm}
   The page rank of a web page is computed from the Google Matrix
   \begin{gather}
-    P = d (\matl+\vw \mathbf 1^T) + \tfrac{(1-d)}{n} \id,
+    \matp = d (\matl+\vw \mathbf 1^T) + \tfrac{(1-d)}{n} \id,
   \end{gather}
   where $d \in (0,1)$ is a damping parameter, $\mathbf 1^T = (1,\dots,1)$,
   \begin{gather}
@@ -29,12 +17,50 @@
     \end{cases},
   \end{gather}
   and $c_i$ is the number of links from page $i$.
+
+  The number of web pages is estimated at 4.86 billion pages\footnote{\url{https://www.worldwidewebsize.com/}}.
 \end{Example*}
 
-\begin{example}
-  Discretization of partial differential equations by finite
-  difference methods.
-\end{example}
+\begin{intro}
+  Diffusion problems are modelled by the Poisson equation
+  \begin{gather}
+    -\Delta u = f.
+  \end{gather}
+\end{intro}
+
+\begin{Example}{7-point-stencil}
+  Let there be a sequence of points $x_k$, $k=0,\dots,n$ such that
+  $x_k-x_{k-1} = h$ and an approximating function $u_k = u(x_k)$. The
+  second derivative of a function $u(x)$ in a point $x_k$ in the
+  interior can be approximated by the 3-point stencil
+  \begin{gather}
+    u''(x_k) = \Delta_h^2 u(x_k) = - \frac{2 u_k - u_{k-1} - u_{k+1}}{h^2}.
+  \end{gather}
+  This can be generalized to the Laplacian in two dimensions by the \define{5-point stencil}
+  \begin{gather}
+    \Delta u_{ij} = -\frac{4 u_{ij}- u_{i-1,j} - u_{i+1,j}- u_{i,j-1} - u_{i,j+1}}{h^2},
+  \end{gather}
+  and to three dimensions by the \define{7-point stencil}
+  \begin{multline}
+    \Delta u_{ijk} = \tfrac{-1}{h^2}\Bigl(6 u_{ij}
+    - u_{i-1,j,k} - u_{i+1,j,k}
+    \\
+    - u_{i,j-1,k} - u_{i,j+1,k}
+    - u_{i,j,k-1} - u_{i,j,k+1}\Bigr).
+  \end{multline}
+\end{Example}
+
+\begin{Definition}{sparse-matrix}
+  We call a matrix \textbf{sparse}\index{sparse matrix} in strict
+  sense, if the number of nonzero entries is much less than the total
+  number of entries, typically $\bigo(n)$ instead of $\bigo(n^2)$. The
+  distribution of nonzero entries is called \define{sparsity pattern}.
+
+  More broadly, a sparse matrix has the property that its application
+  to a vector requires considerably less than $n^2$, typically
+  $\bigo(n)$ operations. It also can be stored with considerably less
+  than $n^2$ floating point numbers.
+\end{Definition}
 
 \begin{Example*}{csr}{Compressed row storage (CSR)}
   A sparse matrix can be stored using two integer fields defining the
@@ -64,7 +90,61 @@
 
   Thus, we start viewing matrices more as linear operators than as
   rectangular schemes of numbers.
+
+  Such algorithms are of high importance on modern hardware, where the
+  time and also the energy cost of computations is much lower than of
+  moving data from memory.
 \end{Remark}
+
+\begin{Example}{sparse-computation-memory}
+  The matrix of the 7-point stencil on a grid of $N=n^3$ points has
+  dimension $N$. For $n=100$, this is $N=10^6$. The whole matrix has
+  $N^2=10^{12}$ entries, but only $7N \approx 10^7$ are nonzero.
+  \begin{enumerate}
+  \item Storing the full matrix in double precision requires
+    \begin{gather}
+     8\cdot 10^{12}\text{B} \approx 10\text{TB}. 
+    \end{gather}
+    Storing relevant information in
+    CSR requires
+    \begin{gather}
+      12\cdot7\cdot 10^6\text{B} \approx 100\text{MB}.
+    \end{gather}
+  \item On a hypothetical CPU with $10^9$ multiplication/additions per second, multiplying a vector with this matrix takes
+    \begin{gather}
+      \text{Full: } 1000\text{sec} \approx 20\text{min},
+      \qquad
+      \text{CSR: } 7\text{msec}.
+    \end{gather}
+  \end{enumerate}
+\end{Example}
+
+\begin{Example}{sparse-computation-factorization}
+  Solving a linear system with the matrix of the 7-point stencil on a $100^3$ grid
+  \begin{enumerate}
+  \item Full Choleski factorization
+    \begin{gather}
+      \frac16 \left(100^3\right)^3\text{flops}\approx 10^{17}\text{flops}
+      \simeq 10^8\text{sec} \approx 3\text{yrs.}
+    \end{gather}
+%    \pause
+  \item Banded Choleski factorization
+    \begin{gather}
+      \frac16 10^{16} \approx 10^{15}\text{flops}
+      \simeq 10^6\text{sec} \approx 10\text{d}.
+    \end{gather}
+%    \pause
+  \item Cramer's Rule with Laplace Expansion: $\approx 10^{65,000}$ years.
+  \end{enumerate}
+\end{Example}
+
+\begin{Example*}{von-Neumann-series}{von Neumann series}
+  If $\norm{\mata}<1$, then
+  \begin{gather}
+    (\id-\mata)^{-1} = \sum_{k=0}^{\infty} \mata^k.
+  \end{gather}
+\end{Example*}
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
