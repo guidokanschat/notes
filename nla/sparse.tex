@@ -138,12 +138,35 @@
   \end{enumerate}
 \end{Example}
 
-\begin{Example*}{von-Neumann-series}{von Neumann series}
-  If $\norm{\mata}<1$, then
+
+\begin{Theorem*}{von-Neumann-series}{von Neumann series}
+  If $\norm{\mata}<1$, then the right hand side of the following
+  equation is convergent and
   \begin{gather}
     (\id-\mata)^{-1} = \sum_{k=0}^{\infty} \mata^k.
   \end{gather}
-\end{Example*}
+\end{Theorem*}
+
+\begin{Algorithm}{von-Neumann-series}
+  An approximative solution to the problem $\mata\vx = \vb$ can
+  be obtained from an initial vector $\vx$ by the iteration
+  \begin{algorithmic}
+    \State $\vy \gets \vx$
+    \Repeat
+    \State $\vy \gets (\id-\mata) \vy$
+    \State $\vx \gets \vx + \vy$
+    \Until convergence
+  \end{algorithmic}
+  This algorithm converges for any initial vector if $\norm{\id-\mata}< 1$.
+\end{Algorithm}
+
+\begin{intro}
+  While this algorithm serves as a first example that a linear system
+  can be solved by successive multiplication with $\mata$, it
+  typically slow. Furthermore, most matrices will not admit the
+  condition. It is therefore our goal to find more efficient and
+  reliable algorithms.
+\end{intro}
 
 %%% Local Variables:
 %%% mode: latex
