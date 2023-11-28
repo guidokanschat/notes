@@ -48,11 +48,11 @@ convergence.
   respectively. Let $\vb$ be the right hand side of the linear system
   $\mata\vx=\vb$. Then, Jacobi iteration has the matrix form
   \begin{gather}
-    x^{k+1} = \bigl(\id-\matd^{-1}\mata\bigr) x^{k} + \matd^{-1} \vb.
+    x^{(k+1)} = \bigl(\id-\matd^{-1}\mata\bigr) x^{(k)} + \matd^{-1} \vb.
   \end{gather}
   The Gauss-Seidel iteration has the matrix form
   \begin{gather}
-    x^{k+1} = \bigl(\id-(\matd+\matl)^{-1}\mata\bigr) x^{k} + (\matd+\matl)^{-1} \vb.
+    x^{(k+1)} = \bigl(\id-(\matd+\matl)^{-1}\mata\bigr) x^{(k)} + (\matd+\matl)^{-1} \vb.
   \end{gather}
 \end{Lemma}
 
@@ -61,7 +61,7 @@ convergence.
   closed subset of $V$. Let $F\colon M\to M$ be a \define{contraction},
   that is, there is a \define{contraction number} $q\in[0,1)$ such that
   \begin{gather}
-    \norm{F(\vx)-F(\vy)} \le q \norm{\vx-\vy}\qquad\forall \vx,\vy\in M.
+    \norm*{F(\vx)-F(\vy)} \le q \norm*{\vx-\vy}\qquad\forall \vx,\vy\in M.
   \end{gather}
   Then, there is a unique \define{fixed-point} $\vx^*\in M$ with the property
   \begin{gather}
@@ -141,7 +141,7 @@ convergence.
   that this can only be a sufficient condition, but not a necessary
   one.
 
-  After the following Lemma, we will prove a result which provides us
+  After the following Lemma, we will provide a result which provides us
   with a sufficiant \emph{and} necessary condition.
 \end{remark}
 
@@ -286,28 +286,28 @@ convergence.
   Given three consecutive vectors, the contraction property tells us
   that
   \begin{gather}
-    \norm*{x^{(k+1)} - x^{(k)}} \le \rho \norm*{x^{(k)}-x^{(k-1)}}.
+    \norm{x^{(k+1)} - x^{(k)}} \le \rho \norm{x^{(k)}-x^{(k-1)}}.
   \end{gather}
   If we now assume that we are in a regime where this is almost equal, we obtain
   \begin{gather}
-    q \gtrapprox \frac{\norm*{x^{(k+1)} - x^{(k)}}}{\norm*{x^{(k)} - x^{(k-1)}}}.
+    \rho \gtrapprox \frac{\norm*{x^{(k+1)} - x^{(k)}}}{\norm*{x^{(k)} - x^{(k-1)}}}.
   \end{gather}
   This estimate can be improved if it is monitored over serveral steps
   to gain confidence.
 
-  Note that once $q$ has been estimated, the error can be estimated by
+  Note that once $\rho$ has been estimated, the error can be estimated by
   \slideref{Corollary}{bfp-estimates}, namely
   \begin{gather}
-    \norm{x^{(k)} - x^*} \le \frac{q}{1-q} \norm{x^{(k)}-x^{(k-1)}}.
+    \label{eq:iterations:obscon:1}
+    \norm{x^{(k)} - x^*} \le \frac{\rho}{1-\rho} \norm{x^{(k)}-x^{(k-1)}}.
   \end{gather}
-  Observe how this estimate deteriorates if $q$ is close to one.
+  Observe how this estimate deteriorates if $\rho$ is close to one.
 \end{remark}
 
 \begin{Definition}{convergence-rate-observed}
-  The \define{observed convergence rate} of $k$ steps of a
+  The average \define{observed convergence rate} of $k$ steps of a
   method with error measure $e_k$ is
   \begin{gather}
-    \label{eq:iterations:obscon:1}
     \overline{r_c} = \frac1k \log_{10}\frac{e_0}{e_k}.
   \end{gather}
 \end{Definition}
@@ -322,7 +322,8 @@ convergence.
 
   The measure for the error may be a computation of the actual error
   for model cases where the solution is known. It might also be an
-  estimate like in equation~\eqref{eq:iterations:obscon:1}.
+  estimate of the actual error like in
+  equation~\eqref{eq:iterations:obscon:1}.
 \end{remark}
 
 %%% Local Variables:

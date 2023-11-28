@@ -1,0 +1,234 @@
+
+\begin{intro}
+  In this section, we summarize some basic information on finite
+  difference methods as the simplest discretization of partial
+  differential equations in order to facilitate implementation of the
+  5-point stencil as example for sparse matrix methods.
+
+  We restrict this exposition to the simplest case of boundary
+  problems on the unit square or cube $[0,1]^d$ for $d=2,3$.
+\end{intro}
+
+\begin{Definition}{Laplacian}
+  The \define{Laplacian} is a differential operator $\Delta$ defined
+  for a function $u\in C^2$ in two dimensions by
+  \begin{gather}
+    \Delta u = \d_{xx} u + \d_{yy} u,
+  \end{gather}
+  and in three dimensions by
+  \begin{gather}
+    \Delta u = \d_{xx} u + \d_{yy} u + \d_{zz} u.
+  \end{gather}
+  Here, we use the notation for partial derivatives
+  \begin{gather}
+    \d_{x} = \tfrac{\d}{\d x},
+    \qquad \d_{xx} = \tfrac{\d^2}{\d x^2},
+    \qquad \d_{y} = \tfrac{\d}{\d y},
+    \qquad\text{etc.}
+  \end{gather}
+\end{Definition}
+
+\begin{Definition*}{poisson}{Poisson equation}
+  Stationary diffusion processes are modeled in the simplest case by
+  the equation
+  \begin{gather}
+    -\Delta u = f,
+  \end{gather}
+  where $u= u(\vx)$ describes the stationary distribution of the
+  diffused quantity in space and $f$ is a source.
+
+  In order to obtain a well-posed problem, this equation has to be
+  complemented by suitable \putindex{boundary condition}s.
+\end{Definition*}
+
+\begin{Example}{Dirichlet-problem}
+  On the \putindex{unit square} and \putindex{unit cube}
+  $\Omega = [0,1]^d$ for $d=2,3$, the homogeneous \define{Dirichlet
+    boundary value problem} for the Poisson equation reads
+  \begin{xalignat}2
+    -\Delta u &= f & \text{in } & \Omega,\\
+    u &= 0 & \text{on } & \d\Omega.
+  \end{xalignat}
+\end{Example}
+
+\begin{Definition}{fd-grid}
+  On the unit square, we define a \define{finite difference grid}, by
+  first choosing a number of points $n$ in each coordinate direction
+  with \define{grid size} $h = \nicefrac1{n+1}$. We number these points with
+  double indices $ij$, such that
+  \begin{gather}
+    \vx_{ij} =
+    \begin{pmatrix}
+      x_i\\y_i
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      ih\\jh
+    \end{pmatrix},
+    \qquad i,j=1,\dots,n.
+  \end{gather}
+  These points cover the interior of the domain, since we assume that
+  boundary conditions are given and no computation is necessary on the
+  boundary. The same construction is possible in three dimensions with
+  triple indices $ijk$ and
+  \begin{gather}
+    \vx_{ijk} =
+    \begin{pmatrix}
+      x_i\\y_j\\z_k
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      ih\\jh\\kh
+    \end{pmatrix},
+    \qquad i,j,k=1,\dots,n.
+  \end{gather}  
+\end{Definition}
+
+\begin{Definition}{fd-function}
+  A \define{finite difference function} $\vu$ is a function with values in
+  the points of the finite difference grid, namely
+  \begin{gather}
+    u_{ij} = u(\vx_{ij}), \qquad u_{ijk} = u(\vx_{ijk}).
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{lexicographic}
+  Since there are $n^d$ points in a finite difference grid, a finite
+  difference function is characterized by $n^d$ values. Hence, it is a
+  vector in $\R^{n^d}$. In order to index this vector in the usual
+  way, we introduce \define{lexicographic numbering}, mapping the
+  multi-indices $ijk$ to a single index $m$ by
+  \begin{gather}
+    m = i+nj+n^2k,
+  \end{gather}
+  and in two dimensions without the last term. The inverse is obtained by
+  \begin{gather}
+    i = m \bmod n,\quad j = (m/n) \bmod n,\quad k= m/n^2.
+  \end{gather}
+\end{Definition}
+
+\begin{Definition}{fd-operators}
+  Approximations to differential operators on finite difference
+  functions are first defined for partial derivatives in one
+  dimension. There are three commonly used operators for first
+  derivatives, namely
+  \begin{alignat}2
+    &\text{forward difference: } & D_+ u(x_i) &= \frac{u_{i+1} - u_{i}}{h}\\
+    &\text{backward difference: } & D_- u(x_i) &= \frac{u_{i} - u_{i-1}}{h}\\
+    &\text{symmetric difference: } & D_s u(x_i) &= \frac{u_{i+1} - u_{i-1}}{2h}.
+  \end{alignat}
+  A second order difference operator can be obtained by
+  \begin{gather}
+    D^2u(x_i) = D_+D_-u(x_i) = D_-D_+u(x_i) = \frac{-2u_i + u_{i-1}+u_{i+1}}{h^2}.
+  \end{gather}
+\end{Definition}
+
+\begin{remark}
+  The finite difference approximation of the Laplacian on the finite
+  difference grids defined in \slideref{Definition}{fd-grid} can be
+  found in \slideref{Example}{7-point-stencil}. It is obtained by
+  adding the second order difference operators for each coordinate
+  direction.
+\end{remark}
+
+\begin{remark}
+  The finite differenze operators acting on finite difference
+  functions are linear operators. Hence, they can be represented by a
+  matrix. We will build this matrix for the Dirichlet boundary value
+  problem in \slideref{Example}{Dirichlet-problem} dimension by
+  dimension.
+
+  First, in one dimension, every point couples to its two neighbors by
+  the second order difference operators. Our only problem is the lack
+  of neighbors at the two ends of the interval. But, there we can add
+  a virtual point on the boundary and employ the boundary
+  condition. Thus, we obtain a matrix of dimension $n$ of the form
+  \begin{gather}
+    -D^2 \vu = \frac1{h^2} \matt_2 u :=
+    \begin{pmatrix}
+      2 & -1 \\
+      -1 & 2 & -1\\
+      &\ddots & \ddots & \ddots \\
+      &&-1 & 2 & -1\\
+      &&& -2 & 2
+    \end{pmatrix}.
+  \end{gather}
+
+  In two dimensions, we have to add a second difference operator in
+  $y$-direction. It has the same entries as the previous one, but the
+  location of the off-diagonal entries is different. Using
+  lexicographic numbering, every value in the interior couples with
+  the ones $n$ before and $n$ after in the vector. Again, the
+  couplings at the lower and upper boundary are missing. The result is
+  summarized as follows:
+  \begin{gather}
+    -(D_x^2+D_y^2) \vu = \frac1{h^2} \matb_4 \vu :=
+    \begin{pmatrix}
+      \matt_4 & \id_n \\
+      \id_n & \matt_4 & \id_n \\
+      &\ddots & \ddots & \ddots \\
+      &&\id_n & \matt_4 & \id_n \\
+      &&&\id_n & \matt_4 \\
+    \end{pmatrix},
+  \end{gather}
+  where $\id_n$ is the identity matrix of dimension $n$ and $\matt_4$
+  is obtained from $\matt_2$ by replacing the diagonal element 2 by 4.
+
+  This procedure can be extended to three dimensions in the same
+  way. Now, the distance to the previous and next element in
+  $z$-direction is $n^2$ in lexicographic numbering. Hence
+  \begin{gather}
+    -(D_x^2+D_y^2+D_z^2) \vu = \frac1{h^2}
+    \begin{pmatrix}
+      \matt_6 & \id_{n^2} \\
+      \id_{n^2} & \matt_6 & \id_{n^2} \\
+      &\ddots & \ddots & \ddots \\
+      &&\id_{n^2} & \matt_6 & \id_{n^2} \\
+      &&&\id_{n^2} & \matt_6 \\
+    \end{pmatrix}.
+  \end{gather}
+  Independent of the dimension, we will call all these matrices
+  $-\Delta_h$ and refer to them as the finite difference Laplacian.
+\end{remark}
+
+\begin{Example}{Dirichlet-discrete}
+  The discrete form of the Dirichlet boundary value problem
+  ~\slideref{Example}{Dirichlet-problem} is
+  \begin{gather}
+    -\Delta_h \vu = \vf,
+  \end{gather}
+  where $f_m = f(\vx_m)$ with the points $\vx$ in lexicographic ordering.
+\end{Example}
+
+\begin{Lemma}{Laplacian-eigenvalues-1d}
+  The eigenvalues of the matrix $\matt_2$ are
+  \begin{gather}
+    \lambda_j = 2 - 2\cos(j\theta) = 4 \sin^2 \frac{j\theta}2,
+    \quad j=1,\dots, n
+  \end{gather}
+  where $\theta = \nicefrac{\pi}{n+1}$.
+\end{Lemma}
+
+\begin{todo}
+  add eigenfunctions!
+\end{todo}
+
+\begin{Lemma}{Laplacian-eigenvalues-2d}
+  The eigenvalues of the matrix $\matb_4$ are obtained by taking all
+  possible sums of two eigenvalues of $\matt_2$, that is, using double
+  indices for the eigenvalues of $\matb_4$ and single indices for
+  those of $\matt_2$,
+  \begin{gather}
+    \lambda_{ij} = \lambda_i+\lambda_j.
+  \end{gather}
+  The corresponding eigenvectors $\vv_{ij}$ are obtained as tensor
+  products of the eigenvectors $\vv_i$ and $\vv_j$, namely
+  \begin{gather}
+    \vv_{ij}(\vx_{k\ell}) = \vv_i(x_k)\vv_j(y_\ell).
+  \end{gather}
+\end{Lemma}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
