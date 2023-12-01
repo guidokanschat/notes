@@ -33,28 +33,33 @@
   determined by the condition
   \begin{align}
     \vv &\in K\\
-    \vr^{(k)} - \mata\vv &\perp L.
+    \vr^{(k+m)} \equiv \vr^{(k)} - \mata\vv &\perp L.
   \end{align}
 \end{Definition}
 
-Note that the notation $\vx^{(k+m)}$ in the previous definition is
-quite arbitrary and we could have written $\vx^{(k+1)}$ as
-well. Nevertheless, algorithms we will study later have a structure
-where the $m$-dimensional projection step will resemble $m$
-one-dimensional steps, at least from the algorithmic point of
-view. Thus, we adopt the view of a single step in dimension $m$ as an
-$m$-fold step.
+\begin{remark}
+  The notation $\vx^{(k+m)}$ in the previous definition is quite
+  arbitrary and we could have written $\vx^{(k+1)}$ as
+  well. Nevertheless, algorithms we will study later have a structure
+  where the $m$-dimensional projection step will resemble $m$
+  one-dimensional steps, at least from the algorithmic point of
+  view. Thus, we adopt the view of a single step in dimension $m$ as
+  an $m$-fold step.
+\end{remark}
 
 \begin{Example}{projection-gauss-seidel}
-  The Gauss-Seidel substep is a projection step with the choice
+  The Gauss-Seidel and the Jacobi substeps are projection steps with the choice
   \begin{gather}
     K=L=\spann{\ve_i}.
   \end{gather}
+  The difference between the two methods is that the projection steps
+  of the Jacobi iteration are applied in parallel, while they are
+  applied successively in the Gauss-Seidel iteration.
 \end{Example}
 
 \begin{notation}
   We will mostly only consider a single step of the method in
-  \slideref{Definition}{projection-step}. Therefore, we will consider
+  \slideref{Definition}{projection-step}. Therefore, we will often consider
   the step from an initial guess $\vx^{(0)}$ to an approximate solution
   $\tilde \vx$ to simplify the notation.
 \end{notation}
@@ -64,7 +69,7 @@ $m$-fold step.
   the subspaces $K$ and $L$, respectively. Then, the solution
   $\tilde \vx$ to the projection step is determined by $\vy\in\R^m$ and
   \begin{align}
-    \tilde\vx &= \vx^{(0)} + \matv\vy\\
+    \vx^{(m)} &= \vx^{(0)} + \matv\vy\\
     \matw^*\mata\matv \vy &= \matw^* \vr^{(0)}.
   \end{align}
   It is thus obtained by solving an $m$-by-$m$ linear system, called
@@ -90,14 +95,62 @@ $m$-fold step.
 \begin{Theorem}{projection-orthogonal-optimal}
   Let $\mata\in\Rnn$ be symmetric, positive definite. Then,
   $\tilde \vx$ is the result of the orthogonal ($L=K$) projection
-  method with initial vector $\vx^{(0)}$ if and only if it minimizes
-  the \putindex{A-norm} of the error over the space $\vx^{(0)}+K$. Namely, for the
+  method with initial vector $\vx^{(k)}$ if and only if it minimizes
+  the \putindex{A-norm} of the error over the space $\vx^{(k)}+K$. Namely, for the
   solution $\vx$ of $\mata\vx=\vb$ there holds
   \begin{gather}
-    \norm{\tilde\vx-\vx}_A = \min_{\vy\in\vx^{(0)}+K} \norm{\vy-\vx}_A.
+    \norm{\tilde\vx-\vx}_A
+    = \min_{\vv\in \vx^{(k)}+K} \norm{\vv-\vx}_A
+    = \min_{\vv\in K} \norm{\vv+\vx^{(k)}-\vx}_A.
   \end{gather}
-  Here, $\norm\vy_A = \sqrt{\vy^*\mata\vy}$.
+  Here, $\norm\vv_A = \sqrt{\vv^*\mata\vv}$.
 \end{Theorem}
+
+\begin{proof}
+  We use the definition of the projection step to derive for
+  $\tilde \vx = \vx^{(k+m)}$ and any $\vw \in L = K$:
+  \begin{align}
+    0
+    &= \scal(\vr^{(k)} - \mata \vv,\vw)\\
+    &= \scal(\vb-\mata\tilde\vx,\vw)\\
+    &= \scal(\mata\vx - \mata\tilde\vx,\vw)\\
+    &=: \scal(\vx-\tilde\vx,\vw)_{\mata}.
+  \end{align}
+  That is, the error after the projection step is orthogonal to the
+  test space $K$ in the $\mata$-inner product. Hence, we can continue
+  with a standard proof for the optimality of orthogonal
+  projection. We present here the version which is also used in
+  functional analysis. To this end, we define for arbitrary nonzero $\vw\in K$
+  the function
+  \begin{gather}
+    F(t) = \norm{\tilde\vx+t\vw-\vx}_{\mata}^2.
+  \end{gather}
+  We observe that since $\tilde\vx \in \vx^{(k)}+K$, also
+  $\tilde\vx + t \vw \in \vx^{(k)}+K$. Hence, we can replace the
+  minimum as one over $\vw$ and $t$.
+  
+  We observe that if $\tilde\vx$ is a minimizer of the norm, then this
+  function has a minimum at $t=0$. Furthermore, if it has a minimimum
+  at $t=0$ for all $\vw\in K$, then this implies that $\tilde\vx$ is a
+  minimum over $K$. Hence, we have reduced the question to a set of
+  one-dimensional minimization problems. We have
+  \begin{align}
+    F(t) &= t^2\norm{\vw}_{\mata}^2 + 2t \scal(\tilde\vx-\vx,\vw)
+    + \norm{\tilde\vx-\vx}_{\mata}^2,\\
+    F'(t) &= 2t\norm{\vw}_{\mata}^2 + 2 \scal(\tilde\vx-\vx,\vw)_{\mata},\\
+    F''(t) &= \norm{\vw}_{\mata}^2 = \vw^*\mata\vw.
+  \end{align}
+  These derivatives are also called \define{first variation} and
+  \define{second variation} of the minimization problem.
+  Necessary and sufficient for a minimum at $t=0$ is $F'(0)=0$ and
+  $F''(0)>0$. The latter is due to the positive definiteness of
+  $\mata$. The first is fulfilled if
+  \begin{gather}
+    F'(0) = 2 \scal(\tilde\vx-\vx,\vw)_{\mata} = 0,
+  \end{gather}
+  which is exactly what we derived for the projection step.
+\end{proof}
+
 
 \begin{Theorem}{projection-oblique-optimal}
   Let $\mata\in\Rnn$ and $L=\mata K$. Then, $\tilde \vx$ is the result
@@ -111,6 +164,25 @@ $m$-fold step.
   \end{gather}
 \end{Theorem}
 
+\begin{proof}
+  We begin as in the previous proof and use the definition of the
+  projection step to derive for $\tilde \vx = \vx^{(k+m)}$ and any
+  $\mata\vw \in L = \mata K$:
+  \begin{align}
+    0
+    &= \scal(\vr^{(k)} - \mata \vv,\mata\vw)\\
+    &= \scal(\vb-\mata\tilde\vx,\mata\vw)\\
+    &= \scal(\mata\vx - \mata\tilde\vx,\mata\vw)\\
+    &=: \scal(\vx-\tilde\vx,\vw)_{\mata^*\mata}.
+  \end{align}
+  Since $\mata^*\mata$ is positive definite if $\mata$ is nonsingular,
+  we can proceed as in the previous theorem, observing that
+  \begin{gather}
+    \norm{\vb-\mata\tilde\vx}^2 = \scal(\vb-\mata\tilde\vx,\vb-\mata\tilde\vx)
+    = \scal(\vx-\tilde\vx,\vx-\tilde\vx)_{\mata^*\mata}.
+  \end{gather}
+\end{proof}
+
 \begin{Example}{projection-1d}
   A one-dimensional projection method can be characterized by two
   vectors $\vv$ and $\vw$. Then,
@@ -120,11 +192,11 @@ $m$-fold step.
   \end{gather}
   The new solution is
   \begin{gather}
-    \vx^{(k+1)} = \vx^{(k)}+\alpha \vv^{(k)},
+    \vx^{(k+1)} = \vx^{(k)}+\alpha_k \vv^{(k)},
   \end{gather}
   where
   \begin{gather}
-    \alpha = \frac{\scal(\vr^{(k)},\vw)}{\scal(\mata\vv,\vw)}
+    \alpha_k = \frac{\scal(\vr^{(k)},\vw^{(k)})}{\scal(\mata\vv^{(k)},\vw^{(k)})}
   \end{gather}
   is determined from the Galerkin condition
   \begin{gather}
@@ -147,13 +219,20 @@ $m$-fold step.
 \begin{Lemma}{steepest-descent}
   Each step of the steepest descent method computes the minimum of
   $F(\vy) = \norm{\vy-\vx}_A^2$ along the line from the current
-  iterate $\vx^{(k)}$ in direction $-\nabla F(\vx^{(k)})$.
+  iterate $\vx^{(k)}$ in direction $\vw = -\nabla F(\vx^{(k)})$.
   Furthermore, there holds
   \begin{gather}
     \vr^{(k+1)} \perp \vr^{(k)}.
   \end{gather}
-  
 \end{Lemma}
+
+\begin{proof}
+  This result is an immediate consequence of
+  \slideref{Theorem}{projection-orthogonal-optimal}.
+  \begin{todo}
+    continue
+  \end{todo}
+\end{proof}
 
 \begin{remark}
   In this algorithm, the operation $\mata\vr$ is applied twice. Since
