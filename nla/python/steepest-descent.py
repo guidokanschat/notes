@@ -2,11 +2,12 @@ import numpy as np
 
 def steepest_descent(A,b,x,tol):
   r = b
-  r -= A.dot(x)
+  r -= A @ x
   while True:
-    if (r*r<tol*tol):
+    r2 = np.dot(r,r)
+    if (r2<tol*tol):
       break
-    p = A.dot(r)
-    alpha = (r*r)/(p*r)
+    p = A @ r
+    alpha = (r2)/(np.dot(p,r))
     x += alpha*r
     r -= alpha*p
