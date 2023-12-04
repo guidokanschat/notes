@@ -14,12 +14,14 @@
 \end{Definition}
 
 \begin{remark}
-  For the case $L=\mata K$ we deduce from the optimization property of
-  orthogonal projections that $\mata\tilde \vx$ in~\eqref{eq:krylov:1}
-  is the vector in the subspace $\mata K$ closest to $\vb$. Thus,
-  $\tilde\vx$ minimizes the \putindex{residual} $\vb-\mata\vy$ over
-  all choices $\vy\in K$.
- Note that this does not hold for $L\neq \mata K$.
+  We will see later, that projection methods are justified by
+  best-approximation properties of the vector $\tilde \vx$.
+  % For the case $L=\mata K$ we deduce from the optimization property of
+ %  orthogonal projections that $\mata\tilde \vx$ in~\eqref{eq:krylov:1}
+ %  is the vector in the subspace $\mata K$ closest to $\vb$. Thus,
+ %  $\tilde\vx$ minimizes the \putindex{residual} $\vr = \vb-\mata\vy$ over
+ %  all choices $\vy\in K$.
+ % Note that this does not hold for $L\neq \mata K$.
 \end{remark}
 
 \begin{Definition}{projection-step}
@@ -119,11 +121,11 @@
   That is, the error after the projection step is orthogonal to the
   test space $K$ in the $\mata$-inner product. Hence, we can continue
   with a standard proof for the optimality of orthogonal
-  projection. We present here the version which is also used in
-  functional analysis. To this end, we define for arbitrary nonzero $\vw\in K$
-  the function
+  projection. We present here the \putindex{variational method} which
+  is also used in functional analysis. To this end, we define for
+  arbitrary nonzero $\vw\in K$ the function
   \begin{gather}
-    F(t) = \norm{\tilde\vx+t\vw-\vx}_{\mata}^2.
+    F(t) = \tfrac12 \norm{\tilde\vx+t\vw-\vx}_{\mata}^2.
   \end{gather}
   We observe that since $\tilde\vx \in \vx^{(k)}+K$, also
   $\tilde\vx + t \vw \in \vx^{(k)}+K$. Hence, we can replace the
@@ -135,9 +137,9 @@
   minimum over $K$. Hence, we have reduced the question to a set of
   one-dimensional minimization problems. We have
   \begin{align}
-    F(t) &= t^2\norm{\vw}_{\mata}^2 + 2t \scal(\tilde\vx-\vx,\vw)
-    + \norm{\tilde\vx-\vx}_{\mata}^2,\\
-    F'(t) &= 2t\norm{\vw}_{\mata}^2 + 2 \scal(\tilde\vx-\vx,\vw)_{\mata},\\
+    F(t) &= \tfrac{t^2}2 \norm{\vw}_{\mata}^2 + t \scal(\tilde\vx-\vx,\vw)
+    + \tfrac12 \norm{\tilde\vx-\vx}_{\mata}^2,\\
+    F'(t) &= t\norm{\vw}_{\mata}^2 + \scal(\tilde\vx-\vx,\vw)_{\mata},\\
     F''(t) &= \norm{\vw}_{\mata}^2 = \vw^*\mata\vw.
   \end{align}
   These derivatives are also called \define{first variation} and
@@ -146,7 +148,7 @@
   $F''(0)>0$. The latter is due to the positive definiteness of
   $\mata$. The first is fulfilled if
   \begin{gather}
-    F'(0) = 2 \scal(\tilde\vx-\vx,\vw)_{\mata} = 0,
+    F'(0) = \scal(\tilde\vx-\vx,\vw)_{\mata} = 0,
   \end{gather}
   which is exactly what we derived for the projection step.
 \end{proof}
@@ -183,9 +185,10 @@
   \end{gather}
 \end{proof}
 
-\begin{Example}{projection-1d}
-  A one-dimensional projection method can be characterized by two
-  vectors $\vv$ and $\vw$. Then,
+\begin{Theorem}{projection-1d}
+  Any one-dimensional projection method can be characterized by two
+  vectors, the \define{search direction} $\vv$ and the test vector
+  $\vw$. Then,
   \begin{gather}
     K = \spann{\vv^{(k)}},
     \qquad L = \spann{\vw^{(k)}}.
@@ -196,13 +199,33 @@
   \end{gather}
   where
   \begin{gather}
-    \alpha_k = \frac{\scal(\vr^{(k)},\vw^{(k)})}{\scal(\mata\vv^{(k)},\vw^{(k)})}
+    \label{eq:projection:1d-1}
+    \alpha_k = \frac{\scal(\vr^{(k)},\vw^{(k)})}{\scal(\mata\vv^{(k)},\vw^{(k)})}.
   \end{gather}
-  is determined from the Galerkin condition
+\end{Theorem}
+
+\begin{proof}
+  After choosing the spaces $K$ and $L$, the method is uniquely defined. Since (omitting indices)
   \begin{gather}
-    \vr^{(k)}-\mata\vv^{(k)} \perp \vw^{(k)}
+    \scal(\vb-\mata\vx - \alpha\mata\vv,\vw) = 0,
   \end{gather}
-\end{Example}
+  we have
+  \begin{gather}
+    \alpha\scal(\mata\vv,\vw) = \scal(\vr,\vw),
+  \end{gather}
+  which implies the formula for $\alpha$ if the denominator is nonzero.
+\end{proof}
+
+\begin{Definition}{breakdown}
+  The computation of the step length in all projection methods
+  requires a division as in~\eqref{eq:projection:1d-1}. If the
+  denominator is zero, the next step of the method cannot be
+  computed. We call this a \define{breakdown} of the method.
+  
+  Furthermore, this value might be almost zero, which is called a
+  \define{near breakdown}. In this case, the next step might be
+  computed, but it will suffer from round-off errors.
+\end{Definition}
 
 \begin{Algorithm*}{steepest-descent-algol}{The steepest descent method}
   \begin{algorithmic}[1]
@@ -218,8 +241,8 @@
 
 \begin{Lemma}{steepest-descent}
   Each step of the steepest descent method computes the minimum of
-  $F(\vy) = \norm{\vy-\vx}_A^2$ along the line from the current
-  iterate $\vx^{(k)}$ in direction $\vw = -\nabla F(\vx^{(k)})$.
+  $F(\vy) = \frac12\norm{\vy-\vx}_A^2$ along the line from the current
+  iterate $\vx^{(k)}$ in direction $\vw = -\nabla F(\vx^{(k)}) = -\vr^{(k)}$.
   Furthermore, there holds
   \begin{gather}
     \vr^{(k+1)} \perp \vr^{(k)}.
@@ -228,10 +251,17 @@
 
 \begin{proof}
   This result is an immediate consequence of
-  \slideref{Theorem}{projection-orthogonal-optimal}.
-  \begin{todo}
-    continue
-  \end{todo}
+  \slideref{Theorem}{projection-orthogonal-optimal}. From the proof of
+  this theorem, we deduce for any $\vw$
+  \begin{gather}
+    \nabla F(\vx^{(k)})(\vw) = \scal(\vx^{(k)}-\vx,\vw)_{\mata}
+    = -\scal(\vr^{(k)},\vw).
+  \end{gather}
+  Furthermore, the orthogonality condition of the orthogonal
+  projection method implies
+  \begin{gather}
+    0 = \scal(\vr^{(k+1)},\vw^{(k)}) = -\scal(\vr^{(k+1)},\vr^{(k)}).
+  \end{gather}
 \end{proof}
 
 \begin{remark}
@@ -244,7 +274,7 @@
 \end{remark}
 
 \begin{Remark}{convergence-residual}
-  The residual $\vr = \vb - \mata\tilde\vx$ of the current iterate
+  The residual $\tilde \vr = \vb - \mata\tilde\vx$ of the current iterate
   $\tilde\vx$ measures the misfit of $\tilde\vx$ in the equation
   $\mata\vx = \vb$. Since the error $\tilde\vx-\vx$ is unknown, we can
   use it as criterion for the accuracy of the current
@@ -253,15 +283,15 @@
     \norm{\vx-\tilde\vx}
     = \norm*{\mata^{-1}\bigl(\mata\vx - \mata\tilde\vx\bigr)}
     = \norm*{\mata^{-1}\bigl(\vb - \mata\tilde\vx\bigr)}
-    \le \norm{\mata^{-1}}\norm{\vr}.
+    \le \norm{\mata^{-1}}\norm{\tilde \vr}.
   \end{gather}
   Therefore, the criterion for convergence of the algorithm is typically
   \begin{gather}
-    \norm{\vr} \le \text{TOL},
+    \norm{\tilde \vr} \le \text{TOL},
   \end{gather}
   where TOL is a tolerance chosen by the user.
 
-  Note, that the computation of $\vr$ is subject to roundoff
+  Note, that the computation of $\tilde \vr$ is subject to roundoff
   errors. Thus, the tolerance should always be chosen
   \begin{gather}
     \text{TOL} > c\norm{\vb}\eps,
@@ -318,12 +348,19 @@
 
 \begin{Lemma}{minimal-residual}
   Each step of the minimal method computes the minimum of
-  $F(\vy) = \norm{\vb-\mata\vy}_2^2$ along the line from the current
-  iterate $\vx^{(k)}$ in direction $\vr$. Furthermore, there holds
+  $F(\vy) = \frac12\norm{\vb-\mata\vy}_2^2$ along the line from the current
+  iterate $\vx^{(k)}$ in direction $-\vr^{(k)}$. Furthermore, there holds
   \begin{gather}
     \vr^{(k+1)} \perp \mata \vr^{(k)}
   \end{gather}
 \end{Lemma}
+
+\begin{proof}
+  The proof is identical ot the one of
+  \slideref{Lemma}{steepest-descent} after replacing
+  $\vw^{(k)} = \mata\vr^{(k)}$ and using
+  \slideref{Theorem}{projection-oblique-optimal}.
+\end{proof}
 
 \begin{Lemma}{lucky-breakdown}
   The iteration sequences $\{\vx^{(k)}\}$ of the steepest descent and
