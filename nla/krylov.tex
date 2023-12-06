@@ -116,7 +116,7 @@
   after Cornelius Lanczos in the symmetric case.
 \end{intro}
 
-\begin{Lemma}{Hessenberg-Krylov}
+\begin{Lemma}{Hessenberg-Krylov-1}
   Let $\mata\in\Rnn$ be given. Let $\matq$ be orthogonal with column
   vectors $\vq_j$ and $\matH$ be Hessenberg, such that
   \begin{gather}
@@ -163,6 +163,7 @@
   according dimensions. Then, there holds
   \begin{gather}
     \label{eq:arnoldi-projection-2}
+    \mata\matq_m
     = \matq_{m+1}\overline{\matH}_m
   \end{gather}
   Furthermore, the matrix
@@ -170,12 +171,12 @@
     \label{eq:arnoldi-projection-3}
     \matH_m = \matq_m^T\mata\matq_m
   \end{gather}
-  is the projection of $\mata$ to $\krylov_m(\matq_1,\mata)$ expressed
+  is the projection of $\mata$ to $\krylov_m(\vq_1,\mata)$ expressed
   in the basis $\matq_m$.
 \end{Theorem}
 
 \begin{proof}
-  The first statement only rephrases~\eqref{eq:krylov:3}. Forthe
+  The first statement only rephrases~\eqref{eq:krylov:3}. For the
   second, we observe that $\matq_m^*\matq_{m+1}$ is the identity
   $\id_m$ with an additional zero-column to the right. Hence,
   \begin{gather}
@@ -184,7 +185,21 @@
   Entering this into~\eqref{eq:arnoldi-projection-2} yields the result.
 \end{proof}
 
-\begin{Algorithm*}{arnoldi-1}{Arnoldi with Gram-Schmidt}
+\begin{Lemma}{Hessenberg-Krylov-2}
+  Let the grade of $\vv$ with respect to $\mata$ be not less than
+  $m$. Define the \define{Krylov matrix}
+  \begin{gather}
+    \matk_m = \left(\vv,\mata\vv,\dots,\mata^{m-1}\vv\right).
+  \end{gather}
+  Let $\matq_m$ be the matrix of the QR factorization
+  \begin{gather}
+    \matk_m = \matq_m\matr_m.
+  \end{gather}
+  Then $\matq_m^*\mata\matq$ is Hessenberg.
+\end{Lemma}
+
+
+\begin{Algorithm*}{arnoldi-1}{Arnoldi}
   \algtext*{EndIf}
   \begin{algorithmic}[1]
     \Require $\mata\in\Rnn$; $\quad\vq_1\in\R^n, \norm{\vq_1}_2 = 1$
@@ -208,7 +223,7 @@
 
 \begin{Lemma}{arnoldi-w}
   We can rewrite~\eqref{eq:arnoldi-projection-2} using the vector
-  $\vw$ as it was computed in line 7 of the algorithm as
+  $\vw_j$ as it was computed by orthogonalization as
   \begin{gather}
     \label{eq:arnoldi-projection-1}
     \mata\matq_m
@@ -222,6 +237,8 @@
   From line 9, we have $\vw_m = h_{m+1,m} \vq_{m+1}$. Hence, the last 
 \end{proof}  
 \end{todo}
+
+
 
 \begin{Algorithm*}{arnoldi-householder}{Arnoldi with Householder}
   \algtext*{EndIf}
@@ -378,7 +395,8 @@
 \end{remark}
 
 \begin{Lemma*}{lanczos-linear}{Lanczos solver}
-  The Galerkin approximation   \begin{align}
+  The Galerkin approximation
+  \begin{align}
     x^{(m)} &\in x^{(0)} + \krylov_m(\mata,r^{(0)})\\
     b-\mata x^{(m)} &\perp \krylov_m(\mata,r^{(0)}),
   \end{align}
@@ -411,7 +429,7 @@
   While the basis of $\krylov_m(r^{(0)},\mata)$ can be computed
   incrementally, only using the previous two vectors, the update
   \begin{gather}
-    $\vx^{(m)} = \vx^{(0)} + \matq_m \vy_m$
+    \vx^{(m)} = \vx^{(0)} + \matq_m \vy_m
   \end{gather}
   requires storing the whole basis $\matq_m$. This is a problem, if
   many iteration steps are required. Hence, in the following steps, we
