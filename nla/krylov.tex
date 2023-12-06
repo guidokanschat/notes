@@ -104,7 +104,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The Arnoldi and Lanczos procedures}
+\subsection{The Arnoldi and Lanczos processes}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -185,7 +185,7 @@
   Entering this into~\eqref{eq:arnoldi-projection-2} yields the result.
 \end{proof}
 
-\begin{Lemma}{Hessenberg-Krylov-2}
+\begin{Theorem}{Hessenberg-Krylov-2}
   Let the grade of $\vv$ with respect to $\mata$ be not less than
   $m$. Define the \define{Krylov matrix}
   \begin{gather}
@@ -196,8 +196,27 @@
     \matk_m = \matq_m\matr_m.
   \end{gather}
   Then $\matq_m^*\mata\matq$ is Hessenberg.
-\end{Lemma}
+\end{Theorem}
 
+\begin{proof}
+  The proof follows the uniqueness proof of
+  \slideref{Theorem}{qr-existence} using the property
+  \begin{gather}
+    \spann{\vq_1,\dots,\vq_j} = \spann{\vv,\mata\vv,\dots,\mata^{j-1}\vv}
+  \end{gather}
+  from \slideref{Lemma}{qr-columns}.
+  \begin{todo}
+    Continue
+  \end{todo}
+\end{proof}
+
+\begin{Corollary}{Hessenberg-Krylov}
+  The last theorem shows that the Hessenberg similarity
+  transformations in \slideref{Lemma}{Hessenberg-Krylov-1} and
+  \slideref{Theorem}{arnoldi-projection} can be chosen with any
+  normalized vector $\vq_1$ as long as its grade is sufficiently
+  hight.
+\end{Corollary}
 
 \begin{Algorithm*}{arnoldi-1}{Arnoldi}
   \algtext*{EndIf}
@@ -237,23 +256,6 @@
   From line 9, we have $\vw_m = h_{m+1,m} \vq_{m+1}$. Hence, the last 
 \end{proof}  
 \end{todo}
-
-
-
-\begin{Algorithm*}{arnoldi-householder}{Arnoldi with Householder}
-  \algtext*{EndIf}
-  \begin{algorithmic}[1]
-    \Require $\mata\in\Rnn$; $\quad\vq_1\in\R^n, \norm{\vq_1}_2 = 1$
-    \State Choose $\matq_1^*$ such that $\matq_1^*\vq_1 = \ve_1$.
-    \Comment{Householder}
-    \For{$j=1,\dots,m$}
-    \State $\vq_j \gets \matq_1^*\dots\matq_j^*\ve_j$
-    \State $\matq_{j+1}\matr \gets \matq_j^*\dots\matq_1^*(\vq_1,\mata\vq_1,\dots,\mata\vq_m)$
-    \Comment{Householder}
-    \If{$r_{j+1,j+1}=0$} \textbf{stop}\EndIf
-    \EndFor
-  \end{algorithmic}
-\end{Algorithm*}
 
 \begin{remark}
   The next step of the Arnoldi method can always be computed if
@@ -368,8 +370,9 @@
 \end{Theorem}
 
 \begin{proof}
-  See also~\cite[Proposition 6.7]{Saad00}
-  We use the definition of the residual of $\vx^{(m)}$ and the representation of \slideref{Theorem}{arnoldi-projection} to obtain
+  See also~\cite[Proposition 6.7]{Saad00} We use the definition of the
+  residual of $\vx^{(m)}$ and the representation of
+  \slideref{Theorem}{arnoldi-projection} to obtain
   \begin{align}
     \vr^{(m)} = b-\mata\vx^{(m)}
     &= b- \mata\left(\vx^{(0)} + \matq_m\vy_m\right)\\
@@ -812,6 +815,171 @@
   faster convergence.
 \end{remark}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The generalized minimal residual method (GMRES)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{todo}
+  Put this theorem into an appendix?
+\end{todo}
+
+\begin{Theorem}{normal-equations}
+  Let $\mata\in\R^{m\times n}$ with $m\ge n$ and $\vb\in\R^m$. Then, a vector $\vx$ is the solution to the minimization problem
+  \begin{gather}
+    \norm{\vb-\mata\vx}_2 \stackrel{!}{=} \min,
+  \end{gather}
+  if an only if $\vx$ solves the \define{normal equations}
+  \begin{gather}
+    \mata^T\mata\vx = \mata^T \vb.
+  \end{gather}
+\end{Theorem}
+
+\begin{Lemma}{oblique-normal}
+  Let $\mata\in\Rnn$ be invertible. Let $K$ be a subspace of $\Rnn$. Then, the oblique projection
+  \begin{gather}
+    \vv\in K, \qquad \vb-\mata\vv \perp \mata K,
+  \end{gather}
+  and the orthogonal projection
+  \begin{gather}
+    \vw\in K, \qquad \mata^T \vb-\mata^T\mata\vw \perp K,
+  \end{gather}
+  are identical.
+\end{Lemma}
+
+\begin{proof}
+  Homework.
+\end{proof}
+
+\begin{todo}
+  Write in incremental form? Add pseudocode version in incremental form?
+\end{todo}
+
+\begin{Algorithm*}{gmres}{Generalized Minimal Residual}
+  Given $\vx^{(0)}\in\R^n$, the ``iterate'' $\vx^{(m)}$ of the
+  \define{GMRES} method is computed by the following steps.
+  \begin{enumerate}
+  \item Compute the Arnoldi basis $\matq_{m+1}$ of
+    $\krylov_{m+1}(\mata,\vr^{(0)})$ and the matrix $\overline\matH_m\in\R^{m+1\times m}$.
+  \item Solve the least squares problem
+    \begin{gather}
+      \norm{\beta\ve_1 - \overline\matH_m \vy_m}_2 \stackrel{!}{=} \min
+    \end{gather}
+    in $\R^m$ with $\beta = \norm{\vr^{(0)}}_2$.
+  \item Let
+    \begin{gather}
+      \vx^{(m)} = \vx^{(0)} + \matq_{m}\vy_m
+    \end{gather}
+  \end{enumerate}
+\end{Algorithm*}
+
+\begin{Theorem}{gmres-projection}
+  The GMRES method computes the update of the $m$-dimensional oblique
+  projection step. It minimizes the residual over the search space
+  $\vx^{(0)} +\krylov_m(\mata,\vr^{(0)}$ and there holds
+  \begin{gather}
+    \label{eq:gmres-norm}
+    \norm{\vr^{(m)}}_2 = \norm{\vb-\mata\vx^{(m)}}_2 =
+    \norm{\beta\ve_1 - \overline\matH \vy_m}_2.
+  \end{gather}
+\end{Theorem}
+
+\begin{proof}
+  We use the equivalence between minimizing the residual and the
+  solution to the normal equations, namely
+  \slideref{Theorem}{normal-equations}. According to
+  \slideref{Theorem}{arnoldi-projection}, we obtain
+  \begin{gather}
+    \matq_m^T\mata^T\mata\matq_m
+    = \overline\matH_m^T \matq_{m+1}^T\matq_{m+1}\overline\matH_m
+    = \overline\matH_m^T\overline\matH_m.
+  \end{gather}
+  Thus, $\overline\matH_m^T\overline\matH_m$ is the Galerkin
+  projection of $\mata^T\mata$ to the subspace generated by
+  $\matq_m$. Furthermore, it is symmetric, positive definite, the
+  latter assuming $\mata$ is invertible.  Furthermore,
+  $\vr^{(0)} = \vb-\mata\vx^{(0)} = \beta\matq_{m+1}\ve_1$, such that
+  \begin{gather}
+    \matq_m^T\mata^T\vr^{(0)} = \beta\overline\matH_m \ve_1.
+  \end{gather}
+  Thus, the linear system
+  \begin{gather}
+    \overline\matH_m^T\overline\matH_m \vy_m = \beta\overline\matH_m \ve_1
+  \end{gather}
+  is the (orthogonal) Galerkin projection of the normal equations to
+  the search space. On the other hand, its solution solves the
+  minimization problem in the GMRES algorithm.
+
+  By the minimization property of the orthogonal projection, the error
+  after the projection step is minimal in the $\mata^T\mata$ norm,
+  which is equal to the Euclidean norm of the residual.
+
+  Finally, we have
+  \begin{align}
+    \vr^{(m)}
+    &= \vb-\mata\vx^{(0)} - \mata\matq_m\vy_m\\
+    &=\beta\matq_{m+1}\ve_1 - \matq_{m+1}\overline\matH_m\vy_m\\
+    &= \matq_{m+1}\left(\beta\ve_1 - \overline\matH_m\vy_m\right).
+  \end{align}
+  Since $\matq_{m+1}$ is orthogonal, this implies that
+  \begin{gather}
+    \norm{\vr^{(m)}}_2 = \norm{\beta\ve_1 - \overline\matH_m\vy_m}_2
+  \end{gather}
+\end{proof}
+
+\begin{remark}
+  \slideref{Algorithm}{gmres} should not be implemented as it is
+  presented, but rather in the fashion of an iterative method, where
+  $m$ is increased step by step. To this end, we observe that the
+  generation of the Arnoldi basis proceeds incrementally, adding new
+  vectors, but not changing the previous ones.
+
+  Therefore, $\overline\matH_{m+1}$ differs from $\overline\matH_{m}$
+  only by adding an additional row and column. Then, the least-squares
+  system is solved by computing the QR factorization of
+  $\overline\matH_{m+1}$, which again amounts to updating the last
+  column only.
+\end{remark}
+
+\begin{remark}
+  Equation~\eqref{eq:gmres-norm} implies in particular, that the norm
+  of the residual in the GMRES method can be computed without
+  computing a ``big'' matrix-vector operation $\mata\vx^{(m)}$, but is
+  indeed the misfit of the $m$-dimensional least-squares problem for
+  $\vy_m$. This implies on the other hand, that even the solution
+  $\vx^{(m)}$ should only be computed as soon as the resiudal is
+  sufficiently small.
+\end{remark}
+
+\begin{Lemma}{gmres-breakdown}
+  If the GMRES method breaks down at step $m$, then
+  $\vr^{(m)}=0$. Thus, the GMRES method only encounters a
+  \putindex{lucky breakdown}.
+\end{Lemma}
+
+\begin{todo}
+  finish text
+\end{todo}
+\begin{intro}
+  The GMRES algorithm uses the Arnoldi process in order to compute a QR factorization of the 
+\end{intro}
+
+
+\begin{Algorithm*}{arnoldi-householder}{Arnoldi with Householder}
+  \algtext*{EndIf}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Rnn$; $\quad\vq_1\in\R^n, \norm{\vq_1}_2 = 1$
+    \State Choose $\matq_1^*$ such that $\matq_1^*\vq_1 = \ve_1$.
+    \Comment{Householder}
+    \For{$j=1,\dots,m$}
+    \State $\vq_j \gets \matq_1^*\dots\matq_j^*\ve_j$
+    \State $\matq_{j+1}\matr \gets \matq_j^*\dots\matq_1^*(\vq_1,\mata\vq_1,\dots,\mata\vq_m)$
+    \Comment{Householder}
+    \If{$r_{j+1,j+1}=0$} \textbf{stop}\EndIf
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
 
 \begin{Theorem}{gmres-optimality}
   For the residual $\vr^{(k)} = \vb-\mata\vx^{(k)}$ after $k$ steps of
@@ -822,9 +990,9 @@
   \end{gather}
   If the matrix $\mata$ is diagonalizable, then there holds
     \begin{gather}
-    \norm{\vr^{(k)}}_2 \le \rho_k \cond_2(\matq) \norm{\vr^{(0)}}_2,
+    \norm{\vr^{(k)}}_2 \le \rho_k \cond_2(\matv) \norm{\vr^{(0)}}_2,
   \end{gather}
-  where $\matq$ is the matrix of eigenvectors and
+  where $\matv$ is the matrix of eigenvectors and
   \begin{gather}
     \rho_k = \min_{\substack{p\in\P_k\\p(0) = 1}} \max_{\lambda\in\sigma(\mata)} \abs{p(\lambda)}.
   \end{gather}
@@ -863,6 +1031,41 @@
   numbers, you can find a sequence such that the norms of residuals of
   the GMRES method will follow that
   sequence~\cite{GreenbaumPtakStrakos96}.
+\end{remark}
+
+\begin{remark}
+  The GMRES method encounters a problem if convergence is slow: the
+  effort for computing the last basis vector in $\matq_m$ is of order
+  $mn$, the effort for solving the least-squares problem is
+  $m^3$. Similarly, the storage requirement for $\matq_m$ is $mn$ and
+  for $\overline \matH_m$, it is $m^2$. Thus, the algorithm is
+  feasible for large sparse matrices only if $m\ll n$.
+
+  Therefore, we introduce two variants of the GMRES algorithm:
+  \begin{itemize}
+  \item Restarted GMRES simply deletes the whole basis $\matq_m$ and the matrix $\overline\matH_m$ every $k$-th step starts fresh.
+  \item Truncated GMRES orthogonalizes only with respect to the last
+    $k$ basis vectors.
+  \end{itemize}
+\end{remark}
+
+\begin{Algorithm*}{gmres-restart}{Restarted GMRES}
+  \begin{enumerate}
+  \item Choose a maximal dimension $m$ of the Krylov space
+  \item Begin with an initial guess $\vx^{(0)}$.
+  \item For $k>0$, given $\vx^{(k)}$, perform the GMRES method with
+    basis size $m$ to obtain $\vx^{(k+m)}$.
+  \item Check the stopping criterion as usual inside the GMRES method
+  \end{enumerate}
+\end{Algorithm*}
+
+\begin{Algorithm*}{gmres-truncated}{Truncated GMRES}
+  Run the GMRES method as usual, but in the Arnoldi process, only
+  orthogonalize with respect to the last $k$ vectors for fixed $k$.
+\end{Algorithm*}
+
+\begin{remark}
+  Note that both modifications destroy the minimization property of the method.
 \end{remark}
 
 \begin{Theorem}{gmres-pos-def}
@@ -923,8 +1126,8 @@
   $\{\vw_k\}_{k=1,\dots,m}$ are bases for $\krylov_m(\mata,\vv_1)$ and
   $\krylov_m(\mata^T,\vw_1)$, respectively. They form a biorthogonal system and there holds
   \begin{align}
-    \mata\matv_m &= \matv_m \matt_m + \delta_{m+1}\vv_{m+1\ve_m^T},\\
-    \mata^T\matw_m &= \matw_m \matt_m^T + \beta_{m+1}\vw_{m+1\ve_m^T},\\
+    \mata\matv_m &= \matv_m \matt_m + \delta_{m+1}\vv_{m+1}\ve_m^T,\\
+    \mata^T\matw_m &= \matw_m \matt_m^T + \beta_{m+1}\vw_{m+1}\ve_m^T,\\
     \matw_m^T \mata \matv_m &= \matt_m,
   \end{align}
   where
@@ -967,7 +1170,7 @@
   
   This has spurred the development of a whole bunch of algorithms,
   from BiCG to QMR to BiCG-stab (already involving 8 auxiliary vectors) to
-  BiCG-stab($m$), which combines $m$ GMRES steps win an outer
+  BiCG-stab($m$), which combines $m$ GMRES steps with an outer
   BiCG-stab algorithm.
 \end{remark}
 
@@ -1058,36 +1261,6 @@
     \EndFor
   \end{algorithmic}
 \end{Algorithm*}
-
-\begin{todo}
-  Middle of the stash conflict
-\end{todo}
-
-\begin{Algorithm*}{gmres}{Generalized Minimal Residual}
-  Given $\vx^{(0)}\in\R^n$, the ``iterate'' $\vx^{(m)}$ of the
-  \define{GMRES} method is computed by the following steps.
-  \begin{enumerate}
-  \item Compute the Arnoldi basis $\matv_{m+1}$ of
-    $\krylov_{m+1}(\mata,\vr^{(0)})$ and the matrix $\overline\matH_m\in\R^{m+1\times m}$.
-  \item Solve the least squares problem
-    \begin{gather}
-      \norm{\beta\ve_1 - \overline\matH_m \vy}_2 \stackrel{!}{=} \min
-    \end{gather}
-    in $\R^m$ with $\beta = \norm{\vr^{(0)}}_2$.
-  \item Let
-    \begin{gather}
-      \vx^{(m)} = \vx^{(0)} + \matv_{m}\vy
-    \end{gather}
-  \end{enumerate}
-\end{Algorithm*}
-
-\begin{remark}
-  The GMRES methof is not really an iterative method. indeed, the intermediate iterates $\vx^{(k)}$ may not even be computed, since the norm of the residual can be computed by% \slideref{}{}
-\end{remark}
-
-\begin{todo}
-  End of stash conflict
-\end{todo}
 
 %%% Local Variables:
 %%% mode: latex
