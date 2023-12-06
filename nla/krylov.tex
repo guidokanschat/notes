@@ -251,11 +251,17 @@
   with $\ve_m\in \R^m$.
 \end{Lemma}
 
-\begin{todo}
 \begin{proof}
-  From line 9, we have $\vw_m = h_{m+1,m} \vq_{m+1}$. Hence, the last 
+  From line 9, we have $\vw_m = h_{m+1,m} \vq_{m+1}$. Hence, the sum
+  in~\eqref{eq:krylov:2} can be rewritten without using the matrix
+  $\overline\matH_m$ as
+  \begin{align}
+    \mata\vq_m
+    &= \sum_{k=1}^{m} h_{km}\vq_k + h_{m+1,m} \vq_{m+1}\\
+    &= \matq_m\matH_m \ve_m + \vw_m,
+  \end{align}
+  which is the $m$-th column of the matrix $\matq_m\matH_m+\vw_m\ve_m^T$.
 \end{proof}  
-\end{todo}
 
 \begin{remark}
   The next step of the Arnoldi method can always be computed if
@@ -337,6 +343,10 @@
 \subsection{The conjugate gradient method}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{intro}
+  
+\end{intro}
 
 \begin{Theorem}{arnoldi-linear-system}
   Given an initial vector $\vx^{(0)}$ and
