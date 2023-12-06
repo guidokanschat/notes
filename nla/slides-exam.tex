@@ -1,0 +1,65 @@
+
+\begin{frame}
+  \begin{block}{Assignment}
+    Implement the QR-method with shifts and deflation for Hermitian
+    matrices and document the decisions you made in the implementation.
+    
+    Verify your program with meaningful tests and document their results.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Formalities}
+  \begin{itemize}
+  \item The program(s), documentation, and results should be submitted
+    electronically in a single PDF by Feb 6th, 2023.
+  \item You are welcome and encouraged to discuss your work with your
+    peers, but every student must submit their own, unique work.
+  \item  As part of the exam, you will be asked to give a short oral
+    presentation of your work and you should be able to answer questions
+    about your code.
+  \item Oral presentations will be scheduled for the week of
+    Feb 6th, or later upon request.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Guidelines}
+  \begin{enumerate}
+  \item The program must run with several example matrices without
+    crashing and you must be able to change parameters like the matrix
+    size
+  \item The program must be subdivided into functions of well-defined
+    purpose
+  \item Your code should be well structured and readable
+  \item You must be able to describe how you verify the correctness of
+    your program
+  \item Follow all suggestions from the notes on how to save memory and operations
+  \item Avoid complex numbers whenever possible
+  \item The QR iteration must be able to identify multiple eigenvalues
+  \item Use appropriate shift strategies and document
+  \item Document your deflation strategy
+  \item Bonus if you compute not only eigenvalues but also eigenvectors
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hints}
+  \begin{enumerate}
+\item Jupyter notebooks are a great way of producing this PDF, but
+  they are not necessary.
+\item The ``[:]'' notation for selecting column vectors or submatrices
+  can be very helpful, if used the right way.
+\end{enumerate}
+\end{frame}
+
+\frame {\input {blocks/Algorithm-householder-multiplication.tex}}
+\frame {\input {blocks/Algorithm-givens-multiplication.tex}}
+\frame {\input {blocks/Problem-Hermitian-tridiagonal.tex}}
+\frame {\input {blocks/Remark-tridiagonal-storage.tex}}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End:

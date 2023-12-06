@@ -1,5 +1,6 @@
 \documentclass[a4paper]{article}
 \usepackage{amsmath}
+%\usepackage[scale=5]{draftwatermark}
 %\usepackage{background}
 
 \addtolength{\textwidth}{2cm}
@@ -12,68 +13,56 @@
 \begin{center}
   \textbf{\Large Programming-Exam Numerical Linear Algebra}
   
-  \textbf{Winter 2022/23}
+  \textbf{Winter 2023/24}
 \end{center}
 
 \subsection*{Assignment}
-Minimum: implement the QR-method following Algorithm 1.4.17 in the notes and
-verify your implementation.
 
-Gold standard: implement the Francis-QR-iteration with double shifts
-and deflation in Algorithm 1.5.15.
-\subsection*{Dates}
+Implement the QR-method with shifts and deflation for Hermitian
+matrices and document the decisions you made in the implementation.
 
-The program(s) should be submitted electronically by Feb 12th,
-2023. Oral presentations will be scheduled for the week of Feb 13th, or later upon request.
+Verify your program with meaningful tests and document their results.
 
-\subsection*{Minimal requirements}
-\begin{itemize}
+\subsection*{Formalities}
+
+The program(s), documentation, and results should be submitted
+electronically in a single PDF or a PDF plus one file with code by Feb
+4th, 2023. You are welcome and encouraged to discuss your work with
+your peers, but every student must submit their own, unique work.
+
+As part of the exam, you will be asked to give a short oral
+presentation of your work and you should be able to answer questions
+about your code.  Oral presentations will be scheduled for the week of
+Feb 5th, or later upon request.
+
+Please submit at the oral test a signed declaration: ``I/We have
+  prepared the assignment myself/ourselves and I/we have only used the
+  sources declared in the submission''.
+
+\subsection*{Guidelines}
+\begin{enumerate}
 \item The program must run with several example matrices without
   crashing and you must be able to change parameters like the matrix
   size
 \item The program must be subdivided into functions of well-defined
   purpose
+\item Your code should be well structured and readable
 \item You must be able to describe how you verify the correctness of
   your program
-\end{itemize}
-
-If your program following algorithm 1.4.17 works for several matrices and you can explain it, you will pass the exam, but only with the minimal passing grade (4,0).
-
-\subsection*{Improving your grade}
-You can improve your grade by putting more effort into the
-implementation. You can consider items from the following list, but
-you can also think of other improvements:
-\begin{enumerate}
-\item Use implicit single shifts to accelerate convergence (Algorithm 1.5.6)
-\item Use double shifts to avoid complex arithmetic (Theorem 1.5.13)
-\item Use deflation when the subdiagonal element in the last row is
-  sufficiently small
-\item Use deflation, if any other subdiagonal element is small (somewhat more difficult)
-\item Compute not only eigenvalues but also eigenvectors
-\item Well-chosen tests for correctness
-\item Investigation into convergence
-\item Write very well structured code
-\item Well-prepared jupyter notebooks with code, accompanying text, and results
-\item Object-oriented programming: it is possible to implement
-  algorithm 1.4.17 in a way, that $\boldmath H$ is either Hessenberg or
-  tridiagonal, either real or complex, but encapsulate the differences
-  inside the QR-decompositions applied in every step.
+\item The target dimension for matrices should be at least 20
+\item Follow all suggestions from the notes on how to save memory and operations
+\item Avoid complex numbers whenever possible
+\item The QR iteration must be able to identify multiple eigenvalues
+\item Use appropriate shift strategies and document
+\item Document your deflation strategy
+\item Bonus if you compute not only eigenvalues but also eigenvectors
 \end{enumerate}
 
-Note that combining for instance options 1 and 2 is not really helpful. Choose wisely!
-
-If you implement the QR iteration based on Algorithm 1.5.15 observing items 2, 3, 4, 6, 7, and 8 of the previous list, and you can explain your work, the result will be a top grade (1,0). But, going all the way may not be necessary.
-
-\subsection*{Additional rules}
-\begin{itemize}
-\item You can prepare the assignment by yourself or in a team of two
-  students.
-\item There will be short oral tests with the authors of each program
-  in order to verify authorship and help determining a grade. You will
-  have to demonstrate the running program. Both students of a team
-  will have to contribute equally!
-\item Please submit at the oral test a signed declaration: ``I/We have
-  prepared the assignment myself/ourselves and I/we have only used the
-  sources declared in comments to the program''.
-\end{itemize}
+\subsection*{Hints}
+\begin{enumerate}
+\item Jupyter notebooks are a great way of producing this PDF, but
+  they are not necessary.
+\item The ``[:]'' notation for selecting column vectors or submatrices
+  can be very helpful, if used the right way.
+\end{enumerate}
 \end{document}

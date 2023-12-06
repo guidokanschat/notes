@@ -11,9 +11,9 @@
 
 \begin{Algorithm*}{rayleigh-ritz}{Rayleigh-Ritz method}
   \begin{enumerate}
-  \item Compute an orthonormal basis $\matv_m$ for the subspace $K$ and let
+  \item Compute an orthonormal basis $\matq_m$ for the subspace $K$ and let
     \begin{gather}
-      \matb_m = \matv_m^T\mata\matv_m \in \R^{m\times m}.
+      \matb_m = \matq_m^T\mata\matq_m \in \R^{m\times m}.
     \end{gather}
   \item Compute the eigenvalues of $\matb_m$ and select $k\le m$ ``desired'' eigenvalues
     \begin{gather}
@@ -22,36 +22,50 @@
   \item Compute the eigenvectors $\vy_1,\dots,\vy_k\in\R^m$ of $\matb$
     and the corresponding approximate eigenvectors of $\mata$:
     \begin{gather}
-      \tilde\vu_i = \matv_m \vy_i,\qquad i=1,\dots,k.
+      \tilde\vu_i = \matq_m \vy_i,\qquad i=1,\dots,k.
     \end{gather}
   \end{enumerate}
 \end{Algorithm*}
 
 \begin{Definition}{ritz-values}
-  Let $\mata$ be a matrix and $\matb = \matv^*\mata\matv$ be its
-  projection to the subspace spanned by the orthonormal basis
-  $\matv$. Then, we refer to the eigenvalues of $\matb$ as
+  Let $\mata$ be a matrix and $\matb_m = \matq_m^*\mata\matq_m$ be its
+  orthogonal projection to the subspace spanned by the orthonormal basis
+  $\matq_m$. Then, we refer to the eigenvalues of $\matb_m$ as
   \define{Ritz values}.
-  For each eigenvector $\vy_i$ of $\matb$, we refer to the vector
-  $\vx_i = \matv\vy_i$ as \define{Ritz vector}.
+  For each eigenvector $\vy_i$ of $\matb_m$, we refer to the vector
+  $\vx_i = \matq_m\vy_i$ as \define{Ritz vector}.
 \end{Definition}
 
 \begin{Lemma}{ritz-invariant}
-  Let $K\subset\R^n$ be an invariant subspace under the action of
+  Let $V\subset\R^n$ be an invariant subspace under the action of
   $\mata$. Then, the Ritz values and associated Ritz vectors of the
   Rayleigh-Ritz approximation are exact eigenpairs of $\mata$.
 \end{Lemma}
 
-\begin{remark}
-  A variation of \slideref{Algorithm}{rayleigh-ritz} computes the
-  Schur vectors of $\matb$ instead of the eigenvectors. For symmetric
-  matrices, they are actually the same vectors, but for
-  non-diagonalizable matrices, this variant is preferred as it does
-  not require cumbersome computation of invariant subspaces.
-\end{remark}
+\begin{proof}
+  Let $\vq_1,\dots,\vq_m$ be an orthonormal basis for the invariant
+  subspace $V$, and let $\matb_m = \matq_m^T\mata\matq$ be the projected
+  matrix. For an eigenvector $\vy\in\R^m$ to eigenvalue $\lambda$ of
+  $\matb_m$, compute the Ritz vector $\vv = \matq_m\vy$. Then,
+  \begin{gather}
+    \lambda \vv = \lambda\matq_m\vy = \matq_m\matb\vy
+    = \matq_m\matq_m^T\mata\matq_m\vy = \matq_m\matq_m^T\mata\vv.
+  \end{gather}
+  Since $\matq_m\matq_m^T$ is the orthogonal projector to $V$, the
+  term on the right is equal to $\mata\vv$ if and only if $V$ is
+  invariant.
+\end{proof}
+
+% \begin{remark}
+%   A variation of \slideref{Algorithm}{rayleigh-ritz} computes the
+%   Schur vectors of $\matb$ instead of the eigenvectors. For symmetric
+%   matrices, they are actually the same vectors, but for
+%   non-diagonalizable matrices, this variant is preferred as it does
+%   not require cumbersome computation of invariant subspaces.
+% \end{remark}
 
 \begin{intro}
-  We now focus on the Rayleigh-Ritz approximation of real, symmetric
+  We now focus on the Rayleigh-Ritz method for real, symmetric
   matrices. The results transfer immediately to the complex symmetric
   (Hermitian) case, but we avoid formulating with complex numbers.
 \end{intro}
@@ -61,65 +75,127 @@
   \begin{gather}
     \lambda_1\ge \lambda_2\ge \dots \ge \lambda_n.
   \end{gather}
-  Let $\mu_1,\dots,\mu_m$ be their Rayleigh-Ritz approximation in the
-  subspace $K$. Then, there holds
-  \begin{gather}
-    \lambda_i \ge \mu_i, \qquad i=1,\dots,m.
-  \end{gather}
-\end{Lemma}
-
-\begin{Lemma}{ritz-rayleigh-estimate}
-  Let $(\lambda,\vu)$ be an eigenpair of the symmetric matrix
-  $\mata\in\Rnn$. Let $\P_K$ be the orthogonal projection to the
-  subspace $K$. Then, the \putindex{Rayleigh quotient}
-  $R_\mata(P_K \vu)$ admits the estimate
-  \begin{gather}
-    \abs*{\lambda-R_\mata(P_K \vu)}
-    \le \norm{\mata-\lambda\id}
-    \frac{\norm{\vu-P_K\vu}^2}{\norm{P_K\vu}^2}
-    = \norm{\mata-\lambda\id} \tan^2\theta
-    ,
-  \end{gather}
-  where $\theta$ is the angle between $K$ and the subspace spanned by the eigenvector $\vu$.
+  Let $\mu_1,\dots,\mu_m$ be the Ritz values in the subspace
+  $V$. Then, there holds
+  \begin{xalignat}2
+    \lambda_k &\ge \mu_i, &i&=1,\dots,m,\\
+    \lambda_{n-i}& \le \mu_{m-i}, &i&=0,\dots,m-1.
+  \end{xalignat}
 \end{Lemma}
 
 \begin{proof}
-  See~\cite[Lemma 4.1]{Saad11}.
+  Due to the Courant-Fischer min-max theorem,
+  \slideref{Theorem}{minmax}, we can characterize the Ritz values as
+  \begin{alignat}2
+    \mu_i &= \max_{\substack{W \subset V\\\dim W = i}} \min_{\vx\in W} R_\mata(\vx)
+    &\le \max_{\substack{W \subset \R^n\\\dim W = i}} \min_{\vx\in W} R_\mata(\vx)
+    &= \lambda_i\\
+    \mu_{m-i}&= \min_{\substack{W \subset V\\\dim W = i}} \max_{\vx\in W} R_\mata(\vx)
+    &\le \min_{\substack{W \subset \R^n\\\dim V = i}} \max_{\vx\in W} R_\mata(\vx)
+    &= \lambda_{n-i}.
+  \end{alignat}
+\end{proof}
+
+\begin{Lemma}{ritz-rayleigh-estimate}
+  Let $(\lambda,\vu)$ be an eigenpair of the symmetric matrix
+  $\mata\in\Rnn$. Let $P_V$ be the orthogonal projection to the
+  subspace $V$. Then, the \putindex{Rayleigh quotient}
+  $R_\mata(P_V \vu)$ admits the estimate
+  \begin{gather}
+    \abs*{\lambda-R_\mata(P_V \vu)}
+    \le \norm{\mata-\lambda\id}
+    \frac{\norm{\vu-P_V\vu}^2}{\norm{P_V\vu}^2}
+    = \norm{\mata-\lambda\id} \tan^2\theta
+    ,
+  \end{gather}
+  where $\theta$ is the angle between $V$ and the subspace spanned by
+  the eigenvector $\vu$.
+\end{Lemma}
+
+\begin{proof}
+  See also~\cite[Lemma 4.1]{Saad11}.
+
+  Let $\lambda$ be an eigenvalue of $\mata$. We have
+  \begin{gather}
+    \lambda-R_\mata(P_K \vu)
+    = \frac{\scal({(\lambda\id-\mata)} P_V\vu,P_V\vu)}{\scal(P_V\vu,P_V\vu)}.
+  \end{gather}
+  Furthermore, if $\vu$ is an eigenvector for $\lambda$, then
+  \begin{gather}
+    (\lambda\id-\mata)P_V\vu = (\lambda\id-\mata) \bigl[u-(\id-P_V)\vu\bigr]
+    = (\mata-\lambda\id) (\id-P_V)\vu,
+  \end{gather}
+  and
+  \begin{gather}
+    0 = \scal(P_V\vu,{(\mata-\lambda\id)}u)
+    = \scal({(\mata-\lambda\id)}P_V\vu,\vu).
+  \end{gather}
+  Hence,
+  \begin{gather}
+    \lambda-R_\mata(P_K \vu)
+    = \frac{\scal({(\mata-\lambda\id)} {(\id-P_V)}\vu,{(\id-P_V)}\vu)}{\scal(P_V\vu,P_V\vu)}.
+  \end{gather}
+  
 \end{proof}
 
 \begin{Lemma}{ritz-estimate-sine}
   Let $(\lambda,\vu)$ be an eigenpair of the symmetric matrix
-  $\mata\in\Rnn$, and let $\tilde\lambda,\tilde\vu)$ be the eigenpair
-  of the projected problem such that $\tilde\lambda$ is the closest
-  approximated eigenvalue to $\lambda$.  Then,
+  $\mata\in\Rnn$, and let $(\mu,\tilde\vu)$ be the eigenpair
+  of the projected problem such that $\mu$ is the closest
+  Ritz value to $\lambda$.  Then,
   \begin{gather}
-    \abs{\lambda-\tilde\lambda}
+    \abs{\lambda-\mu}
     \le \norm{\mata-\lambda\id} \sin^2\theta,
   \end{gather}
   where $\theta$ is the angle between $\vu$ and $\tilde\vu$.
 \end{Lemma}
+
+\begin{proof}
+  Note that
+  \begin{gather}
+    \mu-\lambda
+    = \scal(\mata\tilde \vu,\tilde\vu)
+    - \lambda\scal(\tilde \vu,\tilde\vu)
+    = \scal({(\mata-\lambda)} \tilde\vu,\tilde\vu).
+  \end{gather}
+  Let now $\alpha = \scal(\vu,\tilde\vu) = \cos\theta$. Exploiting
+  $(\mata-\lambda\id)\vu=0$, we write
+  \begin{gather}
+    \mu-\lambda
+    = \scal({(\mata-\lambda\id)}{(\tilde\vu - \alpha\vu)},\tilde\vu)
+    = \scal({(\mata-\lambda\id)}{(\tilde\vu - \alpha\vu)},\tilde\vu - \alpha\vu).
+  \end{gather}
+  Hence, by Bunyakovsky-Cauchy-Schwarz,
+  \begin{align}
+    \abs{\mu-\lambda}
+    &\le \norm{(\mata-\lambda\id)(\tilde\vu - \alpha\vu)}\norm{\tilde\vu - \alpha\vu}\\
+    &\le \norm{\mata-\lambda\id}\norm{\tilde\vu - \alpha\vu}^2\\
+    &= \norm{\mata-\lambda\id} \sin^2\theta.
+  \end{align}
+\end{proof}
+
 
 \begin{Algorithm*}{ev-projection}{Projected subspace iteration}
   \begin{algorithmic}[1]
     \Require $\matx^{(0)} = (\vx_1,\dots,\vx_m)$
     \For {$k=1,\dots$ until convergence}
     \State $\matw \gets \mata\matx^{(k-1)}$
-    \State $\matv \gets ONB(\matw)$ \Comment{QR factorization}
-    \State $\matb \gets \matv^*\mata\matv$ \Comment{Projected matrix}
+    \State $\matq \gets ONB(\matw)$ \Comment{QR factorization}
+    \State $\matb \gets \matq^*\mata\matq$ \Comment{Projected matrix}
     \State $\maty \gets EV(\matb)$ \Comment{Eigenvectors}
-    \State $\matx^{(k)} \gets \matv\maty$
+    \State $\matx^{(k)} \gets \matq\maty$
     \EndFor
   \end{algorithmic}
 \end{Algorithm*}
 
 \begin{Theorem}{ritz-convergence}
-  Let $\esp{1,\dots,m}$ be the space spanned by the first (by
-  magnitude of eigenvalue) $m$ eigenvectors and let $\matp$ be the
+  Let $D_m(\mata)$ be the space spanned by the dominant $m$
+  eigenvectors $\vv_1,\dots,\vv_m$ of $\mata$ and let $\matp_D$ be the
   orthogonal projector onto it. Let $S_k$ be the subspace spanned by
   the basis $\matx^{(k)}$.
   
-  If $\matp S_0 = \esp{1,\dots,m}$, then there holds: for each
-  eigenvector $\vv_i$ of $\mata$, $i=1,\dots,m$, there is a vector
+  If $\matp_D S_0 = D_m(\mata)$, then there holds: for each
+  eigenvector $\vv_i, i=1,\dots,m$, there is a vector
   $\vy_i\in S_0$ such that $\matp\vy_i = \vv_i$. Furthermore,
   \begin{gather}
     \norm{\vv_i - \matp_{S_k} \vv_i}_2 \le \norm{\vv_i-\vy_i}

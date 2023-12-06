@@ -97,7 +97,7 @@
 \begin{Theorem}{projection-orthogonal-optimal}
   Let $\mata\in\Rnn$ be symmetric, positive definite. Then,
   $\tilde \vx$ is the result of the orthogonal ($L=K$) projection
-  method with initial vector $\vx^{(k)}$ if and only if it minimizes
+  method with previous state $\vx^{(k)}$ if and only if it minimizes
   the \putindex{A-norm} of the error over the space $\vx^{(k)}+K$. Namely, for the
   solution $\vx$ of $\mata\vx=\vb$ there holds
   \begin{gather}
@@ -156,13 +156,13 @@
 
 \begin{Theorem}{projection-oblique-optimal}
   Let $\mata\in\Rnn$ and $L=\mata K$. Then, $\tilde \vx$ is the result
-  of the (oblique) projection method with initial vector $\vx^{(0)}$
+  of the (oblique) projection method with previous state $\vx^{(k)}$
   if and only if it minimizes the Euclidean norm of the residual
-  $\vb-\mata\tilde\vx$ over the space $\vx^{(0)}+K$. Namely, there
+  $\vb-\mata\tilde\vx$ over the space $\vx^{(k)}+K$. Namely, there
   holds
   \begin{gather}
     \norm{\vb-\mata\tilde\vx}_2
-    = \min_{\vy\in\vx^{(0)}+K} \norm{\vb-\mata\vy}_2
+    = \min_{\vy\in\vx^{(k)}+K} \norm{\vb-\mata\vy}_2
   \end{gather}
 \end{Theorem}
 

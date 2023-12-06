@@ -1,3 +1,7 @@
+\begin{todo}
+  Add a lemma about the fact that $\matH_m$ is real symmetric somewhere.
+\end{todo}
+
 \begin{Lemma}{cg-tridiagonal}
   Let $\alpha_k$ and $\beta_k$ be the sequences of coefficients in the conjugate gradient method
   \slideref{Algorithm}{cg}. Then, the entries of the projected matrix
@@ -35,16 +39,25 @@
   due to round-off errors.
 \end{remark}
 
+\begin{Problem}{cg-ev}
+  Augment your implementation of the conjugate gradient method such
+  that you can compute the eigenvalues of the projected matrix
+  $\matH_m$ in each step.
+
+  Observe the convergence of the extremal eigenvalues $\lambda_{\text{min}}$
+  and $\lambda_{\text{max}}$.
+\end{Problem}
+
 \begin{Lemma}{lanczos-angle}
   Let $\mata\in\Rnn$ be symmetric, positive definite with eigenvalues
   \begin{gather}
     \lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n.
   \end{gather}
   Let $P_i$ be the projector to the subspace spanned by the
-  eigenvector(s) for $\lambda_i$. Let the initial vector in Lanczos
+  eigenvector(s) for $\lambda_i$. Let the initial vector in Lanczos'
   method be chosen such that $P_i \vv_1\neq 0$. Then, the angle
   $\theta_i^{(m)}$ between the eigenvector(s) $\vu_i$ and the Krylov space
-  $\krylov_m(\mata,\vv_1)$ admits the estimate
+  $\krylov_m(\vv_1,\mata)$ admits the estimate
   \begin{gather}
     \tan\theta_i^{(m)} = \min_{\substack{p\in\P_{m-1}\\p(\lambda_i)=1}} \norm{p(\mata)\vy_i} \tan \theta_i^{(1)}.
   \end{gather}
@@ -69,7 +82,7 @@
     \kappa_i=\prod_{\lambda_k < \lambda_i} \frac{\lambda_k-\lambda_n}{\lambda_k-\lambda_i},
     \qquad \gamma_i = \frac{\lambda_{i}-\lambda_{i+1}}{\lambda_{i+1}-\lambda_{n}}.
   \end{gather}
-  The same result holds for $\vu_{n-i}$ by replacing
+  The same result holds for $\theta_{n-i}^{(m)}$ by replacing
   \begin{gather}
     \kappa_i=\prod_{\lambda_k > \lambda_i} \frac{\lambda_1-\lambda_k}{\lambda_i-\lambda_k},
     \qquad \gamma_i = \frac{\lambda_{i-1}-\lambda_{i}}{\lambda_{1}-\lambda_{i-1}}.
@@ -129,6 +142,10 @@
   can apply the same construction from the other end of the spectrum
   to obtein estimates for $\vu_{n-1},\dots,\vu_{n-m}$.
 \end{proof}
+
+\begin{todo}
+  Add figures of polynomials.
+\end{todo}
 
 \begin{remark}
   Note that if $m<\nicefrac{n}2$, there are eigenvectors for which

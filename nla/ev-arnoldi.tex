@@ -1,7 +1,37 @@
+
+\begin{intro}
+  In this section, we investigate Krylov space projection methods in
+  more detail. All results hold, with the due simplifications for the
+  Lanczos method as well. Note that the \define{Arnoldi factorization}
+  in \slideref{Definition}{arnoldi-factorization} is a reformulation
+  of \slideref{Theorem}{arnoldi-projection} and of
+  \slideref{Lemma}{arnoldi-w}.
+\end{intro}
+
+\begin{notation}
+  As with all methods for computing eigenvalues of large, sparse
+  systems, we will only compute a subset of the eigenvalues. An
+  important concept of the methods developed below is the idea ow
+  \define{wanted eigenvalues} and \define{unwanted eigenvalues}.
+
+  Given a set of Ritz values or computed eigenvalues, we will always
+  assume that we can decide which of them are wanted. The complement
+  set is then unwanted.
+
+  Note that there might not be a clear mathematical definition of
+  wanted eigenvalues, as long as at any step of the iteration we can
+  select them. In particular, a Ritz value flagged as wanted in one
+  step of the iteration might be unwanted in the next step, when
+  another one fits the criteria better.
+
+  Typical criteria are greatest, smallest, greatest/smallest real
+  value, and greatest/smallest by magnitude.
+\end{notation}
+
 \begin{Algorithm*}{ev-arnoldi}{Arnoldi for eigenvalues}
   Given an initial vector $\vv_1$ with $\norm{\vv_1}=1$.
   \begin{enumerate}
-  \item Compute the arnoldi basis $\matv_{m+1}$ and the projected matrix
+  \item Compute the Arnoldi basis $\matv_{m+1}$ and the projected matrix
     \begin{gather}
       \matH_m = \matv_m^*\mata\matv_m.
     \end{gather}
@@ -33,16 +63,17 @@
 \end{remark}
 
 \begin{Definition}{arnoldi-factorization}
-  The result of $k$ steps of the Arnoldi algorithm is the
+  The result of $m$ steps of the Arnoldi algorithm is the
   \define{Arnoldi factorization}
+  \begin{gather*}
+    \label{eq:ev-arnoldi-projection}
+    \mata\matv_m = \matv_m\matH_m + h_{m+1,m}\vv_{m+1}\ve_m^*,
+  \end{gather*}
+  where $\matv_m\in\C^{n\times m}$ is the matrix of mutually
+  orthogonal \define{Arnoldi vectors} and $\matH_m\in\R^{m\times m}$
+  is Hessenberg. There holds
   \begin{gather}
-    \mata\matv_k = \matv_k\matH_k + \beta\vv_{k+1}\ve_k^*,
-  \end{gather}
-  where $\matv_k\in\C^{n\times k}$ is the matrix of mutually
-  orthogonal \define{Arnoldi vectors} and $\matH_k\in\R^{k\times k}$
-  is symmetric and tridiagonal. There holds
-  \begin{gather}
-    \matv_k^*\vv_{k+1} = 0.
+    \matv_m^*\vv_{m+1} = 0.
   \end{gather}
 \end{Definition}
 
@@ -57,12 +88,24 @@
   In particular, its norm is
   \begin{gather}
     \norm*{\left(A-\lambda_i^{(m)}\identity\right)\vu_i^{(m)}}_2
-    = h_{m+1,m} \abs{\ve_m^*\vy_i^{(m)}}.
+    =  \abs{h_{m+1,m}\ve_m^*\vy_i^{(m)}}.
   \end{gather}
+  Note that $\ve_m^*\vy_i^{(m)}$ is the $m$-th entry of
+  $\vy_i^{(m)}$. In particular, we can estimate the residual of the
+  Ritz pair without computing the Ritz vector.
 \end{Lemma}
 
 \begin{proof}
-  See~\cite[Proposition 6.8]{Saad11}.
+  See also~\cite[Proposition 6.8]{Saad11}.
+  Multiplying~\eqref{eq:ev-arnoldi-projection} from the
+  right with $\vy_i^{(m)}$, we obtain
+  \begin{align}
+    \mata\matv_m\vy_i^{(m)}
+    &= \matv_m\matH_m\vy_i^{(m)} + h_{m+1,m}\vv_{m+1}\ve_m^*\vy_i^{(m)}\\
+    &=\lambda_i^{(m)} \matv_m\vy_i^{(m)}
+      + h_{m+1,m}\bigl(\ve_m^*\vy_i^{(m)}\bigr)\vv_{m+1},
+  \end{align}
+  which is the result as soon as we enter $\vu_i^{(m)} = \matv_m \vy_i^{(m)}$.
 \end{proof}
 
 \begin{Corollary}{ev-arnoldi-breakdown}
@@ -71,7 +114,14 @@
 \end{Corollary}
 
 \begin{remark}
-  While this breakdown was ``lucky'' for linear solvers, it actually
+  While this breakdown was ``lucky'' for linear solvers, it is not
+  entirely so in the case of eigenvalue computations. On the one hand,
+  we have the preceding corollary, which states that the computed Ritz
+  vectors are actually eigenvectors and the Ritz values are
+  eigenvalues of $\mata$. This is good, if all desired eigenpairs are
+  in this set.
+
+  On the other hand, a breakdown actually
   breaks the algorithm if the number of desired eigenvalues is higher
   than the dimension of the Krylov space. In this case, we will have
   to insert a new initial vector during the computation of the Krylov
@@ -81,6 +131,26 @@
   unlikely, but a near breakdown may happen more likely. Detecting
   this is related to loss of orthogonality.
 \end{remark}
+
+\begin{Definition}{arnoldi-locking}
+  In the case of a breakdown at step $m$ of the Arnoldi algorithm,
+  we restart the algorithm after \define{locking} the wanted eigenvalues.
+
+  \begin{enumerate}
+  \item Choose the wanted eigenvalues from the computed ones. Store
+    the corresponding eigenvectors $\vu_1,\dots,\vu_k$.
+  \item Choose a new initial vector $\vv_1$ which is orthogonal to all
+    previously converged eigenvectors $\vu_1,\dots,\vu_m$, as the
+    eigenvalues $\lambda_{k+1},\dots,\lambda_m$ are unwanted.
+  \item Build the Arnoldi basis, but orthogonalize not only with
+    respect to the vectors $\vv_1,\dots$, but also with respect to
+    $\vu_1,\dots,\vu_k$.
+  \end{enumerate}
+  This concept can be repeated until the desired number of
+  eigenvectors has been found. This may also involved removing
+  eigenvectors of previous runs, if their eigenvalues are not wanted
+  anymore.
+\end{Definition}
 
 \begin{intro}
   The size of the matrix $\matv_k$ of the Arnoldi algorithm is growing
@@ -92,82 +162,300 @@
   \item Restarting after $m$ steps by choosing a single column vector
     from $\matv_m$ or a single linear combination of them eliminates
     most information on the spectral structure gathered in these $m$
-    steps.
+    steps. Indeed, we would have to make sure that the new initial
+    vector has dominant components in the wanted eigenspaces and
+    small components in the others.
   \item A windowing technique only considering the last $m$ vectors
     from $\matv_k$ might eliminate the desired eigenvectors, which
-    then have to reenter in the following steps.
+    then have to reenter in the following steps. Furthermore, the
+    spectrum of $\matH_m$ is not related to the spectrum of $\mata$
+    anymore, if the basis $\matv_m$ is not orthogonal. Hence, we
+    do not consider this option.
   \end{enumerate}
-  To the rescue comes the so called implicit restart, which will be
-  presented after some preliminary considerations.
 \end{intro}
 
 \begin{intro}
-  As with linear solvers, the main drawback of Arnoldi's algorithm is
-  the growth of the basis and thus the increasing effort for
-  orthogonalization of the new basis vectors. Therefore, our next
-  effort must be a modification of the algorithm such that the length
-  of the basis remains bounded by a constant number $m$.
-
   In the previous chapter, we have seen the restart of GMRES in
-  \slideref{Algorithm}{gmres-restart}. This algorithm can be applied
-  here, if only a single eigenpair is needed. But, if several
-  eigenvectors are to be computed, all additional information on
-  convergence of the other vectors is lost, if we apply standard
-  restart.
-
-  Then, we saw the truncation of GMRES in
-  \slideref{Algorithm}{gmres-truncated}. Here, we see again the
-  fundamental difference between a linear solver and an eigenvalue
-  solver: while in GMRES we only care for the convergence of the
-  approximate solution vector $\vx^{(m)}$, solution of the eigenvalue
-  problem requires that $\matH_m$ is obtaind from $\mata$ by
-  orthogonal projection. As soon as the matrix $\matv_m$ is not
-  orthogonal anymore, the eigenvalue problem for $\matH_m$ loses
-  connection to the one for $\mata$.
-
-  The following ``implicitly restarted Arnoldi method'' (IRAM) combines the
-  ideas of truncation and restart into an efficient method.
+  \slideref{Algorithm}{gmres-restart}. When this algorithm is applied
+  here, we have to make sure that the initial vector for the restart
+  is ``rich'' in components of the wanted eigenspaces, but has small
+  components in the unwanted directions. In principle, we could use a
+  technique like in the restart after a breakdown, but it comes at a
+  high cost. Hence, we consider a different option.
 \end{intro}
 
-\begin{Algorithm*}{iram-concept}{Implicitly restarted Arnoldi method}
-  Let $k$ be the number of desired eigenvalues and let $m$ be the
-  maximal admissible dimension of an Arnoldi basis.  Assume that a
-  basis $\matv_k$ has been obtained by $k$ steps of the Arnoldi
-  method.
+\begin{Definition}{polynomial-filtering}
+  By \define{polynomial filtering} we denote a method for prerocessing
+  the initial vector for an Arnoldi process by applying a matrix
+  polynomial. Given a vector $\tilde\vv$, the initial vector is obtained by
+  \begin{gather}
+    \vw = p(\mata) \tilde \vv,\qquad \vv_1 = \frac{\vw}{\norm{\vw}}.
+  \end{gather}
+  The polynomial should be chosen such that its values are large on
+  the wanted eigenvalues and small on the unwanted ones.
+\end{Definition}
+
+\begin{intro}
+  We will now describe how we can use the Arnoldi factorization to
+  implement polynomial filtering in a fairly cheap way. To this end,
+  let us assume that the filter polynomial is given in factored form,
+  namely
+  \begin{gather}
+    p(x) = (x-\sigma_p)\dots(x-\sigma_2)(x-\sigma_1).
+  \end{gather}
+  We apply the first factor not only to the initial vector $\vv_1$,
+  but to the whole basis $\matv_m$. Hence, we obtain
+  \begin{align}
+    (\mata-\sigma_1\id_n)\matv_m
+    &= \mata\matv_m - \sigma_1\matv_m\\
+    &= \matv_m\matH_m - \sigma_1 \matv_m + h_{m+1,m} \vv_{m+1} \ve_m^*\\
+    &= \matv_m (\matH_m-\sigma_1\id_m) + \vv_{m+1} \vw_m^*,
+  \end{align}
+  where we abbreviated $\vw_{m+1} =  h_{m+1,m} \ve_m$.
+  Now, we apply a step of the shifted QR iteration in
+  \slideref{Algorithm}{shifted-qr-iteration} to obtain
+  \begin{gather}
+    \matq_1\matr_1 = \matH_m-\sigma_1\id_m,
+    \qquad
+    \matH_m^{(1)} = \matr_1\matq_1+\sigma_1\id_m.
+  \end{gather}
+  Hence,
+  \begin{gather}
+    \label{eq:ev-arnoldi:1}
+    (\mata-\sigma_1\id_n)\matv_m = \matv_m \matq_1\matr_1
+    + \vv_{m+1} \vw_{m+1}^*.
+  \end{gather}
+  Multiplying with $\matq_1$ from the right yields
+  \begin{gather}
+    (\mata-\sigma_1\id_n)\matv_m\matq_1 = \matv_m \matq_1 \matr_1\matq_1
+    + \vv_{m+1} \vw_{m+1}^* \matq_1.
+  \end{gather}
+  Finally, adding $\sigma_1\matv_m\matq_1$ from both sides, we obtain
+  \begin{gather}
+    \mata\matv_m\matq_1 = \matv_m \matq_1 \matH_m^{(1)}
+    + \vv_{m+1} \vw_{m+1}^* \matq_1.
+  \end{gather}
+  Letting $\matv_m^{(1)} = \matv_m\matq_1$, which is still an orthogonal set since $\matq_1$ is an orthogonal matrix, and
+  $\vw_{m+1}^{(1)} = \matq_1^*\vw_{m+1}$, we have
+  \begin{gather}
+    \label{eq:ev-arnoldi:2}
+    \mata\matv_m^{(1)} = \matv_m^{(1)} \matH_m^{(1)}
+    + \vv_{m+1} \bigl[\vw_{m+1}^{(1)}\bigr]^*.
+  \end{gather}
+  Multiplying~\eqref{eq:ev-arnoldi:1} with
+  $\ve_1$, we see that
+  \begin{gather}
+    (\mata-\sigma_1\id) \vv_1 = \matv_m\matq_1 \matr_1\ve_1
+    = r_{11} \matv_m\matq_1 \ve_1 = r_{11} \matv_m^{(1)} \ve_1
+    = r_{11} \vv_1^{(1)},
+  \end{gather}
+  we see that $\vv_1^{(1)}$ is parallel to
+  $(\mata-\sigma_1\id) \vv_1$, which means, it is obtained from
+  $\vv_1$ by filtering with the polynomial $x-\sigma_1$.
+  
+  The transformation $\matH_m^{(1)} = \matq_1^*\matH_{m}\matq_1$ can
+  be implemented by $m-1$ Givens rotations according to
+  \slideref{Algorithm}{Hessenberg-qr-2}. Hence, the last two entries
+  of $\vw_{m+1}^{(1)}$ are nonzero, which is the only difference
+  between this representation and the Arnoldi factorization. This
+  means on the other hand, that the first $m-1$
+  columns~\eqref{eq:ev-arnoldi:2} are indeed an Arnoldi factorization
+  starting with $\vv_1^{(1)}$.
+
+  We can repeat the same process with
+  $\matq_2\matr_2 = \matH_m^{(1)} - \sigma_2\id_m$ to obtain
+  \begin{gather}
+    \mata\matv_m^{(2)} = \matv_m^{(2)} \matH_m^{(2)}
+    + \vv_{m+1} \bigl[\vw_{m+1}^{(2)}\bigr]^*,
+  \end{gather}
+  where $\matv_m^{(2)} = \matv_m^{(1)}\matq_2$,
+  $\matH_m^{(2)} = \matq_2^*\matH_{m}^{(1)}\matq_2$, and
+  $\vw_{m+1}^{(2)} = \matq_2^*\vw_{m+1}^{(2)}$.
+  With the same arguments as before,
+  \begin{gather}
+    \vv_1^{(2)} \sim (\mata-\sigma_2\id)\vv_1^{(1)}
+    \sim (\mata-\sigma_2\id) (\mata-\sigma_1\id)\vv_1.
+  \end{gather}
+  Hence, we have constructively proven the following lemma.
+\end{intro}
+
+\begin{Lemma}{filtering-restart}
+  Let $\matv_m$ and $\matH_m$ be the result of $m$ steps of the
+  Arnoldi method with initial vector $\vv_1$. Let $\matH_m^{(p)}$ be
+  result of $p$ steps of the shifted QR iteration with shift
+  parameters $\sigma_1,\dots,\sigma_p$ and resulting orthogonal
+  transformations $\matq_1,\dots,\matq_p$ applied to $\matH_m$.
+
+  Then, the first $m-p$ columns of
+  $\matv_m^{(p)} = \matv_m\matq_1\dots\matq_p$ and of $\matH_m^{(p)}$
+  correspond to the result of $m-p$ steps of the Arnoldi method with
+  initial vector
+  \begin{gather}
+    \hat\vv_1 = (\mata-\sigma_p\id)\dots(\mata-\sigma_2\id)(\mata-\sigma_1\id)
+    \vv_1.
+  \end{gather}
+\end{Lemma}
+
+\begin{intro}
+  The algorithm induced by the preceding lemma allows us to apply
+  polynomial filtering to an already existing Arnoldi factorization in
+  a fairly cheap manner. The result is a factorization of shorter
+  length ``as if'' it had been started with the filtered initial
+  vector. That's why the algorithm is called \define{implicit
+    restart}.
+
+  The question remaining is the choice of filter parameters
+  $\sigma_i$. If these are good approximations to eigenvalues of
+  $\mata$, then we expect the filtering to effectively suppress
+  eigenspaces for these eigenvalues. The approximations themselves can
+  also be obtained from the Arnoldi factorization by using the Ritz
+  values.
+\end{intro}
+
+% \begin{Lemma}{arnoldi-truncation}
+%   Let $m=k+p$ and let the result of $m$ Arnoldi steps be given by
+%   \begin{gather}
+%     \mata\matv_m = \matv_m\matH_m + \vr_m\ve_m^*.
+%   \end{gather}
+%   This factorization can be truncated by $p$ shifted QR steps to a
+%   Arnoldi factorization
+%     \begin{gather}
+%     \tilde\mata\tilde\matv_k = \tilde\matv_k\tilde\matH_k + \tilde\vr_k\ve_k^*,
+%   \end{gather}
+%   where $\tilde\matv_k$ consists of the first $k$ columns of $\matv_m\matq$, $\tilde\matH_k$ is the upper left $k\times k$-block of $\matq^*\matH_m\matq$ and
+%   \begin{gather}
+%     \tilde\vr_k = \beta_k\matv_m\matq \ve_{k+1} + q_{mk} \vr_m ,
+%   \end{gather}
+%   and $\matq=\matq_1\dots\matq_p$ is the product of the factors in the
+%   shifted QR steps.
+% \end{Lemma}
+
+% \begin{proof}
+%   See~\cite[Section 4.5.1]{BaiDemmelDongarraRuhevanderVorst00}.
+% \end{proof}
+
+\begin{Algorithm*}{implicit-restart}{Implicit restart with locking and purging}
+  Given the Arnoldi basis $\matv_m$ and the projected matrix $\matH_m$
+  as well as the list of previously locked eigenpairs.
   \begin{enumerate}
-  \item Perform additional $p=m-k$ steps of the Arnoldi method to
-    obtain $\matv_m$.
-  \item Compute eigenvalues of $\matH_m = \matv_m^*\mata\matv$.
-  \item Select $k$ wanted and $p$ unwanted eigenvalues of $\matH_m$.
-  \item Eliminate the unwanted Ritz vectors from the range of
-    $\matv_m$ to obtain an updated basis $\matv_k$.
+  \item Compute the eigenvalues and eigenvectors.
+  \item For each converged eigenvalue (\slideref{Lemma}{ev-arnoldi-a-posteriori}), compare to the locked eigenvalues.
+  \begin{enumerate}
+  \item If the newer one is preferred, \define{purge} the old one from the locked list and \define{lock} the new pair.
+  \item If the newer one is not preferred, do not lock it, but remove
+    it in the next step
+  \end{enumerate}
+\item Use all converged eigenvalues and additional unwanted
+  eigenvalues of $\matH_m$, a total of $p$ for the implicit restart of
+  \slideref{Lemma}{filtering-restart}. The result is an Arnoldi basis
+  of length $k=m-p$.
+\item Run the necessary $p=m-k$ Arnoldi steps to obtain a Krylov space of
+  dimension $m$ again and repeat from step 1.
   \end{enumerate}
 \end{Algorithm*}
 
+\begin{Algorithm*}{iram}{Implicitly restarted Arnoldi method}
+  Choose the maximal lenxth of the Arnoldi basis $m$, the length of
+  the truncated basis $k$ and let $p=m-k$.
+  \begin{algorithmic}[1]
+    \Require Initial vector $\vv\in\C^n$ with $\norm{\vv}_2=1$.
+    \State Compute Arnoldi factorization
+    $\mata\matv_m = \matv_m\matH_m + \vr_m\ve_m^*$
+    \Repeat
+    \State Compute eigenvalues and eigenvectors of $\matH_m$
+    \State Lock and purge eigenvectors of $\mata$.
+    \State Select shifts $\sigma_1,\dots,\sigma_p$
+    \For {$j=1,\dots, p$}
+    \State $\matH_m \gets \matq_j^*\matH_m\matq_j$
+    \Comment{$\matq_j\matr_j = \matH_m - \sigma_j\id$}
+    \EndFor
+    \State $\matq \gets \matq_1\dots\matq_p$
+    \State $\matv_k = \bigl[\matv_m\matq\bigr](:,1:k)$
+    \State $\matH_k = \matH_m(1:k,1:k)$
+    \State $\vr_k= [\matH_m]_{k+1,k}\vv_{k+1} + q_{mk}\vr_m$
+    \State Continue $p$ steps Arnoldi factorization
+    $\mata\matv_m = \matv_m\matH_m + \vr_m\ve_m^*$
+    \Until convergence
+  \end{algorithmic}
+\end{Algorithm*}
 
+\begin{remark}
+  Like with the Francis QR iteration, the goal of the implicitly
+  restarted Arnoldi method is not so much global convergence of the
+  matrix $\matH_m$ to an upper triangular matrix, but the consecutive
+  locking of sufficiently many eigenvectors.
+  Hence, the method has converged, if the desired number $M$ of wanted
+  eigenpairs have been locked.
 
-\begin{Lemma}{arnoldi-truncation}
-  Let $m=k+p$ and let the result of $m$ Arnoldi steps be given by
+  The selection of wanted eigenpairs is due to a relative criterion in
+  a given set of eigenvalues. Hence, once $M$ eigenpairs have been
+  locked, we cannot be sure that we have all eigenvalues in the wanted
+  set. As an example, if we want the 5 greatest eigenvalues, we may
+  not have caught number 3, but have included number 6 instead. In
+  order to address this problem, the algorithm is run even after
+  enough eigenpairs have been locked and is terminated if no purging
+  has occurred for 2--3 iterations.
+
+  Mathematically, there cannot be a proof that we have obtained all
+  eigenvalues fitting the criterion. But evidence shows that round-off
+  errors make it very likely that the wanted eigenvalues are found.
+\end{remark}
+
+\begin{remark}
+  Locking and purging of eigenpairs requires bookkeeping of two sets
+  of vectors, the locked eigenvectors $\vu_1,\dots,\vu_\ell$, and the
+  Arnoldi basis $\vv_1,\dots,\vv_n$, which is again split into the two
+  sets of vectors to be kept after truncation and the remainder.
+
+  Standard implementations use a single array of vectors and store the
+  locked vectors in the beginning, then the Arnoldi basis. Hence, the
+  matrix $\matH_k$ after truncation has the form
   \begin{gather}
-    \mata\matv_m = \matv_m\matH_m + \vr_m\ve_m^*.
+    \matH_k =
+    \begin{pmatrix}
+      \tau_1\\&\ddots\\
+      &&\tau_\ell\\
+      &&& \tilde \matH_k
+    \end{pmatrix},
   \end{gather}
-  This factorization can be truncated by $p$ shifted QR steps to a
-  Arnoldi factorization
-    \begin{gather}
-    \tilde\mata\tilde\matv_k = \tilde\matv_k\tilde\matH_k + \tilde\vr_k\ve_k^*,
-  \end{gather}
-  where $\tilde\matv_k$ consists of the first $k$ columns of $\matv_m\matq$, $\tilde\matH_k$ is the upper left $k\times k$-block of $\matq^*\matH_m\matq$ and
-  \begin{gather}
-    \tilde\vr_k = \beta_k\matv_m\matq \ve_{k+1} + q_{mk} \vr_m ,
-  \end{gather}
-  and $\matq=\matq_1\dots\matq_p$ is the product of the factors in the
-  shifted QR steps.
-\end{Lemma}
+  where the Hessenberg matrix $\tilde \matH_k$ is of dimension
+  $k-\ell$.  Hence, $p+k = m-\ell$. In particular, $k$ in the
+  algorithm must be chosen not less than the number of desired
+  eigenpairs.
 
-\begin{proof}
-  See~\cite[Section 4.5.1]{BaiDemmelDongarraRuhevanderVorst00}.
-\end{proof}
+  Alternatively, the locked vectors can be stored separately. Then,
+  the size of the truncated basis can be chosen independently
+  according to considerations of memory consumption and convergence.
+\end{remark}
 
+\begin{remark}
+  We have so far neglected two important cases. First, if the initial
+  vector of the Arnoldi method does not have any component in the
+  direction of a desired eigenvector, the method in exact arithmetic
+  will not be able to produce this eigenvector. Here, roundoff errors
+  come to our rescue. They will produce spurious components in
+  direction of such an eigenvector and due to the amplification in
+  each step, will become dominant.
+  
+  Second, if $\mata$ has multiple eigenvalues,
+  \slideref{Algorithm}{iram} will only identify a single vector in its
+  eigenspace. This is due to the fact that the algorithm cannot
+  distinguish between vectors in the same eigenspace and operates on
+  each of them equally. Nevertheless, once we lock such an
+  eigenvector, it is treated differently and a possible second
+  eigenvector for the same eigenvalue may come up in subsequent
+  iterations due to roundoff errors.
+\end{remark}
+
+\begin{remark}
+  \slideref{Algorithm}{iram} is formulated under the assumption, that
+  the Arnoldi factorization in the last line does not suffer a
+  breakdown or near breakdown. In the first case, we should apply
+  locking and purging according to
+  \slideref{Definition}{arnoldi-locking} right away. In the second
+  case, we expect that the orthogonalization is not accurate and
+  reorthogonalization will be necessary.
+\end{remark}
 
 \begin{Algorithm*}{arnoldi-reorthogonalization}{Arnoldi with reorthogonalization}
   \algtext*{EndIf}
@@ -203,94 +491,12 @@
   \end{gather}
   Thus, the condition in line 5 of the algorithm enforces a
   reorthogonalization, if the angle $\theta$ is too small.
+
+  \slideref{Algorithm}{arnoldi-reorthogonalization} is taken from the
+  literature. After a student had implemented it, I have had several
+  discussions and it is not clear whether the criterion for breakdown
+  is applied in the right way.
 \end{remark}
-
-\begin{Algorithm*}{irlm}{Implicitly restarted Arnoldi method}
-  \begin{algorithmic}[1]
-    \Require Initial vector $\vv\in\C^n$ with $\norm{\vv}_2=1$.
-    \State Compute Arnoldi factorization
-    $\mata\matv_m = \matv_m\matH_m + \vr_m\ve_m^*$
-    \Repeat
-    \State Compute $\sigma(\matH_m)$
-    \State Select shifts $\mu_1,\dots,\mu_p$
-    \State $\matq = \id_m$
-    \For {$j=1,\dots, p$}
-    \State Factorize $\matq_j\matr_j = \matH_m - \mu_j\id$
-    \State $\matH_m \gets \matq_j^*\matH_m\matq_j$
-    \State $\matq \gets \matq\matq_j$
-    \EndFor
-    \State $\matv_k = \bigl[\matv_m\matq\bigr](:,1:k)$
-    \State $\matH_k = \matH_m(1:k,1:k)$
-    \State $\vr_k= [\matH_m]_{k+1,k}\vv_{k+1} + q_{mk}\vr_m$
-    \State Continue $p$ steps Arnoldi factorization
-    $\mata\matv_m = \matv_m\matH_m + \vr_m\ve_m^*$
-    \Until $T_k$ diagonal
-  \end{algorithmic}
-\end{Algorithm*}
-
-\begin{remark}
-  In every step of the outer loop of \slideref{Algorithm}{irlm} we
-  apply a polynomial $\psi_\nu$ of $\mata$ to the initial
-  vector. Decomposing this vector with respect to eigenvectors of
-  $\mata$, we see that each component gets multiplied with
-  $\psi_\nu(\lambda_i)$. Thus, after scaling by the dominant
-  eigenvector, these components get weighted with factors
-  \begin{gather}
-    \prod_\nu\frac{\psi_\nu(\lambda_i)}{\psi_\nu(\lambda_1)}.
-  \end{gather}
-  By the choice of the shifts, these polynomials ensure that the first
-  $k$ desired eigenvalues become dominant, while the latter ones will
-  be suppressed.
-\end{remark}
-
-\begin{remark}
-  Once an eigenpair of $\mata$ has been identified to sufficient
-  accuracy, we should keep it and continue the algorithm without
-  changing this pair anymore. This technique is called
-  \define{locking} of converged eigenvalues.
-
-  Let $\tau$ be an eigenvalue of $\matH_k$ with corresponding
-  \putindex{Ritz vector} $\vv_1$ such that
-  $\norm{\mata\vv_1 - \tau\vv_1}$ sufficiently small. Then, we will
-  consider $\tau$ converged and $\vv_1$ is a good approximation to an
-  eigenvector. Thus, the algorithm can be continued without
-  consideration of $\tau$ and $\vv_1$.
-
-  Let $\matq$ be an orthogonal matrix such that
-  \begin{gather}
-    \tilde \matH_k = \matq^*
-    \begin{pmatrix}
-      \tau \\&\hat \matH_k
-    \end{pmatrix} \matq.
-  \end{gather}
-
-  Similar to implicit restart, we can use this matrix $\matq$ to
-  modify the basis $\matv_k$ to obtain a new set of Arnoldi vectors
-  such that $\vv_1$ is the first of them. We can now continue the
-  implicitly restarted Arnoldi method using the matrix $\hat\matH_k$
-  and the vectors $\vv_2,\dots,\vv_k$. Just in the case of
-  reorthogonalization, we will involve the vector $\vv_1$ as well.
-\end{remark}
-
-\begin{remark}
-  We have so far neglected two important cases. First, if the initial
-  vector of the Arnoldi method does not have any component in the
-  direction of a desired eigenvector, the method in exact arithmetic
-  will not be able to produce this eigenvector. Here, roundoff errors
-  come to our rescue. They will produce spurious components in
-  direction of such an eigenvector and due to the amplification in
-  each step, will become dominant.
-  
-  Second, if $\mata$ has multiple eigenvalues,
-  \slideref{Algorithm}{irlm} will only identify a single vector in its
-  eigenspace. This is due to the fact that the algorithm cannot
-  distinguish between vectors in the same eigenspace and operates on
-  each of them equally. Nevertheless, once we lock such an
-  eigenvector, it is treated differently and a possible second
-  eigenvector for the same eigenvalue may come up in subsequent
-  iterations due to roundoff errors.
-\end{remark}
-
 
 %%% Local Variables:
 %%% mode: latex

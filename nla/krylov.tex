@@ -62,10 +62,10 @@
 \end{proof}
 
 \begin{Lemma}{krylov-projector}
-  Let $\matq_m$ be a projector onto $\krylov_m=\krylov_m(\mata,\vv)$ and define
+  Let $\matp_m$ be a projector onto $\krylov_m=\krylov_m(\mata,\vv)$ and define
   \begin{align}
     \mata_m\colon \krylov_m &\to \krylov_m\\
-    \vv&\mapsto \matq_m \mata.
+    \vv&\mapsto \matp_m \mata.
   \end{align}
   Then, for any polynomial $q\in\P_{m-1}$ there holds
   \begin{gather}
@@ -75,7 +75,7 @@
   For any polynomial $p\in\P_m$, there holds
   \begin{gather}
     \label{eq:krylov-projector-2}
-    \matq_m p(\mata)\vv = p(\mata_m)\vv.
+    \matp_m p(\mata)\vv = p(\mata_m)\vv.
   \end{gather}
 \end{Lemma}
 
@@ -91,14 +91,14 @@
   Since $i<m-1$, this vector is in $\krylov_m$ and we obtain
   \begin{gather}
     q_{i+1}(\mata)\vv
-    = \matq_m q_{i+1}(\mata)\vv
-    = \matq_m \mata q_i(\mata_m)\vv
+    = \matp_m q_{i+1}(\mata)\vv
+    = \matp_m \mata q_i(\mata_m)\vv
     = q_{i+1}(\mata_m)\vv,
   \end{gather}
   since $q_i(\mata_m)\vv\in\krylov_m$. Thus, we have proven the
   statement for $q\in\P_{m-1}$. The proof for $q_{m}(x) = x^m$ uses
   the same induction step, just with the exception that the action of
-  $\matq_m$ on the left is not the identity anymore, since
+  $\matp_m$ on the left is not the identity anymore, since
   $q_m(\mata)\vv$ may not be in $\krylov_m$.
 \end{proof}
 
@@ -195,7 +195,7 @@
   \begin{gather}
     \matk_m = \matq_m\matr_m.
   \end{gather}
-  Then $\matq_m^*\mata\matq$ is Hessenberg.
+  Then $\matq_m^*\mata\matq_m$ is Hessenberg.
 \end{Theorem}
 
 \begin{proof}
@@ -204,10 +204,16 @@
   \begin{gather}
     \spann{\vq_1,\dots,\vq_j} = \spann{\vv,\mata\vv,\dots,\mata^{j-1}\vv}
   \end{gather}
-  from \slideref{Lemma}{qr-columns}.
-  \begin{todo}
-    Continue
-  \end{todo}
+  from \slideref{Lemma}{qr-columns}. Comparing this
+  to~\eqref{eq:krylov-2}, the condition there is
+  \begin{gather}
+    \spann{\vq_1,\dots,\vq_j} = \spann{\vv,\mata\vq_1,\dots,\mata\vq_{j-1}}.
+  \end{gather}
+  But by construction we can use the induction argument,
+  \begin{gather}
+    \spann{\vq_1,\dots,\vq_{j-1}} = \spann{\vv,\mata\vv,\dots,\mata^{j-2}\vv},
+  \end{gather}
+  such that $\vq_j$ is identically defined in both places.
 \end{proof}
 
 \begin{Corollary}{Hessenberg-Krylov}
@@ -215,7 +221,7 @@
   transformations in \slideref{Lemma}{Hessenberg-Krylov-1} and
   \slideref{Theorem}{arnoldi-projection} can be chosen with any
   normalized vector $\vq_1$ as long as its grade is sufficiently
-  hight.
+  high.
 \end{Corollary}
 
 \begin{Algorithm*}{arnoldi-1}{Arnoldi}
@@ -235,11 +241,6 @@
   \end{algorithmic}
 \end{Algorithm*}
 
-\begin{Notation}{arnoldi-step}
-  We refer to step $m$ of the Arnoldi process as the step generating
-  the vector $\vq_m$.
-\end{Notation}
-
 \begin{Lemma}{arnoldi-w}
   We can rewrite~\eqref{eq:arnoldi-projection-2} using the vector
   $\vw_j$ as it was computed by orthogonalization as
@@ -251,20 +252,33 @@
   with $\ve_m\in \R^m$.
 \end{Lemma}
 
-\begin{todo}
 \begin{proof}
-  From line 9, we have $\vw_m = h_{m+1,m} \vq_{m+1}$. Hence, the last 
+  From line 9, we have $\vw_m = h_{m+1,m} \vq_{m+1}$. Hence, the sum
+  in~\eqref{eq:krylov:2} can be rewritten without using the matrix
+  $\overline\matH_m$ as
+  \begin{align}
+    \mata\vq_m
+    &= \sum_{k=1}^{m} h_{km}\vq_k + h_{m+1,m} \vq_{m+1}\\
+    &= \matq_m\matH_m \ve_m + \vw_m,
+  \end{align}
+  which is the $m$-th column of the matrix $\matq_m\matH_m+\vw_m\ve_m^T$.
 \end{proof}  
-\end{todo}
+
+\begin{Notation}{arnoldi-step}
+  We refer to step $m$ of the Arnoldi process as the step generating
+  the vector $\vq_m$.
+\end{Notation}
 
 \begin{remark}
   The next step of the Arnoldi method can always be computed if
-  $h_{j+1,j}\neq 0$ in line 9. If it cannot be, we speak of a
+  $h_{m+1,m}\neq 0$ in line 9. If it cannot be, we speak of a
   \define{breakdown} of the method.
 \end{remark}
 
 \begin{Lemma}{arnoldi-breakdown}
-  The Arnoldi method stops at step $j$ if and only if the subspace $\krylov_j$ is invariant under $\mata$ or equivalently, the minimal polynomial of $\vq_1$ is of degree $j$.
+  The Arnoldi method stops at step $m$ if and only if the subspace
+  $\krylov_m$ is invariant under $\mata$ or equivalently, the minimal
+  polynomial of $\vq_1$ is of degree $m$.
 \end{Lemma}
 
 \begin{proof}
@@ -330,7 +344,20 @@
   also the corrections for $\vx^{(m)}$ can be computed incrementally.
 \end{remark}
 
-
+\begin{Problem}{Arnoldi-invariant}
+  Assume that after $m$ steps of the Arnoldi process with initial
+  vector $\vb$, there holds $h_{m+1,m} = 0$.
+  \begin{enumerate}
+  \item How can~\eqref{eq:arnoldi-projection-2} be simplified in this
+    case?
+  \item What does this mean for the structure of the complete
+    Hessenberg matrix in~\eqref{eq:krylov:1}?
+  \item Show that in this case $\krylov_m(\vb,\mata)$ is an
+    $\mata$-invariant subspace of $\R^n$.
+  \item Assume additionally that $\mata$ is nonsingular. Show that the
+    solution $\vx$ of $\mata\vx = \vb$ is in $\krylov_m(\vb,\mata)$.
+  \end{enumerate}
+\end{Problem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -338,24 +365,53 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{intro}
+  
+\end{intro}
+
 \begin{Theorem}{arnoldi-linear-system}
-  Given an initial vector $\vx^{(0)}$ and
+  Given an initial vector $\vx^{(0)}$ and initial residual
   $\vr^{(0)} = \vb - \mata \vx^{(0)}$. Let $\beta=\norm{\vr^{(0)}}$
   and choose $\vq_1 =\nicefrac{\vr^{(0)}}{\beta}$ in Arnoldi's
   method. Then, the Galerkin approximation
   \begin{align}
-    x^{(m)} &\in x^{(0)} + \krylov_m(\mata,r^{(0)})\\
-    b-\mata x^{(m)} &\perp \krylov_m(\mata,r^{(0)}),
+    \vx^{(m)} &\in \vx^{(0)} + \krylov_m(\vr^{(0)},\mata)\\
+    \vb-\mata \vx^{(m)} &\perp \krylov_m(\vr^{(0)},\mata),
   \end{align}
   is obtained in two steps. Solve in $\R^m$
   \begin{gather}
-    \matH_m\vy_m = \beta\ve_1,
+    \matH_m\vy = \beta\ve_1,
   \end{gather}
   and let
   \begin{gather}
-    \vx^{(m)} = \vx^{(0)} + \matq_m \vy_m.
+    \vx^{(m)} = \vx^{(0)} + \matq_m \vy.
   \end{gather}
 \end{Theorem}
+
+\begin{proof}
+  Let $\vv$ be the update vector such that
+  $\vx^{(m)} = \vx^{(0)} + \vv$ and note that this implies
+  $\vv=\matq_m\vy$.
+
+  The orthogonality condition implies for all basis vectors $\vq_i\in\krylov_m(\vr^{(0)},\mata)$
+  \begin{gather}
+    0 = \scal(\vb-\mata \vx^{(m)},\vq_i) = \scal(\vr^{(0)} - \mata\vv,\vq_i).
+  \end{gather}
+  Hence,
+  \begin{gather}
+    \vq_i^* \mata\vv = \vq_i^*\vr^{(0)},\qquad i=1,\dots,m,
+  \end{gather}
+  or in matrix notation
+  \begin{gather}
+    \matq_m^*\mata\vv = \matq_m^* \vr^{(0)}.
+  \end{gather}
+  Since $\matq_m$ is orthogonal and $\vr^{(0)} = \beta\vq_1$, the
+  right hand side is $\beta\ve_1 \in \R^m$. Entering the representation of
+  $\vv$ by $\vy$, we obtain
+  \begin{gather}
+    \matq^*\mata\matq\vy = \matH_m \vy = \beta\ve_1.
+  \end{gather}
+\end{proof}
 
 \begin{Theorem}{arnoldi-linear-residual}
   Let $\vx^{(m)}$ be the Galerkin solution in
@@ -393,15 +449,23 @@
 \begin{remark}
   Following \slideref{Theorem}{projected-invertible} this algorithm
   works reliably only for $\mata$ symmetric, positive definite. This
-  is the case we study here and we will improve the algorithm
-  considerably.
+  is the case we study here and we will improve the algorithm.
+
+  In particular, we will derive an incremental version of the
+  algorithm which starts with $\vx^{(0)}$ and produces the next
+  iterate by increasing $m$ instead of starting a new projection
+  step. Hence, we will change our view from discussing the step
+  $k\to k+m$ to discussing the iteration $0\to 1\to m\to m+1$.
+
+  To this end, we first rephrase the previous theorem in terms of a
+  tridiagonal matrix.
 \end{remark}
 
 \begin{Lemma*}{lanczos-linear}{Lanczos solver}
-  The Galerkin approximation
+  The Ritz-Galerkin approximation
   \begin{align}
-    x^{(m)} &\in x^{(0)} + \krylov_m(\mata,r^{(0)})\\
-    b-\mata x^{(m)} &\perp \krylov_m(\mata,r^{(0)}),
+    \vx^{(m)} &\in \vx^{(0)} + \krylov_m(\vr^{(0)},\mata)\\
+    \vb-\mata \vx^{(m)} &\perp \krylov_m(\vr^{(0)},\mata),
   \end{align}
   is obtained as $\vx^{(m)} = \vx^{(0)} + \matq_m \vy_m$, where $\matq_m$ is the basis obtained from the Lanczos process and $\vy_m$ solves
   \begin{gather}
@@ -429,7 +493,7 @@
 \end{proof}
 
 \begin{intro}
-  While the basis of $\krylov_m(r^{(0)},\mata)$ can be computed
+  While the basis of $\krylov_m(\vr^{(0)},\mata)$ can be computed
   incrementally, only using the previous two vectors, the update
   \begin{gather}
     \vx^{(m)} = \vx^{(0)} + \matq_m \vy_m
@@ -456,9 +520,9 @@
   \begin{gather}
     \matH_m =
     \begin{pmatrix}
-      1\\\lambda_2&1\\
+      1\\\mu_2&1\\
       &\ddots&\ddots\\
-      &&\lambda_m&1
+      &&\mu_m&1
     \end{pmatrix}
     \times
     \begin{pmatrix}
@@ -470,9 +534,9 @@
   \end{gather}
   where
   \begin{gather}
-    \lambda_k = \frac{\delta_k}{\eta_{k-1}},
+    \mu_k = \frac{\delta_k}{\eta_{k-1}},
     \qquad
-    \eta_k = \gamma_k - \lambda_k \delta_k.
+    \eta_k = \gamma_k - \mu_k \delta_k.
   \end{gather}
   We note that LU decomposition works from top to bottom and left to
   right, such that already processed rows do not change when adding
@@ -486,11 +550,12 @@
   such that
   \begin{align}
     \vx^{(m)}
+    &= \vx^{(0)} + \matq_m \matH_m^{-1}\beta \ve_1\\
     &= \vx^{(0)} + \matq_m \matu_m^{-1} \matl_m^{-1} \beta \ve_1\\
     &= \vx^{(0)} + \matg_m \vz_m
   \end{align}
   With $\zeta_k$ following the recursion
-  $\zeta_k = - \lambda_k \zeta_{k-1}$, we realize
+  $\zeta_k = - \mu_k \zeta_{k-1}$, we realize
   \begin{gather}
     \vz_{m+1} =
     \begin{pmatrix}
@@ -506,7 +571,8 @@
   obtain the relation
   \begin{gather}
     \label{eq:nla:krylov:lanczos-p}
-    \vg_k = \frac1{\eta_k}\bigl(\vq_k - \delta_k \vg_{k-1}\bigr).
+    \vg_k = \frac1{\eta_k}\bigl(\vq_k - \delta_k \vg_{k-1}\bigr),
+    \qquad\vg_1 = \frac1{\eta_1} \vq_1.
   \end{gather}
   Thus,
   \begin{gather}
@@ -541,19 +607,27 @@
 \end{remark}
 
 \begin{Lemma}{lanczos-orthogonality}
-  The sequences of vector $\vr_m = \vb-\mata\vx^{(m)}$ and $\vg_m$
-  constructed in the preceding lemma have the following orthogonality
-  properties:
+  For the sequences of vectors $\vx_m$, $\vr_m = \vb-\mata\vx_{m}$ and $\vg_m$
+  constructed in the preceding lemma, there holds
+  \begin{align}
+    \vg_m &\in \krylov_{m}(\vr_0,\mata)\\
+    \vx_m &\in \vx_0 + \krylov_{m}(\vr_0,\mata)\\
+    \vr_m &\in \krylov_{m+1}(\vr_0,\mata)
+  \end{align}
+  Additionally, they have the following orthogonality properties:
   \begin{xalignat}2
-    \scal(\vr_i,\vr_k) &= 0 & i&\neq k\\
-    \scal(\mata\vg_i,\vg_k) &= 0 & i&\neq k.
+    \scal(\vr_i,\vr_k) &= 0 & i&< k \le m\\
+    \scal(\mata\vg_i,\vg_k) &= 0 & i&< k \le m.
   \end{xalignat}
 \end{Lemma}
 
 \begin{proof}
-  Orthogonality of the residuals follows from
-  \slideref{Lemma}{lanczos-linear}, since $\vr_m$ is aligned with
-  $\vq_{m+1}$.
+  By~\eqref{eq:nla:krylov:lanczos-p},
+  $\vg_m\in\krylov_{m+1}(\vr_0,\mata)$, hence the inclusion of
+  $\vx_m$.  By construction, the residual
+  $\vr_m \in \krylov_{m+1}(\vr_0,\mata)$ and orthogonal to
+  $\krylov_{m}(\vr_0,\mata)$. Hence, it is coaligned with $\vq_{m+1}$
+  and orthogonal to all previous residuals.
 
   The second orthogonality relation is equivalent to the fact that
   $\matg_m^T\mata\matg_m$ is diagonal.
@@ -572,81 +646,106 @@
   \begin{algorithmic}[1]
     \State $\vr_0 = b-\mata \vx_0$
     \State $\vp_0 = \vr_0$
-    \For{$j=0,1,\dots$}
-    \State $\alpha_j = \frac{\scal(\vr_j,\vr_j)}{\scal(\mata\vp_j,\vp_j)}$
-    \State $\vx_{j+1} = \vx_j + \alpha_j \vp_j$
-    \State $\vr_{j+1} = \vr_j - \alpha_j \mata \vp_j$
-    \State $\beta_j =\frac{\scal(\vr_{j+1},\vr_{j+1})}{\scal(\vr_j,\vr_j)}$
-    \State $\vp_{j+1} = r_{j+1} + \beta_j \vp_j$
+    \For{$m=0,1,\dots$}
+    \State $\alpha_m = \frac{\scal(\vr_m,\vr_m)}{\scal(\mata\vp_m,\vp_m)}$
+    \State $\vx_{m+1} = \vx_m + \alpha_m \vp_m$
+    \State $\vr_{m+1} = \vr_m - \alpha_m \mata \vp_m$
+    \State $\beta_m =\frac{\scal(\vr_{m+1},\vr_{m+1})}{\scal(\vr_m,\vr_m)}$
+    \State $\vp_{m+1} = r_{m+1} + \beta_m \vp_m$
     \EndFor
   \end{algorithmic}
 \end{Algorithm*}
 
 \begin{Lemma}{cg-orthogonality}
-  The sequences $\vx_j$ and $\vr_j$ produced by the cg method coincide
-  with those of the Lanczos solver (in exact arithmetic). The vectors
-  $\vp_j$ of the cg method coincide up to scalar factors with the vectors $\vg_{j+1}$
-  in \slideref{Lemma}{lanczos-incremental}.
+  Assume that $\vr_m \neq 0$.
+  For $k\le m$ the vectors $\vx_k$, $\vr_k = \vb-\mata\vx^{(k)}$ and $\vp_k$
+  of the conjugate gradient method admit
+  \begin{align}
+    \vp_k &\in \krylov_{k+1}(\vr_0,\mata),\\
+    \vr_k &\in \krylov_{k+1}(\vr_0,\mata).
+  \end{align}
+  Additionally, they have the following orthogonality properties:
+  \begin{xalignat}2
+    \scal(\vr_i,\vr_k) &= 0 & i&< k\le m,\\
+    \scal(\mata\vp_i,\vp_k) &= 0 & i&< k \le m,\\
+    \scal(\vp_i,\vr_k) &= 0 & i&< k\le m.
+  \end{xalignat}
+  Furthermore,
+  $\scal(\vr_k,\vp_k) = \scal(\vr_k,\vr_k)$.
 \end{Lemma}
 
-\begin{todo}
-  The structure of the argument is not very clear. We are jumping
-  back and forth between the algorithms. It would be better to show
-  that CG produces the same orthogonality with respect to the
-  previous vectors, then use uniqueness. Where to put equality of
-  the coefficients?
-\end{todo}
-  
 \begin{proof}
-  Note that the vectors $\vp_j$ refers to the cg algorithm, the
-  vectors from \slideref{Lemma}{lanczos-incremental} will be
-  distinguished clearly.
+  We show the result by induction over $m$. It is true for $m=0$. Now
+  assume that it holds for $m$ and we conclude for $m+1$. From line 6,
+  we obtain $\vr_{m+1} \in \krylov_{m+1}(\vr_0,\mata)$, since
+  $\vp_m\in \krylov_{m+1}(\vr_0,\mata)$. Then, line 8 yields
+  immediately $\vp_{m+1} \in \krylov_{m+1}(\vr_0,\mata)$.
 
-  We start with the update formula
-  $\vx_{j+1} = \vx_j + \alpha_j \vp_j$, which immediately implies
-  \begin{gather}
-    \vr_{j+1} = \vr_j - \alpha_j \mata\vp_j.
-  \end{gather}
-  Orthogonality between $\vr_{j+1}$ and $\vr_j$ due to the projection
-  property implies the choice
-  \begin{gather}
-    \alpha_j = \frac{\scal(\vr_j,\vr_j)}{\scal(\mata\vp_j,\vr_j)}.
-  \end{gather}
-  Since $\vr_j$ is a multiple of $\vq_{j+1}$ by the residual
-  representation in \slideref{Theorem}{arnoldi-linear-residual}, the
-  update formula~\eqref{eq:nla:krylov:lanczos-p} for $\vg_{j+1}$
-  (after index shift) implies that the direction is a linear
-  combination of $\vr_{j+1}$ and $\vp_j$. After arbitrary scaling,
-  \begin{gather}
-    \vp_{j+1} = \vr_{j+1} + \beta_j \vp_{j}.
-  \end{gather}
-  A-orthogonality implies the choice
-  \begin{gather}
-    \beta_j = -\frac{\scal(\mata \vp_j,\vr_{j+1})}{\scal(\mata \vp_j,\vp_j)}.
-  \end{gather}
-  Note that in each step, the orthogonality relation determines $\vp_{j+1}$ uniquely
-  up to scaling in this subspace. After the scaling has been chosen,
-  the orthogonality relation for $\vr_{j+1}$ uniquely
-  determines the update for $\vx_{j+1}$, such that the sequences
-  indeed coincide.
 
-  The definition of the coefficients still differs from the cg
-  algorithm. But, we observe
+  From line 6 the definition of $\alpha_m$ and the equality of the
+  inner products in the statement of the lemma, we have
+  \begin{align}
+    \scal(\vr_{m+1},\vp_m)
+    &= \scal(\vr_m,\vp_m) - \frac{\scal(\vr_m,\vr_m)}{\scal(\mata\vp_m,\vp_m)} \scal(\mata\vp_m,\vp_m)\\
+    &= \scal(\vr_m,\vp_m) - \frac{\scal(\vr_m,\vp_m)}{\scal(\mata\vp_m,\vp_m)} \scal(\mata\vp_m,\vp_m) = 0.
+  \end{align}
+  For any $k<m$, there holds
   \begin{gather}
-    \scal(\mata\vp_j,\vr_j) = \scal(\mata\vp_j,\vp_j-\beta_{j-1}\vp_{j-1})
-    = \scal(\mata\vp_j,\vp_j).
+    \scal(\vr_{m+1},\vp_k) = \scal(\vr_m,\vp_k) - \alpha_k \scal(\mata\vp_m,\vp_k) = 0-0 = 0.
   \end{gather}
-  Similarly, from the update formula for the residual, we get
+  Hence, we have proven
   \begin{gather}
-    \mata\vp_j = \frac1{\alpha_j}\bigl(\vr_j-\vr_{j+1}\bigr),
+    \scal(\vr_{m+1},\vp_k) = 0 \qquad k < m.
   \end{gather}
-  and thus,
+  Now, we observe
   \begin{gather}
-    \beta_j = \frac1{\alpha_j}\frac{\scal(\vr_{j+1},\vr_{j+1}-\vr_j)}{\scal(\mata\vp_j,\vp_j)} = \frac{\scal(\vr_{j+1},\vr_{j+1})}{\scal(\vr_{j},\vr_{j})}.
+    \label{eq:krylov-cg-1}
+    \scal(\vr_{m+1},\vp_{m+1}) = \scal(\vr_{m+1},\vr_{m+1} + \beta_k\vp_k) = \scal(\vr_{m+1},\vr_{m+1}).
   \end{gather}
-  Note that these forms avoid inner products of possibly almost
-  orthogonal vectors.
+
+  From line 8, we obtain for $k\le m$
+  \begin{gather}
+    \scal(\vp_{m+1},\mata\vp_k)
+    = \scal(\vr_{m+1},\mata\vp_k) + \beta_m \scal(\vp_m,\mata\vp_k)
+  \end{gather}
+  For the first term, we use first line 6 and then line 8 to obtain
+  \begin{align}
+    \scal(\vr_{m+1},\mata\vp_k)
+    &= \tfrac1{\alpha_k}\scal(\vr_{m+1},\vr_{k}-\vr_{k+1}) + \beta_m \scal(\vp_m,\mata\vp_k)\\
+    &= \tfrac1{\alpha_k}\scal(\vr_{m+1}, \vp_k-\beta_{k-1}\vp_{k-1} - \vp_{k+1} + \beta_k\vp_k)\\
+    &= -\tfrac1{\alpha_k}\scal(\vr_{m+1},\vp_{k+1}).
+  \end{align}
+  Hence, for $k<m$ we immediately have
+  \begin{gather}
+    \scal(\vp_{m+1},\mata\vp_k) = 0.
+  \end{gather}
+  For $k=m$, we obtain
+  \begin{align}
+    \scal(\vp_{m+1},\mata\vp_m)
+    &= -\tfrac1{\alpha_k}\scal(\vr_{m+1},\vp_{k+1}) + \beta_m \scal(\vp_m,\mata\vp_k)\\
+    &= -\frac{\scal(\mata\vp_m,\vp_m)}{\scal(\vr_m,\vr_m)} \scal(\vr_{m+1},\vp_{k+1})
+      + \frac{\scal(\vr_{m+1},\vr_{m+1})}{\vr_{m},\vr_{m}}\scal(\vp_m,\mata\vp_k)\\
+    &= 0,
+  \end{align}
+  again by the equality of inner products in~\eqref{eq:krylov-cg-1}.
+  Hence, we have proven
+  \begin{gather}
+    \scal(\mata\vp_{m+1}, \vp_k) = 0 \qquad k\le m.
+  \end{gather}
+  Finally, there holds for $k\le m$
+  \begin{gather}
+    \scal(\vr_{m+1},\vr_k) = \scal(\vr_{m+1}, \vp_k - \beta_{k-1}\vp_{k-1}) = 0.
+  \end{gather}
 \end{proof}
+
+\begin{Corollary}{cg-Lanczos}
+  The sequences $\vx_m$ and $\vr_m$ produced by the conjugate gradient
+  method coincide with those of the Lanczos solver (in exact
+  arithmetic). The vectors $\vp_m$ of the cg method coincide up to
+  scalar factors with the vectors $\vg_{m+1}$ in
+  \slideref{Lemma}{lanczos-incremental}.
+\end{Corollary}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -661,23 +760,23 @@
 \end{intro}
 
 \begin{Theorem}{cg-optimality}
-  For the error $\ve^{(k)} = \vx^{(k)}-\vx$ after $k$ steps of the cg
+  For the error $\ve^{(m)} = \vx^{(m)}-\vx$ after $k$ steps of the cg
   method there holds
   \begin{align}
-    \norm{\ve^{(k)}}_A
-    & = \min_{p\in \P_{k-1}}
+    \norm{\ve^{(m)}}_A
+    & = \min_{p\in \P_{m-1}}
       \norm{\ve^{(0)} + \mata p(\mata) \ve^{(0)}}_A\\
-    &= \min_{\substack{p\in\P_k\\p(0) = 1}} \norm{p(\mata)\ve^{(0)}}_A.
+    &= \min_{\substack{p\in\P_m\\p(0) = 1}} \norm{p(\mata)\ve^{(0)}}_A.
   \end{align}
 \end{Theorem}
 
 \begin{proof}
-  There holds $\vx^{(k)} = \vx^{(0)} + \vw$ with
-  $\vw \in \krylov_k(\mata,\vr^{(0)})$. Then, by
-  \slideref{Lemma}{krylov-polynomial}, there is $p\in\P_{k-1}$ such
+  There holds $\vx^{(m)} = \vx^{(0)} + \vw$ with
+  $\vw \in \krylov_m(\mata,\vr^{(0)})$. Then, by
+  \slideref{Lemma}{krylov-polynomial}, there is $p\in\P_{m-1}$ such
   that $\vw = -p(\mata) \vr^{(0)}$. Thus
   \begin{align}
-    \vx^{(k)} - \vx
+    \vx^{(m)} - \vx
     &= \vx^{(0)} - \vx - p(\mata)\vr^{(0)}\\
     &= \vx^{(0)} - \vx - p(\mata) (\vb-\mata\vx^{(0)})\\
     &= \vx^{(0)} - \vx - p(\mata) (\mata\vx-\mata\vx^{(0)})\\
@@ -686,17 +785,17 @@
   On the other hand, we have the optimality of projection methods in
   \slideref{Theorem}{projection-orthogonal-optimal}, which states
   \begin{align}
-    \norm{\ve^{(k)} -\vx}_A
-    &= \min_{\vw\in \krylov_k(\mata,\vr^{(0)})} \norm{\vx^{(0)}+\vw-\vx}_A\\
-    &= \min_{\vw\in \krylov_k(\mata,\vr^{(0)})} \norm{\ve^{(0)}+\vw}_A.
+    \norm{\ve^{(m)} -\vx}_A
+    &= \min_{\vw\in \krylov_m(\mata,\vr^{(0)})} \norm{\vx^{(0)}+\vw-\vx}_A\\
+    &= \min_{\vw\in \krylov_m(\mata,\vr^{(0)})} \norm{\ve^{(0)}+\vw}_A.
   \end{align}
   Thus, we obtain the first expression. The second follows by noticing
   that the set of polynomials $q(x) = 1+xp(x)$ with $p\in\P_{k-1}$ is
-  just the set of polynomials in $\P_k$ with coefficient $a_0 = 1$.
+  just the set of polynomials in $\P_m$ with coefficient $a_0 = 1$.
 \end{proof}
 
 \begin{Corollary}{cg-vs-descent}
-  The error after $k$ steps of the conjugate gradient method is never
+  The error after $m$ steps of the conjugate gradient method is never
   greater than the error after equally many steps of the steepest
   descent method.
 \end{Corollary}
@@ -704,30 +803,30 @@
 \begin{proof}
   The error of the steepest descent method is
   \begin{gather}
-    \ve^{(k)} = \prod_{i=k}^{1} (\id-\alpha_k\mata) \ve^{(0)}.
+    \ve^{(m)} = \prod_{i=1}^{m} (\id-\alpha_i\mata) \ve^{(0)}.
   \end{gather}
   This can be rewritten as
   \begin{gather}
-    \ve^{(k)} = p_k(\mata) \ve^{(0)},
+    \ve^{(m)} = p_m(\mata) \ve^{(0)},
   \end{gather}
-  where $p_k\in\P_k$ is the polynomial of degree $k$ defined by
+  where $p_m\in\P_m$ is the polynomial of degree $m$ defined by
   \begin{gather}
-    p_k(x) = \prod_{i=k}^{1} (1-\alpha_kx).
+    p_m(x) = \prod_{i=1}^{m} (1-\alpha_ix).
   \end{gather}
-  There holds $p_k(0)=1$ and thus this polynomial is in the set over
+  There holds $p_m(0)=1$ and thus this polynomial is in the set over
   which the conjugate gradient method minimizes.
 \end{proof}
 
 \begin{Corollary}{cg-optimality-spectrum}
   Let $\sigma(\mata) = \{\lambda_1,\dots,\lambda_n\} \subset \R^+$ be
-  the spectrum of $\mata$. Then, the error after $k$ steps of the
+  the spectrum of $\mata$. Then, the error after $m$ steps of the
   conjugate gradient method follows the estimate
   \begin{gather}
-    \norm{\ve^{(k)}}_A \le \rho_k \norm{\ve^{(0)}}_A,
+    \norm{\ve^{(m)}}_A \le \rho_m \norm{\ve^{(0)}}_A,
   \end{gather}
   where
   \begin{gather}
-    \rho_k = \min_{\substack{p\in\P_k\\p(0) = 1}} \max_{\lambda\in\sigma(\mata)} \abs{p(\lambda)}.
+    \rho_m = \min_{\substack{p\in\P_m\\p(0) = 1}} \max_{\lambda\in\sigma(\mata)} \abs{p(\lambda)}.
   \end{gather}
 \end{Corollary}
 
@@ -739,11 +838,11 @@
   \begin{gather}
     \ve^{(0)} = \sum_{i=1}^n \alpha_i \vq_i,
     \qquad
-    \ve^{(k)} = \sum_{i=1}^n \alpha_i p(\lambda_i) \vq_i.    
+    \ve^{(m)} = \sum_{i=1}^n \alpha_i p(\lambda_i) \vq_i.    
   \end{gather}
   Hence, we can estimate
   \begin{align}
-    \norm{\ve^{(k)}}_A^2
+    \norm{\ve^{(m)}}_A^2
     &= \sum_{i=1}^n \lambda_i\alpha_i^2 p(\lambda_i)^2 \norm{\vq_i}_A^2\\
     & \le \max_i p(\lambda_i)^2 \sum_{i=1}^n \lambda_i\alpha_i^2\norm{\vq_i}_A^2\\
     &= \max_i p(\lambda_i)^2 \norm{\ve^{(0)}}_A^2.
@@ -756,10 +855,10 @@
   optimal. In particular, it can exploit any information which is
   known about the spectrum. In particular, the following statements are true:
   \begin{enumerate}
-  \item If the matrix $\mata$ only has $k$ distinct eigenvalues, then
-    the cg iteration converges to the solution in $k$ steps.
-  \item If the eigenvalues are clustered around $k$ values, then the
-    gain in the first $k$ steps will be large.
+  \item If the matrix $\mata$ only has $m$ distinct eigenvalues, then
+    the cg iteration converges to the solution in $m$ steps.
+  \item If the eigenvalues are clustered around $m$ values, then the
+    gain in the first $m$ steps will be large.
   \item If the spectrum consists of a continuum plus a single outlier,
     the method will perform almost as if the outlier did not exist.
   \end{enumerate}
@@ -769,10 +868,10 @@
 \end{remark}
 
 \begin{Corollary}{cg-condition-number}
-  The error after $k$ steps of the cg method admits the estimate
+  The error after $m$ steps of the cg method admits the estimate
   \begin{gather}
-    \norm{e^{(k)}}_A \le 2 \left(
-      \frac{\sqrt{\cond_2(A)}-1}{\sqrt{\cond_2(A)}+1}\right)^k
+    \norm{e^{(m)}}_A \le 2 \left(
+      \frac{\sqrt{\cond_2(A)}-1}{\sqrt{\cond_2(A)}+1}\right)^m
     \norm{e^{(0)}}_A.
   \end{gather}
 \end{Corollary}
@@ -780,24 +879,24 @@
 \begin{proof}
   We make no further assumtions on the spectrum of $\mata$ except that
   all eigenvalues are in the interval
-  $[\lambda_{\min},\lambda_{\max}]$. Thus, we estimate the factors $\rho_k$ in \slideref{Corollary}{cg-optimality-spectrum} by
+  $[\lambda_{\min},\lambda_{\max}]$. Thus, we estimate the factors $\rho_m$ in \slideref{Corollary}{cg-optimality-spectrum} by
   \begin{gather}
-    \rho_k \le \min_{\substack{p\in\P_k\\p(0) = 1}}
+    \rho_m \le \min_{\substack{p\in\P_m\\p(0) = 1}}
     \max_{\lambda\in[\lambda_{\min},\lambda_{\max}]} \abs{p(\lambda)}.
   \end{gather}
   
   We use the optimality property of Chebyshev polynomials stated in
   \slideref{Corollary}{chebyshev-minimal-2} and note that the
   optimality stated there is exactly what we need. Thus,
-  $p = \widehat\pchebyshev_k(\lambda)$ solves the minimization
+  $p = \widehat\pchebyshev_m(\lambda)$ solves the minimization
   problem and there holds
   \begin{align}
-    \rho_k
-    &\le \left(\pchebyshev_k\left(
+    \rho_m
+    &\le \frac1{\pchebyshev_k\left(
       \frac{\lambda_{\max}+\lambda_{\min}}{\lambda_{\max}-\lambda_{\min}}
-      \right)\right)^{-1}\\
-    & \le \left(\frac{\sqrt{\lambda_{\max}}-\sqrt{\lambda_{\min}}}{\sqrt{\lambda_{\max}}+\sqrt{\lambda_{\min}}}
-      \right)^k
+      \right)}\\
+    & \le 2 \left(\frac{\sqrt{\lambda_{\max}}-\sqrt{\lambda_{\min}}}{\sqrt{\lambda_{\max}}+\sqrt{\lambda_{\min}}}
+      \right)^m
   \end{align}
   Dividing both sides of the fraction by $\sqrt{\lambda_{\min}}$ yields the result.
 \end{proof}
@@ -805,21 +904,41 @@
 \begin{remark}
   Note that the estimate in \slideref{Corollary}{cg-condition-number}
   is not a classical contraction estimate which allows us to deduce
-  the error reduction from step $k$ to $k+1$. Indeed, the factor 2
+  the error reduction from step $m$ to $m+1$. Indeed, the factor 2
   before the quotient renders this exercise impossible, and the
   estimate for the steepest descent method is our rescue.
 
   Instead, the estimate shows that with growing dimension of the
   Krylov space, eventually the factor 2 is compensated by the first
-  $k$ powers of the quotient and then the additional powers guarantee
+  $m$ powers of the quotient and then the additional powers guarantee
   faster convergence.
 \end{remark}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{Problem}{cg-implementation}
+%   Implement the conjugate gradient method. Apply it to the 
+% \end{Problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The generalized minimal residual method (GMRES)}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{intro}
+  Now, we turn our attention again to nonsymmetric matrices. Here, the
+  full Arnoldi process is necessary, as the Lanczos process is only
+  applicable to symmetric matrices. Hence, for $m$ steps of the
+  method, we have to store the whole Arnoldi basis of $m$
+  vectors. Furthermore, in each step, we must orthogonalize explicitly
+  with respect to every previous vector.
+
+  Then, we also will apply the oblique projection method with
+  $L=\mata K$, as we have a guarantee here that the projected problems
+  are solvable. But the projected matrix is not $\matH_m$ as for the
+  orthogonal projection method, since the test space is
+  different. Hence, we construct the projected problem analog to the
+  normal equations of least-squares approximation.
+\end{intro}
 
 \begin{todo}
   Put this theorem into an appendix?
@@ -850,6 +969,44 @@
 
 \begin{proof}
   Homework.
+\end{proof}
+
+\begin{Lemma}{gmres-projected}
+  The projected normal equations of the oblique projection method with Arnoldi basis $\matq_m$ read
+  \begin{gather}
+    {\overline\matH}^T_m\overline\matH_m \vy = {\overline\matH}^T_m \beta \ve_1.
+  \end{gather}
+  These are equivalent to finding $\vy\in\R^m$ such that
+  \begin{gather}
+    \norm{\beta\ve_1 - \overline\matH_m \vy_m}_2 \stackrel{!}{=} \min.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  According to \slideref{Theorem}{arnoldi-projection}, we obtain
+  \begin{gather}
+    \matq_m^T\mata^T\mata\matq_m
+    = \overline\matH_m^T \matq_{m+1}^T\matq_{m+1}\overline\matH_m
+    = \overline\matH_m^T\overline\matH_m.
+  \end{gather}
+  Thus, $\overline\matH_m^T\overline\matH_m$ is the Galerkin
+  projection of $\mata^T\mata$ to the subspace generated by
+  $\matq_m$.
+
+  Furthermore,
+  $\vr^{(0)} = \vb-\mata\vx^{(0)} = \beta\matq_{m+1}\ve_1$, such that
+  \begin{gather}
+    \matq_m^T\mata^T\vr^{(0)} = \beta\overline\matH_m^T \ve_1.
+  \end{gather}
+  Thus, the linear system
+  \begin{gather}
+    \overline\matH_m^T\overline\matH_m \vy_m = \beta\overline\matH_m^T \ve_1
+  \end{gather}
+  is the (orthogonal) Galerkin projection of the normal equations to
+  the search space spanned by $\matq_m$.
+
+  Equivalence with the minimization problem follows from the theorem
+  on the normal equations.
 \end{proof}
 
 \begin{todo}
@@ -888,29 +1045,16 @@
 \begin{proof}
   We use the equivalence between minimizing the residual and the
   solution to the normal equations, namely
-  \slideref{Theorem}{normal-equations}. According to
-  \slideref{Theorem}{arnoldi-projection}, we obtain
-  \begin{gather}
-    \matq_m^T\mata^T\mata\matq_m
-    = \overline\matH_m^T \matq_{m+1}^T\matq_{m+1}\overline\matH_m
-    = \overline\matH_m^T\overline\matH_m.
-  \end{gather}
-  Thus, $\overline\matH_m^T\overline\matH_m$ is the Galerkin
-  projection of $\mata^T\mata$ to the subspace generated by
-  $\matq_m$. Furthermore, it is symmetric, positive definite, the
-  latter assuming $\mata$ is invertible.  Furthermore,
-  $\vr^{(0)} = \vb-\mata\vx^{(0)} = \beta\matq_{m+1}\ve_1$, such that
-  \begin{gather}
-    \matq_m^T\mata^T\vr^{(0)} = \beta\overline\matH_m \ve_1.
-  \end{gather}
-  Thus, the linear system
-  \begin{gather}
-    \overline\matH_m^T\overline\matH_m \vy_m = \beta\overline\matH_m \ve_1
-  \end{gather}
-  is the (orthogonal) Galerkin projection of the normal equations to
-  the search space. On the other hand, its solution solves the
-  minimization problem in the GMRES algorithm.
+  \slideref{Lemma}{oblique-normal} and
+  \slideref{Theorem}{normal-equations}.  Furthermore, $\mata^T\mata$
+  is symmetric, positive definite, the latter assuming $\mata$ is
+  invertible. Hence, we can apply the orthogonal projection method.
 
+  Following \slideref{Theorem}{arnoldi-linear-system}, we can compute
+  $\vx^{(m)} = \vx^{(0)} + \matq_m\vy$, where $\vy$ solves the
+  projected system. According to \slideref{Lemma}{gmres-projected},
+  this vector solves the stated minimization problem.
+  
   By the minimization property of the orthogonal projection, the error
   after the projection step is minimal in the $\mata^T\mata$ norm,
   which is equal to the Euclidean norm of the residual.
@@ -958,43 +1102,25 @@
   \putindex{lucky breakdown}.
 \end{Lemma}
 
-\begin{todo}
-  finish text
-\end{todo}
-\begin{intro}
-  The GMRES algorithm uses the Arnoldi process in order to compute a QR factorization of the 
-\end{intro}
-
-
-\begin{Algorithm*}{arnoldi-householder}{Arnoldi with Householder}
-  \algtext*{EndIf}
-  \begin{algorithmic}[1]
-    \Require $\mata\in\Rnn$; $\quad\vq_1\in\R^n, \norm{\vq_1}_2 = 1$
-    \State Choose $\matq_1^*$ such that $\matq_1^*\vq_1 = \ve_1$.
-    \Comment{Householder}
-    \For{$j=1,\dots,m$}
-    \State $\vq_j \gets \matq_1^*\dots\matq_j^*\ve_j$
-    \State $\matq_{j+1}\matr \gets \matq_j^*\dots\matq_1^*(\vq_1,\mata\vq_1,\dots,\mata\vq_m)$
-    \Comment{Householder}
-    \If{$r_{j+1,j+1}=0$} \textbf{stop}\EndIf
-    \EndFor
-  \end{algorithmic}
-\end{Algorithm*}
+\begin{proof}
+  A breakdown of the method occurs if $h_{m+,m} = 0$, which in turn
+  implies $\vr^{(m)} = 0$.
+\end{proof}
 
 \begin{Theorem}{gmres-optimality}
-  For the residual $\vr^{(k)} = \vb-\mata\vx^{(k)}$ after $k$ steps of
+  For the residual $\vr^{(m)} = \vb-\mata\vx^{(m)}$ after $m$  steps of
   the GMRES method, there holds
   \begin{gather}
-    \norm{\vr^{(k)}}_2 = \min_{\substack{p\in\P_k\\p(0) = 1}}
+    \norm{\vr^{(m)}}_2 = \min_{\substack{p\in\P_m\\p(0) = 1}}
     \norm{p(\mata)\vr^{(0)}}_2.
   \end{gather}
   If the matrix $\mata$ is diagonalizable, then there holds
     \begin{gather}
-    \norm{\vr^{(k)}}_2 \le \rho_k \cond_2(\matv) \norm{\vr^{(0)}}_2,
+    \norm{\vr^{(m)}}_2 \le \rho_m \cond_2(\matv) \norm{\vr^{(0)}}_2,
   \end{gather}
   where $\matv$ is the matrix of eigenvectors and
   \begin{gather}
-    \rho_k = \min_{\substack{p\in\P_k\\p(0) = 1}} \max_{\lambda\in\sigma(\mata)} \abs{p(\lambda)}.
+    \rho_m = \min_{\substack{p\in\P_m\\p(0) = 1}} \max_{\lambda\in\sigma(\mata)} \abs{p(\lambda)}.
   \end{gather}
 \end{Theorem}
 
@@ -1007,7 +1133,7 @@
   an ellipse in the complex plane with center $c$, focal distance $d$
   and semimajor axis $a$. Then,
   \begin{gather}
-     \rho_k \approx \left(
+     \rho_m \approx \left(
       \frac{a+\sqrt{a^2-d^2}}{c+\sqrt{c^2-d^2}}
       \right)^k.
   \end{gather}
@@ -1033,6 +1159,115 @@
   sequence~\cite{GreenbaumPtakStrakos96}.
 \end{remark}
 
+\begin{intro}
+  According to \slideref{Theorem}{Hessenberg-Krylov-2}, the GMRES
+  algorithm uses the Arnoldi process in order to compute a QR
+  factorization of the Krylov matrix
+  $\matk_m = (\vr_0,\mata\vr_0,\dots,\mata^{m-1}\vr_0)$. In
+  \slideref{Algorithm}{arnoldi-1}, Gram-Schmidt orthogonalization is
+  used to this effect. Hence, we expect numerical instability if many
+  steps of the method are needed. This in particular, as
+  $\mata^m\vr_0$ converges to a dominant eigenvector which will make
+  the Krylov matrix ill-conditioned. We should thus investigate in a
+  more stable way of computing the Arnoldi basis and the projected
+  matrix.
+
+  Our starting point is \slideref{Theorem}{Hessenberg-Krylov-2}, which
+  states that we can compute the Arnoldi basis by a QR factorization
+  of the Krylov matrix. Two steps are needed to develop a working
+  algorithm. First, since we still want to grow the Krylov space
+  dimension by dimension, we need an incremental version of the QR
+  factorization. But indeed, the standard method described
+  in~\ref{intro:ortho:1} already fulfills this requirement, we just
+  have to rewrite it column by column. Second, we have to construct
+  the Hessenberg matrix $\matH_m$ from this QR factorization.
+\end{intro}
+
+\begin{Lemma}{qr-Arnoldi-1}
+  The $j$-th column of the QR factorization of the Krylov matrix
+  \begin{gather}
+    \matk_\infty = \bigl(\vv,\mata\vv,\mata^2\vv,\dots\bigr)
+  \end{gather}
+  from the previous $j-1$ columns by the following steps:
+  \begin{align}
+    \label{eq:Arnoldi-Householder:1}
+    \vv_j &= \matp_{j-1}\cdots \matp_1\mata\vq_{j-1}\\
+    \label{eq:Arnoldi-Householder:2}
+    \vq_j &= \matp_1\cdots \matp_j\ve_j.
+  \end{align}
+  Here, $\matp_j$ is the Householder reflection of the form
+  \begin{gather}
+    \label{eq:Arnoldi-Householder:3}
+    \matp_j =
+    \begin{pmatrix}
+      \id_{j-1}\\& \tilde P_{j}
+    \end{pmatrix},
+  \end{gather}
+  which eliminates $v_{j;j+1}$ to $v_{j;n}$.  The columns of the
+  Hessenberg matrix $\overline\matH_m$ in the Arnoldi process can be computed
+  as $\vh_{j-1} = \matp_j\vv_j$.
+\end{Lemma}
+
+\begin{proof}
+  Already in the proof of \slideref{Theorem}{Hessenberg-Krylov-2}, we
+  have argued that we may replace the column $\mata^{j}\vv$ by
+  $\mata\vq_{j}$ to obtain an essentially equivalent QR factorization. Hence,
+  $\vv_j$ can be viewed as the $j$-th column of the matrix
+  \begin{gather}
+    \matk^{(j-1)} = \matp_{j-1}\cdots \matp_1 \matk_{\infty},
+  \end{gather}
+  of the QR factorization. Then, the next step is computed by the
+  Householder reflection $\matp_j$. Finally,~\eqref{eq:ortho:1} states
+  \begin{gather}
+    \matq_j = \matp_1\dots\matp_j.
+  \end{gather}
+  The $j$-th column of this matrix is $\vq_j$ as stated by
+  this lemma.
+
+  We note that this representation of the QR factorization is
+  essentially a reordering of operations. While in the standard
+  representation, we apply the Householder reflection in each step to
+  all further columns of the matrix, here we go column by column and
+  apply all previously computed reflections at once.
+
+  It remains to prove the statement on the Hessenberg matrix
+  $\matH$. By equation~\eqref{eq:Arnoldi-Householder:1}, we have
+  \begin{gather}
+    \vh_j = \matp_{j+1}^T\vv_{j+1}
+    = \matp_{j+1}^T\matp_{j}^T\cdots\matp_1^T\mata\vq_{j}
+    = \matq_{j+1}^T\mata\vq_j.
+  \end{gather}
+  The Householder reflections $\matp_{k+1}$ act as identity on the
+  span of the first $k$ unit vectors. Hence, $\matp_{k}\vh_j = \vh_j$ for $k\ge j+2$ and
+  \begin{gather}
+    \matp_{j+2}\cdots\matp_{m+1}\vh_j = \vh_j = \matq_{j+1}^T\mata\vq_j.
+  \end{gather}
+  Since $\mata\vq_j\in\krylov_{j+1}(\vv,\mata)$ and
+  $\matq_{j+1}\matq_{j+1}^T$ is the identity on this space, we obtain
+  \begin{gather}
+    \matq_{m+1}\vh_j = \mata\vq_j,\qquad j=1,\dots,m,
+  \end{gather}
+  which are the columns of the matrix equation
+  \begin{gather}
+    \matq_{m+1}\overline\matH_m = \mata\matq_{m}.
+  \end{gather}
+\end{proof}
+
+\begin{Algorithm*}{arnoldi-householder}{Arnoldi with Householder}
+  \algtext*{EndIf}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Rnn$; $\quad\vv\in\R^n$
+    \State $\vq_1 = \nicefrac{\vv}{\norm{\vv}}_2$
+    \For{$j=2,\dots,m$}
+    \State $\vv \gets \matp_{j-1}\cdots\matp_1\mata\vq_{j-1}$
+    \State Choose $\matp_j$: $\matp_j^*\vv = (v_1,\dots,v_{j-1},\alpha,0,\dots,0)^T$.
+    \Comment{Householder}
+    \State $\vq_j \gets \matp_1^*\dots\matp_j^*\ve_j$
+    \State $\vh_{j-1} \gets \matp_j^*\vv$
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
+
 \begin{remark}
   The GMRES method encounters a problem if convergence is slow: the
   effort for computing the last basis vector in $\matq_m$ is of order
@@ -1043,9 +1278,9 @@
 
   Therefore, we introduce two variants of the GMRES algorithm:
   \begin{itemize}
-  \item Restarted GMRES simply deletes the whole basis $\matq_m$ and the matrix $\overline\matH_m$ every $k$-th step starts fresh.
+  \item Restarted GMRES simply deletes the whole basis $\matq_m$ and the matrix $\overline\matH_m$ every $m$-th step starts fresh.
   \item Truncated GMRES orthogonalizes only with respect to the last
-    $k$ basis vectors.
+    $m$ basis vectors.
   \end{itemize}
 \end{remark}
 
@@ -1181,7 +1416,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{intro}
-  If matrices are extremely ill-conditioned, convergence of cg or
+  If matrices are ill-conditioned, convergence of cg or
   GMRES will still be slow, even if considerable faster than steepest
   descent or minimal residual. No general purpose algorithms with a
   better dependence on the condition number have been found.
@@ -1199,7 +1434,7 @@
   \end{gather}
   It is preconditioned from the right, if we solve
   \begin{gather}
-    \mata\matb^{-1}\vy = \vb,\qquad \vx = \matb^{-1}\vy.
+    \mata\matb^{-1}\vy = \vb,\quad \vx = \matb^{-1}\vy.
   \end{gather}
 \end{Definition}
 
@@ -1209,11 +1444,27 @@
   \begin{gather}
     \matb^{-1}\mata\qquad\text{or}\qquad \mata\matb^{-1}
   \end{gather}
-  is much better than the one of $\mata$. Furthermore, the evaluation
-  of $\matb^{-1}$ is at least much cheaper than the one of
-  $\mata^{-1}$, ideally not much more expensive than the product
+  is much less than the one of $\mata$. Furthermore, the evaluation
+  of $\matb^{-1}\vr$ is at least much cheaper than the one of
+  $\mata^{-1}\vr$, ideally not much more expensive than the product
   $\mata\vx$.
 \end{Definition}
+
+\begin{intro}
+  Preconditioning the conjugate gradient method poses an additional
+  challenge, since for two symmetric, positive definite matrices
+  $\mata$ and $\matb^{-1}$, their product $\matb^{-1}\mata$ is not
+  necessarily symmetric. A possible solution is symmetric
+  preconditioning,
+  \begin{gather}
+    \matc^{-\nicefrac12} \mata \matc^{-\nicefrac12} \vy
+    = \matc^{-\nicefrac12}\vb,
+    \quad \vx = \matc^{-\nicefrac12} \vy.
+  \end{gather}
+  Here, $\matc^{-\nicefrac12}$ is a preconditioner for
+  $\mata^{\nicefrac12}$. Unfortunately, it is not easy to obtain such
+  a method. Therefore, we follow another route.
+\end{intro}
 
 \begin{Lemma}{preconditioner-symmetry}
   Let $\mata$ and $\matb$ be symmetric, positive definite matrices. Then, $\matb^{-1}\mata$ is self-adjoint with respect to the $\matb$-inner product, i.~e.
