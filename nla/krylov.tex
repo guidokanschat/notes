@@ -38,7 +38,7 @@
 \end{Lemma}
 
 \begin{proof}
-  See \cite[Propositions 6.1 \& 6.2]{Saad00}.
+  See also~\cite[Propositions 6.1 \& 6.2]{Saad00}.
   The definition of $\krylov_m(\mata,\vv)$ implies that any vector $\vw$ in this space has a representation
   \begin{gather}
     \vw = \sum_{i=0}^{m-1} \alpha_i \mata^i\vv =: p_{\vw}(\mata) \vv.
@@ -102,16 +102,6 @@
   $q_m(\mata)\vv$ may not be in $\krylov_m$.
 \end{proof}
 
-\begin{todo}
-  Reorganize as follows:
-  \begin{enumerate}
-  \item Arnoldi and Lanczos process here
-  \item Derivation of cg from Lanczos
-  \item General Arnoldi and GMRES
-  \item Comments on Bi-Lanczos
-  \end{enumerate}
-\end{todo}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Arnoldi and Lanczos procedures}
@@ -126,115 +116,127 @@
   after Cornelius Lanczos in the symmetric case.
 \end{intro}
 
+\begin{Lemma}{Hessenberg-Krylov}
+  Let $\mata\in\Rnn$ be given. Let $\matq$ be orthogonal with column
+  vectors $\vq_j$ and $\matH$ be Hessenberg, such that
+  \begin{gather}
+    \label{eq:krylov:1}
+    \matH = \matq^*\mata\matq.
+  \end{gather}
+  Then, for any $j=1,\dots,n-1$
+  \begin{gather}
+    \label{eq:krylov:2}
+    \mata\vq_j = \sum_{k=1}^{j+1} h_{kj}\vq_k.
+  \end{gather}
+  If $\matH[1:m,1:m]$ is unreduced for some $m\le n$, the vectors
+  $\vq_1,\dots,\vq_m$ form a basis of the Krylov space
+  $\krylov_{m}(\vq_1,\mata)$.
+\end{Lemma}
+
+\begin{proof}
+  We rewrite~\eqref{eq:krylov:1} as
+  \begin{gather}
+    \mata\matq = \matq\matH.
+  \end{gather}
+  Column $j$ of this relation is exactly~\eqref{eq:krylov:2}. Now we
+  revert this relation and write
+  \begin{gather}
+    \label{eq:krylov:3}
+    h_{j+1,j} \vq_{j+1} = \mata\vq_j - \sum_{k=1}^j h_{kj} \vq_j.
+  \end{gather}
+  Clearly, $\vq_1\in\krylov_1(\vq_1,\mata)$.
+  Furthermore,~\eqref{eq:krylov:1} yields the induction argument that
+  $\vq_{j+1}\in \krylov_{j+1}(\vq_1,\mata)$ if
+  $\vq_1,\dots,\vq_j\in \krylov_j(\vq_1,\mata)$. Note that this
+  argument is not possible if $h_{j+1,j}=0$.
+
+  Now that we know that $\vq_1,\dots,\vq_m\in\krylov_{m}(\vq_1,\mata)$
+  are an orthogonal set, they must form a basis since the dimension of
+  $\krylov_{m}(\vq_1,\mata)$ is $m$.
+\end{proof}
+
+\begin{Theorem}{arnoldi-projection}
+  Let $\matq_m = (\vq_1,\dots,\vq_m)$ be the first $m$ columns of the
+  matrix $\matq$ in $\matH = \matq^*\mata\matq$ and let
+  $\overline{\matH}_m\in\R^{m+1\times m}$ and
+  $\matH_m\in\R^{m\times m}$ be the upper left blocks of $\matH$ of
+  according dimensions. Then, there holds
+  \begin{gather}
+    \label{eq:arnoldi-projection-2}
+    = \matq_{m+1}\overline{\matH}_m
+  \end{gather}
+  Furthermore, the matrix
+  \begin{gather}
+    \label{eq:arnoldi-projection-3}
+    \matH_m = \matq_m^T\mata\matq_m
+  \end{gather}
+  is the projection of $\mata$ to $\krylov_m(\matq_1,\mata)$ expressed
+  in the basis $\matq_m$.
+\end{Theorem}
+
+\begin{proof}
+  The first statement only rephrases~\eqref{eq:krylov:3}. Forthe
+  second, we observe that $\matq_m^*\matq_{m+1}$ is the identity
+  $\id_m$ with an additional zero-column to the right. Hence,
+  \begin{gather}
+    \matH_m = \matq_m^*\matq_{m+1}\overline\matH_{m}.
+  \end{gather}
+  Entering this into~\eqref{eq:arnoldi-projection-2} yields the result.
+\end{proof}
+
 \begin{Algorithm*}{arnoldi-1}{Arnoldi with Gram-Schmidt}
   \algtext*{EndIf}
   \begin{algorithmic}[1]
-    \Require $\mata\in\Rnn$; $\quad\vv_1\in\R^n, \norm{\vv_1}_2 = 1$
+    \Require $\mata\in\Rnn$; $\quad\vq_1\in\R^n, \norm{\vq_1}_2 = 1$
     \For{$j=1,\dots,m$}
-    \State $\vw_j \gets \mata\vv_j$
+    \State $\vw_j \gets \mata\vq_j$
     \For{$i=1,\dots,j$}
-    \State $h_{ij} \gets \scal(\mata\vv_j,\vv_i)$
-    \State $\vw_j \gets \vw_j - h_{ij}\vv_i$
+    \State $h_{ij} \gets \scal(\mata\vq_j,\vq_i)$
+    \State $\vw_j \gets \vw_j - h_{ij}\vq_i$
     \EndFor
     \State $h_{j+1,j} \gets \norm{\vw_j}_2$
     \If{$h_{j+1,j}=0$} \textbf{stop}\EndIf
-    \State $\vv_{j+1} = \nicefrac{\vw_j}{h_{j+1,j}}$
+    \State $\vq_{j+1} = \nicefrac{\vw_j}{h_{j+1,j}}$
     \EndFor
   \end{algorithmic}
 \end{Algorithm*}
 
-\begin{Lemma}{arnoldi-krylov}
-  Assume that the Arnoldi algorithm does not stop before step
-  $m$. Then, the vectors $\vv_1,\dots,\vv_m$ form an orthonormal basis
-  of $\krylov_m(\mata,\vv_1)$.
+\begin{Notation}{arnoldi-step}
+  We refer to step $m$ of the Arnoldi process as the step generating
+  the vector $\vq_m$.
+\end{Notation}
+
+\begin{Lemma}{arnoldi-w}
+  We can rewrite~\eqref{eq:arnoldi-projection-2} using the vector
+  $\vw$ as it was computed in line 7 of the algorithm as
+  \begin{gather}
+    \label{eq:arnoldi-projection-1}
+    \mata\matq_m
+    = \matq_m\matH_m+\vw_m\ve_m^T,
+  \end{gather}
+  with $\ve_m\in \R^m$.
 \end{Lemma}
 
+\begin{todo}
 \begin{proof}
-  See \cite[Proposition 6.4]{Saad00}.
-\end{proof}
+  From line 9, we have $\vw_m = h_{m+1,m} \vq_{m+1}$. Hence, the last 
+\end{proof}  
+\end{todo}
 
 \begin{Algorithm*}{arnoldi-householder}{Arnoldi with Householder}
   \algtext*{EndIf}
   \begin{algorithmic}[1]
-    \Require $\mata\in\Rnn$; $\quad\vv_1\in\R^n, \norm{\vv_1}_2 = 1$
-    \State Choose $\matq_1$ such that $\matq_1\vv_1 = \ve_1$.
+    \Require $\mata\in\Rnn$; $\quad\vq_1\in\R^n, \norm{\vq_1}_2 = 1$
+    \State Choose $\matq_1^*$ such that $\matq_1^*\vq_1 = \ve_1$.
+    \Comment{Householder}
     \For{$j=1,\dots,m$}
-    \State $\vv_j \gets \matq_1\dots\matq_j\ve_j$
-    \State $\matq_{j+1}^*\matr \gets \matq_j\dots\matq_1(\vv_1,\mata\vv_1,\dots,\mata\vv_m)$
+    \State $\vq_j \gets \matq_1^*\dots\matq_j^*\ve_j$
+    \State $\matq_{j+1}\matr \gets \matq_j^*\dots\matq_1^*(\vq_1,\mata\vq_1,\dots,\mata\vq_m)$
     \Comment{Householder}
     \If{$r_{j+1,j+1}=0$} \textbf{stop}\EndIf
     \EndFor
   \end{algorithmic}
 \end{Algorithm*}
-
-\begin{Lemma}{arnoldi-householder}
-  If the Arnoldi algorithm with Householder orthogonalization did not
-  stop before step $m$, then the set $\vv_1,\dots,\vv_m$ is an
-  orthonormal basis for $\krylov_m(\mata,\vv_1)$.
-\end{Lemma}
-
-\begin{proof}
-  By line 4 of the algorithm, for $j=1,\dots,m$
-  \begin{gather}
-    \matq_1^*\dots\matq_{j+1}^* \matr = (\vv_1,\mata\vv_1,\dots,\mata\vv_j)
-  \end{gather}
-  is a QR factorization of the (rectangular) matrix on the
-  right. Therefore, we can apply \slideref{Lemma}{qr-columns}, which
-  readily implies the result.
-\end{proof}
-
-\begin{Theorem}{arnoldi-projection}
-  Let $\matv_m = (\vv_1,\dots,\vv_m)$ be the matrix of basis vectors
-  generated by the Arnoldi method and let
-  $\overline{\matH}_m\in\R^{m+1\times m}$ be the Hessenberg matrix of
-  entries $h_{ij}$ computed in the algorithm. Let further
-  $\matH_m\in\R^{m\times m}$ be the same matrix without the last
-  row. Then, there holds
-  \begin{align}
-    \label{eq:arnoldi-projection-1}
-    \mata\matv_m &= \matv_m\matH_m+\vw_m\ve_m^T\\
-    \label{eq:arnoldi-projection-2}
-                 &= \matv_{m+1}\overline{\matH}_m
-  \end{align}
-  and
-  \begin{gather}
-    \label{eq:arnoldi-projection-3}
-    \matH_m = \matv_m^T\mata\matv_m.
-  \end{gather}
-\end{Theorem}
-
-\begin{proof}
-  See also \cite[Proposition 6.5]{Saad00}.
-  From lines 2--6 of \slideref{Algorithm}{arnoldi-1}, we deduce
-  \begin{gather}
-    \mata \vv_j = \vw_j + \sum_{i=1}^j h_{ij} \vv_i,
-    \qquad j=1,\dots,m.
-    =  \sum_{i=1}^{j+1} h_{ij} \vv_i,
-  \end{gather}
-  For $j<m$, we use line 9 to obtain
-  \begin{gather}
-    \mata \vv_j =  \sum_{i=1}^{j+1} h_{ij} \vv_i.
-  \end{gather}
-  Since $\mata \vv_j$ is the $j$th column of $\mata\matv_m$ and
-  $\matH_m$ is Hessenberg, we can rewrite this as
-  \begin{gather}
-    \mata\matv_m\ve_j = \matv_m\matH\ve_j,\qquad j=1,\dots,m-1.
-  \end{gather}
-  For $j=m$, we cannot replace $\vw_m$, therefore,
-  \begin{gather}
-    \mata\matv_m\ve_m = \matv_m\matH\ve_m + \vw_m.
-  \end{gather}
-  Using $\ve_m^T\ve_j=0$ for $j<m$, we can combine these to the matrix
-  representation
-  \begin{gather}
-    \mata\matv_m = \matv_m\matH + \vw_m\ve_m^T.
-  \end{gather}
-  Adding the vector $\vv_{m+1}$ from the next step of the algorithm,
-  we get the alternative formulation~\eqref{eq:arnoldi-projection-2}.
-  In order to prove~\eqref{eq:arnoldi-projection-3}, we multiply from
-  the left with $\matv_m^T$. The proof is finished by observing that
-  $\matv_m^T\matv_m$ is the identity on $\R^m$ and $\matv_m^T\vw_m=0$.
-\end{proof}
 
 \begin{remark}
   The next step of the Arnoldi method can always be computed if
@@ -243,11 +245,11 @@
 \end{remark}
 
 \begin{Lemma}{arnoldi-breakdown}
-  The Arnoldi method stops at step $j$ if and only if the subspace $\krylov_j$ is invariant under $\mata$ or equivalently, the minimal polynomial of $\vv_1$ is of degree $j$.
+  The Arnoldi method stops at step $j$ if and only if the subspace $\krylov_j$ is invariant under $\mata$ or equivalently, the minimal polynomial of $\vq_1$ is of degree $j$.
 \end{Lemma}
 
 \begin{proof}
-  The algorithm stops in line 8 if and only if $\mata\vv_j$ is a
+  The algorithm stops in line 8 if and only if $\mata\vq_j$ is a
   linear combination of the previously computed basis vectors, such
   that $\vw_j=0$ in line 5 at the end of the loop. This happens
   exactly when the Krylov space is invariant.
@@ -257,9 +259,9 @@
   If the matrix $\mata$ is symmetric, the vectors of the Arnoldi
   procedure admit the three-term recurrence relation
   \begin{gather}
-    \delta_{j+1}\vv_{j+1} = \mata \vv_j - \gamma_j \vv_j - \delta_j\vv_{j-1}
+    \delta_{j+1}\vq_{j+1} = \mata \vq_j - \gamma_j \vq_j - \delta_j\vq_{j-1}
   \end{gather}
-  with $\vv_0 = 0$, $\delta_1 = 0$ and
+  with $\vq_0 = 0$, $\delta_1 = 0$ and
   \begin{gather}
     \gamma_j =  h_{jj}, \qquad \delta_j = h_{j-1,j},
     \qquad j=1,\dots
@@ -284,21 +286,21 @@
 \begin{Algorithm*}{lanczos}{Lanczos}
   \algtext*{EndIf}
   \begin{algorithmic}[1]
-    \Require $\mata\in\Rnn$; $\quad\vv_1\in\R^n, \norm{\vv_1}_2 = 1$, $\vv_0=0$, $\delta_1=0$.
+    \Require $\mata\in\Rnn$; $\quad\vq_1\in\R^n, \norm{\vq_1}_2 = 1$, $\vq_0=0$, $\delta_1=0$.
     \For{$j=1,\dots,m$}
-    \State $\vw_j \gets \mata\vv_j - \delta_j \vv_{j-1}$
-    \State $\gamma_{j} \gets \scal(\vw_j,\vv_j)$
-    \State $\vw_j \gets \vw_j - \gamma_j\vv_i$
+    \State $\vw_j \gets \mata\vq_j - \delta_j \vq_{j-1}$
+    \State $\gamma_{j} \gets \scal(\vw_j,\vq_j)$
+    \State $\vw_j \gets \vw_j - \gamma_j\vq_i$
     \State $\delta_{j+1} \gets \norm{\vw_j}_2$
     \If{$\delta_{j+1}=0$} \textbf{stop}\EndIf
-    \State $\vv_{j+1} = \nicefrac{\vw_j}{\delta_{j+1}}$
+    \State $\vq_{j+1} = \nicefrac{\vw_j}{\delta_{j+1}}$
     \EndFor
   \end{algorithmic}  
 \end{Algorithm*}
 
 \begin{remark}
   The main difference between Arnoldi and Lanczos is the fact that
-  every step of the Lanczos process onle requires the previous two
+  every step of the Lanczos process only requires the previous two
   vectors, while Arnoldi requires storing the whole history.
 
   This implies, that Lanczos itself is much closer to the concept of
@@ -320,7 +322,7 @@
 \begin{Theorem}{arnoldi-linear-system}
   Given an initial vector $\vx^{(0)}$ and
   $\vr^{(0)} = \vb - \mata \vx^{(0)}$. Let $\beta=\norm{\vr^{(0)}}$
-  and choose $\vv_1 =\nicefrac{\vr^{(0)}}{\beta}$ in Arnoldi's
+  and choose $\vq_1 =\nicefrac{\vr^{(0)}}{\beta}$ in Arnoldi's
   method. Then, the Galerkin approximation
   \begin{align}
     x^{(m)} &\in x^{(0)} + \krylov_m(\mata,r^{(0)})\\
@@ -332,19 +334,15 @@
   \end{gather}
   and let
   \begin{gather}
-    \vx^{(m)} = \vx^{(0)} + \matv_m \vy_m.
+    \vx^{(m)} = \vx^{(0)} + \matq_m \vy_m.
   \end{gather}
 \end{Theorem}
-
-\begin{todo}
-  Move this to Lanczos as it is irrelevant here
-\end{todo}
 
 \begin{Theorem}{arnoldi-linear-residual}
   Let $\vx^{(m)}$ be the Galerkin solution in
   \slideref{Theorem}{arnoldi-linear-system}. Then, there holds
   \begin{gather}
-    \vb-\mata\vx^{(m)} = -h_{m+1,m} \ve_m^T \vy_m \vv_{m+1},
+    \vb-\mata\vx^{(m)} = -h_{m+1,m} \ve_m^T \vy_m \vq_{m+1},
   \end{gather}
   and therefore
   \begin{gather}
@@ -357,18 +355,18 @@
   We use the definition of the residual of $\vx^{(m)}$ and the representation of \slideref{Theorem}{arnoldi-projection} to obtain
   \begin{align}
     \vr^{(m)} = b-\mata\vx^{(m)}
-    &= b- \mata\left(\vx^{(0)} + \matv_m\vy_m\right)\\
-    &=\vr^{(0)} - \mata\matv_m\vy_m\\
-    &= \beta\vv_1 - \matv_m\matH_m\vy_m - \vw_m\ve_m^T\vy_m.
+    &= b- \mata\left(\vx^{(0)} + \matq_m\vy_m\right)\\
+    &=\vr^{(0)} - \mata\matq_m\vy_m\\
+    &= \beta\vq_1 - \matq_m\matH_m\vy_m - \vw_m\ve_m^T\vy_m.
   \end{align}
   Since $\vy_m$ solves the projected system
   $\matH_m\vy_m = \beta\ve_1$, there holds
   \begin{gather}
-    \beta\vv_1 - \matv_m\matH_m\vy_m = \beta\vv_1 - \beta \matv_m\ve_1 = 0.
+    \beta\vq_1 - \matq_m\matH_m\vy_m = \beta\vq_1 - \beta \matq_m\ve_1 = 0.
   \end{gather}
   Furthermore, we rewrite
   \begin{gather}
-    \vw_m\bigl(\ve_m^T\vy_m\bigr) = h_{m+1,m} \bigl(\ve_m^T\vy_m\bigr) \vv_{m+1}.
+    \vw_m\bigl(\ve_m^T\vy_m\bigr) = h_{m+1,m} \bigl(\ve_m^T\vy_m\bigr) \vq_{m+1}.
   \end{gather}
 \end{proof}
 
@@ -384,7 +382,7 @@
     x^{(m)} &\in x^{(0)} + \krylov_m(\mata,r^{(0)})\\
     b-\mata x^{(m)} &\perp \krylov_m(\mata,r^{(0)}),
   \end{align}
-  is obtained as $\vx^{(m)} = \vx^{(0)} + \matv_m \vy_m$, where $\matv_m$ is the basis obtained from the Lanczos process and $\vy_m$ solves
+  is obtained as $\vx^{(m)} = \vx^{(0)} + \matq_m \vy_m$, where $\matq_m$ is the basis obtained from the Lanczos process and $\vy_m$ solves
   \begin{gather}
     \matH_m\vy_m = \beta\ve_1,
     \qquad \matH_m =
@@ -397,7 +395,7 @@
   \end{gather}
   For the residual, there holds
   \begin{gather}
-    \vr^{(m)} = \vb-\mata\vx^{(m)} = -\delta_{m+1} \ve_m^T \vy_m \vv_{m+1}.
+    \vr^{(m)} = \vb-\mata\vx^{(m)} = -\delta_{m+1} \ve_m^T \vy_m \vq_{m+1}.
   \end{gather}
 \end{Lemma*}
 
@@ -409,6 +407,19 @@
   hold.
 \end{proof}
 
+\begin{intro}
+  While the basis of $\krylov_m(r^{(0)},\mata)$ can be computed
+  incrementally, only using the previous two vectors, the update
+  \begin{gather}
+    $\vx^{(m)} = \vx^{(0)} + \matq_m \vy_m$
+  \end{gather}
+  requires storing the whole basis $\matq_m$. This is a problem, if
+  many iteration steps are required. Hence, in the following steps, we
+  will a method, which computes the update using only a few
+  vectors. We will see that our first attempt fails, as the method is
+  potentially unstable, but we succeed in a second step.
+\end{intro}
+
 \begin{Lemma}{lanczos-incremental}
   Given the vector $\vx^{(m)}$ in the Lanczos solver, the vector
   $\vx^{(m+1)}$ can be computed incrementally by an update of the form
@@ -416,7 +427,7 @@
     \vx^{(m+1)} = \vx^{(m)} + \zeta_{m+1}\vg^{(m+1)},
   \end{gather}
   where the vector $\vg^{(m)}$ itself is computed only using the
-  vectors $\vg^{(m-1)}$ and $\vv^{(m)}$.
+  vectors $\vg^{(m-1)}$ and $\vq^{(m)}$.
 \end{Lemma}
 
 \begin{proof}
@@ -448,13 +459,13 @@
 
   Now we introduce matrices and vectors
   \begin{gather}
-    \matg_m = \matv_m \matu_m^{-1} \in \R^{n\times m},
+    \matg_m = \matq_m \matu_m^{-1} \in \R^{n\times m},
     \qquad \vz_m = \matl_m^{-1} \beta \ve_1\in \R^m,
   \end{gather}
   such that
   \begin{align}
     \vx^{(m)}
-    &= \vx^{(0)} + \matv_m \matu_m^{-1} \matl_m^{-1} \beta \ve_1\\
+    &= \vx^{(0)} + \matq_m \matu_m^{-1} \matl_m^{-1} \beta \ve_1\\
     &= \vx^{(0)} + \matg_m \vz_m
   \end{align}
   With $\zeta_k$ following the recursion
@@ -470,11 +481,11 @@
     \end{pmatrix}.
   \end{gather}
   Let $\vg_k$ be the column vectors of $\matg_m$. Writing the
-  definition of $\matg_m$ in the form $\matg_m \matu_m = \matv_m$, we
+  definition of $\matg_m$ in the form $\matg_m \matu_m = \matq_m$, we
   obtain the relation
   \begin{gather}
     \label{eq:nla:krylov:lanczos-p}
-    \vg_k = \frac1{\eta_k}\bigl(\vv_k - \delta_k \vg_{k-1}\bigr).
+    \vg_k = \frac1{\eta_k}\bigl(\vq_k - \delta_k \vg_{k-1}\bigr).
   \end{gather}
   Thus,
   \begin{gather}
@@ -504,7 +515,7 @@
   We have used an LU decomposition without pivoting though in the
   derivation of this algorithm, which might suffer from numerical
   instability. Therefore, we will now analyze the main properties of
-  the sequences $\vv_m$, $\vg_m$ and $\vr_m$ and then write a new
+  the sequences $\vq_m$, $\vg_m$ and $\vr_m$ and then write a new
   algorithm to obtain these sequences.
 \end{remark}
 
@@ -521,13 +532,13 @@
 \begin{proof}
   Orthogonality of the residuals follows from
   \slideref{Lemma}{lanczos-linear}, since $\vr_m$ is aligned with
-  $\vv_{m+1}$.
+  $\vq_{m+1}$.
 
   The second orthogonality relation is equivalent to the fact that
   $\matg_m^T\mata\matg_m$ is diagonal.
   \begin{align}
     \matg_m^T\mata\matg_m
-    &= \matu_m^{-T}\matv_m^T\mata\matv_m\matu_m^{-1}\\
+    &= \matu_m^{-T}\matq_m^T\mata\matq_m\matu_m^{-1}\\
     &= \matu_m^{-T}\matH_m\matu_m^{-1}\\
     &= \matu_m^{-T}\matl_m.
   \end{align}
@@ -580,7 +591,7 @@
   \begin{gather}
     \alpha_j = \frac{\scal(\vr_j,\vr_j)}{\scal(\mata\vp_j,\vr_j)}.
   \end{gather}
-  Since $\vr_j$ is a multiple of $\vv_{j+1}$ by the residual
+  Since $\vr_j$ is a multiple of $\vq_{j+1}$ by the residual
   representation in \slideref{Theorem}{arnoldi-linear-residual}, the
   update formula~\eqref{eq:nla:krylov:lanczos-p} for $\vg_{j+1}$
   (after index shift) implies that the direction is a linear
@@ -701,19 +712,19 @@
 
 \begin{proof}
   First, since we apply the cg iteration to s.p.d. matrices, there is
-  an orthogonal basis $\{\vv_1,\dots,\vv_n\}$ of eigenvectors of
+  an orthogonal basis $\{\vq_1,\dots,\vq_n\}$ of eigenvectors of
   $\mata$ with real, positive eigenvalues $\lambda_i$. Thus, we can
   write with some coefficients $\alpha_i$:
   \begin{gather}
-    \ve^{(0)} = \sum_{i=1}^n \alpha_i \vv_i,
+    \ve^{(0)} = \sum_{i=1}^n \alpha_i \vq_i,
     \qquad
-    \ve^{(k)} = \sum_{i=1}^n \alpha_i p(\lambda_i) \vv_i.    
+    \ve^{(k)} = \sum_{i=1}^n \alpha_i p(\lambda_i) \vq_i.    
   \end{gather}
   Hence, we can estimate
   \begin{align}
     \norm{\ve^{(k)}}_A^2
-    &= \sum_{i=1}^n \lambda_i\alpha_i^2 p(\lambda_i)^2 \norm{\vv_i}_A^2\\
-    & \le \max_i p(\lambda_i)^2 \sum_{i=1}^n \lambda_i\alpha_i^2\norm{\vv_i}_A^2\\
+    &= \sum_{i=1}^n \lambda_i\alpha_i^2 p(\lambda_i)^2 \norm{\vq_i}_A^2\\
+    & \le \max_i p(\lambda_i)^2 \sum_{i=1}^n \lambda_i\alpha_i^2\norm{\vq_i}_A^2\\
     &= \max_i p(\lambda_i)^2 \norm{\ve^{(0)}}_A^2.
   \end{align}
   The statement now follows from \slideref{Theorem}{cg-optimality}.
@@ -793,9 +804,9 @@
   \end{gather}
   If the matrix $\mata$ is diagonalizable, then there holds
     \begin{gather}
-    \norm{\vr^{(k)}}_2 \le \rho_k \cond_2(\matv) \norm{\vr^{(0)}}_2,
+    \norm{\vr^{(k)}}_2 \le \rho_k \cond_2(\matq) \norm{\vr^{(0)}}_2,
   \end{gather}
-  where $\matv$ is the matrix of eigenvectors and
+  where $\matq$ is the matrix of eigenvectors and
   \begin{gather}
     \rho_k = \min_{\substack{p\in\P_k\\p(0) = 1}} \max_{\lambda\in\sigma(\mata)} \abs{p(\lambda)}.
   \end{gather}
