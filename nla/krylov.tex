@@ -362,39 +362,64 @@
   and choose $\vq_1 =\nicefrac{\vr^{(0)}}{\beta}$ in Arnoldi's
   method. Then, the Galerkin approximation
   \begin{align}
-    x^{(m)} &\in x^{(0)} + \krylov_m(\mata,r^{(0)})\\
-    b-\mata x^{(m)} &\perp \krylov_m(\mata,r^{(0)}),
+    \vx^{(m+k)} &\in \vx^{(k)} + \krylov_m(\vr^{(k)},\mata)\\
+    \vb-\mata \vx^{(m+k)} &\perp \krylov_m(\vr^{(k)},\mata),
   \end{align}
   is obtained in two steps. Solve in $\R^m$
   \begin{gather}
-    \matH_m\vy_m = \beta\ve_1,
+    \matH_m\vy = \beta\ve_1,
   \end{gather}
   and let
   \begin{gather}
-    \vx^{(m)} = \vx^{(0)} + \matq_m \vy_m.
+    \vx^{(m+k)} = \vx^{(k)} + \matq_m \vy.
   \end{gather}
 \end{Theorem}
+
+\begin{proof}
+  Let $\vv$ be the update vector such that
+  $\vx^{(m+k)} = \vx^{(k)} + \vv$ and note that this implies
+  $\vv=\matq_m\vy$.
+
+  The orthogonality condition implies for all basis vectors $\vq_i\in\krylov_m(\vr^{(k)},\mata)$
+  \begin{gather}
+    0 = \scal(\vb-\mata \vx^{(m+k)},\vq_i) = \scal(\vr^{(k)} - \mata\vv,\vq_i).
+  \end{gather}
+  Hence,
+  \begin{gather}
+    \vq_i^* \mata\vv = \vq_i^*\vr^{(k)},\qquad i=1,\dots,m,
+  \end{gather}
+  or in matrix notation
+  \begin{gather}
+    \matq_m^*\mata\vv = \matq_m^* \vr^{(k)}.
+  \end{gather}
+  Since $\matq_m$ is orthogonal and $\vr^{(k)} = \beta\vq_1$, the
+  right hand side is $\beta\ve_1 \in \R^m$. Entering the representation of
+  $\vv$ by $\vy$, we obtain
+  \begin{gather}
+    \matq^*\mata\matq\vy = \matH_m \vy = \beta\ve_1.
+  \end{gather}
+\end{proof}
 
 \begin{Theorem}{arnoldi-linear-residual}
   Let $\vx^{(m)}$ be the Galerkin solution in
   \slideref{Theorem}{arnoldi-linear-system}. Then, there holds
   \begin{gather}
-    \vb-\mata\vx^{(m)} = -h_{m+1,m} \ve_m^T \vy_m \vq_{m+1},
+    \vb-\mata\vx^{(m+k)} = -h_{m+1,m} \ve_m^T \vy_m \vq_{m+1},
   \end{gather}
   and therefore
   \begin{gather}
-    \norm{\vb-\mata\vx^{(m)}}_2 = h_{m+1,m} \abs{\ve_m^T \vy_m}.
+    \norm{\vb-\mata\vx^{(m+k)}}_2 = h_{m+1,m} \abs{\ve_m^T \vy_m}.
   \end{gather}  
 \end{Theorem}
 
 \begin{proof}
   See also~\cite[Proposition 6.7]{Saad00} We use the definition of the
-  residual of $\vx^{(m)}$ and the representation of
+  residual of $\vx^{(m+k)}$ and the representation of
   \slideref{Theorem}{arnoldi-projection} to obtain
   \begin{align}
-    \vr^{(m)} = b-\mata\vx^{(m)}
-    &= b- \mata\left(\vx^{(0)} + \matq_m\vy_m\right)\\
-    &=\vr^{(0)} - \mata\matq_m\vy_m\\
+    \vr^{(m+k)} = b-\mata\vx^{(m+k)}
+    &= b- \mata\left(\vx^{(k)} + \matq_m\vy_m\right)\\
+    &=\vr^{(k)} - \mata\matq_m\vy_m\\
     &= \beta\vq_1 - \matq_m\matH_m\vy_m - \vw_m\ve_m^T\vy_m.
   \end{align}
   Since $\vy_m$ solves the projected system
@@ -411,15 +436,23 @@
 \begin{remark}
   Following \slideref{Theorem}{projected-invertible} this algorithm
   works reliably only for $\mata$ symmetric, positive definite. This
-  is the case we study here and we will improve the algorithm
-  considerably.
+  is the case we study here and we will improve the algorithm.
+
+  In particular, we will derive an incremental version of the
+  algorithm which starts with $\vx^{(0)}$ and produces the next
+  iterate by increasing $m$ instead of starting a new projection
+  step. Hence, we will change our view from discussing the step
+  $k\to k+m$ to discussing the iteration $0\to 1\to m\to m+1$.
+
+  To this end, we first rephrase the previous theorem in terms of a
+  tridiagonal matrix.
 \end{remark}
 
 \begin{Lemma*}{lanczos-linear}{Lanczos solver}
-  The Galerkin approximation
+  The Ritz-Galerkin approximation
   \begin{align}
-    x^{(m)} &\in x^{(0)} + \krylov_m(\mata,r^{(0)})\\
-    b-\mata x^{(m)} &\perp \krylov_m(\mata,r^{(0)}),
+    \vx^{(m)} &\in \vx^{(0)} + \krylov_m(\vr^{(0)},\mata)\\
+    \vb-\mata \vx^{(m)} &\perp \krylov_m(\vr^{(0)},\mata),
   \end{align}
   is obtained as $\vx^{(m)} = \vx^{(0)} + \matq_m \vy_m$, where $\matq_m$ is the basis obtained from the Lanczos process and $\vy_m$ solves
   \begin{gather}
@@ -447,7 +480,7 @@
 \end{proof}
 
 \begin{intro}
-  While the basis of $\krylov_m(r^{(0)},\mata)$ can be computed
+  While the basis of $\krylov_m(\vr^{(0)},\mata)$ can be computed
   incrementally, only using the previous two vectors, the update
   \begin{gather}
     \vx^{(m)} = \vx^{(0)} + \matq_m \vy_m
