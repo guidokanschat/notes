@@ -62,10 +62,10 @@
 \end{proof}
 
 \begin{Lemma}{krylov-projector}
-  Let $\matq_m$ be a projector onto $\krylov_m=\krylov_m(\mata,\vv)$ and define
+  Let $\matp_m$ be a projector onto $\krylov_m=\krylov_m(\mata,\vv)$ and define
   \begin{align}
     \mata_m\colon \krylov_m &\to \krylov_m\\
-    \vv&\mapsto \matq_m \mata.
+    \vv&\mapsto \matp_m \mata.
   \end{align}
   Then, for any polynomial $q\in\P_{m-1}$ there holds
   \begin{gather}
@@ -75,7 +75,7 @@
   For any polynomial $p\in\P_m$, there holds
   \begin{gather}
     \label{eq:krylov-projector-2}
-    \matq_m p(\mata)\vv = p(\mata_m)\vv.
+    \matp_m p(\mata)\vv = p(\mata_m)\vv.
   \end{gather}
 \end{Lemma}
 
@@ -91,14 +91,14 @@
   Since $i<m-1$, this vector is in $\krylov_m$ and we obtain
   \begin{gather}
     q_{i+1}(\mata)\vv
-    = \matq_m q_{i+1}(\mata)\vv
-    = \matq_m \mata q_i(\mata_m)\vv
+    = \matp_m q_{i+1}(\mata)\vv
+    = \matp_m \mata q_i(\mata_m)\vv
     = q_{i+1}(\mata_m)\vv,
   \end{gather}
   since $q_i(\mata_m)\vv\in\krylov_m$. Thus, we have proven the
   statement for $q\in\P_{m-1}$. The proof for $q_{m}(x) = x^m$ uses
   the same induction step, just with the exception that the action of
-  $\matq_m$ on the left is not the identity anymore, since
+  $\matp_m$ on the left is not the identity anymore, since
   $q_m(\mata)\vv$ may not be in $\krylov_m$.
 \end{proof}
 
@@ -195,7 +195,7 @@
   \begin{gather}
     \matk_m = \matq_m\matr_m.
   \end{gather}
-  Then $\matq_m^*\mata\matq$ is Hessenberg.
+  Then $\matq_m^*\mata\matq_m$ is Hessenberg.
 \end{Theorem}
 
 \begin{proof}
@@ -204,10 +204,16 @@
   \begin{gather}
     \spann{\vq_1,\dots,\vq_j} = \spann{\vv,\mata\vv,\dots,\mata^{j-1}\vv}
   \end{gather}
-  from \slideref{Lemma}{qr-columns}.
-  \begin{todo}
-    Continue
-  \end{todo}
+  from \slideref{Lemma}{qr-columns}. Comparing this
+  to~\eqref{eq:krylov-2}, the condition there is
+  \begin{gather}
+    \spann{\vq_1,\dots,\vq_j} = \spann{\vv,\mata\vq_1,\dots,\mata\vq_{j-1}}.
+  \end{gather}
+  But by construction we can use the induction argument,
+  \begin{gather}
+    \spann{\vq_1,\dots,\vq_{j-1}} = \spann{\vv,\mata\vv,\dots,\mata^{j-2}\vv},
+  \end{gather}
+  such that $\vq_j$ is identically defined in both places.
 \end{proof}
 
 \begin{Corollary}{Hessenberg-Krylov}
@@ -215,7 +221,7 @@
   transformations in \slideref{Lemma}{Hessenberg-Krylov-1} and
   \slideref{Theorem}{arnoldi-projection} can be chosen with any
   normalized vector $\vq_1$ as long as its grade is sufficiently
-  hight.
+  high.
 \end{Corollary}
 
 \begin{Algorithm*}{arnoldi-1}{Arnoldi}
@@ -234,11 +240,6 @@
     \EndFor
   \end{algorithmic}
 \end{Algorithm*}
-
-\begin{Notation}{arnoldi-step}
-  We refer to step $m$ of the Arnoldi process as the step generating
-  the vector $\vq_m$.
-\end{Notation}
 
 \begin{Lemma}{arnoldi-w}
   We can rewrite~\eqref{eq:arnoldi-projection-2} using the vector
@@ -263,14 +264,21 @@
   which is the $m$-th column of the matrix $\matq_m\matH_m+\vw_m\ve_m^T$.
 \end{proof}  
 
+\begin{Notation}{arnoldi-step}
+  We refer to step $m$ of the Arnoldi process as the step generating
+  the vector $\vq_m$.
+\end{Notation}
+
 \begin{remark}
   The next step of the Arnoldi method can always be computed if
-  $h_{j+1,j}\neq 0$ in line 9. If it cannot be, we speak of a
+  $h_{m+1,m}\neq 0$ in line 9. If it cannot be, we speak of a
   \define{breakdown} of the method.
 \end{remark}
 
 \begin{Lemma}{arnoldi-breakdown}
-  The Arnoldi method stops at step $j$ if and only if the subspace $\krylov_j$ is invariant under $\mata$ or equivalently, the minimal polynomial of $\vq_1$ is of degree $j$.
+  The Arnoldi method stops at step $m$ if and only if the subspace
+  $\krylov_m$ is invariant under $\mata$ or equivalently, the minimal
+  polynomial of $\vq_1$ is of degree $m$.
 \end{Lemma}
 
 \begin{proof}
