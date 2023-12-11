@@ -507,9 +507,9 @@
   \begin{gather}
     \matH_m =
     \begin{pmatrix}
-      1\\\lambda_2&1\\
+      1\\\mu_2&1\\
       &\ddots&\ddots\\
-      &&\lambda_m&1
+      &&\mu_m&1
     \end{pmatrix}
     \times
     \begin{pmatrix}
@@ -521,9 +521,9 @@
   \end{gather}
   where
   \begin{gather}
-    \lambda_k = \frac{\delta_k}{\eta_{k-1}},
+    \mu_k = \frac{\delta_k}{\eta_{k-1}},
     \qquad
-    \eta_k = \gamma_k - \lambda_k \delta_k.
+    \eta_k = \gamma_k - \mu_k \delta_k.
   \end{gather}
   We note that LU decomposition works from top to bottom and left to
   right, such that already processed rows do not change when adding
@@ -537,11 +537,12 @@
   such that
   \begin{align}
     \vx^{(m)}
+    &= \vx^{(0)} + \matq_m \matH_m^{-1}\beta \ve_1\\
     &= \vx^{(0)} + \matq_m \matu_m^{-1} \matl_m^{-1} \beta \ve_1\\
     &= \vx^{(0)} + \matg_m \vz_m
   \end{align}
   With $\zeta_k$ following the recursion
-  $\zeta_k = - \lambda_k \zeta_{k-1}$, we realize
+  $\zeta_k = - \mu_k \zeta_{k-1}$, we realize
   \begin{gather}
     \vz_{m+1} =
     \begin{pmatrix}
@@ -557,7 +558,8 @@
   obtain the relation
   \begin{gather}
     \label{eq:nla:krylov:lanczos-p}
-    \vg_k = \frac1{\eta_k}\bigl(\vq_k - \delta_k \vg_{k-1}\bigr).
+    \vg_k = \frac1{\eta_k}\bigl(\vq_k - \delta_k \vg_{k-1}\bigr),
+    \qquad\vg_1 = \frac1{\eta_1} \vq_1.
   \end{gather}
   Thus,
   \begin{gather}
@@ -592,9 +594,14 @@
 \end{remark}
 
 \begin{Lemma}{lanczos-orthogonality}
-  The sequences of vector $\vr_m = \vb-\mata\vx^{(m)}$ and $\vg_m$
-  constructed in the preceding lemma have the following orthogonality
-  properties:
+  For the sequences of vectors $\vx_m$, $\vr_m = \vb-\mata\vx^{(m)}$ and $\vg_m$
+  constructed in the preceding lemma, there holds
+  \begin{align}
+    \vg_m &\in \krylov_{m}(\vr_0,\mata)\\
+    \vx_m &\in \vx_0 + \krylov_{m}(\vr_0,\mata)\\
+    \vr_m &\in \krylov_{m+1}(\vr_0,\mata)
+  \end{align}
+  Additionally, they have the following orthogonality properties:
   \begin{xalignat}2
     \scal(\vr_i,\vr_k) &= 0 & i&\neq k\\
     \scal(\mata\vg_i,\vg_k) &= 0 & i&\neq k.
@@ -602,9 +609,12 @@
 \end{Lemma}
 
 \begin{proof}
-  Orthogonality of the residuals follows from
-  \slideref{Lemma}{lanczos-linear}, since $\vr_m$ is aligned with
-  $\vq_{m+1}$.
+  By~\eqref{eq:nla:krylov:lanczos-p},
+  $\vg_m\in\krylov_{m+1}(\vr_0,\mata)$, hence the inclusion of
+  $\vx_m$.  By construction, the residual
+  $\vr_m \in \krylov_{m+1}(\vr_0,\mata)$ and orthogonal to
+  $\krylov_{m}(\vr_0,\mata)$. Hence, it is coaligned with $\vq_{m+1}$
+  and orthogonal to all previous residuals.
 
   The second orthogonality relation is equivalent to the fact that
   $\matg_m^T\mata\matg_m$ is diagonal.
@@ -634,70 +644,102 @@
 \end{Algorithm*}
 
 \begin{Lemma}{cg-orthogonality}
-  The sequences $\vx_j$ and $\vr_j$ produced by the cg method coincide
-  with those of the Lanczos solver (in exact arithmetic). The vectors
-  $\vp_j$ of the cg method coincide up to scalar factors with the vectors $\vg_{j+1}$
-  in \slideref{Lemma}{lanczos-incremental}.
+  Assume that $\vr_m \neq 0$.
+  For $k\le m$ the vectors $\vx_k$, $\vr_k = \vb-\mata\vx^{(k)}$ and $\vp_k$
+  of the conjugate gradient method admit
+  \begin{align}
+    \vp_k &\in \krylov_{k+1}(\vr_0,\mata)\\
+    \vr_k &\in \krylov_{k+1}(\vr_0,\mata)
+  \end{align}
+  Additionally, they have the following orthogonality properties:
+  \begin{xalignat}2
+    \scal(\vr_i,\vr_k) &= 0 & i&\neq k\\
+    \scal(\mata\vp_i,\vp_k) &= 0 & i&\neq k\\
+    \scal(\vp_i,\vr_k) &= 0 & i&< k
+  \end{xalignat}
+  Furthermore,
+  $\scal(\vr_k,\vp_k) = \scal(\vr_k,\vr_k)$.
 \end{Lemma}
 
-\begin{todo}
-  The structure of the argument is not very clear. We are jumping
-  back and forth between the algorithms. It would be better to show
-  that CG produces the same orthogonality with respect to the
-  previous vectors, then use uniqueness. Where to put equality of
-  the coefficients?
-\end{todo}
-  
 \begin{proof}
-  Note that the vectors $\vp_j$ refers to the cg algorithm, the
-  vectors from \slideref{Lemma}{lanczos-incremental} will be
-  distinguished clearly.
+  We show the result by induction over $m$. It is true for $m=0$. Now
+  assume that it holds for $m$ and we conclude for $m+1$. From line 6,
+  we obtain $\vr_{m+1} \in \krylov_{m+1}(\vr_0,\mata)$, since
+  $\vp_m\in \krylov_{m+1}(\vr_0,\mata)$. Then, line 8 yields
+  immediately $\vp_{m+1} \in \krylov_{m+1}(\vr_0,\mata)$.
 
-  We start with the update formula
-  $\vx_{j+1} = \vx_j + \alpha_j \vp_j$, which immediately implies
-  \begin{gather}
-    \vr_{j+1} = \vr_j - \alpha_j \mata\vp_j.
-  \end{gather}
-  Orthogonality between $\vr_{j+1}$ and $\vr_j$ due to the projection
-  property implies the choice
-  \begin{gather}
-    \alpha_j = \frac{\scal(\vr_j,\vr_j)}{\scal(\mata\vp_j,\vr_j)}.
-  \end{gather}
-  Since $\vr_j$ is a multiple of $\vq_{j+1}$ by the residual
-  representation in \slideref{Theorem}{arnoldi-linear-residual}, the
-  update formula~\eqref{eq:nla:krylov:lanczos-p} for $\vg_{j+1}$
-  (after index shift) implies that the direction is a linear
-  combination of $\vr_{j+1}$ and $\vp_j$. After arbitrary scaling,
-  \begin{gather}
-    \vp_{j+1} = \vr_{j+1} + \beta_j \vp_{j}.
-  \end{gather}
-  A-orthogonality implies the choice
-  \begin{gather}
-    \beta_j = -\frac{\scal(\mata \vp_j,\vr_{j+1})}{\scal(\mata \vp_j,\vp_j)}.
-  \end{gather}
-  Note that in each step, the orthogonality relation determines $\vp_{j+1}$ uniquely
-  up to scaling in this subspace. After the scaling has been chosen,
-  the orthogonality relation for $\vr_{j+1}$ uniquely
-  determines the update for $\vx_{j+1}$, such that the sequences
-  indeed coincide.
 
-  The definition of the coefficients still differs from the cg
-  algorithm. But, we observe
+  From line 6 the definition of $\alpha_m$ and the equality of the
+  inner products in the statement of the lemma, we have
+  \begin{align}
+    \scal(\vr_{m+1},\vp_m)
+    &= \scal(\vr_m,\vp_m) - \frac{\scal(\vr_m,\vr_m)}{\scal(\mata\vp_m,\vp_m)} \scal(\mata\vp_m,\vp_m)\\
+    &= \scal(\vr_m,\vp_m) - \frac{\scal(\vr_m,\vp_m)}{\scal(\mata\vp_m,\vp_m)} \scal(\mata\vp_m,\vp_m) = 0.
+  \end{align}
+  For any $k<m$, there holds
   \begin{gather}
-    \scal(\mata\vp_j,\vr_j) = \scal(\mata\vp_j,\vp_j-\beta_{j-1}\vp_{j-1})
-    = \scal(\mata\vp_j,\vp_j).
+    \scal(\vr_{m+1},\vp_k) = \scal(\vr_m,\vp_k) - \alpha_k \scal(\mata\vp_m,\vp_k) = 0-0 = 0.
   \end{gather}
-  Similarly, from the update formula for the residual, we get
+  Hence, we have proven
   \begin{gather}
-    \mata\vp_j = \frac1{\alpha_j}\bigl(\vr_j-\vr_{j+1}\bigr),
+    \scal(\vr_{m+1},\vp_k) = 0 \qquad k < m.
   \end{gather}
-  and thus,
+  Now, we observe
   \begin{gather}
-    \beta_j = \frac1{\alpha_j}\frac{\scal(\vr_{j+1},\vr_{j+1}-\vr_j)}{\scal(\mata\vp_j,\vp_j)} = \frac{\scal(\vr_{j+1},\vr_{j+1})}{\scal(\vr_{j},\vr_{j})}.
+    \label{eq:krylov-cg-1}
+    \scal(\vr_{m+1},\vp_{m+1}) = \scal(\vr_{m+1},\vr_{m+1} + \beta_k\vp_k) = \scal(\vr_{m+1},\vr_{m+1}).
   \end{gather}
-  Note that these forms avoid inner products of possibly almost
-  orthogonal vectors.
+
+  From line 8, we obtain for $k\le m$
+  \begin{gather}
+    \scal(\vp_{m+1},\mata\vp_k)
+    = \scal(\vr_{m+1},\mata\vp_k) + \beta_m \scal(\vp_m,\mata\vp_k)
+  \end{gather}
+  For the first term, we use first line 6 and then line 8 to obtain
+  \begin{align}
+    \scal(\vr_{m+1},\mata\vp_k)
+    &= \tfrac1{\alpha_k}\scal(\vr_{m+1},\vr_{k}-\vr_{k+1}) + \beta_m \scal(\vp_m,\mata\vp_k)\\
+    &= \tfrac1{\alpha_k}\scal(\vr_{m+1}, \vp_k-\beta_{k-1}\vp_{k-1} - \vp_{k+1} + \beta_k\vp_k)\\
+    &= -\tfrac1{\alpha_k}\scal(\vr_{m+1},\vp_{k+1}).
+  \end{align}
+  Hence, for $k<m$ we immediately have
+  \begin{gather}
+    \scal(\vp_{m+1},\mata\vp_k) = 0.
+  \end{gather}
+  For $k=m$, we obtain
+  \begin{align}
+    \scal(\vp_{m+1},\mata\vp_m)
+    &= -\tfrac1{\alpha_k}\scal(\vr_{m+1},\vp_{k+1}) + \beta_m \scal(\vp_m,\mata\vp_k)\\
+    &= -\frac{\scal(\mata\vp_m,\vp_m)}{\scal(\vr_m,\vr_m)} \scal(\vr_{m+1},\vp_{k+1})
+      + \frac{\scal(\vr_{m+1},\vr_{m+1})}{\vr_{m},\vr_{m}}\scal(\vp_m,\mata\vp_k)\\
+    &= 0,
+  \end{align}
+  again by the equality of inner products in~\eqref{eq:krylov-cg-1}.
+  Hence, we have proven
+  \begin{gather}
+    \scal(\mata\vp_{m+1}, \vp_k) = 0 \qquad k\le m.
+  \end{gather}
+  Finally, there holds for $k\le m$
+  \begin{gather}
+    \scal(\vr_{m+1},\vr_k) = \scal(\vr_{m+1}, \vp_k - \beta_{k-1}\vp_{k-1}) = 0.
+  \end{gather}
 \end{proof}
+
+% \begin{Lemma}{cg-orthogonality}
+%   The sequences $\vx_j$ and $\vr_j$ produced by the cg method coincide
+%   with those of the Lanczos solver (in exact arithmetic). The vectors
+%   $\vp_j$ of the cg method coincide up to scalar factors with the vectors $\vg_{j+1}$
+%   in \slideref{Lemma}{lanczos-incremental}.
+% \end{Lemma}
+
+\begin{Corollary}{cg-Lanczos}
+  The sequences $\vx_m$ and $\vr_m$ produced by the conjugate gradient
+  method coincide with those of the Lanczos solver (in exact
+  arithmetic). The vectors $\vp_m$ of the cg method coincide up to
+  scalar factors with the vectors $\vg_{m+1}$ in
+  \slideref{Lemma}{lanczos-incremental}.
+\end{Corollary}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
