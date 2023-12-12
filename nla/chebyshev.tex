@@ -42,58 +42,18 @@
   with $\pchebyshev_n(1) = 1$ and $\pchebyshev_n(-1) = (-1)^n$.
 \end{Lemma}
 
-% \begin{Theorem}{chebyshev-minimal-1}
-%   For every polynomial $p\in \P_n$ with leading coefficient 1 there is $x\in[-1,1]$ such that $\abs{p(x)} \ge \nicefrac1{2^{n-1}}$. There holds
-%   \begin{gather}
-%    \frac1{2^{n-1}} \pchebyshev_n(x)
-%    = \operatorname*{arg min}_{\substack{p\in\P_n\\p = x^n+\cdots}}
-%    \max_{x\in[-1,1]}\abs{p(x)}.
-%   \end{gather}
-% \end{Theorem}
-
-% \begin{proof}
-%   See \cite[Satz 7.19]{DeuflhardHohmann08}.  The three-term recursion
-%   for Chebyshev polynomials implies that the leading coefficient of
-%   $\pchebyshev_n$ is $2^{n-1}$.
-
-%   Assume that there is another polynomial $p\in \P_n$ with leading
-%   coefficient $2^{n-1}$ such that
-%   \begin{gather}
-%     \max_{x\in[-1,1]} \abs{p(x)} < 1.
-%   \end{gather}
-%   Then, $q_n = \pchebyshev_n-p \in \P_{n-1}$. Furthermore, for the
-%   Chebyshev abscissae $\tilde x_j = \cos(\nicefrac{j\pi}{n})$ with
-%   $j=0,\dots,n$ there holds
-%   \begin{xalignat}4
-%     \pchebyshev_n(\tilde x_j) &= 1,
-%     & p(\tilde x_j) &< 1
-%     & q_n(\tilde x_j) &> 0,
-%     & j&\text{ gerade}\\
-%     \pchebyshev_n(\tilde x_j) &= -1,
-%     & p(\tilde x_j) &> -1
-%     & q_n(\tilde x_j) &< 0,
-%     & j&\text{ ungerade}.
-%   \end{xalignat}
-%   Therefore, 
-%   $q_n$ changes sign at at least $n$ points and thus has at least $n$ roots.
-%   From
-%   $q_n\in\P_{n-1}$ we deduce $q_n=0$ and thus $p=\pchebyshev_n$ as a contradiction.
-%   After scaling by $2^{n-1}$ we obtain
-%   \begin{gather}
-%     \operatorname*{min}_{\substack{p\in\P_n\\p = x^n+\cdots}}
-%    \max_{x\in[-1,1]}\abs{p(x)} \ge 1,
-%  \end{gather}
-%  with equality for the scaled Chebyshev polynomial.
-% \end{proof}
 
 \begin{Theorem}{chebyshev-growth}
-  Let
+  Let $K$ be the set of polynomials of degree $n$ with values in
+  $[-1,1]$ on the interval $[-1,1]$, namely
   \begin{gather}
     K = \bigl\{ p\in \P_n \;\big|\; \max_{x\in[-1,1]} \abs{p(x)} =1 \bigr\}.
   \end{gather}
-  Then,
+  Then, The Chebyshev polynomial $\pchebyshev_n$ is the polynomial in
+  $K$ which grows fastest outside the interval $[-1,1]$, hence
   \begin{gather}
-    \abs{\pchebyshev_n(x)} \ge p(x) \qquad \forall p\in K, \quad \forall \abs{x} > 1.
+    \abs{\pchebyshev_n(x)} \ge p(x) \qquad \forall p\in K,
+    \quad \forall \abs{x} > 1.
   \end{gather}
 \end{Theorem}
 
