@@ -344,7 +344,20 @@
   also the corrections for $\vx^{(m)}$ can be computed incrementally.
 \end{remark}
 
-
+\begin{Problem}{Arnoldi-invariant}
+  Assume that after $m$ steps of the Arnoldi process with initial
+  vector $\vb$, there holds $h_{m+1,m} = 0$.
+  \begin{enumerate}
+  \item How can~\eqref{eq:arnoldi-projection-2} be simplified in this
+    case?
+  \item What does this mean for the structure of the complete
+    Hessenberg matrix in~\eqref{eq:krylov:1}?
+  \item Show that in this case $\krylov_m(\vb,\mata)$ is an
+    $\mata$-invariant subspace of $\R^n$.
+  \item Assume additionally that $\mata$ is nonsingular. Show that the
+    solution $\vx$ of $\mata\vx = \vb$ is in $\krylov_m(\vb,\mata)$.
+  \end{enumerate}
+\end{Problem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -901,7 +914,11 @@
   faster convergence.
 \end{remark}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{Problem}{cg-implementation}
+%   Implement the conjugate gradient method. Apply it to the 
+% \end{Problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The generalized minimal residual method (GMRES)}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -917,7 +934,10 @@
 
   Then, we also will apply the oblique projection method with
   $L=\mata K$, as we have a guarantee here that the projected problems
-  are solvable.
+  are solvable. But the projected matrix is not $\matH_m$ as for the
+  orthogonal projection method, since the test space is
+  different. Hence, we construct the projected problem analog to the
+  normal equations of least-squares approximation.
 \end{intro}
 
 \begin{todo}
@@ -1335,7 +1355,7 @@
   \end{gather}
   It is preconditioned from the right, if we solve
   \begin{gather}
-    \mata\matb^{-1}\vy = \vb,\qquad \vx = \matb^{-1}\vy.
+    \mata\matb^{-1}\vy = \vb,\quad \vx = \matb^{-1}\vy.
   \end{gather}
 \end{Definition}
 
@@ -1345,11 +1365,27 @@
   \begin{gather}
     \matb^{-1}\mata\qquad\text{or}\qquad \mata\matb^{-1}
   \end{gather}
-  is much better than the one of $\mata$. Furthermore, the evaluation
-  of $\matb^{-1}$ is at least much cheaper than the one of
-  $\mata^{-1}$, ideally not much more expensive than the product
+  is much less than the one of $\mata$. Furthermore, the evaluation
+  of $\matb^{-1}\vr$ is at least much cheaper than the one of
+  $\mata^{-1}\vr$, ideally not much more expensive than the product
   $\mata\vx$.
 \end{Definition}
+
+\begin{intro}
+  Preconditioning the conjugate gradient method poses an additional
+  challenge, since for two symmetric, positive definite matrices
+  $\mata$ and $\matb^{-1}$, their product $\matb^{-1}\mata$ is not
+  necessarily symmetric. A possible solution is symmetric
+  preconditioning,
+  \begin{gather}
+    \matc^{-\nicefrac12} \mata \matc^{-\nicefrac12} \vy
+    = \matc^{-\nicefrac12}\vb,
+    \quad \vx = \matc^{-\nicefrac12} \vy.
+  \end{gather}
+  Here, $\matc^{-\nicefrac12}$ is a preconditioner for
+  $\mata^{\nicefrac12}$. Unfortunately, it is not easy to obtain such
+  a method. Therefore, we follow another route.
+\end{intro}
 
 \begin{Lemma}{preconditioner-symmetry}
   Let $\mata$ and $\matb$ be symmetric, positive definite matrices. Then, $\matb^{-1}\mata$ is self-adjoint with respect to the $\matb$-inner product, i.~e.
