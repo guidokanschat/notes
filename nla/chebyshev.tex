@@ -1,8 +1,9 @@
 \begin{Definition}{chebyshev-polynomials}
-  The \define{Chebyshev polynomials} $\pchebyshev_k$ are defined by the
+  The \define{Chebyshev polynomials} $\pchebyshev_n$ are defined by the
   three-term recurrence relation
   \begin{gather}
-    \pchebyshev_{k}(x) = 2x \pchebyshev_{k-1}(x) - \pchebyshev_{k-2}(x),
+    \pchebyshev_{n}(x) = 2x \pchebyshev_{n-1}(x) - \pchebyshev_{n-2}(x),
+    \quad n=2,\ldots
   \end{gather}
   with $T_0 \equiv 1$ and $T_1(x) = x$.
   They are orthogonal with respect to the inner product
@@ -14,16 +15,16 @@
 \begin{Lemma}{chebyshev-representation}
   Chebyshev polynomials admit the trigonometric representation
   \begin{gather}
-    \pchebyshev_k(x) = \cos(k \operatorname{arccos} x), \qquad\abs{x} \le 1.
+    \pchebyshev_n(x) = \cos(n \operatorname{arccos} x), \qquad\abs{x} \le 1.
   \end{gather}
   
   Furthermore, there holds
     \begin{gather}
-    \pchebyshev_k = \frac12
+    \pchebyshev_n = \frac12
     \left(
-      \left(x-\sqrt{x^2-1}\right)^k
+      \left(x-\sqrt{x^2-1}\right)^n
       +
-      \left(x+\sqrt{x^2-1}\right)^k
+      \left(x+\sqrt{x^2-1}\right)^n
     \right),\qquad\abs{x}\ge 1.
   \end{gather}
 \end{Lemma}
@@ -89,12 +90,12 @@
     \max_{x\in[a,b]}{\abs{p(x)}}.
   \end{gather}
   There holds
-  \begin{align}
+  \begin{gather}
     \label{eq:chebyshev-cg1}
     \max_{x\in[a,b]}{\abs{\widehat \pchebyshev_n(x)}}
-    &= \left(\pchebyshev_n\left(\frac{a+b}{b-a}\right)\right)^{-1}\\
-    & \le 2 \left(\frac{\sqrt b-\sqrt a}{\sqrt b + \sqrt a}\right)^n.
-  \end{align}
+    = \frac1{\pchebyshev_n\left(\frac{a+b}{b-a}\right)}
+    \le 2 \left(\frac{\sqrt b-\sqrt a}{\sqrt b + \sqrt a}\right)^n.
+  \end{gather}
 \end{Corollary}
 
 \begin{proof}
