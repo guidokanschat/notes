@@ -77,19 +77,23 @@
   \end{gather}
   Let $\mu_1,\dots,\mu_m$ be the Ritz values in the subspace
   $V$. Then, there holds
-  \begin{gather}
-    \lambda_i \ge \mu_i, \qquad i=1,\dots,m.
-  \end{gather}
+  \begin{xalignat}2
+    \lambda_k &\ge \mu_i, &i&=1,\dots,m,\\
+    \lambda_{n-i}& \le \mu_{m-i}, &i&=0,\dots,m-1.
+  \end{xalignat}
 \end{Lemma}
 
 \begin{proof}
   Due to the Courant-Fischer min-max theorem,
   \slideref{Theorem}{minmax}, we can characterize the Ritz values as
-  \begin{gather}
-    \mu_k = \max_{\substack{W \subset V\\\dim W = k}} \min_{\vx\in V} R_\mata(\vx)
-    \le \max_{\substack{W \subset \R^n\\\dim W = k}} \min_{\vx\in V} R_\mata(\vx)
-    = \lambda_k.
-  \end{gather}
+  \begin{alignat}2
+    \mu_i &= \max_{\substack{W \subset V\\\dim W = i}} \min_{\vx\in W} R_\mata(\vx)
+    &\le \max_{\substack{W \subset \R^n\\\dim W = i}} \min_{\vx\in W} R_\mata(\vx)
+    &= \lambda_i\\
+    \mu_{m-i}&= \min_{\substack{W \subset V\\\dim W = i}} \max_{\vx\in W} R_\mata(\vx)
+    &\le \min_{\substack{W \subset \R^n\\\dim V = i}} \max_{\vx\in W} R_\mata(\vx)
+    &= \lambda_{n-i}.
+  \end{alignat}
 \end{proof}
 
 \begin{Lemma}{ritz-rayleigh-estimate}
