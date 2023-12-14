@@ -1107,36 +1107,6 @@
   implies $\vr^{(m)} = 0$.
 \end{proof}
 
-\begin{intro}
-  According to \slideref{Theorem}{Hessenberg-Krylov-2}, the GMRES
-  algorithm uses the Arnoldi process in order to compute a QR
-  factorization of the Krylov matrix
-  $\matk_m = (\vr_0,\mata\vr_0,\dots,\mata^{m-1}\vr_0)$. In
-  \slideref{Algorithm}{arnoldi-1}, Gram-Schmidt orthogonalization is
-  used to this effect. Hence, we expect numerical instability if many
-  steps of the method are needed. This in particular, as
-  $\mata^m\vr_0$ converges to a dominant eigenvector which will make
-  the Krylov matrix ill-conditioned. We should thus investigate in a
-  more stable way of computing the Arnoldi basis and the projected
-  matrix.
-\end{intro}
-
-
-\begin{Algorithm*}{arnoldi-householder}{Arnoldi with Householder}
-  \algtext*{EndIf}
-  \begin{algorithmic}[1]
-    \Require $\mata\in\Rnn$; $\quad\vq_1\in\R^n, \norm{\vq_1}_2 = 1$
-    \State Choose $\matq_1^*$ such that $\matq_1^*\vq_1 = \ve_1$.
-    \Comment{Householder}
-    \For{$j=1,\dots,m$}
-    \State $\vq_j \gets \matq_1^*\dots\matq_j^*\ve_j$
-    \State $\matq_{j+1}\matr \gets \matq_j^*\dots\matq_1^*(\vq_1,\mata\vq_1,\dots,\mata\vq_m)$
-    \Comment{Householder}
-    \If{$r_{j+1,j+1}=0$} \textbf{stop}\EndIf
-    \EndFor
-  \end{algorithmic}
-\end{Algorithm*}
-
 \begin{Theorem}{gmres-optimality}
   For the residual $\vr^{(m)} = \vb-\mata\vx^{(m)}$ after $m$  steps of
   the GMRES method, there holds
@@ -1188,6 +1158,115 @@
   the GMRES method will follow that
   sequence~\cite{GreenbaumPtakStrakos96}.
 \end{remark}
+
+\begin{intro}
+  According to \slideref{Theorem}{Hessenberg-Krylov-2}, the GMRES
+  algorithm uses the Arnoldi process in order to compute a QR
+  factorization of the Krylov matrix
+  $\matk_m = (\vr_0,\mata\vr_0,\dots,\mata^{m-1}\vr_0)$. In
+  \slideref{Algorithm}{arnoldi-1}, Gram-Schmidt orthogonalization is
+  used to this effect. Hence, we expect numerical instability if many
+  steps of the method are needed. This in particular, as
+  $\mata^m\vr_0$ converges to a dominant eigenvector which will make
+  the Krylov matrix ill-conditioned. We should thus investigate in a
+  more stable way of computing the Arnoldi basis and the projected
+  matrix.
+
+  Our starting point is \slideref{Theorem}{Hessenberg-Krylov-2}, which
+  states that we can compute the Arnoldi basis by a QR factorization
+  of the Krylov matrix. Two steps are needed to develop a working
+  algorithm. First, since we still want to grow the Krylov space
+  dimension by dimension, we need an incremental version of the QR
+  factorization. But indeed, the standard method described
+  in~\ref{intro:ortho:1} already fulfills this requirement, we just
+  have to rewrite it column by column. Second, we have to construct
+  the Hessenberg matrix $\matH_m$ from this QR factorization.
+\end{intro}
+
+\begin{Lemma}{qr-Arnoldi-1}
+  The $j$-th column of the QR factorization of the Krylov matrix
+  \begin{gather}
+    \matk_\infty = \bigl(\vv,\mata\vv,\mata^2\vv,\dots\bigr)
+  \end{gather}
+  from the previous $j-1$ columns by the following steps:
+  \begin{align}
+    \label{eq:Arnoldi-Householder:1}
+    \vv_j &= \matp_{j-1}\cdots \matp_1\mata\vq_{j-1}\\
+    \label{eq:Arnoldi-Householder:2}
+    \vq_j &= \matp_1\cdots \matp_j\ve_j.
+  \end{align}
+  Here, $\matp_j$ is the Householder reflection of the form
+  \begin{gather}
+    \label{eq:Arnoldi-Householder:3}
+    \matp_j =
+    \begin{pmatrix}
+      \id_{j-1}\\& \tilde P_{j}
+    \end{pmatrix},
+  \end{gather}
+  which eliminates $v_{j;j+1}$ to $v_{j;n}$.  The columns of the
+  Hessenberg matrix $\overline\matH_m$ in the Arnoldi process can be computed
+  as $\vh_{j-1} = \matp_j\vv_j$.
+\end{Lemma}
+
+\begin{proof}
+  Already in the proof of \slideref{Theorem}{Hessenberg-Krylov-2}, we
+  have argued that we may replace the column $\mata^{j}\vv$ by
+  $\mata\vq_{j}$ to obtain an essentially equivalent QR factorization. Hence,
+  $\vv_j$ can be viewed as the $j$-th column of the matrix
+  \begin{gather}
+    \matk^{(j-1)} = \matp_{j-1}\cdots \matp_1 \matk_{\infty},
+  \end{gather}
+  of the QR factorization. Then, the next step is computed by the
+  Householder reflection $\matp_j$. Finally,~\eqref{eq:ortho:1} states
+  \begin{gather}
+    \matq_j = \matp_1\dots\matp_j.
+  \end{gather}
+  The $j$-th column of this matrix is $\vq_j$ as stated by
+  this lemma.
+
+  We note that this representation of the QR factorization is
+  essentially a reordering of operations. While in the standard
+  representation, we apply the Householder reflection in each step to
+  all further columns of the matrix, here we go column by column and
+  apply all previously computed reflections at once.
+
+  It remains to prove the statement on the Hessenberg matrix
+  $\matH$. By equation~\eqref{eq:Arnoldi-Householder:1}, we have
+  \begin{gather}
+    \vh_j = \matp_{j+1}^T\vv_{j+1}
+    = \matp_{j+1}^T\matp_{j}^T\cdots\matp_1^T\mata\vq_{j}
+    = \matq_{j+1}^T\mata\vq_j.
+  \end{gather}
+  The Householder reflections $\matp_{k+1}$ act as identity on the
+  span of the first $k$ unit vectors. Hence, $\matp_{k}\vh_j = \vh_j$ for $k\ge j+2$ and
+  \begin{gather}
+    \matp_{j+2}\cdots\matp_{m+1}\vh_j = \vh_j = \matq_{j+1}^T\mata\vq_j.
+  \end{gather}
+  Since $\mata\vq_j\in\krylov_{j+1}(\vv,\mata)$ and
+  $\matq_{j+1}\matq_{j+1}^T$ is the identity on this space, we obtain
+  \begin{gather}
+    \matq_{m+1}\vh_j = \mata\vq_j,\qquad j=1,\dots,m,
+  \end{gather}
+  which are the columns of the matrix equation
+  \begin{gather}
+    \matq_{m+1}\overline\matH_m = \mata\matq_{m}.
+  \end{gather}
+\end{proof}
+
+\begin{Algorithm*}{arnoldi-householder}{Arnoldi with Householder}
+  \algtext*{EndIf}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Rnn$; $\quad\vv\in\R^n$
+    \State $\vq_1 = \nicefrac{\vv}{\norm{\vv}}_2$
+    \For{$j=2,\dots,m$}
+    \State $\vv \gets \matp_{j-1}\cdots\matp_1\mata\vq_{j-1}$
+    \State Choose $\matp_j$: $\matp_j^*\vv = (v_1,\dots,v_{j-1},\alpha,0,\dots,0)^T$.
+    \Comment{Householder}
+    \State $\vq_j \gets \matp_1^*\dots\matp_j^*\ve_j$
+    \State $\vh_{j-1} \gets \matp_j^*\vv$
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
 
 \begin{remark}
   The GMRES method encounters a problem if convergence is slow: the
