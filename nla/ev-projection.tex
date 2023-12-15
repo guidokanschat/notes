@@ -164,12 +164,13 @@
 \end{Algorithm*}
 
 \begin{Theorem}{ritz-convergence}
-  Let $\esp{1,\dots,m}$ be the space spanned by the dominant $m$
-  eigenvectors and let $\matp$ be the orthogonal projector onto
-  it. Let $S_k$ be the subspace spanned by the basis $\matx^{(k)}$.
+  Let $D_m(\mata)$ be the space spanned by the dominant $m$
+  eigenvectors $\vv_1,\dots,\vv_m$ of $\mata$ and let $\matp_D$ be the
+  orthogonal projector onto it. Let $S_k$ be the subspace spanned by
+  the basis $\matx^{(k)}$.
   
-  If $\matp S_0 = \esp{1,\dots,m}$, then there holds: for each
-  eigenvector $\vv_i$ of $\mata$, $i=1,\dots,m$, there is a vector
+  If $\matp_D S_0 = D_m(\mata)$, then there holds: for each
+  eigenvector $\vv_i, i=1,\dots,m$, there is a vector
   $\vy_i\in S_0$ such that $\matp\vy_i = \vv_i$. Furthermore,
   \begin{gather}
     \norm{\vv_i - \matp_{S_k} \vv_i}_2 \le \norm{\vv_i-\vy_i}
