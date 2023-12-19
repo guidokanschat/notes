@@ -100,7 +100,7 @@
   Let $(\lambda,\vu)$ be an eigenpair of the symmetric matrix
   $\mata\in\Rnn$. Let $P_V$ be the orthogonal projection to the
   subspace $V$. Then, the \putindex{Rayleigh quotient}
-  $R_\mata(PVK \vu)$ admits the estimate
+  $R_\mata(P_V \vu)$ admits the estimate
   \begin{gather}
     \abs*{\lambda-R_\mata(P_V \vu)}
     \le \norm{\mata-\lambda\id}
@@ -140,15 +140,40 @@
 
 \begin{Lemma}{ritz-estimate-sine}
   Let $(\lambda,\vu)$ be an eigenpair of the symmetric matrix
-  $\mata\in\Rnn$, and let $\tilde\lambda,\tilde\vu$ be the eigenpair
-  of the projected problem such that $\tilde\lambda$ is the closest
-  approximated eigenvalue to $\lambda$.  Then,
+  $\mata\in\Rnn$, and let $(\mu,\tilde\vu)$ be the eigenpair
+  of the projected problem such that $\mu$ is the closest
+  Ritz value to $\lambda$.  Then,
   \begin{gather}
-    \abs{\lambda-\tilde\lambda}
+    \abs{\lambda-\mu}
     \le \norm{\mata-\lambda\id} \sin^2\theta,
   \end{gather}
   where $\theta$ is the angle between $\vu$ and $\tilde\vu$.
 \end{Lemma}
+
+\begin{proof}
+  Note that
+  \begin{gather}
+    \mu-\lambda
+    = \scal(\mata\tilde \vu,\tilde\vu)
+    - \lambda\scal(\tilde \vu,\tilde\vu)
+    = \scal({(\mata-\lambda)} \tilde\vu,\tilde\vu).
+  \end{gather}
+  Let now $\alpha = \scal(\vu,\tilde\vu) = \cos\theta$. Exploiting
+  $(\mata-\lambda\id)\vu=0$, we write
+  \begin{gather}
+    \mu-\lambda
+    = \scal({(\mata-\lambda\id)}{(\tilde\vu - \alpha\vu)},\tilde\vu)
+    = \scal({(\mata-\lambda\id)}{(\tilde\vu - \alpha\vu)},\tilde\vu - \alpha\vu).
+  \end{gather}
+  Hence, by Bunyakovsky-Cauchy-Schwarz,
+  \begin{align}
+    \abs{\mu-\lambda}
+    &\le \norm{(\mata-\lambda\id)(\tilde\vu - \alpha\vu)}\norm{\tilde\vu - \alpha\vu}\\
+    &\le \norm{\mata-\lambda\id}\norm{\tilde\vu - \alpha\vu}^2\\
+    &= \norm{\mata-\lambda\id} \sin^2\theta.
+  \end{align}
+\end{proof}
+
 
 \begin{Algorithm*}{ev-projection}{Projected subspace iteration}
   \begin{algorithmic}[1]
