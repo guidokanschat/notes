@@ -1,7 +1,37 @@
+
+\begin{intro}
+  In this section, we investigate Krylov space projection methods in
+  more detail. All results hold, with the due simplifications for the
+  Lanczos method as well. Note that the \define{Arnoldi factorization}
+  in \slideref{Definition}{arnoldi-factorization} is a reformulation
+  of \slideref{Theorem}{arnoldi-projection} and of
+  \slideref{Lemma}{arnoldi-w}.
+\end{intro}
+
+\begin{notation}
+  As with all methods for computing eigenvalues of large, sparse
+  systems, we will only compute a subset of the eigenvalues. An
+  important concept of the methods developed below is the idea ow
+  \define{wanted eigenvalues} and \define{unwanted eigenvalues}.
+
+  Given a set of Ritz values or computed eigenvalues, we will always
+  assume that we can decide which of them are wanted. The complement
+  set is then unwanted.
+
+  Note that there might not be a clear mathematical definition of
+  wanted eigenvalues, as long as at any step of the iteration we can
+  select them. In particular, a Ritz value flagged as wanted in one
+  step of the iteration might be unwanted in the next step, when
+  another one fits the criteria better.
+
+  Typical criteria are greatest, smallest, greatest/smallest real
+  value, and greatest/smallest by magnitude.
+\end{notation}
+
 \begin{Algorithm*}{ev-arnoldi}{Arnoldi for eigenvalues}
   Given an initial vector $\vv_1$ with $\norm{\vv_1}=1$.
   \begin{enumerate}
-  \item Compute the arnoldi basis $\matv_{m+1}$ and the projected matrix
+  \item Compute the Arnoldi basis $\matv_{m+1}$ and the projected matrix
     \begin{gather}
       \matH_m = \matv_m^*\mata\matv_m.
     \end{gather}
@@ -33,16 +63,17 @@
 \end{remark}
 
 \begin{Definition}{arnoldi-factorization}
-  The result of $k$ steps of the Arnoldi algorithm is the
+  The result of $m$ steps of the Arnoldi algorithm is the
   \define{Arnoldi factorization}
+  \begin{gather*}
+    \label{eq:ev-arnoldi-projection}
+    \mata\matv_m = \matv_m\matH_m + h_{m+1,m}\vv_{m+1}\ve_m^*,
+  \end{gather*}
+  where $\matv_m\in\C^{n\times m}$ is the matrix of mutually
+  orthogonal \define{Arnoldi vectors} and $\matH_m\in\R^{m\times m}$
+  is Hessenberg. There holds
   \begin{gather}
-    \mata\matv_k = \matv_k\matH_k + \beta\vv_{k+1}\ve_k^*,
-  \end{gather}
-  where $\matv_k\in\C^{n\times k}$ is the matrix of mutually
-  orthogonal \define{Arnoldi vectors} and $\matH_k\in\R^{k\times k}$
-  is symmetric and tridiagonal. There holds
-  \begin{gather}
-    \matv_k^*\vv_{k+1} = 0.
+    \matv_m^*\vv_{m+1} = 0.
   \end{gather}
 \end{Definition}
 
@@ -57,12 +88,24 @@
   In particular, its norm is
   \begin{gather}
     \norm*{\left(A-\lambda_i^{(m)}\identity\right)\vu_i^{(m)}}_2
-    = h_{m+1,m} \abs{\ve_m^*\vy_i^{(m)}}.
+    =  \abs{h_{m+1,m}\ve_m^*\vy_i^{(m)}}.
   \end{gather}
+  Note that $\ve_m^*\vy_i^{(m)}$ is the $m$-th entry of
+  $\vy_i^{(m)}$. In particular, we can estimate the residual of the
+  Ritz pair without computing the Ritz vector.
 \end{Lemma}
 
 \begin{proof}
-  See~\cite[Proposition 6.8]{Saad11}.
+  See also~\cite[Proposition 6.8]{Saad11}.
+  Multiplying~\eqref{eq:ev-arnoldi-projection} from the
+  right with $\vy_i^{(m)}$, we obtain
+  \begin{align}
+    \mata\matv_m\vy_i^{(m)}
+    &= \matv_m\matH_m\vy_i^{(m)} + h_{m+1,m}\vv_{m+1}\ve_m^*\vy_i^{(m)}\\
+    &=\lambda_i^{(m)} \matv_m\vy_i^{(m)}
+      + h_{m+1,m}\bigl(\ve_m^*\vy_i^{(m)}\bigr)\vv_{m+1},
+  \end{align}
+  which is the result as soon as we enter $\vu_i^{(m)} = \matv_m \vy_i^{(m)}$.
 \end{proof}
 
 \begin{Corollary}{ev-arnoldi-breakdown}
@@ -71,7 +114,14 @@
 \end{Corollary}
 
 \begin{remark}
-  While this breakdown was ``lucky'' for linear solvers, it actually
+  While this breakdown was ``lucky'' for linear solvers, it is not
+  entirely so in the case of eigenvalue computations. On the one hand,
+  we have the preceding corollary, which states that the computed Ritz
+  vectors are actually eigenvectors and the Ritz values are
+  eigenvalues of $\mata$. This is good, if all desired eigenpairs are
+  in this set.
+
+  On the other hand, a breakdown actually
   breaks the algorithm if the number of desired eigenvalues is higher
   than the dimension of the Krylov space. In this case, we will have
   to insert a new initial vector during the computation of the Krylov
@@ -81,6 +131,26 @@
   unlikely, but a near breakdown may happen more likely. Detecting
   this is related to loss of orthogonality.
 \end{remark}
+
+\begin{Definition}{arnoldi-locking}
+  In the case of a breakdown at step $m$ of the Arnoldi algorithm,
+  we restart the algorithm after \define{locking} the wanted eigenvalues.
+
+  \begin{enumerate}
+  \item Choose the wanted eigenvalues from the computed ones. Store
+    the corresponding eigenvectors $\vu_1,\dots,\vu_k$.
+  \item Choose a new initial vector $\vv_1$ which is orthogonal to all
+    previously converged eigenvectors $\vu_1,\dots,\vu_m$, as the
+    eigenvalues $\lambda_{k+1},\dots,\lambda_m$ are unwanted.
+  \item Build the Arnoldi basis, but orthogonalize not only with
+    respect to the vectors $\vv_1,\dots$, but also with respect to
+    $\vu_1,\dots,\vu_k$.
+  \end{enumerate}
+  This concept can be repeated until the desired number of
+  eigenvectors has been found. This may also involved removing
+  eigenvectors of previous runs, if their eigenvalues are not wanted
+  anymore.
+\end{Definition}
 
 \begin{intro}
   The size of the matrix $\matv_k$ of the Arnoldi algorithm is growing
@@ -92,7 +162,9 @@
   \item Restarting after $m$ steps by choosing a single column vector
     from $\matv_m$ or a single linear combination of them eliminates
     most information on the spectral structure gathered in these $m$
-    steps.
+    steps. Indeed, we would have to make sure that the new initial
+    vector has doominant components in the wanted eigenspaces and
+    small components in the others.
   \item A windowing technique only considering the last $m$ vectors
     from $\matv_k$ might eliminate the desired eigenvectors, which
     then have to reenter in the following steps.
@@ -168,42 +240,6 @@
   See~\cite[Section 4.5.1]{BaiDemmelDongarraRuhevanderVorst00}.
 \end{proof}
 
-
-\begin{Algorithm*}{arnoldi-reorthogonalization}{Arnoldi with reorthogonalization}
-  \algtext*{EndIf}
-  \begin{algorithmic}[1]
-    \Require $\mata\in\Rnn$; $\quad\vv_1\in\R^n, \norm{\vv_1}_2 = 1$
-    \For{$j=1,\dots,m$}
-    \State $\vw_j \gets \mata\vv_j$
-    \State $\vh_{j} \gets \matv_j^*\vw_j$
-    \State $\vw_j \gets \vw_j - \matv_j\vh_{j}$
-    \If{$\norm{\vw_j} < \eta \norm{\vh_j}$} \Comment{Reorthogonalization}
-    \State $\vg = \matv_j^*\vw_j$
-    \State $\vw_j \gets \vw_j - \matv_j\vg$
-    \State $\vh \gets \vh + \vg$.
-    \EndIf
-    \If{$\norm{\vw_j} < \eta \norm{\vg}$}\Comment{Failure}
-    \State Choose random $\vv_{j+1}$
-    \State $h_{j+1,j} \gets 0$
-    \Else
-    \State $h_{j+1,j} \gets \norm{\vw_j}_2$
-    \State $\vv_{j+1} = \nicefrac{\vw_j}{h_{j+1,j}}$
-    \EndIf
-    \EndFor
-  \end{algorithmic}
-\end{Algorithm*}
-
-\begin{remark}
-  In exact arithmetic, $\matv_j\vh_j$ and $\vw_j$ are the projections
-  of $\mata\vv_j$ onto the range of $\matv_j$ and its orthogonal
-  complement, respectively. Thus, if $\theta$ is the angle between
-  $\mata\vv_j$ and the range of $\matv_j$, we have
-  \begin{gather}
-    \cot\theta = \frac{\norm{\vw_j}}{\norm{\vh_j}}.
-  \end{gather}
-  Thus, the condition in line 5 of the algorithm enforces a
-  reorthogonalization, if the angle $\theta$ is too small.
-\end{remark}
 
 \begin{Algorithm*}{irlm}{Implicitly restarted Arnoldi method}
   \begin{algorithmic}[1]
@@ -291,6 +327,41 @@
   iterations due to roundoff errors.
 \end{remark}
 
+\begin{Algorithm*}{arnoldi-reorthogonalization}{Arnoldi with reorthogonalization}
+  \algtext*{EndIf}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Rnn$; $\quad\vv_1\in\R^n, \norm{\vv_1}_2 = 1$
+    \For{$j=1,\dots,m$}
+    \State $\vw_j \gets \mata\vv_j$
+    \State $\vh_{j} \gets \matv_j^*\vw_j$
+    \State $\vw_j \gets \vw_j - \matv_j\vh_{j}$
+    \If{$\norm{\vw_j} < \eta \norm{\vh_j}$} \Comment{Reorthogonalization}
+    \State $\vg = \matv_j^*\vw_j$
+    \State $\vw_j \gets \vw_j - \matv_j\vg$
+    \State $\vh \gets \vh + \vg$.
+    \EndIf
+    \If{$\norm{\vw_j} < \eta \norm{\vg}$}\Comment{Failure}
+    \State Choose random $\vv_{j+1}$
+    \State $h_{j+1,j} \gets 0$
+    \Else
+    \State $h_{j+1,j} \gets \norm{\vw_j}_2$
+    \State $\vv_{j+1} = \nicefrac{\vw_j}{h_{j+1,j}}$
+    \EndIf
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{remark}
+  In exact arithmetic, $\matv_j\vh_j$ and $\vw_j$ are the projections
+  of $\mata\vv_j$ onto the range of $\matv_j$ and its orthogonal
+  complement, respectively. Thus, if $\theta$ is the angle between
+  $\mata\vv_j$ and the range of $\matv_j$, we have
+  \begin{gather}
+    \cot\theta = \frac{\norm{\vw_j}}{\norm{\vh_j}}.
+  \end{gather}
+  Thus, the condition in line 5 of the algorithm enforces a
+  reorthogonalization, if the angle $\theta$ is too small.
+\end{remark}
 
 %%% Local Variables:
 %%% mode: latex
