@@ -163,42 +163,25 @@
     from $\matv_m$ or a single linear combination of them eliminates
     most information on the spectral structure gathered in these $m$
     steps. Indeed, we would have to make sure that the new initial
-    vector has doominant components in the wanted eigenspaces and
+    vector has dominant components in the wanted eigenspaces and
     small components in the others.
   \item A windowing technique only considering the last $m$ vectors
     from $\matv_k$ might eliminate the desired eigenvectors, which
-    then have to reenter in the following steps.
+    then have to reenter in the following steps. Furthermore, the
+    spectrum of $\matH_m$ is not related to the spectrum of $\mata$
+    anymore, if the basis $\matv_m$ is not orthogonal. Hence, we
+    do not consider this option.
   \end{enumerate}
-  To the rescue comes the so called implicit restart, which will be
-  presented after some preliminary considerations.
 \end{intro}
 
 \begin{intro}
-  As with linear solvers, the main drawback of Arnoldi's algorithm is
-  the growth of the basis and thus the increasing effort for
-  orthogonalization of the new basis vectors. Therefore, our next
-  effort must be a modification of the algorithm such that the length
-  of the basis remains bounded by a constant number $m$.
-
   In the previous chapter, we have seen the restart of GMRES in
-  \slideref{Algorithm}{gmres-restart}. This algorithm can be applied
-  here, if only a single eigenpair is needed. But, if several
-  eigenvectors are to be computed, all additional information on
-  convergence of the other vectors is lost, if we apply standard
-  restart.
-
-  Then, we saw the truncation of GMRES in
-  \slideref{Algorithm}{gmres-truncated}. Here, we see again the
-  fundamental difference between a linear solver and an eigenvalue
-  solver: while in GMRES we only care for the convergence of the
-  approximate solution vector $\vx^{(m)}$, solution of the eigenvalue
-  problem requires that $\matH_m$ is obtaind from $\mata$ by
-  orthogonal projection. As soon as the matrix $\matv_m$ is not
-  orthogonal anymore, the eigenvalue problem for $\matH_m$ loses
-  connection to the one for $\mata$.
-
-  The following ``implicitly restarted Arnoldi method'' (IRAM) combines the
-  ideas of truncation and restart into an efficient method.
+  \slideref{Algorithm}{gmres-restart}. When this algorithm is applied
+  here, we have to make sure that the initial vector for the restart
+  is ``rich'' in components of the wanted eigenspaces, but has small
+  components in the unwanted directions. In principle, we could use a
+  technique like in the restart after a breakdown, but it comes at a
+  high cost. Hence, we consider a different option.
 \end{intro}
 
 \begin{Algorithm*}{iram-concept}{Implicitly restarted Arnoldi method}
@@ -215,6 +198,17 @@
     $\matv_m$ to obtain an updated basis $\matv_k$.
   \end{enumerate}
 \end{Algorithm*}
+
+\begin{Definition}{polynomial-filtering}
+  By \define{polynomial filtering} we denote a method for prerocessing
+  the initial vector for an Arnoldi process by applying a matrix
+  polynomial. Given a vector $\tilde\vv$, the initial vector is obtained by
+  \begin{gather}
+    \vw = p(\mata) \tilde \vv,\qquad \vv_1 = \frac{\vw}{\norm{\vw}}.
+  \end{gather}
+  The polynomial should be chosen such that its values are large on
+  the wanted eigenvalues and small on the unwanted ones.
+\end{Definition}
 
 
 
