@@ -1,0 +1,29 @@
+\begin{tikzpicture}
+
+% Define coordinates for vertices
+\coordinate (A) at (0,0);
+\coordinate (B) at (4,0);
+\coordinate (C) at (7,1);
+\coordinate (D) at (6,2);
+\coordinate (E) at (2,2);
+\coordinate (F) at (-1,1);
+\coordinate (P) at (3,1);
+\coordinate (Q) at (3,6);
+
+% Draw triangles
+\draw[thick,fill={gray!50}] (A) -- (B) -- (P) -- cycle;
+\draw[thick,fill={gray!50}] (B) -- (C) -- (P) -- cycle;
+\draw[thick,fill={gray!50}] (C) -- (D) -- (P) -- cycle;
+\draw[thick,fill={gray!50}] (D) -- (E) -- (P) -- cycle;
+\draw[thick] (E) -- (F) -- (P) -- cycle;
+\draw[thick,fill={gray!50}] (F) -- (A) -- (P) -- cycle;
+
+% Draw the shape function
+\draw[fill={gray}] (E) -- (F) -- (Q);
+
+\end{tikzpicture}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "linear-hat"
+%%% End:

@@ -1,0 +1,55 @@
+\begin{tikzpicture}
+
+% Define coordinates for vertices
+\coordinate (A) at (0,0);
+\coordinate (B) at (4,0);
+\coordinate (C) at (7,1);
+\coordinate (D) at (6,2);
+\coordinate (E) at (2,2);
+\coordinate (F) at (-1,1);
+\coordinate (P) at (3,1);
+\coordinate (Q) at (3,6);
+
+\coordinate (LT) at (-2,2);
+\coordinate (LB) at (-4,0);
+\coordinate (RT) at (10,2);
+\coordinate (RB) at (8,0);
+
+
+% Draw triangles
+\draw[thick] (A) -- (B) -- (P) -- cycle;
+\draw[thick] (B) -- (C) -- (P) -- cycle;
+\draw[thick] (C) -- (D) -- (P) -- cycle;
+\draw[thick] (D) -- (E) -- (P) -- cycle;
+\draw[thick] (E) -- (F) -- (P) -- cycle;
+\draw[thick] (F) -- (A) -- (P) -- cycle;
+
+\draw[thick] (F) -- (A) -- (LB) -- cycle;
+\draw[thick] (F) -- (E) -- (LT) -- cycle;
+\draw[thick] (F) -- (LB) -- (LT) -- cycle;
+
+\draw[thick] (C) -- (B) -- (RB) -- cycle;
+\draw[thick] (C) -- (D) -- (RT) -- cycle;
+\draw[thick] (C) -- (RB) -- (RT) -- cycle;
+
+
+% Draw circles at vertices
+ % \filldraw (A) circle (2pt) node[anchor=east] {A};
+ % \filldraw (B) circle (2pt) node[anchor=west] {B};
+ % \filldraw (C) circle (2pt) node[anchor=west] {C};
+ % \filldraw (D) circle (2pt) node[anchor=west] {D};
+ % \filldraw (E) circle (2pt) node[anchor=west] {E};
+ % \filldraw (F) circle (2pt) node[anchor=east] {F};
+
+% Draw the hat function
+\draw[fill={gray!30}] (F) -- (A) -- (Q);
+\draw[fill={gray!20}] (A) -- (B) -- (Q);
+\draw[fill={gray!10}] (B) -- (C) -- (Q);
+
+
+\end{tikzpicture}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "linear-hat"
+%%% End:

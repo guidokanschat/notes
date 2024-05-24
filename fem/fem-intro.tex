@@ -1,3 +1,5 @@
+\section{Meshes}
+
 \begin{Definition}{facets}
   Let $\cell\subset \R^d$ be a polyhedron. We call the lower
   dimensional polyhedra constituting its boundary \define{facet}s. A
@@ -15,8 +17,8 @@
 
   A mesh $\mesh$ is called regular, if each face
   $\face \subset \d\cell$ of the cell $\cell\in\mesh$ is either a
-  face of another cell $\cell\prime$, that is,
-  $\overline{\face} = \overline{\cell} \cap \overline{\cell\prime}$,
+  face of another cell $\cell^\prime$, that is,
+  $\overline{\face} = \overline{\cell} \cap \overline{\cell^\prime}$,
   or a subset of $\d\domain$.
 \end{Definition}
 
@@ -27,11 +29,14 @@
   approximating the domain will be deferred to later discussion.
 \end{remark}
 
+
+\section{Local properties of a finite element}
+
 \begin{Definition}{finite-element}
   With a mesh cell $\cell$, we associate a finite dimensional
   \define{shape function} space $\shapespace(\cell)$ of dimension
   $n_\cell$. The term \define{node functional} denotes linear
-  functionals on this space.
+  functionals used for interpolation to this space.
 
   A set of node functionals $\{\nodal_\cell^i\}_{i=1,\dots,n_\cell}$ is called
   \define{unisolvent} on $\shapespace(\cell)$ if for any vector
@@ -41,9 +46,9 @@
     \nodal_\cell^i(u) = \vu_i,\quad i=1,\dots,n_\cell.
   \end{gather}
 
-  A \define{finite element} is a set of shape function spaces
-  $\shapespace(\cell)$ for all $\cell\in\mesh$ together with
-  unisolvent set of node functionals.
+  A \define{finite element} consists of a mesh cell $T$ with a shape
+  function space $\shapespace(\cell)$ and a unisolvent set of node
+  functionals.
 \end{Definition}
 
 \begin{Notation}{dofs}
@@ -54,15 +59,45 @@
     \nodal^i(p_k) = \delta_{ik}.
   \end{gather}
   We refer to $\{p_k\}$ as \define{shape function basis} and use the
-  term \define{degrees of freedom} for both the node functionals and
+  term \define{degrees of freedom} with a certain sloppyness for both the node functionals and
   the basis functions.
 \end{Notation}
+
+\begin{Example}{nodes-linear-triangle}
+  The node functionals of the linear triangle in the introduction are the function values in the three vertices.
+  \begin{center}
+    \includegraphics[width=2cm]{mixed/fig/p1-p.tikz}    
+  \end{center}
+  The shape function space is the space of linear polynomials $\P_1$
+  in two dimensions. The shape function basis consists of the three
+  linear polynomials which are one in one of the vertices and zero in
+  the other two.
+\end{Example}
+
+\section{Global properties of finite elements}
 
 \begin{Definition}{node-topology}
   Node functionals can be associated with the cell $\cell$ or with one
   of its lower dimensional boundary facets. We call this association
   the \define{topology} of the finite element.
+
+  The global \define{degrees of freedom} are formed by the union of all
+  node functionals, where we identify node functionals associated to
+  boundary facets among all cells sharing this facet.  
 \end{Definition}
+
+\begin{Example*}{nodes-identification}{Identification of node functionals}
+  \begin{center}
+    \includegraphics[width=.5\textwidth]{graph/concatenation.tikz}    
+  \end{center}
+  The node functionals on
+    shared edges (separated for presentation purposes) are
+    distinguished locally as belonging to their respective cells, but
+    identical global indices are assigned to all nodes in a single
+    circle. Thus, all associated shape functions obtain the same
+    coefficient in the global basis representation of a finite element
+    function $u$.
+\end{Example*}
 
 \begin{Definition}{fe-space}
   The \define{finite element space} on the mesh $\mesh$, denoted by
@@ -72,35 +107,25 @@
     V_\mesh \subset \bigl\{ f\in L^2(\domain) \big|
     f_{|\cell} \in \shapespace(\cell) \bigr\}.
   \end{gather}
-  The \define{degrees of freedom} of $V_\mesh$ are the union of all
-  node functionals, where we identify node functionals associated to
-  boundary facets among all cells sharing this facet. The resulting
-  dimension is
+  
+  It has one basis function for each (global) degree of freedom, such
+  that the restriction of this basis function to a cell is the
+  corresponding shape function.  The resulting dimension is
   \begin{gather}
     n = \dim V_\mesh \le \sum n_\cell.
   \end{gather}
 \end{Definition}
 
-\begin{figure}[tp]
-  \begin{center}
-    \includegraphics[width=.5\textwidth]{graph/concatenation.tikz}
-  \end{center}
-  \caption{Identification of node functionals. The node functionals on
-    shared edges (separated for presentation purposes) are
-    distinguished locally as belonging to their respective cells, but
-    identical global indices are assigned to all nodes in a single
-    circle. Thus, all associated shape functions obtain the same
-    coefficient in the global basis representation of a finite element
-    function $u$.}
-  \label{fig:nodes-identification}
-\end{figure}
+\begin{Example*}{shape-basis-functions}{Linear shape and basis functions}
+  
+\end{Example*}
 
 \begin{Notation}{global-local}
   When we enumerate the degrees of freedom of $V_\mesh$, we obtain a
   global numbering of degrees of freedom $\nodal^i$ with
   $i=1,\dots,n$. For each mesh cell, we have a local numbering
-  $\nodal_\cell^j$ with $j=1,\dots,n$. By construction of the finite
-  element space, there is a unique $i$, such that
+  $\nodal_\cell^j$ with $j=1,\dots,n_T$. By construction of the finite
+  element space, there is a unique global index $i$, such that
   $\nodal_\cell^j(f) = \nodal^i(f)$ for all cells $\cell$ and local
   indices $j$. The converse is not true due to the identification
   process.
