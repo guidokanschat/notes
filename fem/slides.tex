@@ -1,6 +1,6 @@
 \documentclass[american,ignorenonframetext,notheorems,aspectratio=1610]{beamer}
 \usetheme[compress]{Madrid}
-\usecolortheme{albatross}
+\usecolortheme{iwr}
 \usepackage{tikz,tikzscale}
 \usetikzlibrary{snakes}
 \input{mixed/fig/tikzsettings}
@@ -112,14 +112,48 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conforming Finite Element Methods}
 \frame{\sectoc}
-\subsection{Meshes, shape functions, and degrees of freedom}
+
+\begin{frame}
+  \begin{block}{Linear finite elements on triangles}
+    \begin{columns}
+      \begin{column}{.54\textwidth}
+        \begin{itemize}
+        \item The mesh in 2D consists of triangles
+        \item The functions are linear on each triangle
+        \item The functions are continuous on $\Omega$
+        \end{itemize}
+        \visible<2>{
+          \begin{gather*}
+            V_{\mesh} = S^{1,1}(\mesh)
+            = \bigl\{ v\in H^1(\domain) \;\big|\; \forall T\in\mesh : v_{|T} \in \P_1\bigr\}
+          \end{gather*}
+          }
+      \end{column}
+      \begin{column}{.45\textwidth}
+        \includegraphics[width=\textwidth]{fig/piecewise-linear-function}
+      \end{column}
+    \end{columns}
+  \end{block}
+\end{frame}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Meshes}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame {\input{blocks/Definition-facets.tex}
   \input{blocks/Definition-mesh.tex}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Local properties of a finite element}
+\frame{\subtoc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame {\input{blocks/Definition-finite-element.tex}
   \input{blocks/Notation-dofs.tex}}
 \frame {\input {blocks/Example-nodes-linear-triangle.tex}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Global properties of finite elements}
+\frame{\subtoc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame {\input{blocks/Definition-node-topology.tex}
   \input {blocks/Example-nodes-identification.tex}}
 \frame {\input{blocks/Definition-fe-space.tex}}
@@ -129,6 +163,12 @@
 \frame {\input{blocks/Lemma-fe-support.tex}}
 \frame {\input{blocks/Lemma-mesh-continuity.tex}
   \input{blocks/Lemma-nodal-continuity.tex}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Shape function spaces on simplices}
+\frame{\subtoc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \frame {\input{blocks/Definition-barycentric-coordinates.tex}}
 \frame {\input{blocks/Lemma-barycentric-affine.tex}
   \input{blocks/Corollary-barycentric-interpolation.tex}}
@@ -195,6 +235,11 @@
   \input{blocks/Lemma-cea.tex}}
 \frame {\input{blocks/Lemma-fe-matrix.tex}}
 \frame {\input{blocks/Algorithm-matrix-assembling.tex}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Shape functions on quadrilaterals and hexahedra}
+\frame{\subtoc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \frame {\input{blocks/Definition-tensor-product-polynomials.tex}}
 \frame {\input{blocks/Lemma-tensor-product-node-functionals.tex}}
@@ -269,59 +314,59 @@
 \frame {\input{blocks/Assumption-mapping-decomposition.tex}}
 \frame {\input{blocks/Lemma-scaling-1.tex}}
 
-\subsection{A priori error analysis}
-\frame{\subtoc}
+% \subsection{A priori error analysis}
+% \frame{\subtoc}
 
-\frame {\input{blocks/Lemma-poincare.tex}}
-\frame {\input{blocks/Lemma-bramble-hilbert.tex}}
-%\frame {\input{blocks/Lemma-b-h-projector.tex}}
-\frame {\input{blocks/Definition-mesh-family.tex}}
-\frame {\input{blocks/Definition-nodal-interpolation.tex}
-  \input{blocks/Lemma-nodal-interpolation.tex}}
-\frame {\input{blocks/Definition-broken-sobolev-norm.tex}}
-\frame {\input{blocks/Theorem-fe-interpolation.tex}
-  \input{blocks/Corollary-fe-approximation.tex}}
-\frame {\input{blocks/Theorem-fe-convergence.tex}}
+% \frame {\input{blocks/Lemma-poincare.tex}}
+% \frame {\input{blocks/Lemma-bramble-hilbert.tex}}
+% %\frame {\input{blocks/Lemma-b-h-projector.tex}}
+% \frame {\input{blocks/Definition-mesh-family.tex}}
+% \frame {\input{blocks/Definition-nodal-interpolation.tex}
+%   \input{blocks/Lemma-nodal-interpolation.tex}}
+% \frame {\input{blocks/Definition-broken-sobolev-norm.tex}}
+% \frame {\input{blocks/Theorem-fe-interpolation.tex}
+%   \input{blocks/Corollary-fe-approximation.tex}}
+% \frame {\input{blocks/Theorem-fe-convergence.tex}}
 
-\subsubsection{Estimates of stronger norms}
+% \subsubsection{Estimates of stronger norms}
 
-\frame {\input{blocks/Definition-stronger-norm.tex}}
-\frame {\input{blocks/Lemma-inverse-estimate.tex}}
-\frame {\input{blocks/Theorem-h2-error.tex}}
+% \frame {\input{blocks/Definition-stronger-norm.tex}}
+% \frame {\input{blocks/Lemma-inverse-estimate.tex}}
+% \frame {\input{blocks/Theorem-h2-error.tex}}
 
-\subsubsection{Estimates of weaker norms}
+% \subsubsection{Estimates of weaker norms}
 
-\frame {\input{blocks/Definition-dual-problem.tex}}
-\frame {\input{blocks/Lemma-poisson-dual.tex}}
-\frame {\input{blocks/Assumption-elliptic-regularity.tex}}
-\frame {\input{blocks/Theorem-fe-l2.tex}
-  \input {blocks/Corollary-fe-functional.tex}}
+% \frame {\input{blocks/Definition-dual-problem.tex}}
+% \frame {\input{blocks/Lemma-poisson-dual.tex}}
+% \frame {\input{blocks/Assumption-elliptic-regularity.tex}}
+% \frame {\input{blocks/Theorem-fe-l2.tex}
+%   \input {blocks/Corollary-fe-functional.tex}}
 
-\subsubsection{Green's function and maximum norm estimates}
+% \subsubsection{Green's function and maximum norm estimates}
 
-\frame {\input {blocks/Definition-greens-function.tex}
-  \input {blocks/Theorem-greens-function-rd.tex}}
-\frame {\input {blocks/Lemma-greens-function-domain.tex}}
-\frame {\input {blocks/Theorem-greens-function-representation.tex}}
-\frame {\input {blocks/Theorem-linfty-error.tex}}
+% \frame {\input {blocks/Definition-greens-function.tex}
+%   \input {blocks/Theorem-greens-function-rd.tex}}
+% \frame {\input {blocks/Lemma-greens-function-domain.tex}}
+% \frame {\input {blocks/Theorem-greens-function-representation.tex}}
+% \frame {\input {blocks/Theorem-linfty-error.tex}}
 
-\subsection{A posteriori error analysis}
-\frame{\subtoc}
+% \subsection{A posteriori error analysis}
+% \frame{\subtoc}
 
-\frame {\input {blocks/Definition-a-posteriori.tex}}
-\frame {\input {blocks/Definition-locally-quasi-uniform.tex}}
-\frame {\input {blocks/Definition-fem-neighborhood.tex}}
-\frame {\input {blocks/Theorem-clement.tex}}
-\frame {\input {blocks/Theorem-scott-zhang.tex}}
-\frame {\input {blocks/Theorem-schoeberl-interpolation.tex}}
-\frame {\input {blocks/Definition-residual.tex}}
-\frame {\input {blocks/Lemma-residual-hm1.tex}}
-\frame {\input {blocks/Definition-mvl-jmp.tex}}
-\frame {\input {blocks/Definition-residual-strong.tex}}
-\frame {\input {blocks/Lemma-residual-upper-bound.tex}}
-\frame {\input {blocks/Definition-osc.tex}}
-\frame {\input {blocks/Definition-residual-estimator.tex}}
-\frame {\input {blocks/Theorem-residual-estimate.tex}}
+% \frame {\input {blocks/Definition-a-posteriori.tex}}
+% \frame {\input {blocks/Definition-locally-quasi-uniform.tex}}
+% \frame {\input {blocks/Definition-fem-neighborhood.tex}}
+% \frame {\input {blocks/Theorem-clement.tex}}
+% \frame {\input {blocks/Theorem-scott-zhang.tex}}
+% \frame {\input {blocks/Theorem-schoeberl-interpolation.tex}}
+% \frame {\input {blocks/Definition-residual.tex}}
+% \frame {\input {blocks/Lemma-residual-hm1.tex}}
+% \frame {\input {blocks/Definition-mvl-jmp.tex}}
+% \frame {\input {blocks/Definition-residual-strong.tex}}
+% \frame {\input {blocks/Lemma-residual-upper-bound.tex}}
+% \frame {\input {blocks/Definition-osc.tex}}
+% \frame {\input {blocks/Definition-residual-estimator.tex}}
+% \frame {\input {blocks/Theorem-residual-estimate.tex}}
 
 \section{Variational Crimes}
 \frame{\sectoc}

@@ -1,3 +1,38 @@
+\begin{intro}
+  The finite element method is a particular Galerkin approximation of
+  the weak formulation of a boundary value problem. It is generates a
+  finite dimensional subspace of the appropriate function space (in
+  this exposition $H^1(\domain)$ unless specified differently) by the
+  following steps:
+  \begin{enumerate}
+  \item Cover the domain by a mesh, consisting of simple polygons/polyhedra
+  \item Define a finite dimensional function space on each cell of the mesh
+  \item Connect the cell-wise function spaces such that the global
+    function space is conforming.
+  \end{enumerate}
+\end{intro}
+
+
+\begin{example}
+  The simplest example of a finite element discretization are linear
+  elements on triangles in two dimensions. Here, the mesh consists of
+  triangles covering the whole domain. Hence, a finite element mesh is
+  often referred to as a \define{triangulation}. On each triangle of
+  the mesh, the solution is approximated by a linear function.
+
+  An image of such a piecewise linear function on a mesh can be found
+  in Figure~\ref{fig:piecewise-linear}. This image will serve us as a
+  reference for the more precise mathematical formulation which
+  follows.
+  \begin{figure}[tp]
+    \centering
+    \includegraphics[width=.5\textwidth]{fig/piecewise-linear-function}
+    \caption{A piecewise linear finite element function on a
+      triangular mesh. Thanks to Oleg Alexandrov on Wikipedia.}
+    \label{fig:piecewise-linear}
+  \end{figure}
+\end{example}
+
 \section{Meshes}
 
 \begin{Definition}{facets}
@@ -51,6 +86,13 @@
   functionals.
 \end{Definition}
 
+\begin{intro}
+  Since we are mostly concerned with finite elements which are
+  identical on each cell up to the geometry of the cell, we will drop
+  the reference to the cell most of the time and write $\nodal^i$ and
+  $\shapespace$.
+\end{intro}
+
 \begin{Notation}{dofs}
   If the node functionals $\nodal^i$ are unisolvent on
   $\shapespace(\cell)$, then, there is a basis $\{p_k\}$ of $\shapespace(\cell)$
@@ -74,11 +116,33 @@
   the other two.
 \end{Example}
 
+\begin{Lemma}{shape-function-basis}
+  Let $\nodal^1,\dots,\nodal^{n_T}$ be the node functionals of the
+  finite element and let $\phi_1,\dots,\phi_{n_T}$ be an arbitrary
+  basis of the shape function space.  Let $\matg$ be the Gramian matrix
+  between the node functionals and the shape functions with entries
+  \begin{gather}
+    g_{ik} = \nodal^i(\phi_k).
+  \end{gather}
+  Then, the set of node functionals is unisolvent on $\shapespace$ if
+  and only if $\matg$ is invertible. Furthermore, the shape function
+  basis $\{p_k\}$ can be computed by
+  \begin{gather}
+    \begin{pmatrix}
+      p_1(\vx)\\\vdots\\p_{n_T}(\vx)
+    \end{pmatrix}
+    = \matg^{-1}
+    \begin{pmatrix}
+      \phi_1(\vx)\\\vdots\\\phi_{n_T}(\vx)
+    \end{pmatrix}.
+  \end{gather}
+\end{Lemma}
+
 \section{Global properties of finite elements}
 
 \begin{Definition}{node-topology}
   Node functionals can be associated with the cell $\cell$ or with one
-  of its lower dimensional boundary facets. We call this association
+  of its lower dimensional boundary facets. We call these associations
   the \define{topology} of the finite element.
 
   The global \define{degrees of freedom} are formed by the union of all
@@ -191,6 +255,57 @@
   \end{enumerate}
 \end{Lemma}
 
+\begin{Definition}{Galerkin-equations}{Galerkin equations}
+  By restricting the weak formulation to the finite element space $V_{\mesh}$, we obtain the \define{Galerkin equations}
+  \begin{gather}
+    B(u_{\mesh},v_{\mesh}) = \ell(v_{\mesh}) \qquad\forall\;v_{\mesh}\in V_{\mesh}. 
+  \end{gather}
+  
+  After choosing a basis $\{v_i\}$ for $V_{\mesh}$, the Galerkin equations are
+  equivalent to a linear system
+  \begin{gather}
+    \mata \vu = \vf,
+  \end{gather}
+  with $\mata\in\R^{n\times n}$ and $\vf\in \R^n$ defined by
+  \begin{gather}
+    a_{ij} = a(v_j, v_i), \qquad f_i = f(v_i).
+  \end{gather}
+\end{Definition}
+
+\begin{Lemma}{fe-matrix}
+  For a finite element discretization of Poisson's equation with the
+  space $V_\mesh$, the Galerkin equations can be computed using the
+  following formulas:
+  \begin{alignat*}3
+    a_{ij} &= \int\limits_\domain \nabla v_j \cdot \nabla v_i \dx
+    &&= \int\limits_{\domain(\nodal^i)} \nabla v_j \cdot \nabla v_i \dx
+    &&= \sum_{\cell\in\mesh(\nodal^i)}\int\limits_\cell \nabla v_j \cdot \nabla v_i \dx\\
+    f_{i} &= \int\limits_\domain f v_i \dx
+    &&= \int\limits_{\domain(\nodal^i)} f v_i \dx
+    &&= \sum_{\cell\in\mesh(\nodal^i)}\int\limits_\cell f v_i \dx
+  \end{alignat*}
+\end{Lemma}
+
+\begin{Algorithm*}{matrix-assembling}{Assembling the matrix}
+  \begin{enumerate}
+  \item Start with a matrix $\mata = 0 \in \R^{n\times n}$
+  \item Loop over all cells $\cell\in\mesh$
+  \item On each cell $\cell$, compute a cell matrix
+    $\mata_\cell \in \R^{n_\cell\times n_\cell}$ by integrating
+    \begin{gather}
+      a_{\cell,ij} = \int_\cell \nabla p_{\cell,j}\cdot\nabla p_{\cell,i}\,dx,
+    \end{gather}
+    where $\{p_{\cell,i}\}$ is the shape function basis.
+  \item Assemble the cell matrices into the global matrix by
+    \begin{gather}
+      a_{\iota(i),\iota(j)} = a_{\iota(i),\iota(j)} + a_{\cell,ij}
+      \qquad i,j = 1,\dots,n_\cell.
+    \end{gather}
+  \end{enumerate}
+\end{Algorithm*}
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Shape function spaces on simplices}
@@ -211,10 +326,6 @@
     T = \Bigl\{x\in\R^d \Big| x = \sum \vertex_k\lambda_k \Bigr\}.
   \end{gather}
 \end{Definition}
-
-\begin{todo}
-  Properties of simplicial coordinates, e.g. $\{\lambda_i=0\}$ is the facet opposite to $\vertex_i$.
-\end{todo}
 
 \begin{Lemma}{barycentric-affine}
   There is a matrix $B_T\in \R^{d+1\times d}$ and a vector
@@ -484,138 +595,96 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{The Galerkin equations and Céa's lemma}
+%\section{The Galerkin equations}% and Céa's lemma}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{Definition*}{galerkin-approximation}{Galerkin approximation}
-  Let $u\in V$ be determined by the weak formulation
-  \begin{gather*}
-    a(u,v) = f(v) \qquad\forall v\in V,
-  \end{gather*}
-  where $V$ is a suitable function space including boundary
-  conditions. The \define{Galerkin approximation}, also called
-  \define{conforming approximation} of this problem reads as follows:
-  choose a subspace $V_n\subset V$ of dimension $n$ and find
-  $u_n\in V_n$, such that
-  \begin{gather*}
-    a(u_n,v_n) = f(v_n) \qquad\forall v_n\in V_n.
-  \end{gather*}
-  We will refer to this equation as the \define{discrete problem}.
-\end{Definition*}
 
-\begin{Corollary*}{galerkin-equations}{Galerkin equations}
-  After choosing a basis $\{v_i\}$ for $V_n$, the Galerkin equations are
-  equivalent to a linear system
-  \begin{gather}
-    \mata \vu = \vf,
-  \end{gather}
-  with $\mata\in\R^{n\times n}$ and $\vf\in \R^n$ defined by
-  \begin{gather}
-    a_{ij} = a(v_j, v_i), \qquad f_i = f(v_i).
-  \end{gather}
-\end{Corollary*}
+% \begin{Definition*}{galerkin-approximation}{Galerkin approximation}
+%   Let $u\in V$ be determined by the weak formulation
+%   \begin{gather*}
+%     a(u,v) = f(v) \qquad\forall v\in V,
+%   \end{gather*}
+%   where $V$ is a suitable function space including boundary
+%   conditions. The \define{Galerkin approximation}, also called
+%   \define{conforming approximation} of this problem reads as follows:
+%   choose a subspace $V_n\subset V$ of dimension $n$ and find
+%   $u_n\in V_n$, such that
+%   \begin{gather*}
+%     a(u_n,v_n) = f(v_n) \qquad\forall v_n\in V_n.
+%   \end{gather*}
+%   We will refer to this equation as the \define{discrete problem}.
+% \end{Definition*}
 
-\begin{Lemma}{discrete-lax-milgram}
-  If the lemma of Lax-Milgram holds for $a(.,.)$ on $V$, it holds on
-  $V_n\subset V$. In particular, solvability of the Galerkin equations
-  is implied.
-\end{Lemma}
 
-\begin{proof}
-  Since coercivity and boundedness hold for all $u,v\in V$ they hold
-  in particular for all $u,v\in V_n$.
-\end{proof}
+% \begin{Lemma}{discrete-lax-milgram}
+%   If the lemma of Lax-Milgram holds for $a(.,.)$ on $V$, it holds on
+%   $V_n\subset V$. In particular, solvability of the Galerkin equations
+%   is implied.
+% \end{Lemma}
 
-\begin{Lemma}{galerkin-ortho}
-  Let $a(.,.)$ be a bilinear form on the Hilbert
-  space $V$.
-  Let $u \in V$ and $u_n\in V_n \subset V$ be the solution to the
-  weak formulation and its Galerkin approximation
-  \begin{gather*}
-    \begin{aligned}
-      a(u,v) &= f(v) & \qquad\forall v&\in V,\\
-      a(u_n,v_n) &= f(v_n) & \qquad\forall v_n&\in V_n,
-    \end{aligned}
-  \end{gather*}
-  respectively. Then, there holds the \define{Galerkin orthogonality}
-  \begin{align}
-    \label{eq:galerkin-ortho}
-    a(u-u_n,v_n) = 0 \qquad \forall v_n\in V_n.
-  \end{align}
-\end{Lemma}
+% \begin{proof}
+%   Since coercivity and boundedness hold for all $u,v\in V$ they hold
+%   in particular for all $u,v\in V_n$.
+% \end{proof}
 
-\begin{proof}
-  As $v_n\in V_n$ there holds $a(u,v_n)=f(v_n)$, too.
-  Then, there holds for an arbitrary $v_n\in V_n$
-  \begin{gather*}
-    a(u-u_n,v_n)=a(u,v_n)-a(u_n,v_n)=f(v_n)-f(v_n)=0.
-  \end{gather*}
-\end{proof}
+% \begin{Lemma}{galerkin-ortho}
+%   Let $a(.,.)$ be a bilinear form on the Hilbert
+%   space $V$.
+%   Let $u \in V$ and $u_n\in V_n \subset V$ be the solution to the
+%   weak formulation and its Galerkin approximation
+%   \begin{gather*}
+%     \begin{aligned}
+%       a(u,v) &= f(v) & \qquad\forall v&\in V,\\
+%       a(u_n,v_n) &= f(v_n) & \qquad\forall v_n&\in V_n,
+%     \end{aligned}
+%   \end{gather*}
+%   respectively. Then, there holds the \define{Galerkin orthogonality}
+%   \begin{align}
+%     \label{eq:galerkin-ortho}
+%     a(u-u_n,v_n) = 0 \qquad \forall v_n\in V_n.
+%   \end{align}
+% \end{Lemma}
 
-\begin{Lemma*}{cea}{Céa}
-  Let $a(.,.)$ be a bounded and elliptic bilinear form on the Hilbert
-  space $V$.  Let $u \in V$ and $u_n\in V_n \subset V$ be
-  the solution to the weak formulation and its Galerkin approximation
-  respectively. Then, there holds
-  \begin{gather}
-    \norm{u-u_n}_V \le \frac{M}{\alpha}
-    \inf_{v_n\in V_n}\norm{u-v_n}_V.
-  \end{gather}
-\end{Lemma*}
+% \begin{proof}
+%   As $v_n\in V_n$ there holds $a(u,v_n)=f(v_n)$, too.
+%   Then, there holds for an arbitrary $v_n\in V_n$
+%   \begin{gather*}
+%     a(u-u_n,v_n)=a(u,v_n)-a(u_n,v_n)=f(v_n)-f(v_n)=0.
+%   \end{gather*}
+% \end{proof}
 
-\begin{proof}
-  As $a(.,.)$ is coercive with $\alpha>0$ and bounded with $M>0$
-  we get for arbitrary $v_n\in V_n$
-  \begin{gather*}
-    \begin{aligned}
-      \alpha \norm{u-u_n}_V^2 &\le a(u-u_n,u-u_n) = a(u-u_n,u-v_n+v_n-u_n) \\
-      &= a(u-u_n,u-v_n) + \underbrace{a(u-u_n,v_n-u_n)}_{=0} \\
-      &\le M \norm{u-u_n}_V \norm{u-v_n}_V.
-    \end{aligned}
-  \end{gather*}
-  In the second line we applied the Galerkin orthogonality
-  as $v_n-u_n\in V_n$. Dividing by $\norm{u-u_n}_V$ there holds
-  \begin{gather*}
-    \norm{u-u_n}_V \leq \frac{M}{\alpha} \norm{u-v_n}_V.
-  \end{gather*}
-  As $v_n\in V_n$ was chosen arbitrary, we conclude
-  \begin{gather*}
-    \norm{u-u_n}_V \le \inf_{v_n\in V_n} \norm{u-v_n}_V.
-  \end{gather*}
-\end{proof}
+% \begin{Lemma*}{cea}{Céa}
+%   Let $a(.,.)$ be a bounded and elliptic bilinear form on the Hilbert
+%   space $V$.  Let $u \in V$ and $u_n\in V_n \subset V$ be
+%   the solution to the weak formulation and its Galerkin approximation
+%   respectively. Then, there holds
+%   \begin{gather}
+%     \norm{u-u_n}_V \le \frac{M}{\alpha}
+%     \inf_{v_n\in V_n}\norm{u-v_n}_V.
+%   \end{gather}
+% \end{Lemma*}
 
-\begin{Lemma}{fe-matrix}
-  For a finite element discretization of Poisson's equation with the
-  space $V_\mesh$, the Galerkin equations can be computed using the
-  following formulas:
-  \begin{alignat*}3
-    a_{ij} &= \int\limits_\domain \nabla v_j \cdot \nabla v_i \dx
-    &&= \int\limits_{\domain(\nodal^i)} \nabla v_j \cdot \nabla v_i \dx
-    &&= \sum_{\cell\in\mesh(\nodal^i)}\int\limits_\cell \nabla v_j \cdot \nabla v_i \dx\\
-    f_{i} &= \int\limits_\domain f v_i \dx
-    &&= \int\limits_{\domain(\nodal^i)} f v_i \dx
-    &&= \sum_{\cell\in\mesh(\nodal^i)}\int\limits_\cell f v_i \dx
-  \end{alignat*}
-\end{Lemma}
-
-\begin{Algorithm*}{matrix-assembling}{Assembling the matrix}
-  \begin{enumerate}
-  \item Start with a matrix $\mata = 0 \in \R^{n\times n}$
-  \item Loop over all cells $\cell\in\mesh$
-  \item On each cell $\cell$, compute a cell matrix
-    $\mata_\cell \in \R^{n_\cell\times n_\cell}$ by integrating
-    \begin{gather}
-      a_{\cell,ij} = \int_\cell \nabla p_{\cell,j}\cdot\nabla p_{\cell,i}\,dx,
-    \end{gather}
-    where $\{p_{\cell,i}\}$ is the shape function basis.
-  \item Assemble the cell matrices into the global matrix by
-    \begin{gather}
-      a_{\iota(i),\iota(j)} = a_{\iota(i),\iota(j)} + a_{\cell,ij}
-      \qquad i,j = 1,\dots,n_\cell.
-    \end{gather}
-  \end{enumerate}
-\end{Algorithm*}
+% \begin{proof}
+%   As $a(.,.)$ is coercive with $\alpha>0$ and bounded with $M>0$
+%   we get for arbitrary $v_n\in V_n$
+%   \begin{gather*}
+%     \begin{aligned}
+%       \alpha \norm{u-u_n}_V^2 &\le a(u-u_n,u-u_n) = a(u-u_n,u-v_n+v_n-u_n) \\
+%       &= a(u-u_n,u-v_n) + \underbrace{a(u-u_n,v_n-u_n)}_{=0} \\
+%       &\le M \norm{u-u_n}_V \norm{u-v_n}_V.
+%     \end{aligned}
+%   \end{gather*}
+%   In the second line we applied the Galerkin orthogonality
+%   as $v_n-u_n\in V_n$. Dividing by $\norm{u-u_n}_V$ there holds
+%   \begin{gather*}
+%     \norm{u-u_n}_V \leq \frac{M}{\alpha} \norm{u-v_n}_V.
+%   \end{gather*}
+%   As $v_n\in V_n$ was chosen arbitrary, we conclude
+%   \begin{gather*}
+%     \norm{u-u_n}_V \le \inf_{v_n\in V_n} \norm{u-v_n}_V.
+%   \end{gather*}
+% \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
