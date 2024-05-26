@@ -117,7 +117,19 @@
 \end{Definition}
 
 \begin{Example*}{shape-basis-functions}{Linear shape and basis functions}
-  
+  Given a set of six triangles, we obtain the shape functions
+  \begin{center}
+    \includegraphics[width=.15\textwidth]{./fig/linear-1.tikz}
+    \includegraphics[width=.15\textwidth]{./fig/linear-2.tikz}
+    \includegraphics[width=.15\textwidth]{./fig/linear-3.tikz}
+    \includegraphics[width=.15\textwidth]{./fig/linear-4.tikz}
+    \includegraphics[width=.15\textwidth]{./fig/linear-5.tikz}
+    \includegraphics[width=.15\textwidth]{./fig/linear-6.tikz}
+  \end{center}
+  By identifying the node value at the common vertex, these form a finite element basis function
+  \begin{center}
+    \includegraphics[width=.4\textwidth]{./fig/linear-hat.tikz}    
+  \end{center}
 \end{Example*}
 
 \begin{Notation}{global-local}
@@ -181,7 +193,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Shape function spaces on simplices}
+\section{Shape function spaces on simplices}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -278,7 +290,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Shape functions on tensor product cells}
+\section{Shape functions on quadrilaterals and hexahedra}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -470,11 +482,9 @@
   over the area.
 \end{example}
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The Galerkin equations and Céa's lemma}
+\section{The Galerkin equations and Céa's lemma}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -609,7 +619,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Mapped finite elements}
+\section{Mapped finite elements}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

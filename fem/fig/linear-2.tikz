@@ -19,7 +19,7 @@
 \draw[thick,fill={gray!50}] (F) -- (A) -- (P) -- cycle;
 
 % Draw the shape function
-\draw[fill={gray!20}] (A) -- (B) -- (Q);
+\draw[fill={gray!40}] (A) -- (B) -- (Q);
 
 \end{tikzpicture}
 
