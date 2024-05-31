@@ -390,7 +390,7 @@
   \end{xalignat}
   and there holds
   \begin{gather}
-    T = \Bigl\{x\in\R^d \Big| x = \sum \vertex_k\lambda_k \Bigr\}.
+    T = \Bigl\{\vx\in\R^d \Big| \vx = \sum \vertex_k\lambda_k \Bigr\}.
   \end{gather}
 \end{Definition}
 
@@ -401,6 +401,31 @@
     \vlambda = B_{\cell}\vx + b_{\cell}.
   \end{gather}
 \end{Lemma}
+
+\begin{proof}
+  We give an exemplary proof in two dimensions. There, we have the relation
+  \begin{gather}
+    \vx = \lambda_0 \vertex_0 + \lambda_1 \vertex_1 + \lambda_2 \vertex_2.
+  \end{gather}
+  Substituting $\lambda_0 = 1-\lambda_1 - \lambda_2$, we obtain
+  \begin{gather}
+    \vx = \vertex_0 + (\vertex_1-\vertex_0)\lambda_1 + (\vertex_2-\vertex_0)\lambda_2.
+  \end{gather}
+  Hence,
+  \begin{gather}
+    \begin{pmatrix}
+      x_1-x_0 & x_2-x_0\\
+      y_1-y_0 & y_2-y_0
+    \end{pmatrix}
+    \begin{pmatrix}
+      \lambda_1\\lambda_2
+    \end{pmatrix}
+    =
+    \vx - \vertex_0.
+  \end{gather}
+  The matrix is invertible if the points span a triangle,
+  which proves the affine relationship.
+\end{proof}
 
 \begin{Corollary}{barycentric-interpolation}
   The barycentric coordinates $\lambda_0,\dots,\lambda_d$ are the
