@@ -76,9 +76,9 @@
   A set of node functionals $\{\nodal_\cell^i\}_{i=1,\dots,n_\cell}$ is called
   \define{unisolvent} on $\shapespace(\cell)$ if for any vector
   $\vu = (u_1,\dots,u_{n_\cell})^T$ there exists a unique
-  $u\in \shapespace(\cell)$ such that
+  $p\in \shapespace(\cell)$ such that
   \begin{gather}
-    \nodal_\cell^i(u) = \vu_i,\quad i=1,\dots,n_\cell.
+    \nodal_\cell^i(p) = u_i,\quad i=1,\dots,n_\cell.
   \end{gather}
 
   A \define{finite element} consists of a mesh cell $T$ with a shape
@@ -93,16 +93,67 @@
   $\shapespace$.
 \end{intro}
 
+\begin{Lemma}{shape-function-basis}
+  Let $\nodal^1,\dots,\nodal^{n_{\cell}}$ be the node functionals of the
+  finite element and let $\phi_1,\dots,\phi_{n_{\cell}}$ be an arbitrary
+  basis of the shape function space.  Let $\matg$ be the Gramian matrix
+  between the node functionals and the shape functions with entries
+  \begin{gather}
+    g_{ik} = \nodal^i(\phi_k).
+  \end{gather}
+  Then, the set of node functionals is unisolvent on $\shapespace$ if
+  and only if $\matg$ is invertible. Furthermore, a
+  basis $\{p_k\}$ can be computed by
+  \begin{gather}
+    \begin{pmatrix}
+      p_1(\vx)\\\vdots\\p_{n_{\cell}}(\vx)
+    \end{pmatrix}
+    = \matg^{-1}
+    \begin{pmatrix}
+      \phi_1(\vx)\\\vdots\\\phi_{n_{\cell}}(\vx)
+    \end{pmatrix},
+  \end{gather}
+  such that $\nodal^i(p_k) = \delta_{ik}$.
+\end{Lemma}
+
+\begin{proof}
+  Let for brevity $n=n_{\cell}$. Writing the polynomial $p$ in the
+  definition of unisolvence as a linear combination
+  \begin{gather}
+    p(\vx) = \sum_{k=1}^n a_k \phi_k(\vx),
+  \end{gather}
+  proving unisolvence reduces to finding a unique coefficient vector
+  $\va$ for any vector $\vu$ of node functional evaluations. There holds
+  \begin{gather}
+    \nodal^i(p)
+    = \nodal^i\left(\sum_k a_k\phi_k\right)
+    = \sum_k a_k \nodal^i(\phi_k)
+    = \sum_k a_k g_{ik}.
+  \end{gather}
+  Hence, the condition $\nodal^i(p) = u_i$ for $i=1,\dots,n$ amounts
+  to the linear system
+  \begin{gather}
+    \matg\va = \vu,
+  \end{gather}
+  which has a unique solution for all $\vu$ if and only if $\matg$ is
+  invertible. The second statement is confirmed by simple computation.
+\end{proof}
+
 \begin{Notation}{dofs}
   If the node functionals $\nodal^i$ are unisolvent on
-  $\shapespace(\cell)$, then, there is a basis $\{p_k\}$ of $\shapespace(\cell)$
-  such that
+  $\shapespace(\cell)$, we refer to the basis $\{p_k\}$ of
+  $\shapespace(\cell)$ admitting
   \begin{gather}
-    \nodal^i(p_k) = \delta_{ik}.
+    \nodal^i(p_k) = \delta_{ik},
   \end{gather}
-  We refer to $\{p_k\}$ as \define{shape function basis} and use the
-  term \define{degrees of freedom} with a certain sloppyness for both the node functionals and
-  the basis functions.
+  as \define{shape function basis}. For any function $u\in C^\infty$,
+  it allows to compute the interpolating polynomial
+  $p \in \shapespace(\cell)$ by the simple summation
+  \begin{gather}
+    p(\vx) = \sum_{k=1}^{n_\cell} \nodal^k(u) p_k(\vx).
+  \end{gather}
+  We use the term \define{degrees of freedom} with a certain
+  sloppyness for both the node functionals and the basis functions.
 \end{Notation}
 
 \begin{Example}{nodes-linear-triangle}
@@ -115,28 +166,6 @@
   linear polynomials which are one in one of the vertices and zero in
   the other two.
 \end{Example}
-
-\begin{Lemma}{shape-function-basis}
-  Let $\nodal^1,\dots,\nodal^{n_T}$ be the node functionals of the
-  finite element and let $\phi_1,\dots,\phi_{n_T}$ be an arbitrary
-  basis of the shape function space.  Let $\matg$ be the Gramian matrix
-  between the node functionals and the shape functions with entries
-  \begin{gather}
-    g_{ik} = \nodal^i(\phi_k).
-  \end{gather}
-  Then, the set of node functionals is unisolvent on $\shapespace$ if
-  and only if $\matg$ is invertible. Furthermore, the shape function
-  basis $\{p_k\}$ can be computed by
-  \begin{gather}
-    \begin{pmatrix}
-      p_1(\vx)\\\vdots\\p_{n_T}(\vx)
-    \end{pmatrix}
-    = \matg^{-1}
-    \begin{pmatrix}
-      \phi_1(\vx)\\\vdots\\\phi_{n_T}(\vx)
-    \end{pmatrix}.
-  \end{gather}
-\end{Lemma}
 
 \section{Global properties of finite elements}
 
@@ -163,22 +192,32 @@
     function $u$.
 \end{Example*}
 
-\begin{Definition}{fe-space}
-  The \define{finite element space} on the mesh $\mesh$, denoted by
-  $V_\mesh$ is a subset of the concatenation of all shape function
-  spaces,
-  \begin{gather}
-    V_\mesh \subset \bigl\{ f\in L^2(\domain) \big|
-    f_{|\cell} \in \shapespace(\cell) \bigr\}.
-  \end{gather}
-  
-  It has one basis function for each (global) degree of freedom, such
-  that the restriction of this basis function to a cell is the
-  corresponding shape function.  The resulting dimension is
-  \begin{gather}
-    n = \dim V_\mesh \le \sum n_\cell.
-  \end{gather}
-\end{Definition}
+\begin{intro}
+  After the duplicated degrees of freedom on boundary facets of
+  adjacent cells have been eliminated, a reduced set of degrees of
+  freedom remains. The cardinality of this reduces set determines the
+  dimension of the finite element space on the whole mesh.
+
+  For each of those remaining degrees of freedom, we can define a
+  basis function for the global finite element space. On each of the
+  adjacent cells, it is equal to the shape function associeated with
+  the corresponding local degree of freedom.
+
+  After an example, we will formalize this description.
+\end{intro}
+
+\begin{Problem}{counting-dofs}
+  What are the numbers of degrees of freedom in terms of the
+  triangles, edges, and vertices of a mesh for the following local
+  node functionals?
+  \begin{center}
+    \includegraphics[width=2.5cm]{mixed/fig/p1-p.tikz}
+    \hspace{10mm}
+    \includegraphics[width=2.5cm]{mixed/fig/p2-p.tikz}
+    \hspace{10mm}
+    \includegraphics[width=2.5cm]{mixed/fig/p3-p.tikz}
+  \end{center}
+\end{Problem}
 
 \begin{Example*}{shape-basis-functions}{Linear shape and basis functions}
   Given a set of six triangles, we obtain the shape functions
@@ -196,11 +235,33 @@
   \end{center}
 \end{Example*}
 
+\begin{Definition}{fe-space}
+  The \define{finite element space} on the mesh $\mesh$, denoted by
+  $V_\mesh$ is a subset of the concatenation of all shape function
+  spaces,
+  \begin{gather}
+    V_\mesh \subset \bigl\{ f\in L^2(\domain) \big|
+    f_{|\cell} \in \shapespace(\cell) \bigr\}.
+  \end{gather}
+  
+  It has one basis function for each (global) degree of freedom (after the elimination above), such
+  that
+  \begin{gather}
+    \nodal^i(v_k) = \delta_{ik}.
+  \end{gather}
+
+  The restriction of this basis function to a cell is the
+  corresponding shape function.  The resulting dimension is
+  \begin{gather}
+    n = \dim V_\mesh \le \sum n_\cell.
+  \end{gather}
+\end{Definition}
+
 \begin{Notation}{global-local}
   When we enumerate the degrees of freedom of $V_\mesh$, we obtain a
   global numbering of degrees of freedom $\nodal^i$ with
   $i=1,\dots,n$. For each mesh cell, we have a local numbering
-  $\nodal_\cell^j$ with $j=1,\dots,n_T$. By construction of the finite
+  $\nodal_\cell^j$ with $j=1,\dots,n_{\cell}$. By construction of the finite
   element space, there is a unique global index $i$, such that
   $\nodal_\cell^j(f) = \nodal^i(f)$ for all cells $\cell$ and local
   indices $j$. The converse is not true due to the identification
@@ -232,6 +293,12 @@
     \operatorname{supp}(v_i) \subset \domain\left(\nodal^i\right).
   \end{gather*}
 \end{Lemma}
+
+\begin{proof}
+  A basis function $v_i$ evaluates to zero at all global node
+  functionals $\nodal^j$ for $j\neq i$. Hence, it is zero on all cells
+  not sharing $\nodal^i$.
+\end{proof}
 
 \begin{Lemma}{mesh-continuity}
   Let $\mesh$ be a subdivision of $\domain$, and let $u$ be a function
@@ -328,10 +395,10 @@
 \end{Definition}
 
 \begin{Lemma}{barycentric-affine}
-  There is a matrix $B_T\in \R^{d+1\times d}$ and a vector
-  $b_T\in\R^{d+1}$, such that
+  There is a matrix $B_{\cell}\in \R^{d+1\times d}$ and a vector
+  $b_{\cell}\in\R^{d+1}$, such that
   \begin{gather}
-    \vlambda = B_T\vx + b_T.
+    \vlambda = B_{\cell}\vx + b_{\cell}.
   \end{gather}
 \end{Lemma}
 
@@ -393,7 +460,7 @@
 \begin{remark}
   The functions $\lambda_i(x)$ are the shape functions of the linear
   $P_1$ element on $T$. They allow us to define basis functions on the
-  cell $T$ without use of a reference element $\widehat T$.
+  cell $T$ without use of a reference element.
 
   Note that $\lambda_i\equiv 0$ on the face opposite to the
   vertex $x_i$.
@@ -868,7 +935,7 @@
     \Phi = \Phi_O \circ \Phi_S \circ \Phi_W,
   \end{gather}
   where $\Phi_O$ is a combination of translation and rotation,
-  $\Phi_S$ is a scaling with a characteristic length $h_T$, and
+  $\Phi_S$ is a scaling with a characteristic length $h_{\cell}$, and
   $\Phi_W$ is a warping function not changing the characteristic length.
 \end{Assumption}
 
@@ -937,7 +1004,7 @@
 
 \begin{proof}
   By the chain rule,
-  $\nabla \Phi_T = \nabla \Phi_O \nabla \Phi_S \nabla \Phi_W$. By
+  $\nabla \Phi_{\cell} = \nabla \Phi_O \nabla \Phi_S \nabla \Phi_W$. By
   construction, $\nabla\Phi_O$ is an orthogonal matrix, such that
   \begin{gather*}
     \norm{\nabla\Phi_O} = \norm{\nabla\Phi_O^{-1}} = 1.
@@ -958,9 +1025,9 @@
   \end{gather*}
   such that the case $k=0$ is proven immediately by
   \begin{gather*}
-    h_T^d d_\cell^2 \int_{\refcell} \refu^2 \dvxref
+    h_{\cell}^d d_\cell^2 \int_{\refcell} \refu^2 \dvxref
     \le \int_\cell u^2 \dvx
-    \le h_T^d D_\cell^2 \int_{\refcell} \refu^2 \dvxref
+    \le h_{\cell}^d D_\cell^2 \int_{\refcell} \refu^2 \dvxref
   \end{gather*}
   By the chain rule, we have
   \begin{gather*}
