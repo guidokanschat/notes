@@ -11,15 +11,15 @@
 \coordinate (Q) at (3,6);
 
 % Draw triangles
-\draw[thick,fill={gray!50}] (A) -- (B) -- (P) -- cycle;
-\draw[thick,fill={gray!50}] (B) -- (C) -- (P) -- cycle;
+\draw[thick,fill={blue!50}] (A) -- (B) -- (P) -- cycle;
+\draw[thick,fill={blue!50}] (B) -- (C) -- (P) -- cycle;
 \draw[thick] (C) -- (D) -- (P) -- cycle;
-\draw[thick,fill={gray!50}] (D) -- (E) -- (P) -- cycle;
-\draw[thick,fill={gray!50}] (E) -- (F) -- (P) -- cycle;
-\draw[thick,fill={gray!50}] (F) -- (A) -- (P) -- cycle;
+\draw[thick,fill={blue!50}] (D) -- (E) -- (P) -- cycle;
+\draw[thick,fill={blue!50}] (E) -- (F) -- (P) -- cycle;
+\draw[thick,fill={blue!50}] (F) -- (A) -- (P) -- cycle;
 
 % Draw the shape function
-\draw[fill={gray!60}] (C) -- (D) -- (Q);
+\draw[fill={blue!60}] (C) -- (D) -- (Q);
 
 
 \end{tikzpicture}

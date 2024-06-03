@@ -42,9 +42,9 @@
  % \filldraw (F) circle (2pt) node[anchor=east] {F};
 
 % Draw the hat function
-\draw[fill={gray!30}] (F) -- (A) -- (Q);
-\draw[fill={gray!20}] (A) -- (B) -- (Q);
-\draw[fill={gray!10}] (B) -- (C) -- (Q);
+\draw[fill={blue!30}] (F) -- (A) -- (Q);
+\draw[fill={blue!40}] (A) -- (B) -- (Q);
+\draw[fill={blue!50}] (B) -- (C) -- (Q);
 
 
 \end{tikzpicture}

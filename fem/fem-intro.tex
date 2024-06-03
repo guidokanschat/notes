@@ -244,8 +244,8 @@
     f_{|\cell} \in \shapespace(\cell) \bigr\}.
   \end{gather}
   
-  It has one basis function for each (global) degree of freedom (after the elimination above), such
-  that
+  We choose a basis which has one basis function for each (global)
+  degree of freedom (after the elimination above), such that
   \begin{gather}
     \nodal^i(v_k) = \delta_{ik}.
   \end{gather}
@@ -371,7 +371,14 @@
   \end{enumerate}
 \end{Algorithm*}
 
-
+\begin{remark}
+  \slideref{Lemma}{fe-matrix} and
+  \slideref{Algorithm}{matrix-assembling} suggest that the matrix of
+  the Galerkin equations is sparse. Indeed, we will always consider
+  finite element meshes, where only few elements share a common
+  boundary facet. Hence, we can use data structures and algorithms for
+  sparse matrices.
+\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -418,7 +425,7 @@
       y_1-y_0 & y_2-y_0
     \end{pmatrix}
     \begin{pmatrix}
-      \lambda_1\\lambda_2
+      \lambda_1\\ \lambda_2
     \end{pmatrix}
     =
     \vx - \vertex_0.
@@ -469,27 +476,37 @@
           \begin{xalignat*}2
           \phi_{iii} &= \tfrac12 \lambda_i(3\lambda_i-1)(3\lambda_i-2)
           &i&=0,1,2\\
-          \phi_{ij} &= \tfrac92\lambda_i\lambda_j(3\lambda_j-1)
+          \phi_{ijj} &= \tfrac92\lambda_i\lambda_j(3\lambda_j-1)
           &j&\neq i\\
-          \phi_0 &= 27\lambda_0\lambda_1\lambda_2
+          \phi_{012} &= 27\lambda_0\lambda_1\lambda_2
         \end{xalignat*}
         \end{minipage}}
         \\\hline
     \end{tabular}
-    \caption{Degrees of freedom and shape functions of simplicial elements
+    \caption{Degrees of freedom defined as point values in
+      interpolation points and shape functions of triangular elements
       in terms of barycentric coordinates}
     \label{tab:barycentric-shapes}
   \end{table}
-\end{example}
 
-\begin{remark}
-  The functions $\lambda_i(x)$ are the shape functions of the linear
+  The functions $\lambda_i(\vx)$ are the shape functions of the linear
   $P_1$ element on $T$. They allow us to define basis functions on the
   cell $T$ without use of a reference element.
 
   Note that $\lambda_i\equiv 0$ on the face opposite to the
-  vertex $x_i$.
-\end{remark}
+  vertex $\vx_i$.
+  
+  We discuss now, why the quadratic functions in the table are the
+  shape function basis. First, we observe that at the midpoint
+  $\vx_{ij}$ of the edge between $\vx_i$ and $\vx_j$, we have
+  $\lambda_i = \lambda_j = \nicefrac12$. Hence,
+  $\phi_{ij}(\vx_{ij}) = 1$. Furthermore, this function is zero on
+  both other edges, in particular in all other interpolation points.
+
+  The function $\phi_{ii}$ is one for $\lambda_i = 1$ and zero for
+  $\lambda_i=\nicefrac12$. Furthermore, it is zero on the opposing
+  edge. Hence, it also fulfills the interpolation condition.
+\end{example}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1077,6 +1094,20 @@
   of the mesh cell deviates from the reference cell. For instance, it
   is one for squares.
 \end{Remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Essential boundary conditions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{intro}
+  In the introduction of weak formulations, we have seen that
+  Dirichlet boundary conditions are modeled by modifying the function
+  space, for instance by replacing $H^1(\domain)$ by
+  $H^1_0(\domain)$. In this section, we discuss the application of
+  this concept in the context of finite element spaces.
+\end{intro}
 
 %%% Local Variables: 
 %%% mode: latex
