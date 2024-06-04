@@ -315,12 +315,18 @@
   We have $V_\mesh\subset C(\overline{\domain})$ if and only if for
   every facet $F$ of dimension $d_F < d$ there holds that
   \begin{enumerate}
-  \item the traces of the spaces $\shapespace(\cell)$ on $F$ coincide
+  \item the trace spaces of the spaces $\shapespace(\cell)$ on $F$ coincide
     for all cells $\cell$ having $F$ as a facet,
-  \item The node functionals associated to the facet are unisolvent on
+  \item the node functionals associated to the facets are identified
+    in the right manner between the cells, and
+  \item the node functionals associated to the facet are unisolvent on
     this trace space.
   \end{enumerate}
 \end{Lemma}
+
+\begin{todo}
+  Discuss how to identify geometrically identical node functionals!
+\end{todo}
 
 \begin{Definition}{Galerkin-equations}{Galerkin equations}
   By restricting the weak formulation to the finite element space $V_{\mesh}$, we obtain the \define{Galerkin equations}
@@ -357,7 +363,7 @@
   \begin{enumerate}
   \item Start with a matrix $\mata = 0 \in \R^{n\times n}$
   \item Loop over all cells $\cell\in\mesh$
-  \item On each cell $\cell$, compute a cell matrix
+  \item On each cell $\cell$, compute the entries of the cell matrix
     $\mata_\cell \in \R^{n_\cell\times n_\cell}$ by integrating
     \begin{gather}
       a_{\cell,ij} = \int_\cell \nabla p_{\cell,j}\cdot\nabla p_{\cell,i}\,dx,
@@ -380,6 +386,19 @@
   sparse matrices.
 \end{remark}
 
+\begin{remark}
+  As known from courses in numerical linear algebra, the linear system
+  can be solved using an iterative solver, if the mesh consists of
+  many cells and the matrix size is huge. For symmetric problems, the
+  conjugate gradient method is the solver of choice. We will discuss
+  its convergence properties and preconditioning techniques later in
+  this class.
+
+  For smaller meshes, a so-called sparse direct solver can be
+  used. These compute an LU or Choleski factorization with limited
+  fill-in by reordering matrix entries.
+\end{remark}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Shape function spaces on simplices}
@@ -389,15 +408,15 @@
 \begin{Definition}{barycentric-coordinates}
   A simplex $\cell\in \R^d$ with vertices $\vertex_0,\dots,\vertex_d$
   is described by a set of $d+1$ \define{barycentric coordinates}
-  $\vlambda = (\lambda_0,\dots,\lambda_d)^T$ such that
+  $\vlambda = (\lambda_0,\dots,\lambda_d)^T$. These are linear functions such that
   \begin{xalignat}2
-    0\le\lambda_i &\le 1& i&=0,\dots,d;\\
+    0\le\lambda_i(\vx) &\le 1& i&=0,\dots,d;\quad \vx\in\cell\\
     \lambda_i(\vertex_j) &= \delta_{ij}& i,j&=0,\dots,d\\
-    \sum \lambda_i(\vx) &= 1,
+    \sum \lambda_i(\vx) &= 1,&\vx&\in\cell
   \end{xalignat}
   and there holds
   \begin{gather}
-    T = \Bigl\{\vx\in\R^d \Big| \vx = \sum \vertex_k\lambda_k \Bigr\}.
+    \cell = \Bigl\{\vx\in\R^d \Big| \vx = \sum \vertex_k\lambda_k \Bigr\}.
   \end{gather}
 \end{Definition}
 
@@ -442,6 +461,7 @@
 \end{Corollary}
 
 \begin{example}
+  \label{example:barycentric-shape-functions}
   We can use barycentric coordinates to define interpolating polynomials on
   simplicial meshes easily, as in
   Table~\ref{tab:barycentric-shapes}.
@@ -507,6 +527,42 @@
   $\lambda_i=\nicefrac12$. Furthermore, it is zero on the opposing
   edge. Hence, it also fulfills the interpolation condition.
 \end{example}
+
+\begin{remark}
+  The barycentric coordinates of all boundary facets except vertices
+  of a simplex are obtained by setting all other barycentric
+  coordinates to zero. Hence, if two simplices share a facet, the
+  representation of this facet by barycentric coordinates from both
+  simplices coincides.
+
+  Since the shape functions are typically provided using the
+  barycentric coordinates in a symmetric way, we also obtain a
+  reliable way to obtain matching trace spaces from the different
+  simplices.
+\end{remark}
+
+\begin{example}
+  Take the quadratic shape functions in
+  Example~\ref{example:barycentric-shape-functions} and their
+  restriction to the edge spanned by vertices $\vx_0$ and
+  $\vx_1$. Naming the one-dimensional coordinate on the edge
+  $t\in[0,1]$, we obtain the basis functions from the table as
+  \begin{gather}
+    \phi_{00}(t) = 2t^2-t,\qquad
+    \phi_{11}(t) = 2(1-t)^2 - (1-t),
+    \qquad
+    \phi_{01}(t) = 4t(1-t).
+  \end{gather}
+  These functions are independent of the location of the vertex
+  $\vx_2$, and hence coincide for all simplices sharing the edge
+  between $\vx_0$ and $\vx_1$.
+\end{example}
+
+\begin{example}
+  Vice-versa, we can use this construction to obtain finite elements
+  in higher dimension. See the discussion in class.
+\end{example}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -611,9 +667,9 @@
   $\Q_k$ on the $\delta$-dimensional facets of the reference cube
   $\refcell = (0,1)^d$ is the $\delta$-dimensional space $\Q_k$.
 
-  The traces from two cells sharing the same face coincide, if the
-  mapping is continuous. Therefore, continuity can be achieved by
-  unisolvent sets of node functionals on the face.
+  % The traces from two cells sharing the same face coincide, if the
+  % mapping is continuous. Therefore, continuity can be achieved by
+  % unisolvent sets of node functionals on the face.
 \end{Lemma}
 
 \begin{proof}
@@ -640,24 +696,24 @@
   \end{center}
 \end{Example*}
 
-\begin{Example*}{dg-q2}{Discontinuous basis functions}
-  \begin{center}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-08}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-15}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-20}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-27}
+% \begin{Example*}{dg-q2}{Discontinuous basis functions}
+%   \begin{center}
+%     \includegraphics[height=.20\textwidth]{graph/dgbasis1-08}
+%     \includegraphics[height=.20\textwidth]{graph/dgbasis1-15}
+%     \includegraphics[height=.20\textwidth]{graph/dgbasis1-20}
+%     \includegraphics[height=.20\textwidth]{graph/dgbasis1-27}
 
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-07}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-19}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-23}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-30}
+%     \includegraphics[height=.20\textwidth]{graph/dgbasis1-07}
+%     \includegraphics[height=.20\textwidth]{graph/dgbasis1-19}
+%     \includegraphics[height=.20\textwidth]{graph/dgbasis1-23}
+%     \includegraphics[height=.20\textwidth]{graph/dgbasis1-30}
 
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-26}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-33}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-24}
-    \includegraphics[height=.20\textwidth]{graph/dgbasis1-22}
-  \end{center}
-\end{Example*}
+%     \includegraphics[height=.20\textwidth]{graph/dgbasis1-26}
+%     \includegraphics[height=.20\textwidth]{graph/dgbasis1-33}
+%     \includegraphics[height=.20\textwidth]{graph/dgbasis1-24}
+%     \includegraphics[height=.20\textwidth]{graph/dgbasis1-22}
+%   \end{center}
+% \end{Example*}
 
 \begin{example}
   As a second example, we choose $d=2$ and the univariate space $\P_2$ with node functionals
@@ -795,6 +851,14 @@
 %   \end{gather*}
 % \end{proof}
 
+\begin{remark}
+  There remains the problem from the homework. Depending on the
+  orientation of a quadrilateral, the node functionals provided by
+  interpolation in the four corners are not unisolvent. Hence, we will
+  reconsider our introduction of shape function spaces in the next
+  section.
+\end{remark}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Mapped finite elements}
@@ -869,6 +933,15 @@
     \end{split}
   \end{gather}
 \end{Definition}
+
+\begin{remark}
+  Using mapped finite elements also opens a new avenue for computing
+  the integrals needed to form the Galerkin equations. Since we can
+  now integrate over the reference cell $\refcell$, we can use
+  tabulated quadrature formulas instead of computing integrals by
+  hand.
+\end{remark}
+
 
 \begin{Lemma}{mapped-norms-affine}
   Let $\refcell$ be the reference triangle and let $\cell$ be a
