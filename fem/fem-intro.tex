@@ -325,7 +325,11 @@
 \end{Lemma}
 
 \begin{todo}
-  Discuss how to identify geometrically identical node functionals!
+  \begin{enumerate}
+  \item Introduce the term ``conforming''
+  \item Discuss how to identify geometrically identical node functionals!
+  \item Example: $H^2$-conforming spaces
+  \end{enumerate}
 \end{todo}
 
 \begin{Definition}{Galerkin-equations}{Galerkin equations}
@@ -398,6 +402,32 @@
   used. These compute an LU or Choleski factorization with limited
   fill-in by reordering matrix entries.
 \end{remark}
+
+\begin{Example}{Argyris}
+  The following finite element is due to Argyris. Take the shape
+  function space $\P_5$ and the following node functionals on a
+  triangle:
+  \begin{itemize}
+  \item In each vertex, the function value, the first derivatives, and the second derivatives.
+  \item In the midpoint of each edge: the normal derivative.
+  \end{itemize}
+\end{Example}
+
+\begin{Problem}{Argyris}
+  Show that the node functionals of the Argyris element guarantee
+  continuously differentiable transitions between mesh cell. To do so,
+  follow these steps:
+  \begin{enumerate}
+  \item In which polynomial space is the trace of a function from the
+    shape function space on an edge? The trace of the derivatives?
+  \item Show that the node functionals uniquely determine the trace of
+    a function on the edge!
+  \item Why can we separate the gradient into tangential and normal
+    derivatives?
+  \item Why are the tangential derivatives continuous?
+  \item Show that the node functionals uniquely determine the normal derivatives.
+  \end{enumerate}
+\end{Problem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -558,10 +588,23 @@
   between $\vx_0$ and $\vx_1$.
 \end{example}
 
-\begin{example}
+\begin{remark}
   Vice-versa, we can use this construction to obtain finite elements
-  in higher dimension. See the discussion in class.
-\end{example}
+  in higher dimension. First, interpolation points and corresponding
+  shape functions are fixed on vertices and edges. The shape function
+  which eveluates to one in vertex $\vertex_i$ only depends on the
+  barycentric coordinate $\lambda_i$. All shape functions for interior
+  degrees of freedom on an edge between vertices $\vertex_i$ and
+  $\vertex_j$ contain the factor $\lambda_i\lambda_j$, such that they
+  vanish in both vertices. Those for triangles with vertices
+  $\vertex_i$, $\vertex_j$, and $\vertex_k$ contain the factor
+  $\lambda_i\lambda_j\lambda_k$ and vanish on the boundary on the
+  triangle. And so on. These functions are sometimes called
+  \putindex{bubble function}s, as they look like a bubble on a flat
+  surface.
+  % Note that the isolines of $\lambda_i$ on a triangle are parallel to
+  % the edge opposite to $\vertex_i$. Hence, if we multiply the same linear factors in the interior 
+\end{remark}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -906,6 +949,7 @@
       X_0 \\ Y_0
     \end{pmatrix} =: \matb_\cell \refvx + \vb_\cell
   \end{gather}
+  This definition extends to simplices in any dimension.
 \end{Example}
 
 \begin{Example}{mapping-bilinear}
@@ -915,11 +959,34 @@
   \putindex{bilinear mapping}
   \begin{gather}
     \Phi_\cell(\refvx)
-    = \vertex_0 (1-\refx)(1-\refy)
-    + \vertex_1 \refx(1-\refy)
-    + \vertex_2 (1-\refx)\refy
-    + \vertex_3 \refx\refy
+    = \bigl[\vertex_0 (1-\refx)
+    + \vertex_1 \refx\bigr] (1-\refy)
+    + \bigl[\vertex_2 (1-\refx)
+    + \vertex_3 \refx\bigr]\refy.
   \end{gather}
+\end{Example}
+
+\begin{Example}{mapping-trilinear}
+  In three dimensions, the reference for a hexahedral mesh is the
+  reference cube $\refcell = (0,1)^3$. The \putindex{trilinear
+    mapping} to the mesh cell $\cell$ spanned by the vertices
+  $\vertex_0$ to $\vertex_7$ is a straightforward extension of the
+  bilinear mapping, namely
+  \begin{gather}
+    \begin{split}
+      \Phi_\cell(\refvx)
+      &= \Bigl[\bigl[\vertex_0 (1-\refx)
+      + \vertex_1 \refx\bigr] (1-\refy)
+      + \bigl[\vertex_2 (1-\refx)
+      + \vertex_3 \refx\bigr]\refy\Bigr] (1-\refz)\\
+      &+ \Bigl[\bigl[\vertex_4 (1-\refx)
+      + \vertex_5 \refx\bigr] (1-\refy)
+      + \bigl[\vertex_6 (1-\refx)
+      + \vertex_7 \refx\bigr]\refy\Bigr] \refz.      
+    \end{split}
+  \end{gather}
+  Note that in this case the faces of the cell $\cell$ are in general
+  not planar, but bilinear surfaces.
 \end{Example}
 
 \begin{Definition}{mapped-fe}
