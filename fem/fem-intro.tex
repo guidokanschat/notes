@@ -33,6 +33,13 @@
   \end{figure}
 \end{example}
 
+\begin{Definition}{conforming}
+  A finite element space $V_{\mesh}$ is called \define{conforming}
+  with a function space $V$, if $V_{\mesh} \subset V$. We will for
+  instance see spaces which are $H^1$-conforming, such that each
+  finite element function is also in $H^1$.
+\end{Definition}
+
 \section{Meshes}
 
 \begin{Definition}{facets}
@@ -326,7 +333,6 @@
 
 \begin{todo}
   \begin{enumerate}
-  \item Introduce the term ``conforming''
   \item Discuss how to identify geometrically identical node functionals!
   \item Example: $H^2$-conforming spaces
   \end{enumerate}
@@ -617,7 +623,7 @@
   The space of \define{tensor product polynomials} of degree $k$ in
   $d$ dimensions, denoted as $\Q_k$ consists of polynomials of degree
   up to $k$ in each variable. Given a basis for one-dimensional
-  polynomials $\{p_i\}_{i=0,\dots,k}$, a natural basis for $\Q_k$ is
+  polynomials $\{p_i\}_{i=0,\dots,k}\subset \P_k$, a natural basis for $\Q_k$ is
   the \define{tensor product basis}
   \begin{gather}
     \label{eq:fem-intro:1}
@@ -625,6 +631,9 @@
     = p_{i_1}\otimes \dots\otimes p_{i_d}(\vx)
     = \prod_{k=1}^d p_{i_k}(x_k).
   \end{gather}
+  In general, an object of the form $q_1\otimes \dots\otimes q_d$ with
+  $q_i\in\P_k$ are called \define{elementary tensor} or \define{rank
+    one tensor}.
 \end{Definition}
 
 \begin{remark}
@@ -800,6 +809,75 @@
   Thus, the tensor product of two line integrals becomes the integral
   over the area.
 \end{example}
+
+\begin{Example}{Bogner-Fox-Schmit}
+  The Bogner-Fox-Schmit element employs the polynomial space $\Q_3$ in
+  two dimensions and as node functionals in each vertex $\vertex_i$
+  \begin{itemize}
+  \item the function value $p(\vertex_i)$,
+  \item the first derivatives $\nabla p(\vertex_i)$, and
+  \item the mixed second derivative $\partial_{xy}p(\vertex_i)$.
+  \end{itemize}
+  When used on a Cartesian mesh of squares, it generates a finite
+  element space of continuously differentiable functions.
+\end{Example}
+
+\begin{Lemma}{Bogner-Fox-Schmit}
+  The node functionals of the Bogner-Fox-Schmit element are unisolvent
+  on $\Q_3$. Furthermore, the node functionals associated to an edge
+  and its vertices uniquely identify the traces of a polynomial in
+  $\Q_3$and its first derivatives on each edge of a quadrilateral.
+\end{Lemma}
+
+\begin{proof}
+  We first show, that the node functionals are obtained by tensor
+  products of the standard Hermite interpolation conditions in one
+  dimension. There, the interpolating polynomial $p\in\P_3$ of a
+  function $u\in C^1$ on the interval $[0,1]$ is uniquely determined
+  by the conditions
+  \begin{xalignat*}2
+    p(0) &= u(0), &p'(0) &= u'(0),\\
+    p(1) &= u(1), &p'(1) &= u'(1).
+  \end{xalignat*}
+  Now let's look at an elementary tensor product polynomial
+  $\phi(x,y) = p(x)q(y)$. Applying the interpolation conditions for
+  instance at a vertex $\vertex = (0,0)$ in $x$- and $y$-directions,
+  they uniquely identify
+  \begin{gather}
+    \begin{split}
+      p(0)q(0) &= \phi(\vertex),\\
+      p'(0)q(0) &= \partial_{x} \phi(\vertex),\\
+      p(0)q'(0) &= \partial_{y} \phi(\vertex),\\
+      p'(0)q'(0) &= \partial_{xy}\phi(\vertex).
+    \end{split}
+  \end{gather}
+  Since the elementary tensors form a basis of the tensor product
+  space and the node functionals are linear, the node functionals on
+  the right hand sides are indeed the tensor products of
+  one-dimensional hermite interpolation, and hence unisolvent on the
+  tensor product space $\Q_3 = \P_3\otimes \P_3$.
+
+  Consider now for instance the edge $(0,0)$ to $(1,0)$, hence the
+  pairs $(x,0)$ with $x\in(0,1)$. The trace of $\Q_3$ on this edge
+  simply consists of the polynomials in $\P_3$ in $x$ since for any elementary tensor product polynomial
+  $\phi(x,y) = p(x)q(y)$ the trace is $p(x)q(0)$. These are
+  uniquely identified by the four node functionals
+  \begin{gather}
+    \phi(0,0), \partial_{x} \phi(0,0), \phi(1,0), \partial_{x} \phi(1,0).
+  \end{gather}
+  The tangential derivative is uniquely identified as
+  $\partial_x \phi(x,0) = p'(x)q(0)$ The normal derivative on such an
+  edge is
+  \begin{gather}
+    \partial_y \phi(x,0) = p(x)q'(0) \in\P_3.
+  \end{gather}
+  
+  This is again identified uniquely by Hermite interpolation with the
+  functionals
+  \begin{gather}
+    \partial_{y}\phi(0,0), \partial_{xy} \partial_{y}\phi(0,0), \phi(1,0), \partial_{xy} \phi(1,0).
+  \end{gather}
+\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
