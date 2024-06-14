@@ -15,32 +15,33 @@
   since it implies the same asymptotic order.
 \end{Notation}
 
-\begin{example}
-  The interpolation estimate~\eqref{eq:fe-interpolation} could be written as
-  \begin{align*}
-    \norm{u-I_h u}_{m;h} \lesssim h^{k+1-m} \snorm{u}_{k+1;h},\\
-    \intertext{instead of}
-    \norm{u-I_h u}_{m;h} \le c h^{k+1-m} \snorm{u}_{k+1;h}.
-  \end{align*}
-  The statement of the equivalence of two norms becomes
-  \begin{gather*}
-    \norm{\cdot}_X \simeq \norm{\cdot}_Y,
-  \end{gather*}
-  while 
-  \begin{gather*}
-    \norm{\cdot}_X \lesssim \norm{\cdot}_Y
-  \end{gather*}
-  states that the $Y$-norm is not weaker than the $X$-norm.
-\end{example}
+% \begin{example}
+%   The interpolation estimate~\eqref{eq:fe-interpolation} could be written as
+%   \begin{align*}
+%     \norm{u-I_h u}_{m;h} \lesssim h^{k+1-m} \snorm{u}_{k+1;h},\\
+%     \intertext{instead of}
+%     \norm{u-I_h u}_{m;h} \le c h^{k+1-m} \snorm{u}_{k+1;h}.
+%   \end{align*}
+%   The statement of the equivalence of two norms becomes
+%   \begin{gather*}
+%     \norm{\cdot}_X \simeq \norm{\cdot}_Y,
+%   \end{gather*}
+%   while 
+%   \begin{gather*}
+%     \norm{\cdot}_X \lesssim \norm{\cdot}_Y
+%   \end{gather*}
+%   states that the $Y$-norm is not weaker than the $X$-norm.
+% \end{example}
 
 \begin{Definition}{mass-stiffness}
   Let $\mesh_h$ be a mesh on the domain $\domain$ and $V_h$ a finite
   element space with basis $\{\phi_i\}$. Then, the matrix associated
-  with the $L^2$-inner product,
+  with the $L^2$-inner product with entries
   \begin{gather*}
     m_{ij} = \int_\Omega \phi_j(x) \phi_i(x) \dx,
   \end{gather*}
-  is called \define{mass matrix}. The matrix associated with the
+  is called \define{mass matrix}.
+  The matrix associated with the
   bilinear form of the equation is called \define{stiffness matrix},
   \begin{gather*}
     a_{ij} = a(\phi_j,\phi_i).
@@ -71,16 +72,17 @@
   % \end{gather*}
   % The argument for $\lambda(\matm)$ is more subtle. 
   For any mesh cell
-  $\cell\in\mesh_h$, let $\vecx_T$ be the entries of the vector $\vecx$ which
+  $\cell\in\mesh_h$, let $\vecx_{\cell}$ be the entries of the vector $\vecx$ which
   belong to node values of the cell $\cell$. Let $\matm_\cell$ be the cell
   mass matrix obtained by restricting the $L^2$-inner product to
   $\cell$. Then,
   \begin{gather*}
-    \norm{u_h}_{L^2(\domain)}^2 \vecx^T \matm_h \vecx
-    = \sum_{T\in\T_h} \vecx^T_T \matm_T \vecx_T
+    % \norm{u_h}_{L^2(\domain)}^2
+    \vecx^T \matm_h \vecx
+    = \sum_{\cell\in\T_h} \vecx^T_{\cell} \matm_{\cell} \vecx_{\cell}
     \begin{cases}
-    \ge \min\limits_{T\in\T_h} \frac{\vecx^T_T \matm_T \vecx_T}{\abs{\vecx_T}} \sum_{T\in\T_h} \abs{\vecx_T}^2 \ge \lambda(\matm_T) \abs{\vecx}^2,\\
-    \le \max\limits_{T\in\T_h} \frac{\vecx^T_T \matm_T \vecx_T}{\abs{\vecx_T}} \sum_{T\in\T_h} \abs{\vecx_T}^2 \le c \Lambda(\matm_T) \abs{\vecx}^2,
+    \ge \min\limits_{\cell\in\T_h} \frac{\vecx^T_{\cell} \matm_{\cell} \vecx_{\cell}}{\abs{\vecx_{\cell}}} \sum_{\cell\in\T_h} \abs{\vecx_{\cell}}^2 \ge \lambda(\matm_{\cell}) \abs{\vecx}^2,\\
+    \le \max\limits_{\cell\in\T_h} \frac{\vecx^T_{\cell} \matm_{\cell} \vecx_{\cell}}{\abs{\vecx_{\cell}}} \sum_{\cell\in\T_h} \abs{\vecx_{\cell}}^2 \le c \Lambda(\matm_{\cell}) \abs{\vecx}^2,
     \end{cases}
   \end{gather*}
   where the constant in the upper bound is due to degrees of freedom
@@ -89,8 +91,8 @@
   \begin{gather}
     \lambda(\matm_\cell) \le \frac{\vecx^T \matm_h \vecx}{\abs{\vecx}^2} \le c \Lambda(\matm_\cell).
   \end{gather}
-  In order to estimate the eigenvalues of $\matm_T$, we note that for
-  a unisolvent element, the norms $\abs{\vecx_T}$ and $\norm{u}_{0,T}$ are
+  In order to estimate the eigenvalues of $\matm_{\cell}$, we note that for
+  a unisolvent element, the norms $\abs{\vecx_{\cell}}$ and $\norm{u}_{0,T}$ are
   equivalent on the reference cell, and the $L^2$-norm scales with
   $h^d$ when transforming to the real cell $T$. Thus, we have
   $\lambda(\matm_h) = \mathcal O(h^{d}) = \Lambda(\matm_h)$.

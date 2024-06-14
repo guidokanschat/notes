@@ -36,6 +36,31 @@
 \chapter{Conforming Finite Element Methods}
 \setcounter{section}{2}
 \input{fem-intro}
+
+\section{Eigenvalues of finite element matrices}
+
+\begin{intro}
+  The linear systems of equations obtained by finite element methods
+  on fine meshes are large and sparse. Hence, the application of
+  iterative solvers is advisable. For symmetric, positive definite
+  matrices like the matrix of the Laplace operator with Dirichlet
+  boundary conditions, the conjugate gradient method is the method of
+  choice. It has a convergence estimate of the form
+  \begin{gather}
+    \label{eq:cg:1}
+    \norm{\vecx^{(k)} - \vecx}_A \le 2
+    \left(\frac{\sqrt\kappa-1}{\sqrt\kappa+1}\right)^k \norm{\vecx^{(0)} - \vecx}_A
+    =
+    \left(2-\frac{4}{\sqrt\kappa+1}\right)^k \norm{\vecx^{(0)} - \vecx}_A
+  \end{gather}
+  Here, $\kappa = \Lambda/\lambda$ is the \putindex{spectral condition
+    number} of the matrix $\mata$ defined as the quotient of greatest
+  and smallest eigenvalues. Hence, we will estimate these eigenvalues
+  in order to make predictions on the performance of the solver.
+\end{intro}
+
+\input{condition}
+
 \end{document}
 
 
@@ -63,9 +88,6 @@
 \input{iteration/itintro}
 \input{iteration/richardson}
 \input{iteration/cg}
-
-\section{Condition numbers of finite element matrices}
-\input{condition}
 
 \section{Multigrid methods}
 \input{multigrid}
