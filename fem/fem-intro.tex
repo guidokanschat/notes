@@ -1084,9 +1084,57 @@
   the integrals needed to form the Galerkin equations. Since we can
   now integrate over the reference cell $\refcell$, we can use
   tabulated quadrature formulas instead of computing integrals by
-  hand.
+  hand. Note that some authors use the word cubature for quadrature
+  over a two-dimensional region, which will leave us with the question
+  how to call quadrature in higher dimensions.
+
+  As a result, we can use tensor products of one-dimensional
+  quadrature formulas on quadrilaterals and hexahedra. For triangles,
+  we refer to \cite[Table 4.1]{StrangFix08}.
 \end{remark}
 
+\begin{Example}{hexahedron-quadrature}
+  On the reference square $\refcell = (0,1)$, we obtain quadrature
+  formulas by a tensor product construction. Let $(t_1,\dots,t_m)$ be
+  the points and $(w_1,\dots,w_m)$ be the weights of such a
+  formula. Then, the tensor product consists of the points and weights
+  \begin{gather}
+    \vx_{ij} =
+    \begin{pmatrix}
+      t_i\\t_j
+    \end{pmatrix},
+    \qquad
+    w_{ij} = w_iw_j.
+  \end{gather}
+  The same construction holds for higher dimensions. For example, it is
+  possible to use the Gauß-Legendre formulas
+  \begin{center}
+    \begin{tabular}{|c|c|c|}
+      \hline deg. of prec. & points & weights \\\hline
+      3 & $\frac12 \pm \frac1{2\sqrt3}$ & $\frac12$\\\hline
+      5 & $\frac12$ & $\frac49$ \\
+                          & $\frac12 \pm\frac{\sqrt3}{2\sqrt5}$
+                                   &$\frac5{18}$
+      \\\hline
+    \end{tabular}
+  \end{center}
+\end{Example}
+
+\begin{Example}{triangle-quadrature}
+  On triangles, quadrature rules can be tabulated with respect to
+  barycentric coordinates. We are in particular interested in
+  symmetric formulas, where each triple of coordinates rotates through
+  all permutations of the barycentric coordinates. From Strang/Fix, we
+  quote
+  \begin{center}
+    \begin{tabular}{|c|c|c|}
+      \hline
+      deg. of prec. & points & weights \\\hline
+      2 & $\left(\frac23,\frac16,\frac16\right)$ & $\frac13$
+      \\\hline
+    \end{tabular}
+  \end{center}
+\end{Example}
 
 \begin{Lemma}{mapped-norms-affine}
   Let $\refcell$ be the reference triangle and let $\cell$ be a
@@ -1250,16 +1298,26 @@
   for all $\refvx\in\refcell$. Then, for $k=0,1$ and a constant $c$
   \begin{gather}
     \begin{split}
-      \snorm{\refu}_{k,\refcell}
-      &\le c \frac{M_\cell}{d_\cell}  h_\cell^{k-\nicefrac d2}
-      \snorm{u}_{k,\cell},\\
-      \snorm{u}_{k,\cell}
-      &\le c \frac{D_\cell}{m_\cell} h_\cell^{\nicefrac d2-k}
-      \snorm{\refu}_{k,\refcell}.
+      \snorm{\refu}_{1,\refcell}
+      &\le c \frac{M_\cell}{d_\cell}  h_\cell^{1-\nicefrac d2}
+      \snorm{u}_{1,\cell},\\
+      \snorm{u}_{1,\cell}
+      &\le c \frac{D_\cell}{m_\cell} h_\cell^{\nicefrac d2-1}
+      \snorm{\refu}_{1,\refcell}.
     \end{split}
   \end{gather}
   This extends to higher derivatives under assumptions on higher
   derivatives of $\Phi_\cell$.
+  \begin{gather}
+    \begin{split}
+      \snorm{\refu}_{k,\refcell}
+      &\le \overline c  h_\cell^{k-\nicefrac d2}
+      \snorm{u}_{\det\nabla\Phi_Ok,\cell},\\
+      \snorm{u}_{k,\cell}
+      &\le \underline c h_\cell^{\nicefrac d2-k}
+      \snorm{\refu}_{k,\refcell},
+    \end{split}
+  \end{gather}
 \end{Lemma*}
 
 \begin{proof}
@@ -1280,7 +1338,7 @@
   \begin{gather*}
     \int_\cell u^2 \dvx
     = \int_{\refcell} \refu^2 \abs{\det\nabla\Phi_\cell} \dvxref
-    = \int_{\refcell} \refu^2 \det\nabla\Phi_S\det\nabla\Phi_O\det\nabla\Phi_W \dvxref
+    = \int_{\refcell} \refu^2 \abs{\det\nabla\Phi_S\det\nabla\Phi_W} \dvxref
     ,
   \end{gather*}
   such that the case $k=0$ is proven immediately by
