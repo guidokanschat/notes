@@ -106,7 +106,7 @@
   basis of the shape function space.  Let $\matg$ be the Gramian matrix
   between the node functionals and the shape functions with entries
   \begin{gather}
-    g_{ik} = \nodal^i(\phi_k).
+    g_{ik} = \nodal^k(\phi_i).
   \end{gather}
   Then, the set of node functionals is unisolvent on $\shapespace$ if
   and only if $\matg$ is invertible. Furthermore, a
@@ -251,8 +251,9 @@
     f_{|\cell} \in \shapespace(\cell) \bigr\}.
   \end{gather}
   
-  We choose a basis which has one basis function for each (global)
-  degree of freedom (after the elimination above), such that
+  We choose the \define{nodal basis} which has one basis function for
+  each (global) degree of freedom (after the elimination above), such
+  that
   \begin{gather}
     \nodal^i(v_k) = \delta_{ik}.
   \end{gather}
@@ -1384,6 +1385,43 @@
   this concept in the context of finite element spaces.
 \end{intro}
 
+\begin{Lemma}{homogeneous-Dirichlet}
+  Let $V_{\mesh} \subset C(\overline\domain)$ be a globally continuous
+  finite element space. Then, we obtain a subspace
+  $V_{\mesh}^0 \subset H^1_0(\domain)$ by removing all basis functions
+  associated to degrees of freedom on the boundary.
+\end{Lemma}
+
+\begin{proof}
+  For globally continuous finite element spaces,
+  \slideref{Lemma}{nodal-continuity} holds. Hence, the function values
+  of a finite element function on a boundary face are determined
+  uniquely by the values of the node functionals associated to this
+  edge. Furthermore, these values are the coefficients of the finite
+  element function with respect to the nodal basis. Since the shape
+  function space is a vector space and contains the zero function,
+  this function must be obtained by setting all coefficients to zero.
+
+  We conclude that all functions in $V_{\mesh}^0$ have zero boundary
+  values. Since the space is finite dimensional, this is also true for
+  the limit of all sequences in this space and hence
+  $V_{\mesh}^0 \subset H^1_0(\domain)$.
+\end{proof}
+
+\begin{remark}
+  There are two ways to represent the space $V_{\mesh}^0$ for the
+  ensuing problem of linear algebra: we can keep the coefficients of
+  basis functions on the boundary in the coefficient space $\R^n$ and
+  ensure in the solution process, that they are zero. Or we can remove
+  them from the space obtaining a coefficient space $\R^{n_0}$ of
+  lower dimension.
+
+  Both approaches have their advantages and drawbacks.
+\end{remark}
+
+\begin{remark}
+  Inhomogeneous Dirichlet boundary conditions.
+\end{remark}
 
 %%% Local Variables: 
 %%% mode: latex
