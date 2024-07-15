@@ -1237,6 +1237,30 @@
   on $\reference{R}$.
 \end{proof}
 
+\begin{remark}
+  The norm of $\matb$ is equal to its greatest singular value, while
+  the norm of $\matb^{-1}$ is the reciprocal of the smallest singular
+  value of $\matb$. Furthermore, the determinant is the product of the
+  singular values, since
+  \begin{gather}
+    \prod_{i=1^d} \sigma_i(\matb)^2 = \det(\matb^T\matb) = \det \matb^T \det\matb
+    = (\det\matb)^2.
+  \end{gather}
+  Hence, we can completely characterize the estimates in
+  \slideref{Lemma}{mapped-norms-affine} by singular values.
+\end{remark}
+
+\begin{intro}
+  The preceding estimate for the scaling of integrals and norms holds
+  for affine mappings only. Even there, we face the problem that for
+  the reference simplex the fraction between inradius and circumradius
+  converges to zero as the dimension grows.
+
+  We need a finer tool though, which is less dependent on simple
+  geometric properties, but on understanding the character of the
+  mapping.
+\end{intro}
+
 \begin{Assumption}{mapping-decomposition}
   For more general mappings $\Phi\colon \refcell\to \cell$, we
   make the assumption, that they can be decomposed into three factors,
@@ -1250,12 +1274,11 @@
 
 \begin{example}
   We construct the inverse of $\Phi$ in two dimensions by the
-  following three steps, using as $h_\cell$ the length of the longest
+  following three steps, using as $h_\cell$ the length of a characteristic
   edge of $\cell$.
   \begin{enumerate}
   \item Choose $\Phi_O$ as the rigid body movement which maps the
-    longest edge to the interval $(0,h_\cell)$ on the $x$-axis and the
-    cell itself to $\cell_O$ in the positive half plane. This mapping
+    vertices of the characteristic edge to the origin and the point $(h_\cell,0)$, respectively. This mapping
     has the structure
     \begin{gather*}
       \Phi^{-1}_O (\vx) = \mats \vx - \mats \vertex_0,
@@ -1266,13 +1289,15 @@
     \begin{gather*}
       \Phi^{-1}_S (\vx) = \tfrac1{h_\cell} \vx,
     \end{gather*}
-    such that the longest edge of the resulting cell $\cell_S$ has the
-    longest edge equal to the interval $(0,1)$ on the $x$-axis.
+    such that the end points of the characteristic edge of the
+    resulting cell $\cell_S$ are the origin and the point $(1,0)$,
+    respectively..
   \item Warp the cell $\cell_S$ into the reference cell $\refcell$ by
-    the mapping $\Phi^{-1}_W$. This operation leaves the longest edge
-    untouched. For triangles, it is the uniquely defined linear
+    the mapping $\Phi^{-1}_W$. This operation leaves the two fixed
+    points untouched. For triangles, it is the uniquely defined linear
     transformation mapping the vertex not on the longest edge to
-    $(0,1)$. For quadrilaterals, it is a bilinear transformation.
+    $(0,1)$. For quadrilaterals, it is a bilinear transformation. For
+    higher order mappings, it could be anything.
   \end{enumerate}
 
   In the first step, we have assumed that the cell is convex, which is
@@ -1289,9 +1314,9 @@
   are constants $0 < M_\cell, m_\cell, d_\cell, D_\cell$, such that
   \begin{gather}
     \begin{split}
-      \norm{\nabla\Phi_W(\refvx)} \le M_\cell,
+      \norm*{\nabla\Phi_W(\refvx)} \le M_\cell,
       \\
-      \norm{\nabla\Phi_W^{-1}(\refvx)} \le m_\cell^{-1} ,
+      \norm*{(\nabla\Phi_W(\refvx))^{-1}} \le m_\cell^{-1} ,
       \\
       d^2_\cell \le \det \nabla\Phi_W(\refx)) \le D^2_\cell.      
     \end{split}
@@ -1313,7 +1338,7 @@
     \begin{split}
       \snorm{\refu}_{k,\refcell}
       &\le \overline c  h_\cell^{k-\nicefrac d2}
-      \snorm{u}_{\det\nabla\Phi_Ok,\cell},\\
+      \snorm{u}_{k,\cell},\\
       \snorm{u}_{k,\cell}
       &\le \underline c h_\cell^{\nicefrac d2-k}
       \snorm{\refu}_{k,\refcell},
@@ -1371,6 +1396,7 @@
   is one for squares.
 \end{Remark}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Essential boundary conditions}
@@ -1422,6 +1448,10 @@
 \begin{remark}
   Inhomogeneous Dirichlet boundary conditions.
 \end{remark}
+
+\begin{Algorithm}{inhomogeneous-essential-boundary}
+  
+\end{Algorithm}
 
 %%% Local Variables: 
 %%% mode: latex
