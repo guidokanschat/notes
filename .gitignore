@@ -33,3 +33,5 @@ allslides.pdf
 appendix.pdf
 chapter-?.pdf
 slides-only.tex
+*.fls
+*.fdb_latexmk
