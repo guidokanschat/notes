@@ -1,3 +1,7 @@
+\begin{todo}
+  Georg: We should decide on a Notation for the angle of a vector \(\left( \frac{x}{|x|}\right)\) as this is currently not consistent
+  I think. (Todo1) \label{todo:angle}
+\end{todo}
 \begin{intro}
   The facts in this chapter can be found in many textbooks on
   numerical linear algebra, for instance in~\cite[Chapter
@@ -314,6 +318,9 @@
     = \id - 4\frac{\vw\vw^*}{\vw^*\vw} + 4\frac{\vw\vw^*}{\vw^*\vw} = \id.
   \end{multline}
 \end{proof}
+\begin{todo}
+  Georg: Here the angle is denoted by \(\varphi\) See todo \ref{todo:angle}
+\end{todo}
 
 \begin{Lemma}{householder-qr}
   For any vector $\vx\in\C^n$ there are vectors $\vw_\phi\in\C^n$ such
@@ -377,8 +384,20 @@
   value does not have to be stored. In its position, we can store the
   normalization factor $\beta = \nicefrac2{\norm{\vw}^2}$.
 
+  \begin{todo}
+    Georg: Here the angle is \(\frac{x_1}{|x_1|}\) See Todo \ref{todo:angle}
+  \end{todo}
   Let $\vv$ be the vector computed according
   to~\eqref{eq:ortho:householder:1} without normalization. Then,
+  \begin{todo}
+    Georg: I think this was wrong with the \(v_1\). And the alpha here is different to the one in Lemma 1.2.3, and a few
+    students confused it when working on the exam, so it should be renamed \\ Also probably move the DeclareMathOpertor in
+    the print.tex to the Mathsim file/ replace it with a nicer one. \label{todo:householder_alpha}
+    \begin{gather}
+      \label{eq:ortho:householder:2a}
+      w_1 = x_1 \left(1+ \frac{\norm{\vx}}{\abs{x_1}}\right) \defineright \omega.
+    \end{gather}
+  \end{todo}
   \begin{gather}
     \label{eq:ortho:householder:2a}
     v_1 = x_1 \left(1+ \frac{\norm{\vx}}{\abs{x_1}}\right) =: \alpha.
@@ -398,6 +417,13 @@
   Since the ``1'' in the first row is known, there is no need to store
   it. This will be important for the implementation of the QR
   factorization below. The Householder reflection will thus be stored in the format
+  \begin{todo}
+    Georg: Change of the alpha sign, to Omega, see todo \ref{todo:householder_alpha}.
+  \begin{gather}
+    \label{eq:ortho:householder:2b}
+    \vw(2:) = \left(\tfrac{x_2}{\omega},\dots,\tfrac{x_n}{\omega}\right)^T, \qquad \beta = \tfrac2{\norm{\vw}^2}.
+  \end{gather}
+\end{todo}
   \begin{gather}
     \label{eq:ortho:householder:2b}
     \vw(2:) = \left(\tfrac{x_2}{\alpha},\dots,\tfrac{x_n}{\alpha}\right)^T, \qquad \beta = \tfrac2{\norm{\vw}^2}.
@@ -437,6 +463,30 @@
   \end{enumerate}
 \end{Problem}
 
+\begin{todo}
+  Georg: Changed the alpha to a omega, see todo \ref{todo:householder_alpha}
+\begin{Algorithm}{householder-multiplication}
+  Computation of $\matq_{\vw}\vx$. The result is updated in the vector
+  $\vx$. $\vw$ is in the format of \eqref{eq:ortho:householder:2b}.
+
+  \hrulefill
+  \vspace*{2mm}
+  \begin{algorithmic}[1]
+    \Function{householder}{$\vx,\beta,\vw$}
+    \If{$\beta \neq 0$}
+    \State $\omega \gets \beta \bigl( x_1 + \vw(2:)^*\vx(2:)\bigr)$
+    \State $x_1 \gets x_1 - \omega$
+    \State $\vx(2:) \gets \vx(2:) - \omega \vw(2:)$
+    \EndIf
+    \EndFunction
+  \end{algorithmic}
+   \hrulefill
+  %\vspace*{2mm}
+
+   This algorithm requires $2n+1$ multiplications and $2n$ additions
+   compared to $n^2$ for a general matrix vector product.
+\end{Algorithm}
+\end{todo}
 \begin{Algorithm}{householder-multiplication}
   Computation of $\matq_{\vw}\vx$. The result is updated in the vector
   $\vx$. $\vw$ is in the format of \eqref{eq:ortho:householder:2b}.
@@ -601,9 +651,10 @@
   \end{gather}
 \end{Lemma}
 \begin{todo}
+  Georg: Should this be added? \\
   Furthermore, we have
   \begin{gather}
-    c = -\frac{x_j}r,\quad s = -\frac{x_k}r
+    c = -\frac{x_j}r,\quad s = \frac{x_k}r
     \qquad \Rightarrow \qquad
     \begin{pmatrix}
       c & s \\ -s & c
@@ -617,9 +668,6 @@
     \end{pmatrix}
     .
   \end{gather}
-\end{todo}
-\begin{todo}
-  GM: In the definition of \(s\) the minus has to be removed
 \end{todo}
 
 \begin{remark}
