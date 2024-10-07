@@ -416,6 +416,42 @@
 \frame {\input {blocks/Theorem-condition-number-stiffness-matrix.tex}}
 
 \subsection{Multigrid methods}
+
+\begin{frame}{Smoothing property of the Gauss-Seidel iteration}
+    \begin{columns}
+    \begin{column}{.45\textwidth}
+      \begin{flushright}
+        step 0
+        \includegraphics[width=.6\textwidth]{../graph/smoothing/gauss-seidel-0.tikz}
+
+        step 1
+        \includegraphics[width=.6\textwidth]{../graph/smoothing/gauss-seidel-1.tikz}
+        
+        step 2
+        \includegraphics[width=.6\textwidth]{../graph/smoothing/gauss-seidel-2.tikz}
+      \end{flushright}
+    \end{column}
+    \begin{column}{.45\textwidth}
+      \pause
+      \begin{center}
+        \includegraphics[width=.6\textwidth]{../graph/smoothing/gauss-seidel-3.tikz}
+        
+        steps 3,4,5
+        
+        \pause
+        \includegraphics[width=.6\textwidth]{../graph/smoothing/gauss-seidel-4.tikz}
+        
+        steps 10,20,40,80,160,320        
+      \end{center}
+      \pause
+      \begin{itemize}
+      \item The error becomes smoother
+      \item The smooth error can be approximated on a coarser mesh
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \frame {\input {blocks/Algorithm-mgm.tex}}
 
 \section{Bibliography}

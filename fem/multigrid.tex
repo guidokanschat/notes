@@ -1,7 +1,18 @@
 \def\restrict{r}
 \def\prolongate{p}
 \begin{example}
-  Smoothing property of the Richardson method with $\omega = 1/2$ for the one-dimensional Laplacian.
+  Smoothing property of the Gauss-Seidel method for the one-dimensional Laplacian.
+  \begin{figure}[tp]
+    \begin{center}
+      \includegraphics[width=.49\textwidth]{../graph/smoothing/gauss-seidel-0.tikz}
+      \includegraphics[width=.49\textwidth]{../graph/smoothing/gauss-seidel-3.tikz}
+      \includegraphics[width=.49\textwidth]{../graph/smoothing/gauss-seidel-1.tikz}
+      \includegraphics[width=.49\textwidth]{../graph/smoothing/gauss-seidel-4.tikz}
+      \includegraphics[width=.49\textwidth]{../graph/smoothing/gauss-seidel-2.tikz}
+      \hbox to .49\textwidth{}
+    \end{center}
+    \caption{Development of the error of the Gauss-Seidel iteration. Random initial error and errors after one and two steps (left). Errors after 3, 4, and 5 steps (top right) and after 10, 20, 40, 80, 160, and 320 steps (lower right).}
+  \end{figure}
 \end{example}
 \begin{Algorithm*}{mgm}{The Multigrid iteration MGM($\ell, u_\ell^{k}, b_\ell$)}
   \index{multigrid iteration}
