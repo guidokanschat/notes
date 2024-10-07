@@ -1,0 +1,329 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{Problem}{intro-problem-vector-iterations}
+	Consider the following matrix
+	\begin{gather*}
+	\mata =
+	\begin{pmatrix}
+	\cos\phi & -\sin\phi\\
+	\sin\phi &  \cos\phi
+	\end{pmatrix}^T
+	\begin{pmatrix}
+	1 & \\
+	& c
+	\end{pmatrix}
+	\begin{pmatrix}
+	\cos\phi & -\sin\phi\\
+	\sin\phi &  \cos\phi
+	\end{pmatrix}
+	\end{gather*}
+	with parameters $\phi\in[0,2\pi]$ and $c\in(0,1)$.
+	\begin{enumerate}
+		\item Determine (think, don't compute!) the eigenvalues and eigenvectors of $\mata$.
+		\item (Programming) Write a program which computes the sequence
+		$\vx^{(n)}\in\R^2$ defined as
+		\begin{align*}
+		\vx^{(n)} &= \mata \vx^{(n-1)}, \\
+		\vx^{(0)} &= \vx^{*},
+		\end{align*}
+		for $\vx^{*} = (1,\ 0)^T$, $c = 0.1$, and
+		$\phi=\frac\pi4$. Try playing with different values of those
+		parameters.
+		\item Is there a limit of $\vx^{(n)}$? What is about the case
+		$c=1$?
+		\item Compute the limit: $\lim_{n\to\infty}\mata^n$.
+	\end{enumerate}
+\end{Problem}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Simple iterations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{todo}
+  Rename the vectors $\vv$ to $\vq$ to be more consistent with QR later.
+\end{todo}
+
+\begin{intro}
+  The eigenspace of a dominant eigenvalue seems to get amplified
+  whenever we multiply with the matrix $\mata$. Hence, we should be a
+  able to approximate this eigenspace by a simple iteration.
+\end{intro}
+
+\begin{Algorithm*}{vector-iteration}{Vector iteration (power method)}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$, initial vector $\vv^{(0)}\in\C^n$ with $\norm{\vv}=1$
+    \For{$k=1,\dots$ until convergence}
+    \State $\vy^{(k)} \gets \mata \vv^{(k-1)}$
+    \State $\vv^{(k)} = \frac{\vy^{(k)}}{\norm{\vy^{(k)}}}$
+    \State $\alpha_k = \frac{\bigl(\vy^{(k)}\bigr)_i}{\bigl(\vv^{(k)}\bigr)_i}$ where $\abs*{\bigl(\vv^{(k)}\bigr)_i} = \norm*{\vv^{(k)}}_\infty $
+    \EndFor
+%    \State $\alpha = \frac{\vy^{(k_\max +1)}}{\vv^{(k_{\max})}_i}$
+%    where $\abs{\vv^{(k_{\max})}_i}$ is maximal
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{Theorem}{vector-iteration}
+  Let $\mata\in\Cnn$ be diagonalizable such that $\lambda_1$ is the
+  unique dominant eigenvalue. Let furthermore the
+  component of $v^{(0)}$ in direction of the first eigenvector be
+  nonzero. Then, the factors
+  \[\alpha_k := \frac{\vy^{(k+1)}_i}{\vv_i^{(k)}} \; \text{where} \; |\vv_i^{(k)|}| \; \text{is maximal}\]
+  and vectors $v^{(k)}$ of the
+  vector iteration converge to the eigenvalue $\lambda_1$ and its
+  associated eigenvector. Moreover, there holds
+    %\State $\alpha = \frac{\vy^{(k_\max +1)}}{\vv^{(k_{\max})}_i}$
+    %where $\abs{\vv^{(k_{\max})}_i}$ is maximal
+  \begin{align}
+    \abs{\alpha_{k+1}-\lambda_1}
+    &\le \frac{\abs{\lambda_2}}{\abs{\lambda_1}} \abs{\alpha_{k}-\lambda_1}\\
+    \norm{v^{(k+1)}-u_1}
+    &\le \frac{\abs{\lambda_2}}{\abs{\lambda_1}} \norm{v^{(k)}-u_1}
+  \end{align}
+\end{Theorem}
+
+\begin{todo}
+  (Georg): rewrote the text, to be a bit easier to understand, is the proof included somewhere? Otherwise the argument is
+  strange.
+\begin{remark}
+  The previous theorem also holds for non diagonalizable matrices , but then the proof becomes more involved.
+  Since we are not interested in non semi-simple eigenvalues, we decided on the simpler version.
+
+  The proof can be easily improved to cover the case that $\lambda_1$
+  is not a single eigenvalue. In exact arithmetic, there will be no
+  change of the result. When computing with floating point numbers,
+  there will be a small glitch. It is left to the reader to find it.
+\end{remark}
+\end{todo}
+\begin{remark}
+  The previous theorem actually holds eveon for matrices, which are
+  not diagonalizable, but then the proof becomes more involved. Since
+  we are not interested in eigenvalues, which are not semi-simple, we
+  decided for the simpler version.
+
+  The proof can be easily improved to cover the case that $\lambda_1$
+  is not a single eigenvalue. In exact arithmetic, there will be no
+  change of the result. When computing with floating point numbers,
+  there will be a small glitch. It is left to the reader to find it.
+\end{remark}
+
+\begin{todo}
+  (Georg): Rephrase, but it should be discussed, which convergence check should be used here, but the computation of
+  \(\alpha\) in the iteration should not be a good criteria
+\begin{remark}
+  The power method can be improved in several ways. First, we saw in the
+  proof that it generates a converging sequence of vectors. Therefore,
+  we can save the effort of computing approximate eigenvalues inside the iteration
+  and postpone it until the end.
+
+  Second, if $\mata$ is a Hermitian matrix, the computation of the
+  eigenvalue can be improved by using the Rayleigh quotient.
+
+  Using both statements, we obtain an optimized version of the vector
+  iteration.
+\end{remark}
+\end{todo}
+\begin{remark}
+  The algorithm can be improved in several ways. First, we saw in the
+  proof that it generates a converging sequence of vectors. Threfore,
+  we can save the effort of computing eigenvalues inside the iteration
+  and postpone it until the end.
+
+  Second, if $\mata$ is a Hermitian matrix, the computation of the
+  eigenvalue can be improved by usig the Rayleigh quotient.
+
+  Using both statements, we obtain an optimized version of the vector
+  iteration.
+\end{remark}
+
+\begin{todo}
+  (Georg): added a closing bracket, and rephrased the iteration, such that convergence can be easily monitored through the
+  change of the iterate v. \\
+  I think it might be better to choose a different method of computing the eigenvalue from the eigenvector, which also works
+  for non Hermitian Matrices, as the rest of the algorithm does not require a hermitian matrix structure.
+\begin{Algorithm*}{vector-iteration-rayleigh}{Power method (optimized)}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$ Hermitian, initial vector $\vv^{(0)}\in\C^n$ with $\norm{\vv}=1$
+    \For{$k=1,\dots$ until \(\norm{y^{(k-1)} - y^{(k)}} < \eps\)}
+    \State $\vy^{(k)} \gets \mata \vv^{(k-1)}$
+    \State $\vv^{(k)} = \frac{y^{(k)}_0}{|y^{(k)}_0|}\frac{\vy^{(k)}}{\norm{\vy^{(k)}}}$
+    \EndFor
+    \State $\lambda_1 \approx R_\mata\left(\vv^{(k_{\max})}\right) = \scal(\mata\vv^{(k_{\max})},\vv^{(k_{\max})})$
+  \end{algorithmic}
+\end{Algorithm*}
+\end{todo}
+\begin{Algorithm*}{vector-iteration-rayleigh}{Power method (optimized)}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$ Hermitian, initial vector $\vv^{(0)}\in\C^n$ with $\norm{\vv}=1$
+    \For{$k=1,\dots$ until convergence}
+    \State $\vy^{(k)} \gets \mata \vv^{(k-1)}$
+    \State $\vv^{(k)} = \frac{\vy^{(k)}}{\norm{\vy^{(k)}}}$
+    \EndFor
+    \State $\lambda_1 \approx R_\mata(\vv^{(k_{\max})} = \scal(\mata\vv^{(k_{\max})},\vv^{(k_{\max})})$
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{Remark}{vector-iteration}
+  The proof actually requires, that the entry defining $\alpha_k$
+  remains the same during the iteration, at least during the steps
+  used for detecting convergence.
+
+  The result does not actually require that $\mata$ is diagonalizable,
+  as long as $\lambda_1$ is single and of largest modulus.
+\end{Remark}
+
+\begin{Remark}{vector-iteration-roundoff}
+  The convergence proof of the power iteration requires that the
+  initial vector has a component in the direction of the dominant
+  eigenvector. Nevertheless, convergence to the dominant eigenvector
+  is still observed if this condition does not hold. This is due to
+  round-off errors and the exponential growth of rate
+  $\nicefrac{\abs{\lambda_2}}{\abs{\lambda_1}}$.
+\end{Remark}
+
+\begin{Algorithm*}{shifted-vector-iteration}{Shifted vector iteration}
+  The vector iteration can be applied to the matrix $\mata-\sigma\id$
+  for some $\sigma\in\C$.
+
+  Then, $\alpha_k$ converges to the eigenvalue $\lambda$ such that
+  $\lambda-\sigma$ has largest modulus. $v^{(k)}$ converges to an
+  eigenvector for this eigenvalue.
+\end{Algorithm*}
+
+%\begin{intro}
+%  \begin{todo}
+%    Remove!
+%  \end{todo}
+%\end{intro}
+
+\begin{Definition*}{shifted-matrix-polynomial}{Matrix Polynomial}
+  Let \(\mata \in \C^{n \times n}\) be a square matrix.
+  The \define{matrix polynomial} of degree \(k\), with shift parameters \(\sigma_1, \ldots, \sigma_k\) is defined by
+  \begin{gather}
+    p(\mata) := \left(\mata - \sigma_1 \id \right) \cdots \left(\mata - \sigma_k\right).
+  \end{gather}
+\end{Definition*}
+
+\begin{Lemma}{matrix-polynomial}
+  Let $\mata$ be diagonalizable and $p(\mata)$ be a matrix
+  polynomial. Then, $p(\mata)$ is diagonalizable. Moreover, a vector
+  $\vv$ is an eigenvalue for $p(\mata)$ and eigenvalue $p(\lambda)$,
+  if and only if it is an eigenvector for $\mata$ and eigenvalue $\lambda$.
+\end{Lemma}
+
+\begin{Algorithm*}{polynomial-filtering}{Polynomial filtering}
+  Let $\mu_1,\dots,\mu_k$ be approximations to \putindex{unwanted
+    eigenvalues} $\lambda_1,\dots,\lambda_k$ of the matrix
+  $\mata$. Define the filtering polynomial
+  \begin{gather}
+    p(x) = (x-\mu_1)\cdots(x-\mu_k).
+  \end{gather}
+  Then, the corresponding eigenvalues
+  $p(\lambda_1),\dots,p(\lambda_k)$ of the matrix polynomial
+  $p(\mata)$ will be small and the power method converges to other
+  eigenvalues.
+\end{Algorithm*}
+
+\begin{Example}{polynomial-filtering}
+  Let
+  \begin{gather}
+    \mata =
+    \begin{pmatrix}
+      1&&\\ &2& \\ &&3
+    \end{pmatrix}.
+  \end{gather}
+  \begin{enumerate}
+  \item The eigenvalue $\lambda=3$ can be computed by the power method.
+  \item The eigenvalue $\lambda=1$ can be computed by the shifted power method with $\sigma>2$.
+  \item The eigenvalue $\lambda=2$ cannot be computed by the shifted power method, but we can use
+    \begin{gather}
+      p(\mata) = (\mata-\id)(\mata-3\id),
+    \end{gather}
+    which has eigenvalues 0 and -1. Since -1 is dominant, the power
+    method converges to its eigenvector in a single step.
+  \end{enumerate}
+\end{Example}
+
+\begin{todo}
+  (Georg): added missing closing bracket
+\end{todo}
+\begin{Algorithm*}{vector-iteration-polynomial}{Power method for matrix polynomials}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$ Hermitian, initial vector $\vv^{(0)}\in\C^n$ with $\norm{\vv}=1$
+    \For{$k=1,\dots$ until convergence}
+    \State $\vy^{(k)} \gets p(\mata) \vv^{(k-1)}$
+    \State $\vv^{(k)} = \frac{\vy^{(k)}}{\norm{\vy^{(k)}}}$
+    \EndFor
+    \State $\lambda_1 \approx R_\mata\left(\vv^{(k_{\max})}\right) = \scal(\mata\vv^{(k_{\max})},\vv^{(k_{\max})})$
+  \end{algorithmic}
+\end{Algorithm*}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Subspace iterations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{intro}
+  Instead of approximating eigenvalues consecutively by filtering
+  previously converged eigenvalues in the power method, we can
+  consider iterating not only a single vector, but instead iterating a
+  higher dimensional subspace.
+
+  If we do so, starting with a linearly independent set of $m$ vectors
+  $\matx^{(0)} \in \C^{m\times m}$, we can produce a sequence
+  $\matx^{(k)}$, for $k=1,\dots$ Note that if we normalize each column
+  vector separately, they will all converge to the dominant
+  eigenvector. Thus, we have to put in a mechanism such that these
+  vectors cannot become parallel. The solution is iterating over an
+  orthonormal set of vectors $\matq^{(k)}$.
+\end{intro}
+
+\begin{todo}
+  (Georg): The comment seems wrong, as this does not seem to match the definition of the Rayleigh Quotient.
+\end{todo}
+\begin{Algorithm*}{subspace-iteration}{Orthogonal subspace iteration}
+  \begin{algorithmic}[1]
+    \Require $\mata\in\Cnn$ and choose $\matq_0 \in \C^{n\times m}$ orthogonal.
+    \For {$k=1,\ldots$ until convergence}
+    \State $\maty_{k} \gets \mata \matq_{k}$
+    \State $\matq_k\matr_k \gets \maty_{k-1}$ \Comment{QR factorization}
+    \EndFor
+    \State {$\lambda_i \approx \vq_{k_{\max},i}^* \mata \vq_{k_{\max},i},\qquad i=1,\dots,m$}\
+    \Comment{Rayleigh quotient}
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{Theorem}{convergence-subspace-iteration}
+  Let $\mata\in\Cnn$ and
+  \begin{gather}
+    \abs{\lambda_1} \ge
+    \abs{\lambda_2} \ge \dots \ge
+    \abs{\lambda_m}>\abs{\lambda_{m+1}} \ge \dots \ge \abs{\lambda_n}.
+  \end{gather}
+  for all remaining eigenvalues $\lambda\in\sigma(\mata)$. Choose
+  $\matq_0 \in \C^{n\times m}$ such that
+  $\dist(D_m(\mata),\ran{\matq^{(0)}}) < 1$, where $D_m(\mata)$ is the
+  \putindex{dominant invariant subspace} of $\mata$ of dimension
+  $m$. Then,
+  \begin{gather}
+    \dist\left(D_m(\mata),\ran{\matq^{(k)}}\right)
+    = \bigo \left(\abs*{\frac{\lambda_{m+1}}{\lambda_m}}^k\right).
+  \end{gather}
+  The constant depends on the separation of the eigenvalues and the deviation of $\mata$ from normality.
+%   Then, the $j$-th column of $\matx_k$ converges to $\vq_j$ for $j=1,\dots,m$ up to a factor $e^{i\phi}$.
+\end{Theorem}
+
+\begin{proof}
+  See~\cite[Theorem 7.3-1]{GolubVanLoan83}.
+\end{proof}
+
+\begin{Corollary}{convergence-subspace-iteration}
+  The orthogonal subspace iteration converges whenever the first $m$
+  eigenvalues are dominant. Moreover, whenever the first $j<m$ eigenvalues are dominant, then the first $j$ columns of $\matq^{(k)}$ converge to the \putindex{dominant invariant subspace} of dimension $j$.
+\end{Corollary}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
