@@ -62,7 +62,7 @@
 \end{Algorithm}
 
 
-\begin{Problem}{gram-schmidt-implementation}
+\begin{example}{gram-schmidt-implementation}
   \begin{enumerate}
   \item Implement both methods in
     \slideref{Algorithm}{gram-schmidt-implementation}.
@@ -76,10 +76,10 @@
 \item Discuss the result. Why are the off-diagonal entries not zero? Why are the algorithms different?
 \item Rewrite the algorithms by repeating rows 2--7 with $\vv_j$ instead of $\vx_j$ (\define{reorthogonalization}). What changes?
   \end{enumerate}
-\end{Problem}
+\end{example}
 
 \begin{remark}
-  The previous problem shows, that the Gram-Schmidt algorithm is
+  The previous example shows, that the Gram-Schmidt algorithm is
   highly susceptible to round-off errors. This is particularly true to
   the implementation on the left. The one on the right, often called
   \define{modified Gram-Schmidt algorithm}\index{Gram-Schmidt
@@ -184,7 +184,7 @@
 \begin{intro}
   \label{intro:ortho:1}
   The matrix $\matq$ of a QR factorization can be obtained by an
-  algorithm progressing over the columns of $\mata$. It progresses as
+  algorithm traversing the columns of $\mata$. It progresses as
   follows: first, find a matrix $\matq_1$ such that $\matq_1^*\mata$
   has the structure
   \begin{gather}
@@ -282,25 +282,49 @@
 \end{intro}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Householder reflection}
+\section{Householder transformation}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{todo}
-  This is in general a reflection matrix. Householder is the special case
-\end{todo}
-\begin{Definition}{householder-transformation}
-  The \define{Householder transformation}
-  associated with a vector $\vw\in\C^n$ is
+\begin{Lemma}{projection-reflection}
+  Given a vector $\vw\in\C^n$ and the hyperplane $V\subset \C$ which is orthogonal to $\vw$, the matrix
+  \begin{gather}
+    \id - \frac{\vw\vw^*}{\vw^*\vw}
+  \end{gather}
+  is the \define{projection matrix} onto $V$ and
   \begin{gather}
     \matq_{\vw} = \id - 2\frac{\vw\vw^*}{\vw^*\vw}
   \end{gather}
-  It is also called \define{Householder matrix} or, particularly in
-  the real case, \define{Householder reflection}, since it reflects
-  the vector $\vx$ at the subspace perpendicular to $\vw$.
-\end{Definition}
+  is the matrix which computes the \define{reflection} of $\vw$ at $V$
+  and is hence called \define{reflection matrix}.
+\end{Lemma}
+
+\begin{proof}
+  THe projection o$\vy$ f an arbitrary vector $\vx$ onto the subspace
+  spanned by $\vw$ is computed by
+  \begin{gather}
+    \vy = \frac{\scal(\vx,\vw)}{\norm{\vw}_2^2} \vw.
+  \end{gather}
+  This is a linear operation, which can be cast in matrix form as
+  \begin{gather}
+    \vy = \tfrac1{\norm{\vw}_2^2} \vw\vw^*.
+  \end{gather}
+  Since the projection $\vv$ of $\vx$ into $V$ is equal to the
+  projection error of this projection, we have
+  \begin{gather}
+    \vv = \vx - \vy = \left(\id - \tfrac1{\norm{\vw}_2^2} \vw\vw^*\right).
+  \end{gather}
+  A simple sketch reveals that $\vx-2\vy$ yields the reflection of $\vx$ at $V$.
+\end{proof}
+
+\begin{Remark}{householder-inner}
+  The proof of \slideref{Lemma}{projection-reflection} reveals that
+  while we can write a reflection for mathematical convenience using
+  the dyadic product $\vw\vw^*$, but that its application to a vector
+  is achieved by an inner product and a scaling of a vector.
+\end{Remark}
 
 \begin{Lemma}{householder-symmetry}
-  For any vector $\vw\in\C^n$ the Householder transformation
+  For any vector $\vw\in\C^n$ the reflection matrix
   $\matq_{\vw}$ is Hermitian and orthogonal, that is,
   \begin{gather}
     \matq_{\vw}^{-1} = \matq_{\vw}^* = \matq_{\vw}.
@@ -317,9 +341,16 @@
     = \id - 4\frac{\vw\vw^*}{\vw^*\vw} + 4\frac{\vw\vw^*}{\vw^*\vw} = \id.
   \end{multline}
 \end{proof}
-\begin{todo}
-  Georg: Here the angle is denoted by \(\varphi\) See todo \ref{todo:angle}
-\end{todo}
+
+\begin{Definition*}{householder-transformation}{Householder transformation}
+  The (real) \define{Householder transformation} is the reflection
+  which transforms the vector $\vx$ to a multiple of the first unit
+  vector $\ve_1$, that is, a vector of the form $(x_1,0,\dots,0)^T$.
+
+    It is also called \define{Householder matrix} or, particularly in
+  the real case, \define{Householder reflection}, since it reflects
+  the vector $\vx$ at the subspace perpendicular to $\vw$.
+\end{Definition*}
 
 \begin{Lemma}{householder-qr}
   For any vector $\vx\in\C^n$ there are vectors $\vw_\phi\in\C^n$ such
@@ -374,17 +405,23 @@
   the real case, this simplifies to $e^{i\phi} = 1$.
 \end{proof}
 
-\begin{todo}
-  Rethink this remark.
-
-  Normalize to $\norm{w}=1$ or $\norm{w}=\sqrt2$?
-\end{todo}
 \begin{remark}
   \label{intro:ortho:householder-storage}
   The Householder vector $\vw$ is determined up to its length, which
   means we have the freedom to normalize it to some criterion when we
-  compute it. A common normalization is $\vw_1 = 1$, such that this
-  value does not have to be stored.
+  compute it. Here are some options, which have been pursued in the
+  literature
+  \begin{enumerate}
+  \item Use the implicit normalization which is obtained by the proof
+    of its existence.
+  \item Normalize its first entry to 1. This has been used to develop
+    a compact storage scheme for the QR factorization.
+  \item Normalize its norm to $\norm{\vw}_2=1$, such that the
+    reflection matrix simplifies to $\matq_{\vw} =
+    \id-2\vw\vw^*$. This can be improved even more by normalizing
+    $\norm{\vw}_2=\sqrt2$ so that $\matq_{\vw} = \id-\vw\vw^*$.
+  \end{enumerate}
+  All of those may be more or less helpful depending of the circumstances. 
 \end{remark}
 
 \begin{todo}
@@ -404,7 +441,7 @@
 
 \begin{Algorithm}{householder-multiplication}
   Computation of $\matq_{\vw}\vx$. The result is updated in the vector
-  $\vx$. $\vw$ is in the format of \eqref{eq:ortho:householder:2b}.
+  $\vx$.
 
   \hrulefill
   \vspace*{2mm}
@@ -440,6 +477,9 @@
   for $\matq_k$ only requires $n-k$ entries.
 \end{Problem}
 
+\begin{todo}
+  Rethink this! Discuss with Georg
+\end{todo}
 \begin{intro}
   When applying the Householder transformation to the first column of
   the matrix $\mata$, we already know that the subdiagonal entries of
