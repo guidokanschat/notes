@@ -32,6 +32,7 @@ iallslides.tex
 allslides.pdf
 appendix.pdf
 chapter-?.pdf
+only.tex
 slides-only.tex
 *.fls
 *.fdb_latexmk

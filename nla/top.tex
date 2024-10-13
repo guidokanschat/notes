@@ -13,52 +13,14 @@
 
 \def\esp#1{V_{#1}}
 
+\input{only}
 \begin{document}
 \maketitle
 \tableofcontents
 \include{ortho}
 \include{dense-evp}
-\chapter{Solving Large Sparse Linear Systems}
-\label{chap:sparse}
-
-\section{Sparse matrices}
-
-\input{sparse-matrices}
-
-\section{Basic iterative methods}
-\input{iterations}
-
-\section{Projection methods}
-\input{projection-iteration}
-
-\section{Krylov-space methods}
-\input{Krylov}
-
-\chapter{Large Sparse Eigenvalue Problems}
-\label{chap:sparse-eigen}
-
-\begin{intro}
-  In this chapter we study algorithms for finding a small number
-  $n_{\text{ev}}$ of eigenvalues and corresponding eigenvectors of a
-  large matrix $\mata\in\Rnn$, where $n$ is large, for instance
-  $n>10^6$. Like in the previous chapter, this is achieved by
-  projecting the problem into smaller subspaces, where we can solve
-  the eigenvalue problem using the methods of the first chapter.
-
-  Thus, we start by transferring the concept of Galerkin approximation
-  from \slideref{Definition}{galerkin-method} and then use again the
-  Arnoldi and Lanczos process to generate subspaces.
-\end{intro}
-
-\section{Projection methods}
-\input{ev-projection}
-
-\section{The Lanczos method}
-\input{ev-lanczos}
-
-\section{The Arnoldi method}
-\input{ev-arnoldi}
-
+\include{sparse}
+\include{sparse-evp}
 
 \appendix
 \chapter{Basics from Linear Algebra}
