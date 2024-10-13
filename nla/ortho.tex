@@ -174,10 +174,10 @@
   The existence of a QR factorization of an invertible matrix $\mata$
   follows constructively from \slideref{Theorem}{gram-schmidt}. For a
   singular matrix, the column vectors are linearly dependent, which
-  will result in $r_{jj}=0$ for some index $j$.
-\begin{todo} % Indent on todo removed since it failed to compile otherwise
-    QR for singular matrices?
-\end{todo}
+  will result in $r_{jj}=0$ for some index $j$. We postpone the
+  discussion of the singular case until we have a new tool for
+  computing the QR factorization.
+
   The following lemma rephrases the same statement we have already
   learned about the Gram-Schmidt orthogonalization.
 \end{intro}
@@ -199,16 +199,20 @@
 
 % GvL Theorem 5.2.1
 \begin{Theorem}{qr-existence}
-  Every matrix $\mata\in\C^{m\times n}$ with $m\ge n$
-  admits a QR factorization.
-
-  If the matrix $\mata$ has full rank, the columns of the matrix
+  Every matrix $\mata\in\C^{m\times n}$ with full rank and $m\ge n$
+  admits a QR factorization. The columns of the matrix
   $\matq$ and the diagonal entries of $\matr$ are uniquely determined
   up to unit factors.
 
   The factorization can be made unique by the condition that for all
   $j$ there holds $r_{jj} > 0$.
 \end{Theorem}
+
+\begin{proof}
+  The existence follows from construction by the Gram-Schmidt
+  algorithm. Uniqueness up to unit factors follows from the statement
+  about the spans.
+\end{proof}
 
 \begin{intro}
   The QR factorization can be used to solve linear systems. It will
@@ -576,9 +580,6 @@
 \section{Givens rotation}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{todo}
-  Separate genaral rotation in a coordinate plane from Givens rotation
-\end{todo}
 \begin{Definition}{givens}
   The real \textbf{Givens rotation}\index{Givens rotation!real}
   $\givens_{jk}$ for $j<k$ is a matrix of the form
