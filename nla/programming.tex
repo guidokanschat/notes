@@ -1,0 +1,37 @@
+\chapter{Programming}
+\section{Programming with Armadillo}
+
+Armadillo is a readily available library providing matrix and vector
+classes. We recommend it, because it is simple to use yet offers a lot
+of functionality which makes implementing in a structured way possible
+and easy.
+
+Armadillo can be found at \url{https://arma.sourceforge.net/} and is
+available as installable package for many operating systems. Be aware
+that some of them distinguish between the library itself and the
+development version. You need the latter, as it includes the header
+files.
+
+\begin{Example*}{armadillo-matmult}{Armadillo --- a first example}
+  \lstinputlisting{code/cpp/matmult.cc}
+\end{Example*}
+
+\begin{Example*}{armadillo-compiling}{Armadillo --- compiling}
+  When compiling a program using Armadillo, the library has to be
+  linked with a command like
+  \begin{lstlisting}[language=bash]
+    g++ name.cc -larmadillo
+  \end{lstlisting}
+\end{Example*}
+
+\begin{Example*}{armadillo-mgs}{Armadillo --- modified Gram-Schmidt}
+  \lstinputlisting{code/cpp/gram_schmidt_modified.hh}  
+\end{Example*}
+
+\section{Python counterexamples}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
