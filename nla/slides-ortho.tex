@@ -17,6 +17,48 @@
 \frame{\subtoc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{frame}[fragile]{An experiment in Python}
+  \begin{columns}
+    \begin{column}[t]{.49\textwidth}
+      \begin{block}{Version 1}\small
+        \begin{lstlisting}[language=Python]
+def test1(r):
+  p = r - np.ones(4)
+  r +=  2*np.ones(4)
+  print("  p = ", p)
+  print("  r = ", r)
+        \end{lstlisting}
+      \end{block}
+%      \only<2->{
+\begin{verbatim}
+r =    [6. 6. 6. 6.]
+  p =  [5. 5. 5. 5.]
+  r =  [8. 8. 8. 8.]
+r =    [8. 8. 8. 8.]
+\end{verbatim}
+%}
+    \end{column}
+    \begin{column}[t]{.49\textwidth}
+      \begin{block}{Version 2}
+        \begin{lstlisting}[language=Python]
+def test2(r):
+    p = r
+    p -= np.ones(4)
+    r +=  2*np.ones(4)
+    print("  p = ", p)
+    print("  r = ", r)          
+        \end{lstlisting}        
+      \end{block}
+\begin{verbatim}
+r =    [6. 6. 6. 6.]
+  p =  [7. 7. 7. 7.]
+  r =  [7. 7. 7. 7.]
+r =    [7. 7. 7. 7.]
+\end{verbatim}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \frame {\small\input {blocks/Example-armadillo-matmult.tex}}
 \frame {\small\input {blocks/Example-armadillo-compiling.tex}}
 \frame {\small\input {blocks/Example-armadillo-mgs.tex}}
