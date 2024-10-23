@@ -197,7 +197,6 @@
   \end{gather}
 \end{Lemma}
 
-% GvL Theorem 5.2.1
 \begin{Theorem}{qr-existence}
   Every matrix $\mata\in\C^{m\times n}$ with full rank and $m\ge n$
   admits a QR factorization. The columns of the matrix
@@ -575,6 +574,20 @@
 %     \end{pmatrix}
 %   \end{multline}
 % \end{intro}
+
+\begin{todo}
+\begin{Theorem}{qr-existence-singular}
+  Every matrix $\mata\in\C^{m\times n}$ with $m\ge n$ admits a QR
+  factorization.
+\end{Theorem}
+
+% GvL Theorem 5.2.1
+
+\begin{Problem}{qr-existence-singular}
+  Prove \slideref{Theorem}{qr-existence-singular} using Householder
+  transformations and induction over the columns of $\mata$.
+\end{Problem}
+\end{todo}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Givens rotation}

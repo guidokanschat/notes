@@ -29,6 +29,27 @@
   \end{gather}
 \end{Lemma}
 
+\begin{Lemma}{similarity-eigenvalues}
+  The eigenvalues of a matrix are invariant under similarity transformations.
+\end{Lemma}
+
+\begin{proof}
+  We use the definition of eigenvalues as roots of the characteristic
+  polynomial and show that the characteristic polynomial does not
+  change under similarity transformation. Let
+  $\matb = \matv^{-1}\mata\matv$. Note that
+  \begin{gather}
+    \matb-\lambda\id = \matv^{-1}\mata\matv - \lambda \matv^{-1}\matv
+    = \matv^{-1}(\mata-\lambda\id)\matv.
+  \end{gather}
+  Hence,
+  \begin{gather}
+    \chi_{\matb}(\lambda) = \det(\matv^{-1}{(\mata-\lambda\id)}\matv)
+    = \det(\matv^{-1})\det(\mata-\lambda\id)\det(\matv)
+    = \chi_{\mata}(\lambda).
+  \end{gather}
+\end{proof}
+
 \begin{Theorem*}{Jordan-canonical-form}{Jordan canonical form}
   Every matrix $A\in\C^{n\times n}$ is similar to a matrix with block structure
   \begin{gather}
@@ -48,9 +69,31 @@
 
 
 \begin{Definition}{diagonalizable}
-  A matrix is called \define{diagonalizable}, if it is similar to a diagonal matrix.
-  Equivalently, a diagonalizable matrix has a basis of eigenvectors.
+  A matrix is called \define{diagonalizable}, if it is similar to a diagonal matrix, that is,
+  \begin{gather}
+    \matlambda = \matv^{-1} \mata \matv
+  \end{gather}
+  with a diagonal matrix $\matlambda$ of eigenvalues.
 \end{Definition}
+
+\begin{remark}
+  Let us apply \slideref{Lemma}{matrix-basis-change} to this
+  definition such that $\matlambda$ is the matrix representing $\mata$
+  in the basis $\matv$.
+
+  By our method of writing bases as matrices, the transformation
+  matrix $\matv$ corresponds to a basis $\vv_i = \matv\ve_i$.
+
+  Since $\matlambda$ is diagonal, we have
+  \begin{gather}
+    \matlambda\ve_i = \lambda_e\ve_i.
+  \end{gather}
+  \slideref{Lemma}{matrix-basis-change} now tells us that
+  \begin{gather}
+    \mata\vv_i = \lambda_i\matv\ve_i=\lambda_i\vv_i.    
+  \end{gather}
+  Hence, the columns of $\matv$ are indeed eigenvectors of $\mata$.
+\end{remark}
 
 \begin{Theorem}{matrix-functions}
   Let $\mata\in \C^{n\times n}$ be diagonalizable such that
@@ -98,14 +141,6 @@
   diagonalized by the same set of eigenvectors if and only if they
   commute. namely $\mata\matb = \matb\mata$.
 \end{Theorem}
-
-\begin{todo}
-  Move this up next time
-\end{todo}
-
-\begin{Lemma}{similarity-eigenvalues}
-  The eigenvalues of a matrix are invariant under similarity transformations.
-\end{Lemma}
 
 %%% Local Variables:
 %%% mode: latex

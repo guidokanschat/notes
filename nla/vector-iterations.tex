@@ -210,7 +210,13 @@
   \end{algorithmic}
 \end{Algorithm*}
 
+\begin{Problem}{polynomial-filtering}
+  Devise an algorithm using the power method and matrix polynomial
+  which computes all distinct eigenvalues of a matrix, one after the
+  other.
 
+  Discuss pros and cons of this algorithm.
+\end{Problem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Subspace iterations}
@@ -268,7 +274,10 @@
 
 \begin{Corollary}{convergence-subspace-iteration}
   The orthogonal subspace iteration converges whenever the first $m$
-  eigenvalues are dominant. Moreover, whenever the first $j<m$ eigenvalues are dominant, then the first $j$ columns of $\matq^{(k)}$ converge to the \putindex{dominant invariant subspace} of dimension $j$.
+  eigenvalues are dominant. Moreover, whenever the first $j<m$
+  eigenvalues are dominant, then the first $j$ columns of
+  $\matq^{(k)}$ converge to the \putindex{dominant invariant subspace}
+  of dimension $j$. The latter statement holds even if $m=n$.
 \end{Corollary}
 
 %%% Local Variables:
