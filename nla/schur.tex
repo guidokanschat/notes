@@ -57,9 +57,28 @@
 
   For $\matq_k = (\vq_1\dots\vq_k)$ and $\matr_k$ the upper left $k\times k$ block of $\matr$, there holds
   \begin{gather}
+    \label{eq:schur:1}
     \mata\matq_k = \matq_k \matr_k.
   \end{gather}
 \end{Lemma}
+
+\begin{proof}
+  Multiplying the definition of the Schur canonical form from the right with $\matq$, we obtain
+  \begin{gather}
+    \mata\matq = \matq\matr.
+  \end{gather}
+  The $j$-th column vector of $\mata\matq$ is the vector
+  $\mata\vq_j$. This is equal to the $j$-th column vector of
+  $\matq\matr$ which is $\matq\vr_j$. The entries $r_{ij}$ are zero if
+  $i>j$. Hence,
+  \begin{gather}
+    \mata\vq_j = \sum_{i=1}^j r_{ij}\vq_i.
+  \end{gather}
+  Applying this for $j=1,\dots,k$, this immediately implies that
+  $\spann{\vq_1,\dots,\vq_k}$ is invariant under $\mata$. Since the
+  linear combinations on the right do not involve any later columns of
+  $\matr$, we can cut them off and obtain the representation~\eqref{eq:schur:1}.
+\end{proof}
 
 \begin{Lemma}{schur-canonical-2}
   The Schur vectors depend on the order chosen for the eigenvalues,

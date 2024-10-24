@@ -50,16 +50,46 @@
   \end{gather}
 \end{proof}
 
+\begin{Lemma}{invariant-blockmatrix}
+  Let $\mata\in\Cnn$ have invariant subspaces $V_i$ of dimension
+  $n_i$, $i=1,\dots,k$, such that $\C^n= \bigoplus V_i$. Then, there
+  is a basis $\matv$ such that
+  \begin{gather}
+    \matb = \matv^{-1}\mata\matv =
+    \begin{pmatrix}
+      \matb_1\\&\ddots\\&&\matb_k,
+    \end{pmatrix}
+  \end{gather}
+  where each block $\matb_i\in\C^{n_i\times n_i}$.
+\end{Lemma}
+
+\begin{proof}
+  For each $i=1,\dots,k$ choose a basis $\vv_{i,1},\dots,\vv_{i,n_i}$
+  of $V_i$. Concatenate these bases to obtain
+  \begin{gather}
+    \matv = \bigl(\vv_{1,1},\dots,\vv_{1,n_1},\vv_{2,1},\dots,\vv_{2,n_2},\dots,\vv_{k,1},\dots,\vv_{k,n_k}\bigr).
+  \end{gather}
+  Let now $\vu\in V_i$, then $\vu = \matv\vx$, where the coefficient
+  vector has nonzero entries only betwen the positions of $\vv_{i,1}$
+  and $\vv_{i,n_i}$. Since $\matb V_i\subset V_i$, the coefficient
+  vector of $\matb\vu = \matv\vy$ is also nonzero only in this
+  range. In particular, all entries of rows in this index range are
+  zero for columns not in this index range.
+\begin{todo}
+    Improve this text!
+\end{todo}
+\end{proof}
+
 \begin{Theorem*}{Jordan-canonical-form}{Jordan canonical form}
   Every matrix $A\in\C^{n\times n}$ is similar to a matrix with block structure
   \begin{gather}
     \begin{pmatrix}
-      J_1\\&J_2\\&&\ddots\\&&&J_k
+      \matj_1\\&\matj_2\\&&\ddots\\&&&\matj_k
     \end{pmatrix},
   \end{gather}
   where each block has the form
   \begin{gather}
-    J_i = \begin{pmatrix}
+    \matj_i = \begin{pmatrix}
       \lambda_i&1\\&\ddots&\ddots\\
       &&\lambda_i&1\\
       &&&\lambda_i
@@ -141,6 +171,45 @@
   diagonalized by the same set of eigenvectors if and only if they
   commute. namely $\mata\matb = \matb\mata$.
 \end{Theorem}
+
+\begin{proof}
+  First, we show that commutativity implies joint diagonalizability. To this end, 
+  let $\vv$ be an eigenvector of $\mata$ such that $\mata\vv = \lambda\vv$. Then,
+  \begin{gather}
+    \label{eq:similarity:1}
+    \mata\matb\vv = \matb\mata\matv = \lambda\matb\matv.
+  \end{gather}
+  Hence, $\matb\vv$ is also an eigenvector of $\mata$ for eigenvalue
+  $\lambda$. Now, we distinguish two cases: if $\lambda$ is a simple
+  eigenvalue of $\mata$, we immediately see that $\matb\vv$ must be a
+  multiple of $\vv$ and hence it is an eigenvector of $\matb$ to some
+  eigenvalue.
+
+  If $\lambda$ is a multiple eigenvalue of $\mata$, we investigate its
+  eigenspace $V_\lambda$. From~\eqref{eq:similarity:1}, we obtain that
+  this space is an invariant subspace of $\matb$. Hence, there is a
+  basis $\matv$ of eigenvectors of $\mata$ with those in $V_\lambda$
+  first, such that
+  \begin{gather}
+    \matv^{-1}\matb\matv =
+    \begin{pmatrix}
+      \matb_1&\\&\matb_2
+    \end{pmatrix}
+  \end{gather}
+  Since $\matb$ is diagonalizable, the basis for $V_\lambda$ can be
+  chosen such that $\matb_1$ is diagonal. Doing this for any
+  eigenspace of $\mata$ yields the joint diagonalizability.
+
+  Assume now that there is a basis $\matv$ such that
+  $\matlambda_{\mata} = \matv^{-1}\mata\matv$ and
+  $\matlambda_{\matb} = \matv^{-1}\matb\matv$. Then,
+  \begin{gather}
+    \mata\matb = \matv\matlambda_{\mata}\matv^{-1}\matv\matlambda_{\matb}\matv^{-1}
+    = \matv\matlambda_{\mata}\matlambda_{\matb}\matv^{-1}
+    = \matv\matlambda_{\matb}\matlambda_{\mata}\matv^{-1}
+    = \matb\mata.
+  \end{gather}
+\end{proof}
 
 %%% Local Variables:
 %%% mode: latex
