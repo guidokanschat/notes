@@ -59,14 +59,58 @@
   \end{gather}
 \end{Definition}
 
+\begin{todo}
+  \begin{enumerate}
+  \item Lemma: the distance is indeed a metric
+  \item Remove example below
+  \end{enumerate}
+\end{todo}
+
+\begin{Lemma}{projection-distance}
+  For two subspaces $U,V\subset \C^n$ of unequal dimension there holds
+  $\dist(U,V)\ge 1$. The distance of subspaces of equal dimension is
+  \begin{align}
+    \dist(U,V) &= \max_{\vu\in U}\min_{\vv\in V} \sin\bigl(\angle(u,v)\bigr)\\
+               &= \max_{\vv\in V}\min_{\vu\in U} \sin\bigl(\angle(u,v)\bigr).
+  \end{align}
+\end{Lemma}
+
+\begin{proof}
+  Let without loss of generality $\dim U >\dim V$. Then, $U$ contains
+  a vector $\vu$ which is orthogonal to $V$. Hence,
+  $(\matp_U-\matp_V)\vu=\vu$ and the norm must be greater or equal to
+  one.
+
+  Let now $\vu\in U$ with $\norm{\vu}_2=1$. Then
+  \begin{gather}
+    \norm{(\matp_U-\matp_V)\vu}_2
+    = \norm{\vu-\matp_V\vu}_2
+    = \norm{\vu-\scal(\vu,\vw)\vw}_2,
+  \end{gather}
+  for some normalized vector $\vw\in v$. Hence,
+  \begin{gather}
+    \norm{(\matp_U-\matp_V)\vu}_2^2
+    = \norm{\vu}_2^2 - 2 \scal(\vu,\vw)^2 + \scal(\vu,\vw)^2\norm{w}_2^2
+    = 1-\cos^2\alpha = \sin^2\alpha,
+  \end{gather}
+  where $\alpha$ is the angle between $\vu$ and $\vw$. By the
+  minimization property of the orthogonal projection, $\alpha$
+  minimizes this expression over $V$. For the norm
+  $\norm{\matp_U-\matp_V}$, we must take the maximum over $\vu$.
+\begin{todo}
+  Do this in detail!
+\end{todo}
+  For the symmetry of the expression, we note that the pair
+  $\vu\in U$, $\vw\in V$ already shows that the maximum over $V$
+  cannot be smaller than the maximum over $U$. But if it were greater,
+  say for a pair $\vv\in V$ and $\vy\in U$, this would imply that the
+  maximum over $U$ was not attained at $\vu$.
+\end{proof}
+
 \begin{Example}{projection-distance}
   Since the orthogonal projection is uniquely defined by its range, there holds
   \begin{gather}
     \dist(U,U) = \norm{\matp_U-\matp_U}_2 = 0.
-  \end{gather}
-  If $U$ contains a vector $\vx$  which is orthogonal to $V$, then $\matp_U\vx=\vx$ and $\matp_V\vx = 0$, thus
-  \begin{gather}
-    \norm{\matp_U-\matp_V}_2 = \sup_{\vx\in\C^n} \frac{\norm{\matp_U\vx-\matp_V\vx}}{\norm{\vx}} \ge 1.
   \end{gather}
 \end{Example}
 

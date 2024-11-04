@@ -40,10 +40,6 @@
 \subsection{Simple iterations}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{todo}
-  Rename the vectors $\vv$ to $\vq$ to be more consistent with QR later.
-\end{todo}
-
 \begin{intro}
   The eigenspace of a dominant eigenvalue seems to get amplified
   whenever we multiply with the matrix $\mata$. Hence, we should be a
@@ -52,11 +48,11 @@
 
 \begin{Algorithm*}{vector-iteration}{Vector iteration (power method)}
   \begin{algorithmic}[1]
-    \Require $\mata\in\Cnn$, initial vector $\vv^{(0)}\in\C^n$ with $\norm{\vv}=1$
+    \Require $\mata\in\Cnn$, initial vector $\vx^{(0)}\in\C^n$ with $\norm{\vx}=1$
     \For{$k=1,\dots$ until convergence}
-    \State $\vy^{(k)} \gets \mata \vv^{(k-1)}$
-    \State $\vv^{(k)} = \frac{\vy^{(k)}}{\norm{\vy^{(k)}}}$
-    \State $\alpha_k = \frac{\bigl(\vy^{(k)}\bigr)_i}{\bigl(\vv^{(k)}\bigr)_i}$ where $\abs*{\bigl(\vv^{(k)}\bigr)_i} = \norm*{\vv^{(k)}}_\infty $
+    \State $\vy^{(k)} \gets \mata \vx^{(k-1)}$
+    \State $\vx^{(k)} = \frac{\vy^{(k)}}{\norm{\vy^{(k)}}}$
+    \State $\alpha_k = \frac{\bigl(\vy^{(k)}\bigr)_i}{\bigl(\vx^{(k)}\bigr)_i}$ where $\abs*{\bigl(\vx^{(k)}\bigr)_i} = \norm*{\vx^{(k)}}_\infty $
     \EndFor
 %    \State $\alpha = \frac{\vy^{(k_\max +1)}}{\vv^{(k_{\max})}_i}$
 %    where $\abs{\vv^{(k_{\max})}_i}$ is maximal
@@ -65,20 +61,16 @@
 
 \begin{Theorem}{vector-iteration}
   Let $\mata\in\Cnn$ be diagonalizable such that $\lambda_1$ is the
-  unique dominant eigenvalue. Let furthermore the
-  component of $v^{(0)}$ in direction of the first eigenvector be
-  nonzero. Then, the factors
-  \[\alpha_k := \frac{\vy^{(k+1)}_i}{\vv_i^{(k)}} \; \text{where} \; |\vv_i^{(k)|}| \; \text{is maximal}\]
-  and vectors $v^{(k)}$ of the
+  unique dominant eigenvalue. Let furthermore the component of
+  $\vx^{(0)}$ in direction of the dominant eigenvector $\vv_1$ be
+  nonzero. Then, the factors $\alpha_k$ and vectors $\vx^{(k)}$ of the
   vector iteration converge to the eigenvalue $\lambda_1$ and its
-  associated eigenvector. Moreover, there holds
-    %\State $\alpha = \frac{\vy^{(k_\max +1)}}{\vv^{(k_{\max})}_i}$
-    %where $\abs{\vv^{(k_{\max})}_i}$ is maximal
+  associated eigenvector $\vv_1$. Moreover, there holds
   \begin{align}
     \abs{\alpha_{k+1}-\lambda_1}
     &\le \frac{\abs{\lambda_2}}{\abs{\lambda_1}} \abs{\alpha_{k}-\lambda_1}\\
-    \norm{v^{(k+1)}-u_1}
-    &\le \frac{\abs{\lambda_2}}{\abs{\lambda_1}} \norm{v^{(k)}-u_1}
+    \norm{\vx^{(k+1)}-\vv_1}
+    &\le \frac{\abs{\lambda_2}}{\abs{\lambda_1}} \norm{\vx^{(k)}-\vv_1}
   \end{align}
 \end{Theorem}
 
@@ -96,18 +88,18 @@
 
 \begin{remark}
   The algorithm can be improved in several ways. First, we saw in the
-  proof that it generates a converging sequence of vectors. Threfore,
+  proof that it generates a converging sequence of vectors. Therefore,
   we can save the effort of computing eigenvalues inside the iteration
   and postpone it until the end.
 
   Second, if $\mata$ is a Hermitian matrix, the computation of the
-  eigenvalue can be improved by usig the Rayleigh quotient.
+  eigenvalue can be improved by using the Rayleigh quotient.
 
   Using both statements, we obtain an optimized version of the vector
   iteration.
 \end{remark}
 
-\begin{Algorithm*}{vector-iteration-rayleigh}{Power method (optimized)}
+\begin{Algorithm*}{vector-iteration-rayleigh}{Power method (optimized for Hermitian matrices)}
   \begin{algorithmic}[1]
     \Require $\mata\in\Cnn$ Hermitian, initial vector $\vv^{(0)}\in\C^n$ with $\norm{\vv}=1$
     \For{$k=1,\dots$ until convergence}
@@ -119,12 +111,10 @@
 \end{Algorithm*}
 
 \begin{Remark}{vector-iteration}
-  The proof actually requires, that the entry defining $\alpha_k$
-  remains the same during the iteration, at least during the steps
-  used for detecting convergence.
-
   The result does not actually require that $\mata$ is diagonalizable,
-  as long as $\lambda_1$ is single and of largest modulus.
+  as long as $\lambda_1$ is single and of largest modulus. But this
+  just complicates the proof and we want to focus on diagonalizable
+  matrices anyway.
 \end{Remark}
 
 \begin{Remark}{vector-iteration-roundoff}
@@ -155,18 +145,18 @@
   Let \(\mata \in \C^{n \times n}\) be a square matrix.
   The \define{matrix polynomial} of degree \(k\), with shift parameters \(\sigma_1, \ldots, \sigma_k\) is defined by
   \begin{gather}
-    p(\mata) := \left(\mata - \sigma_1 \id \right) \cdots \left(\mata - \sigma_k\right).
+    p(\mata) := \left(\mata - \sigma_1 \id \right) \cdots \left(\mata - \sigma_k \id \right).
   \end{gather}
 \end{Definition*}
 
 \begin{Lemma}{matrix-polynomial}
   Let $\mata$ be diagonalizable and $p(\mata)$ be a matrix
   polynomial. Then, $p(\mata)$ is diagonalizable. Moreover, a vector
-  $\vv$ is an eigenvalue for $p(\mata)$ and eigenvalue $p(\lambda)$,
+  $\vv$ is an eigenvector for $p(\mata)$ and eigenvalue $p(\lambda)$,
   if and only if it is an eigenvector for $\mata$ and eigenvalue $\lambda$.
 \end{Lemma}
 
-\begin{Algorithm*}{polynomial-filtering}{Polynomial filtering}
+\begin{Lemma*}{polynomial-filtering}{Polynomial filtering}
   Let $\mu_1,\dots,\mu_k$ be approximations to \putindex{unwanted
     eigenvalues} $\lambda_1,\dots,\lambda_k$ of the matrix
   $\mata$. Define the filtering polynomial
@@ -177,7 +167,7 @@
   $p(\lambda_1),\dots,p(\lambda_k)$ of the matrix polynomial
   $p(\mata)$ will be small and the power method converges to other
   eigenvalues.
-\end{Algorithm*}
+\end{Lemma*}
 
 \begin{Example}{polynomial-filtering}
   Let
@@ -199,7 +189,7 @@
   \end{enumerate}
 \end{Example}
 
-\begin{Algorithm*}{vector-iteration-polynomial}{Power method for matrix polynomials}
+\begin{Algorithm*}{polynomial-filtering}{Power method with polynomial filtering}
   \begin{algorithmic}[1]
     \Require $\mata\in\Cnn$ Hermitian, initial vector $\vv^{(0)}\in\C^n$ with $\norm{\vv}=1$
     \For{$k=1,\dots$ until convergence}
@@ -209,6 +199,14 @@
     \State $\lambda_1 \approx R_\mata(\vv^{(k_{\max})} = \scal(\mata\vv^{(k_{\max})},\vv^{(k_{\max})})$
   \end{algorithmic}
 \end{Algorithm*}
+
+\begin{Remark}{polynomial-filtering}
+  Each step of the power method with polynomial filtering costs as
+  much work as $m$ steps of the shifted power method, if we do not
+  count the work for checking convergence. Hence, it can also be seen
+  as a power method with variable shifts, cycling through the linear
+  factors of the polynomial.
+\end{Remark}
 
 \begin{Problem}{polynomial-filtering}
   Devise an algorithm using the power method and matrix polynomial
@@ -241,7 +239,7 @@
   \begin{algorithmic}[1]
     \Require $\mata\in\Cnn$ and choose $\matq_0 \in \C^{n\times m}$ orthogonal.
     \For {$k=1,\ldots$ until convergence}
-    \State $\maty_{k} \gets \mata \matq_{k}$
+    \State $\maty_{k-1} \gets \mata \matq_{k-1}$
     \State $\matq_k\matr_k \gets \maty_{k-1}$ \Comment{QR factorization}
     \EndFor
     \State {$\lambda_i \approx \vq_{k_{\max},i}^* \mata \vq_{k_{\max},i},\qquad i=1,\dots,m$}\

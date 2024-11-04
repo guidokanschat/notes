@@ -9,6 +9,10 @@ In all cases, we will investigate the change of eigenvalues or
 eigenvectors when the matrix $\mata$ is perturbed by a small matrix
 $\mate$ of norm $\epsilon$.
 
+\begin{todo}
+  Put subsection on bounds
+\end{todo}
+
 \begin{Lemma}{bound-by-norm}
   Let $\norm{\cdot}$ be a vector norm and denote by the same symbol
   a consistent norm for matrices. Then, for any matrix $\mata\in\Cnn$
@@ -42,6 +46,10 @@ $\mate$ of norm $\epsilon$.
   that the norm of the matrix on the left must be not less than one.
 \end{proof}
 
+\begin{todo}
+  move Gershgorin here
+\end{todo}
+
 \begin{Definition}{conditioning-eigenvalue}
   Let $\mata\in\Cnn$ and let $\mata+\mate$ be a perturbation of $\mata$. Then, we define the \define{absolute conditioning}\index{conditioning!absolute} of the eigenvalue problem as follows: let $\mu$ be an eigenvalue of $\mata+\mate$, then, there is an eigenvalue $\lambda$ of $\mata$ and a constant $C_{\text{abs}}$ called \define{condition number}, such that
   \begin{gather*}
@@ -56,7 +64,7 @@ $\mate$ of norm $\epsilon$.
   %\end{gather*}
 \end{Definition}
 
-\begin{Example}{characteristic-polynomial}
+\begin{Example*}{characteristic-polynomial}{Wilkinson's polynomial}
   Take a matrix of dimension 20 with eigenvalues $1,2,\ldots,20$. Its
   characteristic polynomial is
   \begin{gather}
@@ -79,7 +87,7 @@ $\mate$ of norm $\epsilon$.
     \end{array}
   \end{gather}
   {\tiny Source: \cite{DeuflhardHohmann08}}
-\end{Example}
+\end{Example*}
 
 \begin{Example}{conditioning-Jordan-block}
   Consider the matrix
@@ -206,6 +214,63 @@ eigenvectors. The following theorem is less general, since it only
 applies to simple eigenvalues, but it provides geometric intuition of
 the issue.
 
+\begin{todo}
+  create a section on bounds at the beginning?
+\end{todo}
+
+\begin{Theorem*}{gershgorin}{Gershgorin circle theorem}
+  All eigenvalues of a matrix $\mata\in\Cnn$ are contained in the
+  union of the \define{Gershgorin Circle}s
+  \begin{gather}
+    G_j = \left\{ z\in \C \middle| \abs{z-a_{jj}} \le \sum_{k\neq j} \abs{a_{jk}}\right\}.
+  \end{gather}
+  Furthermore, if there is a subset of $m$ circles disjoint from the
+  other circles, then this subset contains $m$ eigenvalues.
+\end{Theorem*}
+
+\begin{proof}
+  We apply \slideref{Lemma}{pre-gershgorin} to the matrices $\mata$
+  and $\matb=\diag\{a_{11},\dots,a_{nn}$. As norm, we use the row sum
+  norm. Hence, for $\lambda\neq a_{ii}$, there holds
+  \begin{gather}
+    1 \le \norm{(\lambda\id-\matb)^{-1}(\mata-\matb)}_{\infty}
+    = \max_{i=1,\dots,n}\frac1{\abs{\lambda-a_{ii}}} \sum_{j\neq i}\abs{a_{ij}}.
+  \end{gather}
+  Let now $i$ be the row where the maximum is attained. Ten,
+  multiplying with the inverse of the fraction, we conclude
+  \begin{gather}
+    \abs{\lambda-a_{ii}} \le  \sum_{j\neq i}\abs{a_{ij}}.
+  \end{gather}
+\end{proof}
+
+\begin{Theorem}{eigenvalues-continuous}
+  Let $\mata,\mate\in\Cnn$. Let $\matc(t) = \mata + t \mate$. Then,
+  the spectrum of $\matc(t)$ depends continuously on $t$.
+\end{Theorem}
+
+\begin{proof}
+  First, we note that it is sufficient to prove continuity for
+  $t=0$. For $t\neq0$ choose $\mata' = \mata + t \mate$.
+  
+  We only conduct the proof for diagonalizable matrices, as it fits
+  better into the concept of this class. Let $\matv$ be the basis
+  which diagonalizes $\mata$. Then,
+  \begin{gather}
+    \matv\matc(t)\matv^{-1} = \matlambda + t \matv\mate\matv^{-1}.
+  \end{gather}
+  Let $\delta$ be the minimal distance between two distinct
+  eigenvalues and let $m$ be the maximal row sum of
+  $\tilde \mate = \matv\mate\matv^{-1}$. Then, there is a parameter
+  $t$ such that all the circles of radius $m$ around
+  $\lambda_i+t\tilde e_{ii}$ are disjoint. In particular, for $t\to 0$
+  all points in these circles converge to $\lambda_i$. Hence, we have
+  the postulated continuity.
+  
+  The more general proof for eigenvalues which are not semi-simple
+  relies on the continuous dependence of the roots of a polynomial on
+  the coefficients.
+\end{proof}
+
 \begin{Theorem}{conditioning-eigenvalue-single}
   Let $\mata_\epsilon = \mata+\epsilon\mate\in\Cnn$ be a perturbation
   of $\mata\in\Cnn$. Let $\lambda(0)$ be a simple
@@ -220,24 +285,6 @@ the issue.
     = \norm{E}_2 \frac1{\cos\angle(\vu,\vv)}.
   \end{gather}
 \end{Theorem}
-
-\begin{Theorem}{eigenvalues-continuous}
-  Let $\mata,\matb\in\Cnn$. Let $\matc(t) = \mata + t \matb$. Then,
-  the spectrum of $\matc(t)$ depends continuously on $t$.
-\end{Theorem}
-
-\begin{proof}
-  The proof relies on another theorem that the set of roots of a polynomial $p_t(x)$ of the form
-  \begin{gather}
-    p_t(x) = a_0(t) + a_1(t) x + \dots + a_n(t) x^n,
-  \end{gather}
-  with continuous coefficient functions $a_i(t)$ depends continuously on $t$.
-
-  If we are willing to make the assumption that the matrices
-  $\matc(t)$ are diagonalizable for any $t$ with a uniform bound on
-  the condition number of the transformation matrix $\matv(t)$, this
-  result is a consequence of the Bauer-Fike theorem.
-\end{proof}
 
 \subsection{Conditioning of eigenvectors and eigenspaces}
 
@@ -287,20 +334,6 @@ the issue.
    with $|\eta| << 1$.\\
   Explain why the problem of finding eigenvectors is \textit{not} well-posed in this example.
 \end{Problem}
-
-
-\subsection{Bounds on eigenvalues}
-
-
-\begin{Theorem*}{gershgorin}{Gershgorin circle theorem}
-  All eigenvalues of a matrix $\mata\in\Cnn$ are contained in the
-  union of the \define{Gershgorin Circle}s
-  \begin{gather}
-    G_j = \left\{ z\in \C \middle| \abs{z-a_{jj}} \le \sum_{k\neq j} \abs{a_{jk}}\right\}.
-  \end{gather}
-  Furthermore, if there is a subset of $m$ circles disjoint from the
-  other circles, then this subset contains $m$ eigenvalues.
-\end{Theorem*}
 
 \subsection{The Rayleigh quotient}
 

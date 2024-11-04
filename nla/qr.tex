@@ -1,37 +1,82 @@
 \subsection{Derivation from orthogonal subspace iteration}
-\begin{remark}
+
+\begin{todo}
+  rename vectors in OSI
+\end{todo}
+
+\begin{intro}
   \label{par:qr:intro}
+  In this section, we call the orthogonal vectors of the orthogonal subspace iteration $\matu^{(k)}$ to distinguish them from the new orthogonal basis constructed here.
+  
   If the \putindex{orthogonal subspace iteration} converges, then
-  there is an orthogonal matrix $\matq$ such that
-  $\lim_{k \to \infty} \matq_k = \matq$.  From the two assignments of
+  there is an unitary matrix $\matu$ such that
+  $\lim_{k \to \infty} \matu_k = \matu$.  From the two assignments of
   the algorithm, we get
   \begin{gather}
-    \lim_{k \to \infty} \matq_k^* \mata \matq_k = \lim_{k \to \infty} \matq_k^* \maty_k = \lim_{k \to \infty}
-    \matq_k^*\matq_{k+1}\matr_{k+1} = \matr,
+    \lim_{k \to \infty} \matu_k^* \mata \matu_k = \lim_{k \to \infty} \matu_k^* \maty_k = \lim_{k \to \infty}
+    \matu_k^*\matu_{k+1}\matr_{k+1} = \matr,
   \end{gather}
-  where $\matr\leftarrow\matr_k$, that is, the matrices
-  $\mata_k = \matq_k^*\mata\matq_k$ converge to an upper triangular
-  matrix with the converged eigenvalues on the diagonal. Our next goal
-  ist the modification of the orthogonal subspace iteration, such that
-  we compute the sequence $\mata_k$ directly, without the intermediate
-  $\maty_k$. To this end, we assume $m=n$, that is, we compute the
-  whole spectrum of $\mata$. By lines 2 and 3 of the algorithm, we have
+  where $\matr\leftarrow\matr_k$. Hence, the matrices
+  \begin{gather}
+    \label{eq:qr:intro:1}
+    \mata_k = \matu_k^*\mata\matu_k
+  \end{gather}
+  converge to an upper triangular matrix with the converged
+  eigenvalues on the diagonal. Our next goal ist the modification of
+  the orthogonal subspace iteration, such that we compute the sequence
+  $\mata_k$ directly, without the intermediate $\maty_k$. To this end,
+  we require $m=n$, that is, we compute the whole spectrum of $\mata$.
+\end{intro}
+
+\begin{Lemma}{qr-iteration-derivation}
+  The matrices $\mata_k = \matu_k^*\mata\matu_k$ obtained from the
+  orthogonal subspace iteration follow the recursion formula
+  \begin{gather}
+    \label{eq:qr:iteration-derivation:2}
+    \mata_k = \matq_k^*\mata_{k-1}\matq_k,
+  \end{gather}
+  where $\matq_k = \matu_{k-1}^*\matu_k$ for $k=1,\dots,n-1$. There holds
+  \begin{gather}
+    \label{eq:qr:iteration-derivation:1}
+    \matu_k=\matu_0\matq_1\dots\matq_k.
+  \end{gather}
+  Furthermore, $\mata_k$ can be
+  computed from the QR factorization $\mata_{k-1}= \matq_k\matr_k$ as
+  \begin{gather}
+    \mata_k = \matr_k\matq_k.
+  \end{gather}
+\end{Lemma}
+
+\begin{proof}
+  By the definition of $\mata_{k-1}$ and
+  \slideref{Algorithm}{subspace-iteration}, we have
   \begin{gather*}
-    \mata_{k-1} = \matq_{k-1}^*\mata\matq_{k-1} = \matq_{k-1}^* \maty_{k-1} = \left(\matq_{k-1}^*\matq_{k}\right)\matr_k,
+    \mata_{k-1} = \matu_{k-1}^*\mata\matu_{k-1}
+    = \matu_{k-1}^* \maty_{k-1}
+    = \left(\matu_{k-1}^*\matu_{k}\right)\matr_k = \matq_k\matr_k,
   \end{gather*}
   where we see that on the right we have obtained the QR factorization of $\mata_{k-1}$.
   On the other hand,
   \begin{align*}
     \mata_k
-    &= \matq_k^*\mata\matq_k\\
-    &= \matq_k^*\mata\matq_{k-1}\matq_{k-1}^*\matq_k\\
-    &= \matq_k^*\maty_{k-1} \matq_{k-1}^*\matq_k\\
-    &= \matr_k \left(\matq_{k-1}^*\matq_k\right).
+    &= \matu_k^*\mata\matu_k\\
+    &= \matu_k^*\mata\matu_{k-1}\matu_{k-1}^*\matu_k\\
+    &= \matu_k^*\maty_{k-1} \matu_{k-1}^*\matu_k\\
+    &= \matr_k \left(\matu_{k-1}^*\matu_k\right) = \matr_k\matq_k.
   \end{align*}
   Thus, we see that $\mata_k$ is obtained by multiplying the QR
-  factorization of $\mata_{k-1}$ in reverse order. Note that $\matq_k$
-  in the following algorithm differs from $\matq_k$ in the previous!
-\end{remark}
+  factorization of $\mata_{k-1}$ in reverse order.  We have already
+  replaced $\matq_k = \matu_{k-1}^*\matu_k$ above. Mutliplying from
+  the left by $\matu_{k-1}$ and using $\matu_0=\matq_0=\id$ yields the
+  formula for $\matu_k$ by induction.
+
+  Now, let $\matq_0=\id$ such that
+  $\mata_0 = \matq_0^*\mata\matq_0=\mata$. Then, for $k\ge 1$ we
+  obtain the recursion
+  \begin{gather}
+    \mata_{k} = \matr_k\matq_k = \matq_k^* \matq_k \matr_k \matq_k = \matq_k^* \mata_{k-1} \matq_k.
+  \end{gather}
+\end{proof}
 
 \begin{Algorithm*}{qr-iteration}{QR iteration}
   \begin{algorithmic}[1]
@@ -65,21 +110,20 @@
 \end{Lemma}
 
 \begin{proof}
-  For the first relation, we observe
-  $\mata_0 = \mata = \matq_0^*\mata\matq_0$ and compute
-  \begin{gather}
-    \mata_{k} = \matr_k\matq_k = \matq_k^* \matq_k \matr_k \matq_k = \matq_k^* \mata_{k-1} \matq_k.
-  \end{gather}
+  The first relation follows from~\eqref{eq:qr:intro:1}
+  and~\eqref{eq:qr:iteration-derivation:1} letting $\matu_0=\id$,
+  which corresponds to $\mata_0 = \matu_0^*\mata\matu_0 = \matq_0^*\mata\matq_0 = \mata$.
+  
   The second, we prove by induction, where
   $\mata = \mata_0 = \matq_1\matr_1$ follows directly from the first
   step of the algorithm. For the induction step, we abbreviate
   \begin{gather}
-    \matp_k = \matq_1\dots\matq_k,\qquad \matu_k = \matr_k\dots\matr_1.
+    \matu_k = \matq_1\dots\matq_k,\qquad \mats_k = \matr_k\dots\matr_1.
   \end{gather}
-  Assuming $\mata^k = \matp_k\matu_k$, we obtain
+  Assuming $\mata^k = \matu_k\mats_k$, we obtain
   \begin{gather}
-    \mata^{k+1} = \mata\matp_k\matu_k = \matp_k\mata_{k+1}\matu_k
-    = \matp_k\matq_{k+1}\matr_{k+1}\matu_k = \matp_{k+1}\matu_{k+1}.
+    \mata^{k+1} = \mata\matu_k\mats_k = \matu_k\mata_{k+1}\mats_k
+    = \matu_k\matq_{k+1}\matr_{k+1}\mats_k = \matu_{k+1}\mats_{k+1}.
   \end{gather}
 \end{proof}
 
@@ -229,7 +273,7 @@
 \end{Theorem*}
 
 \begin{proof}
-  We define the matrix $\matw = \matv^*\matq$, which is orthogonal as the product of orthogonal matrices. There holds
+  We define the matrix $\matw = \matv^*\matq$, which is unitary as the product of unitary matrices. There holds
   \begin{gather}
     \matg\matw = \matv^*\mata\matv\matv^*\matq = \matv^*\mata\matq
     = \matv^*\matq\matq^*\mata\matq = \matw\matH.
@@ -242,7 +286,7 @@
   We use this equality to show by induction over the columns that the
   entries $w_{ij}$ of $\matw$ are zero for $i>j$. In other words,
   $\matw$ is upper triangular.  For $j=1$, we obtain from the
-  orthogonality of $\matq$ and $\matv$ and the parallelity of $\vq_1$
+  unitaryity of $\matq$ and $\matv$ and the parallelity of $\vq_1$
   and $\vv_1$ that $\vw_1 = e^{i\phi} \ve_1$ for some argument $\phi$.
 
   Now let the statement be proven for all columns of $\matw$ up to
@@ -255,7 +299,7 @@
   last possibly nonzero entry of the product is in position $j+1$,
   what we wanted to show.
 
-  Since every orthogonal matrix is normal and due to
+  Since every unitary matrix is normal and due to
   \slideref{Problem}{normal-triangular-diagonal} every triangular
   normal matrix is diagonal, the matrix $(\vw_1,\dots,\vw_k)$ is diagonal with
   diaognal entries of the form $w_{jj} = e^{i\phi_j}$ with some
@@ -320,7 +364,7 @@
 \end{Algorithm*}
 
 \begin{Problem}{Hermitian-tridiagonal}
-  Show that every (complex) Hermitian matrix is orthogonally similar
+  Show that every (complex) Hermitian matrix is unitarily similar
   to a symmetric tridiagonal matrix with real entries.
 \end{Problem}
 

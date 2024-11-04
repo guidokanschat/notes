@@ -63,6 +63,10 @@
   \end{gather}
 \end{Definition*}
 
+\begin{todo}
+  Corollary on norm of identity, example: Frobenius norm is not an operator norm
+\end{todo}
+
 \begin{Definition}{spectral-radius}
   The \define{spectral radius} of a matrix $\mata\in\Cnn$ is the
   maximal absolute value of its eigenvalues, that is
@@ -104,11 +108,11 @@
   \end{gather}
   The operator norm induced by the 1-norm is the \define{column sum norm}
   \begin{gather}
-    \norm{\mata}_\infty = \max_j \sum_i \abs{a_{ij}}.
+    \norm{\mata}_1 = \max_j \sum_i \abs{a_{ij}}.
   \end{gather}
   The operator norm induced by the \putindex{Euclidean norm} is the \define{spectral norm}
   \begin{gather}
-    \norm{\mata}_2 = \lambda_{\max}(\mata^*\mata).
+    \norm{\mata}_2 = \sqrt{\lambda_{\max}(\mata^*\mata)}.
   \end{gather}
 \end{Example}
 
