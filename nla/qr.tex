@@ -144,14 +144,13 @@
     matrix}, if all its entries below the first subdiagonal are zero. Visually,
   \begin{gather}
     H =
-    \begin{pmatrix}
-      *&*&*&*&*&*\\
-      *&*&*&*&*&*\\
-      0&*&*&*&*&*\\
-      0&0&*&*&*&*\\
-      0&0&0&*&*&*\\
-      0&0&0&0&*&*
-    \end{pmatrix}
+    \begin{pNiceMatrix}
+      *&\Cdots&\Cdots&\Cdots&*\\
+      *&\Ddots&&&\Vdots\\
+      &\Ddots&\Ddots&&\Vdots\\
+      &&\Ddots&\Ddots&\Vdots\\
+      &&&*&*
+    \end{pNiceMatrix}
   \end{gather}
   A symmetric or Hermitian Hessenberg matrix is \define{tridiagonal}.
 \end{Definition}
@@ -173,38 +172,144 @@
 \end{Algorithm*}
 
 \begin{example}
-  At the example of a 4-by-4-matrix, we show how this algorithm works.
+  At the example of a 5-by-5-matrix, we show how this algorithm works.
   \begin{enumerate}
   \item Apply a Givens rotation from the left which eliminates the value $Y$ from the matrix. It affects the two top rows.
+    \begin{gather*}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{1-2}{2-5}
+          \Body
+          \cellcolor{green}x&\Block{1-4}{}*&*&*&*\\
+          \cellcolor{green}y&\Block{1-4}{}*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&&\Block{1-2}{}*&*
+        \end{NiceArray}\right)
+      \underrightarrow{\quad\matg_{12}^*\matH\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \Block{1-5}{}*&*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&&\Block{1-2}{}*&*
+        \end{NiceArray}\right)    
+    \end{gather*}
 
-    {\small\begin{tikzpicture}
-      \input{fig/hessenberg-givens-1};
-    \end{tikzpicture}}
-
-  \item Do the same with the second and third rows.
-
-    {\small\begin{tikzpicture}
-        \input{fig/hessenberg-givens-2};
-      \end{tikzpicture}}
-
-    {\small\begin{tikzpicture}
-        \input{fig/hessenberg-givens-3};
-      \end{tikzpicture}}
-
+  \item Do the same with the following row
+    \begin{gather*}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{2-3}{3-5}
+          \Body
+          \Block{1-5}{}*&*&*&*&*\\
+          &\cellcolor{green}x&\Block{1-3}{}*&*&*\\
+          &\cellcolor{green}y&\Block{1-3}{}*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&&\Block{1-2}{}*&*
+        \end{NiceArray}\right)
+      \underrightarrow{\quad\matg_{23}^*\matH\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \Block{1-5}{}*&*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&&\Block{1-2}{}*&*
+        \end{NiceArray}\right)    
+    \end{gather*}
+    to the last pair
+    \begin{gather*}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{4-5}{5-5}
+          \Body
+          \Block{1-5}{}*&*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&&\cellcolor{green}x&*\\
+          &&&\cellcolor{green}y&*\\
+        \end{NiceArray}\right)
+      \underrightarrow{\quad\matg_{45}^*\matH\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \Block{1-5}{}*&*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&&\Block{1-2}{}*&*\\
+          &&&&*
+        \end{NiceArray}\right)    
+    \end{gather*}
     Note that columns with two zero entries remain unchanged and will not have to be processed.
   \item Now the matrix is upper triangular and the transformation was
     \begin{gather*}
-      \matq^* = \givens_{34}^*\givens_{23}^*\givens_{12}^*.
+      \matq^* = \givens_{45}^*\givens_{34}^*\givens_{23}^*\givens_{12}^*.
     \end{gather*}
 
   \item When we go back, we apply Givens rotations from the right, thus affecting columns of the matrices.
-
-    {\footnotesize\begin{tikzpicture}\input{fig/hessenberg-givens-4};\end{tikzpicture}
-        \begin{tikzpicture}\input{fig/hessenberg-givens-5};\end{tikzpicture}
-        \begin{tikzpicture}\input{fig/hessenberg-givens-6};\end{tikzpicture}
-        \begin{tikzpicture}\input{fig/hessenberg-givens-6-result};\end{tikzpicture}}
+    \begin{multline*}\small
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{1-1}{1-1}
+          \rectanglecolor{yellow}{1-2}{2-2}
+          \Body
+          *&\Block{2-1}{}*&\Block{3-1}{}*&\Block{4-1}{}*&\Block{5-1}{}*\\
+          &*&*&*&*\\
+          &&*&*&*\\
+          &&&*&*\\
+          &&&&*
+        \end{NiceArray}\right)
+      \underrightarrow{\quad\matH\matg_{12}\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{1-2}{2-2}
+          \rectanglecolor{yellow}{1-3}{3-3}
+          \Body
+          \Block{2-1}{}*&\Block{2-1}{}*&\Block{3-1}{}*&\Block{4-1}{}*&\Block{5-1}{}*\\
+          *&*&*&*&*\\
+          &&*&*&*\\
+          &&&*&*\\
+          &&&&*
+        \end{NiceArray}\right)
+      \underrightarrow{\quad\matH\matg_{23}\quad}
+      \cdots\\\small
+      \underrightarrow{\quad\matH\matg_{34}\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{1-4}{4-4}
+          \rectanglecolor{yellow}{1-5}{5-5}
+          \Body
+          \Block{2-1}{}*&\Block{3-1}{}*&\Block{4-1}{}*&\Block{4-1}{}*&\Block{5-1}{}*\\
+          *&*&*&*&*\\
+          &*&*&*&*\\
+          &&*&*&*\\
+          &&&&*
+        \end{NiceArray}\right)
+      \underrightarrow{\quad\matH\matg_{45}\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \Block{2-1}{}*&\Block{3-1}{}*&\Block{4-1}{}*&\Block{5-1}{}*&\Block{5-1}{}*\\
+          *&*&*&*&*\\
+          &*&*&*&*\\
+          &&*&*&*\\
+          &&&*&*
+        \end{NiceArray}\right)
+    \end{multline*}    
   \end{enumerate}
 \end{example}
+
+\begin{remark}
+  While the previous algorithmdoes the job, it has some
+  disadvantages. For once, the Givens rotations accumulated in the
+  first part must be stored to be applied in the second. Then, if
+  applied to a tridiagonal matrix, the result of the first step has no
+  subdiagonal, but two superdiagonals. And finally, if applied to a
+  symmetric matrix, all intermediate results are nonsymmetric.
+
+  These drawbacks have led to a second algorithm, where each Givens
+  rotation is applied from the left and the right at the same time and
+  $\matr$ is never explicitly computed.
+
+  After introducing this algorithm, we will obviously have to make
+  sure that its result is useful.
+\end{remark}
 
 \begin{Algorithm*}{Hessenberg-qr-2}{Implicit Hessenberg QR step}
   \begin{algorithmic}[1]
@@ -212,53 +317,185 @@
     \State $\givens_{1,2} \gets$ Givens rotation for $h_{11},h_{21}$
     \State $\matH \gets \givens^*_{1,2}\matH \givens_{1,2}$
     \For{$k=2,\dots,n-1$}
-    \State $\givens_{k,k+1} \gets$ Givens rotation for $h_{k,k-1},h_{k+1,k-1}$
+    \State $\givens_{k,k+1}\gets \givens_{k,k+1}[h_{k,k-1},h_{k+1,k-1}]$ Givens rotation
     \State $\matH \gets \givens^*_{k,k+1}\matH \givens_{k,k+1}$
     \EndFor
   \end{algorithmic}
 \end{Algorithm*}
 
 \begin{example}
-  At the example of a 4-by-4-matrix, we show how this algorithm works.
+  At the example of a 5-by-5-matrix, we show how this algorithm works.
   \begin{enumerate}
   \item Apply a Givens rotation from the left which eliminates the value $Y$ from the matrix. It affects the two top rows. By
-    applying the Givens rotation from the left an additional non zero entry below the subdiagonal is created.
-
-    {\small\begin{tikzpicture}
-      \input{fig/hessenberg-bulge-1};
-    \end{tikzpicture}}
+    applying the Givens rotation from the right an additional non zero entry below the subdiagonal is created.
+    \begin{gather*}\small
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{1-2}{2-5}
+          \Body
+          \cellcolor{green}x&\Block{1-4}{}*&*&*&*\\
+          \cellcolor{green}y&\Block{1-4}{}*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&&\Block{1-2}{}*&*
+        \end{NiceArray}\right)
+      \to%\underrightarrow{\quad\matg_{12}^*\matH\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{1-1}{3-2}
+          \Body
+          *&\Block{3-1}{}*&\Block{4-1}{}*&\Block{5-1}{}*&\Block{5-1}{}*\\
+          &*&*&*&*\\
+          &*&*&*&*\\
+          &&*&*&*\\
+          &&&*&*
+        \end{NiceArray}\right)
+      \to%\underrightarrow{\quad\matg_{12}^*\matH\matg_{12}\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \Block{3-1}{}*&\Block{3-1}{}*&\Block{4-1}{}*&\Block{5-1}{}*&\Block{5-1}{}*\\
+          *&*&*&*&*\\
+          \cellcolor{red}*&*&*&*&*\\
+          &&*&*&*\\
+          &&&*&*
+        \end{NiceArray}\right)    
+    \end{gather*}
 \item Apply a Givens rotation from the left to restore Hessenberg form of the first column.
-  
-    {\small\begin{tikzpicture}
-        \input{fig/hessenberg-bulge-2};
-      \end{tikzpicture}}
+    \begin{gather*}\small
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{2-2}{3-5}
+          \Body
+          \Block{1-5}{}*&*&*&*&*\\
+          \cellcolor{green}x&\Block{1-4}{}*&*&*&*\\
+          \cellcolor{green}y&\Block{1-4}{}*&*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&&\Block{1-2}{}*&*
+        \end{NiceArray}\right)
+      \to%\underrightarrow{\quad\matg_{12}^*\matH\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{1-2}{4-3}
+          \Body
+          \Block{2-1}{}*&\Block{3-1}{}*&\Block{4-1}{}*&\Block{5-1}{}*&\Block{5-1}{}*\\
+          *&*&*&*&*\\
+          &*&*&*&*\\
+          &&*&*&*\\
+          &&&*&*
+        \end{NiceArray}\right)    
+      \to%\underrightarrow{\quad\matH\matg_{12}\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \Block{2-1}{}*&\Block{4-1}{}*&\Block{4-1}{}*&\Block{5-1}{}*&\Block{5-1}{}*\\
+          *&*&*&*&*\\
+          &*&*&*&*\\
+          &\cellcolor{red}*&*&*&*\\
+          &&&*&*
+        \end{NiceArray}\right)    
+    \end{gather*}
     
   \item Do the same with the second column.
     
-    {\small\begin{tikzpicture}
-        \input{fig/hessenberg-bulge-3};
-      \end{tikzpicture}}
+    \begin{gather*}\small
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{3-3}{4-5}
+          \Body
+          \Block{1-5}{}*&*&*&*&*\\
+          \Block{1-5}{}*&*&*&*&*\\
+          &\cellcolor{green}x&\Block{1-3}{}*&*&*\\
+          &\cellcolor{green}y&\Block{1-3}{}*&*&*\\
+          &&&\Block{1-2}{}*&*
+        \end{NiceArray}\right)
+      \to%\underrightarrow{\quad\matg_{23}^*\matH\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{1-3}{5-4}
+          \Body
+          \Block{2-1}{}*&\Block{3-1}{}*&\Block{4-1}{}*&\Block{5-1}{}*&\Block{5-1}{}*\\
+          *&*&*&*&*\\
+          &*&*&*&*\\
+          &&*&*&*\\
+          &&&*&*
+        \end{NiceArray}\right)
+      \to%\underrightarrow{\quad\matH\matg_{23}\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \Block{2-1}{}*&\Block{3-1}{}*&\Block{5-1}{}*&\Block{5-1}{}*&\Block{5-1}{}*\\
+          *&*&*&*&*\\
+          &*&*&*&*\\
+          &&*&*&*\\
+          &&\cellcolor{red}*&*&*
+        \end{NiceArray}\right)    
+    \end{gather*}
+  
+  \item Finally with the last row
+    
+    \begin{gather*}\small
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{4-4}{5-5}
+          \Body
+          \Block{1-5}{}*&*&*&*&*\\
+          \Block{1-5}{}*&*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &&\cellcolor{green}x&\Block{1-2}{}*&*\\
+          &&\cellcolor{green}y&\Block{1-2}{}*&*
+        \end{NiceArray}\right)
+      \to%\underrightarrow{\quad\matg_{23}^*\matH\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{1-4}{5-5}
+          \Body
+          \Block{2-1}{}*&\Block{3-1}{}*&\Block{4-1}{}*&\Block{5-1}{}*&\Block{5-1}{}*\\
+          *&*&*&*&*\\
+          &*&*&*&*\\
+          &&*&*&*\\
+          &&&*&*
+        \end{NiceArray}\right)
+      \to%\underrightarrow{\quad\matH\matg_{23}\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \Block{2-1}{}*&\Block{3-1}{}*&\Block{4-1}{}*&\Block{5-1}{}*&\Block{5-1}{}*\\
+          *&*&*&*&*\\
+          &*&*&*&*\\
+          &&*&*&*\\
+          &&&*&*
+        \end{NiceArray}\right)    
+    \end{gather*}
+
     Note that columns with two zero entries remain unchanged and will not have to be processed.
   \end{enumerate}
 \end{example}
 
-\begin{remark}
+\begin{Remark}{bulge-chasing}
   This algorithm is called \define{bulge chasing} with the following
   image in mind. After the application of the first rotation, there is
   a bulge protruding down from the Hessenberg form in the furst
   column. This bulge is then ``chased'' down row by row until it
   leaves the matrix at the bottom.
-\end{remark}
+    \begin{gather}\arraycolsep0pt
+    \begin{pNiceMatrix}
+      *&\Cdots&\Cdots&\Cdots&\Cdots&*\\[-5pt]
+      *&\Ddots&&&&\Vdots\\[-5pt]
+      &\Ddots&\Ddots&&&\Vdots\\[-5pt]
+      &*&\Ddots&\Ddots&&\Vdots\\[-5pt]
+      &&&\Ddots&\Ddots&\Vdots\\[-5pt]
+      &&&&*&*
+    \end{pNiceMatrix}
+    \to
+    \begin{pNiceMatrix}
+      *&\Cdots&\Cdots&\Cdots&\Cdots&*\\[-5pt]
+      *&\Ddots&&&&\Vdots\\[-5pt]
+      &\Ddots&\Ddots&&&\Vdots\\[-5pt]
+      &&\Ddots&\Ddots&&\Vdots\\[-5pt]
+      &&*&\Ddots&\Ddots&\Vdots\\[-5pt]
+      &&&&*&*
+    \end{pNiceMatrix}
+  \end{gather}
+\end{Remark}
 
 \begin{Definition}{hessenberg-unreduced}
   A Hessenberg matrix is called \define{unreduced} if all entries on
   the first subdiagonal are nonzero. It is called \define{reduced}
   otherwise.
 \end{Definition}
-
-\begin{todo}
-  In the next semester, use $\parallel$!
-\end{todo}
 
 \begin{Theorem*}{implicit-Q}{Implicit Q Theorem}
   Let $\mata\in\Cnn$ arbitrary, let $\matq,\matv\in\Cnn$ unitary such that
@@ -267,8 +504,8 @@
   \end{gather}
   where $\matH$ and $\matg$ are Hessenberg matrices. Let $k$ denote
   the smallest integer such that $h_{k+1,k} = 0$, or $k=n$ if $\matH$
-  is unreduced. Assume $\vv_1 = e^{i\phi_0}\vq_1$. Then,
-  $\vv_j = e^{i\phi_j}\vq_j$ and $\abs{h_{j+1,j}} = \abs{g_{j+1,j}}$
+  is unreduced. Assume $\vv_1 \parallel \vq_1$. Then,
+  $\vv_j\parallel \vq_j$ and $\abs{h_{j+1,j}} = \abs{g_{j+1,j}}$
   for $j=1,\dots,k-1$. if $k<n$, then $g_{k+1,k} = 0$.
 \end{Theorem*}
 

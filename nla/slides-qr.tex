@@ -15,21 +15,97 @@
 \frame {\input {blocks/Algorithm-Hessenberg-qr-1.tex}}
 
 \begin{frame}
-  \frametitle{Example: 4-by-4-matrix}
+  \frametitle{Example: 5-by-5-matrix}
   \begin{gather*}
     \matH \to \givens_{12}^*\matH
     \visible<2->{\to \givens_{23}^*\givens_{12}^*\matH}
-    \visible<3->{\to \givens_{34}^*\givens_{23}^*\givens_{12}^*\matH = \matr}\\
-    \visible<3->{\matr\matq = \matr\givens_{12}\givens_{23}\givens_{34}}\\
+    \visible<3->{\to \givens_{34}^*\givens_{23}^*\givens_{12}^*\matH}
+    \visible<4->{\to \givens_{45}^*\givens_{34}^*\givens_{23}^*\givens_{12}^*\matH = \matr}\\
+    \visible<4->{\matr\matq = \matr\givens_{12}\givens_{23}\givens_{34}\givens_{45}}\\
   \end{gather*}
-  \only<1>{\begin{tikzpicture}\input{fig/hessenberg-givens-1};\end{tikzpicture}}
-  \only<2>{\begin{tikzpicture}\input{fig/hessenberg-givens-2};\end{tikzpicture}}
-  \only<3>{\begin{tikzpicture}\input{fig/hessenberg-givens-3};\end{tikzpicture}}
-  \only<4>{
-    \begin{tikzpicture}\input{fig/hessenberg-givens-4};\end{tikzpicture}
-    \begin{tikzpicture}\input{fig/hessenberg-givens-5};\end{tikzpicture}
-    \begin{tikzpicture}\input{fig/hessenberg-givens-6};\end{tikzpicture}
-    \begin{tikzpicture}\input{fig/hessenberg-givens-6-result};\end{tikzpicture}}
+
+  \begin{gather*}
+    \only<1>{
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{1-2}{2-5}
+          \Body
+          \cellcolor{green}x&\Block{1-4}{}*&*&*&*\\
+          \cellcolor{green}y&\Block{1-4}{}*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&&\Block{1-2}{}*&*
+        \end{NiceArray}\right)
+      \underrightarrow{\quad\matg_{12}^*\matH\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \Block{1-5}{}*&*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&&\Block{1-2}{}*&*
+        \end{NiceArray}\right)
+    }
+    \only<2>{
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{2-3}{3-5}
+          \Body
+          \Block{1-5}{}*&*&*&*&*\\
+          &\cellcolor{green}x&\Block{1-3}{}*&*&*\\
+          &\cellcolor{green}y&\Block{1-3}{}*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&&\Block{1-2}{}*&*
+        \end{NiceArray}\right)
+      \underrightarrow{\quad\matg_{23}^*\matH\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \Block{1-5}{}*&*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&&\Block{1-2}{}*&*
+        \end{NiceArray}\right)    
+      }
+    \only<3>{
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{3-4}{4-5}
+          \Body
+          \Block{1-5}{}*&*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &&\cellcolor{green}x&\Block{1-2}{}*&*\\
+          &&\cellcolor{green}y&\Block{1-2}{}*&*\\
+          &&&\Block{1-2}{}*&*
+        \end{NiceArray}\right)
+      \underrightarrow{\quad\matg_{23}^*\matH\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \Block{1-5}{}*&*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&&\Block{1-2}{}*&*\\
+          &&&\Block{1-2}{}*&*
+        \end{NiceArray}\right)    
+      }
+    \only<4>{
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \CodeBefore
+          \rectanglecolor{yellow}{4-5}{5-5}
+          \Body
+          \Block{1-5}{}*&*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&&\cellcolor{green}x&*\\
+          &&&\cellcolor{green}y&*\\
+        \end{NiceArray}\right)
+      \underrightarrow{\quad\matg_{45}^*\matH\quad}
+      \left(\begin{NiceArray}[margin,hvlines,corners=SW]{ccccc}
+          \Block{1-5}{}*&*&*&*&*\\
+          &\Block{1-4}{}*&*&*&*\\
+          &&\Block{1-3}{}*&*&*\\
+          &&&\Block{1-2}{}*&*\\
+          &&&&*
+        \end{NiceArray}\right)    
+      }
+    \end{gather*}
 \end{frame}
 
 \frame {\input {blocks/Algorithm-Hessenberg-qr-2.tex}}

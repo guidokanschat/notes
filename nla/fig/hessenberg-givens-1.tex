@@ -1,25 +1,27 @@
 \node
 [matrix of math nodes,left delimiter=(,right delimiter=)] (m)  at (0,0)
 {
-  X&X&X&X\\
-  Y&X&X&X\\
-  0&X&X&X\\
-  0&0&X&X\\
+  x&*&*&*&*\\
+  y&*&*&*&*\\
+  0&*&*&*&*\\
+  0&0&*&*&*\\
+  0&0&0&*&*\\
 };
 
 \node
 [matrix of math nodes,left delimiter=(,right delimiter=)] (r)  at (5,0)
 {
-  X&X&X&X\\
-  0&X&X&X\\
-  0&X&X&X\\
-  0&0&X&X\\
+  *&*&*&*&*\\
+  0&*&*&*&*\\
+  0&*&*&*&*\\
+  0&0&*&*&*\\
+  0&0&0&*&*\\
 };
 
 \draw[->,thick] (2,0) -- node[above] {$\matg_{12}^*\matH$} (3,0);
 
 \begin{pgfonlayer}{bg}
-  \node[fit={(m-1-1.north west) (m-2-4.south east)},fill=yellow,inner sep=0,rounded corners=1mm]{};
+  \node[fit={(m-1-1.north west) (m-2-5.south east)},fill=yellow,inner sep=0,rounded corners=1mm]{};
   \node[fit={(m-1-1.north west) (m-2-1.south east)},fill=green,inner sep=0,rounded corners=1mm]{};
 \end{pgfonlayer}
 
