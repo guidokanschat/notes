@@ -588,24 +588,116 @@
     reflection}s.
 \end{Theorem}
 
-\begin{Algorithm*}{qr-method}{The QR-Method}
-  Compute the spectrum of a matrix $\mata\in\Cnn$ by
-  \begin{enumerate}
-  \item Use $n-2$ Householder transformations to transform $\mata$ to
-    Hessenberg form
-    \begin{gather}
-     \matH = \matq^*\mata\matq.
-   \end{gather}
- \item QR-iteration: let $\matH_{0}=\matH$ and perform the implicit Hessenberg QR step until convergence
- \item Store Householder vectors as well as $r$ and $c$ for each
-   Givens rotation \textbf{only} if the eigenvectors are desired in the end.
-  \end{enumerate}
-\end{Algorithm*}
+\begin{proof}
+  The proof is constructive and relies on Householder
+  transformations. We begin by partitioning the matrix $\mata$ as
+  \begin{gather}
+    \mata =
+    \left(\begin{NiceArray}[margin,hvlines]{ccw{c}{4em}c}
+        \Block{1-4}{}*&\Cdots&\Cdots&*\\
+        \Block{4-1}{\vv_1}&\Block{4-3}<\huge>{*}&&\\
+        &&&\\
+        &&&\\
+        &&&
+      \end{NiceArray}\right)
+  \end{gather}
+  Now we find the Householder vector $\tilde\vw_1\in\C^{n-1}$ which transforms $\vv_1$ to a multiple of $\ve_1\in \C^{n-1}$ and let
+  \begin{gather}
+    \vw_1 =
+    \begin{pmatrix}
+      0\\ \tilde\vw_1
+    \end{pmatrix},
+    \qquad
+    \matq_1 = \id - 2 \frac{\vw_1\vw_1^*}{\vw_1^*\vw_1}.
+  \end{gather}
+  Note that the multiplication $\matq_1\mata$ leaves the first row of
+  $\mata$ unchanged, while $\mata\matq_1$ leaves the first column
+  unchanged. Hence,
+  \begin{gather}
+    \matq_1 \mata =
+    \left(\begin{NiceArray}[margin,hvlines]{ccw{c}{4em}c}
+        \Block{1-4}{}*&\Cdots&\Cdots&*\\
+        *&\Block{4-3}<\huge>{*}&&\\
+        \Block{3-1}{0}&&&\\
+        &&&\\
+        &&&
+      \end{NiceArray}\right), 
+  \end{gather}
+  and this structure does not change by multiplication with $\matq_1$
+  from the right. Now partition
+  \begin{gather}
+    \matq_1\mata\matq_1 =
+    \left(\begin{NiceArray}[margin,hvlines]{cccw{c}{4em}c}
+        \Block{1-5}{}*&\Cdots&\Cdots&\Cdots&*\\
+        *&\Block{1-4}{}*&\Cdots&\Cdots&*\\
+        \Block{4-1}{0}&\Block{4-1}{\vv_2}&\Block{4-3}<\huge>{*}&&\\
+        &&&&\\
+        &&&&\\
+        &&&&
+      \end{NiceArray}\right),     
+  \end{gather}
+  and choose the Householder vector $\tilde\vw_2\in\C^{n-2}$ which
+  maps $\vv_2$ to a multiple of $\ve_1\in\C^{n-2}$. Let
+  \begin{gather}
+    \vw_2 =
+    \begin{pmatrix}
+      0\\0\\ \tilde\vw_2
+    \end{pmatrix},
+    \qquad
+    \matq_2 = \id - 2 \frac{\vw_2\vw_2^*}{\vw_2^*\vw_2},
+  \end{gather}
+  and observe that multiplication with $\matq_2$ from left and right leaves the first two rows and columns untouched, respectively. Hence,
+  \begin{gather}
+    \matq_2\matq_1\mata\matq_1\matq_2 =
+    \left(\begin{NiceArray}[margin,hvlines]{cccw{c}{4em}c}
+        \Block{1-5}{}*&\Cdots&\Cdots&\Cdots&*\\
+        *&\Block{1-4}{}*&\Cdots&\Cdots&*\\
+        \Block{4-1}{0}&*&\Block{4-3}<\huge>{*}&&\\
+        &\Block{3-1}{0}&&&\\
+        &&&&\\
+        &&&&
+      \end{NiceArray}\right).
+  \end{gather}
+  This algorithm can be continued until the third last entry in the
+  last row is set to zero. Note that the operations from the left
+  mimic the QR factorization, but start to operate one row below the
+  diagonal.
+\end{proof}
 
 \begin{Problem}{Hermitian-tridiagonal}
   Show that every (complex) Hermitian matrix is unitarily similar
   to a symmetric tridiagonal matrix with real entries.
 \end{Problem}
+
+\begin{Algorithm*}{qr-method}{The Householder QR-Method}
+  Compute the spectrum of a matrix $\mata\in\Cnn$ by
+  \begin{enumerate}
+  \item Use $n-2$ Householder transformations to transform $\mata$ to
+    Hessenberg form
+    \begin{gather}
+     \matH_0 = \matq^*\mata\matq.
+   \end{gather}
+ \item QR-iteration: perform the implicit Hessenberg QR step until convergence
+ \item Store Householder vectors as well as $r$ and $c$ for each
+   Givens rotation \textbf{only} if the eigenvectors are desired in the end.
+  \end{enumerate}
+\end{Algorithm*}
+
+\begin{remark}
+  In this algorithm, we focus on computing eigenvalues. The
+  eigenvectors are neglected. The could be computed by storing the
+  $n-2$ Householder vectors of the transformation to Hessenberg form
+  and all parameters of the Givens rotations of the iteration. In the
+  end, the vectors can be computed by applying all these unitary
+  matrices in the right order to an identity matrix.
+
+  Usually, this is not done, since it results in an inefficient
+  algorithm. Furthermore, we will modify the algorithm to deal with
+  reduced Hessenberg matrices, which may appear anytime in the
+  iteration. Actually, we should point out here that the implicit QR
+  step should not be continued in this case since the Implicit Q
+  Theorem dos not apply anymore.
+\end{remark}
 
 \begin{Lemma}{Hessenberg-rank}
   The rank of an unreduced Hessenberg matrix of dimension $n$ is at
@@ -616,12 +708,12 @@
 \begin{proof}
   If $\mata$ is in Hessenberg form and unreduced, the $k+1$-st entry
   of the $k$-th column vector $\va_k$ for $k\le n-1$ is nonzero, while
-  the same entry of all previous column vectors is zero. Hnece, the
+  the same entry of all previous column vectors is zero. Hence, the
   first $n-1$ column vectors are linearly independent and the rank of
   $\mata$ is at least $n-1$. Note that this argument does not apply to
   the last column.
 
-  If $\mata$ is unreduced Hessenberg, so is $\mata-\lambda\id$, chich
+  If $\mata$ is unreduced Hessenberg, so is $\mata-\lambda\id$, which
   proves the second statement.
 \end{proof}
 
@@ -654,6 +746,20 @@
   $p=n-1$, then $h_{nn}$ approximates an eigenvalue.
 \end{Theorem}
 
+\begin{proof}
+  We consider the algorithm in its explicit form.  The Givens
+  transformation $\givens_{p,p+1}$ can be chosen as identity, since
+  the subdiagonal entry in column $p$ is already zero. Hence, the
+  product of all givens transformations is
+  \begin{gather}
+    \matq = \givens_{12}\dots\givens_{p-1,p}\givens_{p+1,p+2}\dots\givens_{n-1,n},
+  \end{gather}
+  where the first $p-1$ only act on the first $p$ rows/columns and the
+  remaining ones on th last $n-p$. Therefore, $\matr\matq$ has the
+  same block structure as $\matH^{(k)}$.
+\end{proof}
+
+
 \begin{Algorithm*}{qr-deflation}{Deflation}
   After each step of the shifted QR-iteration monitor the subdiagonal
   elements of $\matH^{(k)}$. Whenever
@@ -668,16 +774,21 @@
   If this happens in the center of the matrix, proceed with both
   remaining diagonal blocks separately.
 
-  Note that deflation changes the matrix in a ``nonorthogonal'' way
-  and thus changes the eigenvalues. Their accuracy will be determined
-  by the parameter $\eps$ in the end.
 \end{Algorithm*}
+
+\begin{Remark}{qr-deflation}
+  Deflation changes the matrix in a ``nonorthogonal'' way and thus
+  changes the eigenvalues. Their accuracy will be determined by the
+  parameter $\eps$ in the end.
+\end{Remark}
 
 \begin{remark}
   The purpose of deflation is removing Schur vectors from the
   iteration. Thus, if one of the Schur vectors for a multiple
   eigenvalue has converged, the remaining iterations will deal with
-  reduced multiplicity. Deflation will also help us to deal with the
+  reduced multiplicity.
+
+  Deflation by itself will not help us to deal with the
   requirement that all eigenvalues must have different modulus, but
   this is solved below in combination with shifts.
 \end{remark}
@@ -769,13 +880,6 @@
   to $h_{nn}^{(k)}$.
 \end{Definition*}
 
-\begin{Remark}{wilkinson-shift}
-  The Wilkinson shift is reliable and the $h_{n,n-1}$ and $h_{nn}$
-  converge to zero and the smallest eigenvalue by magnitude,
-  respectively. They converge at least quadratically and cubically in
-  the symmetric case~\cite[Section 8.2]{GolubVanLoan83}.
-\end{Remark}
-
 \begin{Example}{wilkinson-failure}
   Consider the orthogonal matrix
   \begin{gather}
@@ -791,6 +895,19 @@
   \end{gather}
   which all have the same modulus. Thus, the algorithm will not converge with either shift.
 \end{Example}
+
+\begin{remark}
+  The structure of this example for the Wilkinson shift suggests, that
+  for every simple shift strategy relying on submatrices, we will find
+  a matrix which defeats it. This could be either because the
+  iteration stagnates or since it runs in a loop. Hence, we have to
+  break this situatuin, which can be achieved by applying a random
+  shift.
+
+  A notable exception from this rule are symmetric tridiagonal
+  matrices, where we actually have a proof of convergence, see
+  \slideref{Theorem}{wilkinson-convergence}.
+\end{remark}
 
 \begin{Algorithm}{exceptional-shift}
   If no deflation has ocurred for a given number of iteration steps of
