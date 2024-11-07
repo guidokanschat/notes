@@ -502,11 +502,12 @@
   \begin{gather}
     \matq^*\mata\matq = \matH,\qquad \matv^*\mata\matv = \matg,
   \end{gather}
-  where $\matH$ and $\matg$ are Hessenberg matrices. Let $k$ denote
+  where $\matH$ and $\matg$ are Hessenberg matrices.
+  Let $k$ denote
   the smallest integer such that $h_{k+1,k} = 0$, or $k=n$ if $\matH$
   is unreduced. Assume $\vv_1 \parallel \vq_1$. Then,
   $\vv_j\parallel \vq_j$ and $\abs{h_{j+1,j}} = \abs{g_{j+1,j}}$
-  for $j=1,\dots,k-1$. if $k<n$, then $g_{k+1,k} = 0$.
+  for $j=1,\dots,k-1$. If $k<n$, then $g_{k+1,k} = 0$.
 \end{Theorem*}
 
 \begin{proof}
@@ -523,24 +524,25 @@
   We use this equality to show by induction over the columns that the
   entries $w_{ij}$ of $\matw$ are zero for $i>j$. In other words,
   $\matw$ is upper triangular.  For $j=1$, we obtain from the
-  unitaryity of $\matq$ and $\matv$ and the parallelity of $\vq_1$
+  unitarity of $\matq$ and $\matv$ and the parallelity of $\vq_1$
   and $\vv_1$ that $\vw_1 = e^{i\phi} \ve_1$ for some argument $\phi$.
 
   Now let the statement be proven for all columns of $\matw$ up to
   column $j$. Then, from~\eqref{eq:qr:implicitq-1} we obtain
   \begin{gather}
-    h_{j+1,j}\vw_{j+1} = \matg\vw_j - \sum_{k=1}^j h_{kj} \vw_{k}.
+    h_{j+1,j}\vw_{j+1} = \matg\vw_j - \sum_{\nu=1}^j h_{\nu j} \vw_{\nu}.
   \end{gather}
-  For each vector in the sum, there holds $(\vw_{k})_i = 0$ for
+  For each vector in the sum, there holds $(\vw_{\nu})_i = 0$ for
   $i>j$. Since $\matg$ is Hessenberg and applied to $\matw_j$, the
   last possibly nonzero entry of the product is in position $j+1$,
   what we wanted to show.
 
   Since every unitary matrix is normal and due to
   \slideref{Problem}{normal-triangular-diagonal} every triangular
-  normal matrix is diagonal, the matrix $(\vw_1,\dots,\vw_k)$ is diagonal with
-  diaognal entries of the form $w_{jj} = e^{i\phi_j}$ with some
-  arguments $\phi_j$. Hence, $\vv_j = e^{-i\phi_j} \vq_j$ for $j=1,\dots,k$.
+  normal matrix is diagonal, the matrix $(\vw_1,\dots,\vw_k)$ is
+  diagonal with diaognal entries of the form $w_{jj} = e^{i\phi_j}$
+  with some arguments $\phi_j$. Hence, $\vv_j = e^{-i\phi_j} \vq_j$
+  for $j=1,\dots,k$ and thus $\vv_j$ is parallelto $\vq_j$.
 
   There holds for $j<k$
   \begin{gather}
@@ -553,7 +555,7 @@
     g_{k+1,k} = \ve_{k+1}^*\matg\ve_k = e^{i\phi_k}\ve_{k+1}^*\matg\matw\ve_k
     =  e^{i\phi_k}\ve_{k+1}^*\matw\matH\ve_k\\
     =  e^{i\phi_k}\ve_{k+1}^* \sum_{j=1}^k h_{jk} \matw\ve_j
-    =  \sum_{j=1}^k e^{i\phi_*} h_{jk} \ve_{k+1}^* \ve_j = 0.
+    =  \sum_{j=1}^k e^{i\phi_k} h_{jk} \ve_{k+1}^* \ve_j = 0.
   \end{multline}
 \end{proof}
 
