@@ -795,7 +795,7 @@
 
 \begin{Algorithm*}{shifted-qr-iteration}{QR iteration with shift}
   \begin{algorithmic}[1]
-    \Require $\matH_0 in\Cnn$, Hessenberg, unreduced
+    \Require $\matH_0 \in\Cnn$, Hessenberg, unreduced
     \For {$k=1,\ldots$ until convergence}
     \State $\matq_k\matr_k = \matH_{k-1} - \sigma_k\id$\Comment{QR factorization}
     \State $\matH_{k} = \matr_k\matq_k + \sigma_k\id$
@@ -927,9 +927,6 @@
   \end{gather}
   Hence, the situation is not hopeless and typically, the algorithm
   converges again after an exceptional shift.
-
-  We will see soon, that the situation is significantly better in the
-  case of Hermitian matrices.
 \end{remark}
 
 \begin{Algorithm*}{qr-step-deflation}{QR step with deflation}
@@ -954,10 +951,37 @@
   $\matH_{33}$ is upper \putindex{triangular} and $\matH_{22}$
   is unreduced.
 
-  The shifted QR step is then applied to $\matH_{22}$ only. If the
-  eigenvectors are not computed, even the transformations of
-  $\matH_{12}$ and $\matH_{23}$ can be eliminated.
+  The shifted QR step is then applied to $\matH_{22}$ only.
 \end{Algorithm*}
+
+\begin{remark}
+  The three diagonal blocks in the preceding algorithm represent different stages in the algorithm:
+  \begin{itemize}
+  \item $\matH_{33}$ is converged to an upper triangular matrix and
+    hence corresponds to a converged Schur form with eigenvalues on
+    the diagonal.
+  \item $\matH_{22}$ is an unreduced Hessenberg matrix. The shifted QR
+    step operates on this block with the goal of driving at least one
+    subdiagonal element to zero.
+  \item $\matH_{11}$ is the part of the matrix waiting to be handled
+    by the algorithm later.
+  \end{itemize}
+  If a subdiagonal entry of $\matH_{22}$ is in the last row, this last
+  row is transferred to the block $\matH_{33}$ in the next step, hence
+  reducing the dimension of $\matH_{22}$ by one.
+
+  If such a subdiagonal entry is in an earlier row, we split the
+  matrix $\matH_{22}$ at this point. The lower diagonal block becomes
+  the new $\matH_{22}$, while the upper one is becoming a part of
+  $\matH_{11}$.
+
+  We might save additional iterations by allowing two-by-two blocks on
+  the diagonal of $\matH_{33}$. Their eigenvalues can still be
+  computed easily by computing the roots of a quadratic polynomial.
+  
+  We do not compute eigenvectors with this algorithm, such that the
+  transformations of $\matH_{13}$ and $\matH_{23}$ can be avoided.
+\end{remark}
 
 \begin{remark}
   When implementing \slideref{Algorithm}{qr-step-deflation}, we have
@@ -976,22 +1000,12 @@
   between rows or columns. This can be achieved either by storing the
   matrix as a sequence of column vectors, or by using strided versions
   of the algorithms.
-\end{remark}
 
-\begin{Example*}{daxpy}{DAXPY}
-  The BLAS function daxpy computes
-  \begin{gather}
-    \vx \gets a \vx + \vy.
-  \end{gather}
-  It has the signature
-  \begin{lstlisting}[language=c]
-    int daxpy(int N, double A,
-              double* X, int INCX,
-              double* Y, int INCY);
-  \end{lstlisting}
-  The values \lstinline!INCX! and \lstinline!INCY! are used to
-  implement stride, possibly with different values in both vectors.
-\end{Example*}
+  In FORTRAN, the function DAXPY of the basic linear algebra
+  subprograms (BLAS) library has explicit parameters for this
+  stride. The submatrix objects of the Armadillo library implement
+  this in a transparent way.
+\end{remark}
 
 %%% Local Variables:
 %%% mode: latex

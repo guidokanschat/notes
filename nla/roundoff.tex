@@ -1,0 +1,27 @@
+\begin{Lemma}{householder-roundoff}
+  The computation of Householder vectors according to
+  \slideref{Lemma}{householder-qr} is numerically stable. Let $\vw$ be
+  the exact Householder vector mapping $\vx$ to a multiple of the
+  first unit vector, and let $\tilde \vw$ be its numerically computed
+  approximation. Then
+  \begin{gather}
+    \norm{\matq_{\vw} - \matq_{\tilde \vw}}_2 = \bigo(\eps),
+  \end{gather}
+  independent of the vector $\vx$. Furthermore, there are matrices
+  $\mate$ such that for the floating point matrix-vector product $\odot$ there holds
+  \begin{xalignat}{2}
+    \matq_{\tilde w} \odot \mata &= \matq_{w}(\mata+\mate)
+    &\norm{\mate}_2 &= \bigo(\eps \cdot \norm{\mata}_2),\\
+     \mata \odot \matq_{\tilde w} &= (\mata+\mate)\matq_{w}
+    &\norm{\mate}_2 &= \bigo(\eps \cdot \norm{\mata}_2).
+  \end{xalignat}
+\end{Lemma}
+
+\begin{Lemma}{givens-roundoff}
+  
+\end{Lemma}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
