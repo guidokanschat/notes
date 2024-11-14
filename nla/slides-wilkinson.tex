@@ -8,12 +8,15 @@
   \end{gather*}
   \begin{columns}
     \begin{column}{.49\textwidth}
+      \only<1,3,5,8>{Before:}
+      \only<2,4,6,7,9>{After:}
       \begin{gather*}
         \overline\mata_{%
           \only<1>{1}
           \only<2-3>{2}
           \only<4-5>{3}
-          \only<6-7>{4}
+          \only<6>{4}
+          \only<7>{n-2}
           \only<8>{{n-1}}
           \only<9>{{n}}
         } =
@@ -146,7 +149,7 @@
         q_3 &= \ldots, \quad
         r_3 = \ldots\\
         }}
-       \only<7-9>{%
+       \only<8-9>{%
         \matg_{n-1,n}^*
         &=
           \begin{pmatrix}

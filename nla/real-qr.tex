@@ -98,6 +98,24 @@
   \end{gather}
 \end{Lemma}
 
+\begin{proof}
+  The characteristic polynomial of the lower right block is
+  \begin{gather}
+    \chi(\lambda) = \lambda^2-(a_{n-1}+a_{n})\lambda
+    + a_{n-1}a_{n} - b_{n-1}^2.
+  \end{gather}
+  Using the $pq$-formula, its two roots are
+  \begin{align}
+    \lambda_{1/2}
+    &= \frac{a_{n-1}+a_{n}}2 \pm
+      \sqrt{\frac{(a_{n-1}+a_{n})^2}4 - a_{n-1}a_{n} + b_{n-1}^2}\\
+    &= a_{n} + d \pm \sqrt{d^2+b_{n-1}^2}.
+  \end{align}
+  Since we are looking for the root closest to $a_{n}$, the correction
+  by the square root should point in the opposite direction of $d$,
+  hence the negative sign.
+\end{proof}
+
 \begin{Algorithm*}{implicit-symmetric-shift}{Symmetric QR step with implicit shift}
   \begin{algorithmic}[1]
     \Require $\matt\in\Rnn$ symmetric, unreduced, tridiagonal; $\sigma\in\R$
@@ -166,13 +184,45 @@
 
 \begin{proof}
   The proof is straight from the original article by
-  Wilkinson~\cite{Wilkinson68}.  Applying Givens rotations
-  $\givens_{n-1,n}\dots \givens_{12}$ to the matrix
-  $\overline \mata = \mata^{(k)} - \sigma \id$ with diagonal
+  Wilkinson~\cite{Wilkinson68}. Hence, apologies for the index
+  shifts. We again use the explicit version of the QR step. Let
+  $\overline \mata = \mata_{k} - \sigma \id$ with diagonal
   $\overline a_j = a_{jj}-\sigma$ and off-diagonal
-  $b_j = a_{j-1,j} = a_{j,j-1}$, we obtain
+  $b_j = a_{j-1,j} = a_{j,j-1}$. Let for the initial step
+  $x_1 = \overline a_1$, $y_1= \overline b_2$. After
+  $\givens^*_{j-2,j-1}$ has been applied, we have obtained a matrix of
+  the form
   \begin{gather}
-    \matr^{(k)} =
+    \begin{pmatrix}
+      p_1 & q_1 & r_1 \\
+       & \ddots & \ddots & \ddots \\
+      &  & p_{j-2} & q_{j-2} &r_{j-2} \\
+      && 0 & x_{j-1} & y_{j-1} & 0 \\
+      &&& b_{j} & \overline a_{j} & b_{j+1} & \\
+      &&&& \ddots & \ddots & \ddots
+    \end{pmatrix}.
+  \end{gather}
+  We now generate the entries of lines $j-1$ and $j$ by applying $\givens^*_{j-1,j}$:
+  \begin{xalignat}2
+    \label{eq:real:wilkinson:1}
+    p_{j-1} &= \sqrt{x_{j-1} +b_{j}}\\
+    \label{eq:real:wilkinson:2}
+    c_{j} &= \tfrac{x_{j-1}}{p_{j-1}}
+    & s_{j} &= \tfrac{-b_{j}}{p_{j-1}}
+    \\
+    \label{eq:real:wilkinson:3}
+    x_j &= c_j \overline a_j - s_j y_{j-1}
+    & y_j &= c_j b_{j+1},\\
+    0 &= c_jb_j-s_jx_{j-1}.
+  \end{xalignat}
+  Here, $c_j$ and $s_j$ are the cosine and sine from
+  $\givens_{j-1,j}$. The elements $q_j$ and $r_j$ do not contribute to
+  the argument and are therefore not computed here.
+
+  Hence, applying Givens rotations $\givens_{n-1,n}^*\dots \givens_{12}^*$
+  to the matrix $\overline \mata$, we obtain
+  \begin{gather}
+    \matr_{k} =
     \begin{pmatrix}
       p_1 & q_1 & r_1 \\
       0 &p_2 & q_2 & r_2 \\
@@ -183,28 +233,12 @@
       &&&&& 0 & x_n
     \end{pmatrix},
   \end{gather}
-  where with entries generated inductively from $x_1 = \overline a_1$,
-  $y_1= \overline b_2$ by
-  \begin{xalignat}2
-    \label{eq:real:wilkinson:1}
-    p_{j-1} &= \sqrt{x_{j-1} +b_{j}}\\
-    \label{eq:real:wilkinson:2}
-    c_{j} &= \tfrac{x_{j-1}}{p_{j-1}}
-    & s_{j} &= \tfrac{-b_{j}}{p_{j-1}}
-    \\
-    \label{eq:real:wilkinson:3}
-    x_j &= c_j \overline a_j - s_j y_{j-1}
-    & y_j &= c_j b_{j+1}.
-  \end{xalignat}
-  Here, $c_j$ and $s_j$ are the cosine and sine from
-  $\givens_{j-1,j}$. The elements $q_j$ and $r_j$ do not contribute to
-  the argument and are therefore not computed here.
 
   Computing now the product
-  $\mata^{(k+1)} = \matr\givens_{12}^*\dots\givens_{n-1,n}^* +
+  $\widetilde\mata = \mata^{(k+1)} = \matr\givens_{12}^*\dots\givens_{n-1,n}^* +
   \sigma\id$ with entries $\tilde a_{j}$ and $\tilde b_j$, we obtain
   \begin{gather}
-    \mata^{(k+1)} =
+    \mata_{(k+1)} =
     \begin{pmatrix}
       \tilde a_1 & \tilde b_2 \\
       \tilde b_2 & \tilde a_2 & \tilde b_3 \\
@@ -223,16 +257,25 @@
     \label{eq:real:wilkinson:6}
     \tilde b_j &= s_j p_j & j &= 2,\dots,n-1.
   \end{xalignat}
+  Note that it is sufficient to compute the lower triangle, since
+  symmetry was proven before.
 
+  At this point, we have derived the recursion formulas which in one
+  step of the algorithm produce $\tilde \mata = \mata_{k+1}$ from
+  $\mata_k = \overline\mata$. As long as we derive estimates for a
+  single step, we will use the notation without $k$ for simplicity.
+  
   Since $\sigma$ is a root of t he characteristic polynomial of the
-  lower right block, we have for the entries of $\mata^{(k)}-\sigma\id$
+  lower right block, we have for the entries of
+  $\overline\mata = \mata-\sigma\id$
   \begin{gather}
     \label{eq:real:wilkinson:4}
     \overline a_{n-1}\overline a_n - b_n^2 = 0,
     \qquad\text{or}\qquad
     \overline a_n = \frac{b_n^2}{\overline a_{n-1}}
   \end{gather}
-  Furthermore, since $\sigma$ is the closest eigenvalue to $a_n$, we have
+  Furthermore, since $\overline a_{n-1}\overline a_n = b_n^2$ and
+  $\sigma$ is the closest eigenvalue to $a_n$, we have
   \begin{gather}
     \label{eq:real:wilkinson:10}
     \abs{\overline a_{n-1}} \ge \abs{b_n}.
@@ -262,35 +305,35 @@
   both equations in~\eqref{eq:real:wilkinson:2} for $x_{n-1}$ and
   $b_n$ to obtain
   \begin{gather}
-    c_n e_n = s_n x_{n-1}.
+    c_n b_n = s_n x_{n-1}.
   \end{gather}
 
-Now that we are looking at the iteration, all variables will be at
-step $k$ unless explicitly noted. By~\eqref{eq:real:wilkinson:5},
+By~\eqref{eq:real:wilkinson:5},
 \begin{gather}
-  b_n^{k+1} = s_n x_n
+  \tilde b_n = s_n x_n
   = - \frac{b_n}{\overline a_{n-1}} s_n^2 s_{n-1} c_{n-2} b_{n-1}.
 \end{gather}
-Since all other factors are bounded by one, we obtain
+Since all other factors are bounded by one, in particular due to the
+choice of the shift, we obtain
 \begin{gather}
   \label{eq:real:wilkinson:7}
-  \abs*{b_n^{(k+1)}} \le \abs*{b_{n-1}^{(k)}}.
+  \abs{\tilde b_n} \le \abs{b_{n-1}}.
 \end{gather}
 By~\eqref{eq:real:wilkinson:6} and the definition of $s_{n}$
 in~\eqref{eq:real:wilkinson:2}, we have
 \begin{gather}
-  b_{n-1}^{(k+1)} = s_{n-1} p_{n-1} = \frac{s_{n-1}b_n}{s_n}.
+  \tilde b_{n-1} = s_{n-1} p_{n-1} = \frac{s_{n-1}b_n}{s_n}.
 \end{gather}
 Hence,
 \begin{align}
-  \abs*{b_{n-1}^{(k+1)}b_{n}^{(k+1)}}
+  \abs*{\tilde b_{n-1}\tilde b_{n}}
   &= \abs*{\frac{s_{n-1}b_{n}}{s_n}
     \frac{b_nc_{n-2}s_n^2s_{n-1}b_{n-1}}{\overline a_{n-1}}}\\
   \label{eq:real:wilkinson:8}
-  &= \abs*{b_{n-1}^{(k)}b_{n}^{(k)}}\abs*{\frac{b_n}{\overline a_{n-1}}}
+  &= \abs*{b_{n-1}b_{n}}\abs*{\frac{b_n}{\overline a_{n-1}}}
     \abs*{c_{n-2}s_{n-1}^2s_n}\\
   \label{eq:real:wilkinson:9}
-    &\le \abs*{b_{n-1}^{(k)}b_{n}^{(k)}}.
+    &\le \abs*{b_{n-1}b_{n}}.
 \end{align}
 Thus, the sequence $\abs{b_{n-1}^{(k)}b_{n}^{(k)}}$ is monotonically
 decreasing and, since it is bounded from below, convergent.
@@ -299,13 +342,14 @@ us make this assumption and derive a contradiction. We have
 \begin{gather}
   \lim_{k\to\infty}
   \frac{\abs*{b_{n-1}^{(k+1)}b_{n}^{(k+1)}}}%
-  {\abs*{b_{n-1}^{(k)}b_{n}^{(k+1)}}}
+  {\abs*{b_{n-1}^{(k)}b_{n}^{(k)}}}
   = 1,
 \end{gather}
 which by~\eqref{eq:real:wilkinson:8} implies
 \begin{gather}
   \abs*{\frac{b_n}{\overline a_{n-1}}}
-  \abs*{c_{n-2}}\abs*{s_{n-1}^2}\abs*{s_n} \to 1.
+  \abs*{c_{n-2}}\abs*{s_{n-1}^2}\abs*{s_n} \to 1
+  \qquad\text{as } k\to \infty.
 \end{gather}
 
 Since each of these terms is bounded by one, they must converge to one
@@ -318,11 +362,11 @@ individually,
 \end{gather}
 Since the two sines converge to one, the corresponding cosines converge
 \begin{gather}
-  \abs*{c_{n-1}^2} \to 0,\qquad \abs*{c_n} \to 0.
+  \abs*{c_{n-1}^2} \to 0,\qquad \abs*{c_n} \to 0 \qquad\text{as } k\to \infty.
 \end{gather}
 Furthermore,
 \begin{gather}
-  \abs*{s_n} = \frac{b_n^2}{b_n^2+x_n^2} \to 1
+  s_n^2 = \frac{b_n^2}{b_n^2+x_{n-1}^2} \to 1 \qquad\text{as } k\to \infty,
 \end{gather}
 implies $\abs{x_{n-1}} \to 0$ and
 \begin{gather}
@@ -330,18 +374,21 @@ implies $\abs{x_{n-1}} \to 0$ and
   = \lim \Bigl(c_{n-1}\overline a_{n-1} - c_{n-2}s_{n-1}b_{n-1}\Bigr)
   = 0 - 1\cdot \lim b_{n-1},
 \end{gather}
-yields the contradiction through $b_{n-1} \to 0$.
+yields the contradiction through $b_{n-1} \to 0$ since $b_n$ is bounded.
 
 Hence, the limit is zero and we observe that for any given $\epsilon$
 there will be an index $k$ such that $\abs{b_{n-1}^{(k)}b_{n}^{(k)}}$,
 which in turn implies that either $\abs{b_{n}^{(k)}}<\epsilon$ or
 $\abs{b_{n-1}^{(k)}}<\epsilon$. In the second case, we
-apply~\eqref{eq:real:wilkinson:6} to deduce that
+apply~\eqref{eq:real:wilkinson:7} to deduce that
 $\abs{b_{n}^{(k+1)}}<\epsilon$. In both cases, we reach a regime where
 the proof of quadratic convergence below will apply.
 
 Now we tend to the second part of the theorem, namely asymptotic
-quadratic convergence. To this end, we assume that the iteration has yielded a matrix
+quadratic convergence. To this end, we assume that the iteration has
+yielded $b_n=\epsilon$ and by~\eqref{eq:real:wilkinson:4}
+$\overline a_n = \nicefrac{\epsilon^2}{\overline a_{n-1}}$, or in
+matrix notation
 \begin{gather}
   \mata^{(k)} =
   \begin{pmatrix}
