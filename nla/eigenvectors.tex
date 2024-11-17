@@ -1,64 +1,142 @@
-\begin{Algorithm*}{inverse-iteration}{The inverse power method}
+\begin{intro}
+  After having developed a reliable algorithm for eigenvalues, we now
+  turn back to the problem of computing eigenvectors. As pointed out
+  earlier, we do not use the transformations of the QR iteration for
+  several reasons.
+
+  We do use the transformation to Hessenberg or tridiagonal form
+  though, since we will require a QR factorization of the matrix,
+  which is cheaper in this form. Hence, we will compute eigenvectors
+  of the Hessenberg matrix
+  \begin{gather}
+    \matH = \matq^* \mata \matq.
+  \end{gather}
+  Multiplying this equation from the left by $\matq^*$, it is clear
+  that $(\lambda,\vv)$ is an eigenpair of $\matH$, if and only if
+  $(\lambda,\matq\vv)$ is an eigenpair of $\mata$.
+
+  In the following, we will use shifted matrices $\matH-\lambda\id$,
+  where we assume that $\lambda$ is an approximation to an actual
+  eigenvalue of $\matH$ of accuracy $\epsilon\ge \eps$.
+\end{intro}
+
+\begin{Algorithm*}{inverse-iteration}{Inverse iteration}
     \begin{algorithmic}[1]
-    \Require $\mata\in\Cnn$, $\sigma\in\C$, initial vector $\vv^{(0)}\in\C^n$
+    \Require $\matH\in\Cnn$, $\lambda\in\C$, initial vector $\vx^{(0)}\in\C^n$, $\norm{\vx^{(0)}}_2 = 1$
     \For{$k=1,\dots$ until convergence}
-    \State Solve $(\mata-\sigma\id) \vy = \vv^{(k-1)}$
-    \State $\vv^{(k)} = \frac{\vy}{\norm{\vy}}$
-%    \State $\alpha_k = R_\mata(\vv^{(k)})$
+    \State Solve $(\matH-\lambda\id) \vy = \vx^{(k-1)}$
+    \State $\vx^{(k)} = \frac{\vy}{\norm{\vy}}$
     \EndFor
   \end{algorithmic}
 \end{Algorithm*}
 
+\begin{todo}
+  Move to first chapter
+\end{todo}
+
+\begin{Lemma}{qr-roundoff}
+  Let $\matq\matr=\matH$ be an exact QR factorization and let
+  $\tilde \matq\tilde\matr$ be computed with floating point accuracy
+  $\eps$. Then, there holds with a constant $c$ independent of $\matH$
+  \begin{gather}
+    \norm{\matH-\tilde\matq\tilde\matr}_2 \le c \eps \norm{\matH}_2.
+  \end{gather}
+\end{Lemma}
+
 \begin{remark}
-  Applying the inverse iteration, we have to solve an almost singular
-  linear system, which in itself may be the cause of round-off
-  errors. Nevertheless, we have some tools helping us to see that this
-  is not a hopeless endeavor.
+  In the ideal case where $\lambda$ is an exact eigenvalue of $\matH$,
+  the linear system determining $\vy$ in the inverse iteration is not
+  solvable. Using the QR factorization of $\matH$, we know from
+  \slideref{Lemma}{perfect-shift}, that one of the diagonal entries of
+  the upper triangular factor $\matr$ is zero. If $\matH$ is
+  unreduced, this is the entry in the last row.
 
-  First, we can use the Hessenberg form $\matH$ of the matrix $\mata$
-  in the inverse iteration. This requires computing the orthogonal
-  transformation, when we compute it, but it makes a factorization
-  here much cheaper.
+  A simple remedy for the non-invertibility of $\matH = \matq\matr$ is
+  now to replace this zero entry on the diagonal of $\matr$ by a
+  zonzero value of size $\eps \norm{\matH}_2$, hence not affecting the
+  roundoff error of the QR factorization, but making backward
+  substitution possible.
 
-  Next, the perfect shift (\slideref{Lemma}{perfect-shift} and
-  \slideref{Lemma}{perfect-shift-sym}) indicates that in the singular
-  case, the QR factorization of a singular Hessenberg matrix is
-  possible, if the matrix is unreduced.
-
-  If the Hessenberg matrix $\matH$ is reduced, then it is
-  straightforward that eigenvectors of the diagonal blocks are
-  eigenvectors of the whole matrix if padded with zeros. Hence, it is
-  sufficient to compute a factorization of the unreduced diagonal
-  blocks.
-
-  Finally, there are results showing that the error of the solution
-  produced by the QR and even the LU factorization is mostly in
-  direction of the eigenvectors related to small eigenvalues, which is
-  not an issue here due to normalization.
+  Note that if this is done in the last row of the matrix, we can put
+  any number there, since it corresponds to rescaling the result of
+  backward substitution, which in turn will be overwritten by the
+  normalization step of the inverse iteration.
 \end{remark}
 
+\begin{Lemma}{inverse-epsilon}
+  Let $\lambda$ be a single approximate eigenvalue of $\matH$ with
+  error $\epsilon$. Then, the residual after one step admits the estimate
+  \begin{gather}
+    \norm{\vr^{(1)}} = \norm{\matH\vx^{(0)} - \lambda\vx^{(1)}} \le \frac{\alpha_n}{\epsilon},
+  \end{gather}
+  where $\alpha_n$ is the coefficient of $\vx^{(0)}$ with respect to the
+least dominant eigenvector of $\matH-\lambda\id$.
+\end{Lemma}
+
+\begin{proof}
+  See~\cite{PetersWilkinson79} for details. Like in the convergence
+  proof for the vector iteration, we use a basis $\{\vv_1,\dots,\vv_n$
+  of eigenvectors associated to the eigenvalues
+  $\sigma_1,\dots,\sigma-n$ of $\matH-\lambda\id$ and write
+  \begin{gather}
+    \vx^{(0)} = \sum \alpha_i\vv_i.
+  \end{gather}
+  Hence,
+  \begin{gather}
+    \vy^{(1)} = \sum \frac{\alpha_i}{\sigma_i} \vv_i.
+  \end{gather}
+  From the algorithm, we get
+  \begin{gather}
+    \norm{\matH\vx^{(1)}-\lambda\vx^{(1)}}
+    = \frac{\norm{\matH\vy^{(1)}-\lambda\vy^{(1)}}}{\norm{\vy^{(1)}}}
+    = \frac{\norm{\vx^{(0)}}}{\norm{\vy^{(1)}}} \le \frac{\epsilon}{\alpha_n}.
+  \end{gather}
+\end{proof}
+
+\begin{Corollary}{inverse-speed}
+  In most cases, the inverse iteration yields an eigenvector
+  approximation as good as the approximation of the eigenvalue in one
+  to two steps.
+\end{Corollary}
+
 \begin{remark}
-  The last entry $r_{nn}$ of the QR factorization
-  $QR = \matH-\tilde\lambda\id$ with the approximate eigenvalue
-  $\tilde\lambda$ is of the size
-  \begin{gather}
-    \abs{r_{nn}} \approx \abs{\lambda-\tilde\lambda}
-  \end{gather}
-  for some exact eigenvalue $\lambda$. Hence, if the approximation is
-  very good, the corresponding vector $\vq_n$ will be strongly
-  amplified and corrected by the subsequent process of backward
-  elimination. Since the convergence speed is dominated by
-  \begin{gather}
-    \frac{\abs{\lambda-\tilde\lambda}}{\abs{\mu-\tilde\mu}},
-  \end{gather}
-  for all other eigenvalues $\mu$ it will be very fast, if the
-  eigenvalues are well separated. When it is very slow, we are in a
-  regime where the eigenvector problem itself is not well-conditioned.
+  The previous results show that the inverse iteration allows us to
+  approximate real eigenvectors to real, simple eigenvalues very
+  efficiently. If $\matH$ accidentally has a multiple eigenvalue, its
+  multiplicity is known because the QR iteration computed a tight
+  cluster around this eigenvalue. A combination of varying the initial
+  vector and varying the shift between different approximations of the
+  eigenvalue typically computes a basis for the invariant subspace of
+  the cluster.
 \end{remark}
 
 \begin{todo}
   Parlett, Saad: Complex shift and invert strategies for real matrices
 \end{todo}
+
+\begin{intro}
+  What is missing is the computation of eigenvectors to complex
+  eigenvalues of real matrices in real arithmetic. To this end, let
+  $\lambda = \mu+i\nu$. We will now describe an algorithm which
+  computes the vector $\vy = \vy_r + i \vy_i$ in the algorithm from
+  the vector $\vx = \vx_r+i\vx_i$. Since we are only considering a
+  single step, we omit the index of the sequence.
+\end{intro}
+
+\begin{Lemma}
+  The complex linear system
+  \begin{gather}
+    (\matH - \lambda\id) \vy = \vx
+  \end{gather}
+  with real matrix $\matH$ and complex shift $\lambda = \mu+i\nu$, can
+  be solved by consecutively solving for $\vy_r$ and $\vy_i$
+  \begin{align}
+    \bigl((\matH-\mu\id)^2+\nu^2\id\bigr) \vy_r
+    &= (\matH-\mu\id) \vx_r - \nu \vx_i\\
+    \vy_i &= \frac1\nu \bigl(\vx_r - (\matH-\mu\id)\vy_r\bigr).
+  \end{align}
+\end{Lemma}
+
 
 %%% Local Variables:
 %%% mode: latex
