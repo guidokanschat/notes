@@ -1,3 +1,32 @@
+\begin{intro}
+  A simple method to approximate the solution to partial differential
+  equations is the finite difference method. We provide a short
+  introduction sufficient for the purpose in this class in
+  Appendix~\ref{sec:fd}.
+\end{intro}
+
+\begin{Example}{7-point-stencil}
+  Let there be a sequence of points $x_k$, $k=0,\dots,n$ such that
+  $x_k-x_{k-1} = h$ and an approximating function $u_k = u(x_k)$. The
+  second derivative of a function $u(x)$ in a point $x_k$ in the
+  interior can be approximated by the 3-point stencil
+  \begin{gather}
+    u''(x_k) = \Delta_h^2 u(x_k) = - \frac{2 u_k - u_{k-1} - u_{k+1}}{h^2}.
+  \end{gather}
+  This can be generalized to the Laplacian in two dimensions by the \define{5-point stencil}
+  \begin{gather}
+    \Delta u_{ij} = -\frac{4 u_{ij}- u_{i-1,j} - u_{i+1,j}- u_{i,j-1} - u_{i,j+1}}{h^2},
+  \end{gather}
+  and to three dimensions by the \define{7-point stencil}
+  \begin{multline}
+    \Delta u_{ijk} = \tfrac{-1}{h^2}\Bigl(6 u_{ij}
+    - u_{i-1,j,k} - u_{i+1,j,k}
+    \\
+    - u_{i,j-1,k} - u_{i,j+1,k}
+    - u_{i,j,k-1} - u_{i,j,k+1}\Bigr).
+  \end{multline}
+\end{Example}
+
 \begin{Example*}{page-rank}{The PageRank Algorithm}
   The page rank of a web page is computed from the Google Matrix
   \begin{gather}
@@ -22,10 +51,10 @@
 \end{Example*}
 
 \begin{intro}
-  Diffusion problems are modelled by the Poisson equation
-  \begin{gather}
-    -\Delta u = f.
-  \end{gather}
+  A simple method to approximate the solution to partial differential
+  equations is the finite difference method. We provide a short
+  introduction sufficient for the purpose in this class in
+  Appendix~\ref{sec:fd}.
 \end{intro}
 
 \begin{Example}{7-point-stencil}

@@ -382,6 +382,7 @@
 \frame {\input {blocks/Theorem-implicit-symmetric-shift.tex}}
 \frame {\input {blocks/Theorem-wilkinson-convergence.tex}}
 \input{slides-wilkinson}
+\frame {\input {blocks/Lemma-tridiagonal-rnn.tex}}
 
 \subsubsection{The EVP for nonsymmetric real matrices}
 \frame{\subsubtoc}
@@ -394,9 +395,14 @@
 \frame {\input {blocks/Algorithm-deflation-francis.tex}}
 
 \subsection{Computing eigenvectors}
-\frame{\subsubtoc}
+\frame{\subtoc}
 \frame {\input {blocks/Algorithm-inverse-iteration.tex}}
-
+\frame {\input {blocks/Lemma-qr-roundoff.tex}}
+\frame {\input {blocks/Lemma-inverse-epsilon.tex}
+  \pause
+  \input{blocks/Corollary-inverse-speed.tex}}
+\frame {\input {blocks/Lemma-inverse-complex.tex}}
+\frame {\input {blocks/Algorithm-inverse-iteration-complex.tex}}
 
 % \subsubsection{Singular Value Decomposition (SVD)}
 % \frame{\subsubtoc}

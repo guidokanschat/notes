@@ -1,11 +1,4 @@
-\newcommand{\etalchar}[1]{$^{#1}$}
-\begin{thebibliography}{BDD{\etalchar{+}}00}
-
-\bibitem[BDD{\etalchar{+}}00]{BaiDemmelDongarraRuhevanderVorst00}
-Z.~Bai, J.~Demmel, J.~Dongarra, A.~Ruhe, and H.~van~der Vorst, editors.
-\newblock {\em Templates for the Solution of Algebraic Eigenvalue Problems: A
-  Practical Guide}.
-\newblock SIAM, Philadelphia, 2000.
+\begin{thebibliography}{GPS96}
 
 \bibitem[DH08]{DeuflhardHohmann08}
 P.~Deuflhard and A.~Hohmann.
@@ -13,14 +6,24 @@ P.~Deuflhard and A.~Hohmann.
 \newblock de Gruyter, Berlin, 2008.
 
 \bibitem[GPS96]{GreenbaumPtakStrakos96}
-Anne Greenbaum, Vlastimil Pták, and Zdenve˘k Strakoš.
-\newblock Any nonincreasing convergence curve is possible for gmres.
+A.~Greenbaum, V.~Pták, and Z.~Strakoš.
+\newblock Any nonincreasing convergence curve is possible for {GMRES}.
 \newblock {\em SIAM J. Matrix Anal. Appl.}, 17(3):465--469, 1996.
 
 \bibitem[GvL83]{GolubVanLoan83}
 G.~H. Golub and C.~F. van Loan.
 \newblock {\em Matrix Computations}.
 \newblock The Johns Hopkins University Press, 1983.
+
+\bibitem[PS87]{ParlettSaad87}
+B.~N. Parlett and Y.~Saad.
+\newblock Complex shift and invert strategies for real matrices.
+\newblock {\em Lin. Alg. Appl.}, 88/89:575--595, 1987.
+
+\bibitem[PW79]{PetersWilkinson79}
+G.~Peters and J.~H. Wilkinson.
+\newblock Inverse iteration, ill-conditioned equations and {N}ewton’s method.
+\newblock {\em SIAM Rev.}, 21(3):339--360, 1979.
 
 \bibitem[Ran18]{Rannacher18nla}
 R.~Rannacher.

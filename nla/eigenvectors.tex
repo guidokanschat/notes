@@ -64,7 +64,7 @@
 \end{remark}
 
 \begin{Lemma}{inverse-epsilon}
-  Let $\lambda$ be a single approximate eigenvalue of $\matH$ with
+  Let $\lambda$ be a simple approximate eigenvalue of $\matH$ with
   error $\epsilon$. Then, the residual after one step admits the estimate
   \begin{gather}
     \norm{\vr^{(1)}} = \norm{\matH\vx^{(0)} - \lambda\vx^{(1)}} \le \frac{\alpha_n}{\epsilon},
@@ -117,15 +117,17 @@ least dominant eigenvector of $\matH-\lambda\id$.
 \begin{intro}
   What is missing is the computation of eigenvectors to complex
   eigenvalues of real matrices in real arithmetic. To this end, let
-  $\lambda = \mu+i\nu$. We will now describe an algorithm which
-  computes the vector $\vy = \vy_r + i \vy_i$ in the algorithm from
-  the vector $\vx = \vx_r+i\vx_i$. Since we are only considering a
-  single step, we omit the index of the sequence.
+  $\lambda = \mu+i\nu$. We will now describe an algorithm, originally
+  from~\cite{ParlettSaad87}, which computes the vector
+  $\vy = \vy_r + i \vy_i$ in the algorithm from the vector
+  $\vx = \vx_r+i\vx_i$. Since we are only considering a single step,
+  we omit the index of the sequence.
 \end{intro}
 
-\begin{Lemma}
+\begin{Lemma}{inverse-complex}
   The complex linear system
   \begin{gather}
+    \label{eq:inverse:1}
     (\matH - \lambda\id) \vy = \vx
   \end{gather}
   with real matrix $\matH$ and complex shift $\lambda = \mu+i\nu$, can
@@ -133,10 +135,78 @@ least dominant eigenvector of $\matH-\lambda\id$.
   \begin{align}
     \bigl((\matH-\mu\id)^2+\nu^2\id\bigr) \vy_r
     &= (\matH-\mu\id) \vx_r - \nu \vx_i\\
-    \vy_i &= \frac1\nu \bigl(\vx_r - (\matH-\mu\id)\vy_r\bigr).
+    (\matH-\mu\id) \vy_i &= \vx_i + \nu\vy_r.
   \end{align}
 \end{Lemma}
 
+\begin{proof}
+  Splitting the system~\eqref{eq:inverse:1} into its real and
+  imaginary parts, we obtain the real block system
+  \begin{align}
+    (\matH - \mu\id) \vy_r + \nu \vy_i &= \vx_r\\
+    -\nu \vy_r + (\matH - \mu\id) \vy_i &= \vx_i.
+  \end{align}
+  % For the inverse of its block matrix, we easily verify the formula
+  % \begin{gather}
+  %   \begin{pmatrix}
+  %     \matH - \mu\id & \nu\\
+  %     -\nu & \matH - \mu\id
+  %   \end{pmatrix}^{-1}
+  %   =
+  %   \begin{pmatrix}
+  %     \mats^{-1}&-\nu\matt^{-1}\\\nu\matt^{-1}&\mats^{-1}
+  %   \end{pmatrix},
+  % \end{gather}
+  % where
+  % \begin{align}
+  %   \mats &= (\matH-\mu\id) + \nu^2(\matH-\mu\id)^{-1}\\
+  %   \matt &= (\matH-\mu\id)^2 + \nu^2\id.
+  % \end{align}
+  % Hence,
+  % \begin{gather}
+  %   \begin{pmatrix}
+  %     \vy_r\\\vy_i
+  %   \end{pmatrix}
+  %   =
+  %   \begin{pmatrix}
+  %     \mats^{-1}&-\nu\matt^{-1}\\\nu\matt^{-1}&\mats^{-1}
+  %   \end{pmatrix}
+  %   \begin{pmatrix}
+  %     \vx_r\\\vx_i
+  %   \end{pmatrix}
+  %   .
+  % \end{gather}
+  Now, we formally solve for $\vy_i$ in the second row, obtaining
+  \begin{gather}
+    \vy_i = (\matH-\mu\id)^{-1}(\nu\vy_r+\vx_i).
+  \end{gather}
+  Entering this into the first equation yields
+  \begin{gather}
+    \bigl((\matH-\mu\id) + \nu^2(\matH-\mu\id)^{-1}\bigr)\vy_r
+    = \vx_r - \nu (\matH-\mu\id)^{-1}\vx_i.
+  \end{gather}
+  The result of the lemma is obtained multiplying by $\matH-\mu\id$.
+\end{proof}
+
+\begin{Algorithm*}{inverse-iteration-complex}{Inverse iteration for complex eigenvectors}
+    \begin{algorithmic}[1]
+    \Require $\matH\in\Cnn$, $\lambda\in\C$, initial vector $\vx_r^{(0)},\vx_i^{(0)}\in\R^n$, $\norm{\vx_r^{(0)}}_2 = \norm{\vx_i^{(0)}}_2 = 1$
+    \For{$k=1,\dots$ until convergence}
+    \State Solve $\bigl((\matH-\mu\id)^2+\nu^2\id\bigr) \vy_r^{(k)}
+    = (\matH-\mu\id) \vx_r^{(k-1)} - \nu \vx_i^{(k-1)}$
+      \State Solve $(\matH-\mu\id) \vy_i^{(k)} = \vx_i^{(k-1)} + \nu\vy_r^{(k)}$
+    \State $\vx_r^{(k)} = \frac{\vy_r^{(k)}}{\norm{\vy_r^{(k)}}}$
+    \State $\vx_i^{(k)} = \frac{\vy_i^{(k)}}{\norm{\vy_i^{(k)}}}$
+    \EndFor
+  \end{algorithmic}
+\end{Algorithm*}
+
+\begin{todo}
+\begin{remark}
+  For this algorithm, we typically need two QR factorizations, one for
+  $\matH-\mu\id$ and one for $\bigl((\matH-\mu\id)^2+\nu^2\id\bigr)$.
+\end{remark}
+\end{todo}
 
 %%% Local Variables:
 %%% mode: latex

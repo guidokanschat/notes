@@ -517,15 +517,21 @@ $\epsilon$. Unfortunately, this behavior cannot be guaranteed.
   according eigenvalue pair.
 \end{Theorem*}
 
-\begin{intro}{double-shift}
+\begin{intro}%{double-shift}
   When applying the QR step with Wilkinson shift, the shift parameter
   might be complex, thus leading to a bad approximation and
   consequently to slow convergence. Therefore, we have to circumvent
   this situation and find a working method in real arithmetic.
-%  Using double shifts, the QR-iteration can be made to converge to the
-%  real Schur form using double shifts in real arithmetic. This method
-%  is also known as the \define{Francis QR step}~\cite[Algorithm
-%  7.5-1]{GolubVanLoan83}.
+
+  
+  Note that every complex eigenvalue of a real matrix comes as pair
+  $\lambda = \mu \pm \nu i$. Hence, while $\matH-\lambda\id$ might be
+  complex, the matrix
+  \begin{gather}
+    \matm = (\matH-\lambda\id)(\matH-\overline\lambda\id)
+    = \matH^2 - 2\mu \matH + (\mu^2+\nu^2)\id,
+  \end{gather}
+  is real. Hence, we derive an algorithm for this matrix.
 \end{intro}
 
 \begin{Algorithm*}{double-shift-step}{Explicit double-shift QR step}

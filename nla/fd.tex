@@ -3,9 +3,11 @@
   In this section, we summarize some basic information on finite
   difference methods as the simplest discretization of partial
   differential equations in order to facilitate implementation of the
-  5-point stencil as example for sparse matrix methods.
+  5-point and 7-point stencils as example for sparse matrix
+  methods. Note that this method serves as a template here, but that
+  it is not recommended in general as a discretization method.
 
-  We restrict this exposition to the simplest case of boundary
+  We restrict this exposition to the simplest case of boundary value
   problems on the unit square or cube $[0,1]^d$ for $d=2,3$.
 \end{intro}
 
@@ -206,12 +208,15 @@
     \lambda_j = 2 - 2\cos(j\theta) = 4 \sin^2 \frac{j\theta}2,
     \quad j=1,\dots, n
   \end{gather}
-  where $\theta = \nicefrac{\pi}{n+1}$.
+  where $\theta = \nicefrac{\pi}{n+1}$. The corresponding eigenvectors are
+  \begin{gather}
+    \vv_j = \bigl(\sin(j\theta,\sin(2j\theta),\dots,\sin(nj\theta)\bigr)^T.
+  \end{gather}
 \end{Lemma}
 
-\begin{todo}
-  add eigenfunctions!
-\end{todo}
+\begin{Problem}{Laplacian-eigenvalues-1d}
+  Verify the eigenpairs of \slideref{Lemma}{Laplacian-eigenvalues-1d}.
+\end{Problem}
 
 \begin{Lemma}{Laplacian-eigenvalues-2d}
   The eigenvalues of the matrix $\matb_4$ are obtained by taking all
