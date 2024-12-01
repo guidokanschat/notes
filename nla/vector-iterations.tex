@@ -59,6 +59,10 @@
   \end{algorithmic}
 \end{Algorithm*}
 
+\begin{todo}
+  Discuss stopping criteria  
+\end{todo}
+
 \begin{Theorem}{vector-iteration}
   Let $\mata\in\Cnn$ be diagonalizable such that $\lambda_1$ is the
   unique dominant eigenvalue. Let furthermore the component of
@@ -189,6 +193,10 @@
   \end{enumerate}
 \end{Example}
 
+\begin{todo}
+  Change this for general matrices and discuss computation of eigenvalue
+\end{todo}
+
 \begin{Algorithm*}{polynomial-filtering}{Power method with polynomial filtering}
   \begin{algorithmic}[1]
     \Require $\mata\in\Cnn$ Hermitian, initial vector $\vv^{(0)}\in\C^n$ with $\norm{\vv}=1$
@@ -196,7 +204,7 @@
     \State $\vy^{(k)} \gets p(\mata) \vv^{(k-1)}$
     \State $\vv^{(k)} = \frac{\vy^{(k)}}{\norm{\vy^{(k)}}}$
     \EndFor
-    \State $\lambda_1 \approx R_\mata(\vv^{(k_{\max})} = \scal(\mata\vv^{(k_{\max})},\vv^{(k_{\max})})$
+    \State $\lambda_1 \approx R_\mata(\vv^{(k_{\max})}) = \scal(\mata\vv^{(k_{\max})},\vv^{(k_{\max})})$
   \end{algorithmic}
 \end{Algorithm*}
 
