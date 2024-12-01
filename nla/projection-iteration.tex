@@ -264,6 +264,28 @@
   \end{gather}
 \end{proof}
 
+\begin{Example}{steepest-descent-10}
+  We run the steepest descent method for
+  \begin{gather}
+    \mata =
+    \begin{pmatrix}
+      .1 \\&1
+    \end{pmatrix},
+    \vb =
+    \begin{pmatrix}
+      0\\0
+    \end{pmatrix},
+    \vx^{(0)} =
+    \begin{pmatrix}
+      -10\\1
+    \end{pmatrix}.
+  \end{gather}
+  The iteration history together with  the level sets of $\vx^T\mata\vx$ is
+  \begin{center}
+    \includegraphics[width=.8\textwidth]{./graph/steepest-descent-10.tikz}
+  \end{center}
+\end{Example}
+
 \begin{remark}
   In this algorithm, the operation $\mata\vr$ is applied twice. Since
   in most implementations this will be the part with the most

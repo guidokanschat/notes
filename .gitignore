@@ -36,3 +36,4 @@ only.tex
 slides-only.tex
 *.fls
 *.fdb_latexmk
+*.vrb
