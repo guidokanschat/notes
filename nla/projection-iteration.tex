@@ -14,14 +14,18 @@
 \end{Definition}
 
 \begin{remark}
-  We will see later, that projection methods are justified by
-  best-approximation properties of the vector $\tilde \vx$.
-  % For the case $L=\mata K$ we deduce from the optimization property of
- %  orthogonal projections that $\mata\tilde \vx$ in~\eqref{eq:proj-it:1}
- %  is the vector in the subspace $\mata K$ closest to $\vb$. Thus,
- %  $\tilde\vx$ minimizes the \putindex{residual} $\vr = \vb-\mata\vy$ over
- %  all choices $\vy\in K$.
- % Note that this does not hold for $L\neq \mata K$.
+  Projection methods are at first hand not iterative, but they produce
+  an approximation $\tilde \vx$ in one step. Nevertheless, this
+  approximation may not be sufficiently accurate. In this case, we
+  have two options:
+  \begin{enumerate}
+  \item We can enrich the subspaces $K$ and $L$, typically by a
+    one-dimensional subspace each, in order to obtain a better
+    approximation $\tilde \vx$ in this larger space.
+  \item We can rewrite the projection method in an incremental way,
+    where the result of a previous step is improved by an update
+    obtained from a projection step.
+  \end{enumerate}
 \end{remark}
 
 \begin{Definition}{projection-step}
@@ -31,12 +35,13 @@
   \begin{gather}
     \vx^{(k+m)} = \vx^{(k)} + \vv,
   \end{gather}
-  where after the choice of $m$-dimensional subspaces $K$ and $L$ the update $\vv$ is
+  where after the choice of $m$-dimensional subspaces $K_k$ and $L_k$ the update $\vv$ is
   determined by the condition
   \begin{align}
-    \vv &\in K\\
-    \vr^{(k+m)} \equiv \vr^{(k)} - \mata\vv &\perp L.
+    \vv &\in K_k\\
+    \vr^{(k+m)} \equiv \vr^{(k)} - \mata\vv &\perp L_k.
   \end{align}
+  A method of this type is called \define{successive subspace correction} method.
 \end{Definition}
 
 \begin{remark}
@@ -47,29 +52,79 @@
   one-dimensional steps, at least from the algorithmic point of
   view. Thus, we adopt the view of a single step in dimension $m$ as
   an $m$-fold step.
+
+  Since most methods determine the update in each step by the same
+  algorithm, we will typically only discuss the step from $\vx^{(0)}$
+  to $\vx^{(m)}$, thus omitting the index $k$ of the initial vector of
+  the step, or discuss a step from $\vx$ to $\tilde\vx$, hence
+  omitting indices at all, while keeping in mind that there is an
+  iterative procedure in the background.
 \end{remark}
+
+\begin{Notation}{incremental}
+  We will mostly only consider a single step of the iterative
+  projection method. Since the algorithm determining the update
+  usually does not vary between steps, we will equivalently describe
+  iteration steps as mappings
+  \begin{align*}
+    \vx^{(k)} &\mapsto \vx^{(k+m)}\\
+    \vx^{(0)} &\mapsto \vx^{(m)}\\
+    \vx &\mapsto \tilde\vx
+  \end{align*}
+\end{Notation}
+
+\begin{Definition}{parallel-subspace-correction}
+  Given an initial vector $\vx$, a step of the \define{parallel
+    subspace correction} method is obtained by choosing $m$ subspaces
+  $K_1\dots,K_m$ and $L_1,\dots,L_m$, and computing independently $m$
+  update vectors by the projection conditions
+  \begin{align}
+    \vv_i &\in K_i\\
+    \vr_i \equiv \vb-\mata\vx - \mata\vv_i &\perp L_i.
+  \end{align}
+  The result of the correction step is
+  \begin{gather}
+    \tilde \vx = \vx + \omega\sum\vv_i,
+  \end{gather}
+  where $\omega$ is a relaxation parameter chosen to achieve convergence.
+\end{Definition}
 
 \begin{Example}{projection-gauss-seidel}
   The Gauss-Seidel and the Jacobi substeps are projection steps with the choice
   \begin{gather}
     K=L=\spann{\ve_i}.
   \end{gather}
-  The difference between the two methods is that the projection steps
-  of the Jacobi iteration are applied in parallel, while they are
-  applied successively in the Gauss-Seidel iteration.
+  Here, each step of the Jacobi iteration is a parallel subspace
+  correction method, while the Gauss-Seidel iteration is a successive
+  subspace correction method.
 \end{Example}
 
-\begin{notation}
-  We will mostly only consider a single step of the method in
-  \slideref{Definition}{projection-step}. Therefore, we will often consider
-  the step from an initial guess $\vx^{(0)}$ to an approximate solution
-  $\tilde \vx$ to simplify the notation.
-\end{notation}
+\begin{proof}
+  The condition for the update vector $\vv_i$ is
+  \begin{gather}
+    \scal(\vb-\mata\vx-\mata\vv_i,\ve_i) = 0,
+  \end{gather}
+  which, since $\vv_i$ is a multiple of $\ve_i$, translates to
+  \begin{gather}
+    \vb_i - (\mata\vx)_i - a_{ii}v_i = \vb_i-\sum_{j\neq i} a_{ij}x_j - a_{ii}x_i -a_{ii}v_i.
+  \end{gather}
+  Hence
+  \begin{gather}
+    v_i = -x_i + \frac1{a_{ii}} \left(\vb_i - \sum_{j\neq i} a_{ij}x_j\right).
+  \end{gather}
+  For the parallel subspace correction method, we have for each component independently
+  \begin{gather}
+    x_i = x_i+v_i = \frac1{a_{ii}} \left(\vb_i - \sum_{j\neq i} a_{ij}x_j\right),
+  \end{gather}
+  which is equal to the Jacobi step. For the successive subspace
+  correction method, we obtain the Gauss-Seidel step by observing that
+  the start vector $\vx$ changes in every step.
+\end{proof}
 
 \begin{Definition}{projection-method-matrix}
   Let $\matv=(\vv_1,\dots,\vv_m)$ and $\matw=(\vw_1,\dots,\vw_m)$ be bases for
   the subspaces $K$ and $L$, respectively. Then, the solution
-  $\tilde \vx$ to the projection step is determined by $\vy\in\R^m$ and
+  $\vx^{(m)}$ to the projection step is determined by $\vy\in\R^m$ and
   \begin{align}
     \vx^{(m)} &= \vx^{(0)} + \matv\vy\\
     \matw^*\mata\matv \vy &= \matw^* \vr^{(0)}.
@@ -81,7 +136,20 @@
 \end{Definition}
 
 \begin{proof}
-  See \cite[Section 5.1.2]{Saad00}.
+  See \cite[Section 5.1.2]{Saad00}. We observe that the Galerkin condition translates to
+  \begin{gather}
+    \scal(\vw_i,\vb-\mata\vx^{(0)}-\mata\vv)\qquad i=1,\dots,m,
+  \end{gather}
+  which we can rewrite as a matrix equation
+  \begin{gather}
+    \matw^*(\vb-\mata\vx^{(0)}-\mata\vv) = \matw^*\vr^{(0)} -
+    \matw^*\mata\matv.
+  \end{gather}
+  Since we can express $\vv$ in terms of the basis $\matv$, we obtain
+  \begin{gather}
+    \matw^*\mata\vv = \matw^*\mata\matv\vy,
+  \end{gather}
+  for some vector $\vy\in\R^m$.
 \end{proof}
 
 \begin{Theorem}{projected-invertible}
@@ -93,6 +161,33 @@
   Then, the projected matrix $\matw^*\mata\matv$ is invertible for any
   bases $\matv$ and $\matw$ of $K$ and $L$, respectively.
 \end{Theorem}
+
+\begin{proof}
+  First, consider the symmetric, positive definite case. Since $K=L$,
+  we can use the same basis $\matw=\matv$  and obtain
+  \begin{gather}
+    \mata_m = \matv^*\mata\matv,
+  \end{gather}
+  which inherits the symmetry from $\mata$. Hence, we can estimate its
+  lowest eigenvalue by the Rayleigh quotient,
+  \begin{multline}
+    \lambda_{\text{min}}(\mata_m)
+    = \min_{\vy\in\R^m} \frac{\scal(\mata_m\vy,\vy)}{\scal(\vy,\vy)}
+    = \min_{\vy\in\R^m} \frac{\scal(\matv^*\mata\matv\vy,\vy)}{\scal(\vy,\vy)}
+    \\
+    = \min_{\vy\in\R^m} \frac{\scal(\mata\matv\vy,\matv\vy)}{\scal(\vy,\vy)}
+    \ge\min_{\vv\in\R^n} \frac{\scal(\mata\vv,\vv)}{\scal(\vv,\vv)}
+    \min_{\vy\in\R^m} \frac{\scal(\matv\vy,\matv\vy)}{\scal(\vy,\vy)}.
+  \end{multline}
+  Both factors are positive, the first by the positive definiteness of
+  $\mata$, the second because $\matv$ is a basis. The results holds
+  for a different basis $\matw$ on the left, since this corresponds to
+  multiplying $\mata_m$ by an invertible matrix from the left.
+
+  If $\mata$ is invertible and $L=\mata K$ we choose
+  $\matw=\mata\matv$. Observing that $\mata^*\mata$ is symmetric and
+  positive definite, we can apply the previous argument.
+\end{proof}
 
 \begin{Theorem}{projection-orthogonal-optimal}
   Let $\mata\in\Rnn$ be symmetric, positive definite. Then,

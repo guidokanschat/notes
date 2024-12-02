@@ -91,6 +91,11 @@
   than $n^2$ floating point numbers.
 \end{Definition}
 
+\begin{Remark}{sparse-inverse}
+  Warning: neither the inverse of a sparse matrix is typically sparse, nor are
+  its LU or QR factorizations!
+\end{Remark}
+
 \begin{Example*}{csr}{Compressed row storage (CSR)}
   A sparse matrix can be stored using two integer fields defining the
   sparsity pattern and a field of floating point values for its

@@ -8,15 +8,65 @@
 \frame {\input {blocks/Definition-lexicographic.tex}}
 \frame {\input {blocks/Definition-fd-operators.tex}}
 \frame {\input {blocks/Example-Dirichlet-discrete.tex}}
-\frame {\input {blocks/Lemma-Laplacian-eigenvalues-1d.tex}}
-\frame {\input {blocks/Problem-Laplacian-eigenvalues-1d.tex}}
+
+\begin{frame}{The Laplacian in 1D}
+  \begin{block}{The 3-point stencil}
+    \begin{gather}
+      -D^2 \vu = \frac1{h^2} \matt_2 u :=
+      \begin{pmatrix}
+        2 & -1 \\
+        -1 & 2 & -1\\
+        &\ddots & \ddots & \ddots \\
+        &&-1 & 2 & -1\\
+        &&& -1 & 2
+      \end{pmatrix}.
+    \end{gather}
+  \end{block}
+\end{frame}
+
+\frame {\input {blocks/Example-7-point-stencil.tex}}
+
+\begin{frame}{The Laplacian in 2D}
+  \begin{block}{5-point stencil}
+      \begin{gather}
+    -(D_x^2+D_y^2) \vu = \frac1{h^2} \matb_4 \vu :=
+    \begin{pmatrix}
+      \matt_4 & \id_n \\
+      \id_n & \matt_4 & \id_n \\
+      &\ddots & \ddots & \ddots \\
+      &&\id_n & \matt_4 & \id_n \\
+      &&&\id_n & \matt_4 \\
+    \end{pmatrix}.
+  \end{gather}
+  \end{block}
+\end{frame}
+
+\begin{frame}{The Laplacian in 2D}
+  \begin{block}{7-point stencil}
+  \begin{gather}
+    -(D_x^2+D_y^2+D_z^2) \vu = \frac1{h^2}
+    \begin{pmatrix}
+      \matb_6 & \id_{n^2} \\
+      \id_{n^2} & \matb_6 & \id_{n^2} \\
+      &\ddots & \ddots & \ddots \\
+      &&\id_{n^2} & \matb_6 & \id_{n^2} \\
+      &&&\id_{n^2} & \matb_6 \\
+    \end{pmatrix}.
+  \end{gather}
+  \end{block}
+\end{frame}
+
+\frame {\input {blocks/Lemma-Laplacian-eigenvalues-1d.tex}
+  \pause
+  \input {blocks/Problem-Laplacian-eigenvalues-1d.tex}}
 \frame {\input {blocks/Lemma-Laplacian-eigenvalues-2d.tex}}
 
 \subsection{Motivation and sparse matrices}
 \frame{\subtoc}
-\frame {\input {blocks/Example-7-point-stencil.tex}}
 \frame {\input {blocks/Example-page-rank.tex}}
-\frame {\input {blocks/Definition-sparse-matrix.tex}}
+\frame {\input {blocks/Definition-sparse-matrix.tex}
+  \pause
+  \input {blocks/Remark-sparse-inverse.tex}}
 \frame {\input {blocks/Example-csr.tex}}
 \frame {\input {blocks/Remark-algorithmic-matrix.tex}}
 \frame {\input {blocks/Example-sparse-computation-memory.tex}}

@@ -139,8 +139,20 @@
 \end{Lemma}
 
 \begin{proof}
-  \cite[Section 1.12.1]{Saad00}.
+  \cite[Section 1.12.1]{Saad00}. First,
+  \begin{gather}
+    (\id-\matp)^2 = \id-2\matp+\matp^2 = \id-\matp.
+  \end{gather}
+  Hence, $\id-\matp$ is a projection. Let now $\vx\in\ker{\matp}$. Then,
+  \begin{gather}
+    \vx=(\id-\matp)\vx,
+  \end{gather}
+  which implies $\vx\in\range{\id-\matp}$.
 \end{proof}
+
+\begin{todo}
+  Finish!
+\end{todo}
 
 \begin{Lemma}{projection-spaces}
   Any pair of subspaces $N,R\subset \C^n$ such that $\C^n = N\oplus R$
