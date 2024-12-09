@@ -13,6 +13,12 @@
   \end{gather}
 \end{Definition}
 
+\begin{todo}
+  Note that because of the power method, the vectors become more and
+  more aligned, hance we have to find a stable representation of the
+  space.
+\end{todo}
+
 \begin{Definition}{grade-of-v}
   For a matrix $\mata\in\Rnn$ and a vector $\vv\in\R^n$ we define the
   \define{grade} of $\vv$, more precise the grade of $\vv$ with
@@ -82,20 +88,16 @@
 \begin{proof}
   See \cite[Proposition 6.3]{Saad00}.  First, we
   prove~\eqref{eq:krylov-projector-1} by proving it for the monomial
-  basis $q_i(x) = x^i$. It is obviously true for $q_0\equiv 1$. Now,
-  we assume it is true for $q_i$ and conclude for $q_{i+1}$. To this
-  end, we observe
+  basis $q_i(x) = x^i$, $i=1,\dots,m-1$. It is obviously true for
+  $q_0\equiv 1$. Now, we assume it is true for $q_{i-1}$ and conclude for
+  $q_{i}$. Since $i\le m-1$, we have $q_{i}\in\P_{m-1}$ and hence
+  $q_{i}(\mata)\vv\in \krylov_m$.  We observe that
   \begin{gather}
-    q_{i+1}(\mata)\vv = \mata q_i(\mata)\vv = \mata q_i(\mata_m)\vv.
+    q_{i}(\mata)\vv = \matp_m q_{i}(\mata)\vv = \matp_m \mata q_{i-1}(\mata)\vv
+    = \mata_m q_i(\mata_m)\vv
+    = q_{i}(\mata_m)\vv.
   \end{gather}
-  Since $i<m-1$, this vector is in $\krylov_m$ and we obtain
-  \begin{gather}
-    q_{i+1}(\mata)\vv
-    = \matp_m q_{i+1}(\mata)\vv
-    = \matp_m \mata q_i(\mata_m)\vv
-    = q_{i+1}(\mata_m)\vv,
-  \end{gather}
-  since $q_i(\mata_m)\vv\in\krylov_m$. Thus, we have proven the
+  Thus, we have proven the
   statement for $q\in\P_{m-1}$. The proof for $q_{m}(x) = x^m$ uses
   the same induction step, just with the exception that the action of
   $\matp_m$ on the left is not the identity anymore, since
@@ -130,7 +132,7 @@
   \end{gather}
   If $\matH[1:m,1:m]$ is unreduced for some $m\le n$, the vectors
   $\vq_1,\dots,\vq_m$ form a basis of the Krylov space
-  $\krylov_{m}(\vq_1,\mata)$.
+  $\krylov_{m}(\mata,\vq_1)$.
 \end{Lemma}
 
 \begin{proof}
@@ -144,15 +146,15 @@
     \label{eq:krylov:3}
     h_{j+1,j} \vq_{j+1} = \mata\vq_j - \sum_{k=1}^j h_{kj} \vq_j.
   \end{gather}
-  Clearly, $\vq_1\in\krylov_1(\vq_1,\mata)$.
-  Furthermore,~\eqref{eq:krylov:1} yields the induction argument that
-  $\vq_{j+1}\in \krylov_{j+1}(\vq_1,\mata)$ if
-  $\vq_1,\dots,\vq_j\in \krylov_j(\vq_1,\mata)$. Note that this
+  Clearly, $\vq_1\in\krylov_1(\mata,\vq_1)$.
+  Furthermore,~\eqref{eq:krylov:3} yields the induction argument that
+  $\vq_{j+1}\in \krylov_{j+1}(\mata,\vq_1)$ if
+  $\vq_1,\dots,\vq_j\in \krylov_j(\mata,\vq_1)$. Note that this
   argument is not possible if $h_{j+1,j}=0$.
 
-  Now that we know that $\vq_1,\dots,\vq_m\in\krylov_{m}(\vq_1,\mata)$
+  Now that we know that $\vq_1,\dots,\vq_m\in\krylov_{m}(\mata,\vq_1)$
   are an orthogonal set, they must form a basis since the dimension of
-  $\krylov_{m}(\vq_1,\mata)$ is $m$.
+  $\krylov_{m}(\mata,\vq_1)$ is $m$.
 \end{proof}
 
 \begin{Theorem}{arnoldi-projection}
@@ -171,18 +173,39 @@
     \label{eq:arnoldi-projection-3}
     \matH_m = \matq_m^T\mata\matq_m
   \end{gather}
-  is the projection of $\mata$ to $\krylov_m(\vq_1,\mata)$ expressed
+  is the projection of $\mata$ to $\krylov_m(\mata,\vq_1)$ expressed
   in the basis $\matq_m$.
 \end{Theorem}
 
 \begin{proof}
-  The first statement only rephrases~\eqref{eq:krylov:3}. For the
+  The first statement only rephrases~\eqref{eq:krylov:2}. For the
   second, we observe that $\matq_m^*\matq_{m+1}$ is the identity
   $\id_m$ with an additional zero-column to the right. Hence,
   \begin{gather}
     \matH_m = \matq_m^*\matq_{m+1}\overline\matH_{m}.
   \end{gather}
   Entering this into~\eqref{eq:arnoldi-projection-2} yields the result.
+\end{proof}
+
+\begin{Lemma}{Hessenberg-essentially-equal}
+  Let $\matH_m = \matq_m^*\mata\matq$ with a matrix $\mata\in\Rnn$, a
+  Hessenberg matrix $\matH\in\R^{m\times m}$ and an orthogonal matrix
+  $\matq\in\R^{n\times m}$. Let $\matu_m\R^{n\times m}$ be a second
+  orthogonal matrix, essentially equal to $\matq_m$. Then,
+  $\matg_m = \matu_m^*\mata\matu_m$ is a Hessenberg matrix as well.
+\end{Lemma}
+
+\begin{proof}
+  We note that each column $\vu_i$ of $\matu_m$ is equal to the
+  corresponding column $\vq_i$ of $\matq_m$ up to a factor $\pm 1$. Hence,
+  \begin{gather}
+    \abs{g_{ij}} = \abs{\ve_i^*\matg_m\ve_j}
+    = \abs{\vu_i^*\mata\vu_j}
+    = \abs{\vq_i^*\mata\vq_j}
+    = \abs{\ve_i^*\matH_m\ve_j}
+    = \abs{h_{ij}}.
+  \end{gather}
+  In particular, $\matg_m$ has zero entries wherever $\matH$ has them.
 \end{proof}
 
 \begin{Theorem}{Hessenberg-Krylov-2}
@@ -199,21 +222,25 @@
 \end{Theorem}
 
 \begin{proof}
-  The proof follows the uniqueness proof of
-  \slideref{Theorem}{qr-existence} using the property
+  We show that the matrix $\matq_m$ here is essentially equal to the
+  matrix $\matq_m$ in \slideref{Theorem}{arnoldi-projection}, which we
+  will call $\tilde \matq_m$ here. The result then follows from the
+  preceding lemma.
+
+  Using \slideref{Lemma}{qr-columns} about the span of the left
+  columns of the QR factorization, we have for $j=1,\dots,m$
   \begin{gather}
-    \spann{\vq_1,\dots,\vq_j} = \spann{\vv,\mata\vv,\dots,\mata^{j-1}\vv}
+    \spann{\vq_1,\dots,\vq_j} = \spann{\vv,\mata\vv,\dots,\mata^{j-1}\vv} = \krylov_j(\mata,\vv).
   \end{gather}
-  from \slideref{Lemma}{qr-columns}. Comparing this
-  to~\eqref{eq:krylov-2}, the condition there is
+  Comparing this
+  to~\eqref{eq:krylov:2}, the condition there is
   \begin{gather}
-    \spann{\vq_1,\dots,\vq_j} = \spann{\vv,\mata\vq_1,\dots,\mata\vq_{j-1}}.
+    \spann{\tilde\vq_1,\dots,\tilde\vq_j} = \spann{\vv,\mata\tilde\vq_1,\dots,\mata\tilde\vq_{j-1}}
+    = \krylov_j(\mata,\vv).
   \end{gather}
-  But by construction we can use the induction argument,
-  \begin{gather}
-    \spann{\vq_1,\dots,\vq_{j-1}} = \spann{\vv,\mata\vv,\dots,\mata^{j-2}\vv},
-  \end{gather}
-  such that $\vq_j$ is identically defined in both places.
+  Since we have $\vq_1 = \tilde\vq_1 = \nicefrac{\vv}{\norm{\vv}}$, we
+  can use an induction argument to show that
+  $\tilde\vq_j\parallel\vq_j$, which implies that they are essentially equal.
 \end{proof}
 
 \begin{Corollary}{Hessenberg-Krylov}
@@ -294,26 +321,34 @@
   \begin{gather}
     \delta_{j+1}\vq_{j+1} = \mata \vq_j - \gamma_j \vq_j - \delta_j\vq_{j-1}
   \end{gather}
-  with $\vq_0 = 0$, $\delta_1 = 0$ and
+  with $\vq_0 = 0$, $\gamma_1 = 0$ and
   \begin{gather}
-    \gamma_j =  h_{jj}, \qquad \delta_j = h_{j-1,j},
+    \gamma_j =  \scal(\mata\vq_j,\vq_j), \qquad \delta_j = \scal(\mata\vq_j,\vq_{j-1}),
     \qquad j=1,\dots
   \end{gather}
   In particular, explicit orthogonalization is only necessary with respect to
   the previous two basis vectors.
 \end{Lemma}
 
-\begin{todo}
-  Add reference to QR method for symmetrix matrices.
-\end{todo}
+\begin{remark}
+\end{remark}
+
 \begin{proof}
-  See also~\cite[Section 6.6.1]{Saad00}. From
-  \slideref{Theorem}{arnoldi-projection}, we realize that the
-  projected matrix $\matH_m$ of the Arnoldi method is symmetric if
-  $\mata$ is symmetric. Since it is Hessenberg by construction, we
-  conclude that it is tridiagonal. Since it is also the matrix of
-  coefficients in the Gram-Schmidt orthogonalization, the statement
-  becomes evident.
+  The Arnoldi process corresponds to a truncated reduction to
+  Hessenberg form according to \slideref{Theorem}{arnoldi-projection}
+  and \slideref{Theorem}{Hessenberg-Krylov-2}. Hence, like in the
+  previous chapter, the Hessenberg matrix $\matH_m$ becomes symmetric
+  and tridiagonal if $\mata$ is symmetric. Indeed, this implies that
+  the coefficients $h_{ij}$ computed in line 4 of
+  \slideref{Algorithm}{arnoldi-1} are evaluating to zero if
+  $\abs{i-j}>1$. Therefore, the inner products
+  $\scal(\mata\vq_j,\vq_i)$ are zero for $i\le j-2$. This implies the
+  three-term recurrence for $j>1$, where we explicitly copied the
+  definitions of $h_{jj}$ and $h_{j,j-1}$.
+
+  The initial vector $\vq_1$ remains as in the original algorithm and
+  for $j=1$, we have to provide initial values according to the
+  original Arnoldi method, where the third term is missing
 \end{proof}
 
 \begin{Algorithm*}{lanczos}{Lanczos}
@@ -330,6 +365,14 @@
     \EndFor
   \end{algorithmic}  
 \end{Algorithm*}
+
+\begin{Remark}{Lanczos-delta}
+  In this algorithm, $\delta_j$ is not computed as in
+  \slideref{Lemma}{arnoldi-symmetric}, but as the norm of the
+  intermediate vector $\vw_j$. Here, we used the symmetry of the
+  tridiagonal matrix, which allows us to save an additional inner
+  product.
+\end{Remark}
 
 \begin{remark}
   The main difference between Arnoldi and Lanczos is the fact that
@@ -352,10 +395,10 @@
     case?
   \item What does this mean for the structure of the complete
     Hessenberg matrix in~\eqref{eq:krylov:1}?
-  \item Show that in this case $\krylov_m(\vb,\mata)$ is an
+  \item Show that in this case $\krylov_m(\mata,\vb)$ is an
     $\mata$-invariant subspace of $\R^n$.
   \item Assume additionally that $\mata$ is nonsingular. Show that the
-    solution $\vx$ of $\mata\vx = \vb$ is in $\krylov_m(\vb,\mata)$.
+    solution $\vx$ of $\mata\vx = \vb$ is in $\krylov_m(\mata,\vb)$.
   \end{enumerate}
 \end{Problem}
 
@@ -375,8 +418,8 @@
   and choose $\vq_1 =\nicefrac{\vr^{(0)}}{\beta}$ in Arnoldi's
   method. Then, the Galerkin approximation
   \begin{align}
-    \vx^{(m)} &\in \vx^{(0)} + \krylov_m(\vr^{(0)},\mata)\\
-    \vb-\mata \vx^{(m)} &\perp \krylov_m(\vr^{(0)},\mata),
+    \vx^{(m)} &\in \vx^{(0)} + \krylov_m(\mata,\vr^{(0)})\\
+    \vb-\mata \vx^{(m)} &\perp \krylov_m(\mata,\vr^{(0)}),
   \end{align}
   is obtained in two steps. Solve in $\R^m$
   \begin{gather}
@@ -393,7 +436,7 @@
   $\vx^{(m)} = \vx^{(0)} + \vv$ and note that this implies
   $\vv=\matq_m\vy$.
 
-  The orthogonality condition implies for all basis vectors $\vq_i\in\krylov_m(\vr^{(0)},\mata)$
+  The orthogonality condition implies for all basis vectors $\vq_i\in\krylov_m(\mata,\vr^{(0)})$
   \begin{gather}
     0 = \scal(\vb-\mata \vx^{(m)},\vq_i) = \scal(\vr^{(0)} - \mata\vv,\vq_i).
   \end{gather}
@@ -464,8 +507,8 @@
 \begin{Lemma*}{lanczos-linear}{Lanczos solver}
   The Ritz-Galerkin approximation
   \begin{align}
-    \vx^{(m)} &\in \vx^{(0)} + \krylov_m(\vr^{(0)},\mata)\\
-    \vb-\mata \vx^{(m)} &\perp \krylov_m(\vr^{(0)},\mata),
+    \vx^{(m)} &\in \vx^{(0)} + \krylov_m(\mata,\vr^{(0)})\\
+    \vb-\mata \vx^{(m)} &\perp \krylov_m(\mata,\vr^{(0)}),
   \end{align}
   is obtained as $\vx^{(m)} = \vx^{(0)} + \matq_m \vy_m$, where $\matq_m$ is the basis obtained from the Lanczos process and $\vy_m$ solves
   \begin{gather}
@@ -493,7 +536,7 @@
 \end{proof}
 
 \begin{intro}
-  While the basis of $\krylov_m(\vr^{(0)},\mata)$ can be computed
+  While the basis of $\krylov_m(\mata,\vr^{(0)})$ can be computed
   incrementally, only using the previous two vectors, the update
   \begin{gather}
     \vx^{(m)} = \vx^{(0)} + \matq_m \vy_m
@@ -610,9 +653,9 @@
   For the sequences of vectors $\vx_m$, $\vr_m = \vb-\mata\vx_{m}$ and $\vg_m$
   constructed in the preceding lemma, there holds
   \begin{align}
-    \vg_m &\in \krylov_{m}(\vr_0,\mata)\\
-    \vx_m &\in \vx_0 + \krylov_{m}(\vr_0,\mata)\\
-    \vr_m &\in \krylov_{m+1}(\vr_0,\mata)
+    \vg_m &\in \krylov_{m}(\mata,\vr_0)\\
+    \vx_m &\in \vx_0 + \krylov_{m}(\mata,\vr_0)\\
+    \vr_m &\in \krylov_{m+1}(\mata,\vr_0)
   \end{align}
   Additionally, they have the following orthogonality properties:
   \begin{xalignat}2
@@ -623,10 +666,10 @@
 
 \begin{proof}
   By~\eqref{eq:nla:krylov:lanczos-p},
-  $\vg_m\in\krylov_{m+1}(\vr_0,\mata)$, hence the inclusion of
+  $\vg_m\in\krylov_{m+1}(\mata,\vr_0)$, hence the inclusion of
   $\vx_m$.  By construction, the residual
-  $\vr_m \in \krylov_{m+1}(\vr_0,\mata)$ and orthogonal to
-  $\krylov_{m}(\vr_0,\mata)$. Hence, it is coaligned with $\vq_{m+1}$
+  $\vr_m \in \krylov_{m+1}(\mata,\vr_0)$ and orthogonal to
+  $\krylov_{m}(\mata,\vr_0)$. Hence, it is coaligned with $\vq_{m+1}$
   and orthogonal to all previous residuals.
 
   The second orthogonality relation is equivalent to the fact that
@@ -661,8 +704,8 @@
   For $k\le m$ the vectors $\vx_k$, $\vr_k = \vb-\mata\vx^{(k)}$ and $\vp_k$
   of the conjugate gradient method admit
   \begin{align}
-    \vp_k &\in \krylov_{k+1}(\vr_0,\mata),\\
-    \vr_k &\in \krylov_{k+1}(\vr_0,\mata).
+    \vp_k &\in \krylov_{k+1}(\mata,\vr_0),\\
+    \vr_k &\in \krylov_{k+1}(\mata,\vr_0).
   \end{align}
   Additionally, they have the following orthogonality properties:
   \begin{xalignat}2
@@ -677,9 +720,9 @@
 \begin{proof}
   We show the result by induction over $m$. It is true for $m=0$. Now
   assume that it holds for $m$ and we conclude for $m+1$. From line 6,
-  we obtain $\vr_{m+1} \in \krylov_{m+1}(\vr_0,\mata)$, since
-  $\vp_m\in \krylov_{m+1}(\vr_0,\mata)$. Then, line 8 yields
-  immediately $\vp_{m+1} \in \krylov_{m+1}(\vr_0,\mata)$.
+  we obtain $\vr_{m+1} \in \krylov_{m+1}(\mata,\vr_0)$, since
+  $\vp_m\in \krylov_{m+1}(\mata,\vr_0)$. Then, line 8 yields
+  immediately $\vp_{m+1} \in \krylov_{m+1}(\mata,\vr_0)$.
 
 
   From line 6 the definition of $\alpha_m$ and the equality of the

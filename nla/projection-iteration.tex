@@ -197,10 +197,10 @@
   solution $\vx$ of $\mata\vx=\vb$ there holds
   \begin{gather}
     \norm{\tilde\vx-\vx}_A
-    = \min_{\vv\in \vx^{(k)}+K} \norm{\vv-\vx}_A
-    = \min_{\vv\in K} \norm{\vv+\vx^{(k)}-\vx}_A.
+    = \min_{\vy\in \vx^{(k)}+K} \norm{\vy-\vx}_A
+    = \min_{\vy\in K} \norm{\vy+\vx^{(k)}-\vx}_A.
   \end{gather}
-  Here, $\norm\vv_A = \sqrt{\vv^*\mata\vv}$.
+  Here, $\norm\vv_A = \sqrt{\vv^*\mata\vv}$ is the so-called \define{energy norm} or \define{A-norm}.
 \end{Theorem}
 
 \begin{proof}
@@ -232,7 +232,7 @@
   minimum over $K$. Hence, we have reduced the question to a set of
   one-dimensional minimization problems. We have
   \begin{align}
-    F(t) &= \tfrac{t^2}2 \norm{\vw}_{\mata}^2 + t \scal(\tilde\vx-\vx,\vw)
+    F(t) &= \tfrac{t^2}2 \norm{\vw}_{\mata}^2 + t \scal(\tilde\vx-\vx,\vw)_{\mata}
     + \tfrac12 \norm{\tilde\vx-\vx}_{\mata}^2,\\
     F'(t) &= t\norm{\vw}_{\mata}^2 + \scal(\tilde\vx-\vx,\vw)_{\mata},\\
     F''(t) &= \norm{\vw}_{\mata}^2 = \vw^*\mata\vw.
@@ -359,6 +359,16 @@
   \end{gather}
 \end{proof}
 
+\begin{Remark}{line-search}
+  The one-dimensional projection method is an application of the class
+  of \define{line search} algorithms to the solution of a linear
+  system formulated as a minimization problem.
+
+  Such algorithms in general compute the next approximation to a
+  minimization problem by finding a minimizer in a one-dimensional
+  subspace determined by the xurrent iterate and a search direction.
+\end{Remark}
+
 \begin{Example}{steepest-descent-10}
   We run the steepest descent method for
   \begin{gather}
@@ -419,6 +429,10 @@
 
 \begin{Algorithm*}{steepest-descent-python1}{Steepest descent in Python}
   \lstinputlisting{python/steepest-descent.py}
+\end{Algorithm*}
+
+\begin{Algorithm*}{steepest-descent-cpp1}{Steepest descent in C++ (armadillo)}
+  \lstinputlisting{code/cpp/steepest_descent.cc}
 \end{Algorithm*}
 
 \begin{remark}
