@@ -15,6 +15,18 @@
   \end{algorithmic}
 \end{Algorithm*}
 
+\begin{remark}
+  Lines 4 and 6 of the Lanczos algorithm correspond to a Gram-Schmidt
+  orthogonalization and are thus numerically unstable. The optional
+  reorthogonalization in line 7 must then involve all previeous basis
+  vectors and becomes infeasible for large $m$.
+
+  On the other hand, we have developed the conjugate gradient
+  algorithm as a numerically stable method for solving linear systems
+  by the Lanczos process. The following lemma shows, that we can also
+  use this algorithm to compute the projected matrix $\matH_m$.
+\end{remark}
+
 \begin{Lemma}{cg-tridiagonal}
   Let $\alpha_k$ and $\beta_k$ be the sequences of coefficients in the conjugate gradient method
   \slideref{Algorithm}{cg}. Then, the entries of the projected matrix
@@ -42,15 +54,6 @@
 \begin{proof}
   See~\cite[Section 6.7.3]{Saad00}.
 \end{proof}
-
-\begin{remark}
-  The previous lemma allows us to compute eigenvalues on the fly while
-  solving a linear system with the conjugate gradient method. We could
-  also run the Lanczos process \slideref{Algorithm}{lanczos} itself.
-
-  In both cases, if $m$ becomes very large, orthogonality may be lost
-  due to round-off errors.
-\end{remark}
 
 \begin{Problem}{cg-ev}
   Augment your implementation of the conjugate gradient method such

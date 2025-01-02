@@ -214,13 +214,17 @@
 \begin{remark}
   The estimates are all with respect to the $m+1$-st eigenvalue. This
   differs from the standard subspace iteration in the first chapter,
-  where we always deal with the separation to the following
-  eigenvalue.
-  
-  Thus, it is a reasonable approach to choose $m > n_{\text{ev}}$,
+  where we always deal with the separation of two consecutive
+  eigenvalues.
+
+  Assume you want to compute $n_{\text{ev}}$ eigenvalues of a matrix.
+  Then, it is a reasonable approach to choose $m > n_{\text{ev}}$,
   such that for all relevant eigenvalues the quotient
   $\lambda_{m+1}/\lambda_i$ is sufficiently small. This is
-  particularly true if there is a known gap in the spectrum.
+  particularly true if there is a known gap in the spectrum. Note that
+  it is not necessary that the whole subspace of dimension $m$
+  converges fast in order to get fast convergence of the first
+  $n_{\text{ev}}$ eigenvalues.
 
   With respect to this property, this method seems superior to the
   orthogonal subspace iteration. Be aware though that a Schur
