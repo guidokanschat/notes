@@ -9,23 +9,8 @@
 \frame {\input {blocks/Lemma-lanczos-orthogonality.tex}}
 \frame {\input {blocks/Algorithm-cg.tex}}
 \frame {\input {blocks/Lemma-cg-orthogonality.tex}}
-\frame {\input {blocks/Corollary-cg-Lanczos.tex}}
-
-\frame {\input {blocks/Theorem-projection-orthogonal-optimal.tex}}
-\frame {\input {blocks/Lemma-krylov-polynomial.tex}}
-
-\frame {\input {blocks/Theorem-cg-optimality.tex}
-  \pause
-  \input {blocks/Corollary-cg-vs-descent}}
-\frame {\input {blocks/Corollary-cg-optimality-spectrum.tex}}
-
-\frame {\input {blocks/Definition-chebyshev-polynomials.tex}}
-\frame {\input {blocks/Lemma-chebyshev-representation.tex}}
-\frame {\input {blocks/Lemma-chebyshev-abscissae.tex}}
-% \frame {\input {blocks/Theorem-chebyshev-minimal-1.tex}}
-\frame {\input {blocks/Theorem-chebyshev-growth.tex}}
-\frame {\input {blocks/Corollary-chebyshev-minimal-2.tex}}
-\frame {\input {blocks/Corollary-cg-condition-number.tex}}
+\frame {\input {blocks/Corollary-cg-Lanczos.tex}
+\input{blocks/Remark-cg-naming}}
 \begin{frame}
   \begin{columns}
     \begin{column}{.48\textwidth}
@@ -36,6 +21,30 @@
     \end{column}
   \end{columns}
 \end{frame}
+
+\frame {
+\footnotesize
+  \input {blocks/Theorem-projection-orthogonal-optimal.tex}
+  \input {blocks/Lemma-krylov-polynomial.tex}
+}
+
+\frame {\input {blocks/Theorem-cg-optimality.tex}
+  \pause
+  \input {blocks/Corollary-cg-vs-descent}}
+\frame {\input {blocks/Corollary-cg-optimality-spectrum.tex}}
+
+\frame {\input {blocks/Definition-chebyshev-polynomials.tex}}
+\frame {\footnotesize
+  \input {blocks/Lemma-chebyshev-representation.tex}
+  \input {blocks/Lemma-chebyshev-abscissae.tex}}
+% \frame {\input {blocks/Theorem-chebyshev-minimal-1.tex}}
+\frame {\input {blocks/Theorem-chebyshev-growth.tex}}
+\frame {\input {blocks/Corollary-chebyshev-minimal-2.tex}}
+\frame {\input {blocks/Corollary-cg-condition-number.tex}
+  \pause
+  \footnotesize
+  \input{blocks/Theorem-steepest-descent-convergence}
+}
 
 %%% Local Variables:
 %%% mode: latex

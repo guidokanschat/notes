@@ -789,6 +789,19 @@
   \slideref{Lemma}{lanczos-incremental}.
 \end{Corollary}
 
+\begin{Remark}{cg-naming}
+  The conjugate gradient (cg) method closely resembles the steepest
+  descent method as a line search method.
+  The steepest descent method follows the negative gradient of the
+  energy functional (\slideref{Lemma}{steepest-descent})
+  \begin{gather}
+    F(\vy) = \norm{\vy-\vx}_{\mata}^2.
+  \end{gather}
+  The difference is, that the search directions are
+  orthogonalized with respect to the $\mata$-inner product.
+  An earlier term for $\mata$-orthogonal was $\mata$-conjugate, hence
+  the name \define{Conjugate Gradient Method}.
+\end{Remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -913,9 +926,9 @@
 \begin{Corollary}{cg-condition-number}
   The error after $m$ steps of the cg method admits the estimate
   \begin{gather}
-    \norm{e^{(m)}}_A \le 2 \left(
-      \frac{\sqrt{\cond_2(A)}-1}{\sqrt{\cond_2(A)}+1}\right)^m
-    \norm{e^{(0)}}_A.
+    \norm{e^{(m)}}_{\mata} \le 2 \left(
+      \frac{\sqrt{\cond_2(\mata)}-1}{\sqrt{\cond_2(\mata)}+1}\right)^m
+    \norm{e^{(0)}}_{\mata}.
   \end{gather}
 \end{Corollary}
 
@@ -1077,7 +1090,7 @@
 \begin{Theorem}{gmres-projection}
   The GMRES method computes the update of the $m$-dimensional oblique
   projection step. It minimizes the residual over the search space
-  $\vx^{(0)} +\krylov_m(\mata,\vr^{(0)}$ and there holds
+  $\vx^{(0)} +\krylov_m(\mata,\vr^{(0)})$ and there holds
   \begin{gather}
     \label{eq:gmres-norm}
     \norm{\vr^{(m)}}_2 = \norm{\vb-\mata\vx^{(m)}}_2 =
@@ -1157,7 +1170,7 @@
     \norm{\vr^{(m)}}_2 = \min_{\substack{p\in\P_m\\p(0) = 1}}
     \norm{p(\mata)\vr^{(0)}}_2.
   \end{gather}
-  If the matrix $\mata$ is diagonalizable, then there holds
+  If the matrix $\mata$ is diagonalizable such that $\mata=\matv\matlambda\matv^{-1}$, then there holds
     \begin{gather}
     \norm{\vr^{(m)}}_2 \le \rho_m \cond_2(\matv) \norm{\vr^{(0)}}_2,
   \end{gather}
@@ -1197,8 +1210,8 @@
   optimal results only if it is normal. While this condition is not
   strictly necessary, there are examples of arbitrarily bad
   convergence. Indeed, for every nonincreasing sequence of $n-1$
-  numbers, you can find a sequence such that the norms of residuals of
-  the GMRES method will follow that
+  numbers, you can find a matrix and an initial vector such that the
+  norms of residuals of the GMRES method will follow that
   sequence~\cite{GreenbaumPtakStrakos96}.
 \end{remark}
 
@@ -1227,11 +1240,12 @@
 \end{intro}
 
 \begin{Lemma}{qr-Arnoldi-1}
-  The $j$-th column of the QR factorization of the Krylov matrix
+  Consider the Krylov matrix
   \begin{gather}
-    \matk_\infty = \bigl(\vv,\mata\vv,\mata^2\vv,\dots\bigr)
+    \matk_\infty = \bigl(\vv,\mata\vv,\mata^2\vv,\dots\bigr).
   \end{gather}
-  from the previous $j-1$ columns by the following steps:
+  Its QR factorization can be computed recursively from
+  $\vq_1 = \nicefrac{\vv}{\norm{\vv}}$ for $j=2,\ldots$ by
   \begin{align}
     \label{eq:Arnoldi-Householder:1}
     \vv_j &= \matp_{j-1}\cdots \matp_1\mata\vq_{j-1}\\
@@ -1243,7 +1257,7 @@
     \label{eq:Arnoldi-Householder:3}
     \matp_j =
     \begin{pmatrix}
-      \id_{j-1}\\& \tilde P_{j}
+      \id_{j-1}\\& \tilde \matp_{j}
     \end{pmatrix},
   \end{gather}
   which eliminates $v_{j;j+1}$ to $v_{j;n}$.  The columns of the
@@ -1254,12 +1268,18 @@
 \begin{proof}
   Already in the proof of \slideref{Theorem}{Hessenberg-Krylov-2}, we
   have argued that we may replace the column $\mata^{j}\vv$ by
-  $\mata\vq_{j}$ to obtain an essentially equivalent QR factorization. Hence,
-  $\vv_j$ can be viewed as the $j$-th column of the matrix
+  $\mata\vq_{j}$ to obtain an essentially equal QR factorization. Hence,
+  we compute the QR factorization of the matrix
   \begin{gather}
-    \matk^{(j-1)} = \matp_{j-1}\cdots \matp_1 \matk_{\infty},
+    \tilde K_\infty = \bigl(\vq_1,\mata\vq_1,\mata\vq_2,\ldots\bigr),
   \end{gather}
-  of the QR factorization. Then, the next step is computed by the
+  where $\vq_j$ is the column of the matrix $\matq$ computed in the
+  previous step..  $\vv_j$ can be viewed as the $j$-th column of the
+  matrix
+  \begin{gather}
+    \matk^{(j-1)} = \matp_{j-1}\cdots \matp_1 \tilde\matk_{\infty},
+  \end{gather}
+  after $j-1$ steps of the QR factorization. Then, the next step is computed by the
   Householder reflection $\matp_j$. Finally,~\eqref{eq:ortho:1} states
   \begin{gather}
     \matq_j = \matp_1\dots\matp_j.
@@ -1274,26 +1294,33 @@
   apply all previously computed reflections at once.
 
   It remains to prove the statement on the Hessenberg matrix
-  $\matH$. By equation~\eqref{eq:Arnoldi-Householder:1}, we have
+  $\matH$. The representation
+  $\mata\matq_{m} = \matq_{m+1}\overline\matH_{m}$ yields
   \begin{gather}
-    \vh_j = \matp_{j+1}^T\vv_{j+1}
-    = \matp_{j+1}^T\matp_{j}^T\cdots\matp_1^T\mata\vq_{j}
-    = \matq_{j+1}^T\mata\vq_j.
+    \overline\matH_{m} = \matq_{m+1}^T\mata\matq_{m}.
   \end{gather}
-  The Householder reflections $\matp_{k+1}$ act as identity on the
-  span of the first $k$ unit vectors. Hence, $\matp_{k}\vh_j = \vh_j$ for $k\ge j+2$ and
+  Hence, for the $m$-th column of this matrix
   \begin{gather}
-    \matp_{j+2}\cdots\matp_{m+1}\vh_j = \vh_j = \matq_{j+1}^T\mata\vq_j.
+    \vh_m = \matq_{m+1}^T\mata\vq_{m} = \matp_{m+1}
+    \bigl(\matp_{m}\matp_{m-1}\dots\matp_{1}\bigr)\mata\vq_{m}
+    = \matp_{m+1} \vv_{m+1}.
   \end{gather}
-  Since $\mata\vq_j\in\krylov_{j+1}(\vv,\mata)$ and
-  $\matq_{j+1}\matq_{j+1}^T$ is the identity on this space, we obtain
-  \begin{gather}
-    \matq_{m+1}\vh_j = \mata\vq_j,\qquad j=1,\dots,m,
-  \end{gather}
-  which are the columns of the matrix equation
-  \begin{gather}
-    \matq_{m+1}\overline\matH_m = \mata\matq_{m}.
-  \end{gather}
+  Since the matrix $\overline\matH_{m}$ is built column by column from
+  left to right, this formula holds for every column.
+  % The Householder reflections $\matp_{k+1}$ act as identity on the
+  % span of the first $k$ unit vectors. Hence, $\matp_{k}\vh_j = \vh_j$ for $k\ge j+2$ and
+  % \begin{gather}
+  %   \matp_{j+2}\cdots\matp_{m+1}\vh_j = \vh_j = \matq_{j+1}^T\mata\vq_j.
+  % \end{gather}
+  % Since $\mata\vq_j\in\krylov_{j+1}(\vv,\mata)$ and
+  % $\matq_{j+1}\matq_{j+1}^T$ is the identity on this space, we obtain
+  % \begin{gather}
+  %   \matq_{m+1}\vh_j = \mata\vq_j,\qquad j=1,\dots,m,
+  % \end{gather}
+  % which are the columns of the matrix equation
+  % \begin{gather}
+  %   \matq_{m+1}\overline\matH_m = \mata\matq_{m}.
+  % \end{gather}
 \end{proof}
 
 \begin{Algorithm*}{arnoldi-householder}{Arnoldi with Householder}
@@ -1444,7 +1471,8 @@
   which must be detected, since after such an incident, the future
   convergence might suffer.
 
-  Often, the necessity to multiply with $\mata^T$ is considered a downside.
+  Often, the necessity to multiply with $\mata^T$ is considered a
+  downside. Hence, people have investigated transpose-free variants.
   
   This has spurred the development of a whole bunch of algorithms,
   from BiCG to QMR to BiCG-stab (already involving 8 auxiliary vectors) to

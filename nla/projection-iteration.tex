@@ -196,11 +196,11 @@
   the \putindex{A-norm} of the error over the space $\vx^{(k)}+K$. Namely, for the
   solution $\vx$ of $\mata\vx=\vb$ there holds
   \begin{gather}
-    \norm{\tilde\vx-\vx}_A
-    = \min_{\vy\in \vx^{(k)}+K} \norm{\vy-\vx}_A
-    = \min_{\vy\in K} \norm{\vy+\vx^{(k)}-\vx}_A.
+    \norm{\tilde\vx-\vx}_{\mata}
+    = \min_{\vy\in \vx^{(k)}+K} \norm{\vy-\vx}_{\mata}
+    = \min_{\vy\in K} \norm{\vy+\vx^{(k)}-\vx}_{\mata}.
   \end{gather}
-  Here, $\norm\vv_A = \sqrt{\vv^*\mata\vv}$ is the so-called \define{energy norm} or \define{A-norm}.
+  Here, $\norm\vv_{\mata} = \sqrt{\vv^*\mata\vv}$ is the so-called \define{energy norm} or \define{A-norm}.
 \end{Theorem}
 
 \begin{proof}
@@ -336,7 +336,7 @@
 
 \begin{Lemma}{steepest-descent}
   Each step of the steepest descent method computes the minimum of
-  $F(\vy) = \frac12\norm{\vy-\vx}_A^2$ along the line from the current
+  $F(\vy) = \frac12\norm{\vy-\vx}_{\mata}^2$ along the line from the current
   iterate $\vx^{(k)}$ in direction $\vw = -\nabla F(\vx^{(k)}) = -\vr^{(k)}$.
   Furthermore, there holds
   \begin{gather}
@@ -523,7 +523,7 @@ method only fails after the exact solution has been found.
   $\ve^{(k)} = \vx-\vx^{(k)}$ of the steepest descent method admits
   the estimate
   \begin{gather}
-    \norm{\ve^{(k+1)}}_A \le \rho \norm{\ve^{(k)}}_A,
+    \norm{\ve^{(k+1)}}_{\mata} \le \rho \norm{\ve^{(k)}}_{\mata},
   \end{gather}
   where the contraction number is
   \begin{gather}

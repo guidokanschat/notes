@@ -1,6 +1,19 @@
-\begin{todo}
-  Add a lemma about the fact that $\matH_m$ is real symmetric somewhere.
-\end{todo}
+\begin{Algorithm*}{ev-lanczos}{Lanczos algorithm for eigenvalues}
+  \begin{algorithmic}[1]
+    \Require $\vr\in\C^n$ and $\delta_0=\norm{\vr}_2$
+    \For {$m=1,\dots$ until convergence}
+    \State $\vv_{m} \gets \frac{\vr}{\delta_{m-1}}$
+    \State $\vr \gets \mata\vv_{m}$
+    \State $\vr \gets \vr-\delta_{m-1}\vv_{m-1}$
+    \State $\gamma_m = \scal(\vr,\vv^{(m)})$
+    \State $\vr \gets \vr-\gamma_m\vv_{m}$
+    \State Reorthogonalization if necessary
+    \State $\delta_m \gets \norm{\vr}_2$
+    \EndFor
+    \State $\matH_m = \maty\matd_m\maty^*$ \Comment{Compute Ritz values}
+    \State $\matx=\matv_m\maty$ \Comment{Compute Ritz vectors}
+  \end{algorithmic}
+\end{Algorithm*}
 
 \begin{Lemma}{cg-tridiagonal}
   Let $\alpha_k$ and $\beta_k$ be the sequences of coefficients in the conjugate gradient method
@@ -180,27 +193,6 @@
   \end{gather}
   Again, a similar estimate can be obtained for $\lambda_{n-i}^{(m)} - \lambda_{n-i}$.
 \end{Theorem}
-
-\begin{todo}
-  Move this to the beginning.
-\end{todo}
-
-\begin{Algorithm*}{ev-lanczos}{Lanczos algorithm for eigenvalues}
-  \begin{algorithmic}[1]
-    \Require $\vr\in\C^n$ and $\delta_0=\norm{\vr}_2$
-    \For {$m=1,\dots$ until convergence}
-    \State $\vv^{(m)} \gets \frac{\vr}{\delta_{m-1}}$
-    \State $\vr \gets \mata\vv^{(m)}$
-    \State $\vr \gets \vr-\delta_{m-1}\vv^{(m-1)}$
-    \State $\gamma_m = \scal(\vr,\vv^{(m)})$
-    \State $\vr \gets \vr-\gamma_m\vv^{(m)}$
-    \State Reorthogonalization if necessary
-    \State $\delta_m \gets \norm{\vr}_2$
-    \EndFor
-    \State $\matH_m = \maty\matd_m\maty^*$ \Comment{Compute Ritz values}
-    \State $\matx=\matv_m\maty$ \Comment{Compute Ritz vectors}
-  \end{algorithmic}
-\end{Algorithm*}
 
 \begin{remark}
   Reorthogonalization will be necessary once the Krylov space

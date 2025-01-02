@@ -1,5 +1,7 @@
 \documentclass[a4paper]{article}
 \usepackage{amsmath}
+\usepackage{enumitem}
+\setlist{noitemsep,parsep=0pt,topsep=0pt}
 %\usepackage[scale=5]{draftwatermark}
 %\usepackage{background}
 
@@ -10,30 +12,31 @@
 \setlength{\parskip}{1ex plus 1ex}
 
 \begin{document}
+\sffamily
 \begin{center}
   \textbf{\Large Programming-Exam Numerical Linear Algebra}
   
-  \textbf{Winter 2023/24}
+  \textbf{Winter 2024/25}
 \end{center}
 
 \subsection*{Assignment}
 
-Implement the QR-method with shifts and deflation for Hermitian
-matrices and document the decisions you made in the implementation.
+Implement the transformation of a Hermitian matrix to real tridiagonal form and the QR-iteration with shifts and deflation for tridiagonal matrices. Document the decisions you made in the implementation.
 
 Verify your program with meaningful tests and document their results.
 
 \subsection*{Formalities}
 
 The program(s), documentation, and results should be submitted
-electronically in a single PDF or a PDF plus one file with code by Feb
-4th, 2023. You are welcome and encouraged to discuss your work with
-your peers, but every student must submit their own, unique work.
+electronically through Moodle in a single PDF or a PDF plus one file
+with code by Feb 2nd, 2025. You are welcome and encouraged to discuss
+your work with your peers, but every student must submit their own,
+unique work.
 
 As part of the exam, you will be asked to give a short oral
 presentation of your work and you should be able to answer questions
 about your code.  Oral presentations will be scheduled for the week of
-Feb 5th, or later upon request.
+Feb 3rd, or later upon request. Please sign up online on Moodle.
 
 Please submit at the oral test a signed declaration: ``I/We have
   prepared the assignment myself/ourselves and I/we have only used the
@@ -58,11 +61,15 @@ Please submit at the oral test a signed declaration: ``I/We have
 \item Bonus if you compute not only eigenvalues but also eigenvectors
 \end{enumerate}
 
-\subsection*{Hints}
-\begin{enumerate}
-\item Jupyter notebooks are a great way of producing this PDF, but
-  they are not necessary.
-\item The ``[:]'' notation for selecting column vectors or submatrices
-  can be very helpful, if used the right way.
-\end{enumerate}
+\subsection*{Grading criteria}
+
+You pass (at least grade 4,0), if your program successfully computes
+the eigenvalues of a Hermitian matrix given to you.
+
+Your grade will be excellent (1,0) if you follow all of the guidelines
+and your documentation shows that you can transfer the knowledge of
+the lecture meaningfully to writing code and tests as well as
+discussing your the relation between theoretical and experimental
+results.
+
 \end{document}

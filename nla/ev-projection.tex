@@ -29,17 +29,19 @@
 
 \begin{Definition}{ritz-values}
   Let $\mata$ be a matrix and $\matb_m = \matq_m^*\mata\matq_m$ be its
-  orthogonal projection to the subspace spanned by the orthonormal basis
-  $\matq_m$. Then, we refer to the eigenvalues of $\matb_m$ as
-  \define{Ritz values}.
-  For each eigenvector $\vy_i$ of $\matb_m$, we refer to the vector
-  $\vx_i = \matq_m\vy_i$ as \define{Ritz vector}.
+  orthogonal projection to the subspace $V$ spanned by the orthonormal
+  basis $\matq_m$. Then, we refer to the eigenvalues $\mu_i$ of
+  $\matb_m$ as \define{Ritz values}.  For each eigenvector $\vy_i$ of
+  $\matb_m$, we refer to the vector $\vx_i = \matq_m\vy_i$ as
+  \define{Ritz vector}. We call the pairs $(\mu_i,\matq_m\vy_i)$ the
+  \define{Rayleigh-Ritz approximation} of an eigenpair of $\mata$ in the
+  subspace $V$.
 \end{Definition}
 
 \begin{Lemma}{ritz-invariant}
   Let $V\subset\R^n$ be an invariant subspace under the action of
   $\mata$. Then, the Ritz values and associated Ritz vectors of the
-  Rayleigh-Ritz approximation are exact eigenpairs of $\mata$.
+  Rayleigh-Ritz approximation in the space $V$ are exact eigenpairs of $\mata$.
 \end{Lemma}
 
 \begin{proof}
@@ -78,7 +80,7 @@
   Let $\mu_1,\dots,\mu_m$ be the Ritz values in the subspace
   $V$. Then, there holds
   \begin{xalignat}2
-    \lambda_k &\ge \mu_i, &i&=1,\dots,m,\\
+    \lambda_i &\ge \mu_i, &i&=1,\dots,m,\\
     \lambda_{n-i}& \le \mu_{m-i}, &i&=0,\dots,m-1.
   \end{xalignat}
 \end{Lemma}
@@ -183,7 +185,7 @@
     \State $\matq \gets ONB(\matw)$ \Comment{QR factorization}
     \State $\matb \gets \matq^*\mata\matq$ \Comment{Projected matrix}
     \State $\maty \gets EV(\matb)$ \Comment{Eigenvectors}
-    \State $\matx^{(k)} \gets \matq\maty$
+    \State $\matx^{(k)} \gets \matq\maty$ \Comment{Ritz vectors}
     \EndFor
   \end{algorithmic}
 \end{Algorithm*}
