@@ -72,7 +72,7 @@
   Let $P_i$ be the projector to the subspace spanned by the
   eigenvector(s) for $\lambda_i$. Let the initial vector in Lanczos'
   method be chosen such that $P_i \vv_1\neq 0$. Then, the angle
-  $\theta_i^{(m)}$ between the eigenvector(s) $\vu_i$ and the Krylov space
+  $\theta_i^{(m)}$ between the eigenspace $\esp{i}$ and the Krylov space
   $\krylov_m(\vv_1,\mata)$ admits the estimate
   \begin{gather}
     \tan\theta_i^{(m)} = \min_{\substack{p\in\P_{m-1}\\p(\lambda_i)=1}} \norm{p(\mata)\vy_i} \tan \theta_i^{(1)}.
@@ -85,7 +85,30 @@
 \end{Lemma}
 
 \begin{proof}
-  See~\cite[Lemma 6.1]{Saad11}
+  See also~\cite[Lemma 6.1]{Saad11}. For arbitrary $\vw\in\krylov_m$,
+  let $\vw = q(\mata)\vv_1$ with a polynomial $q\in \P_{m-1}$. We have
+  the orthogonal decomposition
+  \begin{gather}
+    \vw = q(\mata)\vv_1 = q(\mata) P_i \vv_1 + q(\mata) (\id-P_i)\vv_1.
+  \end{gather}
+  Let $\vu_i = P_i\vw = q(\mata) P_i\vv_1$ be the orthogonal
+  projection of $\vw$ into the eigenspace $\esp{i}$ and hence the
+  closest eigenvector to $\vw$. Then, for the angle $\theta$ between
+  $\vw$ and $\vu_i$ there holds
+  \begin{gather}
+    \tan \theta = \frac{\norm{q(\mata)(\id-P_i)\vv_1}}{\norm{q(\mata)P_i\vv_1}}
+    = \frac{\norm{q(\mata)\vy_i}}{\abs{q(\lambda_i)}}
+    \frac{\norm{(\id-P_i)\vv_1}}{\norm{P_i\vv_1}}.
+  \end{gather}
+  For the second equality, we have assumed $(\id-P_i)\vv_1\neq0$,
+  which we may safely do, because $(\id-P_i)\vv_1=0$ implies
+  $\vv_1\in\esp{i}$, which is an invariant subspace and hence
+  $\theta=0$.
+
+  Now let $p(\lambda) = \nicefrac{q(\lambda)}{q(\lambda_i)}$ to obtain
+  \begin{gather}
+    \tan \theta = \norm{p(\mata)\vy_i} \tan \angle(\vv_1,\esp{i}).
+  \end{gather}
 \end{proof}
 
 \begin{Theorem}{lanczos-angle}
@@ -159,10 +182,6 @@
   to obtein estimates for $\vu_{n-1},\dots,\vu_{n-m}$.
 \end{proof}
 
-\begin{todo}
-  Add figures of polynomials.
-\end{todo}
-
 \begin{remark}
   Note that if $m<\nicefrac{n}2$, there are eigenvectors for which
   \slideref{Theorem}{lanczos-angle} does not provide an
@@ -183,7 +202,7 @@
 \end{remark}
 
 \begin{Theorem}{lanczos-eigenvalue-estimate}
-  The discrete eigenvalues $\lambda_i^{(m)}$ after $m$ steps of the Lanczos method satisfy the estimate
+  The approximate eigenvalues $\lambda_i^{(m)}$ after $m$ steps of the Lanczos method satisfy the estimate
   \begin{gather}
     0\le \lambda_i-\lambda_i^{(m)}
     \le (\lambda_1-\lambda_n) \left(
