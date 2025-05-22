@@ -148,10 +148,10 @@
 
     \vspace{5mm}
     
-  \item Weitere Formeln mit $d_k$, dem Zuwachs im Intervall $I_k$
+  \item Sei $d_k$ der Zuwachs im Intervall $I_k$
     \begin{gather*}
       N(t_{k+1}) = N(t_k) + d_k,
-      \qquad N(T) = \sum_k d_k.
+      \qquad N(T) = N(t_0) + \sum_k d_k.
     \end{gather*}
   \end{itemize}
   \pause
@@ -190,7 +190,7 @@
   \item Dann können wir für eine beliebige Folge von $n$ Intervallen
     schreiben
     \begin{gather*}
-      N(T) = N(t_0) + \sum_K=1^n f(t_k) (\Delta t)_k
+      N(t_n) = N(t_0) + \sum_{k=0}^{n-1} f(t_k) (\Delta t)_k
     \end{gather*}
     \item Wenn wir die Intervalllänge gegen null gehen lassen, bekommen wir ein Integral
   \end{itemize}
@@ -253,12 +253,58 @@
 
     \vspace{1ex}
 
-    Die tatsächliche Lösung erhält man, indem man die Konstante an den Anfangswert angleicht:
+    Die tatsächliche Lösung erhält man, indem man die Konstante an den Anfangswert $x_0$ angleicht:
     \begin{gather*}
-      x(t_0) = c e^{Rt_0} \qquad \Rightarrow \qquad
+      x_0 = x(t_0) = c e^{Rt_0} \qquad \Rightarrow \qquad c = \frac{x_0}{e^{R t_0}}
     \end{gather*}
   \end{block}
 \end{frame}
+
+\begin{frame}{Berechnung von $R$}
+  Wenn $\Delta t$ die Zeit zur Verdopplung ist, wie groß ist $R$?
+\end{frame}
+
+\begin{frame}{Zusammenfassung}
+  
+\end{frame}
+
+\subsection{Einige Begriffe}
+\frame{\subtoc}
+\begin{frame}
+  \begin{block}{Differentialgleichung}
+    Eine Differentialgleichung ist eine Gleichung, die eine Funktion
+    und/oder ihre Ableitungen in Beziehung setzt. Eine gewöhnliche DGl. 
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Autonome Differentialgleichungen}
+    Eine Differentialgleichung heißt autonom, wenn keiner der Terme
+    eine explizite Abhängigkeit von der Zeit hat.
+  \end{block}
+  \begin{columns}
+    \begin{column}[t]{.5\textwidth}
+      \begin{block}{Autonom}
+        \begin{gather*}
+          x' = f(x)
+        \end{gather*}
+      \end{block}
+    \end{column}
+    \begin{column}[t]{.5\textwidth}
+      \begin{block}{Nicht autonom}
+        \begin{gather*}
+          x' = f(t,x)
+        \end{gather*}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \pause Konsequenz: bei autonomen DGln. ist der Startzeitpunkt frei
+  verschiebbar, wir wählen oft $t_0 = 0$.
+  \begin{exampleblock}{Frage}
+    Welche Prozesse führen zu autonomen DGln., welche zu nicht autonomen?
+  \end{exampleblock}
+\end{frame}
+
 \subsection{Wachstum bei begrenzter Nahrung}
 \frame{\subtoc}
 \subsection{Das Räuber-Beute-Modell}
