@@ -477,9 +477,14 @@
       \mbox{}
       
       \begin{tikzpicture}[scale=1.]]
-        \draw[thick,->] (0,0)  node {$\bullet$} -- (0,1) node {$\bullet$};
-        \draw[thick,<-] (0,-2) -- (0,0);
-        \draw[thick,->] (0,2) -- (0,1);
+        \node (A) at (0,0) {$\bullet$};
+        \node (B) at (0,1) {$\bullet$};
+        \node (C) at (0,-2) {};
+        \node (D) at (0,3) {};
+
+        \draw[thick,-Stealth] (A) edge (B);
+        \draw[thick,-Stealth] (A) edge (C);
+        \draw[thick,-Stealth] (D) edge (B);
       \end{tikzpicture}
     \end{column}
     \pause
@@ -498,9 +503,21 @@
       \end{itemize}
     \end{column}
   \end{columns}
-
 \end{frame}
 
+\begin{frame}
+  \begin{exampleblock}{Frage}
+    Wie finden Sie bei einer autonomen Differentialgleichung der Form
+    \begin{gather*}
+      x' = f(x)
+    \end{gather*}
+    alle Fixpunkte?
+  \end{exampleblock}
+  \pause
+  \begin{exampleblock}{Frage}
+    Woran erkennen Sie, ob diese Fixpunkte anziehend oder abstoßend sind?
+  \end{exampleblock}
+  \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
