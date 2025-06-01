@@ -25,7 +25,7 @@
 \def\putindex#1{#1}
 \title{Differentialgleichungen}
 \author{Guido Kanschat}
-\date{\today}
+\date{}
 
 \begin{document}
 \frame{\maketitle}
@@ -125,7 +125,7 @@
   \begin{itemize}
   \item Anzahlvariable $N$
   \item Zeitvariable $t$ in Minuten, Startzeit $t_0=8:00$, ``Messzeit'' $T=18:00$
-  \item Zeitintervalle $I_k = [t_{k-1},t_k]$ der Länge $\Delta t = 100 \text{min}$
+  \item Zeitintervalle $I_k = [t_{k},t_{k+1}]$ der Länge $\Delta t = 100 \text{min}$
     
     \vspace{5mm}
   \begin{tikzpicture}\footnotesize
@@ -151,7 +151,7 @@
   \item Sei $d_k$ der Zuwachs im Intervall $I_k$
     \begin{gather*}
       N(t_{k+1}) = N(t_k) + d_k,
-      \qquad N(T) = N(t_0) + \sum_k d_k.
+      \qquad N(T) = N(t_0) + \sum_{k=0}^{n-1} d_k.
     \end{gather*}
   \end{itemize}
   \pause
@@ -262,18 +262,80 @@
 
 \begin{frame}{Berechnung von $R$}
   Wenn $\Delta t$ die Zeit zur Verdopplung ist, wie groß ist $R$?
-\end{frame}
 
-\begin{frame}{Zusammenfassung}
+  \vspace{5cm}
   
 \end{frame}
 
+\begin{frame}{Einheiten}
+  \begin{minipage}{.5\textwidth}
+  \begin{itemize}
+  \item Wir setzen Einheiten für $t$ und $x$, zum Beispiel
+    \begin{gather*}
+      t[\text{min}],\qquad x[\text{g}].
+    \end{gather*}
+  \item Dann hat $x'$ die Einheit $\nicefrac{\text{g}}{\text{min}}$
+  \item Wegen
+    \begin{gather*}
+      R = \frac{x'}{x} \qquad\text{ist}\quad R[\nicefrac1{\text{min}}]
+    \end{gather*}
+  \end{itemize}    
+  \end{minipage}
+  \pause
+  \begin{block}{Dimensionslose Formulierung}
+    Indem man formal durch die Einheiten teilt, werden die Gleichungen
+    dimensionslos.
+
+    \vspace{1ex}
+
+    Man kann auch durch charakteristische Größen teilen, um gezielt
+    mathematisch einfache Darstellungen zu erhalten.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Asymptotische Betrachtung}
+  \begin{exampleblock}{Frage}
+    Was passiert, wenn Sie die Lösung der Wachstumsgleichung für immer
+    größere Zeiten, also das Verhalten für $t\to\infty$ betrachten?
+  \end{exampleblock}
+
+  \begin{exampleblock}{Frage}
+    Was passiert für $t\to\infty$, wenn $R<0$?
+  \end{exampleblock}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Einige Begriffe}
 \frame{\subtoc}
 \begin{frame}
   \begin{block}{Differentialgleichung}
     Eine Differentialgleichung ist eine Gleichung, die eine Funktion
-    und/oder ihre Ableitungen in Beziehung setzt. Eine gewöhnliche DGl. 
+    und/oder ihre Ableitungen in Beziehung setzt.
+  \end{block}
+  \begin{columns}
+    \begin{column}[t]{.5\textwidth}
+      \begin{block}{Gewöhnliche DGl.}
+        Es kommen nur Ableitungen bzgl. einer Variablen vor. Beispiel:
+        \begin{gather*}
+          x^{(3)}(t) + \sin(t) x'(t) = x^2(t) +t^2
+        \end{gather*}
+      \end{block}
+    \end{column}
+    \begin{column}[t]{.5\textwidth}
+      \begin{block}{Partielle DGl.}
+        Es kommen partielle Ableitungen nach mehreren Variablen vor.
+        Beispiel:
+        \begin{gather*}
+          \partial_t u(t,x) - \partial_{xx} u(t,x) = \sin(x)
+        \end{gather*}
+      [Nicht in dieser Vorlesung]
+      \end{block}
+    \end{column}
+  \end{columns}
+  \pause
+  \begin{block}{Ordnung einer Differentialgleichung}
+    Die Ordnung einer DGl. ist der Grad der höchsten Ableitung, die in
+    der Gleichung vorkommt.
   \end{block}
 \end{frame}
 
@@ -305,12 +367,164 @@
   \end{exampleblock}
 \end{frame}
 
+\begin{frame}
+  \begin{block}{Homogene Differentialgleichungen}
+    Eine Differentialgleichung ist homogen, wenn es keinen Summanden
+    gibt, der die Lösungsfunktion nicht enthält. Einen solchen
+    Summanden nennt man dann die Inhomogenität.
+  \end{block}
+  \begin{columns}
+    \begin{column}[t]{.5\textwidth}
+      \begin{block}{Homogen}
+        \begin{gather*}
+          x'+ \sin(t) x = 0
+        \end{gather*}
+      \end{block}
+    \end{column}
+    \begin{column}[t]{.5\textwidth}
+      \begin{block}{Nicht homogen}
+        \begin{gather*}
+          x'+ \sin(t) x = 5
+        \end{gather*}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \begin{exampleblock}{Frage}
+    Welche Prozesse führen zu homogenen DGln., welche zu nicht homogenen?
+  \end{exampleblock}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Wachstum bei begrenzter Nahrung}
 \frame{\subtoc}
+
+\begin{frame}
+  \begin{exampleblock}{Frage}
+    Was erwarten Sie im Fermenter, wenn Sie im Prozess keine Nahrung
+    zuführen? Betrachten Sie vor allem den Fall $t\to\infty$.
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}
+  \begin{exampleblock}{Frage}
+    Was erwarten Sie im Fermenter, wenn Sie im Prozess mit konstanter
+    Rate Nahrung zuführen? Betrachten Sie vor allem den Fall
+    $t\to\infty$.
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Modellierung}
+  \begin{itemize}
+  \item Bisher hatten wir $R$ bei optimalen Bedingungen (Nahrungsmenge
+    $F_{\text{opt}}$)
+  \item Bei Nahrungszufuhr $F_{\text{opt}}$ ist der Anteil an verfügbarer Nahrung $1-Vx$, wobei $Vx$ der Verbrauch der Hefe ist.
+  \item Jetzt setzen wir unter Vereinfachung für die Reproduktionsrate
+    \begin{gather*}
+      r = R \frac{F}{F_{\text{opt}}} = R (1-Vx)
+    \end{gather*}
+  \item Wir erhalten die ``logistische Differentialgleichung''
+    \begin{gather*}
+      x' = rx = R (1-Vx) x.
+    \end{gather*}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Lösungen}
+    \begin{gather*}
+      x_c(t) = \frac{e^{Rt}}{V e^{Rt}+c}
+    \end{gather*}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Richtungsfelder}
+  \begin{columns}
+    \begin{column}[t]{.2\textwidth}
+    \begin{gather*}
+      x'= (1-x) x
+    \end{gather*}
+    \begin{exampleblock}{Frage}
+      Verhalten für $t\to\infty$
+    \end{exampleblock}
+    \end{column}
+    \begin{column}[t]{.8\textwidth}
+      \mbox{}
+      
+      \includegraphics[width=\textwidth]{gnuplot/logistic.pdf}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Negative Startwerte}
+  \begin{columns}
+    \begin{column}[t]{.2\textwidth}
+    \begin{gather*}
+      x'= (1-x) x
+    \end{gather*}      
+    \end{column}
+    \begin{column}[t]{.8\textwidth}
+      \mbox{}
+      
+      \includegraphics[width=\textwidth]{gnuplot/logisticm.pdf}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Fixpunkte}
+  \begin{columns}
+    \begin{column}{.1\textwidth}
+      \mbox{}
+      
+      \begin{tikzpicture}[scale=1.]]
+        \draw[thick,->] (0,0)  node {$\bullet$} -- (0,1) node {$\bullet$};
+        \draw[thick,<-] (0,-2) -- (0,0);
+        \draw[thick,->] (0,2) -- (0,1);
+      \end{tikzpicture}
+    \end{column}
+    \pause
+    \begin{column}{.9\textwidth}
+      Für autonome Gleichungen sind Fixpunkte von hoher Bedeutung. Es gilt:
+      \begin{gather*}
+        x'(T) = 0 \qquad \Rightarrow \qquad x(t) = 0
+        \quad\text{für alle}\quad t>T
+      \end{gather*}
+
+      Es gibt
+      \begin{itemize}
+      \item anziehende Fixpunkte: Richtungspfeile zeigen zum Fixpunkt hin
+      \item abstoßende Fixpunkte: Richtungspfeile zeigen vom Fixpunkt weg
+      \item gemischte Fixpunkte
+      \end{itemize}
+    \end{column}
+  \end{columns}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Das Räuber-Beute-Modell}
 \frame{\subtoc}
-\subsection{Aufgaben}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Zusammenfassung und Aufgaben}
 \frame{\subtoc}
+
+\begin{frame}{Zusammenfassung}
+  \begin{enumerate}
+  \item Unter Annahme der Kontinuumshypothese können wir
+    Wachtumsprozesse durch Differentialgleichungen
+    beschreiben.
+  \item Mehrere Spezies führen zu Systemen von DGln.
+  \item Diese DGLn. haben unendlich viele Lösungen, was uns eigentlich interessiert, ist die Lösung einer Anfangswertaufgabe (AWA)
+  \item Das Ergebnis der eigentlichen Modellierung war die
+    Volterrasche Integralgleichung
+  \item Wir haben die allgemeine Lösung der DGl. geraten und an den
+    Anfangswert angeglichen
+  \end{enumerate}
+\end{frame}
 
 \section{Berechnung von Lösungen}
 \frame{\sectoc}
