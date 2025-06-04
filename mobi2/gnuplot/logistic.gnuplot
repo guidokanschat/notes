@@ -172,4 +172,6 @@ set output "logistic.pdf"
 plot 'logistic.dat' with vectors
 set output "logisticm.pdf"
 plot 'logisticm.dat' with vectors
+set output "volterra.pdf"
+plot [0:2][0:2] 'volterra.dat' with vectors
 #    EOF

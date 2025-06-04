@@ -517,31 +517,156 @@
   \begin{exampleblock}{Frage}
     Woran erkennen Sie, ob diese Fixpunkte anziehend oder abstoßend sind?
   \end{exampleblock}
-  \end{frame}
+\end{frame}
 
+\begin{frame}{Charakterisierung von Fixpunkten}
+  Bei einer Gleichung erster Ordnung der Form
+    \begin{gather*}
+      x' = f(x)
+    \end{gather*}
+    sind die Fixpunkte die Nullstellen der Funktion $f$.
+\end{frame}
+  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Das Räuber-Beute-Modell}
 \frame{\subtoc}
 
+\begin{frame}{Erweiterung auf zweite Species}
+  \begin{itemize}
+  \item Sardinen finden optimale Nahrung und werden von
+    Thunfischen gefressen
+  \item Thunfisch frisst Sardinen und stirbt eines natürlichen
+    Todes
+  \end{itemize}
+  \pause
+  Wir wollen möglichst einfache Beziehungen annehmen!
+  \begin{exampleblock}{Aufgabe}
+    Überlegen Sie sich, wie Sie die Entwicklung der Populationen
+    modellieren könnten!
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Modellierung}
+  \begin{itemize}
+  \item<+-> Sardinen:
+    \begin{itemize}
+    \item Vermehrung mit fester Rate: $ax$
+    \item Sterberate abhängig vom Thunfisch: $-bxy$
+    \end{itemize}
+    \begin{gather*}
+      x' = ax-bxy
+    \end{gather*}
+  \item<+-> Thunfisch:
+    \begin{itemize}
+    \item Feste Sterberate: $-cy$
+    \item Vermehrung abhängig von Sardinen: $dxy$
+    \end{itemize}
+    \begin{gather*}
+      y' = -cy + dxy
+    \end{gather*}
+  \item<+-> $a,b,c,d$ sind angenommene, feste Parameter
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Lotka-Volterra-Gleichungen}
+  \begin{gather*}
+    \begin{aligned}
+      x' &=& ax &-bxy\\
+      y' &=& -cy & +dxy
+    \end{aligned}
+  \end{gather*}
+
+  \begin{block}{System von Differentialgleichungen}
+    Mehrere Differentialgleichungen für mehrere Funktionen bilden ein
+    System von DGln. Die Anzahl der Gln./Funktionen ist die Dimension
+    des Systems.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Phasenraumdiagramme}
+  \begin{itemize}
+  \item Die Lotka-Volterra-Gleichungen sind autonom
+    \begin{itemize}
+    \item[$\Rightarrow$] die Entwicklung hängt nur von $(x,y)$ ab 
+    \end{itemize}
+  \item Man bezeichnet den Raum der möglichen Zustände als Phasenraum
+  \item Auch dort können wir wieder Richtungsfelder zeichnen
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Richtungsfeld im Phasenraum}
+  \begin{center}
+    \includegraphics[width=.7\textwidth]{octave/volterra-vectors-crop.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Lösung im Phasenraum}
+  \begin{center}
+    \includegraphics[width=.7\textwidth]{octave/volterra-phasespace-crop.pdf}
+  \end{center}  
+\end{frame}
+
+\begin{frame}{Lösung als Funktion der Zeit}
+  \begin{center}
+    \includegraphics[width=.7\textwidth]{octave/volterra-timeseries-crop.pdf}
+  \end{center}  
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Warnung}
+    Für die Lotka-Volterra-Gleichungen gibt es keine geschlossene
+    Darstellung der Lösungen.
+  \end{block}
+
+  Es lassen sich aber einige Aussagen treffen
+  \begin{itemize}
+  \item Es gibt die beiden Fixpunkte $(0,0)^T$ und
+    $\left(\tfrac cd,\tfrac ab\right)^T$
+  \item Lösungen sind periodisch
+  \item Es gibt diverse Erhaltungssätze
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Lösungen zu verschiedenen Anfangswerten}
+  \begin{center}
+    \includegraphics[width=.7\textwidth]{octave/volterra-multi-crop.pdf}
+  \end{center}    
+\end{frame}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Zusammenfassung und Aufgaben}
+\subsection{Zusammenfassung}
 \frame{\subtoc}
 
-\begin{frame}{Zusammenfassung}
+\begin{frame}{Zusammenfassung Modellierung}
   \begin{enumerate}
   \item Unter Annahme der Kontinuumshypothese können wir
     Wachtumsprozesse durch Differentialgleichungen
     beschreiben.
-  \item Mehrere Spezies führen zu Systemen von DGln.
+  \item Populationsdynamik mehrerer Spezies führt zu Systemen von DGln.
   \item Diese DGLn. haben unendlich viele Lösungen, was uns eigentlich interessiert, ist die Lösung einer Anfangswertaufgabe (AWA)
   \item Das Ergebnis der eigentlichen Modellierung war die
     Volterrasche Integralgleichung
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Zusammenfassung Analyse}
+  \begin{enumerate}
+  \item Qualitative Diskussion zum Verständnis der Modelle
+    \begin{itemize}
+    \item Richtungsfelder
+    \item Phasenraumdiagramme
+    \end{itemize}
+  \item Verhalten für große Zeiten
+    \begin{itemize}
+    \item Fixpunkte
+    \end{itemize}
   \item Wir haben die allgemeine Lösung der DGl. geraten und an den
     Anfangswert angeglichen
   \end{enumerate}
 \end{frame}
+
 
 \section{Berechnung von Lösungen}
 \frame{\sectoc}
