@@ -172,6 +172,11 @@ set output "logistic.pdf"
 plot 'logistic.dat' with vectors
 set output "logisticm.pdf"
 plot 'logisticm.dat' with vectors
+set size square
+unset xlabel
+unset ylabel
 set output "volterra.pdf"
 plot [0:2][0:2] 'volterra.dat' with vectors
+set output "limit-circle.pdf"
+plot [-2:2][-2:2] 'limit-circle.dat' with vectors
 #    EOF
