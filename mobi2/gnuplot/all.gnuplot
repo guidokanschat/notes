@@ -179,4 +179,16 @@ set output "volterra.pdf"
 plot [0:2][0:2] 'volterra.dat' with vectors
 set output "limit-circle.pdf"
 plot [-2:2][-2:2] 'limit-circle.dat' with vectors
+set output "linear-pp.pdf"
+plot [-2:2][-2:2] 'linear-pp.dat' with vectors
+set output "linear-pm.pdf"
+plot [-2:2][-2:2] 'linear-pm.dat' with vectors
+set output "linear-mm.pdf"
+plot [-2:2][-2:2] 'linear-mm.dat' with vectors
+set output "linear-cp.pdf"
+plot [-2:2][-2:2] 'linear-cp.dat' with vectors
+set output "linear-cm.pdf"
+plot [-2:2][-2:2] 'linear-cm.dat' with vectors
+set output "linear-c0.pdf"
+plot [-2:2][-2:2] 'linear-c0.dat' with vectors
 #    EOF
