@@ -1,5 +1,5 @@
 function dxdt = lotka_volterra(x, t)
-  % Parameters (adjust as needed)
+  % Parameters
   alpha = 1.0;   % Prey birth rate
   beta  = 0.1;   % Predation rate
   gamma = 1.5;   % Predator death rate
