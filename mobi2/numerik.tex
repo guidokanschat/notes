@@ -1,0 +1,121 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Matlab und Octave}
+\frame{\subtoc}
+
+\begin{frame}
+  Matlab und Octave sind beides große Programmpakete mit einer auf die
+  Lösung mathematischer Aufgaben fokussierten Programmiersprache.
+
+  Beide Programmiersprachen sind weitgehend kompatibel miteinander.
+
+  \begin{columns}
+    \begin{column}[t]{.49\textwidth}
+      \begin{block}{Matlab}
+        \begin{itemize}
+        \item Kommerzielle Software
+        \item Studierendenlizenzen im URZ
+        \item Besser auf Leistung optimiert
+        \item Besseres GUI
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}[t]{.49\textwidth}
+      \begin{block}{GNU Octave}
+        \begin{itemize}
+        \item Freie Software
+        \item Sehr gut für uns geeignet
+        \item Besserer DGL-Löser?
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Downloading}
+
+  \begin{itemize}
+  \item GNU Octave
+    \begin{itemize}
+    \item The homepage is \url{https://octave.org/}
+    \item The direct download link is \url{https://octave.org/download.html}
+    \end{itemize}
+  \item Matlab
+    \begin{itemize}
+    \item
+      \url{https://www.urz.uni-heidelberg.de/de/service-katalog/software-und-anwendungen/matlab-simulink}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{lsode (Octave)}
+  Die Funktion \lstinline!lsode(@fun, x0, tinv)! löst
+  \begin{gather*}
+    x' = \text{fun}(x,t), \qquad x(t_0) = x0.
+  \end{gather*}
+  Sie hat 3 Parameter:
+  \begin{enumerate}
+  \item \lstinline!@fun! ist die rechte Seite der Gleichung als Funktion
+  \item \lstinline!x0! ist der Startwert, immer als Vektor
+  \item \lstinline!tinv! ist ein Vektor mit allen Zeitpunkten, an denen
+    die Lösung gewünscht ist
+  \end{enumerate}
+  Der Rückgabewert ist ein Vektor mit einer Lösung für jeden Eintrag
+  von \lstinline!tinv!
+\end{frame}
+
+\begin{frame}{Beispielprogramm (lsode)}
+  \lstinputlisting{octave/logistic.m}
+
+  \lstinputlisting{octave/simple_lsode.m}
+\end{frame}
+
+\begin{frame}{ode45 (Matlab, Octave)}
+  Die Funktion \lstinline!ode(@fun, tinv, x0)! löst
+  \begin{gather*}
+    x' = \text{fun}(t,x), \qquad x(t_0) = x0.
+  \end{gather*}
+  Sie hat 3 Parameter:
+  \begin{enumerate}
+  \item \lstinline!@fun! ist die rechte Seite der Gleichung als Funktion
+  \item \lstinline!tinv = [t0,tend]! ist das Zeitintervall
+  \item \lstinline!x0! ist der Startwert, immer als Vektor
+  \end{enumerate}
+  Die Funktion gibt einen Vektor mit Zeitpukten und einen mit
+  Funktionswerten zurück.
+\end{frame}
+
+\begin{frame}{Beispielprogramm (ode45)}
+  \lstinputlisting{octave/logistic_ode45.m}
+
+  \lstinputlisting{octave/simple_ode45.m}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Fehler und Berechenbarkeit}
+\frame{\subtoc}
+
+\begin{frame}{Fehlerquellen einer AWA}
+  \begin{enumerate}
+  \item Messfehler
+    \begin{itemize}
+    \item Startwerte
+    \item Funktionsparameter
+    \end{itemize}
+  \item Diskretisierungsfehler
+    \begin{itemize}
+    \item Ersatz der DGl durch ein Zeitschrittverfahren
+    \end{itemize}
+  \item Rechenfehler
+    \begin{itemize}
+    \item Rundung bei der Zahlendarstellung im Computer
+    \item Inexakte Berechnungen im Algorithmus
+    \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "slides.tex"
+%%% End:
