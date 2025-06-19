@@ -1,6 +1,14 @@
 \documentclass[notheorems,hidelinks,aspectratio=1610]{beamer}
 %\usetheme[compress]{JuanLesPins}
 \usetheme{JuanLesPins}
+\setbeamertemplate{footline}{
+  \hfill%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \setbeamertemplate{page number in head/foot}[framenumber]%
+  \usebeamertemplate*{page number in head/foot}\kern1em\vskip2pt%
+}
+\setbeamertemplate{navigation symbols}{}
 \usecolortheme{iwr}
 \usepackage{mathsim}
 \lstset{language=Python}
@@ -924,7 +932,7 @@
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Analytische Lösungen}
+\subsection{Separable Gleichungen}
 \frame{\subtoc}
 
 \begin{frame}{Separation der Variablen}
@@ -941,7 +949,7 @@
     \begin{enumerate}
     \item Schreibe die Gleichung in der Form
       \begin{gather*}
-        \int \frac{dx}{f(x)} = \int t(t) \frac{dt}.
+        \int \frac{dx}{f(x)} = \int g(t) \,dt.
       \end{gather*}
     \item Berechne beide Integrale
     \item Löse nach $x$ auf
@@ -967,7 +975,11 @@
   \end{gather*}
 \end{frame}
 
-\begin{frame}{Praktische Berechnungen}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Praktische Berechnung von Lösungen}
+\frame{\subtoc}
+
+\begin{frame}{Lösungen im Netz}
   Das Internet bietet uns viele Möglichkeiten zur Lösung von
   Differentialgleichungen
   \begin{itemize}
