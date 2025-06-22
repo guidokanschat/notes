@@ -70,7 +70,7 @@
 \end{frame}
 
 \begin{frame}{ode45 (Matlab, Octave)}
-  Die Funktion \lstinline!ode(@fun, tinv, x0)! löst
+  Die Funktion \lstinline!ode45(@fun, tinv, x0)! löst
   \begin{gather*}
     x' = \text{fun}(t,x), \qquad x(t_0) = x0.
   \end{gather*}
@@ -96,12 +96,17 @@
 \subsection{Fehler und Berechenbarkeit}
 \frame{\subtoc}
 
-\begin{frame}{Fehlerquellen einer AWA}
+\begin{frame}{Fehlerquellen bei der Simulation einer AWA}
   \begin{enumerate}
   \item Messfehler
     \begin{itemize}
     \item Startwerte
     \item Funktionsparameter
+    \end{itemize}
+  \item Modellfehler
+    \begin{itemize}
+    \item vernachlässigte Mechanismen
+    \item indirekt gemessene Funktionsparameter
     \end{itemize}
   \item Diskretisierungsfehler
     \begin{itemize}
@@ -114,6 +119,228 @@
     \end{itemize}
   \end{enumerate}
 \end{frame}
+
+\begin{frame}{Modellierung von Mess- und Modellfehler}
+  \begin{xalignat*}2
+    \text{tatsächlich:}\qquad x' &= f(x,t) & x(0) &= x_0\\
+    \text{Modell:}\qquad y' &= g(x,t) & y(0) &= y_0
+  \end{xalignat*}
+  Für ein kleines Teilintervall mit Startwerten $x_0,y_0$ setzt sich der Fehler $y(t)-x(t)$ am Ende aus 3 Komponenten zusammen:
+  \begin{enumerate}
+  \item Differenz $y(0)-x(0)$ am Anfang
+  \item Differenz $g(x,t) - f(x,t)$ im Intervall
+  \item Differenz $f(y,t) - f(x,t)$ im Intervall
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Fehlerdarstellung}
+  \begin{gather*}
+    y(t)-x(t) = y_0-x_0
+    + \int_0^t \bigl[
+    g(y(s),s) - f(x(s),s)\bigr] \,ds
+  \end{gather*}
+  \pause
+  Ergänzen einer null
+  \begin{gather*}
+    y(t)-x(t) = y_0-x_0
+    + \int_0^t \bigl[
+    g(y(s),s) - f(y(s),s)\bigr] \,ds
+    + \int_0^t \bigl[
+    f(y(s),s) - f(x(s),s)\bigr] \,ds
+  \end{gather*}
+  \begin{enumerate}
+  \item Anfangswertfehler
+  \item Modellfehler
+  \item Fortpflanzung des Anfangswertfehlers
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Beispiel}
+  \begin{xalignat*}3
+     x' &= 2x & x(0) &= 3 & x(t) &= 3e^{2t}\\
+    y' &= 2.1y & y(0) &= 3.1 & y(t) &= 3.1 e^{2.1t}
+%    \only<2->{z' &= 2z & z(0) &= 3.1 & z(t) &= 3.1 e^{2t}}
+  \end{xalignat*}
+  \small
+  \begin{alignat*}2
+    \int_0^t \bigl[g(y(s))-f(y(s))\bigr] &= \int_0^t 0.31 e^{2.1s} &&= \tfrac{0.31}{2.1}\bigl(e^{2.1t}-1\bigr)
+    \\
+    \int_0^t \bigl[f(y(s))-f(x(s))\bigr] &= \int_0^t 2(3.1e^{2.1s} - 3e^{2s}) &&= \tfrac{6.2}{2.1}\bigl(e^{2.1t}-1\bigr) - 3\bigl(e^{2t}-1\bigr)
+  \end{alignat*}
+  \begin{columns}
+    \begin{column}{.7\textwidth}
+      \begin{gather*}
+        \begin{aligned}
+          x(1) &= 3e^2 &&= 22.167\\
+          y(1) &= 3.1e^{2.1} && = 25.315\\
+        \end{aligned}\\
+        y(1)-x(1) = 0.1+ 1.0579 + 1.9901 = 3.1480
+  \end{gather*}      
+    \end{column}
+    \begin{column}{.3\textwidth}
+      \includegraphics[width=\textwidth]{fig/error-simple-crop.pdf}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Diskussion}
+  Der Fehler des Startwerts 0.1 zum Zeitpunkt $t=0$ hat sich zu $t=1$ auf
+  3.148 erhöht.
+
+  \vspace{1cm}
+  
+  \only<1>{
+    \begin{exampleblock}{Frage}
+      Ist das nicht ein katastrophales, unnützes Ergebnis?
+    \end{exampleblock}
+  }
+\end{frame}
+
+\begin{frame}
+\begin{block}{Definition}
+    Wir für die Differenz zwischen der exakten Lösung $x$ einer
+    Aufgabe und einer Approximation $y$ führen wir folgende Fehlermaße
+    ein:
+    \begin{align*}
+      \text{absoluter Fehler:}& \norm{y-x}\\
+      \text{relativer Fehler:}& \frac{\norm{y-x}}{\norm x}.      
+    \end{align*}
+    Die Doppelstriche $\norm\cdot$ bezeichnen eine Norm im
+    $\mathbb R^n$ oder den Absolutbetrag in einer Dimension.
+  \end{block}
+  \begin{gather*}
+    \begin{array}{c|ccc}
+      t & x & \norm{y-x} & \frac{\norm{y-x}}{\norm x}
+      \\\hline
+      0 & 3 & 0.1 & 0.0333\\
+      1 & 22.167 & 3.148 & 0.142
+    \end{array}
+  \end{gather*}
+\end{frame}
+
+\begin{frame}{Schranken für die Fehlerterme}
+  Mess- und Modellierungsfehler seien aus der Anwendung bekannt,
+  \begin{align*}
+    \norm{y_0-x_0} &\le E_0\\
+    \norm{g(y,t)-f(y,t)} &\le E_1 \quad\text{für alle relevanten $(y,t)$}
+  \end{align*}
+  $E_1$ darf hierbei auch von $t$ abhängen,
+  \pause
+  \begin{block}{Lipschitzbedingung}
+    Für alle relevanten $x,y,t$ gelte
+    \begin{gather*}
+      \norm{f(y,t) - f(x,t)} \le L \norm{y-x}.
+    \end{gather*}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Was ist relevant?}
+  \begin{itemize}
+  \item In der mathematischen Formulierung finden Sie Ausdrücke, die
+    zu korrekten Resultaten führen, aber eventuell nicht erfüllbar
+    sind.
+  \item Oft ist bekannt, dass die Lösungen beschränkt sind, was die
+    Menge der relevanten Punkte einschränkt.
+  \end{itemize}
+  \pause
+  Beispiele:
+  \begin{itemize}
+  \item Gelten die Abschätzungen für alle $t\in \R$ und $x,y\in \R^n$,
+    so sind wir fertig.
+    \pause
+  \item Wenn bekannt ist, dass die Lösungen beschränkt sind, dann
+    genügt oft $\norm x \norm y < r$.
+  \item Für $t$ müssen nur Werte im Zeitintervall von Interesse
+    beachtet werden.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  Sei $e(t) = y(t)-x(t)$. Es gilt dann
+  \begin{gather*}
+    \norm{e(t)} = \underbrace{\norm{e(0)}}_{\le E_0}
+    + \int_0^t \underbrace{\bigl[
+      g(y,s) - f(y,s)\bigr]}_{\le E_1(s)} \,ds
+    + \int_0^t \underbrace{\bigl[
+      f(y,s) - f(x,s)\bigr]}_{\le L \norm{y-x}} \,ds
+  \end{gather*}
+  daher gilt
+  \begin{gather*}
+    \norm{e(t)}\le E_0 + \int_0^t L \norm{e(s)}\,ds
+    +\int_0^t E_1(s)\,ds
+  \end{gather*}
+
+  \begin{block}{Fehlerabschätzung}
+    Es gelten die angegebenen Schranken für die Fehlerterme, besonders
+    die Lipschitzbedingung. Dann gilt
+    \begin{gather*}
+       \norm{e(t)}\le e^{Lt} \left[ E_0+\int_0^t E_1(s)\,ds\right]
+    \end{gather*}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Beispiel}
+  \begin{xalignat*}3
+    x' &= 2x & x(0) &= 3 & x(t) &= 3e^{2t}\\
+    y' &= 2y & y(0) &= 3.1 & y(t) &= 3.1 e^{2t}
+  \end{xalignat*}
+  Es ist also $E_0 = 0.1$, $E_1 = 0$ und $L=2$. Unsere Abschätzung ergibt
+  \begin{gather*}
+    \norm{e(t)} \le 0.1 e^{2t},
+  \end{gather*}
+  was in diesem Falle sogar exakt ist. Für den relativen Fehler gilt
+  \begin{gather*}
+    \frac{\norm{e(t)}}{\norm{x(t)}} \le 0.0334.
+  \end{gather*}  
+\end{frame}
+
+\begin{frame}{Negatives Beispiel}
+  \begin{xalignat*}3
+    x' &= -2x & x(0) &= 3 & x(t) &= 3e^{-2t}\\
+    y' &= -2y & y(0) &= 3.1 & y(t) &= 3.1 e^{-2t}
+  \end{xalignat*}
+  Es ist noch immer $E_0 = 0.1$, $E_1 = 0$ und $L=2$ und
+  \begin{gather*}
+    \norm{e(t)} \le 0.1 e^{2t}.
+  \end{gather*}
+  Für den relativen Fehler gilt
+  \begin{gather*}
+    \frac{\norm{e(t)}}{\norm{x(t)}} \le 0.0334 e^{4t},
+  \end{gather*}
+  was bestenfalls nutzlos ist.
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Einseitige Lipschitzbedingung}
+    Für alle relevanten $x,y,t$ gilt
+    \begin{gather*}
+      \scal({f(y,t)-f(x,t)},y-x) \le \mu \norm{y=x}.
+    \end{gather*}
+  \end{block}
+
+  $\mu$ kann, wie in unserem Beispiel, negativ sein!
+  
+  \begin{block}{Verbesserte Fehlerabschätzung}
+    Es sei der Einfachheit halber $E_1=0$ und es gelte
+    die einseitige Lipschitzbedingung. Dann gilt
+    \begin{gather*}
+       \norm{e(t)}\le  E_0 e^{\mu t}
+    \end{gather*}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Bemerkung}
+    Die Lipschitzbedingung besagt nichts anderes, als dass es eine
+    lineare Differentialgleichung gibt, deren Lösung schneller wächst
+    als die der Gleichung mit rechter Seite $f(x,t)$.
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Zeitschrittmethoden}
+\frame{\subtoc}
+
 
 %%% Local Variables:
 %%% mode: latex
