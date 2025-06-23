@@ -196,7 +196,7 @@
   }
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
 \begin{block}{Definition}
     Wir für die Differenz zwischen der exakten Lösung $x$ einer
     Aufgabe und einer Approximation $y$ führen wir folgende Fehlermaße
@@ -209,11 +209,11 @@
     $\mathbb R^n$ oder den Absolutbetrag in einer Dimension.
   \end{block}
   \begin{gather*}
-    \begin{array}{c|ccc}
-      t & x & \norm{y-x} & \frac{\norm{y-x}}{\norm x}
-      \\\hline
-      0 & 3 & 0.1 & 0.0333\\
-      1 & 22.167 & 3.148 & 0.142
+    \begin{array}{cccc}
+    %   t & x & \norm{y-x} & \frac{\norm{y-x}}{\norm x}
+    %   \\\hline
+    %   0 & 3 & 0.1 & 0.0333\\
+    %   1 & 22.167 & 3.148 & 0.142
     \end{array}
   \end{gather*}
 \end{frame}

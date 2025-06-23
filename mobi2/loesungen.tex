@@ -1,6 +1,10 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+l%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Lineare Systeme von Differentialgleichungen}
 \frame{\subtoc}
+
+%\begin{frame}{Erinnerung: Matrixnotation}
+  
+%\end{frame}
 
 \begin{frame}
   \begin{block}{Lineares System von Differentialgleichungen}
@@ -9,12 +13,12 @@
     \begin{gather*}
       x' = Ax + f
       \qquad\text{oder}\qquad
-      x'(t) = A(t)x(t) + f(t)
+      x'(t) = A(t)x(t) + b(t)
     \end{gather*}
-    Es sind $x(t), x'(t), f(t) \in \R^n$ und $A(t)\in \Rnn$.
+    Es sind $x(t), x'(t), b(t) \in \R^n$ und $A(t)\in \Rnn$.
     
-    Falls $A$ und $f$ nicht von der Zeit $t$ abhängen, ist das System
-    autonom, es ist homogen, falls $f\equiv0$.
+    Falls $A$ und $b$ nicht von der Zeit $t$ abhängen, ist das System
+    autonom, es ist homogen, falls $b\equiv0$.
   \end{block}
 
   \begin{block}{Lösung der AWA im homogenen, autonomen Fall}
@@ -108,7 +112,7 @@
   \begin{block}{Integrierender Faktor}
     Zum System
     \begin{gather*}
-      x'(t) = A(t) x(t) + f(t)
+      x'(t) = A(t) x(t) + b(t)
     \end{gather*}
     definieren wir den integrierenden Faktor
     \begin{gather*}
@@ -126,7 +130,7 @@
   \begin{block}{Lösung mit integrierendem Faktor}
     Für die Anwangswertaufgabe
     \begin{gather*}
-      x'(t) = A(t)u(t)+ f(t),
+      x'(t) = A(t)x(t)+ b(t),
       \qquad
       x(0) = x_0,
     \end{gather*}
@@ -134,7 +138,7 @@
     \begin{gather*}
       x(t) = M^{-1}(t)
       \left(
-        x_0 + \int_0^t M(s) f(s) \,ds
+        x_0 + \int_0^t M(s) b(s) \,ds
       \right)
     \end{gather*}
     darstellen.
