@@ -123,12 +123,12 @@
 \begin{frame}{Modellierung von Mess- und Modellfehler}
   \begin{xalignat*}2
     \text{tatsächlich:}\qquad x' &= f(x,t) & x(0) &= x_0\\
-    \text{Modell:}\qquad y' &= g(x,t) & y(0) &= y_0
+    \text{Modell:}\qquad y' &= g(y,t) & y(0) &= y_0
   \end{xalignat*}
   Für ein kleines Teilintervall mit Startwerten $x_0,y_0$ setzt sich der Fehler $y(t)-x(t)$ am Ende aus 3 Komponenten zusammen:
   \begin{enumerate}
   \item Differenz $y(0)-x(0)$ am Anfang
-  \item Differenz $g(x,t) - f(x,t)$ im Intervall
+  \item Differenz $g(y,t) - f(y,t)$ im Intervall
   \item Differenz $f(y,t) - f(x,t)$ im Intervall
   \end{enumerate}
 \end{frame}
@@ -249,7 +249,7 @@
     so sind wir fertig.
     \pause
   \item Wenn bekannt ist, dass die Lösungen beschränkt sind, dann
-    genügt oft $\norm x \norm y < r$.
+    genügt oft $\norm x, \norm y < r$.
   \item Für $t$ müssen nur Werte im Zeitintervall von Interesse
     beachtet werden.
   \end{itemize}
@@ -314,7 +314,7 @@
   \begin{block}{Einseitige Lipschitzbedingung}
     Für alle relevanten $x,y,t$ gilt
     \begin{gather*}
-      \scal({f(y,t)-f(x,t)},y-x) \le \mu \norm{y=x}.
+      \scal({f(y,t)-f(x,t)},y-x) \le \mu \norm{y-x}^2.
     \end{gather*}
   \end{block}
 
@@ -341,6 +341,107 @@
 \subsection{Zeitschrittmethoden}
 \frame{\subtoc}
 
+\begin{frame}{Das allgemeine Konzept}
+  Beginnend mit dem Startwert $\hat x_0 = x_0$ ,an der Stelle $t_0$,
+  berechne rekursiv weitere Werte der approximierten Lösung $\hat x_k$ für $k=1,2,\ldots$:
+  \begin{align*}
+    t_k &= t_{k-1} + h_k\\
+    \hat x_k &= \hat x_{k-1} + h_k F_{h_k}(\hat x_{x-1},t_{k-1}).
+  \end{align*}
+  \begin{itemize}
+  \item $h_k$ ist die Schrittweite im Schritt $k$
+  \item $F_{h_k}(\hat x_{x-1},t_{k-1})$, so dass allgemein
+    \begin{gather*}
+      h F_{h}(y,t) \approx \int_t^{t+h} f(y(s),s)\,ds,
+    \end{gather*}
+    wobei $y(s)$ Lösung der Volterraschen Integralgleichung mit
+    Startwert $y$ zum Zeitpunkt $t$ ist.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Beispiel: Eulersches Polygonzugverfahren}
+  \begin{gather*}
+    x_{k} = x_{k-1} + h_k f(x_{k-1},t_{k-1})
+  \end{gather*}
+  \begin{center}
+    \includegraphics[width=.6\textwidth]{fig/euler-logistic.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \only<1>{\includegraphics[width=.8\textwidth]{fig/Euler-LV-80-crop.pdf}}
+    \only<2>{\includegraphics[width=.8\textwidth]{fig/Euler-LV-160-crop.pdf}}
+    \only<3>{\includegraphics[width=.8\textwidth]{fig/Euler-LV-320-crop.pdf}}
+    \only<4>{\includegraphics[width=.8\textwidth]{fig/Euler-LV-640-crop.pdf}}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Beispiel: das \glqq{}klassische\grqq{} Runge-Kutta-Verfahren}
+  \begin{align*}
+    k_1 &= f\left(y,t\right)\\
+    k_2 &= f\left(y+\tfrac12 hk_1, t+\tfrac12 h\right)\\
+    k_3 &= f\left(y+\tfrac12 hk_2, t+\tfrac12 h\right)\\
+    k_4 &= f\left(y+ hk_3, t+h\right)\\
+    F_h(y,t) &= y+h\left(\tfrac16k_1+\tfrac13k_2+\tfrac13k_3+\tfrac16k_4\right)
+  \end{align*}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \includegraphics[width=.8\textwidth]{fig/RK4-LV-40-crop.pdf}
+  \end{center}
+\end{frame}
+
+% \begin{frame}{Fehleranalyse}
+%   \begin{block}{Lokaler Fehler}
+%     Der lokale Fehler eines Zeitschrittverfahrens ist für Lösungen der
+%     Volterraschen Integralgleichung beginnend in $(y,t)$
+%     \begin{gather*}
+%       \eta(y,h) =  \left\|h F(y,t) - \int_t^{t+h}f(y(s),t)\,ds\right\|,
+%     \end{gather*}
+%     bzw. $\eta_k = \eta(\hat x_k, h_k)$.
+%   \end{block}
+  
+%   \begin{block}{Konsistenzordnung}
+%     Die Verfahrensfunktion heißt konsistent von Ordnung $p$, wenn für
+%     glatte Funktionen $f(y,t)$ mit einer Konstanten $c$ gilt
+%     \begin{gather*}
+%       \eta(y,h) \le c h^{p+1}.
+%     \end{gather*}
+%   \end{block}
+
+%   Das Eulerverfahren hat Konsistenzordnung 1, das klassische
+%   Runge-Kutta-Verfahren hat Ordnung 4.
+% \end{frame}
+
+% \begin{frame}{Fehleranalyse}
+%   \begin{block}{Abschätzung für festes $h_k=h$}
+%     Eine Methode mit Konsistenzordnung $p$ erlaubt die Abschätzung
+%     \begin{gather*}
+%       \norm{\hat x(T) - x(T)} \le c e^{L_h(T-t_0)} h^p,
+%     \end{gather*}
+%     wobei $L_h$ die Lipschitzkonstante der Funktion $F_h(y,t)$ ist.
+%   \end{block}
+
+%   Der Fehler wird also kleiner, wenn man die Schrittweite $h$ kleiner
+%   wählt oder die Konsistenzordnung $p$ erhöht.
+% \end{frame}
+
+\begin{frame}{ode45}
+  Das Verfahren zur Schrittweitensteuerung von Dormand und Prince
+  \begin{itemize}
+  \item Zwei Zeitschrittverfahren, Ordnung 4 und 5
+  \item Schätze den lokalen Fehler durch die Differenz der Lösungen
+  \item Reduziere $h_k$, wenn der lokale Fehler zu groß ist.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \includegraphics[width=.7\textwidth]{octave/volterra-vectors-crop.pdf}
+  \end{center}
+\end{frame}
 
 %%% Local Variables:
 %%% mode: latex
