@@ -62,7 +62,129 @@
 \section{Abschließende Betrachtungen}
 \frame{\sectoc}
 
+\begin{frame}{Zusammenfassung}
+  \begin{itemize}
+  \item Für (Systeme von) Differentialgleichungen gibt es in der Regel
+    keine Lösungsformeln
+  \item Phasenraumdiagramme geben Aufschluss über das qualitative
+    Verhalten
+  \item Mess- und Modellfehler können exponentiell anwachsen
+    \begin{itemize}
+    \item Es gibt aber auch Bedingungen, wo sie es nicht tun
+    \end{itemize}
+  \item Numerische Verfahren sind Standardmethoden zur Lösung
+    \begin{itemize}
+    \item Auch sie produzieren Fehler
+    \end{itemize}
+  \end{itemize}
+\end{frame}
 
+
+\begin{frame}{Steife Gleichungen und Systeme}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{itemize}
+      \item Charakterisiert durch mehrere Zeitskalen
+      \item Interesse an langsamen Skalen
+      \item Standardverfahren müssen schnelle Skalen auflösen
+      \item Spezielle Verfahren für steife Systeme
+      \end{itemize}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \begin{gather*}
+        x' = \mu(\sin t- x)
+      \end{gather*}
+      \begin{center}
+        \includegraphics[width=.8\textwidth]{fig/stiff-crop.pdf}
+
+        \footnotesize
+        
+        \begin{tabular}{|c|ccc|}
+          \hline \multicolumn{4}{|c|}{Dormand/Prince 45}\\\hline
+          $\mu$ & 10 & 100 & 1000\\
+          steps & 277 & 1605 & 15181\\\hline
+        \end{tabular}
+      \end{center}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Chaotische Systeme (Lorenz)}
+  \begin{xalignat*}2
+    x' &= \sigma(y-x) & \beta &= \tfrac83\\
+    y' &= x(\rho-z) -y & \rho &= 28\\
+    z' &= xy-\beta z & \sigma &= 10
+  \end{xalignat*}
+
+  \begin{center}
+    \includegraphics[width=.6\textwidth]{fig/lorenz-all-crop.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Ungenaue Anfangswerte (Lorenz)}
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+      \begin{gather*}
+        \begin{pmatrix}
+          12\\17\\25
+        \end{pmatrix}
+        \qquad\text{und}\qquad
+        \begin{pmatrix}
+          12\\17\\24.99
+        \end{pmatrix}
+      \end{gather*}
+    \end{column}
+    \begin{column}{.6\textwidth}
+      \includegraphics[width=.95\textwidth]{fig/lorenz-initial-crop.pdf}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Fehler der numerischen Integration (Lorenz)}
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+      \begin{itemize}
+        \item ode45 (Dormand/Prince)
+        \item Schrittweitensteuerung über Toleranzen
+        \item Standard: $10^{-3}$ und $10^{-6}$
+        \item Genauer mit $10^{-4}$ und $10^{-7}$
+        \item<2-> Genauer mit $10^{-5}$ und $10^{-8}$
+      \end{itemize}
+    \end{column}
+    \begin{column}{.6\textwidth}
+      \only<1>{\includegraphics[width=.95\textwidth]{fig/lorenz-accuracy1-crop.pdf}}
+      \only<2>{\includegraphics[width=.95\textwidth]{fig/lorenz-accuracy2-crop.pdf}}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Woher weiß ich, ob ich der Lösung trauen kann?}
+  \begin{itemize}
+  \item Kontrollrechnungen mit
+    \begin{itemize}
+    \item leicht veränderten Anfangsdaten
+    \item veränderte Toleranz/Schrittweite im Verfahren
+    \end{itemize}
+  \item Mathematische Fehlerabschätzungen
+  \item Vergleich mit Erwartungen
+    \begin{itemize}
+    \item Analyse von Langzeitverhalten (Phasendiagramme)
+    \item Wissen aus der Anwendung
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Fazit}
+  \begin{itemize}
+  \item Es gibt Aufgaben, die Sie mit den Techniken der Vorlesung lösen können
+  \item Es gibt Aufgaben, bei denen fortgeschrittene Techniken benötigt werden
+  \item Es gibt Aufgaben, deren Lösung nicht berechenbar ist, ob numerisch oder anders.
+  \end{itemize}
+  \pause
+  \begin{center}
+    Im Zweifel, fragen Sie einen Mathematiker!
+  \end{center}
+\end{frame}
 
 \end{document}
 

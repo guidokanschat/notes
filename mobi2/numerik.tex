@@ -378,13 +378,19 @@
 \end{frame}
 
 \begin{frame}{Beispiel: das \glqq{}klassische\grqq{} Runge-Kutta-Verfahren}
-  \begin{align*}
-    k_1 &= f\left(y,t\right)\\
-    k_2 &= f\left(y+\tfrac12 hk_1, t+\tfrac12 h\right)\\
-    k_3 &= f\left(y+\tfrac12 hk_2, t+\tfrac12 h\right)\\
-    k_4 &= f\left(y+ hk_3, t+h\right)\\
-    F_h(y,t) &= y+h\left(\tfrac16k_1+\tfrac13k_2+\tfrac13k_3+\tfrac16k_4\right)
-  \end{align*}
+  \begin{xalignat*}2
+    && k_1 &= f\left(y,t\right)\\
+    y_1 &= y+\tfrac12 hk_1 &  k_2 &= f\left(y_1, t+\tfrac12 h\right)\\
+    y_2 &= y+\tfrac12 hk_2 & k_3 &= f\left(y_2, t+\tfrac12 h\right)\\
+    y_3 &= y+ hk_3 & k_4 &= f\left(y_3, t+h\right)\\
+  \end{xalignat*}
+  \vspace{-1.5cm}
+  \begin{gather*}
+    F_h(y,t) = y+h\left(\tfrac16k_1+\tfrac13k_2+\tfrac13k_3+\tfrac16k_4\right)    
+  \end{gather*}
+  Die Punkte $y_1,\dots,y_3$ sind Hilfskoordinaten, die ähnlich dem
+  Euler-Verfahren konstruiert werden, die Verfahrensfunktion ist dann
+  eine geeignete Kombination der Funktionswerte an diesen Punkten.
 \end{frame}
 
 \begin{frame}
@@ -444,6 +450,21 @@
   \end{center}
 \end{frame}
 
+\begin{frame}{Zusammenfassung}
+  \begin{itemize}
+  \item Zeitschrittverfahren bestehen aus zwei Teilen
+    \begin{itemize}
+    \item Zerlegung des Zeitintervalls in kleine Schritte
+    \item Approximation der Vollterra-Integralgleichung auf jedem
+      Teilintervall durch eine berechenbare Verfahrensfunktion
+    \end{itemize}
+    \item Die Genauigkeit der Lösung ist bestimmt durch
+      \begin{itemize}
+      \item die Wahl der Verfahrensfunktion
+      \item die Schrittweite
+      \end{itemize}
+  \end{itemize}
+\end{frame}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "slides.tex"
